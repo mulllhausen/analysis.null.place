@@ -1,0 +1,80 @@
+body {
+    font-family: arial,sans-serif;
+}
+
+.non-phone-navbar-top-spacer {
+    padding-top: 25px;
+}
+
+.sidebar-nav {
+    margin-top: 10px;
+    padding: 9px 0;
+}
+
+.tag-1 {
+    font-family: monospace;
+    font-size: 12px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* not phone (needed to override .hidden-phone) */
+@media (min-width: 768px) {
+    #sidebar {display: block;}
+}
+
+/* phone (needed to override .hidden-phone) */
+@media (max-width: 767px) {
+    #sidebar {display: none;}
+}
+
+abbr[title] {
+    border-bottom: none;
+    cursor: default;
+}
+
+a.brand {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+a.sidebar-brand, a.sidebar-brand:hover {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
+    background-color: none !important;
+    text-decoration: none !important;
+}
+
+li.sidebar-brand {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+/* .row contains the content of a page and the sidebar */
+.row {
+    min-height: 600px;
+}
+
+#ibis_logo {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.behind-logo {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.fork-me-on-github-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    width: 120px;
+}
