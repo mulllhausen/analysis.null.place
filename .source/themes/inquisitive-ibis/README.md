@@ -1,4 +1,4 @@
-#inquisitive-ibis theme
+# inquisitive-ibis theme
 
 This theme is forked from [Bootstrap 2 Dark theme](https://github.com/getpelican/pelican-themes/tree/master/bootstrap2-dark) theme.
 
