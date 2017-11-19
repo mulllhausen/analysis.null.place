@@ -8,9 +8,10 @@
     <meta name="author" content="peter miller">
 
     <!-- Le styles -->
+    <script src="https://use.fontawesome.com/95559d6484.js"></script>
     <link rel="stylesheet" href="/theme/css/bootstrap.dark.css" type="text/css" />
     <link href="/theme/css/bootstrap-responsive.dark.css" rel="stylesheet">
-    <link href="/theme/css/font-awesome.css" rel="stylesheet">
+    <!--link href="/theme/css/font-awesome.css" rel="stylesheet"-->
     <link href="/theme/css/pygments.css" rel="stylesheet">
     <link href="/theme/css/ibis.css" rel="stylesheet">
 
@@ -41,22 +42,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/index.html">inquisitive ibis</a>
+          <a class="brand" href="/">inquisitive ibis</a>
           <div class="nav-collapse">
             <ul class="nav">
                   <li >
                     <a href="/example-category-a/">
-                        <i class="icon-folder-open icon-large"></i>example category a <sup>3</sup>
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a <sup>3</sup>
 					</a>
                   </li>
                   <li >
                     <a href="/example-category-b/">
-                        <i class="icon-folder-open icon-large"></i>example category b <sup>3</sup>
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b <sup>3</sup>
 					</a>
                   </li>
-                  <li><a href="/archives.html"><i class="icon-folder-open icon-large"></i>All</a></li>
+                  <li class="active"><a href="/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a></li>
+                  <li ><a href="/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a></li>
             </ul>
-            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -65,10 +66,24 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-<ul>
-	<li><a href="example-category-a/">example category a</a></li>
-	<li><a href="example-category-b/">example category b</a></li>
-</ul>
+<section id="content">
+<h1>all articles</h1>
+
+<dl>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-b/example-article-2/'>example article 2</a></dd>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-a/example-article-3/'>example article 3</a></dd>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-b/example-article-4/'>example article4</a></dd>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-a/example-article-5/'>example article 5</a></dd>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-b/example-article-6/'>example article 6</a></dd>
+	<dt>2017-11-18</dt>
+	<dd><a href='/example-category-a/example-article-1/'>example article 1</a></dd>
+</dl>
+</section>
         </div><!--/span-->
 
         <div class="span3 hidden-phone" id="sidebar">
@@ -81,19 +96,22 @@
 <ul class="nav nav-list">
 <li class="sidebar-brand"><div><a class="sidebar-brand" href="/">inquisitive ibis</a></div></li>
 
-<li>
+<li >
 <a href="/example-category-a/">
-    <i class="icon-folder-open icon-large"></i>example category a <sup>3</sup>
+    <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a <sup>3</sup>
 </a>
 </li>
-<li>
+<li >
 <a href="/example-category-b/">
-    <i class="icon-folder-open icon-large"></i>example category b <sup>3</sup>
+    <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b <sup>3</sup>
 </a>
 </li>
-<li><a href="/archives.html"><i class="icon-folder-open icon-large"></i>All</a></li>
-
-
+<li class="active">
+    <a href="/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a>
+</li>
+<li >
+    <a href="/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a>
+</li>
 
 </ul>            </div>
         </div><!--/.well -->

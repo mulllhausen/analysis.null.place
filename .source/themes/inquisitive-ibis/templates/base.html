@@ -8,9 +8,9 @@
     <meta name="author" content="{{ AUTHOR }}">
 
     <!-- Le styles -->
+    <script src="https://use.fontawesome.com/95559d6484.js"></script>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.dark.css" type="text/css" />
     <link href="{{ SITEURL }}/theme/css/bootstrap-responsive.dark.css" rel="stylesheet">
-    <link href="{{ SITEURL }}/theme/css/font-awesome.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/pygments.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/ibis.css" rel="stylesheet">
 
@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{{ SITEURL }}/index.html">{{ SITENAME }}{#% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %#}</a>
+          <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
           <div class="nav-collapse">
             <ul class="nav">
               {% for title, link in MENUITEMS %}
@@ -59,13 +59,14 @@
               {% for cat, articles in categories %}
                   <li {% if cat == category %}class="active"{% endif %}>
                     <a href="{{ SITEURL }}/{{ cat.url }}">
-                        <i class="icon-folder-open icon-large"></i>{{ cat }} <sup>{{ articles | count }}</sup>
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }} <sup>{{ articles | count }}</sup>
 					</a>
                   </li>
               {% endfor %}
-                  <li><a href="{{ SITEURL }}/archives.html"><i class="icon-folder-open icon-large"></i>All</a></li>
+                  <li {% if output_file == "archives/index.html" %}class="active"{% endif %}><a href="{{ SITEURL }}/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a></li>
+                  <li {% if output_file == "tags/index.html" %}class="active"{% endif %}><a href="{{ SITEURL }}/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a></li>
             </ul>
-            <!--<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>-->
+            {#<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>#}
           </div><!--/.nav-collapse -->
         </div>
       </div>

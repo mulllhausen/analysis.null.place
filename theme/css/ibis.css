@@ -11,6 +11,16 @@ body {
     padding: 9px 0;
 }
 
+.navbar .nav>li>a {
+    font-weight: normal;
+}
+
+.sidebar-nav li.active>a, .sidebar-nav li.active>a:hover {
+    text-decoration: none;
+    background-color: #7db904;
+    color: #ffffff;
+}
+
 .tag-1 {
     font-family: monospace;
     font-size: 12px;
@@ -26,7 +36,7 @@ h1 {
     #sidebar {display: block;}
 }
 
-/* phone (needed to override .hidden-phone) */
+/* phone (needed to override .visible-phone) */
 @media (max-width: 767px) {
     #sidebar {display: none;}
 }
@@ -69,12 +79,4 @@ li.sidebar-brand {
 .behind-logo {
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
-
-.fork-me-on-github-img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    width: 120px;
 }

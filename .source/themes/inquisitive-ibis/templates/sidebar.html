@@ -19,29 +19,23 @@
 
 {#<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>#}
 {% for cat, articles in categories %}
-<li>
+<li {% if cat == category %}class="active"{% endif %}>
 <a href="{{ SITEURL }}/{{ cat.url }}">
-    <i class="icon-folder-open icon-large"></i>{{ cat }} <sup>{{ articles | count }}</sup>
+    <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }} <sup>{{ articles | count }}</sup>
 </a>
 </li>
 {% endfor %}
-<li><a href="{{ SITEURL }}/archives.html"><i class="icon-folder-open icon-large"></i>All</a></li>
-
-{#
-<li class="nav-header"><h4><i class="icon-tags icon-large"></i>Tags</h4></li>
-{% for tag in tag_cloud %}
-<li class="tag-{{ tag.1 }}">
-    <a href="{{ SITEURL }}/{{ tag.0.url }}">
-        <i class="icon-tag icon-large"></i>{{ tag.0 }}
-    </a>
+<li {% if output_file == "archives/index.html" %}class="active"{% endif %}>
+    <a href="{{ SITEURL }}/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a>
 </li>
-{% endfor %}
-#}
+<li {% if output_file == "tags/index.html" %}class="active"{% endif %}>
+    <a href="{{ SITEURL }}/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a>
+</li>
 
-{% include 'twitter_profile.html' %}
+{#% include 'twitter_profile.html' %}
 {% include 'search_sidebar.html' %}
 
 {% if SIDEBAR_CUSTOM %}
     {{ SIDEBAR_CUSTOM }}
-{% endif %}
+{% endif %#}
 </ul>
