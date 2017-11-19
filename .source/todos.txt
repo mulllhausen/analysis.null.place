@@ -1,4 +1,3 @@
-- document the whole setup process in readme
 - add meta tags for all social media
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - make the matrix background scroll vertically behind the ibis
