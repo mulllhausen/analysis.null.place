@@ -21,7 +21,7 @@
 {% for cat, articles in categories %}
 <li {% if cat == category %}class="active"{% endif %}>
 <a href="{{ SITEURL }}/{{ cat.url }}">
-    <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }} <sup>{{ articles | count }}</sup>
+    <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
 </a>
 </li>
 {% endfor %}

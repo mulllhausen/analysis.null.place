@@ -7,19 +7,18 @@
     <meta name="description" content="">
     <meta name="author" content="{{ AUTHOR }}">
 
-    <!-- Le styles -->
-    <script src="https://use.fontawesome.com/95559d6484.js"></script>
+    {# Le styles #}
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.dark.css" type="text/css" />
     <link href="{{ SITEURL }}/theme/css/bootstrap-responsive.dark.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/pygments.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/ibis.css" rel="stylesheet">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    {# Le HTML5 shim, for IE6-8 support of HTML5 elements #}
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
+    {# Le fav and touch icons #}
     <link rel="shortcut icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/img/apple-touch-icon.png">
@@ -59,8 +58,8 @@
               {% for cat, articles in categories %}
                   <li {% if cat == category %}class="active"{% endif %}>
                     <a href="{{ SITEURL }}/{{ cat.url }}">
-                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }} <sup>{{ articles | count }}</sup>
-					</a>
+                        <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
+                    </a>
                   </li>
               {% endfor %}
                   <li {% if output_file == "archives/index.html" %}class="active"{% endif %}><a href="{{ SITEURL }}/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a></li>
@@ -80,7 +79,7 @@
         </div><!--/span-->
 
         <div class="span3 hidden-phone" id="sidebar">
-            <div class="behind-logo" style="background-image: url('{{ SITEURL }}/theme/img/matrix-background1.jpg');">
+            <div class="behind-logo" style="background-image: url('{{ SITEURL }}/theme/img/matrix-background.png');">
                 <a href="{{ SITEURL }}/">
                     <img src="{{ SITEURL }}/theme/img/ibis_logo.png" id="ibis_logo">
                 </a>
@@ -96,11 +95,11 @@
 
       <footer>
         <address id="about">
-            Blog by <a href="{{ GITHUB_URL }}">{{ AUTHOR }} <i class="icon-external-link"></i></a>, created with
-            <a href="https://getpelican.com/">Pelican <i class="icon-external-link"></i></a>,
-            <a href="https://www.python.org/">python <i class="icon-external-link"></i></a>,
-            <a href="https://getbootstrap.com/">Bootstrap <i class="icon-external-link"></i></a>,
-            and <a href="http://fontawesome.io/">Font Awesome <i class="icon-external-link"></i></a>
+            Blog by <a href="{{ GITHUB_URL }}">{{ AUTHOR }} <i class="fa fa-github" aria-hidden="true"></i></a>, created with
+            <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
+            <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
+            <a href="https://getbootstrap.com/">Bootstrap <i class="fa fa-external-link" aria-hidden="true"></i></a>,
+            and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>
         </address><!-- /#about -->
       </footer>
 
@@ -111,9 +110,10 @@
     {% include 'piwik.html' %}
     {% include 'disqus_script.html' %}
 
-    <!-- Le javascript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ SITEURL }}/theme/js/jquery-1.7.2.min.js"></script>
-    <script src="{{ SITEURL }}/theme/js/bootstrap.min.js"></script>
+    {# Le javascript #}
+    {# Placed at the end of the document so the pages load faster #}
+    <script src="https://use.fontawesome.com/95559d6484.js"></script>{# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>{# thanks to https://developers.google.com/speed/libraries/#jquery #}
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>{# thanks to https://www.bootstrapcdn.com/legacy/ #}
   </body>
 </html>
