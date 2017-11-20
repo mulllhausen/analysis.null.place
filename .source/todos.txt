@@ -3,3 +3,5 @@
 - make the matrix background scroll vertically behind the ibis
 - add atom and rss feeds
 - version the gimp file used for making all images
+- configure for google amp viewer
+- fix footer
