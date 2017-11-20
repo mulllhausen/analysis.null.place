@@ -76,6 +76,20 @@ li.sidebar-brand {
     max-height: 100%;
 }
 
-.behind-logo {
-    background-attachment: fixed;
+#matrix_container {
+    width: 100%;
+    height: 200px;
 }
+
+canvas {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/*.behind-logo {
+    background-attachment: fixed;
+}*/

@@ -79,7 +79,10 @@
         </div><!--/span-->
 
         <div class="span3 hidden-phone" id="sidebar">
-            <div class="behind-logo" style="background-image: url('{{ SITEURL }}/theme/img/matrix-background.png');">
+            <!--div class="behind-logo" style="background-image: url('{{ SITEURL }}/theme/img/matrix-background.png');"-->
+            <div id="matrix_container">
+                <canvas id="canvas">Canvas is not supported in your browser.</canvas>
+                <canvas id="canvas2">Canvas is not supported in your browser.</canvas>
                 <a href="{{ SITEURL }}/">
                     <img src="{{ SITEURL }}/theme/img/ibis_logo.png" id="ibis_logo">
                 </a>
@@ -112,6 +115,7 @@
 
     {# Le javascript #}
     {# Placed at the end of the document so the pages load faster #}
+    <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
     <script src="https://use.fontawesome.com/95559d6484.js"></script>{# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>{# thanks to https://developers.google.com/speed/libraries/#jquery #}
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>{# thanks to https://www.bootstrapcdn.com/legacy/ #}
