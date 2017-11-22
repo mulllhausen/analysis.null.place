@@ -79,21 +79,20 @@
         </div><!--/span-->
 
         <div class="span3 hidden-phone" id="sidebar">
-            <!--div class="behind-logo" style="background-image: url('{{ SITEURL }}/theme/img/matrix-background.png');"-->
-            <div id="matrix_container">
-                <canvas id="canvas">Canvas is not supported in your browser.</canvas>
-                <canvas id="canvas2">Canvas is not supported in your browser.</canvas>
-                <a href="{{ SITEURL }}/">
-                    <img src="{{ SITEURL }}/theme/img/ibis_logo.png" id="ibis_logo">
-                </a>
-            </div>
             <div class="well sidebar-nav">
                 {% include 'sidebar.html' %}
+            </div>
+            <div class="logo_positioner">
+                <div class="logo_cropper">
+                    <canvas id="matrix_text_green"></canvas>
+                    <canvas id="matrix_text_white"></canvas>
+                    <img src="{{ SITEURL }}/theme/img/shattered-glass-zoom.png" id="logo_img">
+                </div>
             </div>
         </div><!--/.well -->
 
       </div><!--/row-->
-
+      <div id="js_footer_push"></div>
       <hr>
 
       <footer>
