@@ -82,11 +82,6 @@
         </div><!--/span-->
 
         <div class="span3 hidden-phone" id="sidebar">
-            <div class="behind-logo" style="background-image: url('http://inquisitive-ibis.null.place/theme/img/matrix-background.png');">
-                <a href="http://inquisitive-ibis.null.place/">
-                    <img src="http://inquisitive-ibis.null.place/theme/img/ibis_logo.png" id="ibis_logo">
-                </a>
-            </div>
             <div class="well sidebar-nav">
 <ul class="nav nav-list">
 <li class="sidebar-brand"><div><a class="sidebar-brand" href="http://inquisitive-ibis.null.place/">inquisitive ibis</a></div></li>
@@ -109,10 +104,17 @@
 </li>
 
 </ul>            </div>
+            <div class="logo_positioner">
+                <div class="logo_cropper">
+                    <canvas id="matrix_text_green"></canvas>
+                    <canvas id="matrix_text_white"></canvas>
+                    <img src="http://inquisitive-ibis.null.place/theme/img/shattered-glass-zoom.png" id="logo_img">
+                </div>
+            </div>
         </div><!--/.well -->
 
       </div><!--/row-->
-
+      <div id="js_footer_push"></div>
       <hr>
 
       <footer>
@@ -129,5 +131,6 @@
 
 
 
+    <script src="http://inquisitive-ibis.null.place/theme/js/matrix-animation.js"></script>
     <script src="https://use.fontawesome.com/95559d6484.js"></script>    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>  </body>
 </html>
