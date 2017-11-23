@@ -1,3 +1,6 @@
+on linux...
+
+    pip install virtualenv
     mkdir x.null.place
     cd x.null.place
     virtualenv .
