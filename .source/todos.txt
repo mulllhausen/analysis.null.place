@@ -4,3 +4,4 @@
 - fix footer
 - prevent html pages from being cached and changes not showing, if possible
 - add google analytics
+- add a 404 error page
