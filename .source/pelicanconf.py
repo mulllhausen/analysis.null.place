@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'peter miller'
-SITENAME = u'inquisitive ibis'
+SITENAME = u'x.null.place'
 SITEURL = ''
 
 PATH = 'content'
@@ -15,7 +15,7 @@ DEFAULT_LANG = u'en'
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
-THEME = "./themes/inquisitive-ibis"
+THEME = "./themes/thematrix"
 
 DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'archives']
 
