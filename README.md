@@ -1,5 +1,5 @@
-    mkdir inquisitive-ibis
-    cd inquisitive-ibis
+    mkdir x.null.place
+    cd x.null.place
     virtualenv .
     source bin/activate
     pip install pelican Markdown
@@ -25,7 +25,7 @@ for clean URLs edit file `lib/python2.7/site-packages/pelican/generators.py` lik
 
 back in bash...
 
-    cd inquisitive-ibis
+    cd x.null.place
     git clone git@github.com:mulllhausen/mulllhausen.github.io.git output
     cd output/.source
     make publish
