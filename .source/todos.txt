@@ -2,3 +2,5 @@
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - configure for google amp viewer
 - fix footer
+- prevent html pages from being cached and changes not showing, if possible
+- add google analytics
