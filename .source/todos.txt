@@ -3,3 +3,5 @@
 - add atom and rss feeds
 - configure for google amp viewer
 - fix footer
+- rename blog to x.null.place
+- rename theme to "matrix"
