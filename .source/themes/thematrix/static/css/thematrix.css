@@ -58,6 +58,7 @@ abbr[title] {
 }
 
 a.brand {
+    padding-left: 20px !important;
     font-size: 22px;
     font-weight: bold;
 }
