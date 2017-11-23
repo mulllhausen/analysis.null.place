@@ -1,5 +1,4 @@
 - add meta tags for all social media
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
-- add atom and rss feeds
 - configure for google amp viewer
 - fix footer
