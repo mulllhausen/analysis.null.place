@@ -114,3 +114,7 @@ address#about {
     padding-top: 15px;
     border-top: 2px solid #333333;
 }
+
+.invisible {
+    visibility: hidden;
+}

@@ -95,7 +95,7 @@
       <div class="row" id="js_footer_push"></div>
 
       <footer>
-        <address id="about">
+        <address id="about" class="invisible">
             Blog by <a href="{{ GITHUB_URL }}">{{ AUTHOR }} <i class="fa fa-github" aria-hidden="true"></i></a>, created with
             <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
             <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
@@ -115,12 +115,17 @@
     {% include 'piwik.html' %}
     {% include 'disqus_script.html' %}
 
-    {# Le javascript #}
-    {# Placed at the end of the document so the pages load faster #}
-    <script src="https://use.fontawesome.com/95559d6484.js"></script>{# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>{# thanks to https://developers.google.com/speed/libraries/#jquery #}
-    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>{# thanks to https://www.bootstrapcdn.com/legacy/ #}
-    <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
+    {# Le javascript - at the end of the document so the pages load faster #}
     <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
+
+    {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
+    <script src="https://use.fontawesome.com/95559d6484.js"></script>
+
+    {# thanks to https://developers.google.com/speed/libraries/#jquery #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    {# thanks to https://www.bootstrapcdn.com/legacy/ #}
+    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+    <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
   </body>
 </html>
