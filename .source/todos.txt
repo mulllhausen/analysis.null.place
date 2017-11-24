@@ -1,6 +1,5 @@
 - add meta tags for all social media
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - configure for google amp viewer
-- fix footer
 - add google analytics
 - add a 404 error page
