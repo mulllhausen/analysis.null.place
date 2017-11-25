@@ -37,7 +37,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="http://x.null.place/">x.null.place</a>
+          <a class="topbar-brand" href="http://x.null.place/">x.null.place</a>
+          <div class="logo_container">
+              <div class="logo_positioner">
+                  <div class="logo_cropper">
+                      <img src="http://x.null.place/theme/img/matrix-background.png" id="logo_background_fallback">
+                      <canvas class="matrix_text_green"></canvas>
+                      <canvas class="matrix_text_white"></canvas>
+                      <img src="http://x.null.place/theme/img/shattered-glass-2b.png" id="logo_img">
+                  </div>
+              </div>
+          </div>
           <div class="nav-collapse">
             <ul class="nav">
                   <li >
@@ -101,9 +111,10 @@
 </ul>            </div>
             <div class="logo_positioner">
                 <div class="logo_cropper">
-                    <canvas id="matrix_text_green"></canvas>
-                    <canvas id="matrix_text_white"></canvas>
-                    <img src="http://x.null.place/theme/img/shattered-glass-zoom.png" id="logo_img">
+                    <img src="http://x.null.place/theme/img/matrix-background.png" id="logo_background_fallback">
+                    <canvas class="matrix_text_green"></canvas>
+                    <canvas class="matrix_text_white"></canvas>
+                    <img src="http://x.null.place/theme/img/shattered-glass-black.png" id="logo_img">
                 </div>
             </div>
         </div><!--/.well -->
@@ -120,7 +131,7 @@
             and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>
             <br>
             <br>
-            <a href="http://x.null.place/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>,
+            <a href="http://x.null.place/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp&nbsp&nbsp
             <a href="http://x.null.place/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
         </address><!-- /#about -->
       </footer>
@@ -130,6 +141,17 @@
 
 
     <script src="http://x.null.place/theme/js/matrix-animation.js"></script>
+    <script>
+    init_all_matrix_canvases('matrix_text_green', 'matrix_text_white');
+    var resize_id;
+    addEvent(window, 'resize', function() {
+        // debounce the resize
+        clearTimeout(resize_id);
+        resize_id = setTimeout(function() {
+            init_all_matrix_canvases('matrix_text_green', 'matrix_text_white');
+        }, 500);
+    });
+    </script>
 
     <script src="https://use.fontawesome.com/95559d6484.js"></script>
 

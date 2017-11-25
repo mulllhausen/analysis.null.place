@@ -57,10 +57,16 @@ abbr[title] {
     cursor: default;
 }
 
-a.brand {
-    padding-left: 20px !important;
+a.topbar-brand, a.topbar-brand:hover {
+    float: left;
+    padding: 10px 10px 0 15px;
     font-size: 22px;
     font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
+    background-color: none !important;
+    text-decoration: none !important;
 }
 
 a.sidebar-brand, a.sidebar-brand:hover {
@@ -80,6 +86,12 @@ li.sidebar-brand {
 
 /* begin logo stuff */
 
+.logo_container {
+    padding-left: 10px;
+    display: inline-block;
+    width: 42px;
+}
+
 .logo_positioner {
     position: relative;
     display: block;
@@ -96,16 +108,26 @@ li.sidebar-brand {
     right: 0;
     overflow: hidden;
 }
-canvas#matrix_text_green, canvas#matrix_text_white {
+img#logo_background_fallback {
+    position: absolute;
+    width: 100%;
+    /*height: 100%; don't do this since it would squash the aspect ratio */
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+canvas.matrix_text_green, canvas.matrix_text_white {
     position: absolute;
     width: 100%;
     /*height: 100%; don't do this since it would squash the aspect ratio */
     padding-top: 20%;/*move towards the hole in the img regardless of parent width*/
     left: 0;
+    z-index: 2;
 }
 img#logo_img {
     width: 100%;/* expand to the width of #logo_cropper*/
     position: relative;
+    z-index: 3;
 }
 
 /* end logo stuff */

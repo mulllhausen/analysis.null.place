@@ -43,7 +43,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+          <a class="topbar-brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+          <div class="logo_container">
+              <div class="logo_positioner">
+                  <div class="logo_cropper">
+                      <img src="{{ SITEURL }}/theme/img/matrix-background.png" id="logo_background_fallback">
+                      <canvas class="matrix_text_green"></canvas>
+                      <canvas class="matrix_text_white"></canvas>
+                      <img src="{{ SITEURL }}/theme/img/shattered-glass-2b.png" id="logo_img">
+                  </div>
+              </div>
+          </div>
           <div class="nav-collapse">
             <ul class="nav">
               {% for title, link in MENUITEMS %}
@@ -84,9 +94,10 @@
             </div>
             <div class="logo_positioner">
                 <div class="logo_cropper">
-                    <canvas id="matrix_text_green"></canvas>
-                    <canvas id="matrix_text_white"></canvas>
-                    <img src="{{ SITEURL }}/theme/img/shattered-glass-zoom.png" id="logo_img">
+                    <img src="{{ SITEURL }}/theme/img/matrix-background.png" id="logo_background_fallback">
+                    <canvas class="matrix_text_green"></canvas>
+                    <canvas class="matrix_text_white"></canvas>
+                    <img src="{{ SITEURL }}/theme/img/shattered-glass-black.png" id="logo_img">
                 </div>
             </div>
         </div><!--/.well -->
@@ -103,7 +114,7 @@
             and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>
             <br>
             <br>
-            <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>,
+            <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp&nbsp&nbsp
             <a href="{{ SITEURL }}/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
         </address><!-- /#about -->
       </footer>
@@ -117,6 +128,17 @@
 
     {# Le javascript - at the end of the document so the pages load faster #}
     <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
+    <script>
+    init_all_matrix_canvases('matrix_text_green', 'matrix_text_white');
+    var resize_id;
+    addEvent(window, 'resize', function() {
+        // debounce the resize
+        clearTimeout(resize_id);
+        resize_id = setTimeout(function() {
+            init_all_matrix_canvases('matrix_text_green', 'matrix_text_white');
+        }, 500);
+    });
+    </script>
 
     {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
     <script src="https://use.fontawesome.com/95559d6484.js"></script>

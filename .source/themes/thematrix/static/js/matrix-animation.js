@@ -1,22 +1,78 @@
 // code to run a matrix-movie animation in a <canvas>
 
+// shims
+window.requestAnimationFrame = function() {
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        function(f) {
+            window.setTimeout(f, 1e3/60);
+        }
+}();
+
+window.cancelAnimationFrame = function() {
+    return window.cancelAnimationFrame ||
+        window.webkitCancelAnimationFrame ||
+        window.mozCancelAnimationFrame ||
+        window.msCancelAnimationFrame ||
+        window.oCancelAnimationFrame ||
+        function(id) {
+            window.clearTimeout(id);
+        }
+}();
+
+var addEvent = function(object, type, callback) {
+    if (object == null || typeof(object) == 'undefined') return;
+    if (object.addEventListener) {
+        object.addEventListener(type, callback, false);
+    } else if (object.attachEvent) {
+        object.attachEvent('on' + type, callback);
+    } else {
+        object['on' + type] = callback;
+    }
+};
+
+function init_all_matrix_canvases(green_text_canvas_class_name, white_text_canvas_class_name) {
+    var green_text_canvases = document.getElementsByClassName(green_text_canvas_class_name);
+    var white_text_canvases = document.getElementsByClassName(white_text_canvas_class_name);
+    for (var i = 0; i < green_text_canvases.length; i++) {
+        init_matrix_canvas(green_text_canvases[i], white_text_canvases[i]);
+    }
+}
+
 // we use a lot of variables between functions, so keep them out of the global
 // scope with a closure
-(function() {
+function init_matrix_canvas(green_text_canvas, white_text_canvas) {
+    // clear old canvases so only 1 animation can run at a time
+    if (green_text_canvas.hasOwnProperty('animation_id')) {
+        cancelAnimationFrame(green_text_canvas.animation_id);
+    }
+
+    // exit if this canvas is not visible.
+    // this way we can call this function every page resize and hide the canvas
+    // if it becomes invisible to prevent unnecessary cpu load
+    function is_hidden(el) {
+        return (el.offsetParent === null);
+    }
+    if (is_hidden(green_text_canvas)) return;
+
     // init vars
-    var green_text_canvas = document.getElementById('matrix_text_green');
     var green_text_ctx = green_text_canvas.getContext('2d');
-    var white_text_canvas = document.getElementById('matrix_text_white');
     var white_text_ctx = white_text_canvas.getContext('2d');
     var cw = 300;
     var ch = 200;
-    var charArr = ['杕','丁','丂','七','丄','丅','丆','万','丈','三','上','下','丌','不','与','丏','丐','丑','丒','专','且','丕','世','丗','丘','丙','业'];
-    var maxCharCount = 100;
+    var charArr = ['杕','丁','丂','七','丄','丅','丆','万','丈','三','上','下',
+    '丌','不','与','丏','丐','丑','丒','专','且','丕','世','丗','丘','丙','业'];
     var fallingCharArr = [];
-    var fontSize = 12;
+
+    // we want (canvas.width, fontsize) = (42px, 30) = (270px, 16)
+    // so plot a line, using www.mathportal.org/calculators/analytic-geometry/two-point-form-calculator.php
+    var fontSize = (619 / 19) - (7 * green_text_canvas.scrollWidth / 114);
     var font = 'bold ' + fontSize + 'px monospace';
 
-    var maxColums = cw/(fontSize);
+    var maxColumns = cw / fontSize;
 
     // init each canvas
     green_text_canvas.width = white_text_canvas.width = cw;
@@ -71,23 +127,27 @@
     }
 
     // initialize all points
-    for (var i = 0; i < maxColums ; i++) {
+    for (var i = 0; i < maxColumns; i++) {
         fallingCharArr.push(new Point(i * fontSize, RandomFloat(-ch/4, 0)));
     }
 
-    var update = function() {
+    var freq_counter = 0;
+    function update() {
+        // queue up to re-run on next screen paint
+        green_text_ctx.canvas.animation_id = requestAnimationFrame(update);
+
+        // requestAnimationFrame runs at 60fps. make it 6fps = every 100ms
+        freq_counter++;
+        if (freq_counter < 6) return;
+        freq_counter = 0;
+
         green_text_ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         green_text_ctx.fillRect(0, 0, cw, ch);
         white_text_ctx.clearRect(0, 0, cw, ch);
 
-        var i = fallingCharArr.length;
-        while (i--) {
+        for (var i = 0; i < maxColumns; i++) {
             fallingCharArr[i].draw();
-            var v = fallingCharArr[i];
         }
-        setTimeout(function() {
-            requestAnimationFrame(update);
-        }, 100);
     }
-    update();
-})();
+    green_text_ctx.canvas.animation_id = requestAnimationFrame(update);
+}
