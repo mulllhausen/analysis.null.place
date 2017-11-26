@@ -15,6 +15,7 @@
     <meta property="og:image:width" content="266"/>
     <meta property="og:image:height" content="266"/>
     <meta property="og:description" content="Blog by Peter Miller"/>
+    <meta property="fb:app_id" content="2040066019560327"/>
 
     <meta itemprop="name" content="analysis"/>
     <meta itemprop="description" content="analysis"/>
@@ -179,5 +180,25 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
     <script src="http://analysis.null.place/theme/js/autofooter.js"></script>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '2040066019560327',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v2.11'
+        });
+        FB.AppEvents.logPageView();
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
   </body>
 </html>
