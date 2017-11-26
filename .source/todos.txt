@@ -2,4 +2,3 @@
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - configure for google amp viewer
 - add google analytics
-- add a 404 error page
