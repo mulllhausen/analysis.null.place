@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'peter miller'
-SITENAME = u'x.null.place'
+SITENAME = u'analysis'
 SITEURL = ''
 
 PATH = 'content'
@@ -47,4 +47,4 @@ DELETE_OUTPUT_DIRECTORY = False
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-GITHUB_URL = 'https://github.com/mulllhausen'
+GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
