@@ -3,9 +3,31 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="{{ AUTHOR }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="{% block description %}Blog by {{ AUTHOR  }}{% endblock %}"/>
+    <meta name="author" content="{{ AUTHOR }}"/>
+
+    {# open graph data #}
+    <meta property="og:site_name" content="{{ SITENAME }}"/>
+    <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}"/>
+    <meta property="og:image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+    <meta property="og:description" content="{% block og_description %}Blog by {{ AUTHOR }}{% endblock %}"/>
+
+    {# schema.org markup for Google+ #}
+    <meta itemprop="name" content="{{ SITENAME }}"/>
+    <meta itemprop="description" content="{% block google_title %}{{ SITENAME }}{% endblock %}"/>
+    <meta itemprop="image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+
+    {# Twitter Card data # }
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@publisher_handle"/>
+    <meta name="twitter:title" content="{% block twitter_title %}{{ SITENAME }}{% endblock %}"/>
+    <meta name="twitter:description" content="{% block twitter_description %}Blog by {{ AUTHOR }}{% endblock %}"/>
+    <meta name="twitter:creator" content="@author_handle"/>
+    { # twitter summary card with large image must be at least 280x150px # }
+    <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
     {# Le styles #}
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.dark.css"/>
