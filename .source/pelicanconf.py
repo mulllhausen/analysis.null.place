@@ -6,6 +6,7 @@ XYZ = '123'
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
 SITEURL = ''
+BLOG_DESCRIPTION = 'Blog by ' + AUTHOR + ' focusing mainly on cryptocurrencies, software development and economics'
 
 PATH = 'content'
 
