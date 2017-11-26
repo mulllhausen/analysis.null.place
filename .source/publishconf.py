@@ -18,7 +18,6 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 DELETE_OUTPUT_DIRECTORY = False
 
-# Following items are often useful when publishing
-
 #DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+GOOGLE_ANALYTICS_TRACKING_ID = 'UA-110200325-1'
+FACEBOOK_ANALYTICS_ID = '2040066019560327'

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+XYZ = '123'
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
 SITEURL = ''
@@ -29,11 +30,13 @@ FEED_ALL_RSS = None
 AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
-DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'archives']
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'archives', 'sitemap']
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
 CATEGORIES_SAVE_AS = 'categories/index.html'
 ARCHIVES_SAVE_AS = 'archives/index.html'
+SITEMAP_SAVE_AS = 'sitemap.xml'
+
 ARTICLE_URL = '{category}/{slug}/'
 ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
 #PAGE_URL = 'pages/{slug}/'

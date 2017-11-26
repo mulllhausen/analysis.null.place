@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {# global site tag (gtag.js) - google analytics #}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110200325-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-110200325-1');
-    </script>
+    {% include 'google_analytics.html' %}
     <meta charset="utf-8">
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -155,9 +148,6 @@
 
     </div><!--/.fluid-container-->
 
-
-    {% include 'analytics.html' %}
-    {% include 'piwik.html' %}
     {% include 'disqus_script.html' %}
 
     {# Le javascript - at the end of the document so the pages load faster #}
@@ -184,24 +174,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
     <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
 
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '2040066019560327',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.11'
-        });
-        FB.AppEvents.logPageView();
-      };
-
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
+    {% include 'facebook_analytics.html' %}
+    {% include 'piwik.html' %}
   </body>
 </html>
