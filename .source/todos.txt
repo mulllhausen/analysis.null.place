@@ -1,2 +1,1 @@
-- generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - configure for google amp viewer

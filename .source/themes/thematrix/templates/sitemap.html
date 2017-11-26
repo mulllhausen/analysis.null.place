@@ -5,33 +5,30 @@
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
-
     {% for article in articles %}
-        <url>
-            <loc>{{ SITEURL }}/{{ article.url }}</loc>
-            <lastmod>{{ article.date | strftime('%Y-%m-%d') }}</lastmod>
-            <priority>0.8</priority>
-        </url>
-
+    <url>
+        <loc>{{ SITEURL }}/{{ article.url }}</loc>
+        <lastmod>{{ article.date | strftime('%Y-%m-%d') }}</lastmod>
+        <priority>0.8</priority>
+    </url>
         {% for translation in article.translations %}
-        <url>
-            <loc>{{ SITEURL }}/{{ translation.url }}</loc>
-            <priority>0.8</priority>
-        </url>
+    <url>
+        <loc>{{ SITEURL }}/{{ translation.url }}</loc>
+        <priority>0.8</priority>
+    </url>
         {% endfor %}
     {% endfor %}
-
     {% for page in pages %}
-        <url>
-            <loc>{{ SITEURL }}/{{ page.url }}</loc>
-            <priority>0.8</priority>
-        </url>
+    <url>
+        <loc>{{ SITEURL }}/{{ page.url }}</loc>
+        <priority>0.8</priority>
+    </url>
 
         {% for translation in page.translations %}
-        <url>
-            <loc>{{ SITEURL }}/{{ translation.url }}</loc>
-            <priority>0.8</priority>
-        </url>
+    <url>
+        <loc>{{ SITEURL }}/{{ translation.url }}</loc>
+        <priority>0.8</priority>
+    </url>
         {% endfor %}
     {% endfor %}
 </urlset>
