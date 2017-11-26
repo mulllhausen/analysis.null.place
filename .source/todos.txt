@@ -1,4 +1,2 @@
-- add meta tags for all social media
 - generate site map (https://github.com/getpelican/pelican/wiki/Tips-n-Tricks)
 - configure for google amp viewer
-- add google analytics
