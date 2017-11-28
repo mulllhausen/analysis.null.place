@@ -1,1 +1,2 @@
 - configure for google amp viewer
+- upgrade to bootstrap 3 (mainly to get full page width on large monitors)
