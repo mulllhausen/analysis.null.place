@@ -151,3 +151,16 @@ address#about {
 .invisible {
     visibility: hidden;
 }
+.entry-content .media-container {
+    width: 100%;
+}
+.entry-content .media-container > .media-positioner {
+    display: table;
+    margin: 0 auto;
+    padding: 20px 10px 20px 10px;
+}
+.entry-content .media-container > .media-positioner > .media-caption {
+    width: 100%;
+    margin-top: 5px;
+    text-align: center;
+}

@@ -55,3 +55,5 @@ DELETE_OUTPUT_DIRECTORY = False
 #RELATIVE_URLS = True
 
 GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
+
+STATIC_PATHS = ['images', 'scripts']
