@@ -38,6 +38,9 @@
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap-responsive.dark.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
+    {% if article %}{% if article.stylesheet %}
+    <link rel="stylesheet" href="{{ SITEURL }}/css/{{ article.stylesheet }}"/>
+    {% endif %}{% endif %}
 
     {# Le HTML5 shim, for IE6-8 support of HTML5 elements #}
     <!--[if lt IE 9]>
