@@ -3,46 +3,35 @@ slug: how-does-bitcoin-mining-work
 date: 2017-11-28 
 category: cryptocurrencies
 tags: bitcoin, mining, proof-of-work
+stylesheet: btc.css
 summary: An interactive thorough explanation of bitcoin mining. No prior knowledge is necessary.
-
-<style>
-.btc-transaction-full {
-    border: 1px solid;
-    word-break: break-all;
-    padding: 10px;
-    font-family: monospace;
-    background-color: #333333;
-}
-.btc-transaction-mini, .btc-block-header-mini {
-    border: 1px solid;
-    padding: 5px;
-    border-collapse: collapse;
-    background-color: #333333;
-    text-align: center;
-    min-width: 100px;
-}
-.btc-header-definition {
-    display: inline-block;
-    padding: 1px;
-}
-.btc-header-definition > .btc-header-field {
-    border: 1px solid;
-    padding: 5px;
-    margin: -1px -1px 0 0;
-    border-collapse: collapse;
-    background-color: #333333;
-    text-align: center;
-    min-width: 100px;
-    float: left;
-    display: table-cell;
-}
-</style>
 
 This article is for people who want to understand the inner workings of bitcoin
 and other similar cryptocurrencies. If you are just looking to buy or mine some
-bitcoin then this article is massive overkill and I would not recommend reading
-it. Just like you do not need to know how the HTTP protocol works to perform a
-google search, you also do not need to know how bitcoin works in order to use it.
+bitcoins then this article is massive overkill and I would not recommend reading
+it. Just like you do not need to know how the HTTP protocol works to do a Google
+search, you also do not need to know how bitcoin works in order to use it.
+
+## hashing
+
+To understand bitcoin mining, it is first necessary to understand how
+cryptographic hashing works. This section is certainly the most difficult to
+understand, however I have made it interactive, which will make the learning
+process easier and fun. Lets start with the definition of a hash, and then we
+can walk through and test each of the parts of that definition using some
+interactive tools to see if they make sense.
+
+> Hashing involves taking a string of characters and transforming them into
+> another string of characters. We call the initial characters the <i>pre-image</i>
+> and we call the output the <i>hash</i>. The algorythm has the following properties:<br>
+> 1. it is deterministic so the same message always results in the same hash<br>
+> 2. it is quick to compute the hash value for any given message<br>
+> 3. it is infeasible to generate a message from its hash value except by trying all possible messages<br>
+> 4. a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value<br>
+> 5. it is infeasible to find two different messages with the same hash value
+
+
+
 
 I think the best way to explain how bitcoin mining works is to jump straight to
 the detailed explanation at the start, and then unpack that explanation piece b
@@ -103,22 +92,27 @@ into a block:
 </div></div>
 
 A bitcoin block consists of a header, followed by a list of transactions. The
-one shown here only has 3 transactions, but blocks containing thousands of
+block shown here only has 3 transactions, but blocks containing thousands of
 transactions are most common.
 
-Just as the bitcoin transactions are a string of characters, so is the block
-header. The header contains all the data needed to describe the block:
+Just as bitcoin transactions are a string of characters, so is the block header.
+The header contains all the data needed to uniquely identify the block:
 
 <div class="media-container"><div class="media-positioner">
     <div class="btc-header-definition">
+        <div class="btc-header-field">version</div>
         <div class="btc-header-field">previous block hash</div>
-        <div class="btc-header-field">nonce</div>
-        <div class="btc-header-field">timestamp</div>
         <div class="btc-header-field">merkle root</div>
+        <div class="btc-header-field">timestamp</div>
         <div class="btc-header-field">difficulty</div>
+        <div class="btc-header-field">nonce</div>
     </div>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
+
+The remainder of this article is devoted to explaining what each of these fields
+is. Section 2 will explain what the previous block hash and section 3 will give
+an explanation of 
 
 ## 2. the bitcoin blockchain
 
@@ -151,9 +145,55 @@ is important is to know the features of a hashing algorythm:
 4. a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value
 5. it is infeasible to find two different messages with the same hash value
 
+<div class="media-container"><div class="media-positioner">
+    <div class="btc-header-definition">
+        <div class="btc-header-field">
+            version<br>
+            <span class="data-value">0100</span>
+        </div>
+        <div class="btc-header-field">
+            previous block hash<br>
+            <span class="data-value">0000000000000000000000000000000000000000000000000000000000000000000000</span>
+        </div>
+        <div class="btc-header-field">
+            merkle root<br>
+            <span class="data-value">a718a42b7ce7fc5d85e015a8199fe30cab6d4d59f6f6d9923c52620ec636a6ca</span>
+        </div>
+        <div class="btc-header-field">
+            timestamp<br>
+            <span class="data-value">1513019329</span>
+        </div>
+        <div class="btc-header-field">
+            difficulty<br>
+            <span class="data-value">402698477</span>
+        </div>
+        <div class="btc-header-field">
+            nonce<br>
+            <input id="input_pre_image1" type="text" value="0">
+        </div>
+    </div>
+    <div class="media-caption">the bitcoin block header</div>
+</div></div>
+
+<button class="btn" id="btn_run_hash1">mine</button>
+
+<div class="codeblock">target:     <span class="individual-digits">0123456789012345678901234567890123456789012345678901234567890000</span>
+block hash: <span id="hash_output1" class="individual-digits">22a2fa7d04248931a8853a7714b86546610afd01b2b1841890e979ba7ba6bcae</span>
+status: <span id="mine_status1">fail</span>
+</div>
+
+
+
+
 <input id="input_pre_image0" type="text">
 <button class="btn" id="btn_run_hash0">run hash</button>
 ><span id="span_hash0">hash output</span>
+
+
+## annex
+
+This section goes into all the detail skipped above. It is really just intended
+for those (such as myself) who like to leave no stone unturned.
 
 <script>
 
@@ -164,7 +204,32 @@ window.onload = function() {
         var sha256hash = sjcl.codec.hex.fromBits(bitArray);
         document.getElementById('span_hash0').innerText = sha256hash;
     });
+    addEvent(document.getElementById('btn_run_hash1'), 'click', function() {
+        var nonce = document.getElementById('input_pre_image1').value;
+        var pre_image = '123' + nonce;
+        var bitArray = sjcl.hash.sha256.hash(pre_image);
+        var sha256hash = sjcl.codec.hex.fromBits(bitArray);
+        document.getElementById('hash_output1').innerText = sha256hash;
+        border_the_digits('#hash_output1');
+        // increment the nonce
+        document.getElementById('input_pre_image1').value = parseInt(nonce) + 1;
+    });
+    border_the_digits('.individual-digits');
 };
+function border_the_digits(cssSelectors) {
+    var subject_els = document.querySelectorAll(cssSelectors);
+    for (var i = 0; i < subject_els.length; i++) {
+        var text = subject_els[i].innerText; // get
+        var new_text = '';
+        for (var letter_i = 0; letter_i < text.length; letter_i++) {
+            new_text += '<span class="individual-digit">' + text[letter_i] + '</span>';
+        }
+        subject_els[i].innerHTML = new_text; // set
+    }
+}
+function mine() {
+    return { blockhash: 123, status: 'pass' };
+}
 </script>
 
 <script src="/scripts/sjcl.min.js"></script>
