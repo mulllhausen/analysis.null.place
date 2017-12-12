@@ -149,27 +149,27 @@ is important is to know the features of a hashing algorythm:
     <div class="btc-header-definition">
         <div class="btc-header-field">
             version<br>
-            <span class="data-value">0100</span>
+            <input id="version1" type="text" class="data-value" size="4" value="0100">
         </div>
         <div class="btc-header-field">
             previous block hash<br>
-            <span class="data-value">0000000000000000000000000000000000000000000000000000000000000000000000</span>
+            <input id="prev_hash1" type="text" class="data-value" size="64" value="00000000000000000000000000000000000000000000000000000000000000000">
         </div>
         <div class="btc-header-field">
             merkle root<br>
-            <span class="data-value">a718a42b7ce7fc5d85e015a8199fe30cab6d4d59f6f6d9923c52620ec636a6ca</span>
+            <input id="merkle_root1" type="text" class="data-value" size="64" value="a718a42b7ce7fc5d85e015a8199fe30cab6d4d59f6f6d9923c52620ec636a6ca">
         </div>
         <div class="btc-header-field">
             timestamp<br>
-            <span class="data-value">1513019329</span>
+            <input id="timestamp1" type="text" class="data-value" size="10" value="">
         </div>
         <div class="btc-header-field">
             difficulty<br>
-            <span class="data-value">402698477</span>
+            <input id="bits1" type="text" class="data-value" size="8" value="20ffffff">
         </div>
         <div class="btc-header-field">
             nonce<br>
-            <input id="input_pre_image1" type="text" value="0">
+            <input id="nonce1" type="text" class="data-value" size="8" value="0">
         </div>
     </div>
     <div class="media-caption">the bitcoin block header</div>
@@ -177,8 +177,8 @@ is important is to know the features of a hashing algorythm:
 
 <button class="btn" id="btn_run_hash1">mine</button>
 
-<div class="codeblock">target:     <span class="individual-digits">0123456789012345678901234567890123456789012345678901234567890000</span>
-block hash: <span id="hash_output1" class="individual-digits">22a2fa7d04248931a8853a7714b86546610afd01b2b1841890e979ba7ba6bcae</span>
+<div class="codeblock">target:     <span id="target1" class="individual-digits"></span>
+block hash: <span id="blockhash1" class="individual-digits"></span>
 status: <span id="mine_status1">fail</span>
 </div>
 
@@ -198,26 +198,55 @@ for those (such as myself) who like to leave no stone unturned.
 <script>
 
 window.onload = function() {
+    document.getElementById('timestamp1').value = unixtime(); // init
+    bits1_updated(); // init
+    addEvent(document.getElementById('bits1'), 'keyup', bits1_updated);
+    addEvent(document.getElementById('bits1'), 'change', bits1_updated);
+
     addEvent(document.getElementById('btn_run_hash0'), 'click', function() {
         var pre_image = document.getElementById('input_pre_image0').value;
         var bitArray = sjcl.hash.sha256.hash(pre_image);
         var sha256hash = sjcl.codec.hex.fromBits(bitArray);
         document.getElementById('span_hash0').innerText = sha256hash;
     });
-    addEvent(document.getElementById('btn_run_hash1'), 'click', function() {
-        var nonce = document.getElementById('input_pre_image1').value;
-        var pre_image = '123' + nonce;
-        var bitArray = sjcl.hash.sha256.hash(pre_image);
-        var sha256hash = sjcl.codec.hex.fromBits(bitArray);
-        document.getElementById('hash_output1').innerText = sha256hash;
-        border_the_digits('#hash_output1');
-        // increment the nonce
-        document.getElementById('input_pre_image1').value = parseInt(nonce) + 1;
-    });
+
+    addEvent(document.getElementById('btn_run_hash1'), 'click', mine_block1);
     border_the_digits('.individual-digits');
-};
-function border_the_digits(cssSelectors) {
-    var subject_els = document.querySelectorAll(cssSelectors);
+}
+
+function bits1_updated() {
+    bits1 = document.getElementById('bits1').value; // global
+    document.getElementById('target1').innerText = bits2target(bits1);
+    border_the_digits('#target1');
+    mine_block1();
+}
+
+var got_static_block_fields1 = false;
+function mine_block1() {
+    if (!got_static_block_fields1) {
+        got_static_block_fields1 = true;
+        version1 = document.getElementById('version1').value;
+        prev_hash1 = document.getElementById('prev_hash1').value;
+        merkle_root1 = document.getElementById('merkle_root1').value;
+        timestamp1 = document.getElementById('timestamp1').value;
+        bits1 = document.getElementById('bits1').value;
+        nonce1 = document.getElementById('nonce1').value;
+        target1 = bits2target(bits1);
+    }
+    var mined_result = mine(
+        version1, prev_hash1, merkle_root1, timestamp1, bits1, nonce1, target1
+    );
+    document.getElementById('blockhash1').innerText = mined_result.blockhash;
+    border_the_digits('#blockhash1');
+
+    document.getElementById('mine_status1').innerText = (mined_result.status ? 'pass' : 'fail');
+    target1 = mined_result.target; // save cpu next round
+
+    nonce1 = parseInt(nonce1) + 1;
+    document.getElementById('nonce1').value = nonce1;
+}
+function border_the_digits(css_selectors) {
+    var subject_els = document.querySelectorAll(css_selectors);
     for (var i = 0; i < subject_els.length; i++) {
         var text = subject_els[i].innerText; // get
         var new_text = '';
@@ -227,9 +256,50 @@ function border_the_digits(cssSelectors) {
         subject_els[i].innerHTML = new_text; // set
     }
 }
-function mine() {
-    return { blockhash: 123, status: 'pass' };
+function mine(version, prev_hash, merkle_root, timestamp, bits, nonce, target) {
+    var bit_array = sjcl.hash.sha256.hash(
+        version + prev_hash + merkle_root + timestamp + bits + nonce
+    );
+    var bit_array2 = sjcl.hash.sha256.hash(bit_array);
+    var sha256hash = sjcl.codec.hex.fromBits(bit_array2);
+    return {
+        blockhash: sha256hash,
+        status: hex_compare(sha256hash, target) // sha256 < target ?
+    };
+}
+function bits2target(bits) {
+    var len = hex2int(bits.substring(0, 2)); // just byte 1
+    var most_significant = bits.substring(2);
+    var target = most_significant + '00'.repeat(len - (most_significant.length / 2));
+    return '0'.repeat(64 - target.length) + target; // make up to 32 bytes
+}
+
+// true if hex1 < hex2
+function hex_compare(hex1, hex2) {
+    // first, chop off leading zeros
+    hex1 = hex1.replace(/^0*/, '');
+    hex2 = hex2.replace(/^0*/, '');
+
+    // if hex1 is shorter than hex2 then it is smaller
+    if (hex1.length != hex2.length) return (hex1.length < hex2.length);
+
+    // loop through from msb to lsb until there is a difference
+    for (var nibble_i = 0; nibble_i < hex1.length; nibble_i++) {
+        var hex1_nibble = hex1[nibble_i];
+        var hex2_nibble = hex2[nibble_i];
+        if (hex1_nibble == hex2_nibble) continue;
+        return (hex2int(hex1_nibble) < hex2int(hex2_nibble));
+    }
+    return false;
+}
+
+function hex2int(hex) {
+    return parseInt(hex, 16);
+}
+function int2hex(intiger) {
+    return intiger.toString(16);
 }
 </script>
 
 <script src="/scripts/sjcl.min.js"></script>
+<script src="/scripts/utils.js"></script>
