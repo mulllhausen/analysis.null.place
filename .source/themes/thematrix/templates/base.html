@@ -38,8 +38,11 @@
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap-responsive.dark.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
-    {% if article %}{% if article.stylesheet %}
-    <link rel="stylesheet" href="{{ SITEURL }}/css/{{ article.stylesheet }}"/>
+    {% if article %}{% if article.stylesheets %}
+    {% set stylesheets = article.stylesheets.split(',') %}
+        {% for stylesheet in stylesheets %}
+    <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
+        {% endfor %}
     {% endif %}{% endif %}
 
     {# Le HTML5 shim, for IE6-8 support of HTML5 elements #}
@@ -155,6 +158,8 @@
     {% include 'disqus_script.html' %}
 
     {# Le javascript - at the end of the document so the pages load faster #}
+    <script src="{{ SITEURL }}/theme/js/polyfills.js"></script>
+    <script src="{{ SITEURL }}/theme/js/utils.js"></script>
     <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
     <script>
     init_all_matrix_canvases('matrix_text_green', 'matrix_text_white');
@@ -177,6 +182,13 @@
     {# thanks to https://www.bootstrapcdn.com/legacy/ #}
     <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
     <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
+
+    {% if article %}{% if article.scripts %}
+    {% set scripts = article.scripts.split(',') %}
+        {% for script in scripts %}
+    <script src="{{ SITEURL }}/scripts/{{ script }}"></script>
+        {% endfor %}
+    {% endif %}{% endif %}
 
     {% include 'facebook_analytics.html' %}
     {% include 'piwik.html' %}
