@@ -1,11 +1,8 @@
 addEvent(window, 'load', function() {
     document.getElementById('timestamp1').value = unixtime(); // init
-    updateTarget1FromBits1(); // init
-    addEvent(document.getElementById('bits1'), 'keyup, change', function() {
-        updateTarget1FromBits1();
-        mine1AndRenderResults();
-    });
-
+    actionBits1Change(); // init
+    prevBits1 = document.getElementById('bits1').value; // init
+    addEvent(document.getElementById('bits1'), 'keyup, change', bits1InputChanged);
     addEvent(document.getElementById('btnRunHash0'), 'click', function() {
         var preImage = document.getElementById('inputPreImage0').value;
         var bitArray = sjcl.hash.sha256.hash(preImage);
@@ -17,10 +14,29 @@ addEvent(window, 'load', function() {
     borderTheDigits('.individual-digits');
 });
 
-function updateTarget1FromBits1() {
-    bits1 = document.getElementById('bits1').value; // global
-    document.getElementById('target1').innerText = bits2target(bits1);
+var bits1; // set back to this when out of range
+var bits1InputChanged = debounce(actionBits1Change, 1000);
+function actionBits1Change() {
+    var tmpBits1 = document.getElementById('bits1').value;
+    var target1 = bits2target(tmpBits1);
+    if (target1 == null) {
+        document.getElementById('bits1').value = bits1;
+        popup('bits value is out of range', '');
+        return;
+    }
+    bits1 = tmpBits1; // global
+    renderTarget1(target1);
+    resetMiningStatus();
+}
+
+function renderTarget1(target1) {
+    document.getElementById('target1').innerText = target1;
     borderTheDigits('#target1');
+}
+
+function resetMiningStatus() {
+    document.getElementById('blockhash1').innerText = '';
+    document.getElementById('mineStatus1').innerText = '';
 }
 
 var gotStaticBlockFields1 = false;
@@ -41,8 +57,13 @@ function mine1AndRenderResults() {
     document.getElementById('blockhash1').innerText = minedResult.blockhash;
     borderTheDigits('#blockhash1');
 
-    document.getElementById('mineStatus1').innerText = (minedResult.status ? 'pass' : 'fail');
-    document.getElementById('mine1Popup').style.display = (minedResult.status ? 'table' : 'none');
+    if (minedResult.status) {
+        document.getElementById('mineStatus1').innerText = 'pass';
+        popup('success!', 'you mined a block');
+        setTimeout(function() { hidePopup(); }, 2000);
+    } else {
+        document.getElementById('mineStatus1').innerText = 'pass';
+    }
 
     nonce1 = parseInt(nonce1) + 1;
     document.getElementById('nonce1').value = nonce1;
@@ -76,6 +97,8 @@ function bits2target(bits) {
     if (bits.length != 8) return null;
 
     var len = hex2int(bits.substring(0, 2)); // just byte 1
+    if (len > 32) return null; // max length = 32 bytes
+
     var msbytes = bits.substring(2);
     var target = msbytes; // init
     var numTrailingBytes = len - (msbytes.length / 2);
@@ -116,4 +139,3 @@ function hex2int(hex) {
 function int2hex(intiger) {
     return intiger.toString(16);
 }
-

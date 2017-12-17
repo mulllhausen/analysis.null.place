@@ -183,15 +183,6 @@ is important is to know the features of a hashing algorythm:
 block hash: <span id="blockhash1" class="individual-digits"></span>
 status: <span id="mineStatus1"></span>
 </div>
-<div id="mine1Popup" class="popup-fullpage" style="display:none;">
-    <span class="popup-centerer">
-        <h1>success!</h1><br>
-        <span id="mineDetail1"></span>
-    </span>
-</div>
-
-
-
 
 <input id="inputPreImage0" type="text">
 <button class="btn" id="btnRunHash0">run hash</button>
