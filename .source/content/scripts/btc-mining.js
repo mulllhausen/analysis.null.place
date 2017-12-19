@@ -2,7 +2,12 @@ addEvent(window, 'load', function() {
     document.getElementById('timestamp1').value = unixtime(); // init
     actionBits1Change(); // init
     prevBits1 = document.getElementById('bits1').value; // init
-    addEvent(document.getElementById('bits1'), 'keyup, change', bits1InputChanged);
+    addEvent(document.getElementById('version1'), 'keyup, change', validateVersion1);
+    addEvent(document.getElementById('prevHash1'), 'keyup, change', validatePrevHash1);
+    addEvent(document.getElementById('merkleRoot1'), 'keyup, change', validateMerkleRoot1);
+    addEvent(document.getElementById('timestamp1'), 'keyup, change', validateTimestamp1);
+    addEvent(document.getElementById('bits1'), 'keyup, change', validateBits1);
+    addEvent(document.getElementById('nonce1'), 'keyup, change', validateNonce1);
     addEvent(document.getElementById('btnRunHash0'), 'click', function() {
         var preImage = document.getElementById('inputPreImage0').value;
         var bitArray = sjcl.hash.sha256.hash(preImage);
@@ -13,6 +18,152 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
     borderTheDigits('.individual-digits');
 });
+
+function validateVersion1() {
+    deleteElementById('version1Error1');
+    deleteElementById('version1Error2');
+    if (this.value.length != 4) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'version1Error1',
+            'the version must be 2 bytes long'
+        );
+        return;
+    }
+    if (!isHex(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'version1Error2',
+            'the version must only contain hexadecimal digits'
+        );
+        return;
+    }
+}
+
+function validatePrevHash1() {
+    deleteElementById('prevHash1Error1');
+    deleteElementById('prevHash1Error2');
+    if (!isHex(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'prevHash1Error1',
+            'the previous block hash must only contain hexadecimal digits'
+        );
+        return;
+    }
+    if (this.value.length != 64) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'prevHash1Error2',
+            'the previous block hash must be 32 bytes long'
+        );
+        return;
+    }
+}
+
+function validateMerkleRoot1() {
+    deleteElementById('merkleRoot1Error1');
+    deleteElementById('merkleRoot1Error2');
+    if (!isHex(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'merkleRoot1Error1',
+            'the merkle root must only contain hexadecimal digits'
+        );
+        return;
+    }
+    if (this.value.length != 64) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'merkleRoot1Error2',
+            'the merkle root must be 32 bytes long'
+        );
+        return;
+    }
+}
+
+function validateTimestamp1() {
+    deleteElementById('timestamp1Error1');
+    deleteElementById('timestamp1Error2');
+    deleteElementById('timestamp1Error3');
+    if (!stringIsInt(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'timestamp1Error1',
+            'the timestamp must be an integer'
+        );
+        return;
+    }
+    var timestamp1 = parseInt(this.value);
+    if (timestamp1 < 1231006505) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'timestamp1Error1',
+            'the timestamp cannot come before Saturday, January 3rd 2009, 18:15:05 (GMT)'
+        );
+        return;
+    }
+    if (timestamp1 > 0xffffffff) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'timestamp1Error1',
+            'the timestamp cannot come after Sunday, February 7th 2106, 06:28:15 (GMT)'
+        );
+        return;
+    }
+}
+
+function validateBits1() {
+    deleteElementById('bits1Error1');
+    deleteElementById('bits1Error2');
+    if (this.value.length != 8) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'bits1Error1',
+            'the difficulty must be 4 bytes long'
+        );
+        return;
+    }
+    if (!isHex(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'bits1Error2',
+            'the difficulty must only contain hexadecimal digits'
+        );
+        return;
+    }
+}
+
+function validateNonce1() {
+    deleteElementById('nonce1Error1');
+    deleteElementById('nonce1Error2');
+    deleteElementById('nonce1Error3');
+    if (!stringIsInt(this.value)) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'nonce1Error1',
+            'the nonce must be an integer'
+        );
+        return;
+    }
+    var nonce1 = parseInt(this.value);
+    if (nonce1 < 0) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'nonce1Error2',
+            'the nonce must be greater than 0'
+        );
+        return;
+    }
+    if (nonce1 > 0xffffffff) {
+        addLi2Ul(
+            'blockHeader1Error',
+            'nonce1Error3',
+            'the nonce must be lower than ' + 0xffffffff
+        );
+        return;
+    }
+}
 
 var bits1; // set back to this when out of range
 var bits1InputChanged = debounce(actionBits1Change, 1000);

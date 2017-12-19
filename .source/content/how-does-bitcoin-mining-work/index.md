@@ -155,7 +155,7 @@ is important is to know the features of a hashing algorythm:
         </div>
         <div class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash1" type="text" class="data-value" size="64" value="00000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash1" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
         </div>
         <div class="btc-header-field">
             merkle root<br>
@@ -176,6 +176,7 @@ is important is to know the features of a hashing algorythm:
     </div>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
+<ul id="blockHeader1Error" class="error"></ul>
 
 <button class="btn" id="btnRunHash1">mine</button>
 

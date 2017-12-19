@@ -50,3 +50,26 @@ function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args);
     };
 }
+
+function addLi2Ul(ulID, liID, errorText) {
+    var ul = document.getElementById(ulID);
+    var li = document.createElement('li');
+    li.id = liID;
+    li.appendChild(document.createTextNode(errorText));
+    ul.appendChild(li);
+}
+
+function deleteElementById(elID) {
+    var el = document.getElementById(elID);
+    if (el == null) return;
+    el.parentNode.removeChild(el);
+}
+
+function isHex(val) {
+    var regex = /^[0-9a-f]+$/gi;
+    return regex.test(val);
+}
+
+function stringIsInt(x)  {
+    return (x == parseInt(x, 10));
+}

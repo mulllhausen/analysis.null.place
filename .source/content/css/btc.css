@@ -63,3 +63,12 @@
     word-wrap: break-word; 
     font-family: monospace;
 }
+ul.error {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+}
+ul.error li {
+    color: red;
+    font-weight: bold;
+}
