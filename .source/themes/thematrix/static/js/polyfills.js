@@ -54,6 +54,12 @@ if ('ab'.substr(-1) != 'b') {
     }(String.prototype.substr);
 }
 
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+}
+
 window.requestAnimationFrame = function() {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||

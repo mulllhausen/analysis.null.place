@@ -151,7 +151,7 @@ is important is to know the features of a hashing algorythm:
     <div class="btc-header-definition">
         <div class="btc-header-field">
             version<br>
-            <input id="version1" type="text" class="data-value" size="4" value="0100">
+            <input id="version1" type="text" class="data-value" size="2" value="1">
         </div>
         <div class="btc-header-field">
             previous block hash<br>
@@ -159,19 +159,19 @@ is important is to know the features of a hashing algorythm:
         </div>
         <div class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot1" type="text" class="data-value" size="64" value="a718a42b7ce7fc5d85e015a8199fe30cab6d4d59f6f6d9923c52620ec636a6ca">
+            <input id="merkleRoot1" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </div>
         <div class="btc-header-field">
-            timestamp<br>
-            <input id="timestamp1" type="text" class="data-value" size="10" value="">
+            timestamp <span id="timestamp1Explanation"></span><br>
+            <input id="timestamp1" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </div>
         <div class="btc-header-field">
             difficulty<br>
-            <input id="bits1" type="text" class="data-value" size="8" value="20ffffff">
+            <input id="bits1" type="text" class="data-value" size="8" value="1d00ffff">
         </div>
         <div class="btc-header-field">
             nonce<br>
-            <input id="nonce1" type="text" class="data-value" size="8" value="0">
+            <input id="nonce1" type="text" class="data-value" size="10" value="2083236893">
         </div>
     </div>
     <div class="media-caption">the bitcoin block header</div>
