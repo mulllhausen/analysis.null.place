@@ -18,31 +18,77 @@ interacive aspect should make an otherwise dry subject fun.
 To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
-a few times and then try typing different things in the *pre-image* field:
+a few times and then try typing different things in the *message* field:
 <br>
 <br>
-pre-image:<br>
-<input id="inputPreImage0" type="text" value="hello world!">
+message:<br>
+<input id="inputMessage0" type="text" value="hello world!">
 <button class="btn" id="btnRunHash0">SHA256</button>
+&nbsp;&nbsp;<span id="hash0Duration"></span>
 <div id="hash0Results" class="codeblock" style="display:none;"></div>
 <br>
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing alporithms are not important for the sake
 of this article, all that is important is to recognise that *SHA256* is merely
-one of many algorithms - the one that bitcoin used in bitcoin mining (but more
-on that later).
+one of many hashing algorithms - the one that is used in bitcoin mining
+(more on that later). The output of a hash is a numeric value - commonly written
+in hexadecimal format - i.e. base 16. Here are some hexadecimal values side by
+side with their decimal equivalent values:
 
-Now that you have tried hashing some values, you may have noticed a few things:
+    hex 0  = dec 0       hex 10  = dec 16     etc
+    hex 1  = dec 1       hex 11  = dec 17
+    hex 2  = dec 2       hex 12  = dec 18
+    hex 3  = dec 3       hex 13  = dec 19
+    hex 4  = dec 4       hex 14  = dec 20
+    hex 5  = dec 5       hex 15  = dec 21
+    hex 6  = dec 6       hex 16  = dec 22
+    hex 7  = dec 7       hex 17  = dec 23
+    hex 8  = dec 8       hex 18  = dec 24
+    hex 9  = dec 9       hex 19  = dec 25
+    hex a  = dec 10      hex 1a  = dec 26
+    hex b  = dec 11      hex 1b  = dec 27
+    hex c  = dec 12      hex 1c  = dec 28
+    hex d  = dec 13      hex 1d  = dec 29
+    hex e  = dec 14      hex 1e  = dec 30
+    hex f  = dec 15      hex 1f  = dec 31
+
+Don't worry, you won't need to do any hexadecimal conversions in this article.
+All you need to remember is that the digits go from `0` to `9` then `a` to `f`.
+
+OK, so now that you have tried hashing, and you know about hexadecimal notation,
+lets have a look at the formal definition of hashing:
 > Hashing involves taking a string of characters and transforming them into
-> another string of characters. We call the initial characters the *pre-image*
-> and we call the output the *hash*. The algorythm has the following properties:<br>
-> 1. it is deterministic so the same message always results in the same hash<br>
+> another string of characters. We call the initial characters the *message*
+> and we call the output the *hash*. A hashing algorithm has the following
+> properties:<br>
+> 1. it is deterministic - the same message always results in the same hash<br>
 > 2. it is quick to compute the hash value for any given message<br>
-> 3. it is infeasible to generate a message from its hash value except by trying all possible messages<br>
-> 4. a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value<br>
+> 3. it is infeasible to generate a message from its hash value except by
+> trying all possible messages<br>
+> 4. a small change to a message should change the hash value so extensively
+> that the new hash value appears uncorrelated with the old hash value<br>
 > 5. it is infeasible to find two different messages with the same hash value
 
+Lets investigate these properties. Properties 1 and 2 are quite plain to see -
+hashing `hello world!` with *SHA256* always gives
+`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` and takes
+less than 4 milliseconds (depending on your computer speed), which is fairly
+quick. However it must be noted that performing the hash always takes at least
+*some* time, even if it is a very small amount of time. This fact will be
+important when we discuss hashing in relation to bitcoin mining later on.
+
+I can't think of a way of demonstrating property 3 short of investigating a
+hashing algorithm in detail, which would be beyond the scope of this simple
+article. So we will just have to trust the definition for that one.
+
+However we can verify property 4 with a demonstration. Property 4 is quite a
+mouthfull and has some interesting implications which are very relevant to
+Bitcoin mining. If property 4 were not true then we would expect to see a
+correlation in the hash values as we make changes to the message. For example,
+we might expect to see that each digit of the hash increases by the same amount,
+or decreases by the same amount, lets think about what it would Basically it is saying that when we make a small changes to the
+message then every hex digit in the resulting hash
 
 
 
@@ -53,7 +99,7 @@ understand the sentence that follows, however by the end of this article you wil
 - I promise - and I have included plenty of diagrams and interactive tools to help
 you along the way too!
 
-> Bitcoin mining involves computers competing to find the pre-image of the hash
+> Bitcoin mining involves computers competing to find the message of the hash
 of the next block in the bitcoin blockchain. The winner receives bitcoins as a
 reward.
 
@@ -62,7 +108,7 @@ then it will make perfect sense:
 
 1. a bitcoin block
 2. the bitcoin blockchain
-3. a hash and its pre-image
+3. a hash and its message
 
 ## 1. a bitcoin block
 
@@ -135,13 +181,13 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
 
 <image - bitcoin blockchain>
 
-## 3. a hash and its pre-image
+## 3. a hash and its message
 
 A hash can be thought of as a one-way transformation of some text into some other
-text. The original text is called the pre-image, and the result is called the hash.
+text. The original text is called the message, and the result is called the hash.
 Hashing is done using a cryptographic algorythm carefully designed so that
-there is no way to algorythmically get from the hash back to its pre-image. Here
-are some examples of pre-images and their resulting hashes:
+there is no way to algorythmically get from the hash back to its message. Here
+are some examples of messages and their resulting hashes:
 
     1 blah
     2 blah

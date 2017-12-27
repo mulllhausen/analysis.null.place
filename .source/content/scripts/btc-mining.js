@@ -46,16 +46,31 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
 });
 
-var preImage0AlignmentLength = 20;
+var message0AlignmentLength = 20;
 function runHash0Clicked() {
-    var preImage = document.getElementById('inputPreImage0').value;
-    var bitArray = sjcl.hash.sha256.hash(preImage);
+    var message = document.getElementById('inputMessage0').value;
+    var startTime = new Date();
+    var bitArray = sjcl.hash.sha256.hash(message);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
-    var leftPadPreImage = preImage0AlignmentLength - preImage.length;
-    if (leftPadPreImage < 0) leftPadPreImage = 0;
+    var endTime = new Date();
+    var duration = endTime - startTime;
+    var durationExplanationLong = '(hashing took ';
+    var durationExplanationShort = '(took ';
+    if (duration < 1) {
+        durationExplanationLong += 'less than 1';
+        durationExplanationShort += '<1';
+    } else {
+        durationExplanationLong += duration;
+        durationExplanationShort += duration;
+    }
+    durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
+    durationExplanationShort += 'ms)';
+    document.getElementById('hash0Duration').innerText = durationExplanationLong;
+    var leftPadMessage = message0AlignmentLength - message.length;
+    if (leftPadMessage < 0) leftPadMessage = 0;
     var text = document.getElementById('hash0Results').innerText +
-    'pre image: ' + preImage + ' '.repeat(leftPadPreImage) +
-    ' SHA256: ' + sha256Hash + '\n';
+    'message: ' + message + ' '.repeat(leftPadMessage) +
+    ' SHA256: ' + sha256Hash + ' ' + durationExplanationShort + '\n';
     document.getElementById('hash0Results').innerText = text;
     document.getElementById('hash0Results').style.display = 'block';
 }
