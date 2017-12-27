@@ -73,3 +73,6 @@ ul.error li {
     color: red;
     font-weight: bold;
 }
+input {
+    margin: 0 !important;
+}

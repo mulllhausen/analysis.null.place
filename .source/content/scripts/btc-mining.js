@@ -23,6 +23,8 @@ var miningData = { // note: raw values are taken directly from the input field
     target: null
 };
 addEvent(window, 'load', function() {
+    addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
+
     addEvent(document.getElementById('version1'), 'keyup, change', version1Changed);
     triggerEvent(document.getElementById('version1'), 'change');
 
@@ -41,16 +43,22 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('nonce1'), 'keyup, change', nonce1Changed);
     triggerEvent(document.getElementById('nonce1'), 'change');
 
-    addEvent(document.getElementById('btnRunHash0'), 'click', function() {
-        var preImage = document.getElementById('inputPreImage0').value;
-        var bitArray = sjcl.hash.sha256.hash(preImage);
-        var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
-        document.getElementById('spanHash0').innerText = sha256Hash;
-    });
-
     addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
-    //borderTheDigits('.individual-digits');
 });
+
+var preImage0AlignmentLength = 20;
+function runHash0Clicked() {
+    var preImage = document.getElementById('inputPreImage0').value;
+    var bitArray = sjcl.hash.sha256.hash(preImage);
+    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
+    var leftPadPreImage = preImage0AlignmentLength - preImage.length;
+    if (leftPadPreImage < 0) leftPadPreImage = 0;
+    var text = document.getElementById('hash0Results').innerText +
+    'pre image: ' + preImage + ' '.repeat(leftPadPreImage) +
+    ' SHA256: ' + sha256Hash + '\n';
+    document.getElementById('hash0Results').innerText = text;
+    document.getElementById('hash0Results').style.display = 'block';
+}
 
 function borderTheDigits(cssSelectors, num2Color, pass) {
     var subjectEls = document.querySelectorAll(cssSelectors);
@@ -423,7 +431,7 @@ function hex2int(hexStr) {
 function int2hex(intiger, leftPad) {
     var hex = intiger.toString(16);
     if (leftPad == null || hex.length >= leftPad) return hex;
-    return Array(1 + leftPad - hex.length).join('0') + hex;
+    return '0'.repeat(leftPad - hex.length) + hex;
 }
 
 function toLittleEndian(hexStr) {

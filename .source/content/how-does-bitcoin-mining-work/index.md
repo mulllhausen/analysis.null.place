@@ -5,27 +5,38 @@ category: cryptocurrencies
 tags: bitcoin, mining, proof-of-work
 stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
-summary: An interactive thorough explanation of bitcoin mining. No prior
-knowledge is necessary.
+summary: An interactive thorough explanation of bitcoin mining. No prior knowledge is necessary.
 
 This article is for people who want to understand the inner workings of bitcoin
-and other similar cryptocurrencies. If you are just looking to buy or mine some
-bitcoins then this article is massive overkill and I would not recommend reading
-it. Just like you do not need to know how the HTTP protocol works to do a Google
-search, you also do not need to know how bitcoin works in order to use it.
+mining. I have made it interactive so that you can simulate the mining algorithms
+for yourself and get a feel for how mining really works. While the concepts are
+not simple, it should be easily accessible to the average person. And the
+interacive aspect should make an otherwise dry subject fun.
 
 ## hashing
 
-To understand bitcoin mining, it is first necessary to understand how
-cryptographic hashing works. This section is certainly the most difficult to
-understand, however I have made it interactive, which will make the learning
-process easier and fun. Lets start with the definition of a hash, and then we
-can walk through and test each of the parts of that definition using some
-interactive tools to see if they make sense.
+To understand bitcoin mining, it is first necessary to understand what
+cryptographic hashing is and how it works. Rather than bore you with definitions
+at the start, lets just dive in and give it a go. Click the *SHA256* button
+a few times and then try typing different things in the *pre-image* field:
+<br>
+<br>
+pre-image:<br>
+<input id="inputPreImage0" type="text" value="hello world!">
+<button class="btn" id="btnRunHash0">SHA256</button>
+<div id="hash0Results" class="codeblock" style="display:none;"></div>
+<br>
+*SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
+hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
+The differences between these hashing alporithms are not important for the sake
+of this article, all that is important is to recognise that *SHA256* is merely
+one of many algorithms - the one that bitcoin used in bitcoin mining (but more
+on that later).
 
+Now that you have tried hashing some values, you may have noticed a few things:
 > Hashing involves taking a string of characters and transforming them into
-> another string of characters. We call the initial characters the <i>pre-image</i>
-> and we call the output the <i>hash</i>. The algorythm has the following properties:<br>
+> another string of characters. We call the initial characters the *pre-image*
+> and we call the output the *hash*. The algorythm has the following properties:<br>
 > 1. it is deterministic so the same message always results in the same hash<br>
 > 2. it is quick to compute the hash value for any given message<br>
 > 3. it is infeasible to generate a message from its hash value except by trying all possible messages<br>
@@ -185,14 +196,16 @@ block hash: <span id="blockhash1" class="individual-digits"></span>
 status:     <span id="mineStatus1"></span>
 </div>
 
-<input id="inputPreImage0" type="text">
-<button class="btn" id="btnRunHash0">run hash</button>
-><span id="spanHash0">hash output</span>
-
 
 ## annex
 
 This section goes into all the detail skipped above. It is really just intended
 for those (such as myself) who like to leave no stone unturned.
 
+- version int to version in hex
+- merkle root from transaction hash
+- timestamp to unixtime
 - bits to target
+- nonce to hex
+- block to hex
+
