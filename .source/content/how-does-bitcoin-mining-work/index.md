@@ -171,7 +171,7 @@ is important is to know the features of a hashing algorythm:
         </div>
         <div class="btc-header-field">
             nonce<br>
-            <input id="nonce1" type="text" class="data-value" size="10" value="2083236893">
+            <input id="nonce1" type="text" class="data-value" size="10" value="2083236892">
         </div>
     </div>
     <div class="media-caption">the bitcoin block header</div>
@@ -180,9 +180,9 @@ is important is to know the features of a hashing algorythm:
 
 <button class="btn" id="btnRunHash1">mine</button>
 
-<div class="codeblock">target:     <span id="target1" class="individual-digits"></span>
+<div id="block1MiningResults" class="codeblock">target:     <span id="target1" class="individual-digits"></span>
 block hash: <span id="blockhash1" class="individual-digits"></span>
-status: <span id="mineStatus1"></span>
+status:     <span id="mineStatus1"></span>
 </div>
 
 <input id="inputPreImage0" type="text">

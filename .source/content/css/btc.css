@@ -46,13 +46,14 @@
     margin: 0 0 0 -1px;/*top right bottom left*/
     padding-right: 2px;
     padding-left: 1px;
+    padding-top: 2px;
 }
 .codeblock {/* note: if you want <pre> within a codeblock then you have to do it yourself */
     display: block;
-    padding: 8.5px;
+    padding: 10px;
     margin: 0 0 9px;
     font-size: 12.025px;
-    line-height: 18px;
+    line-height: 19px;
     background-color: #333333;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
