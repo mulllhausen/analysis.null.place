@@ -114,46 +114,43 @@
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="span9" id="content">
-            {% block content %}
-            {% endblock %}
-        </div><!--/span-->
+    <table class="container-table"><tbody>
+        <tr>
+            <td class="col-1" id="content">
+                {% block content %}
+                {% endblock %}
+            </td><!--/col-1-->
 
-        <div class="span3 hidden-phone" id="sidebar">
-            <div class="well sidebar-nav">
-                {% include 'sidebar.html' %}
-            </div>
-            <div class="logo_positioner">
-                <div class="logo_cropper">
-                    <img src="{{ SITEURL }}/theme/img/matrix-background.png" id="logo_background_fallback">
-                    <canvas class="matrix_text_green"></canvas>
-                    <canvas class="matrix_text_white"></canvas>
-                    <img src="{{ SITEURL }}/theme/img/shattered-glass-black.png" id="logo_img" alt="website logo">
+            <td class="col-2" id="sidebar">
+                <div class="well sidebar-nav">
+                    {% include 'sidebar.html' %}
                 </div>
-            </div>
-        </div>
+                <div class="logo_positioner">
+                    <div class="logo_cropper">
+                        <img src="{{ SITEURL }}/theme/img/matrix-background.png" id="logo_background_fallback">
+                        <canvas class="matrix_text_green"></canvas>
+                        <canvas class="matrix_text_white"></canvas>
+                        <img src="{{ SITEURL }}/theme/img/shattered-glass-black.png" id="logo_img" alt="website logo">
+                    </div>
+                </div>
+            </td><!--/col-2-->
+        </tr>
+    </tbody></table>
+    <div class="row" id="js_footer_push"></div>
 
-      </div><!--/row-->
-      <div class="row" id="js_footer_push"></div>
-
-      <footer>
+    <footer>
         <address id="about" class="invisible">
             {{ BLOG_DESCRIPTION }}.
             <br>
             Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
             <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-            <a href="https://getbootstrap.com/">Bootstrap <i class="fa fa-external-link" aria-hidden="true"></i></a>,
             and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>.
             Hosted on <a href="{{ GITHUB_URL }}">github <i class="fa fa-github"></i></a>.
             <br>
             <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp&nbsp&nbsp
             <a href="{{ SITEURL }}/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
-        </address><!-- /#about -->
-      </footer>
-
-    </div><!--/.fluid-container-->
+        </address>
+    </footer>
 
     {% include 'disqus_script.html' %}
 
@@ -179,8 +176,6 @@
     {# thanks to https://developers.google.com/speed/libraries/#jquery #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-    {# thanks to https://www.bootstrapcdn.com/legacy/ #}
-    <script src="https://maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
     <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
 
     {% if article %}{% if article.scripts %}
