@@ -1,3 +1,7 @@
+/* TODO:
+- remove "!important" once bootstrap is gone
+- rename .btnn to .btn once bootstrap is gone
+*/
 html, body{
     margin: 0;
     padding: 0;
@@ -58,7 +62,10 @@ h1 {
     width: 100%;
     z-index: 2;
 }
-.navbar .nav>li>a {
+.navbar-fixed-top {
+    background-color: #2b2b2b;
+}
+.navbar-fixed-top .nav>li>a {
     font-weight: normal;
 }
 .navbar-inner {
@@ -67,13 +74,12 @@ h1 {
     padding-right: 20px;
     background-color: #2b2b2b;
 }
-.btn>.fa-bars {font-size: 20px;}
-#navMenu {display: none;}
+.btnn>.fa-bars {font-size: 20px;}
+.nav-menu-phone {display: none;}
 
 /* end navbar */
 
 .sidebar-nav li.active>a, .sidebar-nav li.active>a:hover {
-    text-decoration: none;
     background-color: #7db904;
     color: #ffffff;
 }
@@ -105,7 +111,6 @@ a.sidebar-brand, a.sidebar-brand:hover {
     color: #ffffff;
     text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
     background-color: none !important;
-    text-decoration: none !important;
 }
 
 li.sidebar-brand {
@@ -168,6 +173,23 @@ img#logo_img {
 }
 
 /* end logo stuff */
+
+.btnn {
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none !important;
+}
 
 footer {
     margin-left: 20px;
