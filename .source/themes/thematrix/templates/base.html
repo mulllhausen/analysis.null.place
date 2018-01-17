@@ -61,19 +61,15 @@
     {% if FEED_RSS %}
     <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
     {% endif %}
-
   </head>
 
   <body>
-    <div class="non-phone-navbar-top-spacer visible-desktop"></div>
-    <div class="non-phone-navbar-top-spacer visible-tablet"></div>
-    <div class="navbar navbar-fixed-top visible-phone">
+    <div class="top-spacer hidden-phone"></div>
+    <div class="navbar navbar-fixed-top hidden-pc">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+          <a id="btnNavbar" class="btn btn-navbar" menu-is-collapsed="true">
+            <i class="fa fa-bars" aria-hidden="true"></i>
           </a>
           <a class="topbar-brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
           <div class="logo_container">
@@ -87,7 +83,7 @@
                   <div class="logo_hide_border_artifacts"></div>
               </div>
           </div>
-          <div class="nav-collapse">
+          <div id="navMenu">
             <ul class="nav">
               {% for title, link in MENUITEMS %}
                   <li><a href="{{ link }}">{{ title }}</a></li>
@@ -136,7 +132,8 @@
             </td><!--/col-2-->
         </tr>
     </tbody></table>
-    <div class="row" id="js_footer_push"></div>
+
+    <div class="bottom-spacer" id="js_footer_push"></div>
 
     <footer>
         <address id="about" class="invisible">

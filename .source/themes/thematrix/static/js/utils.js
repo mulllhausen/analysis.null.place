@@ -19,3 +19,16 @@ function addEvent(object, types, callback) {
         }
     }
 }
+
+// navbar open/close (mobile only)
+addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
+    var btn = e.currentTarget;
+    var menu = document.getElementById('navMenu');
+    if (btn.getAttribute('menu-is-collapsed') == 'true') {
+        btn.setAttribute('menu-is-collapsed', 'false');
+        menu.style.display = 'block';
+    } else {
+        btn.setAttribute('menu-is-collapsed', 'true');
+        menu.style.display = 'none';
+    }
+});

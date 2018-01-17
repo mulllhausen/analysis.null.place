@@ -27,13 +27,17 @@ table.container-table tr td {
 
 /* 1 column layout (phones, small portrait tablets, etc) */
 @media (max-width: 650px) {
+    .hidden-phone {display: none;}
     .col-2 {display: none;}
 }
 
 /* 2 column layout (everything else) */
 .col-2 {width: 300px;}
+.top-spacer {padding-top: 25px;}
 @media (min-width: 651px) {
+    .hidden-pc {display: none;}
 }
+.bottom_spacer {width: 100%;}
 
 h1 {
     font-size: 24px;
@@ -43,18 +47,30 @@ h1 {
     text-shadow: none;
 }
 
-.non-phone-navbar-top-spacer {
-    padding-top: 25px;
-}
-
 .sidebar-nav {
     margin-top: 10px;
     padding: 9px 0;
 }
 
+/* begin navbar */
+
+.navbar {
+    width: 100%;
+    z-index: 2;
+}
 .navbar .nav>li>a {
     font-weight: normal;
 }
+.navbar-inner {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #2b2b2b;
+}
+.btn>.fa-bars {font-size: 20px;}
+#navMenu {display: none;}
+
+/* end navbar */
 
 .sidebar-nav li.active>a, .sidebar-nav li.active>a:hover {
     text-decoration: none;
@@ -80,8 +96,6 @@ a.topbar-brand, a.topbar-brand:hover {
     line-height: 1;
     color: #ffffff;
     text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
-    background-color: none !important;
-    text-decoration: none !important;
 }
 
 a.sidebar-brand, a.sidebar-brand:hover {
@@ -155,6 +169,10 @@ img#logo_img {
 
 /* end logo stuff */
 
+footer {
+    margin-left: 20px;
+    margin-right: 20px;
+}
 address#about {
     padding-top: 15px;
     border-top: 2px solid #333333;
