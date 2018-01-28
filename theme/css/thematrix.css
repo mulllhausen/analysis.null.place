@@ -240,6 +240,7 @@ footer {
     margin: 0 20px 18px 20px;
 }
 address#about {
+    font-style: normal;
     padding-top: 15px;
     border-top: 2px solid #2b2b2b;
 }
