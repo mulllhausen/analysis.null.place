@@ -1,39 +1,5 @@
 // code to run a matrix-movie animation in a <canvas>
 
-// shims
-window.requestAnimationFrame = function() {
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        function(f) {
-            window.setTimeout(f, 1e3/60);
-        }
-}();
-
-window.cancelAnimationFrame = function() {
-    return window.cancelAnimationFrame ||
-        window.webkitCancelAnimationFrame ||
-        window.mozCancelAnimationFrame ||
-        window.msCancelAnimationFrame ||
-        window.oCancelAnimationFrame ||
-        function(id) {
-            window.clearTimeout(id);
-        }
-}();
-
-var addEvent = function(object, type, callback) {
-    if (object == null || typeof(object) == 'undefined') return;
-    if (object.addEventListener) {
-        object.addEventListener(type, callback, false);
-    } else if (object.attachEvent) {
-        object.attachEvent('on' + type, callback);
-    } else {
-        object['on' + type] = callback;
-    }
-};
-
 function init_all_matrix_canvases(green_text_canvas_class_name, white_text_canvas_class_name) {
     var green_text_canvases = document.getElementsByClassName(green_text_canvas_class_name);
     var white_text_canvases = document.getElementsByClassName(white_text_canvas_class_name);
