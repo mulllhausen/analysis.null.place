@@ -34,9 +34,6 @@
     <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
     {# Le styles #}
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap.dark.css"/>
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/bootstrap-responsive.dark.css"/>
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css"/>
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
     {% if article %}{% if article.stylesheets %}
     {% set stylesheets = article.stylesheets.split(',') %}
@@ -64,7 +61,6 @@
   </head>
 
   <body>
-    <div class="top-spacer hidden-phone"></div>
     <div class="top-bar hidden-pc">
       <a class="branding" href="{{ SITEURL }}/">{{ SITENAME }}</a>
       {% with position="top" %}{% include 'logo.html' %}{% endwith %}

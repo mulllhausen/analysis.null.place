@@ -1,11 +1,8 @@
-<footer class="post-info">
-
 {#% if article.author %}
 <span class="label">By</span>
 <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i> {{ article.author }}</a>
 {% endif %#}
 
-{#<span class="label">Category</span>#}
 <a href="{{ SITEURL }}/{{ article.category.url }}"><i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ article.category }}</a>
 
 {#<span class="label">Date</span>#}
@@ -19,4 +16,3 @@
 
 {% include 'taglist.html' %}
 {% include 'translations.html' %}
-</footer><!-- /.post-info -->
