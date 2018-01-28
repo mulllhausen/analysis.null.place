@@ -3,7 +3,7 @@
 <section id="content">
 <h1>all articles</h1>
 
-<dl>
+<dl class="inline">
 {% for article in dates %}
 	<dt>{{ article.locale_date }}</dt>
 	<dd><a href='{{ SITEURL }}/{{ article.url }}'>{{ article.title }}</a></dd>

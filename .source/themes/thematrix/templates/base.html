@@ -8,7 +8,7 @@
     <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
     <meta name="author" content="{{ AUTHOR }}"/>
 
-    {# open graph data #}
+    {# le open graph data #}
     <meta property="og:site_name" content="{{ SITENAME }}"/>
     <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
     <meta property="og:type" content="article"/>
@@ -19,12 +19,12 @@
     <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
     {% if FACEBOOK_ANALYTICS_ID %}<meta property="fb:app_id" content="{{ FACEBOOK_ANALYTICS_ID }}"/>{% endif %}
 
-    {# schema.org markup for Google+ #}
+    {# le schema.org markup for Google+ #}
     <meta itemprop="name" content="{{ SITENAME }}"/>
     <meta itemprop="description" content="{% block google_title %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
     <meta itemprop="image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
 
-    {# Twitter Card data # }
+    {# le twitter card data # }
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:site" content="@publisher_handle"/>
     <meta name="twitter:title" content="{% block twitter_title %}{{ SITENAME }}{% endblock %}"/>
@@ -33,7 +33,7 @@
     { # twitter summary card with large image must be at least 280x150px # }
     <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
-    {# Le styles #}
+    {# le styles #}
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
     {% if article %}{% if article.stylesheets %}
     {% set stylesheets = article.stylesheets.split(',') %}
@@ -42,12 +42,12 @@
         {% endfor %}
     {% endif %}{% endif %}
 
-    {# Le HTML5 shim, for IE6-8 support of HTML5 elements #}
+    {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
 
-    {# Le fav and touch icons #}
+    {# le fav and touch icons #}
     <link rel="shortcut icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/img/apple-touch-icon.png">
@@ -126,7 +126,7 @@
 
     {% include 'disqus_script.html' %}
 
-    {# Le javascript - at the end of the document so the pages load faster #}
+    {# le javascript - at the end of the document so the pages load faster #}
     <script src="{{ SITEURL }}/theme/js/polyfills.js"></script>
     <script src="{{ SITEURL }}/theme/js/utils.js"></script>
     <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>

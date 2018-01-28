@@ -87,8 +87,8 @@ ul, ol {
     border-radius: 4px;
 }
 .side-menu a.branding {
-    margin-left: 20px;
-    display: block;
+    margin: 0 0 5px 20px;
+    display: inline-block;
 }
 .side-menu ul.navv {
     margin: 10px 10px 0 10px;
@@ -131,7 +131,7 @@ ul, ol {
     padding-top: 5px;
 }
 .top-bar ul.navv {
-    margin: 0 -10px 0 -10px;
+    margin: 4px -10px -4px -10px;
 }
 
 /* end top bar */
@@ -145,11 +145,6 @@ ul.navv li.active {
 }
 ul.navv li.active a {
     color: #bbbbbb;
-}
-
-.tag-1 {
-    font-family: monospace;
-    font-size: 12px;
 }
 
 abbr[title] {
@@ -248,13 +243,32 @@ a.button, a.button:visited, a.button:active, a.button:hover {
 }
 
 footer {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0 20px 18px 20px;
 }
 address#about {
     padding-top: 15px;
     border-top: 2px solid #2b2b2b;
 }
+
+dl.inline dt {
+    float:left;
+    width: 6em;
+    clear:left;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+dl.inline dd {
+    margin: 0 0 5px 6em;
+}
+
+ul.taglist {
+    list-style-type: none;
+}
+ul.taglist li {
+    margin-bottom: 5px;
+}
+
 .invisible {
     visibility: hidden;
 }
