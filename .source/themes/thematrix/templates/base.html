@@ -112,8 +112,9 @@
                 {% endblock %}
             </td><!--/col-1-->
 
-            <td class="col-2" id="sidebar"><!-- TODO: move sidebar band into this file-->
-                <div class="well sidebar-nav">
+            <td class="col-2" id="sidebar">
+                <div class="side-menu">
+                    <a class="branding" href="{{ SITEURL }}/">{{ SITENAME }}</a>
                     {% include 'sidebar.html' %}
                 </div>
                 <div class="logo-positioner">

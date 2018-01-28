@@ -1,4 +1,7 @@
-/* TODO:
+/*
+trbl
+
+TODO:
 - remove "!important" once bootstrap is gone
 */
 html, body{
@@ -13,12 +16,20 @@ html, body{
     height: 100%;
     max-height: 100%;
 
-    font-family: arial,sans-serif;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 13px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
     color: #bbbbbb;
     text-decoration: none;
     text-shadow: none;
+
     background-color: #000000;
+}
+a:hover {
+    text-decoration: none;
+    text-shadow: none;
 }
 table.container-table {
     width: 100%;
@@ -55,15 +66,41 @@ h1 {
     text-shadow: none;*/
 }
 
-.sidebar-nav {
+a.branding, a.branding:hover {
+    padding-top: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
+}
+
+ul, ol {
+    padding: 0;
+}
+
+/* begin side menu */
+
+.side-menu {
     margin-top: 10px;
     padding: 9px 0;
+    background-color: #2b2b2b;
+    border-radius: 4px;
 }
+.side-menu a.branding {
+    margin-left: 20px;
+    display: block;
+}
+.side-menu ul.navv {
+    margin: 10px 10px 0 10px;
+}
+
+/* end side menu */
 
 /* begin top bar */
 
 .top-bar {
-    padding: 10px 20px 0 20px;/*trbl*/
+    padding: 10px 20px 4px 20px;
     left: 0;
     right: 0;
     z-index: 2;
@@ -78,7 +115,7 @@ h1 {
 .nav-menu-phone {
     display: none;
 }
-.top-bar a.branding, .top-bar a.branding:hover {
+.top-bar a.branding {
     float: left;
 }
 .navv {
@@ -89,15 +126,21 @@ h1 {
 .nav-menu-phone li {
     padding-top: 5px;
 }
-.nav-menu-phone li a {
-    color: #bbbbbb;
+.top-bar ul.navv {
+    margin: 0 -10px 0 -10px;
 }
 
-/* end navbar */
+/* end top bar */
 
-.sidebar-nav li.active>a, .sidebar-nav li.active>a:hover {
-    background-color: #7db904;
-    color: #ffffff;
+ul.navv li {
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+}
+ul.navv li.active {
+    background-color: #000000;
+}
+ul.navv li.active a {
+    color: #bbbbbb;
 }
 
 .tag-1 {
@@ -108,29 +151,6 @@ h1 {
 abbr[title] {
     border-bottom: none;
     cursor: default;
-}
-
-a.branding, a.branding:hover {
-    padding-top: 8px;
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 1;
-    color: #ffffff;
-    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
-}
-
-a.sidebar-brand, a.sidebar-brand:hover {
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 1;
-    color: #ffffff;
-    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
-    background-color: none !important;
-}
-
-li.sidebar-brand {
-    padding-top: 5px;
-    padding-bottom: 10px;
 }
 
 /* begin logo stuff */
@@ -216,11 +236,6 @@ a.button, a.button:visited, a.button:active, a.button:hover {
     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),0 1px 0 rgba(255, 255, 255, 0.075);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
 }
-
-/*a {
-    text-decoration: none !important;
-    text-shadow: none;
-}*/
 
 footer {
     margin-left: 20px;

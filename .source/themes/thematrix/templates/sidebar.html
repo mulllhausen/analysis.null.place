@@ -1,16 +1,15 @@
-<ul class="nav nav-list">
-<li class="sidebar-brand"><div><a class="sidebar-brand" href="{{ SITEURL }}/">{{ SITENAME }}{% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></div></li>
+<ul class="navv">
 {% if LINKS %}
-<li class="nav-header"><h4><i class="icon-external-link"></i>blogroll</h4></li>
+    <li><h4><i class="icon-external-link"></i>blogroll</h4></li>
 {% for name, link in LINKS %}
     <li><a href="{{ link }}"><i class="icon-external-link"></i>{{ name }}</a></li>
 {% endfor %}
 {% endif %}
 {% if SOCIAL %}
-<li class="nav-header"><h4><i class="icon-home icon-large"></i> social</h4></li>
-<li><a href="{{ SITEURL }}/{{ FEED }}" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
+    <li><h4><i class="icon-home icon-large"></i> social</h4></li>
+    <li><a href="{{ SITEURL }}/{{ FEED }}" rel="alternate"><i class="icon-bookmark icon-large"></i>atom feed</a></li>
 {% if FEED_RSS %}
-<li><a href="{{ SITEURL }}/{{ FEED_RSS }}" rel="alternate"><i class="icon-bookmark icon-large"></i>rss feed</a></li>
+    <li><a href="{{ SITEURL }}/{{ FEED_RSS }}" rel="alternate"><i class="icon-bookmark icon-large"></i>rss feed</a></li>
 {% endif %}
 {% for name, link in SOCIAL %}
     <li><a href="{{ link }}"><i class="icon-{{ name }}-sign icon-large"></i>{{ name }}</a></li>
