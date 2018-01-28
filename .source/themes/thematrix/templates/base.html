@@ -68,26 +68,7 @@
         <i class="fa fa-bars" aria-hidden="true"></i>
       </a>
       <div id="navMenu" class="nav-menu-phone">
-        <ul class="nav">
-          {% for title, link in MENUITEMS %}
-              <li><a href="{{ link }}">{{ title }}</a></li>
-          {% endfor %}
-          {% if DISPLAY_PAGES_ON_MENU %}
-          {% for page in pages %}
-            <li><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></li>
-          {% endfor %}
-                      <li class="divider-vertical"></li>
-          {% endif %}
-          {% for cat, articles in categories %}
-              <li {% if cat == category %}class="active"{% endif %}>
-                <a href="{{ SITEURL }}/{{ cat.url }}">
-                    <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
-                </a>
-              </li>
-          {% endfor %}
-              <li {% if output_file == "archives/index.html" %}class="active"{% endif %}><a href="{{ SITEURL }}/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a></li>
-              <li {% if output_file == "tags/index.html" %}class="active"{% endif %}><a href="{{ SITEURL }}/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a></li>
-        </ul>
+        {% include 'menu.html' %}
       </div><!--/#navMenu-->
     </div><!--/.navbar-->
 
@@ -101,7 +82,7 @@
             <td class="col-2" id="sidebar">
                 <div class="side-menu">
                     <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-                    {% include 'sidebar.html' %}
+                    {% include 'menu.html' %}
                 </div>
                 {% with position="side" %}{% include 'logo.html' %}{% endwith %}
             </td><!--/col-2-->
