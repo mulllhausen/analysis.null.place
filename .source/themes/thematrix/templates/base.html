@@ -62,13 +62,13 @@
 
   <body>
     <div class="top-bar hidden-pc">
-      <a class="branding" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+      <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
       {% with position="top" %}{% include 'logo.html' %}{% endwith %}
       <a id="btnNavbar" class="button" menu-is-collapsed="true">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </a>
       <div id="navMenu" class="nav-menu-phone">
-        <ul class="navv">
+        <ul class="nav">
           {% for title, link in MENUITEMS %}
               <li><a href="{{ link }}">{{ title }}</a></li>
           {% endfor %}
@@ -100,7 +100,7 @@
 
             <td class="col-2" id="sidebar">
                 <div class="side-menu">
-                    <a class="branding" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+                    <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
                     {% include 'sidebar.html' %}
                 </div>
                 {% with position="side" %}{% include 'logo.html' %}{% endwith %}
