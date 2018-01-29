@@ -1,16 +1,14 @@
 {# modified from sidebar.html #}
-<ul class="nav">
+<ul class="nav-menu">
     {% for cat, articles in categories %}
-    <li {% if cat == category %}class="active"{% endif %}>
-        <a href="{{ SITEURL }}/{{ cat.url }}">
-            <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
-        </a>
-    </li>
+    <a href="{{ SITEURL }}/{{ cat.url }}" {% if cat == category %}class="active"{% endif %}>
+        <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
+    </a>
     {% endfor %}
-    <li {% if output_file == "archives/index.html" %}class="active"{% endif %}>
-        <a href="{{ SITEURL }}/archives/"><i class="fa fa-book" aria-hidden="true"></i> all</a>
-    </li>
-    <li {% if output_file == "tags/index.html" %}class="active"{% endif %}>
-        <a href="{{ SITEURL }}/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a>
-    </li>
+    <a href="{{ SITEURL }}/archives/" {% if output_file == "archives/index.html" %}class="active"{% endif %}>
+        <i class="fa fa-book" aria-hidden="true"></i> all<sup>&nbsp;</sup>
+    </a>
+    <a href="{{ SITEURL }}/tags/" {% if output_file == "tags/index.html" %}class="active"{% endif %}>
+        <i class="fa fa-hashtag" aria-hidden="true"></i> all<sup>&nbsp;</sup>
+    </a>
 </ul>

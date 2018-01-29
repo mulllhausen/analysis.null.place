@@ -1,144 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% include 'google_analytics.html' %}
-    <meta charset="utf-8">
-    <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-    <meta name="author" content="{{ AUTHOR }}"/>
+    <head>
+        {% include 'google_analytics.html' %}
+        <meta charset="utf-8"/>
+        <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
+        <meta name="author" content="{{ AUTHOR }}"/>
 
-    {# le open graph data #}
-    <meta property="og:site_name" content="{{ SITENAME }}"/>
-    <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:url" content="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}"/>
-    <meta property="og:image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
-    <meta property="og:image:width" content="266"/>
-    <meta property="og:image:height" content="266"/>
-    <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-    {% if FACEBOOK_ANALYTICS_ID %}<meta property="fb:app_id" content="{{ FACEBOOK_ANALYTICS_ID }}"/>{% endif %}
+        {# le open graph data #}
+        <meta property="og:site_name" content="{{ SITENAME }}"/>
+        <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:url" content="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}"/>
+        <meta property="og:image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+        <meta property="og:image:width" content="266"/>
+        <meta property="og:image:height" content="266"/>
+        <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
+        {% if FACEBOOK_ANALYTICS_ID %}
+        <meta property="fb:app_id" content="{{ FACEBOOK_ANALYTICS_ID }}"/>
+        {% endif %}
 
-    {# le schema.org markup for Google+ #}
-    <meta itemprop="name" content="{{ SITENAME }}"/>
-    <meta itemprop="description" content="{% block google_title %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-    <meta itemprop="image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+        {# le schema.org markup for Google+ #}
+        <meta itemprop="name" content="{{ SITENAME }}"/>
+        <meta itemprop="description" content="{% block google_title %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
+        <meta itemprop="image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
 
-    {# le twitter card data # }
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:site" content="@publisher_handle"/>
-    <meta name="twitter:title" content="{% block twitter_title %}{{ SITENAME }}{% endblock %}"/>
-    <meta name="twitter:description" content="{% block twitter_description %}Blog by {{ AUTHOR }}{% endblock %}"/>
-    <meta name="twitter:creator" content="@author_handle"/>
-    { # twitter summary card with large image must be at least 280x150px # }
-    <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
+        {# le twitter card data # }
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" content="@publisher_handle"/>
+        <meta name="twitter:title" content="{% block twitter_title %}{{ SITENAME }}{% endblock %}"/>
+        <meta name="twitter:description" content="{% block twitter_description %}Blog by {{ AUTHOR }}{% endblock %}"/>
+        <meta name="twitter:creator" content="@author_handle"/>
+        { # twitter summary card with large image must be at least 280x150px # }
+        <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
-    {# le styles #}
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
-    {% if article %}{% if article.stylesheets %}
-    {% set stylesheets = article.stylesheets.split(',') %}
-        {% for stylesheet in stylesheets %}
-    <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
-        {% endfor %}
-    {% endif %}{% endif %}
+        {# le styles #}
+        <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
+        {% if article %}
+            {% if article.stylesheets %}
+                {% set stylesheets = article.stylesheets.split(',') %}
+                {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
 
-    {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
+        {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+        <![endif]-->
 
-    {# le fav and touch icons #}
-    <link rel="shortcut icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ SITEURL }}/theme/img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ SITEURL }}/theme/img/apple-touch-icon-114x114.png">
+        {# le fav and touch icons #}
+        <link rel="shortcut icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon"/>
+        <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ SITEURL }}/theme/img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ SITEURL }}/theme/img/apple-touch-icon-114x114.png"/>
 
-    <link href="{{ SITEURL }}/{{ FEED }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed" />
-    {% if FEED_RSS %}
-    <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
-    {% endif %}
-  </head>
+        <link href="{{ SITEURL }}/{{ FEED }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed"/>
+        {% if FEED_RSS %}
+        <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed"/>
+        {% endif %}
+    </head>
 
-  <body>
-    <div class="top-bar hidden-pc">
-      <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-      {% with position="top" %}{% include 'logo.html' %}{% endwith %}
-      <a id="btnNavbar" class="button" menu-is-collapsed="true">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-      </a>
-      <div id="navMenu" class="nav-menu-phone">
-        {% include 'menu.html' %}
-      </div><!--/#navMenu-->
-    </div><!--/.navbar-->
+    <body>
+        <div class="top-bar hidden-pc">
+            <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+            {% with position="top" %}
+                {% include 'logo.html' %}
+            {% endwith %}
+            <a id="btnNavbar" class="button" menu-is-collapsed="true">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+            <div id="navMenu" class="nav-menu-phone">
+                {% include 'menu.html' %}
+            </div>
+        </div>
 
-    <table class="container-table"><tbody>
-        <tr>
-            <td class="col-1" id="content">
-                {% block content %}
-                {% endblock %}
-            </td><!--/col-1-->
+        <table class="container-table">
+            <tbody>
+                <tr>
+                    <td class="col-1" id="content">
+                        {% block content %}
+                        {% endblock %}
+                    </td>
+                    <td class="col-2">
+                        <div class="side-bar">
+                            <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+                            {% include 'menu.html' %}
+                        </div>
+                        {% with position="side" %}
+                            {% include 'logo.html' %}
+                        {% endwith %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            <td class="col-2" id="sidebar">
-                <div class="side-menu">
-                    <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-                    {% include 'menu.html' %}
-                </div>
-                {% with position="side" %}{% include 'logo.html' %}{% endwith %}
-            </td><!--/col-2-->
-        </tr>
-    </tbody></table>
+        <div class="bottom-spacer" id="js_footer_push"></div>
 
-    <div class="bottom-spacer" id="js_footer_push"></div>
+        <footer>
+            <address id="about" class="invisible">
+                {{ BLOG_DESCRIPTION }}.
+                <br>
+                Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
+                <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
+                and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>.
+                Hosted on <a href="{{ GITHUB_URL }}">github <i class="fa fa-github"></i></a>.
+                <br>
+                <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp;&nbsp;&nbsp;
+                <a href="{{ SITEURL }}/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
+            </address>
+        </footer>
 
-    <footer>
-        <address id="about" class="invisible">
-            {{ BLOG_DESCRIPTION }}.
-            <br>
-            Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-            <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-            and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>.
-            Hosted on <a href="{{ GITHUB_URL }}">github <i class="fa fa-github"></i></a>.
-            <br>
-            <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp;&nbsp;&nbsp;
-            <a href="{{ SITEURL }}/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
-        </address>
-    </footer>
+        {% include 'disqus_script.html' %}
 
-    {% include 'disqus_script.html' %}
-
-    {# le javascript - at the end of the document so the pages load faster #}
-    <script src="{{ SITEURL }}/theme/js/polyfills.js"></script>
-    <script src="{{ SITEURL }}/theme/js/utils.js"></script>
-    <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
-    <script>
-    init_all_matrix_canvases('matrix-text-green', 'matrix-text-white');
-    var resize_id;
-    addEvent(window, 'resize', function() {
-        // debounce the resize
-        clearTimeout(resize_id);
-        resize_id = setTimeout(function() {
+        {# le javascript - at the end of the document so the pages load faster #}
+        <script src="{{ SITEURL }}/theme/js/polyfills.js"></script>
+        <script src="{{ SITEURL }}/theme/js/utils.js"></script>
+        <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
+        <script>
             init_all_matrix_canvases('matrix-text-green', 'matrix-text-white');
-        }, 500);
-    });
-    </script>
+            var resize_id;
+            addEvent(window, 'resize', function() {
+                // debounce the resize
+                clearTimeout(resize_id);
+                resize_id = setTimeout(function() {
+                    init_all_matrix_canvases('matrix-text-green', 'matrix-text-white');
+                }, 500);
+            });
+        </script>
 
-    {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
-    <script src="https://use.fontawesome.com/95559d6484.js"></script>
+        {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
+        <script src="https://use.fontawesome.com/95559d6484.js"></script>
 
-    {# thanks to https://developers.google.com/speed/libraries/#jquery #}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        {# thanks to https://developers.google.com/speed/libraries/#jquery #}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-    <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
+        <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
 
-    {% if article %}{% if article.scripts %}
-    {% set scripts = article.scripts.split(',') %}
-        {% for script in scripts %}
-    <script src="{{ SITEURL }}/scripts/{{ script }}"></script>
-        {% endfor %}
-    {% endif %}{% endif %}
+        {% if article %}
+            {% if article.scripts %}
+                {% set scripts = article.scripts.split(',') %}
+                {% for script in scripts %}
+        <script src="{{ SITEURL }}/scripts/{{ script }}"></script>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
 
-    {% include 'facebook_analytics.html' %}
-    {% include 'piwik.html' %}
-  </body>
+        {% include 'facebook_analytics.html' %}
+        {% include 'piwik.html' %}
+    </body>
 </html>
