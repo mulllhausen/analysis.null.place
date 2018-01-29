@@ -149,6 +149,10 @@ abbr[title] {
 }
 
 /* begin logo stuff */
+.col-2 .logo-positioner {
+    width: 75%;
+    margin: 30px auto 0 auto;/*horizontal center and move down*/
+}
 .logo-positioner {
     position: relative;
     display: block;
@@ -159,7 +163,7 @@ abbr[title] {
     display: block;
     position: absolute;
     top: 0;
-    left:0;
+    left: 0;
     bottom: 0;
     right: 0;
     overflow: hidden;
