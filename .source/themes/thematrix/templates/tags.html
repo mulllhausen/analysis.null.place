@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>all tags</h1>
+<ul class="taglist">
 {% for tag, articles in tags|sort %}
-    <p><a href="{{ SITEURL }}/{{ tag.url }}"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ tag }}</a> <sup>{{ articles|count }}</sup></p>
+    <li><a href="{{ SITEURL }}/{{ tag.url }}"><i class="fa fa-hashtag" aria-hidden="true"></i> {{ tag }}</a> <sup>{{ articles|count }}</sup></li>
 {% endfor %}
+<ul>
 {% endblock %}
