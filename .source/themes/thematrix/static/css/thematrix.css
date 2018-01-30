@@ -67,7 +67,7 @@ table.container-table tr td {
 }
 
 /* 1 column layout is for phones, small portrait tablets, etc */
-@media (max-width: 650px) {
+@media (max-width: 800px) {
     .hidden-phone {
         display: none;
     }
@@ -80,7 +80,7 @@ table.container-table tr td {
 .col-2 {
     width: 300px;
 }
-@media (min-width: 651px) {
+@media (min-width: 801px) {
     .hidden-pc {
         display: none;
     }
@@ -163,7 +163,7 @@ ul.nav-menu a.active {
     background-color: #000000;
     color: #bbbbbb;
 }
-.col-2 ul.nav-menu a:hover:not(.active):not(:active) {
+ul.nav-menu a:hover:not(.active):not(:active) {
     background-color: #333333;
 }
 /* end navigation menu */
