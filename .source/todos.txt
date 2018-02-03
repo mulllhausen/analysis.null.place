@@ -3,3 +3,4 @@
 - rename article 'scripts' dir to 'js'
 - once a real article is merged, test css on ie then delete anything not needed (eg .content width)
 - hide articles under review from search engines (exclude from sitemap, links and robots.txt)
+- add google ads
