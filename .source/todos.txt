@@ -1,2 +1,1 @@
 - configure for google amp viewer
-- use my own css (no bootstrap), for simplification and full page width

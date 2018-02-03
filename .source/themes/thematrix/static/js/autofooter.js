@@ -1,51 +1,23 @@
 // make a sticky footer using js, since the css solution is ugly
+addEvent(window, 'load, resize', make_sticky_footer);
 
-// --<body>----------------------------------------------
-//      ^                 |
-//      |                 |
-//      |                 |
-//      |                 v js_footer_push top
-//      |        --<js_footer_push>----------------------
-//      |                 ^
-//      |                 |
-//      |                 | js_footer_push height ???
-//      |                 |
-//      |                 v
-//      |        --</js_footer_push><footer>-------------
-// body height                          ^
-//      |                               |
-//      |                               | footer height
-//      |                               |
-//      |                               v
-//      |        -------------------</footer>------------
-//      |                               ^
-//      |                               | should be 0
-//      v                               v
-// --</body>---------------------------------------------
-
-// so: body height = js_footer_push top + js_footer_push height? + footer height
-// ie: js_footer_push height? = body height - js_footer_push top - footer height
-
-$(window).on('load', make_sticky_footer);
-$(window).on('resize', make_sticky_footer);
-
+var resize_footer;
 function make_sticky_footer() {
-    var body_height = $('body').height();
-    var $about = $('#about');
-
-    // add 2px for border-top, 15px for padding-top, 18px for margin-bottom
-    var footer_height = $about.height() + 2 + 15 + 18;
-
-    var original_footer_top = $about.offset().top;
-    var js_footer_push_top = $('#js_footer_push').offset().top;
-    var js_footer_push_height = body_height - js_footer_push_top - footer_height;
-    if (js_footer_push_height > 0) { // stickyness
-
-        // use padding-top to set the height
-        $('#js_footer_push').css('padding-top', js_footer_push_height);
-    }
-
-    // show footer once it is in position, to prevent it from looking like it is
-    // bouncing around the page
-    $about.removeClass('invisible').hide().fadeIn('slow');
+    var footer_el = document.getElementsByTagName('footer')[0];
+    footer_el.style.visibility = 'hidden';
+    // debounce the resize
+    clearTimeout(resize_footer);
+    resize_footer = setTimeout(function() {
+        var footer_bottom = footer_el.getBoundingClientRect().bottom;
+        var body_bottom = document.body.getBoundingClientRect().bottom;
+        if (footer_bottom <= body_bottom) {
+            // if the bottom of the footer is above the bottom of the body then
+            // set position:absolute. the css already has bottom:0.
+            footer_el.style.position = 'absolute';
+        } else {
+            // note that bottom:0 has no effect with position:relative
+            footer_el.style.position = 'relative';
+        }
+        footer_el.style.visibility = 'visible';
+    }, 500);
 }

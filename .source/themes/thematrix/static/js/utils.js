@@ -11,17 +11,29 @@ function unixtime(date) {
     }
 }
 
+Element.prototype.isNodeList =
+Window.prototype.isNodeList =
+function() {return false;}
+
+NodeList.prototype.isNodeList =
+HTMLCollection.prototype.isNodeList =
+function() {return true;}
+
 function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var typesArr = types.split(',');
-    for (var i = 0; i < typesArr.length; i++) {
-        var type = typesArr[i].replace(/ /g, '');
-        if (element.addEventListener) {
-            element.addEventListener(type, callback, false);
-        } else if (element.attachEvent) {
-            element.attachEvent('on' + type, callback);
-        } else {
-            element['on' + type] = callback;
+    var elements = (element.isNodeList() ? element : [element]);
+    for (var el_i = 0; el_i < elements.length; el_i++) {
+        var el = elements[el_i];
+        for (var type_i = 0; type_i < typesArr.length; type_i++) {
+            var type = typesArr[type_i].replace(/ /g, '');
+            if (el.addEventListener) {
+                el.addEventListener(type, callback, false);
+            } else if (el.attachEvent) {
+                el.attachEvent('on' + type, callback);
+            } else {
+                el['on' + type] = callback;
+            }
         }
     }
 }
@@ -75,6 +87,8 @@ function setButtons(enable) {
     }
 }
 
+// events for all pages
+
 // nav-menu open/close (mobile only)
 addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
     var btn = e.currentTarget;
@@ -86,4 +100,10 @@ addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
         btn.setAttribute('menu-is-collapsed', 'true');
         menu.style.display = 'none';
     }
+});
+
+// prevent css :focus from persisting after a click, but allow it to remain
+// after focus via keyboard tabbing
+addEvent(document.getElementsByTagName('button'), 'click', function(e) {
+    e.currentTarget.blur();
 });
