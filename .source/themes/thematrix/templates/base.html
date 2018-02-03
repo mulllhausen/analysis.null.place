@@ -70,38 +70,32 @@
             {% with position="top" %}
                 {% include 'logo.html' %}
             {% endwith %}
-            <a id="btnNavbar" class="button" menu-is-collapsed="true">
+            <button id="btnNavbar" menu-is-collapsed="true">
                 <i class="fa fa-bars" aria-hidden="true"></i>
-            </a>
+            </button>
             <div id="navMenu" class="nav-menu-phone">
                 {% include 'menu.html' %}
             </div>
         </div>
 
-        <table class="container-table">
-            <tbody>
-                <tr>
-                    <td class="col-1" id="content">
-                        {% block content %}
-                        {% endblock %}
-                    </td>
-                    <td class="col-2">
-                        <div class="side-bar">
-                            <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-                            {% include 'menu.html' %}
-                        </div>
-                        {% with position="side" %}
-                            {% include 'logo.html' %}
-                        {% endwith %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="container">
+            <div class="col-2">{# must come first! stackoverflow.com/a/5195914 #}
+                <div class="side-bar">
+                    <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+                    {% include 'menu.html' %}
+                </div>
+                {% with position="side" %}
+                    {% include 'logo.html' %}
+                {% endwith %}
+            </div>
+            <div class="col-1">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
 
-        <div class="bottom-spacer" id="js_footer_push"></div>
-
-        <footer>
-            <address id="about" class="invisible">
+        <footer class="invisible">
+            <address id="about">
                 {{ BLOG_DESCRIPTION }}.
                 <br>
                 Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
