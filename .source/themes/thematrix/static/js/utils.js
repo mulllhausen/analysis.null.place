@@ -81,6 +81,11 @@ function setButtons(enable) {
     }
 }
 
+function in_array(needle, haystack) {
+    // note: does not with with NaN or ie < 9
+    return (haystack.indexOf(needle) > -1);
+}
+
 // events for all pages
 
 // nav-menu open/close (mobile only)
@@ -100,4 +105,21 @@ addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
 // after focus via keyboard tabbing
 addEvent(document.getElementsByTagName('button'), 'click', function(e) {
     e.currentTarget.blur();
+});
+
+// button to toggle between word-wrap and no-wrap on a codeblock
+addEvent(document.querySelectorAll('.codeblock-container button.wrap-nowrap'), 'click', function(e) {
+    var btn = e.currentTarget;
+    var codeblock = btn.parentNode.parentNode.querySelector('.codeblock');
+    if (btn.getAttribute('wrapped') == 'true') {
+        codeblock.style.whiteSpace = 'pre';
+        btn.querySelector('i.fa-level-down').style.display = 'inline-block';
+        btn.querySelector('i.fa-arrows-h').style.display = 'none';
+        btn.setAttribute('wrapped', 'false');
+    } else {
+        codeblock.style.whiteSpace = 'pre-wrap';
+        btn.querySelector('i.fa-level-down').style.display = 'none';
+        btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
+        btn.setAttribute('wrapped', 'true');
+    }
 });

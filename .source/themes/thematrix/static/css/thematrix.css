@@ -52,6 +52,12 @@ h1, h2, h3, h4, h5, h6 {
 ul, ol {
     padding: 0;
 }
+label {
+    font-style: italic;
+}
+label:after {
+    content: ": "
+}
 input[type="text"] {/*made to look like it is a small hole in the page*/
     margin: 5px 0 5px 0;
     font-size: 14px;
@@ -126,7 +132,7 @@ abbr[title] {
 code, pre {
     font-family: Menlo,Monaco,"Courier New",monospace;
     font-size: 12px;
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 2px 4px 1px 4px;
     color: #ae81ff;/*purple*/
     background-color: #2b2b2b;/*dark-grey*/
@@ -140,20 +146,6 @@ code, pre {
 pre {
     padding: 10px;
     display: inline-block;
-}
-.codeblock {/*note: if you want <pre> within a .codeblock then you have to do it yourself*/
-    display: block;
-    padding: 10px;
-    margin: 0 0 9px 0;
-    line-height: 19px;
-    background-color: #2b2b2b;/*dark-grey*/
-    border-radius: 4px;
-    white-space: pre;
-    /* white-space: pre-wrap; */
-    /* word-break: break-all; */
-    /* word-wrap: break-word; */
-    font-family: monospace;
-    overflow: auto;
 }
 /* end raw element styles */
 
@@ -395,3 +387,71 @@ ul.taglist li {
 .invisible {
     visibility: hidden;
 }
+.entry-content .media-container {
+    width: 100%;
+}
+.entry-content .media-container > .media-positioner {
+    display: table;
+    margin: 0 auto;
+    padding: 20px 10px 20px 10px;
+}
+.entry-content .media-container > .media-positioner > .media-caption {
+    width: 100%;
+    margin-top: 5px;
+    text-align: center;
+}
+.popup-fullpage {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: table;
+    z-index: 100;
+    background-color: black;
+}
+.popup-centerer {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.form-container {
+    border: 1px solid #6a6a6a;/*light-grey*/
+    border-radius: 4px;
+    padding: 10px;
+    margin: 20px 0 20px 0;
+}
+
+/* begin codeblock */
+.codeblock-container {
+    display: block;
+    position: relative;
+}
+.codeblock-container .button-background {
+    position: absolute;
+    right: 0;
+    background-color: #2b2b2b;/*dark-grey*/
+    border-radius: 4px 4px 0 0;
+}
+.codeblock-container button {
+    padding: 0 5px;
+    margin: 4px;
+    min-width: 26px;
+}
+.codeblock {/*note: if you want <pre> within a .codeblock then you have to do it yourself*/
+    padding: 10px;
+    display: block;
+    margin: 10px 0 0 0;
+    line-height: 19px;
+    background-color: #2b2b2b;/*dark-grey*/
+    border-radius: 4px 0 4px 4px;
+    position: relative;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow: auto;
+}
+/* end codeblock */
