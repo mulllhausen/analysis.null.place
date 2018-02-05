@@ -5,13 +5,13 @@ category: cryptocurrencies
 tags: bitcoin, mining, proof-of-work
 stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
-summary: An interactive thorough explanation of bitcoin mining. No prior knowledge is necessary.
+summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
 
 This article is for people who want to understand the inner workings of bitcoin
 mining. I have made it interactive so that you can simulate the mining algorithms
 for yourself and get a feel for how mining really works. While the concepts are
-not simple, it should be easily accessible to the average person. And the
-interacive aspect should make an otherwise dry subject fun.
+not simple, it should be easily accessible to an interested layperson. And I
+hope the interacivity will make an otherwise dry subject fun.
 
 ## hashing
 
@@ -19,14 +19,21 @@ To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
 a few times and then try typing different things in the *pre-image* field:
-<br>
-<br>
-pre-image:<br>
-<input id="inputMessage0" type="text" value="hello world!">
-<button class="btn" id="btnRunHash0">SHA256</button>
-&nbsp;&nbsp;<span id="hash0Duration"></span>
-<div id="hash0Results" class="codeblock" style="display:none;"></div>
-<br>
+<div class="form-container">
+    <label for="inputMessage0">pre-image</label><br>
+    <input id="inputMessage0" type="text" value="hello world!">
+    <button id="btnRunHash0">SHA256</button>
+    &nbsp;&nbsp;<span id="hash0Duration"></span>
+    <div class="codeblock-container" style="display:none;">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="true">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            </button>
+        </div><br>
+        <div id="hash0Results" class="codeblock"></div>
+    </div>
+</div>
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing alporithms are not important for the sake
@@ -36,22 +43,42 @@ one of many hashing algorithms - the one that is used in bitcoin mining
 in hexadecimal format - i.e. base 16. Here are some hexadecimal values side by
 side with their decimal equivalent values:
 
-    hex 0  = dec 0       hex 10  = dec 16     etc
-    hex 1  = dec 1       hex 11  = dec 17
-    hex 2  = dec 2       hex 12  = dec 18
-    hex 3  = dec 3       hex 13  = dec 19
-    hex 4  = dec 4       hex 14  = dec 20
-    hex 5  = dec 5       hex 15  = dec 21
-    hex 6  = dec 6       hex 16  = dec 22
-    hex 7  = dec 7       hex 17  = dec 23
-    hex 8  = dec 8       hex 18  = dec 24
-    hex 9  = dec 9       hex 19  = dec 25
-    hex a  = dec 10      hex 1a  = dec 26
-    hex b  = dec 11      hex 1b  = dec 27
-    hex c  = dec 12      hex 1c  = dec 28
-    hex d  = dec 13      hex 1d  = dec 29
-    hex e  = dec 14      hex 1e  = dec 30
-    hex f  = dec 15      hex 1f  = dec 31
+<pre>
+hex 0 = dec 0
+hex 1 = dec 1
+hex 2 = dec 2
+hex 3 = dec 3
+hex 4 = dec 4
+hex 5 = dec 5
+hex 6 = dec 6
+hex 7 = dec 7
+hex 8 = dec 8
+hex 9 = dec 9
+hex a = dec 10
+hex b = dec 11
+hex c = dec 12
+hex d = dec 13
+hex e = dec 14
+hex f = dec 15
+</pre>
+<pre>
+hex 10 = dec 16
+hex 11 = dec 17
+hex 12 = dec 18
+hex 13 = dec 19
+hex 14 = dec 20
+hex 15 = dec 21
+hex 16 = dec 22
+hex 17 = dec 23
+hex 18 = dec 24
+hex 19 = dec 25
+hex 1a = dec 26
+hex 1b = dec 27
+hex 1c = dec 28
+hex 1d = dec 29
+hex 1e = dec 30
+hex 1f = dec 31
+</pre>
 
 Don't worry, you won't need to do any hexadecimal conversions in this article.
 All you need to remember is that hexadecimal digits go from `0` to `9` then `a`
@@ -246,7 +273,7 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
 </div></div>
 <ul id="blockHeader1Error" class="error"></ul>
 
-<button class="btn" id="btnRunHash1">mine</button>
+<button id="btnRunHash1">mine</button>
 
 <div id="block1MiningResults" class="codeblock">target:     <span id="target1" class="individual-digits"></span>
 block hash: <span id="blockhash1" class="individual-digits"></span>

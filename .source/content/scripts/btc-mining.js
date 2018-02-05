@@ -24,6 +24,16 @@ var miningData = { // note: raw values are taken directly from the input field
 };
 addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
+    addEvent(document.getElementById('inputMessage0'), 'keyup', function(e) {
+        if (e.keyCode != 13) return; // only allow the enter key
+        runHash0Clicked();
+    });
+    addEvent(
+        document.getElementById('btnRunHash0').parentNode.
+        querySelector('button.wrap-nowrap'),
+        'click',
+        runHash0WrapClicked
+    );
 
     addEvent(document.getElementById('version1'), 'keyup, change', version1Changed);
     triggerEvent(document.getElementById('version1'), 'change');
@@ -45,6 +55,18 @@ addEvent(window, 'load', function() {
 
     addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
 });
+
+function runHash0WrapClicked(e) {
+    var btn = e.currentTarget;
+    var codeblock_text = btn.parentNode.parentNode.querySelector('.codeblock').innerText;
+    if (btn.getAttribute('wrapped') == 'true') {
+        btn.parentNode.parentNode.querySelector('.codeblock').innerText =
+        codeblock_text.replace(/\n/g, '\n\n');
+    } else {
+        btn.parentNode.parentNode.querySelector('.codeblock').innerText =
+        codeblock_text.replace(/\n\n/g, '\n');
+    }
+}
 
 var message0AlignmentLength = 20;
 function runHash0Clicked() {
@@ -68,11 +90,17 @@ function runHash0Clicked() {
     document.getElementById('hash0Duration').innerText = durationExplanationLong;
     var leftPadMessage = message0AlignmentLength - message.length;
     if (leftPadMessage < 0) leftPadMessage = 0;
-    var text = document.getElementById('hash0Results').innerText +
-    'message: ' + message + ' '.repeat(leftPadMessage) +
-    ' SHA256: ' + sha256Hash + ' ' + durationExplanationShort + '\n';
+    var wrapButtonIsOn = (
+        document.getElementById('hash0Results').parentNode.
+        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+    );
+    var text = (
+        message + ' '.repeat(leftPadMessage) + ' -> SHA256 -> ' + sha256Hash +
+        ' ' + durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
+        document.getElementById('hash0Results').innerText
+    ).trim();
     document.getElementById('hash0Results').innerText = text;
-    document.getElementById('hash0Results').style.display = 'block';
+    document.getElementById('hash0Results').parentNode.style.display = 'block';
 }
 
 function borderTheDigits(cssSelectors, num2Color, pass) {

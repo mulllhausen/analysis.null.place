@@ -34,8 +34,3 @@ if (!String.prototype.repeat) {
         return rpt;
     }
 }
-
-function unixtime(date_obj) {
-    if (date_obj == null) date_obj = new Date();
-    return Math.round(date_obj.getTime() / 1000);
-}
