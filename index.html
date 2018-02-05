@@ -215,11 +215,11 @@
         <script src="http://analysis.null.place/theme/js/matrix-animation.js"></script>
         <script>
             init_all_matrix_canvases('matrix-text-green', 'matrix-text-white');
-            var resize_id;
+            var timeout_id_resize_logo;
             addEvent(window, 'resize', function() {
                 // debounce the resize
-                clearTimeout(resize_id);
-                resize_id = setTimeout(function() {
+                clearTimeout(timeout_id_resize_logo);
+                timeout_id_resize_logo = setTimeout(function() {
                     init_all_matrix_canvases('matrix-text-green', 'matrix-text-white');
                 }, 500);
             });
