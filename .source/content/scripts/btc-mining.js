@@ -54,6 +54,12 @@ addEvent(window, 'load', function() {
     triggerEvent(document.getElementById('nonce1'), 'change');
 
     addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
+    addEvent(
+        document.getElementById('btnRunHash1').parentNode.
+        querySelector('button.wrap-nowrap'),
+        'click',
+        runHash1WrapClicked
+    );
 });
 
 function runHash0WrapClicked(e) {
@@ -386,7 +392,9 @@ function mine1AndRenderResults() {
         document.getElementById('mineStatus1').style.color = passColor;
         return;
     }
-    document.getElementById('mineStatus1').innerText = 'fail';
+    var explanation = 'because ' + minedResult.blockhash[minedResult.resolution] +
+    ' is greater than ' + miningData.target[minedResult.resolution];
+    document.getElementById('mineStatus1').innerText = 'fail (' + explanation + ')';
     document.getElementById('mineStatus1').style.color = failColor;
 }
 
@@ -407,6 +415,19 @@ function mine() {
         status: miningStatus.status,
         resolution: miningStatus.resolution
     };
+}
+
+// align the status when the 'wrap' button is clicked
+function runHash1WrapClicked(e) {
+    var btn = e.currentTarget;
+    var codeblock_html = btn.parentNode.parentNode.querySelector('.codeblock').innerHTML;
+    if (btn.getAttribute('wrapped') == 'true') {
+        btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
+        codeblock_html.replace('status:     ', 'status: ');
+    } else {
+        btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
+        codeblock_html.replace('status: ', 'status:     ');
+    }
 }
 
 function bits2target(bits) {

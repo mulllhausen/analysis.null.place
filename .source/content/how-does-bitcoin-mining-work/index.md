@@ -161,13 +161,15 @@ bitcoin wallet (which is a program, app or website running on their computer or
 phone), and then type in the recipient and the amount of bitcoin they want to
 send to them. The bitcoin wallet uses this information to construct a
 transaction. Here is an example bitcoin transaction:
-
+<br>
+<br>
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
         01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000
     </div>
     <div class="media-caption">example bitcoin transaction</div>
 </div></div>
+<br>
 
 For the purposes of this article the details of this transaction are not important,
 but if you are curious you can view all of this transaction's information [here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082). However the only thing you really need to
@@ -183,7 +185,8 @@ software running for the transaction to complete.
 Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
 on these later). These miners gather the transactions they receive and put them
 into a block:
-
+<br>
+<br>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-block-mini">
         <tr><td class="btc-block-header-mini">header</td></tr>
@@ -193,6 +196,7 @@ into a block:
     </table>
     <div class="media-caption">a bitcoin block</div>
 </div></div>
+<br>
 
 A bitcoin block consists of a header, followed by a list of transactions. The
 block shown here only has 3 transactions, but blocks containing thousands of
@@ -200,18 +204,20 @@ transactions are most common.
 
 Just as bitcoin transactions are a string of characters, so is the block header.
 The header contains all the data needed to uniquely identify the block:
-
+<br>
+<br>
 <div class="media-container"><div class="media-positioner">
-    <div class="btc-header-definition">
-        <div class="btc-header-field">version</div>
-        <div class="btc-header-field">previous block hash</div>
-        <div class="btc-header-field">merkle root</div>
-        <div class="btc-header-field">timestamp</div>
-        <div class="btc-header-field">difficulty</div>
-        <div class="btc-header-field">nonce</div>
-    </div>
+    <table class="btc-header-definition">
+        <tr><td class="btc-header-field">version</td></tr>
+        <tr><td class="btc-header-field">previous block hash</td></tr>
+        <tr><td class="btc-header-field">merkle root</td></tr>
+        <tr><td class="btc-header-field">timestamp</td></tr>
+        <tr><td class="btc-header-field">difficulty</td></tr>
+        <tr><td class="btc-header-field">nonce</td></tr>
+    </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
+<br>
 
 The *version* field is just a number indicating the current version of the
 bitcoin protocol.
@@ -240,46 +246,54 @@ all of the transactions can come to 1MB, so it is more efficient.
 The bitcoin blockchain is basically a chain of blocks. Each block references the
 previous block, right back to the very first block created by Satoshi Nakamoto on
 4 Jan 2009.
-
-
+<br>
+<br>
+<div class="form-container">
 <div class="media-container"><div class="media-positioner">
-    <div class="btc-header-definition">
-        <div class="btc-header-field">
+    <table class="btc-header-definition">
+        <tr><td class="btc-header-field">
             version<br>
             <input id="version1" type="text" class="data-value" size="2" value="1">
-        </div>
-        <div class="btc-header-field">
+        </td></tr>
+        <tr><td class="btc-header-field">
             previous block hash<br>
             <input id="prevHash1" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
-        </div>
-        <div class="btc-header-field">
+        </td></tr>
+        <tr><td class="btc-header-field">
             merkle root<br>
             <input id="merkleRoot1" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
-        </div>
-        <div class="btc-header-field">
+        </td></tr>
+        <tr><td class="btc-header-field">
             timestamp <span id="timestamp1Explanation"></span><br>
             <input id="timestamp1" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
-        </div>
-        <div class="btc-header-field">
+        </td></tr>
+        <tr><td class="btc-header-field">
             difficulty<br>
             <input id="bits1" type="text" class="data-value" size="8" value="1d00ffff">
-        </div>
-        <div class="btc-header-field">
+        </td></tr>
+        <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce1" type="text" class="data-value" size="10" value="2083236892">
-        </div>
-    </div>
+            <input id="nonce1" type="text" class="data-value" size="10" value="0">
+        </td></tr>
+    </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
 <ul id="blockHeader1Error" class="error"></ul>
-
-<button id="btnRunHash1">mine</button>
-
-<div id="block1MiningResults" class="codeblock">target:     <span id="target1" class="individual-digits"></span>
+<button id="btnRunHash1">mine (with SHA256)</button>
+<div class="codeblock-container">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+        </button>
+    </div><br>
+<div id="block1MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target1" class="individual-digits"></span>
 block hash: <span id="blockhash1" class="individual-digits"></span>
 status:     <span id="mineStatus1"></span>
 </div>
-
+</div>
+</div>
+<br>
 
 ## annex
 
