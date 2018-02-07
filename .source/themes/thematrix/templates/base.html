@@ -141,7 +141,7 @@
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
                 {% for script in scripts %}
-        <script src="{{ SITEURL }}/scripts/{{ script }}"></script>
+        <script src="{{ SITEURL }}/js/{{ script }}"></script>
                 {% endfor %}
             {% endif %}
         {% endif %}
