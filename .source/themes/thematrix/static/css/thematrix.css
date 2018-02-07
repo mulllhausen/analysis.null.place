@@ -86,6 +86,11 @@ input[type="text"]:focus {/*appears deeper when in focus*/
     outline: none;
     box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
+@media (max-width: 800px) {/*when x <= 800px*/
+    input {
+        max-width: 14em;
+    }
+}
 button, button:visited, button:hover {/*made to look like a small bump in the page*/
     font-size: 14px;
     color: #ffffff;/*white*/
@@ -128,6 +133,7 @@ footer {
 abbr[title] {
     border-bottom: none;
     cursor: default;
+    font-size: 12px;
 }
 code, pre {
     font-family: Menlo,Monaco,"Courier New",monospace;
@@ -351,10 +357,15 @@ img#logo_img {
 /* end logo stuff */
 
 .info-box {
-    padding: 15px 20px;
+    padding: 15px;
     margin-bottom: 20px;
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
+}
+@media (max-width: 800px) {/*when x <= 800px*/
+    .info-box {
+        padding: 10px 15px;
+    }
 }
 
 address#about {
@@ -384,6 +395,9 @@ ul.taglist li {
 }
 /* end list styles */
 
+.keep-together {
+    display: inline-block;
+}
 .invisible {
     visibility: hidden;
 }
@@ -393,7 +407,6 @@ ul.taglist li {
 .entry-content .media-container > .media-positioner {
     display: table;
     margin: 0 auto;
-    padding: 20px 10px 20px 10px;
 }
 .entry-content .media-container > .media-positioner > .media-caption {
     width: 100%;
@@ -449,7 +462,7 @@ ul.taglist li {
     border-radius: 4px 0 4px 4px;
     position: relative;
     font-family: monospace;
-    white-space: pre-wrap;
+    white-space: pre-wrap;/*initial value*/
     word-break: break-all;
     word-wrap: break-word;
     overflow: auto;
