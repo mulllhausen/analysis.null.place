@@ -3,14 +3,15 @@ slug: how-does-bitcoin-mining-work
 date: 2017-11-28 
 category: cryptocurrencies
 tags: bitcoin, mining, proof-of-work
+status: draft
 stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
 summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
 
 This article is for people who want to understand the inner workings of bitcoin
 mining. I have made it interactive so that you can simulate the mining algorithms
-for yourself and get a feel for how mining really works. While the concepts are
-not simple, it should be easily accessible to an interested layperson. And I
+for yourself and get a feel for how mining really works. While the concepts here
+are not simple, it should be easily accessible to an interested layperson. And I
 hope the interacivity will make an otherwise dry subject fun.
 
 ## hashing
