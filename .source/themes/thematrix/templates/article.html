@@ -11,12 +11,8 @@
         <article>
                 <header>
                         <h1>
-                                <a href="{{ pagename }}"
-                                        rel="bookmark"
-                                        title="Permalink to {{ article.title }}">
-                                        {{ article.title}}
-                                </a>
-                                {% include 'twitter.html' %}
+                            {{ article.title}}
+                            {% include 'twitter.html' %}
                         </h1>
                 </header>
                 <div class="entry-content">
