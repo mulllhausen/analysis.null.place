@@ -67,14 +67,13 @@ function runHash0WrapClicked(e) {
     var codeblock_text = btn.parentNode.parentNode.querySelector('.codeblock').innerText;
     if (btn.getAttribute('wrapped') == 'true') {
         btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        codeblock_text.replace(/\n/g, '\n\n');
+        codeblock_text.replace(/\n/g, '\n\n').replace(/[ ]* -> SHA256/g, ' -> SHA256');
     } else {
         btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        codeblock_text.replace(/\n\n/g, '\n');
+        alignText(codeblock_text.replace(/\n\n/g, '\n'), '-> SHA256');
     }
 }
 
-var message0AlignmentLength = 20;
 function runHash0Clicked() {
     var message = document.getElementById('inputMessage0').value;
     var startTime = new Date();
@@ -94,19 +93,40 @@ function runHash0Clicked() {
     durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
     durationExplanationShort += 'ms)';
     document.getElementById('hash0Duration').innerText = durationExplanationLong;
-    var leftPadMessage = message0AlignmentLength - message.length;
-    if (leftPadMessage < 0) leftPadMessage = 0;
     var wrapButtonIsOn = (
         document.getElementById('hash0Results').parentNode.
         querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
     );
     var text = (
-        message + ' '.repeat(leftPadMessage) + ' -> SHA256 -> ' + sha256Hash +
-        ' ' + durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
+        message + ' -> SHA256 -> ' + sha256Hash + ' ' +
+        durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
         document.getElementById('hash0Results').innerText
     ).trim();
+    if (!wrapButtonIsOn) text = alignText(text, '-> SHA256');
     document.getElementById('hash0Results').innerText = text;
     document.getElementById('hash0Results').parentNode.style.display = 'block';
+}
+
+// align text from the splitter position onwards. the splitter must be unique.
+function alignText(text, splitter) {
+    var lines = text.split('\n');
+    if (lines.length == 1) return text;
+
+    var biggest_indent_pos = 0; // init
+    for (var line_i = 0; line_i < lines.length; line_i++) {
+        var indent_pos = lines[line_i].indexOf(splitter); // -1 if not found
+        if (indent_pos > biggest_indent_pos) biggest_indent_pos = indent_pos;
+    }
+    for (var line_i = 0; line_i < lines.length; line_i++) {
+        var this_line = lines[line_i];
+        var line_parts = this_line.split(splitter);
+        if (line_parts.length == 1) continue;
+
+        lines[line_i] = line_parts[0] +
+        ' '.repeat(biggest_indent_pos - line_parts[0].length) + splitter +
+        line_parts[1];
+    }
+    return lines.join('\n');
 }
 
 function borderTheDigits(cssSelectors, num2Color, pass) {
