@@ -12,7 +12,7 @@ html, body{
     max-height: 100%;
 
     font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -24,12 +24,8 @@ html, body{
     overflow: auto;/*expand to height of children*/
 }
 p {
-    /*white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: -o-pre-wrap;*/
     word-wrap: break-word;
-    line-height: 19px;
+    line-height: 26px;
 }
 a, a:visited, a:active, a:hover {
     color: #7db904;/*green*/
@@ -53,6 +49,7 @@ ul, ol {
     padding: 0;
 }
 label {
+    font-size: 14px;
     font-style: italic;
 }
 label:after {
@@ -124,7 +121,7 @@ button:active, button:focus {/*appears flat while clicked*/
 }
 footer {
     position: relative;/*changed by js in autofooter.js*/
-    padding: 30px;
+    padding: 20px;
     clear: both;
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
@@ -137,7 +134,7 @@ abbr[title] {
 }
 code, pre {
     font-family: monospace;
-    font-size: 12px;
+    font-size: 13px;
     border-radius: 4px;
     padding: 2px 4px 1px 4px;
     color: #ae81ff;/*purple*/
@@ -165,12 +162,12 @@ pre {
 .col-1 {
     margin-right: 200px;
     overflow-x: hidden;
-    padding: 30px;
+    padding: 20px;
 }
 .col-2 {
     float: right;
     display: inline-block;
-    padding: 30px 30px 0 0;
+    padding: 30px 30px 0 20px;
 }
 
 /* 1 column layout is for phones, small portrait tablets, etc */
@@ -362,6 +359,7 @@ img#logo_img {
     margin-bottom: 20px;
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
+    line-height: 24px;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
@@ -373,6 +371,7 @@ address#about {
     font-style: normal;
     padding-top: 15px;
     border-top: 2px solid #2b2b2b;/*dark-grey*/
+    line-height: 20px;
 }
 
 /* begin list styles */
@@ -411,6 +410,7 @@ ul.taglist li {
 }
 .entry-content .media-container > .media-positioner > .media-caption {
     width: 100%;
+    font-size: 15px;
     margin-top: 5px;
     text-align: center;
 }
@@ -460,12 +460,13 @@ ul.taglist li {
 .codeblock {/*note: if you want <pre> within a .codeblock then you have to do it yourself*/
     padding: 10px;
     display: block;
-    margin: 10px 0 0 0;
-    line-height: 19px;
+    margin: 8px 0 0 0;
+    line-height: 21px;
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px 0 4px 4px;
     position: relative;
     font-family: monospace;
+    font-size: 14px;
     white-space: pre-wrap;/*initial value*/
     word-break: break-all;
     word-wrap: break-word;

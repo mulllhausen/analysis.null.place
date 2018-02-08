@@ -35,6 +35,7 @@ a few times and then try typing different things in the *pre-image* field:
         <div id="hash0Results" class="codeblock"></div>
     </div>
 </div>
+
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing alporithms are not important for the sake
@@ -43,8 +44,7 @@ one of many hashing algorithms - the one that is used in bitcoin mining
 (more on that later). The output of a hash is a numeric value - commonly written
 in hexadecimal format - i.e. base 16. Here are some hexadecimal values side by
 side with their decimal equivalent values:
-<br>
-<br>
+
 <div class="horizontal-center">
 <pre>
 hex 0 = dec 0
@@ -165,15 +165,13 @@ bitcoin wallet (which is a program, app or website running on their computer or
 phone), and then type in the recipient and the amount of bitcoin they want to
 send to them. The bitcoin wallet uses this information to construct a
 transaction. Here is an example bitcoin transaction:
-<br>
-<br>
+
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
         01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000
     </div>
     <div class="media-caption">example bitcoin transaction</div>
 </div></div>
-<br>
 
 For the purposes of this article the details of this transaction are not important,
 but if you are curious you can view all of this transaction's information [here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082). However the only thing you really need to
@@ -189,8 +187,7 @@ software running for the transaction to complete.
 Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
 on these later). These miners gather the transactions they receive and put them
 into a block:
-<br>
-<br>
+
 <div class="media-container"><div class="media-positioner">
     <table class="btc-block-mini">
         <tr><td class="btc-block-header-mini">header</td></tr>
@@ -200,7 +197,6 @@ into a block:
     </table>
     <div class="media-caption">a bitcoin block</div>
 </div></div>
-<br>
 
 A bitcoin block consists of a header, followed by a list of transactions. The
 block shown here only has 3 transactions, but blocks containing thousands of
@@ -208,8 +204,7 @@ transactions are most common.
 
 Just as bitcoin transactions are a string of characters, so is the block header.
 The header contains all the data needed to uniquely identify the block:
-<br>
-<br>
+
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">version</td></tr>
@@ -221,7 +216,6 @@ The header contains all the data needed to uniquely identify the block:
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<br>
 
 The *version* field is just a number indicating the current version of the
 bitcoin protocol.
@@ -250,8 +244,7 @@ all of the transactions can come to 1MB, so it is more efficient.
 The bitcoin blockchain is basically a chain of blocks. Each block references the
 previous block, right back to the very first block created by Satoshi Nakamoto on
 4 Jan 2009.
-<br>
-<br>
+
 <div class="form-container">
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
@@ -297,7 +290,6 @@ status:     <span id="mineStatus1"></span>
 </div>
 </div>
 </div>
-<br>
 
 ## annex
 

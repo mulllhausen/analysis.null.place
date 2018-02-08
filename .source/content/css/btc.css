@@ -2,6 +2,8 @@ pre {
     margin: 10px;
 }
 .btc-transaction-full {
+    font-size: 15px;
+    line-height: 17px;
     border: 1px solid #6a6a6a;/*light-grey*/
     word-break: break-all;
     padding: 10px;
@@ -10,6 +12,7 @@ pre {
 }
 .btc-block-mini, .btc-header-definition {
     border-collapse: collapse;
+    font-size: 15px;
 }
 .btc-transaction-mini, .btc-block-header-mini, .btc-header-definition .btc-header-field {
     border: 1px solid #6a6a6a;/*light-grey*/
@@ -45,5 +48,6 @@ ul.error li {
 }
 span#hash0Duration {
     display: inline-block;/*keep text together*/
+    font-size: 14px;
     margin-bottom: 6px;
 }
