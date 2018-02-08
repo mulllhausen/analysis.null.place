@@ -43,7 +43,9 @@ one of many hashing algorithms - the one that is used in bitcoin mining
 (more on that later). The output of a hash is a numeric value - commonly written
 in hexadecimal format - i.e. base 16. Here are some hexadecimal values side by
 side with their decimal equivalent values:
-
+<br>
+<br>
+<div class="horizontal-center">
 <pre>
 hex 0 = dec 0
 hex 1 = dec 1
@@ -80,6 +82,7 @@ hex 1d = dec 29
 hex 1e = dec 30
 hex 1f = dec 31
 </pre>
+</div>
 
 Don't worry, you won't need to do any hexadecimal conversions in this article.
 All you need to remember is that hexadecimal digits go from `0` to `9` then `a`

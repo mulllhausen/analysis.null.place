@@ -1,3 +1,6 @@
+pre {
+    margin: 10px;
+}
 .btc-transaction-full {
     border: 1px solid #6a6a6a;/*light-grey*/
     word-break: break-all;
@@ -21,6 +24,7 @@
 }
 .btc-header-definition input {
     text-align: center;
+    font-family: monospace;
 }
 .individual-digit {
     border: 1px solid #565656;

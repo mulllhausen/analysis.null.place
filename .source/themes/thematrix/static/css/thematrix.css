@@ -136,7 +136,7 @@ abbr[title] {
     font-size: 12px;
 }
 code, pre {
-    font-family: Menlo,Monaco,"Courier New",monospace;
+    font-family: monospace;
     font-size: 12px;
     border-radius: 4px;
     padding: 2px 4px 1px 4px;
@@ -148,6 +148,7 @@ code, pre {
     white-space: -pre-wrap;
     white-space: -o-pre-wrap;
     word-wrap: break-word;
+    text-align: left;
 }
 pre {
     padding: 10px;
@@ -435,6 +436,9 @@ ul.taglist li {
     border-radius: 4px;
     padding: 10px;
     margin: 20px 0 20px 0;
+}
+.horizontal-center {
+    text-align: center;
 }
 
 /* begin codeblock */
