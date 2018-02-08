@@ -224,7 +224,9 @@ The *previous block hash* field is where the *blockchain* concept comes in - the
 current block references the previous block so that blocks build upon each other
 over time.
 
-<image - bitcoin blockchain>
+<div class="form-container">
+    <object data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
+</div>
 
 The *previous block hash* is found by doing a *SHA265* hash twice in succession
 on the previous block header. As we saw in the hashing section at the start,
