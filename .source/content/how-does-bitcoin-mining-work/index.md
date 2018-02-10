@@ -225,7 +225,7 @@ current block references the previous block so that blocks build upon each other
 over time.
 
 <div class="form-container">
-    <object data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
+    <object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
 </div>
 
 The *previous block hash* is found by doing a *SHA265* hash twice in succession

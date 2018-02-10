@@ -60,6 +60,7 @@ addEvent(window, 'load', function() {
         'click',
         runHash1WrapClicked
     );
+    initBlockchainSVG();
 });
 
 function runHash0WrapClicked(e) {
@@ -522,4 +523,22 @@ function toLittleEndian(hexStr) {
     if (hexStr.length <= 2) return hexStr;
     if (hexStr.length % 2 == 1) hexStr = '0' + hexStr;
     return hexStr.match(/.{2}/g).reverse().join('')
+}
+
+function initBlockchainSVG() {
+    var svg = document.getElementById('blockchainSVG').contentDocument.getElementsByTagName('svg')[0];
+
+    // create 1000 transactions for the first block
+    var txs = svg.getElementsByClassName('btc-txs')[0];
+    for (var i = 1; i < 1000; i++) {
+        var tx = txs.getElementsByClassName('btc-tx')[0].cloneNode(true);
+        tx.setAttribute('transform', 'translate(0,' + 30 * i + ')');
+        tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
+        txs.appendChild(tx);
+    }
+
+    // copy the block over to the right
+    var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
+    block.setAttribute('transform', 'translate(280, 0)');
+    svg.appendChild(block);
 }

@@ -31,10 +31,10 @@ class="global">
         fill: #bbbbbb;/*off-white*/
     }
     .braces path {
-        fill: #bbbbbb;/*off-white*/
+        fill: #2b2b2b;/*dark-grey*/
     }
 ]]></style>
-    <g class="btc-block" transform="translate(0,50)">
+    <g class="btc-block">
         <g class="btc-header">
             <g class="btc-header-field" transform="translate(0,0)">
                 <rect x="0" y="0" width="150" height="30"/>
@@ -72,11 +72,11 @@ class="global">
             </g>
         </g>
     </g>
-    <g class="braces" transform="translate(165,50)">
+    <g class="braces" transform="translate(165,0)">
         <path
             d="M0,0 C 60,0 0,102.5 50,102.5
             S 45,42.5 90,42.5
-            L90,40 L100,45 L90,50 L90,47.5
+            L90,35 L100,45 L90,55 L90,47.5
             C 55,47.5 100,107.5 50,107.5
             S 60,210 0,210
             L0,205
