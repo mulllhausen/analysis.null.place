@@ -18,12 +18,12 @@ class="global">
         -ms-user-select: none;       /* IE/Edge */
         user-select: none;           /* non-prefixed version, currently*/
         pointer-events: all;
-        shape-rendering: crispEdges;
     }
     .btc-header-field rect, .btc-tx rect {
         fill: #2b2b2b;/*dark-grey*/
         stroke: #6a6a6a;/*light-grey*/
         stroke-width: 1;
+        shape-rendering: crispEdges;
     }
     .btc-header-field text, .btc-tx text {
         text-anchor: middle;
@@ -31,9 +31,7 @@ class="global">
         fill: #bbbbbb;/*off-white*/
     }
     .braces path {
-        stroke: #6a6a6a;/*light-grey*/
-        /*fill: #6a6a6a;light-grey*/
-        stroke-width: 1;
+        fill: #bbbbbb;/*off-white*/
     }
 ]]></style>
     <g class="btc-block" transform="translate(0,50)">
@@ -75,14 +73,16 @@ class="global">
         </g>
     </g>
     <g class="braces" transform="translate(165,50)">
-        <path d="M0,0 C60,0 0,102.5 50,102.5"/>
-        <path d="M50,102.5 C95,102.5 50,42.5 90,42.5"/> 
-        <path d="M90,42.5 L90,40 L100,45 L90,50 L90,47.5"/>
-        <path d="M50,107.5 C100,107.5 55,47.5 90,47.5"/> 
-        <path d="M50,107.5 C0,107.5 60,210 0,210"/>
-        <path d="M0,210 L0,205"/>
-        <path d="M0,205 C50,205 0,105 35,105"/>
-        <path d="M35,105 C0,105 50,5 0,5"/>
-        <path d="M0,5 L0,0"/>
+        <path
+            d="M0,0 C 60,0 0,102.5 50,102.5
+            S 45,42.5 90,42.5
+            L90,40 L100,45 L90,50 L90,47.5
+            C 55,47.5 100,107.5 50,107.5
+            S 60,210 0,210
+            L0,205
+            C 50,205 0,105 40,105
+            C 0,105 50,5 0,5
+            Z"
+        />
     </g>
 </svg>
