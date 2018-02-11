@@ -526,13 +526,15 @@ function toLittleEndian(hexStr) {
 }
 
 function initBlockchainSVG() {
-    var svg = document.getElementById('blockchainSVG').contentDocument.getElementsByTagName('svg')[0];
+    var svg = document.getElementById('blockchainSVG').contentDocument.
+    getElementsByTagName('svg')[0];
+    var svg_viewport = svg.getElementById('viewport');
 
-    // create 1000 transactions for the first block
+    // create 100 transactions for the first block
     var txs = svg.getElementsByClassName('btc-txs')[0];
-    for (var i = 1; i < 1000; i++) {
+    for (var i = 1; i < 20; i++) {
         var tx = txs.getElementsByClassName('btc-tx')[0].cloneNode(true);
-        tx.setAttribute('transform', 'translate(0,' + 30 * i + ')');
+        tx.setAttribute('transform', 'translate(0,' + (30 * i) + ')');
         tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
         txs.appendChild(tx);
     }
@@ -540,5 +542,41 @@ function initBlockchainSVG() {
     // copy the block over to the right
     var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
     block.setAttribute('transform', 'translate(280, 0)');
-    svg.appendChild(block);
+    svg_viewport.appendChild(block);
+
+    // drag-events
+    var mouse_start_x = 0; // init scope
+    var mouse_start_y = 0; // init scope
+    var prev_dx = 0; // init scope
+    var prev_dy = 0; // init scope
+    var dragging = false; // init scope
+    var viewport_height = svg_viewport.getBoundingClientRect().height; // pre-compute
+    var svg_height = svg.getBoundingClientRect().height; // pre-compute
+    addEvent(svg, 'mousedown', function(e) {
+        e.preventDefault();
+        mouse_start_x = e.clientX;
+        mouse_start_y = e.clientY;
+        dragging = true;
+    });
+    addEvent(svg, 'mousemove', function(e) {
+        e.preventDefault();
+        if (!dragging) return;
+
+        var dx = prev_dx + e.clientX - mouse_start_x;
+        if (dx > 0) dx = 0; // only allow dragging to the left
+
+        var dy = prev_dy + e.clientY - mouse_start_y;
+        if (dy > 0) dy = 0; // only allow dragging up
+
+        // don't allow dragging up past the viewport height
+        if (dy < (svg_height - viewport_height - 1)) dy = svg_height - viewport_height - 1;
+
+        svg_viewport.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
+    });
+    addEvent(svg, 'mouseup, mouseleave', function(e) {
+        if (!dragging) return;
+        dragging = false;
+        prev_dx += e.clientX - mouse_start_x;
+        prev_dy += e.clientY - mouse_start_y;
+    });
 }

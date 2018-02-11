@@ -18,6 +18,7 @@ class="global">
         -ms-user-select: none;       /* IE/Edge */
         user-select: none;           /* non-prefixed version, currently*/
         pointer-events: all;
+        cursor: move;
     }
     .btc-header-field rect, .btc-tx rect {
         fill: #2b2b2b;/*dark-grey*/
@@ -34,55 +35,57 @@ class="global">
         fill: #2b2b2b;/*dark-grey*/
     }
 ]]></style>
-    <g class="btc-block">
-        <g class="btc-header">
-            <g class="btc-header-field" transform="translate(0,0)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">version</text>
+    <g id="viewport">
+        <g class="btc-block">
+            <g class="btc-header">
+                <g class="btc-header-field" transform="translate(0,0)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">version</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,30)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">previous block hash</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,60)">
+                    <rect x="0" y="0" width="150" height="30" class="btc-header-field"/>
+                    <text x="75" y="21">merkle root</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,90)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">timestamp</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,120)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">difficulty</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,150)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">nonce</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,180)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">merkle root</text>
+                </g>
             </g>
-            <g class="btc-header-field" transform="translate(0,30)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">previous block hash</text>
-            </g>
-            <g class="btc-header-field" transform="translate(0,60)">
-                <rect x="0" y="0" width="150" height="30" class="btc-header-field"/>
-                <text x="75" y="21">merkle root</text>
-            </g>
-            <g class="btc-header-field" transform="translate(0,90)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">timestamp</text>
-            </g>
-            <g class="btc-header-field" transform="translate(0,120)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">difficulty</text>
-            </g>
-            <g class="btc-header-field" transform="translate(0,150)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">nonce</text>
-            </g>
-            <g class="btc-header-field" transform="translate(0,180)">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">merkle root</text>
+            <g class="btc-txs" transform="translate(0,210)">
+                <g class="btc-tx">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">transaction 1</text>
+                </g>
             </g>
         </g>
-        <g class="btc-txs" transform="translate(0,210)">
-            <g class="btc-tx">
-                <rect x="0" y="0" width="150" height="30"/>
-                <text x="75" y="21">transaction 1</text>
-            </g>
+        <g class="braces" transform="translate(165,0)">
+            <path
+                d="M0,0 C 60,0 0,102.5 50,102.5
+                S 45,42.5 90,42.5
+                L90,35 L100,45 L90,55 L90,47.5
+                C 55,47.5 100,107.5 50,107.5
+                S 60,210 0,210
+                L0,205
+                C 50,205 0,105 40,105
+                C 0,105 50,5 0,5
+                Z"
+            />
         </g>
-    </g>
-    <g class="braces" transform="translate(165,0)">
-        <path
-            d="M0,0 C 60,0 0,102.5 50,102.5
-            S 45,42.5 90,42.5
-            L90,35 L100,45 L90,55 L90,47.5
-            C 55,47.5 100,107.5 50,107.5
-            S 60,210 0,210
-            L0,205
-            C 50,205 0,105 40,105
-            C 0,105 50,5 0,5
-            Z"
-        />
     </g>
 </svg>

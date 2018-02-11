@@ -11,10 +11,6 @@ function unixtime(date) {
     }
 }
 
-Element.prototype.isNodeList =
-Window.prototype.isNodeList =
-function() {return false;}
-
 NodeList.prototype.isNodeList =
 HTMLCollection.prototype.isNodeList =
 function() {return true;}
@@ -22,7 +18,7 @@ function() {return true;}
 function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var typesArr = types.split(',');
-    var elements = (element.isNodeList() ? element : [element]);
+    var elements = (element.hasOwnProperty('isNodeList') ? element : [element]);
     for (var el_i = 0; el_i < elements.length; el_i++) {
         var el = elements[el_i];
         for (var type_i = 0; type_i < typesArr.length; type_i++) {
