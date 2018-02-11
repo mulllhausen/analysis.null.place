@@ -545,10 +545,10 @@ function initBlockchainSVG() {
     svg_viewport.appendChild(block);
 
     // drag-events
-    var mouse_start_x = 0; // init scope
-    var mouse_start_y = 0; // init scope
-    var prev_dx = 0; // init scope
-    var prev_dy = 0; // init scope
+    var info = document.getElementById('infoPanel');
+    var mouse_start_x = 0, mouse_start_y = 0; // init scope
+    var prev_dx = 0, prev_dy = 0; // init scope
+    var dx = 0, dy = 0; // init scope
     var dragging = false; // init scope
     var viewport_height = svg_viewport.getBoundingClientRect().height; // pre-compute
     var svg_height = svg.getBoundingClientRect().height; // pre-compute
@@ -556,27 +556,30 @@ function initBlockchainSVG() {
         e.preventDefault();
         mouse_start_x = e.clientX;
         mouse_start_y = e.clientY;
+        info.innerHTML = 'click<br>mouse_start_x=' + mouse_start_x + '<br>mouse_start_y=' + mouse_start_y;
         dragging = true;
     });
     addEvent(svg, 'mousemove', function(e) {
         e.preventDefault();
         if (!dragging) return;
 
-        var dx = prev_dx + e.clientX - mouse_start_x;
+        dx = prev_dx + e.clientX - mouse_start_x;
         if (dx > 0) dx = 0; // only allow dragging to the left
 
-        var dy = prev_dy + e.clientY - mouse_start_y;
+        dy = prev_dy + e.clientY - mouse_start_y;
         if (dy > 0) dy = 0; // only allow dragging up
 
         // don't allow dragging up past the viewport height
         if (dy < (svg_height - viewport_height - 1)) dy = svg_height - viewport_height - 1;
 
+        info.innerHTML = 'drag<br>dx=' + dx + '<br>dy=' + dy + '<br>prev_dx=' + prev_dx + '<br>prev_dy=' + prev_dy;
         svg_viewport.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
     addEvent(svg, 'mouseup, mouseleave', function(e) {
         if (!dragging) return;
         dragging = false;
-        prev_dx += e.clientX - mouse_start_x;
-        prev_dy += e.clientY - mouse_start_y;
+        prev_dx = dx;
+        prev_dy = dy;
+        info.innerHTML = 'mouseup<br>prev_dx=' + prev_dx + '<br>prev_dy=' + prev_dy;
     });
 }
