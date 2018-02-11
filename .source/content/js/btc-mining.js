@@ -539,13 +539,38 @@ function initBlockchainSVG() {
         txs.appendChild(tx);
     }
 
-    // copy the block over to the right
-    var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
-    block.setAttribute('transform', 'translate(280, 0)');
-    svg_viewport.appendChild(block);
+    // copy blocks to render a blockchain
+    var svg_width = svg.getBoundingClientRect().width; // pre-compute
+    var horizontal_padding = 15; // between blocks and braces
+    var block_width = svg.getElementsByClassName('btc-block')[0].
+    getBoundingClientRect().width;
+    var block_and_braces_width = (horizontal_padding * 2) + block_width +
+    svg.getElementsByClassName('braces')[0].getBoundingClientRect().width;
+    var padBlockchain = function() {
+        var num_blocks = svg.getElementsByClassName('btc-block').length;
+
+        // we want to render blocks for twice the width of the viewport
+        var num_to_add = (2 * svg_width) / block_and_braces_width;
+        for (var i = num_blocks; i < num_to_add; i++) {
+            var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
+            var braces = svg.getElementsByClassName('braces')[0].cloneNode(true);
+            var block_num = parseInt(block.id.replace('block', ''));
+            block.getElementsByTagName('text')[0].textContent = 'block ' + (block_num + i);
+            block.setAttribute(
+                'transform',
+                'translate(' + (block_and_braces_width * i) + ',0)'
+            );
+            braces.setAttribute(
+                'transform',
+                'translate(' + (block_width + horizontal_padding + (block_and_braces_width * i)) + ',20)'
+            );
+            svg_viewport.appendChild(block);
+            svg_viewport.appendChild(braces);
+        }
+    };
+    padBlockchain();
 
     // drag-events
-    var info = document.getElementById('infoPanel');
     var mouse_start_x = 0, mouse_start_y = 0; // init scope
     var prev_dx = 0, prev_dy = 0; // init scope
     var dx = 0, dy = 0; // init scope
@@ -556,7 +581,6 @@ function initBlockchainSVG() {
         e.preventDefault();
         mouse_start_x = e.clientX;
         mouse_start_y = e.clientY;
-        info.innerHTML = 'click<br>mouse_start_x=' + mouse_start_x + '<br>mouse_start_y=' + mouse_start_y;
         dragging = true;
     });
     addEvent(svg, 'mousemove', function(e) {
@@ -572,7 +596,6 @@ function initBlockchainSVG() {
         // don't allow dragging up past the viewport height
         if (dy < (svg_height - viewport_height - 1)) dy = svg_height - viewport_height - 1;
 
-        info.innerHTML = 'drag<br>dx=' + dx + '<br>dy=' + dy + '<br>prev_dx=' + prev_dx + '<br>prev_dy=' + prev_dy;
         svg_viewport.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
     addEvent(svg, 'mouseup, mouseleave', function(e) {
@@ -580,6 +603,6 @@ function initBlockchainSVG() {
         dragging = false;
         prev_dx = dx;
         prev_dy = dy;
-        info.innerHTML = 'mouseup<br>prev_dx=' + prev_dx + '<br>prev_dy=' + prev_dy;
+        padBlockchain();
     });
 }

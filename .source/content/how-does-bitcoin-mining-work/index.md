@@ -14,9 +14,6 @@ for yourself and get a feel for how mining really works. While the concepts here
 are not simple, it should be easily accessible to an interested layperson. And I
 hope the interacivity will make an otherwise dry subject fun.
 
-<div id="infoPanel" style="position:fixed;top:0;right:0;height:300px;width:200px;">
-</div>
-
 ## hashing
 
 To understand bitcoin mining, it is first necessary to understand what

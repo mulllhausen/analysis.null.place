@@ -26,18 +26,24 @@ class="global">
         stroke-width: 1;
         shape-rendering: crispEdges;
     }
-    .btc-header-field text, .btc-tx text {
+    text {
         text-anchor: middle;
-        font-size: 16px;
         fill: #bbbbbb;/*off-white*/
+    }
+    .btc-block > text {
+        font-size: 12px;
+    }
+    .btc-header-field > text, .btc-tx > text {
+        font-size: 16px;
     }
     .braces path {
         fill: #2b2b2b;/*dark-grey*/
     }
 ]]></style>
     <g id="viewport">
-        <g class="btc-block">
-            <g class="btc-header">
+        <g id="block0" class="btc-block">
+            <text x="75" y="10">block 0</text>
+            <g class="btc-header" transform="translate(0,20)">
                 <g class="btc-header-field" transform="translate(0,0)">
                     <rect x="0" y="0" width="150" height="30"/>
                     <text x="75" y="21">version</text>
@@ -67,14 +73,14 @@ class="global">
                     <text x="75" y="21">merkle root</text>
                 </g>
             </g>
-            <g class="btc-txs" transform="translate(0,210)">
+            <g class="btc-txs" transform="translate(0,230)">
                 <g class="btc-tx">
                     <rect x="0" y="0" width="150" height="30"/>
                     <text x="75" y="21">transaction 1</text>
                 </g>
             </g>
         </g>
-        <g class="braces" transform="translate(165,0)">
+        <g class="braces" transform="translate(165,20)">
             <path
                 d="M0,0 C 60,0 0,102.5 50,102.5
                 S 45,42.5 90,42.5
