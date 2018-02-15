@@ -40,9 +40,9 @@ class="global">
         fill: #2b2b2b;/*dark-grey*/
     }
 ]]></style>
-    <g id="viewport">
-        <g id="block0" class="btc-block">
-            <text x="75" y="10">block 0</text>
+    <defs>
+        <g id="block" class="btc-block">
+            <text x="75" y="10">block number x</text>
             <g class="btc-header" transform="translate(0,20)">
                 <g class="btc-header-field" transform="translate(0,0)">
                     <rect x="0" y="0" width="150" height="30"/>
@@ -80,7 +80,7 @@ class="global">
                 </g>
             </g>
         </g>
-        <g class="braces" transform="translate(165,20)">
+        <g id="braces" class="braces">
             <path
                 d="M0,0 C 60,0 0,102.5 50,102.5
                 S 45,42.5 90,42.5
@@ -93,5 +93,7 @@ class="global">
                 Z"
             />
         </g>
+    </defs>
+    <g id="viewport">
     </g>
 </svg>

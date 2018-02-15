@@ -530,129 +530,76 @@ function initBlockchainSVG() {
     getElementsByTagName('svg')[0];
     var svg_viewport = svg.getElementById('viewport');
 
-    // create 100 transactions for the first block
+    // create 20 transactions for each block
+    var tx_height = svg.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
+    height;
     var txs = svg.getElementsByClassName('btc-txs')[0];
     for (var i = 1; i < 20; i++) {
         var tx = txs.getElementsByClassName('btc-tx')[0].cloneNode(true);
-        tx.setAttribute('transform', 'translate(0,' + (30 * i) + ')');
+        tx.setAttribute('transform', 'translate(0,' + (tx_height * i) + ')');
         tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
         txs.appendChild(tx);
     }
 
-    // copy blocks to render a blockchain
+    // copy blocks and braces to render a blockchain 3x as wide as the svg
     var svg_width = svg.getBoundingClientRect().width; // pre-compute
-    var horizontal_padding = 15; // between blocks and braces
-    var block_width = svg.getElementsByClassName('btc-block')[0].
-    getBoundingClientRect().width;
+    var horizontal_padding = 0; // between blocks and braces (init)
+    var block_width = svg.getElementById('block').getBoundingClientRect().width;
+    var braces_width = svg.getElementById('braces').getBoundingClientRect().width;
+    var viewport_width = 0; // init
+    for (var block_num = 0; viewport_width <= (svg_width * 3); block_num++) {
+        var block = svg.getElementById('block').cloneNode(true);
+        block.getElementsByTagName('text')[0].textContent = 'block ' + block_num;
+        block.id = 'block' + block_num;
+        block.setAttribute(
+            'transform',
+            'translate(' + (viewport_width + horizontal_padding) + ')'
+        );
+        svg_viewport.appendChild(block);
+        viewport_width += horizontal_padding + block_width;
+        horizontal_padding = 15; // always 15 after the first block
 
-    var braces_width = svg.getElementsByClassName('braces')[0].
-    getBoundingClientRect().width;
+        var braces = svg.getElementById('braces').cloneNode(true);
+        braces.setAttribute(
+            'transform',
+            'translate(' + (viewport_width + horizontal_padding) + ',20)'
+        );
+        svg_viewport.appendChild(braces);
+        viewport_width += horizontal_padding + braces_width;
+    }
 
+    // center the viewport in the x direction and offset to give the illiusion
+    // that the blocks are positioned the same as they currently are
     var block_and_braces_width = block_width + braces_width + (2 * horizontal_padding);
-    var padBlockchain = function() {
-        var num_blocks = svg.getElementsByClassName('btc-block').length;
-        var leftmost_blocknum = parseInt(
-            svg.getElementsByClassName('btc-block')[0].id.replace('block', '')
+    var num_visible_blocks = Math.floor(svg_width / block_and_braces_width);
+    var action_zone = -svg_width - block_and_braces_width;
+    var resetViewport = function() {
+        var viewport_left = svg_viewport.getBoundingClientRect().left;
+        var all_blocks = svg_viewport.getElementsByClassName('btc-block');
+        if ((viewport_left > action_zone) && (all_blocks[0].id == 'block0')) return null;
+
+        // put viewport_left somewhere back between -svg_width and action_zone
+        var blocks_past_action_zone = Math.trunc(
+            (svg_width + viewport_left) / block_and_braces_width
         );
-        var rightmost_blocknum = parseInt(
-            svg.getElementsByClassName('btc-block')[num_blocks - 1].id.replace('block', '')
+        if (blocks_past_action_zone == 0) return null;
+        var translate_x = viewport_left - (blocks_past_action_zone * block_and_braces_width);
+        var viewport_top = svg_viewport.getBoundingClientRect().top;
+        svg_viewport.setAttribute(
+            'transform', 'translate(' + translate_x + ',' + viewport_top + ')'
         );
-        var braces = svg.getElementsByClassName('braces')[0].cloneNode(true);
-        if (num_blocks == 1) svg.getElementsByClassName('braces')[0].remove();
-        while (true) {
-            var nop = true;
-            var viewport_right = svg_viewport.getBoundingClientRect().right;
-
-            // if even after adding a block on the right its still going to be
-            // less than double the svg width then add a block on the right
-            if ((viewport_right + block_and_braces_width) <= (2 * svg_width)) {
-                nop = false;
-
-                if (num_blocks != 1) var braces = svg.
-                getElementsByClassName('braces')[0].cloneNode(true);
-
-                braces.setAttribute(
-                    'transform',
-                    'translate(' + (viewport_right + horizontal_padding) + ',20)'
-                );
-                svg_viewport.appendChild(braces);
-                viewport_right += horizontal_padding + braces_width;
-
-                rightmost_blocknum++;
-                var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
-                block.getElementsByTagName('text')[0].textContent = 'block ' +
-                rightmost_blocknum;
-                block.id = 'block' + rightmost_blocknum;
-                block.setAttribute(
-                    'transform',
-                    'translate(' + (viewport_right + horizontal_padding) + ',0)'
-                );
-                svg_viewport.appendChild(block);
-                num_blocks++;
-                viewport_right += horizontal_padding + block_width;
-            }
-
-            // if more than double the svg width + a block then remove a block on the right
-            if (viewport_right > ((2 * svg_width) + block_and_braces_width)) {
-                nop = false;
-                svg.getElementsByClassName('btc-block')[num_blocks - 1].remove();
-                svg.getElementsByClassName('braces')[num_blocks - 2].remove();
-                rightmost_blocknum--;
-                num_blocks--;
-                viewport_right -= block_and_braces_width;
-            }
-
-            var viewport_left = svg_viewport.getBoundingClientRect().left;
-
-            // if less than (- svg width - a block) then remove blocks on the left
-            if (
-                (leftmost_blocknum > 0) &&
-                (viewport_left < (-svg_width - block_and_braces_width))
-            ) {
-                nop = false;
-                svg.getElementsByClassName('btc-block')[0].remove();
-                svg.getElementsByClassName('braces')[0].remove();
-                leftmost_blocknum++
-                num_blocks--;
-                viewport_left += block_and_braces_width;
-            }
-
-            // if even after adding a block on the left its still going to be
-            // more than (- svg width) then add more blocks on the left
-            if (
-                (leftmost_blocknum > 0) &&
-                ((viewport_left - block_and_braces_width) >= -svg_width)
-            ) {
-                nop = false;
-
-                var braces = svg.getElementsByClassName('braces')[0].cloneNode(true);
-                braces.setAttribute(
-                    'transform',
-                    'translate(' + (viewport_left + horizontal_padding +
-                    braces_width) + ',20)'
-                );
-                svg_viewport.appendChild(braces);
-                viewport_left -= (horizontal_padding + braces_width);
-
-                leftmost_blocknum--;
-                var block = svg.getElementsByClassName('btc-block')[0].cloneNode(true);
-                block.getElementsByTagName('text')[0].textContent = 'block ' +
-                leftmost_blocknum;
-                block.id = 'block' + leftmost_blocknum;
-                block.setAttribute(
-                    'transform',
-                    'translate(' + (viewport_left + horizontal_padding +
-                    block_width) + ',0)'
-                );
-                svg_viewport.appendChild(block);
-                num_blocks++;
-                viewport_left -= horizontal_padding + block_width;
-            }
-
-            if (nop) break;
+        for (
+            var current_block_num = parseInt(all_blocks[0].id.replace('block', ''));
+            current_block_num < all_blocks.length;
+            current_block_num++
+        ) {
+            var new_block_num = current_block_num - blocks_past_action_zone;
+            all_blocks[current_block_num].id = 'block' + new_block_num;
+            all_blocks[current_block_num].getElementsByTagName('text')[0].
+            textContent = 'block ' + new_block_num;
         }
-    };
-    //padBlockchain();
+        return {dx: translate_x, dy: viewport_top};
+    }
 
     // drag-events
     var mouse_start_x = 0, mouse_start_y = 0; // init scope
@@ -685,8 +632,8 @@ function initBlockchainSVG() {
     addEvent(svg, 'mouseup, mouseleave', function(e) {
         if (!dragging) return;
         dragging = false;
-        prev_dx = dx;
-        prev_dy = dy;
-        padBlockchain();
+        var translation = resetViewport();
+        prev_dx = (translation == null) ? dx : translation.dx;
+        prev_dy = (translation == null) ? dy : translation.dy;
     });
 }
