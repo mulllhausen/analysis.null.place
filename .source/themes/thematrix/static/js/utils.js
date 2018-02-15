@@ -84,7 +84,7 @@ function setButtons(enable) {
 }
 
 function in_array(needle, haystack) {
-    // note: does not with with NaN or ie < 9
+    // note: does not work with with NaN or ie < 9
     return (haystack.indexOf(needle) > -1);
 }
 

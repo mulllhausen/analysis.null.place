@@ -529,6 +529,7 @@ function initBlockchainSVG() {
     var svg = document.getElementById('blockchainSVG').contentDocument.
     getElementsByTagName('svg')[0];
     var svg_viewport = svg.getElementById('viewport');
+    var border_top = 1;
 
     // create 20 transactions for each block
     var tx_height = svg.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
@@ -572,31 +573,34 @@ function initBlockchainSVG() {
     // that the blocks are positioned the same as they currently are
     var block_and_braces_width = block_width + braces_width + (2 * horizontal_padding);
     var num_visible_blocks = Math.floor(svg_width / block_and_braces_width);
-    var action_zone = -svg_width - block_and_braces_width;
     var resetViewport = function() {
         var viewport_left = svg_viewport.getBoundingClientRect().left;
         var all_blocks = svg_viewport.getElementsByClassName('btc-block');
-        if ((viewport_left > action_zone) && (all_blocks[0].id == 'block0')) return null;
+        var leftmost_block = parseInt(all_blocks[0].id.replace(/[a-z]/g, ''));
+        if ((viewport_left > -svg_width) && (leftmost_block == 0)) return null;
 
         // put viewport_left somewhere back between -svg_width and action_zone
         var blocks_past_action_zone = Math.trunc(
             (svg_width + viewport_left) / block_and_braces_width
         );
         if (blocks_past_action_zone == 0) return null;
+        // never let the leftmost block index be less than 0
+        if (leftmost_block < blocks_past_action_zone) blocks_past_action_zone = leftmost_block;
         var translate_x = viewport_left - (blocks_past_action_zone * block_and_braces_width);
-        var viewport_top = svg_viewport.getBoundingClientRect().top;
+        var viewport_top = svg_viewport.getBoundingClientRect().top + border_top;
         svg_viewport.setAttribute(
             'transform', 'translate(' + translate_x + ',' + viewport_top + ')'
         );
-        for (
-            var current_block_num = parseInt(all_blocks[0].id.replace('block', ''));
-            current_block_num < all_blocks.length;
-            current_block_num++
-        ) {
+        // alternate between 'block' and 'bloc' otherwise ids may not be
+        // overwritten in some browsers?
+        var new_id_prefix = (all_blocks[0].id.replace(/[0-9]/g, '') == 'block') ?
+        'bloc' : 'block';
+        var current_block_num = leftmost_block;
+        for (var i = 0; i < all_blocks.length; i++) {
             var new_block_num = current_block_num - blocks_past_action_zone;
-            all_blocks[current_block_num].id = 'block' + new_block_num;
-            all_blocks[current_block_num].getElementsByTagName('text')[0].
-            textContent = 'block ' + new_block_num;
+            all_blocks[i].id = new_id_prefix + new_block_num;
+            all_blocks[i].getElementsByTagName('text')[0].textContent = 'block ' + new_block_num;
+            current_block_num++
         }
         return {dx: translate_x, dy: viewport_top};
     }
@@ -625,8 +629,9 @@ function initBlockchainSVG() {
         if (dy > 0) dy = 0; // only allow dragging up
 
         // don't allow dragging up past the viewport height
-        if (dy < (svg_height - viewport_height - 1)) dy = svg_height - viewport_height - 1;
-
+        if (dy < (svg_height - viewport_height - border_top)) {
+            dy = svg_height - viewport_height - border_top;
+        }
         svg_viewport.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
     addEvent(svg, 'mouseup, mouseleave', function(e) {
