@@ -56,4 +56,6 @@ DELETE_OUTPUT_DIRECTORY = False
 
 GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 
-STATIC_PATHS = ['img', 'js', 'css']
+STATIC_PATHS = ['img', 'js', 'css', 'json']
+
+LOAD_CONTENT_CACHE = False

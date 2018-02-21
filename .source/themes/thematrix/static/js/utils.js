@@ -19,10 +19,10 @@ function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var typesArr = types.split(',');
     var elements = (element.hasOwnProperty('isNodeList') ? element : [element]);
-    for (var el_i = 0; el_i < elements.length; el_i++) {
-        var el = elements[el_i];
-        for (var type_i = 0; type_i < typesArr.length; type_i++) {
-            var type = typesArr[type_i].replace(/ /g, '');
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
+        for (var typeI = 0; typeI < typesArr.length; typeI++) {
+            var type = typesArr[typeI].replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
             } else if (el.attachEvent) {
@@ -83,9 +83,21 @@ function setButtons(enable) {
     }
 }
 
-function in_array(needle, haystack) {
+function inArray(needle, haystack) {
     // note: does not work with with NaN or ie < 9
     return (haystack.indexOf(needle) > -1);
+}
+
+function ajax(url, callback) {
+    // doesn't work on opera mini :(
+    var xhttp = new XMLHttpRequest();
+    addEvent(xhttp, 'readystatechange', function() {
+        if (this.readyState != XMLHttpRequest.DONE) return;
+        if (this.status != 200) return;
+        callback(this.responseText);
+    });
+    xhttp.open('GET', url);
+    xhttp.send();
 }
 
 // events for all pages

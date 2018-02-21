@@ -1,5 +1,6 @@
 var passColor = '#7db904'; // green
 var failColor = 'red';
+var txsPerBlock = [];
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
     version: null,
@@ -65,13 +66,13 @@ addEvent(window, 'load', function() {
 
 function runHash0WrapClicked(e) {
     var btn = e.currentTarget;
-    var codeblock_text = btn.parentNode.parentNode.querySelector('.codeblock').innerText;
+    var codeblockText = btn.parentNode.parentNode.querySelector('.codeblock').innerText;
     if (btn.getAttribute('wrapped') == 'true') {
         btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        codeblock_text.replace(/\n/g, '\n\n').replace(/[ ]* -> SHA256/g, ' -> SHA256');
+        codeblockText.replace(/\n/g, '\n\n').replace(/[ ]* -> SHA256/g, ' -> SHA256');
     } else {
         btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        alignText(codeblock_text.replace(/\n\n/g, '\n'), '-> SHA256');
+        alignText(codeblockText.replace(/\n\n/g, '\n'), '-> SHA256');
     }
 }
 
@@ -113,19 +114,19 @@ function alignText(text, splitter) {
     var lines = text.split('\n');
     if (lines.length == 1) return text;
 
-    var biggest_indent_pos = 0; // init
-    for (var line_i = 0; line_i < lines.length; line_i++) {
-        var indent_pos = lines[line_i].indexOf(splitter); // -1 if not found
-        if (indent_pos > biggest_indent_pos) biggest_indent_pos = indent_pos;
+    var biggestIndentPos = 0; // init
+    for (var lineI = 0; lineI < lines.length; lineI++) {
+        var indentPos = lines[lineI].indexOf(splitter); // -1 if not found
+        if (indentPos > biggestIndentPos) biggestIndentPos = indentPos;
     }
-    for (var line_i = 0; line_i < lines.length; line_i++) {
-        var this_line = lines[line_i];
-        var line_parts = this_line.split(splitter);
-        if (line_parts.length == 1) continue;
+    for (var lineI = 0; lineI < lines.length; lineI++) {
+        var thisLine = lines[lineI];
+        var lineParts = thisLine.split(splitter);
+        if (lineParts.length == 1) continue;
 
-        lines[line_i] = line_parts[0] +
-        ' '.repeat(biggest_indent_pos - line_parts[0].length) + splitter +
-        line_parts[1];
+        lines[lineI] = lineParts[0] +
+        ' '.repeat(biggestIndentPos - lineParts[0].length) + splitter +
+        lineParts[1];
     }
     return lines.join('\n');
 }
@@ -441,13 +442,13 @@ function mine() {
 // align the status when the 'wrap' button is clicked
 function runHash1WrapClicked(e) {
     var btn = e.currentTarget;
-    var codeblock_html = btn.parentNode.parentNode.querySelector('.codeblock').innerHTML;
+    var codeblockHtml = btn.parentNode.parentNode.querySelector('.codeblock').innerHTML;
     if (btn.getAttribute('wrapped') == 'true') {
         btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
-        codeblock_html.replace('status:     ', 'status: ');
+        codeblockHtml.replace('status:     ', 'status: ');
     } else {
         btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
-        codeblock_html.replace('status: ', 'status:     ');
+        codeblockHtml.replace('status: ', 'status:     ');
     }
 }
 
@@ -528,117 +529,148 @@ function toLittleEndian(hexStr) {
 function initBlockchainSVG() {
     var svg = document.getElementById('blockchainSVG').contentDocument.
     getElementsByTagName('svg')[0];
-    var svg_viewport = svg.getElementById('viewport');
-    var border_top = 1;
+    var svgDefs = svg.getElementsByTagName('defs')[0];
+    var svgView = svg.getElementById('view');
+    var borderTop = 1;
 
-    // create 20 transactions for each block
-    var tx_height = svg.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
+    // fetch the number of txs per block
+    var getNumBlockTxs = function(blockNum) {
+        if (blockNum < txsPerBlock.length) return;
+
+        var endRange = (Math.ceil(blockNum / 1000) * 1000) - 1;
+        if (txsPerBlock.length > endRange) return;
+
+        var startRange = Math.floor(blockNum / 1000) * 1000;
+        ajax(
+            '/json/btc_txs_per_block_' + startRange + '-' + endRange + '.json',
+            function(json) {
+            try {
+                var numTxsArray = JSON.parse(json).txsPerBlock;
+                txsPerBlock = txsPerBlock.concat(numTxsArray);
+                // this will create a huge array, but javascript can handle it :)
+            }
+            catch(err) {}
+        });
+    };
+    getNumBlockTxs(1); // fetch json via ajax to init the txsPerBlock array
+
+    // render the correct number of transactions for each block
+    var txHeight = svgDefs.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
     height;
-    var txs = svg.getElementsByClassName('btc-txs')[0];
-    for (var i = 1; i < 20; i++) {
-        var tx = txs.getElementsByClassName('btc-tx')[0].cloneNode(true);
-        tx.setAttribute('transform', 'translate(0,' + (tx_height * i) + ')');
-        tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
-        txs.appendChild(tx);
-    }
+    var renderBlockTxs = function(blockEl, blockNum) {
+        // wipe all txs from the btc-txs group in this block
+        var txs = blockEl.getElementsByClassName('btc-txs')[0];
+        txs.parentNode.replaceChild(txs.cloneNode(false), txs);
+        var newTxs = blockEl.getElementsByClassName('btc-txs')[0];
+
+        for (var i = 0; i < txsPerBlock[blockNum]; i++) {
+            var tx = svgDefs.getElementsByClassName('btc-tx')[0].cloneNode(true);
+            tx.setAttribute('transform', 'translate(0,' + (txHeight * i) + ')');
+            tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
+            newTxs.appendChild(tx);
+        }
+    };
 
     // copy blocks and braces to render a blockchain 3x as wide as the svg
-    var svg_width = svg.getBoundingClientRect().width; // pre-compute
-    var horizontal_padding = 0; // between blocks and braces (init)
-    var block_width = svg.getElementById('block').getBoundingClientRect().width;
-    var braces_width = svg.getElementById('braces').getBoundingClientRect().width;
-    var viewport_width = 0; // init
-    for (var block_num = 0; viewport_width <= (svg_width * 3); block_num++) {
+    var svgWidth = svg.getBoundingClientRect().width; // pre-compute
+    var horizontalPadding = 0; // between blocks and braces (init)
+    var blockWidth = svg.getElementById('block').getBoundingClientRect().width;
+    var bracesWidth = svg.getElementById('braces').getBoundingClientRect().width;
+    var viewWidth = 0; // init
+    for (var blockNum = 0; viewWidth <= (svgWidth * 3); blockNum++) {
         var block = svg.getElementById('block').cloneNode(true);
-        block.getElementsByTagName('text')[0].textContent = 'block ' + block_num;
-        block.id = 'block' + block_num;
+        block.getElementsByTagName('text')[0].textContent = 'block ' + blockNum;
+        block.id = 'block' + blockNum;
         block.setAttribute(
             'transform',
-            'translate(' + (viewport_width + horizontal_padding) + ')'
+            'translate(' + (viewWidth + horizontalPadding) + ')'
         );
-        svg_viewport.appendChild(block);
-        viewport_width += horizontal_padding + block_width;
-        horizontal_padding = 15; // always 15 after the first block
+        svgView.appendChild(block);
+        viewWidth += horizontalPadding + blockWidth;
+        horizontalPadding = 15; // always 15 after the first block
 
         var braces = svg.getElementById('braces').cloneNode(true);
         braces.setAttribute(
             'transform',
-            'translate(' + (viewport_width + horizontal_padding) + ',20)'
+            'translate(' + (viewWidth + horizontalPadding) + ',20)'
         );
-        svg_viewport.appendChild(braces);
-        viewport_width += horizontal_padding + braces_width;
+        svgView.appendChild(braces);
+        viewWidth += horizontalPadding + bracesWidth;
     }
 
-    // center the viewport in the x direction and offset to give the illiusion
+    // center the view in the x direction and offset to give the illiusion
     // that the blocks are positioned the same as they currently are
-    var block_and_braces_width = block_width + braces_width + (2 * horizontal_padding);
-    var num_visible_blocks = Math.floor(svg_width / block_and_braces_width);
-    var resetViewport = function() {
-        var viewport_left = svg_viewport.getBoundingClientRect().left;
-        var all_blocks = svg_viewport.getElementsByClassName('btc-block');
-        var leftmost_block = parseInt(all_blocks[0].id.replace(/[a-z]/g, ''));
-        if ((viewport_left > -svg_width) && (leftmost_block == 0)) return null;
+    var blockAndBracesWidth = blockWidth + bracesWidth + (2 * horizontalPadding);
+    var numVisibleBlocks = Math.floor(svgWidth / blockAndBracesWidth);
+    var resetView = function() {
+        var viewLeft = svgView.getBoundingClientRect().left;
+        var allBlocks = svgView.getElementsByClassName('btc-block');
+        var leftmostBlock = parseInt(allBlocks[0].id.replace(/[a-z]/g, ''));
+        if ((viewLeft > -svgWidth) && (leftmostBlock == 0)) return null;
 
-        // put viewport_left somewhere back between -svg_width and action_zone
-        var blocks_past_action_zone = Math.trunc(
-            (svg_width + viewport_left) / block_and_braces_width
+        // put viewLeft somewhere back between -svgWidth and actionZone
+        var blocksPastActionZone = Math.trunc(
+            (svgWidth + viewLeft) / blockAndBracesWidth
         );
-        if (blocks_past_action_zone == 0) return null;
+        if (blocksPastActionZone == 0) return null;
         // never let the leftmost block index be less than 0
-        if (leftmost_block < blocks_past_action_zone) blocks_past_action_zone = leftmost_block;
-        var translate_x = viewport_left - (blocks_past_action_zone * block_and_braces_width);
-        var viewport_top = svg_viewport.getBoundingClientRect().top + border_top;
-        svg_viewport.setAttribute(
-            'transform', 'translate(' + translate_x + ',' + viewport_top + ')'
+        if (leftmostBlock < blocksPastActionZone) blocksPastActionZone = leftmostBlock;
+        var translateX = viewLeft - (blocksPastActionZone * blockAndBracesWidth);
+        var viewTop = svgView.getBoundingClientRect().top + borderTop;
+        svgView.setAttribute(
+            'transform', 'translate(' + translateX + ',' + viewTop + ')'
         );
         // alternate between 'block' and 'bloc' otherwise ids may not be
         // overwritten in some browsers?
-        var new_id_prefix = (all_blocks[0].id.replace(/[0-9]/g, '') == 'block') ?
+        var newIdPrefix = (allBlocks[0].id.replace(/[0-9]/g, '') == 'block') ?
         'bloc' : 'block';
-        var current_block_num = leftmost_block;
-        for (var i = 0; i < all_blocks.length; i++) {
-            var new_block_num = current_block_num - blocks_past_action_zone;
-            all_blocks[i].id = new_id_prefix + new_block_num;
-            all_blocks[i].getElementsByTagName('text')[0].textContent = 'block ' + new_block_num;
-            current_block_num++
+        var currentBlockNum = leftmostBlock;
+        for (var i = 0; i < allBlocks.length; i++) {
+            var newBlockNum = currentBlockNum - blocksPastActionZone;
+            allBlocks[i].id = newIdPrefix + newBlockNum;
+            allBlocks[i].getElementsByTagName('text')[0].textContent = 'block ' +
+            newBlockNum;
+            renderBlockTxs(allBlocks[i], newBlockNum);
+            getNumBlockTxs(newBlockNum + (3 * numVisibleBlocks)); // fetch ahead
+            currentBlockNum++
         }
-        return {dx: translate_x, dy: viewport_top};
+        return {dx: translateX, dy: viewTop};
     }
 
     // drag-events
-    var mouse_start_x = 0, mouse_start_y = 0; // init scope
-    var prev_dx = 0, prev_dy = 0; // init scope
+    var mouseStartX = 0, mouseStartY = 0; // init scope
+    var prevDx = 0, prevDy = 0; // init scope
     var dx = 0, dy = 0; // init scope
     var dragging = false; // init scope
-    var viewport_height = svg_viewport.getBoundingClientRect().height; // pre-compute
-    var svg_height = svg.getBoundingClientRect().height; // pre-compute
+    var svgHeight = svg.getBoundingClientRect().height; // pre-compute
     addEvent(svg, 'mousedown', function(e) {
         e.preventDefault();
-        mouse_start_x = e.clientX;
-        mouse_start_y = e.clientY;
+        mouseStartX = e.clientX;
+        mouseStartY = e.clientY;
         dragging = true;
     });
     addEvent(svg, 'mousemove', function(e) {
         e.preventDefault();
         if (!dragging) return;
 
-        dx = prev_dx + e.clientX - mouse_start_x;
+        dx = prevDx + e.clientX - mouseStartX;
         if (dx > 0) dx = 0; // only allow dragging to the left
 
-        dy = prev_dy + e.clientY - mouse_start_y;
-        if (dy > 0) dy = 0; // only allow dragging up
+        dy = prevDy + e.clientY - mouseStartY;
 
-        // don't allow dragging up past the viewport height
-        if (dy < (svg_height - viewport_height - border_top)) {
-            dy = svg_height - viewport_height - border_top;
+        // don't allow dragging up past the view height
+        var viewHeight = svgView.getBoundingClientRect().height; // pre-compute
+        if (dy < (svgHeight - viewHeight - borderTop)) {
+            dy = svgHeight - viewHeight - borderTop;
         }
-        svg_viewport.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
+        if (dy > 0) dy = 0; // only allow dragging up
+        svgView.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
     addEvent(svg, 'mouseup, mouseleave', function(e) {
         if (!dragging) return;
         dragging = false;
-        var translation = resetViewport();
-        prev_dx = (translation == null) ? dx : translation.dx;
-        prev_dy = (translation == null) ? dy : translation.dy;
+        var translation = resetView();
+        prevDx = (translation == null) ? dx : translation.dx;
+        prevDy = (translation == null) ? dy : translation.dy;
     });
 }
