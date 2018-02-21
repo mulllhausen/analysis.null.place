@@ -598,7 +598,10 @@ function initBlockchainSVG() {
         viewWidth += horizontalPadding + bracesWidth;
     }
 
-    // center the view in the x direction and offset to give the illiusion
+    // append the instructions
+    svgView.appendChild(svgDefs.getElementsByClassName('big-instructions')[0]);
+
+    // roughly center the view in the x direction and offset to give the illiusion
     // that the blocks are positioned the same as they currently are
     var blockAndBracesWidth = blockWidth + bracesWidth + (2 * horizontalPadding);
     var numVisibleBlocks = Math.floor(svgWidth / blockAndBracesWidth);
@@ -649,10 +652,15 @@ function initBlockchainSVG() {
         mouseStartY = e.clientY;
         dragging = true;
     });
+    var instructionsHidden = false; // init
     addEvent(svg, 'mousemove', function(e) {
         e.preventDefault();
         if (!dragging) return;
 
+        if (!instructionsHidden) {
+            svgView.removeChild(svgView.getElementsByClassName('big-instructions')[0]);
+            instructionsHidden = true;
+        }
         dx = prevDx + e.clientX - mouseStartX;
         if (dx > 0) dx = 0; // only allow dragging to the left
 
