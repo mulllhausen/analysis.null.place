@@ -4,7 +4,7 @@
 "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 
 <svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="500"
+xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="300"
 class="global">
 <style type="text/css"><![CDATA[
     .global {
@@ -27,7 +27,7 @@ class="global">
         shape-rendering: crispEdges;
     }
     text {
-        text-anchor: middle;
+        text-anchor: middle;/*horizontal*/
         fill: #bbbbbb;/*off-white*/
     }
     .btc-block > text {
@@ -40,13 +40,17 @@ class="global">
         fill: #2b2b2b;/*dark-grey*/
     }
     .big-instructions {
-        font-size: 100px;
+        transform: rotate(15deg);
+        transform-origin: -280vh 215vw;
+    }
+    .big-instructions text {
+        font-size: 14vw;
         animation: hideshow 3s infinite linear;
     }
     @keyframes hideshow {
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
+        0% { opacity: 0.9; }
+        50% { opacity: 0.3; }
+        100% { opacity: 0.9; }
     }
 ]]></style>
     <defs>
@@ -102,9 +106,9 @@ class="global">
                 Z"
             />
         </g>
-        <text class="big-instructions" x="50%" y="50%" width="100%" height="100%"
-            transform="rotate(15,500,250)"
-        >drag across</text>
+        <g class="big-instructions">
+            <text x="0" y="0">drag across</text>
+        </g>
     </defs>
     <g id="view">
     </g>

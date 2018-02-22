@@ -599,7 +599,7 @@ function initBlockchainSVG() {
     }
 
     // append the instructions
-    svgView.appendChild(svgDefs.getElementsByClassName('big-instructions')[0]);
+    svg.appendChild(svgDefs.getElementsByClassName('big-instructions')[0]);
 
     // roughly center the view in the x direction and offset to give the illiusion
     // that the blocks are positioned the same as they currently are
@@ -646,25 +646,47 @@ function initBlockchainSVG() {
     var dx = 0, dy = 0; // init scope
     var dragging = false; // init scope
     var svgHeight = svg.getBoundingClientRect().height; // pre-compute
-    addEvent(svg, 'mousedown', function(e) {
-        e.preventDefault();
-        mouseStartX = e.clientX;
-        mouseStartY = e.clientY;
+    addEvent(svg, 'mousedown, touchstart', function(e) {
+        switch (e.type) {
+            case 'touchstart':
+                e.cancelBubble = true;
+                mouseStartX = e.touches[0].clientX;
+                mouseStartY = e.touches[0].clientY;
+                break;
+            case 'mousedown':
+                e.stopPropagation();
+                mouseStartX = e.clientX;
+                mouseStartY = e.clientY;
+                break;
+        }
         dragging = true;
     });
     var instructionsHidden = false; // init
-    addEvent(svg, 'mousemove', function(e) {
-        e.preventDefault();
+    addEvent(svg, 'mousemove, touchmove', function(e) {
+        switch (e.type) {
+            case 'touchmove': e.cancelBubble = true; break;
+            case 'mousemove': e.stopPropagation(); break;
+        }
         if (!dragging) return;
 
         if (!instructionsHidden) {
-            svgView.removeChild(svgView.getElementsByClassName('big-instructions')[0]);
+            svg.removeChild(svg.getElementsByClassName('big-instructions')[0]);
             instructionsHidden = true;
         }
-        dx = prevDx + e.clientX - mouseStartX;
+        switch (e.type) {
+            case 'touchmove':
+                var clientX = e.touches[0].clientX;
+                var clientY = e.touches[0].clientY;
+                break;
+            case 'mousemove':
+                var clientX = e.clientX;
+                var clientY = e.clientY;
+                break;
+        }
+        dx = prevDx + clientX - mouseStartX;
         if (dx > 0) dx = 0; // only allow dragging to the left
 
-        dy = prevDy + e.clientY - mouseStartY;
+        dy = prevDy + clientY - mouseStartY;
 
         // don't allow dragging up past the view height
         var viewHeight = svgView.getBoundingClientRect().height; // pre-compute
@@ -674,7 +696,11 @@ function initBlockchainSVG() {
         if (dy > 0) dy = 0; // only allow dragging up
         svgView.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
-    addEvent(svg, 'mouseup, mouseleave', function(e) {
+    addEvent(svg, 'mouseup, mouseleave, touchend', function(e) {
+        switch (e.type) {
+            case 'touchmove': e.cancelBubble = true; break;
+            case 'mousemove': e.stopPropagation(); break;
+        }
         if (!dragging) return;
         dragging = false;
         var translation = resetView();

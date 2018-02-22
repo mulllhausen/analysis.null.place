@@ -137,7 +137,7 @@ code, pre {
     font-size: 13px;
     border-radius: 4px;
     padding: 2px 4px 1px 4px;
-    color: #ae81ff;/*purple*/
+    color: #7db904;/*green*/
     background-color: #2b2b2b;/*dark-grey*/
     border: 1px solid #6a6a6a;/*light-grey*/
     white-space: pre-wrap;
@@ -360,6 +360,9 @@ img#logo_img {
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
     line-height: 24px;
+}
+.info-box .fa-hashtag {
+    font-size: 90%;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
