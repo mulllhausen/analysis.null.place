@@ -31,12 +31,13 @@ FEED_ALL_RSS = None
 AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
-DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'archives', 'sitemap']
+DIRECT_TEMPLATES = ['index', 'tags', 'categories', 'archives', 'sitemap', 'robots']
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
 CATEGORIES_SAVE_AS = 'categories/index.html'
 ARCHIVES_SAVE_AS = 'archives/index.html'
 SITEMAP_SAVE_AS = 'sitemap.xml'
+ROBOTS_SAVE_AS = 'robots.txt'
 
 ARTICLE_URL = '{category}/{slug}/'
 ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
