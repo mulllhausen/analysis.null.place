@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
 SITEURL = ''
-BLOG_DESCRIPTION = 'Blog by ' + AUTHOR + ' focusing mainly on cryptocurrencies,' +
+BLOG_DESCRIPTION = 'Blog by ' + AUTHOR + ' focusing mainly on cryptocurrencies,' \
 ' software development and economics'
 
 PATH = 'content'
