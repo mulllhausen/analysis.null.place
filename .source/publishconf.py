@@ -10,7 +10,7 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITE_HOSTNAME = 'analysis.null.place'
+SITE_HOSTNAME = 'null.place'
 SITEURL = 'http://' + SITE_HOSTNAME
 RELATIVE_URLS = False
 
