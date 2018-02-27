@@ -10,7 +10,8 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://analysis.null.place'
+SITE_HOSTNAME = 'analysis.null.place'
+SITEURL = 'http://' + SITE_HOSTNAME
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
@@ -21,3 +22,5 @@ DELETE_OUTPUT_DIRECTORY = False
 #DISQUS_SITENAME = ""
 GOOGLE_ANALYTICS_TRACKING_ID = 'UA-110200325-1'
 FACEBOOK_ANALYTICS_ID = '2040066019560327'
+
+GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
