@@ -23,7 +23,7 @@ html, body{
     background-color: #000000;/*black*/
     overflow: auto;/*expand to height of children*/
 }
-p {
+p, li {
     word-wrap: break-word;
     line-height: 26px;
 }
@@ -150,6 +150,9 @@ code, pre {
 pre {
     padding: 10px;
     display: inline-block;
+}
+code {
+    word-break: break-all;
 }
 /* end raw element styles */
 
@@ -396,6 +399,15 @@ ul.taglist {
 ul.taglist li {
     margin-bottom: 5px;
 }
+.entry-content ol, .entry-content ul {
+    list-style-position: inside;
+}
+.entry-content ul {
+    list-style-type: none;
+}
+.entry-content ul li:before {
+    content: "\2011 \a0\a0";/*dash space space in utf8*/
+}
 /* end list styles */
 
 .keep-together {
@@ -411,11 +423,14 @@ ul.taglist li {
     display: table;
     margin: 0 auto;
 }
-.entry-content .media-container > .media-positioner > .media-caption {
+.media-caption {
     width: 100%;
     font-size: 15px;
     margin-top: 5px;
     text-align: center;
+}
+.form-container + .media-caption {
+    margin-top: -10px;
 }
 .popup-fullpage {
     position: fixed;
@@ -442,6 +457,13 @@ ul.taglist li {
 }
 .horizontal-center {
     text-align: center;
+}
+
+blockquote {
+    background-color: #101010;/*very-dark-grey*/
+    display: inline-block;
+    margin: 0;
+    padding: 0 30px 0 30px;
 }
 
 /* begin codeblock */

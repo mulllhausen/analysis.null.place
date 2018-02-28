@@ -41,7 +41,7 @@ class="global">
     }
     .big-instructions {
         transform: rotate(15deg);
-        transform-origin: -280vh 215vw;
+        transform-origin: -500px 215vw;
     }
     .big-instructions text {
         font-size: 14vw;

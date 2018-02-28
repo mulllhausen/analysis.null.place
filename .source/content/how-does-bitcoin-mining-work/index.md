@@ -11,10 +11,10 @@ summary: An interactive walkthrough of bitcoin mining. No prior knowledge is nec
 This article is for people who want to understand the inner workings of bitcoin
 mining. I have made it interactive so that you can simulate the mining algorithms
 for yourself and get a feel for how mining really works. While the concepts here
-are not simple, it should be easily accessible to an interested layperson. And I
-hope the interacivity will make an otherwise dry subject fun.
+are not simple, they should be easily accessible to an interested layperson. And
+I hope the interacivity will make an otherwise dry subject fun.
 
-## hashing
+## cryptographic hashing
 
 To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -39,11 +39,13 @@ a few times and then try typing different things in the *pre-image* field:
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing alporithms are not important for the sake
-of this article, all that is important is to recognise that *SHA256* is merely
-one of many hashing algorithms - the one that is used in bitcoin mining
-(more on that later). The output of a hash is a numeric value - commonly written
-in hexadecimal format - i.e. base 16. Here are some hexadecimal values side by
-side with their decimal equivalent values:
+of this article - all that is important is to recognise that *SHA256* is merely
+one of many hashing algorithms - the one that is used in bitcoin mining (more on
+that soon). The output of a cryptographic hash is actually a number, however
+that may not have been obvious when you ran the *SHA256* hash above, since that
+number is written in hexadecimal format - i.e. base 16. To explain what that
+means, here are some hexadecimal values side by side with their decimal
+equivalent values:
 
 <div class="horizontal-center">
 <pre>
@@ -85,22 +87,29 @@ hex 1f = dec 31
 </div>
 
 Don't worry, you won't need to do any hexadecimal conversions in this article.
-All you need to remember is that hexadecimal digits go from `0` to `9` then `a`
-to `f`.
+All you need to remember here is that hexadecimal digits go from `0` to `9` to
+`a` to `f`.
 
-OK, so now that you have tried hashing, and you know about hexadecimal notation,
-lets have a look at the formal definition of hashing:
-> Hashing involves taking a string of characters and transforming them into
-> another string of characters. We call the initial characters the *pre-image*
-> and we call the output the *hash*.<br><br>
-> A hashing algorithm has the following properties relevant to bitcoin mining:
-><br><br>
-> 1. it is deterministic - the same pre-image always results in the same hash<br>
-> 2. it is quick to compute the hash value for any given pre-image<br>
-> 3. it is infeasible to generate a pre-image from its hash value except by
-> trying all possible pre-images<br>
-> 4. a small change to a pre-image should change the hash value so extensively
-> that the new hash value appears uncorrelated with the old hash value<br>
+OK, so now that you have tried cryptographic hashing, and you know about
+hexadecimal format, lets have a look at the formal definition of cryptographic
+hashing:
+
+<blockquote>
+<p>Cryptographic hashing involves taking a string of characters and transforming
+them into another string of characters. We call the initial characters the
+<i>pre-image</i> and we call the output the <i>hash</i>.</p>
+<p></p>
+<p>A hashing algorithm has the following properties relevant to bitcoin mining:</p>
+<p></p>
+<ol>
+    <li>it is deterministic - the same pre-image always results in the same hash</li>
+    <li>it is quick to compute the hash value for any given pre-image</li>
+    <li>it is infeasible to reverse a cryptographic hash and recover a pre-image
+    from its hash value, except by trying all possible pre-images</li>
+    <li>a small change to a pre-image should change the hash value so extensively
+    that the new hash value appears uncorrelated with the old hash value</li>
+</ol>
+</blockquote>
 
 Lets investigate these properties. Properties 1 and 2 are quite plain to see -
 hashing `hello world!` with *SHA256* always gives
@@ -111,16 +120,17 @@ quick. However it must be noted that performing the hash always takes at least
 important when we discuss hashing in relation to bitcoin mining later on.
 
 Property 3 explains that hashing is a one-way process. We can easily get from
-a pre-image to its hash, but it is impossible to programatically get from a hash
-back to its pre-image. If you start with a pre-image and then hash it, then of
-course you will know what the pre-image is - for example, if I give you the hash
+a pre-image to its hash, but it is impossible to programatically get from a
+cryptographic hash back to its pre-image. If we start with a pre-image and then
+hash it, then of course we will know what the pre-image for the resulting hash is
+- for example, if I give you the hash
 `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you now
-know that the corresponding pre-image is `hello world!`, since we already hashed
-`hello world!` earlier. But if I give you
-`0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58` then you will
-not be able to find the pre-image which results in this hash. Seriously - give
-it a go - scroll back up and try a few values to see if you can produce a hash
-value of `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58`.
+know that a corresponding SHA256 pre-image is `hello world!`, since we already
+hashed `hello world!` with SHA256 earlier and it gave this result. But if I give
+you `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58` then you
+will not be able to find the pre-image which results in this hash. Seriously -
+give it a go - scroll back up and try a few values to see if you can produce a
+hash value of `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58`.
 
 The difficulty of guessing the pre-image for a given hash is that the resulting
 hash values for *SHA256* are so large! *SHA256* has 2<sup>256</sup> possible
@@ -130,19 +140,21 @@ universe! So don't feel bad for not guessing the correct pre-image for
 `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58` - for all
 intents and purposes it is unguessable. And its also unguessable for computers
 too. Even though some computers can do billions of hashes per second, that is
-still not good enough to run through all the combinations of pre-images to find
-a matching hash within our lifetimes. Infact it would take all computers on this
-planet millions of years to try all possible pre-images.
+still not quick enough to try all the combinations of pre-images to find a
+matching hash within our lifetimes. Infact it would take all computers on this
+planet millions of years to try all possible pre-images until they found the
+solution.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
 ahead ... If the pre-image I start with does not give a hash that is close to
 what I want, then I will just choose a pre-image further along that gives a hash
 closer to what I want, and then make minor adjustments until I zero in on the
-hash." But no such luck - property 4 tells us that hashes are both deterministic
-and random. A pre-image will always hash to the same value, but that value is
-random, so there can be no process of zeroing in. Trying a pre-image that is
-"further along" is no better than trying any other pre-image. They all completely
+hash." But alas, this is not how cryptographic hashing works - property 4 tells
+us that hashes are both deterministic and random. They are deterministic because
+a pre-image will always hash to the same value, but that value is random, so
+there can be no process of zeroing in. Trying a pre-image that is
+"further along" is no better than trying any other pre-image - they all completely
 modify the resulting hash.
 
 ## bitcoin mining
@@ -150,9 +162,9 @@ modify the resulting hash.
 Now that you know all about hashing, we can apply this knowledge to bitcoin
 mining.
 
-> Bitcoin mining involves computers competing to find the pre-image of the hash
-of the next block in the bitcoin blockchain. The winner receives bitcoins as a
-reward.
+> Bitcoin mining involves computers competing to find part of the pre-image of
+the hash of the next block in the bitcoin blockchain. The winner receives
+bitcoins as a reward.
 
 That sentence contains a couple of new concepts, and once you understand them
 then it will make perfect sense:
@@ -182,7 +194,7 @@ internet to all the other bitcoin nodes it can find (a bitcoin node is just a
 computer or phone running the bitcoin software). You might have expected the
 transaction to only be sent to the person who is receiving the bitcoins, but
 that is not the case. Infact that person does not even have to have their wallet
-software running for the transaction to complete.
+software running for the transaction to be processed.
 
 Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
 on these later). These miners gather the transactions they receive and put them
@@ -227,6 +239,7 @@ over time.
 <div class="form-container">
     <object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
 </div>
+<div class="media-caption">the bitcoin blockchain</div>
 
 The *previous block hash* is found by doing a *SHA265* hash twice in succession
 on the previous block header. As we saw in the hashing section at the start,
