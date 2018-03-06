@@ -21,7 +21,7 @@ cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
 a few times and then try typing different things in the *pre-image* field:
 <div class="form-container">
-    <label for="inputMessage0">pre-image</label><br>
+    <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <input id="inputMessage0" type="text" value="hello world!">
     <button id="btnRunHash0">SHA256</button>
     &nbsp;&nbsp;<span id="hash0Duration"></span>
@@ -104,7 +104,7 @@ them into another string of characters. We call the initial characters the
 <ol>
     <li>it is deterministic - the same pre-image always results in the same hash</li>
     <li>it is quick to compute the hash value for any given pre-image</li>
-    <li>it is infeasible to reverse a cryptographic hash and recover a pre-image
+    <li>it is impossible to reverse a cryptographic hash and recover a pre-image
     from its hash value, except by trying all possible pre-images</li>
     <li>a small change to a pre-image should change the hash value so extensively
     that the new hash value appears uncorrelated with the old hash value</li>
@@ -127,10 +127,30 @@ hash it, then of course we will know what the pre-image for the resulting hash i
 `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you now
 know that a corresponding SHA256 pre-image is `hello world!`, since we already
 hashed `hello world!` with SHA256 earlier and it gave this result. But if I give
-you `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58` then you
+you `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` then you
 will not be able to find the pre-image which results in this hash. Seriously -
-give it a go - scroll back up and try a few values to see if you can produce a
-hash value of `0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58`.
+give it a go:
+
+<div class="form-container">
+    <input type="checkbox" id="inputCheckbox1" checked>
+    <label for="inputCheckbox1">automatically change pre-image after hashing</label><br>
+
+    <label for="inputMessage1" class="for-textbox">pre-image</label><br>
+    <input id="inputMessage1" type="text" value="a">
+    <button id="btnRunHash1">SHA256</button>
+    &nbsp;&nbsp;<span id="hash1Duration"></span>
+    <div class="codeblock-container">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+<span id="preImage1"></span> -> SHA256 : <span id="hash1Result" class="individual-digits"></span>
+status : <span id="matchStatus1"></span></div>
+    </div>
+</div>
 
 The difficulty of guessing the pre-image for a given hash is that the resulting
 hash values for *SHA256* are so large! *SHA256* has 2<sup>256</sup> possible
@@ -150,7 +170,7 @@ possible combinations to produce the hash I'm after - maybe I can just skip
 ahead ... If the pre-image I start with does not give a hash that is close to
 what I want, then I will just choose a pre-image further along that gives a hash
 closer to what I want, and then make minor adjustments until I zero in on the
-hash." But alas, this is not how cryptographic hashing works - property 4 tells
+hash." But alas, this is not how cryptographic hashing works - Property 4 tells
 us that hashes are both deterministic and random. They are deterministic because
 a pre-image will always hash to the same value, but that value is random, so
 there can be no process of zeroing in. Trying a pre-image that is
@@ -265,33 +285,33 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version1" type="text" class="data-value" size="2" value="1">
+            <input id="version2" type="text" class="data-value" size="2" value="1">
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash1" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash2" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot1" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot2" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp <span id="timestamp1Explanation"></span><br>
-            <input id="timestamp1" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            timestamp <span id="timestamp2Explanation"></span><br>
+            <input id="timestamp2" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
             difficulty<br>
-            <input id="bits1" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits2" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce1" type="text" class="data-value" size="10" value="0">
+            <input id="nonce2" type="text" class="data-value" size="10" value="0">
         </td></tr>
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<ul id="blockHeader1Error" class="error"></ul>
-<button id="btnRunHash1">mine (with SHA256)</button>
+<ul id="blockHeader2Error" class="error"></ul>
+<button id="btnRunHash2">mine (with SHA256)</button>
 <div class="codeblock-container">
     <div class="button-background">
         <button class="wrap-nowrap" wrapped="false">
@@ -299,9 +319,9 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block1MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target1" class="individual-digits"></span>
-block hash: <span id="blockhash1" class="individual-digits"></span>
-status:     <span id="mineStatus1"></span>
+<div id="block2MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target2" class="individual-digits"></span>
+block hash: <span id="blockhash2" class="individual-digits"></span>
+status:     <span id="mineStatus2"></span>
 </div>
 </div>
 </div>

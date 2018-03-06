@@ -52,7 +52,7 @@ label {
     font-size: 14px;
     font-style: italic;
 }
-label:after {
+label.for-textbox:after {
     content: ": "
 }
 input[type="text"] {/*made to look like it is a small hole in the page*/

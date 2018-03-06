@@ -36,30 +36,43 @@ addEvent(window, 'load', function() {
         runHash0WrapClicked
     );
 
-    addEvent(document.getElementById('version1'), 'keyup, change', version1Changed);
-    triggerEvent(document.getElementById('version1'), 'change');
-
-    addEvent(document.getElementById('prevHash1'), 'keyup, change', prevHash1Changed);
-    triggerEvent(document.getElementById('prevHash1'), 'change');
-
-    addEvent(document.getElementById('merkleRoot1'), 'keyup, change', merkleRoot1Changed);
-    triggerEvent(document.getElementById('merkleRoot1'), 'change');
-
-    addEvent(document.getElementById('timestamp1'), 'keyup, change', timestamp1Changed);
-    triggerEvent(document.getElementById('timestamp1'), 'change');
-
-    addEvent(document.getElementById('bits1'), 'keyup, change', bits1Changed);
-    triggerEvent(document.getElementById('bits1'), 'change');
-
-    addEvent(document.getElementById('nonce1'), 'keyup, change', nonce1Changed);
-    triggerEvent(document.getElementById('nonce1'), 'change');
-
-    addEvent(document.getElementById('btnRunHash1'), 'click', mine1AndRenderResults);
+    addEvent(document.getElementById('btnRunHash1'), 'click', runHash1Clicked);
+    addEvent(document.getElementById('inputMessage1'), 'keyup', function(e) {
+        if (e.keyCode != 13) return; // only allow the enter key
+        runHash1Clicked();
+    });
+    runHash1Clicked();
     addEvent(
         document.getElementById('btnRunHash1').parentNode.
         querySelector('button.wrap-nowrap'),
         'click',
         runHash1WrapClicked
+    );
+
+    addEvent(document.getElementById('version2'), 'keyup, change', version2Changed);
+    triggerEvent(document.getElementById('version2'), 'change');
+
+    addEvent(document.getElementById('prevHash2'), 'keyup, change', prevHash2Changed);
+    triggerEvent(document.getElementById('prevHash2'), 'change');
+
+    addEvent(document.getElementById('merkleRoot2'), 'keyup, change', merkleRoot2Changed);
+    triggerEvent(document.getElementById('merkleRoot2'), 'change');
+
+    addEvent(document.getElementById('timestamp2'), 'keyup, change', timestamp2Changed);
+    triggerEvent(document.getElementById('timestamp2'), 'change');
+
+    addEvent(document.getElementById('bits2'), 'keyup, change', bits2Changed);
+    triggerEvent(document.getElementById('bits2'), 'change');
+
+    addEvent(document.getElementById('nonce2'), 'keyup, change', nonce2Changed);
+    triggerEvent(document.getElementById('nonce2'), 'change');
+
+    addEvent(document.getElementById('btnRunHash2'), 'click', mine2AndRenderResults);
+    addEvent(
+        document.getElementById('btnRunHash2').parentNode.
+        querySelector('button.wrap-nowrap'),
+        'click',
+        runHash2WrapClicked
     );
     initBlockchainSVG();
 });
@@ -109,24 +122,144 @@ function runHash0Clicked() {
     document.getElementById('hash0Results').parentNode.style.display = 'block';
 }
 
+var hash1Match = document.getElementById('match1').innerText;
+var match1Found = false;
+var previousMessage = '';
+function runHash1Clicked() {
+    var message = document.getElementById('inputMessage1').value;
+    document.getElementById('preImage1').innerText = message;
+    var startTime = new Date();
+    var bitArray = sjcl.hash.sha256.hash(message);
+    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
+    var endTime = new Date();
+    match1Found = (message == sha256Hash);
+    var duration = endTime - startTime;
+    var durationExplanationLong = '(hashing took ';
+    if (duration < 1) {
+        durationExplanationLong += 'less than 1';
+    } else {
+        durationExplanationLong += duration;
+    }
+    durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
+    document.getElementById('hash1Duration').innerText = durationExplanationLong;
+    document.getElementById('hash1Result').innerHTML = sha256Hash;
+    var wrapButtonIsOn = (
+        document.getElementById('codeblock1HashResults').parentNode.
+        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+    );
+    var incrementPreImage = document.getElementById('inputCheckbox1').checked;
+    var currentMessage = message; // save before modification
+    if (incrementPreImage) message = incrementAlpha(message);
+    document.getElementById('inputMessage1').value = message;
+    var html = document.getElementById('codeblock1HashResults').innerHTML;
+    if (
+        !wrapButtonIsOn
+        && (previousMessage.length != message.length) // save some cpu power
+    ) html = alignText(html, ':');
+    document.getElementById('codeblock1HashResults').innerHTML = html;
+    var matches = alphaInCommon(hash1Match, sha256Hash);
+    borderTheDigits2('#codeblock1HashResults .individual-digits', matches);
+
+    var numMatches = countMatches(matches);
+    var status = (match1Found ? 'pass' : 'fail') + ' (because ';
+    if (match1Found) status += 'all digits';
+    else {
+        if (numMatches == 0) status += '0';
+        else if (numMatches > 0) status += 'only ' + numMatches;
+        status += ' of ' + hash1Match.length + ' digits';
+    }
+    status += ' match)';
+    document.getElementById('matchStatus1').innerText = status;
+    document.getElementById('matchStatus1').style.color =
+    (match1Found ? passColor : failColor);
+
+    // prepare for next round
+    previousMessage = currentMessage;
+}
+
+function runHash1WrapClicked(e) {
+    var btn = e.currentTarget;
+    var codeblockHTML = document.getElementById('codeblock1HashResults').innerHTML;
+    if (btn.getAttribute('wrapped') == 'true') {
+        document.getElementById('codeblock1HashResults').innerHTML =
+        codeblockHTML.replace(/\n/g, '\n\n').replace(/[ ]*:/g, ':');
+    } else {
+        document.getElementById('codeblock1HashResults').innerHTML =
+        alignText(codeblockHTML.replace(':', ' :').replace(/\n\n/g, '\n'), ':');
+    }
+}
+
+var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var lastAlphabetChar = alphabet.substr(-1);
+function incrementAlpha(text) {
+    var lastChar = text.substr(-1);
+    if (lastChar == lastAlphabetChar) return text + alphabet[0];
+    var beforeLastChar = text.substr(0, text.length - 1);
+    return beforeLastChar + alphabet[alphabet.indexOf(lastChar) + 1];
+}
+
+function alphaInCommon(text1, text2) {
+    var inCommon = [];
+    for (var i = 0; i < text1.length; i++) { // undefined when dne
+        inCommon[i] = ((text1[i] === text2[i]) && (text1[i] != null));
+    }
+    return inCommon;
+}
+
+function countMatches(matchArray) {
+    var matches = 0; // init
+    for (var i = 0; i < matchArray.length; i++) {
+        if (matchArray[i] === true) matches++;
+    }
+    return matches;
+}
+
 // align text from the splitter position onwards. the splitter must be unique.
+var withinTag = false;
 function alignText(text, splitter) {
     var lines = text.split('\n');
     if (lines.length == 1) return text;
 
+    // first, find the biggest index position from any line
     var biggestIndentPos = 0; // init
     for (var lineI = 0; lineI < lines.length; lineI++) {
-        var indentPos = lines[lineI].indexOf(splitter); // -1 if not found
+        var thisLine = lines[lineI];
+
+        // strip html tags out (but keep content between)
+        if (
+            inArray('<', thisLine)
+            && inArray('>', thisLine)
+            && !inArray('< ', thisLine)
+        ) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = thisLine;
+            thisLine = tmp.textContent;
+        }
+        var indentPos = thisLine.indexOf(splitter); // -1 if not found
         if (indentPos > biggestIndentPos) biggestIndentPos = indentPos;
     }
+
+    // then do the indentation on each line
     for (var lineI = 0; lineI < lines.length; lineI++) {
         var thisLine = lines[lineI];
-        var lineParts = thisLine.split(splitter);
-        if (lineParts.length == 1) continue;
+        if (!inArray(splitter, thisLine)) continue;
 
-        lines[lineI] = lineParts[0] +
-        ' '.repeat(biggestIndentPos - lineParts[0].length) + splitter +
-        lineParts[1];
+        var thisLineNoHTML = thisLine;
+        if (
+            inArray('<', thisLine)
+            && inArray('>', thisLine)
+            && !inArray('< ', thisLine)
+        ) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = thisLine;
+            thisLineNoHTML = tmp.textContent;
+        }
+        var linePartsForCalc = thisLineNoHTML.split(splitter);
+        var lineParts = thisLine.split(splitter);
+        var beforeSplitter = lineParts.shift();
+        lines[lineI] = beforeSplitter +
+        ' '.repeat(biggestIndentPos - linePartsForCalc[0].length) + splitter +
+        lineParts.join(splitter);
     }
     return lines.join('\n');
 }
@@ -155,253 +288,278 @@ function borderTheDigits(cssSelectors, num2Color, pass) {
     }
 }
 
-function version1Changed() {
+function borderTheDigits2(cssSelectors, matchArray) {
+    var subjectEls = document.querySelectorAll(cssSelectors);
+    for (var i = 0; i < subjectEls.length; i++) {
+        var text = subjectEls[i].innerText; // get
+        var newText = '';
+        for (var letterI = 0; letterI < matchArray.length; letterI++) {
+            var border = '';
+            var borderLeft = '';
+            if (matchArray[letterI] === true) {
+                border = 'border:1px solid ' + passColor + ';';
+            } else if (matchArray[letterI] === false) {
+                border = 'border:1px solid ' + failColor + ';';
+            }
+            if (matchArray[letterI - 1] === true) {
+                borderLeft = 'border-left:1px solid ' + passColor + ';';
+            }
+            newText += '<span class="individual-digit" style="' + border +
+            borderLeft + '">' +
+                text[letterI] +
+            '</span>';
+        }
+        subjectEls[i].innerHTML = newText; // set
+    }
+}
+
+function version2Changed() {
     if (this.value != this.value.trim()) this.value = this.value.trim();
     if (this.value == miningData.versionRaw) return;
-    deleteElementById('version1Error1');
-    deleteElementById('version1Error2');
-    deleteElementById('version1Error3');
+    deleteElementById('version2Error1');
+    deleteElementById('version2Error2');
+    deleteElementById('version2Error3');
     resetMiningStatus();
     if (!stringIsInt(this.value)) {
         addLi2Ul(
-            'blockHeader1Error',
-            'version1Error1',
+            'blockHeader2Error',
+            'version2Error1',
             'the version must be an integer'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.versionRaw = this.value; // last
         return;
     }
-    var version1 = parseInt(this.value);
-    if (version1 < 0) {
+    var version2 = parseInt(this.value);
+    if (version2 < 0) {
         addLi2Ul(
-            'blockHeader1Error',
-            'version1Error1',
+            'blockHeader2Error',
+            'version2Error1',
             'the version must be greater than 0'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.versionRaw = this.value; // last
         return;
     }
-    if (version1 > 0xffffffff) {
+    if (version2 > 0xffffffff) {
         addLi2Ul(
-            'blockHeader1Error',
-            'version1Error2',
+            'blockHeader2Error',
+            'version2Error2',
             'the version must be lower than ' + 0xffffffff
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.versionRaw = this.value; // last
         return;
     }
-    miningData.version = toLittleEndian(int2hex(version1, 8));
-    setButtons(true, 'RunHash1');
+    miningData.version = toLittleEndian(int2hex(version2, 8));
+    setButtons(true, 'RunHash2');
     miningData.versionRaw = this.value; // last
 }
 
-function prevHash1Changed() {
+function prevHash2Changed() {
     if (this.value != this.value.trim()) this.value = this.value.trim();
     if (this.value == miningData.prevHashRaw) return;
-    deleteElementById('prevHash1Error1');
-    deleteElementById('prevHash1Error2');
+    deleteElementById('prevHash2Error1');
+    deleteElementById('prevHash2Error2');
     resetMiningStatus();
     if (!isHex(this.value)) {
         addLi2Ul(
-            'blockHeader1Error',
-            'prevHash1Error1',
+            'blockHeader2Error',
+            'prevHash2Error1',
             'the previous block hash must only contain hexadecimal digits'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.prevHashRaw = this.value; // last
         return;
     }
     if (this.value.length != 64) {
         addLi2Ul(
-            'blockHeader1Error',
-            'prevHash1Error2',
+            'blockHeader2Error',
+            'prevHash2Error2',
             'the previous block hash must be 32 bytes long'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.prevHashRaw = this.value; // last
         return;
     }
     miningData.prevHash = toLittleEndian(this.value);
-    setButtons(true, 'RunHash1');
+    setButtons(true, 'RunHash2');
     miningData.prevHashRaw = this.value; // last
 }
 
-function merkleRoot1Changed() {
+function merkleRoot2Changed() {
     if (this.value != this.value.trim()) this.value = this.value.trim();
     if (this.value == miningData.merkleRootRaw) return;
-    deleteElementById('merkleRoot1Error1');
-    deleteElementById('merkleRoot1Error2');
+    deleteElementById('merkleRoot2Error1');
+    deleteElementById('merkleRoot2Error2');
     resetMiningStatus();
     if (!isHex(this.value)) {
         addLi2Ul(
-            'blockHeader1Error',
-            'merkleRoot1Error1',
+            'blockHeader2Error',
+            'merkleRoot2Error1',
             'the merkle root must only contain hexadecimal digits'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.merkleRootRaw = this.value; // last
         return;
     }
     if (this.value.length != 64) {
         addLi2Ul(
-            'blockHeader1Error',
-            'merkleRoot1Error2',
+            'blockHeader2Error',
+            'merkleRoot2Error2',
             'the merkle root must be 32 bytes long'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.merkleRootRaw = this.value; // last
         return;
     }
     miningData.merkleRoot = toLittleEndian(this.value);
-    setButtons(true, 'RunHash1');
+    setButtons(true, 'RunHash2');
     miningData.merkleRootRaw = this.value; // last
 }
 
 // the timetstamp can be either an integer (unixtime) or a date string
-function timestamp1Changed() {
+function timestamp2Changed() {
     // do not trim, or the user will not be able to put spaces between words
     if (this.value == miningData.timestampRaw) return;
-    deleteElementById('timestamp1Error1');
-    deleteElementById('timestamp1Error2');
-    deleteElementById('timestamp1Error3');
+    deleteElementById('timestamp2Error1');
+    deleteElementById('timestamp2Error2');
+    deleteElementById('timestamp2Error3');
     resetMiningStatus();
     if (stringIsInt(Date.parse(this.value))) {
-        var timestamp1 = unixtime(this.value);
-        document.getElementById('timestamp1Explanation').innerText = '';
+        var timestamp2 = unixtime(this.value);
+        document.getElementById('timestamp2Explanation').innerText = '';
     } else if (stringIsInt(this.value)) {
-        var timestamp1 = parseInt(this.value);
-        document.getElementById('timestamp1Explanation').innerText = '(unixtime)';
+        var timestamp2 = parseInt(this.value);
+        document.getElementById('timestamp2Explanation').innerText = '(unixtime)';
     } else {
         addLi2Ul(
-            'blockHeader1Error',
-            'timestamp1Error1',
+            'blockHeader2Error',
+            'timestamp2Error1',
             'the timestamp must either be a valid date-time, or be an integer (unixtime)'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.timestampRaw = this.value; // last
         return;
     }
-    if (timestamp1 < 1231006505) {
+    if (timestamp2 < 1231006505) {
         addLi2Ul(
-            'blockHeader1Error',
-            'timestamp1Error1',
+            'blockHeader2Error',
+            'timestamp2Error1',
             'the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.timestampRaw = this.value; // last
         return;
     }
-    if (timestamp1 > 0xffffffff) {
+    if (timestamp2 > 0xffffffff) {
         addLi2Ul(
-            'blockHeader1Error',
-            'timestamp1Error1',
+            'blockHeader2Error',
+            'timestamp2Error1',
             'the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.timestampRaw = this.value; // last
         return;
     }
-    miningData.timestamp = toLittleEndian(int2hex(timestamp1, 8));
-    setButtons(true, 'RunHash1');
+    miningData.timestamp = toLittleEndian(int2hex(timestamp2, 8));
+    setButtons(true, 'RunHash2');
     miningData.timestampRaw = this.value; // last
 }
 
-function bits1Changed() {
+function bits2Changed() {
     if (this.value != this.value.trim()) this.value = this.value.trim();
     if (this.value == miningData.bitsRaw) return;
     resetMiningStatus();
-    deleteElementById('bits1Error1');
-    deleteElementById('bits1Error2');
+    deleteElementById('bits2Error1');
+    deleteElementById('bits2Error2');
     if (this.value.length != 8) {
         addLi2Ul(
-            'blockHeader1Error',
-            'bits1Error1',
+            'blockHeader2Error',
+            'bits2Error1',
             'the difficulty must be 4 bytes long'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.bitsRaw = this.value; // last
         return;
     }
     if (!isHex(this.value)) {
         addLi2Ul(
-            'blockHeader1Error',
-            'bits1Error2',
+            'blockHeader2Error',
+            'bits2Error2',
             'the difficulty must only contain hexadecimal digits'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.bitsRaw = this.value; // last
         return;
     }
     miningData.bits = toLittleEndian(this.value);
     miningData.target = bits2target(this.value);
-    document.getElementById('target1').innerText = miningData.target;
-    borderTheDigits('#target1'); // erase colors
-    setButtons(true, 'RunHash1');
+    document.getElementById('target2').innerText = miningData.target;
+    borderTheDigits('#target2'); // erase colors
+    setButtons(true, 'RunHash2');
     miningData.bitsRaw = this.value; // last
 }
 
-function nonce1Changed() {
+function nonce2Changed() {
     if (this.value != this.value.trim()) this.value = this.value.trim();
     if (this.value == miningData.nonceRaw) return;
-    deleteElementById('nonce1Error1');
-    deleteElementById('nonce1Error2');
-    deleteElementById('nonce1Error3');
+    deleteElementById('nonce2Error1');
+    deleteElementById('nonce2Error2');
+    deleteElementById('nonce2Error3');
     resetMiningStatus();
     if (!stringIsInt(this.value)) {
         addLi2Ul(
-            'blockHeader1Error',
-            'nonce1Error1',
+            'blockHeader2Error',
+            'nonce2Error1',
             'the nonce must be an integer'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.nonceRaw = this.value; // last
         return;
     }
     miningData.nonceInt = parseInt(this.value);
     if (miningData.nonceInt < 0) {
         addLi2Ul(
-            'blockHeader1Error',
-            'nonce1Error2',
+            'blockHeader2Error',
+            'nonce2Error2',
             'the nonce must be greater than 0'
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.nonceRaw = this.value; // last
         return;
     }
     if (miningData.nonceInt > 0xffffffff) {
         addLi2Ul(
-            'blockHeader1Error',
-            'nonce1Error3',
+            'blockHeader2Error',
+            'nonce2Error3',
             'the nonce must be lower than ' + 0xffffffff
         );
-        setButtons(false, 'RunHash1');
+        setButtons(false, 'RunHash2');
         miningData.nonceRaw = this.value; // last
         return;
     }
     miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
-    setButtons(true, 'RunHash1');
+    setButtons(true, 'RunHash2');
     miningData.nonceRaw = this.value; // last
 }
 
 function resetMiningStatus() {
-    document.getElementById('blockhash1').innerText = '';
-    document.getElementById('mineStatus1').innerText = '';
-    borderTheDigits('#target1'); // erase colors
+    document.getElementById('blockhash2').innerText = '';
+    document.getElementById('mineStatus2').innerText = '';
+    borderTheDigits('#target2'); // erase colors
 }
 
-function mine1AndRenderResults() {
+function mine2AndRenderResults() {
     miningData.nonceInt += 1;
     if (miningData.nonceInt > 0xffffffff) miningData.nonceInt = 0;
-    document.getElementById('nonce1').value = miningData.nonceInt;
+    document.getElementById('nonce2').value = miningData.nonceInt;
     miningData.nonceRaw = miningData.nonceInt;
     miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
     var minedResult = mine(); // using global var miningData
-    document.getElementById('blockhash1').innerText = minedResult.blockhash;
+    document.getElementById('blockhash2').innerText = minedResult.blockhash;
     borderTheDigits(
-        '#block1MiningResults .individual-digits',
+        '#block2MiningResults .individual-digits',
         minedResult.resolution,
         minedResult.status
     );
@@ -409,15 +567,15 @@ function mine1AndRenderResults() {
     if (minedResult.status) {
         popup('success!', 'you mined a block');
         setTimeout(function() { hidePopup(); }, 2000);
-        setButtons(false, 'RunHash1');
-        document.getElementById('mineStatus1').innerHTML = 'pass';
-        document.getElementById('mineStatus1').style.color = passColor;
+        setButtons(false, 'RunHash2');
+        document.getElementById('mineStatus2').innerHTML = 'pass';
+        document.getElementById('mineStatus2').style.color = passColor;
         return;
     }
     var explanation = 'because ' + minedResult.blockhash[minedResult.resolution] +
     ' is greater than ' + miningData.target[minedResult.resolution];
-    document.getElementById('mineStatus1').innerText = 'fail (' + explanation + ')';
-    document.getElementById('mineStatus1').style.color = failColor;
+    document.getElementById('mineStatus2').innerText = 'fail (' + explanation + ')';
+    document.getElementById('mineStatus2').style.color = failColor;
 }
 
 function mine() {
@@ -440,7 +598,7 @@ function mine() {
 }
 
 // align the status when the 'wrap' button is clicked
-function runHash1WrapClicked(e) {
+function runHash2WrapClicked(e) {
     var btn = e.currentTarget;
     var codeblockHtml = btn.parentNode.parentNode.querySelector('.codeblock').innerHTML;
     if (btn.getAttribute('wrapped') == 'true') {

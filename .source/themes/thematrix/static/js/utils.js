@@ -91,6 +91,7 @@ function setButtons(enable) {
     }
 }
 
+// find needle in haystack - works for strings as well as arrays
 function inArray(needle, haystack) {
     // note: does not work with with NaN or ie < 9
     return (haystack.indexOf(needle) > -1);
