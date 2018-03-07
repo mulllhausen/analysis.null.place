@@ -127,12 +127,21 @@ var match1Found = false;
 var previousMessage = '';
 function runHash1Clicked() {
     var message = document.getElementById('inputMessage1').value;
+    var overridePass = false;
+    if (match1Found && (previousMessage == message)) {
+        if (document.getElementById('inputCheckbox1').checked) overridePass = true;
+        else return;
+    }
+
     document.getElementById('preImage1').innerText = message;
     var startTime = new Date();
     var bitArray = sjcl.hash.sha256.hash(message);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
     var endTime = new Date();
-    match1Found = (message == sha256Hash);
+    match1Found = (hash1Match == sha256Hash);
+    if (match1Found && !overridePass) {
+        document.getElementById('inputCheckbox1').checked = false;
+    }
     var duration = endTime - startTime;
     var durationExplanationLong = '(hashing took ';
     if (duration < 1) {
@@ -184,18 +193,38 @@ function runHash1WrapClicked(e) {
         document.getElementById('codeblock1HashResults').innerHTML =
         codeblockHTML.replace(/\n/g, '\n\n').replace(/[ ]*:/g, ':');
     } else {
+        codeblockHTML = codeblockHTML.replace(/^([\s\S]*?):([\s\S]*?)$/gm, '$1 :$2').
+        replace(/\n\n/g, '\n');
         document.getElementById('codeblock1HashResults').innerHTML =
-        alignText(codeblockHTML.replace(':', ' :').replace(/\n\n/g, '\n'), ':');
+        alignText(codeblockHTML, ':');
     }
 }
 
-var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// iterate the given text through the alphabet, such that:
+// a -> b
+// z -> aa
+// az -> ba
+// ba -> bb
+// zz -> aaa
+// zaz -> zba
+// @ -> a (@ is anything not in the alphabet)
+// @z -> aa
+var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=.\'';
 var lastAlphabetChar = alphabet.substr(-1);
 function incrementAlpha(text) {
-    var lastChar = text.substr(-1);
-    if (lastChar == lastAlphabetChar) return text + alphabet[0];
-    var beforeLastChar = text.substr(0, text.length - 1);
-    return beforeLastChar + alphabet[alphabet.indexOf(lastChar) + 1];
+    if (text.length == 0) return alphabet[0];
+    var lastTextChar = text.substr(-1);
+    if (lastTextChar == lastAlphabetChar) {
+        // put all but the last char through this function recursively
+        // set last char to first letter of alphabet
+        return incrementAlpha(text.substr(0, text.length - 1)) + alphabet[0];
+    } else {
+        // we get here both when:
+        // - the last char does not exist in the alphabet and
+        // - the last char is not the last char of the alphabet
+        // just increment the last char
+        return text.substr(0, text.length - 1) + alphabet[alphabet.indexOf(lastTextChar) + 1];
+    }
 }
 
 function alphaInCommon(text1, text2) {
@@ -226,11 +255,7 @@ function alignText(text, splitter) {
         var thisLine = lines[lineI];
 
         // strip html tags out (but keep content between)
-        if (
-            inArray('<', thisLine)
-            && inArray('>', thisLine)
-            && !inArray('< ', thisLine)
-        ) {
+        if (inArray('<', thisLine) && inArray('>', thisLine)) {
             var tmp = document.createElement('div');
             tmp.innerHTML = thisLine;
             thisLine = tmp.textContent;
@@ -245,11 +270,7 @@ function alignText(text, splitter) {
         if (!inArray(splitter, thisLine)) continue;
 
         var thisLineNoHTML = thisLine;
-        if (
-            inArray('<', thisLine)
-            && inArray('>', thisLine)
-            && !inArray('< ', thisLine)
-        ) {
+        if (inArray('<', thisLine) && inArray('>', thisLine)) {
             var tmp = document.createElement('div');
             tmp.innerHTML = thisLine;
             thisLineNoHTML = tmp.textContent;

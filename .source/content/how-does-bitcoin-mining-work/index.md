@@ -157,13 +157,35 @@ hash values for *SHA256* are so large! *SHA256* has 2<sup>256</sup> possible
 different hash values. That's 115792089237316195423570985008687907853269984665640564039457584007913129639936
 different possible hash values - there are approximately that many atoms in the
 universe! So don't feel bad for not guessing the correct pre-image for 
-`0b0f445fe487a967f9d103287057030fa248ff5ad38c55a49383379baa493e58` - for all
-intents and purposes it is unguessable. And its also unguessable for computers
-too. Even though some computers can do billions of hashes per second, that is
-still not quick enough to try all the combinations of pre-images to find a
-matching hash within our lifetimes. Infact it would take all computers on this
-planet millions of years to try all possible pre-images until they found the
-solution.
+`ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` - for all
+intents and purposes it is unguessable. And its unguessable for computers too.
+Even though some computers can do billions of hashes per second, that is still
+not quick enough to try all the combinations of pre-images to find a matching
+hash within our lifetimes. Infact it would take all the computers on this planet
+millions of years to try all possible pre-images until they found the solution.
+But don't take my word for it. Click the button below to cycle through all
+pre-images at the maximum speed possible on your device:
+
+<div class="form-container">
+    <input type="checkbox" id="inputCheckbox2" checked disabled>
+    <label for="inputCheckbox2">automatically change pre-image after hashing</label><br>
+
+    <label for="inputMessage2" class="for-textbox">pre-image</label><br>
+    <input id="inputMessage2" type="text" value="a">
+    <button id="btnRunHash2">Run SHA256 Automatically</button>
+    &nbsp;&nbsp;<span id="hash2Duration"></span>
+    <div class="codeblock-container">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+<span id="preImage2"></span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
+status : <span id="matchStatus2"></span></div>
+    </div>
+</div>
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
