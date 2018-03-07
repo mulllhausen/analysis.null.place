@@ -307,33 +307,33 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version2" type="text" class="data-value" size="2" value="1">
+            <input id="version3" type="text" class="data-value" size="2" value="1">
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash2" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash3" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot2" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot3" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp <span id="timestamp2Explanation"></span><br>
-            <input id="timestamp2" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            timestamp <span id="timestamp3Explanation"></span><br>
+            <input id="timestamp3" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
             difficulty<br>
-            <input id="bits2" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits3" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce2" type="text" class="data-value" size="10" value="0">
+            <input id="nonce3" type="text" class="data-value" size="10" value="0">
         </td></tr>
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<ul id="blockHeader2Error" class="error"></ul>
-<button id="btnRunHash2">mine (with SHA256)</button>
+<ul id="blockHeader3Error" class="error"></ul>
+<button id="btnRunHash3">mine (with SHA256)</button>
 <div class="codeblock-container">
     <div class="button-background">
         <button class="wrap-nowrap" wrapped="false">
@@ -341,9 +341,9 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block2MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target2" class="individual-digits"></span>
-block hash: <span id="blockhash2" class="individual-digits"></span>
-status:     <span id="mineStatus2"></span>
+<div id="block3MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target3" class="individual-digits"></span>
+block hash: <span id="blockhash3" class="individual-digits"></span>
+status:     <span id="mineStatus3"></span>
 </div>
 </div>
 </div>
