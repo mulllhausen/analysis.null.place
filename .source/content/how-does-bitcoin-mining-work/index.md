@@ -138,7 +138,7 @@ give it a go:
     <label for="inputMessage1" class="for-textbox">pre-image</label><br>
     <input id="inputMessage1" type="text" value="a">
     <button id="btnRunHash1">SHA256</button>
-    &nbsp;&nbsp;<span id="hash1Duration"></span>
+    &nbsp;&nbsp;(Average hash rate: <span id="hash1Rate"></span> hashes per second)
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -173,7 +173,7 @@ pre-images at the maximum speed possible on your device:
     <label for="inputMessage2" class="for-textbox">pre-image</label><br>
     <input id="inputMessage2" type="text" value="a" disabled>
     <button id="btnRunHash2">Run SHA256 Automatically</button>
-    &nbsp;&nbsp;<span id="hash2Duration"></span>
+    &nbsp;&nbsp;(Average hash rate: <span id="hash2Rate"></span> hashes per second)
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">

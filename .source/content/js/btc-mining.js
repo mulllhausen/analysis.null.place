@@ -43,7 +43,8 @@ addEvent(window, 'load', function() {
         hashMatch: document.getElementById('match1').innerText,
         matchFound: false,
         previousMessage: '',
-        formNum: 1
+        formNum: 1,
+        hashRateData: []
     };
     addEvent(document.getElementById('btnRunHash1'), 'click', function() {
         runHash1Or2Clicked(hash1Params);
@@ -69,11 +70,11 @@ addEvent(window, 'load', function() {
         matchFound: false,
         previousMessage: '',
         formNum: 2,
-        state: 'stopped'
+        state: 'stopped',
+        hashRateData: []
     };
     addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
-        handleRunHash2Clicked(e, hash2Params);
-        runHash1Or2Clicked(hash2Params);
+        runHash2Clicked(e, hash2Params);
     });
     runHash1Or2Clicked(hash2Params);
     (function() {
@@ -160,7 +161,7 @@ function runHash0Clicked() {
     document.getElementById('hash0Results').parentNode.style.display = 'block';
 }
 
-function handleRunHash2Clicked(e, params) {
+function runHash2Clicked(e, params) {
     switch (params.state) {
         case 'running':
             stopHashingForm2 = true;
@@ -200,16 +201,8 @@ function runHash1Or2Clicked(params) {
     if (params.matchFound && !overridePass) {
         document.getElementById('inputCheckbox' + params.formNum).checked = false;
     }
-    var duration = endTime - startTime;
-    var durationExplanationLong = '(hashing took ';
-    if (duration < 1) {
-        durationExplanationLong += 'less than 1';
-    } else {
-        durationExplanationLong += duration;
-    }
-    durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
-    document.getElementById('hash' + params.formNum + 'Duration').innerText =
-    durationExplanationLong;
+    document.getElementById('hash' + params.formNum + 'Rate').innerText =
+    getAverageHashRate(params.hashRateData);
     document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
     var wrapButtonIsOn = (
         document.getElementById('hash' + params.formNum + 'Result').parentNode.
@@ -249,7 +242,24 @@ function runHash1Or2Clicked(params) {
 
     // prepare for next round
     params.previousMessage = currentMessage;
+    params.hashRateData.push((new Date()).getTime()); // push on the end
+    while (params.hashRateData.length > 10) {
+        params.hashRateData.shift(); // pop from the start
+    }
     return true; // keep running if in a loop
+}
+
+function getAverageHashRate(hashRateData) {
+    // add up the diffs between each item in the list
+    var sum = 0;
+    for (var i = 1; i < hashRateData.length; i++) {
+        sum += (hashRateData[i] - hashRateData[i - 1]);
+    }
+    var average = 0;
+    if (sum == 0) average = 0; // avoid div by 0
+    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
+    if (average < 1) average = 'less than 1';
+    return average;
 }
 
 function runHash1And2WrapClicked(e, codeblock) {
