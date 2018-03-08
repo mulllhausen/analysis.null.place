@@ -38,12 +38,20 @@ addEvent(window, 'load', function() {
     );
 
     // form 1 - hashing manually to match hash
-    addEvent(document.getElementById('btnRunHash1'), 'click', runHash1Clicked);
+    var hash1Params = { // use an object for pass-by-reference
+        hashMatch: document.getElementById('match1').innerText,
+        matchFound: false,
+        previousMessage: '',
+        formNum: 1
+    };
+    addEvent(document.getElementById('btnRunHash1'), 'click', function() {
+        runHash1Or2Clicked(hash1Params);
+    });
     addEvent(document.getElementById('inputMessage1'), 'keyup', function(e) {
         if (e.keyCode != 13) return; // only allow the enter key
-        runHash1Clicked();
+        runHash1Or2Clicked(hash1Params);
     });
-    runHash1Clicked();
+    runHash1Or2Clicked(hash1Params);
     (function() {
         var codeblock = document.getElementById('codeblock1HashResults');
         addEvent(
@@ -55,12 +63,20 @@ addEvent(window, 'load', function() {
     })();
 
     // form 2 - hashing automatically to match hash
-    addEvent(document.getElementById('btnRunHash2'), 'click', runHash2Clicked);
+    var hash2Params = { // use an object for pass-by-reference
+        hashMatch: document.getElementById('match2').innerText,
+        matchFound: false,
+        previousMessage: '',
+        formNum: 2
+    };
+    addEvent(document.getElementById('btnRunHash2'), 'click', function() {
+        runHash1Or2Clicked(hash2Params);
+    });
     addEvent(document.getElementById('inputMessage2'), 'keyup', function(e) {
         if (e.keyCode != 13) return; // only allow the enter key
-        runHash2Clicked();
+        runHash1Or2Clicked(hash2Params);
     });
-    runHash2Clicked();
+    runHash1Or2Clicked(hash2Params);
     (function() {
         var codeblock = document.getElementById('codeblock2HashResults');
         addEvent(
@@ -145,25 +161,24 @@ function runHash0Clicked() {
     document.getElementById('hash0Results').parentNode.style.display = 'block';
 }
 
-var hash1Match = document.getElementById('match1').innerText;
-var match1Found = false;
-var previousMessage = '';
-function runHash1Clicked() {
-    var message = document.getElementById('inputMessage1').value;
+function runHash1Or2Clicked(params) {
+    var message = document.getElementById('inputMessage' + params.formNum).value;
     var overridePass = false;
-    if (match1Found && (previousMessage == message)) {
-        if (document.getElementById('inputCheckbox1').checked) overridePass = true;
+    if (params.matchFound && (params.previousMessage == message)) {
+        if (document.getElementById('inputCheckbox' + params.formNum).checked) {
+            overridePass = true;
+        }
         else return;
     }
 
-    document.getElementById('preImage1').innerText = message;
+    document.getElementById('preImage' + params.formNum).innerText = message;
     var startTime = new Date();
     var bitArray = sjcl.hash.sha256.hash(message);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
     var endTime = new Date();
-    match1Found = (hash1Match == sha256Hash);
-    if (match1Found && !overridePass) {
-        document.getElementById('inputCheckbox1').checked = false;
+    params.matchFound = (params.hashMatch == sha256Hash);
+    if (params.matchFound && !overridePass) {
+        document.getElementById('inputCheckbox' + params.formNum).checked = false;
     }
     var duration = endTime - startTime;
     var durationExplanationLong = '(hashing took ';
@@ -173,40 +188,47 @@ function runHash1Clicked() {
         durationExplanationLong += duration;
     }
     durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
-    document.getElementById('hash1Duration').innerText = durationExplanationLong;
-    document.getElementById('hash1Result').innerHTML = sha256Hash;
+    document.getElementById('hash' + params.formNum + 'Duration').innerText =
+    durationExplanationLong;
+    document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
     var wrapButtonIsOn = (
-        document.getElementById('codeblock1HashResults').parentNode.
-        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+        document.getElementById('hash' + params.formNum + 'Result').parentNode.
+        parentNode.querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
     );
-    var incrementPreImage = document.getElementById('inputCheckbox1').checked;
+    var incrementPreImage = document.getElementById('inputCheckbox' + params.formNum).checked;
     var currentMessage = message; // save before modification
     if (incrementPreImage) message = incrementAlpha(message);
-    document.getElementById('inputMessage1').value = message;
-    var html = document.getElementById('codeblock1HashResults').innerHTML;
+    document.getElementById('inputMessage' + params.formNum).value = message;
+
+    // fix up the alignment if the pre-image length hash changed
     if (
         !wrapButtonIsOn
-        && (previousMessage.length != message.length) // save some cpu power
-    ) html = alignText(html, ':');
-    document.getElementById('codeblock1HashResults').innerHTML = html;
-    var matches = alphaInCommon(hash1Match, sha256Hash);
-    borderTheDigits2('#codeblock1HashResults .individual-digits', matches);
+        && (params.previousMessage.length != message.length)
+    ) {
+        var html = document.getElementById('codeblock' + params.formNum + 'HashResults').innerHTML;
+        html = alignText(html, ':');
+        document.getElementById('codeblock' + params.formNum + 'HashResults').innerHTML = html;
+    }
+    var matches = alphaInCommon(params.hashMatch, sha256Hash);
+    borderTheDigits2(
+        '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
+    );
 
     var numMatches = countMatches(matches);
-    var status = (match1Found ? 'pass' : 'fail') + ' (because ';
-    if (match1Found) status += 'all digits';
+    var status = (params.matchFound ? 'pass' : 'fail') + ' (because ';
+    if (params.matchFound) status += 'all digits';
     else {
         if (numMatches == 0) status += '0';
         else if (numMatches > 0) status += 'only ' + numMatches;
-        status += ' of ' + hash1Match.length + ' digits';
+        status += ' of ' + params.hashMatch.length + ' digits';
     }
     status += ' match)';
-    document.getElementById('matchStatus1').innerText = status;
-    document.getElementById('matchStatus1').style.color =
-    (match1Found ? passColor : failColor);
+    document.getElementById('matchStatus' + params.formNum).innerText = status;
+    document.getElementById('matchStatus' + params.formNum).style.color =
+    (params.matchFound ? passColor : failColor);
 
     // prepare for next round
-    previousMessage = currentMessage;
+    params.previousMessage = currentMessage;
 }
 
 function runHash1And2WrapClicked(e, codeblock) {

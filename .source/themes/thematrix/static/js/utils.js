@@ -97,6 +97,18 @@ function inArray(needle, haystack) {
     return (haystack.indexOf(needle) > -1);
 }
 
+function mergeObjects() {
+    var retObj = {};
+    for (var i = 0; i < arguments.length; i++) {
+        var obj = arguments[i];
+        for (var key in obj) {
+            if (!obj.hasOwnProperty(key)) continue;
+            retObj[key] = obj[key];
+        }
+    }
+    return retObj;
+}
+
 function ajax(url, callback) {
     // doesn't work on opera mini :(
     var xhttp = new XMLHttpRequest();

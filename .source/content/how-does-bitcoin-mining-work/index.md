@@ -148,7 +148,7 @@ give it a go:
         </div><br>
         <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
 <span id="preImage1"></span> -> SHA256 : <span id="hash1Result" class="individual-digits"></span>
-status : <span id="matchStatus1"></span></div>
+status      : <span id="matchStatus1"></span></div>
     </div>
 </div>
 
@@ -183,7 +183,7 @@ pre-images at the maximum speed possible on your device:
         </div><br>
         <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
 <span id="preImage2"></span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
-status : <span id="matchStatus2"></span></div>
+status      : <span id="matchStatus2"></span></div>
     </div>
 </div>
 
