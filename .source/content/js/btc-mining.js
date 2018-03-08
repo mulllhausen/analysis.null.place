@@ -1,5 +1,6 @@
 var passColor = '#7db904'; // green
 var failColor = 'red';
+var stopHashingForm2 = false; // global
 var txsPerBlock = [];
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
@@ -67,13 +68,11 @@ addEvent(window, 'load', function() {
         hashMatch: document.getElementById('match2').innerText,
         matchFound: false,
         previousMessage: '',
-        formNum: 2
+        formNum: 2,
+        state: 'stopped'
     };
-    addEvent(document.getElementById('btnRunHash2'), 'click', function() {
-        runHash1Or2Clicked(hash2Params);
-    });
-    addEvent(document.getElementById('inputMessage2'), 'keyup', function(e) {
-        if (e.keyCode != 13) return; // only allow the enter key
+    addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
+        handleRunHash2Clicked(e, hash2Params);
         runHash1Or2Clicked(hash2Params);
     });
     runHash1Or2Clicked(hash2Params);
@@ -161,7 +160,28 @@ function runHash0Clicked() {
     document.getElementById('hash0Results').parentNode.style.display = 'block';
 }
 
+function handleRunHash2Clicked(e, params) {
+    switch (params.state) {
+        case 'running':
+            stopHashingForm2 = true;
+            params.state = 'stopped';
+            e.currentTarget.innerHTML = 'Run SHA256 Automatically';
+            break;
+        case 'stopped':
+            stopHashingForm2 = false;
+            params.state = 'running';
+            e.currentTarget.innerHTML = 'Stop';
+            (function loop(params) {
+                if (stopHashingForm2) return;
+                runHash1Or2Clicked(params);
+                setTimeout(function() { loop(params); }, 0);
+            })(params);
+            break;
+    }
+}
+
 function runHash1Or2Clicked(params) {
+    if (stopHashingForm2 && (params.formNum == 2)) return false; // stop running if in a loop
     var message = document.getElementById('inputMessage' + params.formNum).value;
     var overridePass = false;
     if (params.matchFound && (params.previousMessage == message)) {
@@ -229,6 +249,7 @@ function runHash1Or2Clicked(params) {
 
     // prepare for next round
     params.previousMessage = currentMessage;
+    return true; // keep running if in a loop
 }
 
 function runHash1And2WrapClicked(e, codeblock) {

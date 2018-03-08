@@ -171,7 +171,7 @@ pre-images at the maximum speed possible on your device:
     <label for="inputCheckbox2">automatically change pre-image after hashing</label><br>
 
     <label for="inputMessage2" class="for-textbox">pre-image</label><br>
-    <input id="inputMessage2" type="text" value="a">
+    <input id="inputMessage2" type="text" value="a" disabled>
     <button id="btnRunHash2">Run SHA256 Automatically</button>
     &nbsp;&nbsp;<span id="hash2Duration"></span>
     <div class="codeblock-container">
