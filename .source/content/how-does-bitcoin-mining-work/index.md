@@ -121,15 +121,17 @@ important when we discuss hashing in relation to bitcoin mining later on.
 
 Property 3 explains that hashing is a one-way process. We can easily get from
 a pre-image to its hash, but it is impossible to programatically get from a
-cryptographic hash back to its pre-image. If we start with a pre-image and then
-hash it, then of course we will know what the pre-image for the resulting hash is
-- for example, if I give you the hash
-`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you now
-know that a corresponding SHA256 pre-image is `hello world!`, since we already
-hashed `hello world!` with SHA256 earlier and it gave this result. But if I give
-you `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` then you
-will not be able to find the pre-image which results in this hash. Seriously -
-give it a go:
+cryptographic hash back to its pre-image. The process of trying to get from a
+hash back to its pre-image is called *inverting* the hash.
+
+If we start with a pre-image and then hash it, then of course we will know what
+the pre-image for the resulting hash is - for example, if I give you the hash
+`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
+already know that a corresponding SHA256 pre-image is `hello world!`, since we
+already hashed `hello world!` with SHA256 earlier and it gave this result. But
+if I give you `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22`
+then you will not be able to find the pre-image which results in this hash - i.e.
+you will not be able to invert this hash. Seriously - give it a go:
 
 <div class="form-container">
     <input type="checkbox" id="inputCheckbox1" checked>
@@ -138,7 +140,7 @@ give it a go:
     <label for="inputMessage1" class="for-textbox">pre-image</label><br>
     <input id="inputMessage1" type="text" value="a">
     <button id="btnRunHash1">SHA256</button>
-    &nbsp;&nbsp;(Average hash rate: <span id="hash1Rate"></span> hashes per second)
+    &nbsp;&nbsp;(Average hash rate: <span class="hash1Rate"></span> hashes per second)
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -152,19 +154,16 @@ status      : <span id="matchStatus1"></span></div>
     </div>
 </div>
 
-The difficulty of guessing the pre-image for a given hash is that the resulting
-hash values for *SHA256* are so large! *SHA256* has 2<sup>256</sup> possible
-different hash values. That's 115792089237316195423570985008687907853269984665640564039457584007913129639936
-different possible hash values - there are approximately that many atoms in the
-universe! So don't feel bad for not guessing the correct pre-image for 
+The difficulty of inverting a *SHA256* hash is due its length being so large!
+*SHA256* has 2<sup>256</sup> possible different hash values. That's
+115792089237316195423570985008687907853269984665640564039457584007913129639936
+different possible hash values. There are approximately that many atoms in the
+universe! So don't feel bad for not being able to invert
 `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` - for all
-intents and purposes it is unguessable. And its unguessable for computers too.
-Even though some computers can do billions of hashes per second, that is still
-not quick enough to try all the combinations of pre-images to find a matching
-hash within our lifetimes. Infact it would take all the computers on this planet
-millions of years to try all possible pre-images until they found the solution.
-But don't take my word for it. Click the button below to cycle through all
-pre-images at the maximum speed possible on your device:
+intents and purposes it cannot be inverted. And that is true even when computers
+do the hashing at their maximum speeds. If you click the button below then you
+can have your device cycle through all pre-images at the maximum speed possible
+on your device:
 
 <div class="form-container">
     <input type="checkbox" id="inputCheckbox2" checked disabled>
@@ -173,7 +172,9 @@ pre-images at the maximum speed possible on your device:
     <label for="inputMessage2" class="for-textbox">pre-image</label><br>
     <input id="inputMessage2" type="text" value="a" disabled>
     <button id="btnRunHash2">Run SHA256 Automatically</button>
-    &nbsp;&nbsp;(Average hash rate: <span id="hash2Rate"></span> hashes per second)
+    &nbsp;&nbsp;<span id="showHash2Rate" style="display:none;">
+        (Average hash rate: <span class="hash2Rate"></span> hashes per second)
+    </span>
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -182,10 +183,21 @@ pre-images at the maximum speed possible on your device:
             </button>
         </div><br>
         <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="preImage2"></span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
+<span id="preImage2"> </span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
 status      : <span id="matchStatus2"></span></div>
     </div>
 </div>
+
+<span id="showHowLongForThisDevice" style="display:none;">Using your device's
+average hash rate of <span class="hash2Rate"></span> hashes per second, then we
+can calculate that it is going to take <span id="howLongForThisDeviceWords"></span>
+to try enough combinations to invert this hash and find the solution. That's
+<span id="howLongForThisDeviceNumber"></span>.</span>
+
+Even though some computers can do billions of hashes per second, that is still
+not quick enough to try all the combinations of pre-images to find a matching
+hash within our lifetimes. Infact it would take all the computers on this planet
+millions of years to try all possible pre-images until they found the solution.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip

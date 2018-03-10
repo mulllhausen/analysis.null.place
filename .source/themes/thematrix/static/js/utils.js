@@ -109,6 +109,19 @@ function mergeObjects() {
     return retObj;
 }
 
+// 1000 -> 1,000
+function addThousandCommas(number) {
+    number += ''; // convert to string
+    var numberParts = number.split('.');
+    var whole = numberParts[0];
+    var decimals = ((numberParts.length > 1) ? '.' + numberParts[1] : '');
+    var regex = /(\d+)(\d{3})/;
+    while (regex.test(whole)) {
+        whole = whole.replace(regex, '$1' + ',' + '$2');
+    }
+    return whole + decimals;
+}
+
 function ajax(url, callback) {
     // doesn't work on opera mini :(
     var xhttp = new XMLHttpRequest();

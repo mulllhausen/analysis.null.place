@@ -76,7 +76,6 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
         runHash2Clicked(e, hash2Params);
     });
-    runHash1Or2Clicked(hash2Params);
     (function() {
         var codeblock = document.getElementById('codeblock2HashResults');
         addEvent(
@@ -167,6 +166,7 @@ function runHash2Clicked(e, params) {
             stopHashingForm2 = true;
             params.state = 'stopped';
             e.currentTarget.innerHTML = 'Run SHA256 Automatically';
+            renderHashing2Duration(params.hashRateData); // update the paragraph
             break;
         case 'stopped':
             stopHashingForm2 = false;
@@ -177,6 +177,7 @@ function runHash2Clicked(e, params) {
                 runHash1Or2Clicked(params);
                 setTimeout(function() { loop(params); }, 0);
             })(params);
+            document.getElementById('showHash2Rate').style.display = 'inline';
             break;
     }
 }
@@ -193,15 +194,20 @@ function runHash1Or2Clicked(params) {
     }
 
     document.getElementById('preImage' + params.formNum).innerText = message;
-    var startTime = new Date();
     var bitArray = sjcl.hash.sha256.hash(message);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
-    var endTime = new Date();
+
+    // update the latest hash times for averaging later
+    params.hashRateData.push((new Date()).getTime()); // push on the end
+    while (params.hashRateData.length > 10) {
+        params.hashRateData.shift(); // pop from the start
+    }
+
     params.matchFound = (params.hashMatch == sha256Hash);
     if (params.matchFound && !overridePass) {
         document.getElementById('inputCheckbox' + params.formNum).checked = false;
     }
-    document.getElementById('hash' + params.formNum + 'Rate').innerText =
+    document.getElementsByClassName('hash' + params.formNum + 'Rate')[0].innerText =
     getAverageHashRate(params.hashRateData);
     document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
     var wrapButtonIsOn = (
@@ -242,14 +248,10 @@ function runHash1Or2Clicked(params) {
 
     // prepare for next round
     params.previousMessage = currentMessage;
-    params.hashRateData.push((new Date()).getTime()); // push on the end
-    while (params.hashRateData.length > 10) {
-        params.hashRateData.shift(); // pop from the start
-    }
     return true; // keep running if in a loop
 }
 
-function getAverageHashRate(hashRateData) {
+function getAverageHashRate(hashRateData, numberOnly) {
     // add up the diffs between each item in the list
     var sum = 0;
     for (var i = 1; i < hashRateData.length; i++) {
@@ -258,8 +260,26 @@ function getAverageHashRate(hashRateData) {
     var average = 0;
     if (sum == 0) average = 0; // avoid div by 0
     else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
-    if (average < 1) average = 'less than 1';
+    if (average < 1 && (numberOnly != true)) average = 'less than 1';
     return average;
+}
+
+function renderHashing2Duration(hashRateData) {
+    var hashRate = getAverageHashRate(hashRateData, true);
+    if (hashRate < 1) return;
+    document.getElementsByClassName('hash2Rate')[1].innerText = hashRate;
+    document.getElementById('showHowLongForThisDevice').style.display = 'inline';
+    // x hashes per second takes ((2^256) / x) seconds =
+    // = ((2^256) / (x * 60 * 60 *  24 * 365)) years
+    // = ((2^256) / (x * 60 * 60 *  24 * 365 * 1000000)) million years
+    // = ((2^256) / (x * 60 * 60 *  24 * 365 * (1000000^10))) million^10 years
+    // = (3671743063 / x) million^10 years
+    var durationInMillionPow10Years = addThousandCommas(Math.round(3671743063 / hashRate));
+    document.getElementById('howLongForThisDeviceWords').innerText =
+    durationInMillionPow10Years + ' million'.repeat(10) + ' years';
+
+    document.getElementById('howLongForThisDeviceNumber').innerText =
+    durationInMillionPow10Years + ',000'.repeat(20) + ' years';
 }
 
 function runHash1And2WrapClicked(e, codeblock) {
