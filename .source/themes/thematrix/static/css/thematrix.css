@@ -52,10 +52,10 @@ label {
     font-size: 14px;
     font-style: italic;
 }
-label.for-textbox:after {
+label.for-textbox:after, label.for-select:after {
     content: ": "
 }
-input[type="text"] {/*made to look like it is a small hole in the page*/
+input[type="text"], select {/*made to look like it is a small hole in the page*/
     margin: 5px 0 5px 0;
     font-size: 14px;
     color: #bbbbbb;/*off-white*/
@@ -79,7 +79,10 @@ input[type="text"] {/*made to look like it is a small hole in the page*/
     -moz-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1),0 -1px 0 rgba(255, 255, 255, 0.075);
     box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
 }
-input[type="text"]:focus {/*appears deeper when in focus*/
+select {
+    padding: 6px 10px;/*keep to the same height as text input*/
+}
+input[type="text"]:focus, select:focus {/*appears deeper when in focus*/
     outline: none;
     box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
@@ -176,7 +179,7 @@ code {
 /* 1 column layout is for phones, small portrait tablets, etc */
 @media (max-width: 800px) {/*when x <= 800px*/
     .hidden-phone {
-        display: none;
+        display: none !important;
     }
     .col-2 {
         display: none;
@@ -192,7 +195,7 @@ code {
 }
 @media (min-width: 801px) {/*when x >= 801px*/
     .hidden-pc {
-        display: none;
+        display: none !important;
     }
     .col-2 {
         width: 200px;
@@ -410,6 +413,17 @@ ul.taglist li {
 }
 /* end list styles */
 
+.left {
+    font-size: 14px;
+    float: left;
+    margin: 0 20px 10px 0;
+}
+.left .line-spacer {
+    display: block;
+}
+.left .line-spacer:after {
+    content: "\00a0";/*nbsp in utf8*/
+}
 .keep-together {
     display: inline-block;
 }
@@ -454,6 +468,7 @@ ul.taglist li {
     border-radius: 4px;
     padding: 10px;
     margin: 20px 0 20px 0;
+    overflow: hidden;/*border outside floats*/
 }
 .horizontal-center {
     text-align: center;
@@ -470,6 +485,7 @@ blockquote {
 .codeblock-container {
     display: block;
     position: relative;
+    clear: both;
 }
 .codeblock-container .button-background {
     position: absolute;

@@ -21,10 +21,19 @@ cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
 a few times and then try typing different things in the *pre-image* field:
 <div class="form-container">
-    <label for="inputMessage0" class="for-textbox">pre-image</label><br>
-    <input id="inputMessage0" type="text" value="hello world!">
-    <button id="btnRunHash0">SHA256</button>
-    &nbsp;&nbsp;<span id="hash0Duration"></span>
+    <div class="left">
+        <label for="inputMessage0" class="for-textbox">pre-image</label><br>
+        <input id="inputMessage0" type="text" value="hello world!">
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <button id="btnRunHash0">SHA256</button>
+    </div>
+    <div class="left">
+        <span class="line-spacer"></span>
+        <span class="line-spacer hidden-phone"></span>
+        <span id="hash0Duration"></span>
+    </div>
     <div class="codeblock-container" style="display:none;">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="true">
@@ -124,6 +133,11 @@ a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting* the hash.
 
+<div class="codeblock" style="white-space:pre;">programatically easy:       pre-image -> SHA256 -> hash
+
+programatically impossible: pre-image <- SHA256 <- hash
+</div>
+
 If we start with a pre-image and then hash it, then of course we will know what
 the pre-image for the resulting hash is - for example, if I give you the hash
 `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
@@ -135,12 +149,23 @@ you will not be able to invert this hash. Seriously - give it a go:
 
 <div class="form-container">
     <input type="checkbox" id="inputCheckbox1" checked>
-    <label for="inputCheckbox1">automatically change pre-image after hashing</label><br>
-
-    <label for="inputMessage1" class="for-textbox">pre-image</label><br>
-    <input id="inputMessage1" type="text" value="a">
-    <button id="btnRunHash1">SHA256</button>
-    &nbsp;&nbsp;(Average hash rate: <span class="hash1Rate"></span> hashes per second)
+    <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
+    <br><br>
+    <div class="left">
+        <label for="inputMessage1" class="for-textbox">pre-image</label><br>
+        <input id="inputMessage1" type="text" value="a">
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <button id="btnRunHash1">SHA256</button>
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <span class="line-spacer hidden-phone"></span>
+        <span id="showHash1Rate" style="display:none;">
+            (Average hash rate: <span class="hash1Rate"></span> hashes per second)
+        </span>
+    </div>
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -149,8 +174,8 @@ you will not be able to invert this hash. Seriously - give it a go:
             </button>
         </div><br>
         <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="preImage1"></span> -> SHA256 : <span id="hash1Result" class="individual-digits"></span>
-status      : <span id="matchStatus1"></span></div>
+<span id="showHash1Results" style="display:none;"><span id="preImage1"></span> -> SHA256 : <span id="hash1Result" class="individual-digits"></span>
+status      : <span id="matchStatus1"></span></span></div>
     </div>
 </div>
 
@@ -167,14 +192,24 @@ on your device:
 
 <div class="form-container">
     <input type="checkbox" id="inputCheckbox2" checked disabled>
-    <label for="inputCheckbox2">automatically change pre-image after hashing</label><br>
-
-    <label for="inputMessage2" class="for-textbox">pre-image</label><br>
-    <input id="inputMessage2" type="text" value="a" disabled>
-    <button id="btnRunHash2">Run SHA256 Automatically</button>
-    &nbsp;&nbsp;<span id="showHash2Rate" style="display:none;">
-        (Average hash rate: <span class="hash2Rate"></span> hashes per second)
-    </span>
+    <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
+    <br><br>
+    <div class="left">
+        <label for="inputMessage2" class="for-textbox">pre-image</label><br>
+        <input id="inputMessage2" type="text" value="a" disabled>
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <button id="btnRunHash2">Run SHA256 Automatically</button>
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <span class="line-spacer hidden-phone"></span>
+        <span id="showHash2Rate" style="display:none;">
+            (Average hash rate: <span class="hash2Rate"></span> hashes per second)
+        </span>
+    </div>
+    <br><br>
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -183,8 +218,8 @@ on your device:
             </button>
         </div><br>
         <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="preImage2"> </span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
-status      : <span id="matchStatus2"></span></div>
+<span id="showHash2Results" style="display:none;"><span id="preImage2"> </span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
+status      : <span id="matchStatus2"></span></span></div>
     </div>
 </div>
 
@@ -194,10 +229,15 @@ can calculate that it is going to take <span id="howLongForThisDeviceWords"></sp
 to try enough combinations to invert this hash and find the solution. That's
 <span id="howLongForThisDeviceNumber"></span>.</span>
 
-Even though some computers can do billions of hashes per second, that is still
-not quick enough to try all the combinations of pre-images to find a matching
-hash within our lifetimes. Infact it would take all the computers on this planet
-millions of years to try all possible pre-images until they found the solution.
+When it comes hashing, <span class="hash2Rate"></span> is actually not quick at
+all. Specialized computer chips are built to run billions of hashes per second.
+At the time of writing (March 2018) the total global SHA256 hashpower is
+25,000,000,000,000,000,000 hashes per second, or 25 million million million
+hashes per second, but even at this rate it would take 146 million million
+million million million million million million years to try all pre-image
+combinations for SHA256. Thats about a million million million years quicker
+than your device, but it doesn't really matter - by the time it comes around our
+sun will have long since burned out and humanity will be long gone.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
@@ -207,9 +247,63 @@ closer to what I want, and then make minor adjustments until I zero in on the
 hash." But alas, this is not how cryptographic hashing works - Property 4 tells
 us that hashes are both deterministic and random. They are deterministic because
 a pre-image will always hash to the same value, but that value is random, so
-there can be no process of zeroing in. Trying a pre-image that is
-"further along" is no better than trying any other pre-image - they all completely
+there can be no process of zeroing in. Trying a pre-image that is "further along"
+is no better than trying any other different pre-image - they all completely
 modify the resulting hash.
+
+Now that we have discussed the properties of cryptographic hashing we can
+investigate how it is used in a technique known as *proof of work*. *Proof of work*,
+as the name implies, is a way for one computer to prove to another computer that
+it has completed a certain amount of work. The *work* is cryptographic hashing
+of a pre-image (incremented after each attempt). Because the output of a
+cryptographic hash is simultaneously random and deterministic, then once we have
+found the correct pre-image we can submit it as the solution to another computer,
+which can verify that it is indeed correct. "But wait", you might be thinking,
+"didn't you say that it would take millions of years to try all the pre-images
+for SHA256 before we find one which matches the output?" And indeed that is true.
+But the beauty of *proof of work* is that we don't have to match the entire
+SHA256 output - we need only match a specified number of characters.
+
+Lets give it a go. Click the *Mine with SHA256* button and once you find the
+solution try changing the difficulty:
+
+<div class="form-container">
+    <div class="left">
+        <label for="difficulty3" class="for-select">difficulty</label><br>
+        <select id="difficulty3"></select>
+    </div>
+    <div class="left">
+        <label for="inputMessage3Prefix" class="for-textbox">pre-image prefix</label><br>
+        <input id="inputMessage3Prefix" type="text" value="" disabled>
+    </div>
+    <div class="left">
+        <label for="inputMessage3" class="for-textbox">pre-image nonce</label><br>
+        <input id="inputMessage3" type="text" value="a" disabled>
+    </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <button id="btnRunHash3">Mine with SHA256</button>
+    </div>
+    <div class="left">
+        <span id="showMining3Duration" style="display:none;">
+            (Mining duration: <span class="mining3Duration"></span>)
+        </span>
+    </div>
+    <br><br>
+    <div class="codeblock-container">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="codeblock3MiningResults" class="codeblock" style="white-space:pre;">SHA256 target: <span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
+<span id="showMining3Results" style="display:none;"><span id="preImage3"> </span> -> SHA256 : <span id="mining3Result" class="individual-digits"></span>
+status      : <span id="miningStatus3"></span>
+<span id="mining3Statistics"></span></span></div>
+    </div>
+</div>
+
 
 ## bitcoin mining
 
@@ -319,33 +413,33 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version3" type="text" class="data-value" size="2" value="1">
+            <input id="version4" type="text" class="data-value" size="2" value="1">
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash3" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash4" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot3" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp <span id="timestamp3Explanation"></span><br>
-            <input id="timestamp3" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            timestamp <span id="timestamp4Explanation"></span><br>
+            <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
             difficulty<br>
-            <input id="bits3" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce3" type="text" class="data-value" size="10" value="0">
+            <input id="nonce4" type="text" class="data-value" size="10" value="0">
         </td></tr>
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<ul id="blockHeader3Error" class="error"></ul>
-<button id="btnRunHash3">mine (with SHA256)</button>
+<ul id="blockHeader4Error" class="error"></ul>
+<button id="btnRunHash4">mine (with SHA256)</button>
 <div class="codeblock-container">
     <div class="button-background">
         <button class="wrap-nowrap" wrapped="false">
@@ -353,9 +447,9 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block3MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target3" class="individual-digits"></span>
-block hash: <span id="blockhash3" class="individual-digits"></span>
-status:     <span id="mineStatus3"></span>
+<div id="block4MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target4" class="individual-digits"></span>
+block hash: <span id="blockhash4" class="individual-digits"></span>
+status:     <span id="mineStatus4"></span>
 </div>
 </div>
 </div>
