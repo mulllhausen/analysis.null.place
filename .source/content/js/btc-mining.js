@@ -32,10 +32,9 @@ addEvent(window, 'load', function() {
         runHash0Clicked();
     });
     addEvent(
-        document.getElementById('btnRunHash0').parentNode.
-        querySelector('button.wrap-nowrap'),
+        document.getElementById('form0').querySelector('button.wrap-nowrap'),
         'click',
-        runHash0WrapClicked
+        runHashWrapClicked
     );
 
     // form 1 - hashing manually to match hash
@@ -54,15 +53,11 @@ addEvent(window, 'load', function() {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash1Or2Clicked(hash1Params);
     });
-    (function() {
-        var codeblock = document.getElementById('codeblock1HashResults');
-        addEvent(
-            document.getElementById('btnRunHash1').parentNode.
-            querySelector('button.wrap-nowrap'),
-            'click',
-            function(e) { runHash1And2WrapClicked(e, codeblock); }
-        );
-    })();
+    addEvent(
+        document.getElementById('form1').querySelector('button.wrap-nowrap'),
+        'click',
+        runHashWrapClicked
+    );
 
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
@@ -77,15 +72,11 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
         runHash2Clicked(e, hash2Params);
     });
-    (function() {
-        var codeblock = document.getElementById('codeblock2HashResults');
-        addEvent(
-            document.getElementById('btnRunHash2').parentNode.
-            querySelector('button.wrap-nowrap'),
-            'click',
-            function(e) { runHash1And2WrapClicked(e, codeblock); }
-        );
-    })();
+    addEvent(
+        document.getElementById('form2').querySelector('button.wrap-nowrap'),
+        'click',
+        runHashWrapClicked
+    );
 
     // form 3 - proof of work
     var hash3Params = {
@@ -99,6 +90,11 @@ addEvent(window, 'load', function() {
     addEvent(document.getElementById('btnRunHash3'), 'click', function(e) {
         runHash3Clicked(e, hash3Params);
     });
+    addEvent(
+        document.getElementById('form3').querySelector('button.wrap-nowrap'),
+        'click',
+        runHashWrapClicked
+    );
 
     // form 4 - bitcoin mining
     addEvent(document.getElementById('version4'), 'keyup, change', version4Changed);
@@ -121,27 +117,24 @@ addEvent(window, 'load', function() {
 
     addEvent(document.getElementById('btnRunHash4'), 'click', mine4AndRenderResults);
     addEvent(
-        document.getElementById('btnRunHash4').parentNode.
-        querySelector('button.wrap-nowrap'),
+        document.getElementById('form4').querySelector('button.wrap-nowrap'),
         'click',
-        runHash4WrapClicked
+        runHashWrapClicked
     );
     initBlockchainSVG();
 });
 
-function runHash0WrapClicked(e) {
+function runHashWrapClicked(e) {
     var btn = e.currentTarget;
-    var codeblockText = btn.parentNode.parentNode.querySelector('.codeblock').innerText;
-    if (btn.getAttribute('wrapped') == 'true') {
-        btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        codeblockText.replace(/\n/g, '\n\n').replace(/[ ]* -> SHA256/g, ' -> SHA256');
-    } else {
-        btn.parentNode.parentNode.querySelector('.codeblock').innerText =
-        alignText(codeblockText.replace(/\n\n/g, '\n'), '-> SHA256');
-    }
+    var codeblock = btn.closest('.form-container').querySelector('.codeblock');
+    if (btn.getAttribute('wrapped') == 'true') codeblock.innerHTML = codeblock.
+    innerHTML.replace(/\n/g, '\n\n');
+    else codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n');
 }
 
+// form 0
 function runHash0Clicked() {
+    var form0 = document.getElementById('form0');
     var message = document.getElementById('inputMessage0').value;
     var startTime = new Date();
     var bitArray = sjcl.hash.sha256.hash(message);
@@ -161,19 +154,19 @@ function runHash0Clicked() {
     durationExplanationShort += 'ms)';
     document.getElementById('hash0Duration').innerText = durationExplanationLong;
     var wrapButtonIsOn = (
-        document.getElementById('hash0Results').parentNode.
-        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+        form0.querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
     );
-    var text = (
-        message + ' -> SHA256 -> ' + sha256Hash + ' ' +
-        durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
-        document.getElementById('hash0Results').innerText
+    var hash0Results = document.getElementById('hash0Results');
+    hash0Results.innerHTML = (
+        message + ' <span class="aligner"></span>-> SHA256 -> ' + sha256Hash +
+        ' ' + durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
+        hash0Results.innerHTML
     ).trim();
-    if (!wrapButtonIsOn) text = alignText(text, '-> SHA256');
-    document.getElementById('hash0Results').innerText = text;
-    document.getElementById('hash0Results').parentNode.style.display = 'block';
+    if (!wrapButtonIsOn) alignText(hash0Results);
+    hash0Results.closest('.codeblock-container').style.display = 'block';
 }
 
+// forms 1 and 2
 function runHash2Clicked(e, params) {
     switch (params.state) {
         case 'running':
@@ -232,8 +225,8 @@ function runHash1Or2Clicked(params) {
     getAverageHashRate(params.hashRateData);
     document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
     var wrapButtonIsOn = (
-        document.getElementById('hash' + params.formNum + 'Result').parentNode.
-        parentNode.parentNode.querySelector('button.wrap-nowrap').
+        document.getElementById('hash' + params.formNum + 'Result').
+        closest('.form-container').querySelector('button.wrap-nowrap').
         getAttribute('wrapped') == 'true'
     );
     var incrementPreImage = document.getElementById('inputCheckbox' + params.formNum).checked;
@@ -245,11 +238,8 @@ function runHash1Or2Clicked(params) {
     if (
         !wrapButtonIsOn
         && (params.previousMessage.length != message.length)
-    ) {
-        var html = document.getElementById('codeblock' + params.formNum + 'HashResults').innerHTML;
-        html = alignText(html, ':');
-        document.getElementById('codeblock' + params.formNum + 'HashResults').innerHTML = html;
-    }
+    ) alignText(document.getElementById('codeblock' + params.formNum + 'HashResults'));
+
     var matches = alphaInCommon(params.hashMatch, sha256Hash);
     borderTheDigits2(
         '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
@@ -305,19 +295,6 @@ function renderHashing2Duration(hashRateData) {
     durationInMillionPow10Years + ',000'.repeat(20) + ' years';
 }
 
-function runHash1And2WrapClicked(e, codeblock) {
-    var btn = e.currentTarget;
-    var codeblockHTML = codeblock.innerHTML;
-    if (btn.getAttribute('wrapped') == 'true') {
-        codeblock.innerHTML =
-        codeblockHTML.replace(/\n/g, '\n\n').replace(/[ ]*:/g, ':');
-    } else {
-        codeblockHTML = codeblockHTML.replace(/^([\s\S]*?):([\s\S]*?)$/gm, '$1 :$2').
-        replace(/\n\n/g, '\n');
-        codeblock.innerHTML = alignText(codeblockHTML, ':');
-    }
-}
-
 // form 3
 
 function initProofOfWorkForm() {
@@ -336,7 +313,7 @@ function initProofOfWorkForm() {
     return prefix;
 }
 
-function runHash3Clicked(e) {
+function runHash3Clicked(e, params) {
 }
 
 // iterate the given text through the alphabet, such that:
@@ -382,53 +359,10 @@ function countMatches(matchArray) {
     return matches;
 }
 
-// align text from the splitter position onwards. the splitter must be unique.
-var withinTag = false;
-function alignText(text, splitter) {
-    var lines = text.split('\n');
-    if (lines.length == 1) return text;
-
-    // first, find the biggest index position from any line
-    var biggestIndentPos = 0; // init
-    for (var lineI = 0; lineI < lines.length; lineI++) {
-        var thisLine = lines[lineI];
-
-        // strip html tags out (but keep content between)
-        if (inArray('<', thisLine) && inArray('>', thisLine)) {
-            var tmp = document.createElement('div');
-            tmp.innerHTML = thisLine;
-            thisLine = tmp.textContent;
-        }
-        var indentPos = thisLine.indexOf(splitter); // -1 if not found
-        if (indentPos > biggestIndentPos) biggestIndentPos = indentPos;
-    }
-
-    // then do the indentation on each line
-    for (var lineI = 0; lineI < lines.length; lineI++) {
-        var thisLine = lines[lineI];
-        if (!inArray(splitter, thisLine)) continue;
-
-        var thisLineNoHTML = thisLine;
-        if (inArray('<', thisLine) && inArray('>', thisLine)) {
-            var tmp = document.createElement('div');
-            tmp.innerHTML = thisLine;
-            thisLineNoHTML = tmp.textContent;
-        }
-        var linePartsForCalc = thisLineNoHTML.split(splitter);
-        var lineParts = thisLine.split(splitter);
-        var beforeSplitter = lineParts.shift();
-        lines[lineI] = beforeSplitter +
-        ' '.repeat(biggestIndentPos - linePartsForCalc[0].length) + splitter +
-        lineParts.join(splitter);
-    }
-    return lines.join('\n');
-}
-
 // todo - merge with borderTheDigits2
 function borderTheDigits(cssSelectors, num2Color, pass) {
-    var subjectEls = document.querySelectorAll(cssSelectors);
-    for (var i = 0; i < subjectEls.length; i++) {
-        var text = subjectEls[i].innerText; // get
+    foreach(document.querySelectorAll(cssSelectors), function(i, el) {
+        var text = el.innerText; // get
         var newText = '';
         for (var letterI = 0; letterI < text.length; letterI++) {
             var style = '';
@@ -445,8 +379,8 @@ function borderTheDigits(cssSelectors, num2Color, pass) {
                 text[letterI] +
             '</span>';
         }
-        subjectEls[i].innerHTML = newText; // set
-    }
+        el.innerHTML = newText; // set
+    });
 }
 
 function borderTheDigits2(cssSelectors, matchArray) {
@@ -756,19 +690,6 @@ function mine() {
         status: miningStatus.status,
         resolution: miningStatus.resolution
     };
-}
-
-// align the status when the 'wrap' button is clicked
-function runHash4WrapClicked(e) {
-    var btn = e.currentTarget;
-    var codeblockHtml = btn.parentNode.parentNode.querySelector('.codeblock').innerHTML;
-    if (btn.getAttribute('wrapped') == 'true') {
-        btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
-        codeblockHtml.replace('status:     ', 'status: ');
-    } else {
-        btn.parentNode.parentNode.querySelector('.codeblock').innerHTML =
-        codeblockHtml.replace('status: ', 'status:     ');
-    }
 }
 
 function bits2target(bits) {

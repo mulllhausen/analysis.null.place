@@ -97,16 +97,27 @@ function inArray(needle, haystack) {
     return (haystack.indexOf(needle) > -1);
 }
 
-function mergeObjects() {
-    var retObj = {};
-    for (var i = 0; i < arguments.length; i++) {
-        var obj = arguments[i];
-        for (var key in obj) {
-            if (!obj.hasOwnProperty(key)) continue;
-            retObj[key] = obj[key];
+function foreach(els, callback) {
+    if (isNodeList(els) || (els instanceof Array)) {
+        for (var i = 0; i < els.length; i++) {
+            if (callback(i, els[i]) === false) break;
+        }
+    } else if (typeof els === 'object') {
+        for (var key in els) {
+            if (!els.hasOwnProperty(key)) continue;
+            if (callback(key, els[key]) === false) break;
         }
     }
-    return retObj;
+}
+
+function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
+    var retObj = {};
+    foreach(arguments, function(i, obj) {
+        foreach(obj, function(k, v) {
+            retObj[k] = v;
+        });
+    });
+    return retObj;// eg {a:1, b:2, c:3}
 }
 
 // 1000 -> 1,000
@@ -132,6 +143,63 @@ function ajax(url, callback) {
     });
     xhttp.open('GET', url);
     xhttp.send();
+}
+
+Element.prototype.up = function(num) {
+    var el = this;
+    for (var i = 0; i < num; i++) el = el.parentNode;
+    return el;
+}
+
+// align text at <span class="aligner"/>. currently only 1 aligner is supported
+// per line
+var uniqueTextAligner = '|%|'; // something never used in the codeblock
+function alignText(codeblock) {
+    var lines = codeblock.innerHTML.split('\n');
+    if (lines.length == 1) return;
+
+    // put the aligners in
+    foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
+        el.innerText = uniqueTextAligner;
+    });
+    lines = codeblock.innerHTML.split('\n');
+
+    // find the biggest index position from any line
+    var biggestIndentPos = 0; // init
+    var linesWithoutAlignment = []; // init
+    var linesNoHTML = {}; // init (avoid unnecessary dom operations)
+    foreach (lines, function(lineI, line) {
+        if (!inArray(uniqueTextAligner, line)) {
+            linesWithoutAlignment.push(lineI);
+            return; // continue
+        }
+        // strip html tags out (but keep content between)
+        if (inArray('<', line) && inArray('>', line)) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = line;
+            line = tmp.textContent;
+        }
+        linesNoHTML[lineI] = line;
+        var indentPos = line.indexOf(uniqueTextAligner); // -1 if not found
+        if (indentPos > biggestIndentPos) biggestIndentPos = indentPos;
+    });
+
+    // do the indentation on each line
+    var alignerNum = 0;
+    foreach (lines, function(lineI, line) {
+        if (inArray(lineI, linesWithoutAlignment)) return; // continue
+        var linePartsForCalc = linesNoHTML[lineI].split(uniqueTextAligner);
+        // remove the unique aligner and align the text
+        codeblock.querySelectorAll('.aligner')[alignerNum].innerText =
+        ' '.repeat(biggestIndentPos - linePartsForCalc[0].length);
+        alignerNum++;
+    });
+}
+
+function unalignText(codeblock) {
+    foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
+        el.innerText = '';
+    });
 }
 
 // events for all pages
@@ -163,11 +231,13 @@ addEvent(document.querySelectorAll('.codeblock-container button.wrap-nowrap'), '
         codeblock.style.whiteSpace = 'pre';
         btn.querySelector('i.fa-level-down').style.display = 'inline-block';
         btn.querySelector('i.fa-arrows-h').style.display = 'none';
+        alignText(codeblock);
         btn.setAttribute('wrapped', 'false');
     } else {
         codeblock.style.whiteSpace = 'pre-wrap';
         btn.querySelector('i.fa-level-down').style.display = 'none';
         btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
+        unalignText(codeblock);
         btn.setAttribute('wrapped', 'true');
     }
 });

@@ -20,7 +20,7 @@ To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
 a few times and then try typing different things in the *pre-image* field:
-<div class="form-container">
+<div class="form-container" id="form0">
     <div class="left">
         <label for="inputMessage0" class="for-textbox">pre-image</label><br>
         <input id="inputMessage0" type="text" value="hello world!">
@@ -133,9 +133,9 @@ a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting* the hash.
 
-<div class="codeblock" style="white-space:pre;">programatically easy:       pre-image -> SHA256 -> hash
+<div class="codeblock" style="white-space:pre;">easy:       pre-image -> SHA256 -> hash
 
-programatically impossible: pre-image <- SHA256 <- hash
+impossible: pre-image <- SHA256 <- hash
 </div>
 
 If we start with a pre-image and then hash it, then of course we will know what
@@ -147,7 +147,7 @@ if I give you `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22`
 then you will not be able to find the pre-image which results in this hash - i.e.
 you will not be able to invert this hash. Seriously - give it a go:
 
-<div class="form-container">
+<div class="form-container" id="form1">
     <input type="checkbox" id="inputCheckbox1" checked>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
@@ -173,9 +173,9 @@ you will not be able to invert this hash. Seriously - give it a go:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="showHash1Results" style="display:none;"><span id="preImage1"></span> -> SHA256 : <span id="hash1Result" class="individual-digits"></span>
-status      : <span id="matchStatus1"></span></span></div>
+        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+<span id="showHash1Results" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
+status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
 
@@ -190,7 +190,7 @@ do the hashing at their maximum speeds. If you click the button below then you
 can have your device cycle through all pre-images at the maximum speed possible
 on your device:
 
-<div class="form-container">
+<div class="form-container" id="form2">
     <input type="checkbox" id="inputCheckbox2" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
@@ -217,9 +217,9 @@ on your device:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? -> SHA256 : <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="showHash2Results" style="display:none;"><span id="preImage2"> </span> -> SHA256 : <span id="hash2Result" class="individual-digits"></span>
-status      : <span id="matchStatus2"></span></span></div>
+        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+<span id="showHash2Results" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
+status: <span id="matchStatus2"></span></span></div>
     </div>
 </div>
 
@@ -267,7 +267,7 @@ SHA256 output - we need only match a specified number of characters.
 Lets give it a go. Click the *Mine with SHA256* button and once you find the
 solution try changing the difficulty:
 
-<div class="form-container">
+<div class="form-container" id="form3">
     <div class="left">
         <label for="difficulty3" class="for-select">difficulty</label><br>
         <select id="difficulty3"></select>
@@ -297,9 +297,9 @@ solution try changing the difficulty:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock3MiningResults" class="codeblock" style="white-space:pre;">SHA256 target: <span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
-<span id="showMining3Results" style="display:none;"><span id="preImage3"> </span> -> SHA256 : <span id="mining3Result" class="individual-digits"></span>
-status      : <span id="miningStatus3"></span>
+        <div id="codeblock3MiningResults" class="codeblock" style="white-space:pre;">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
+<span id="showMining3Results" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="mining3Result" class="individual-digits"></span>
+status: <span id="miningStatus3"></span>
 <span id="mining3Statistics"></span></span></div>
     </div>
 </div>
@@ -408,7 +408,7 @@ The bitcoin blockchain is basically a chain of blocks. Each block references the
 previous block, right back to the very first block created by Satoshi Nakamoto on
 4 Jan 2009.
 
-<div class="form-container">
+<div class="form-container" id="form4">
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -447,9 +447,9 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block4MiningResults" class="codeblock" style="white-space:pre;">target:     <span id="target4" class="individual-digits"></span>
-block hash: <span id="blockhash4" class="individual-digits"></span>
-status:     <span id="mineStatus4"></span>
+<div id="block4MiningResults" class="codeblock" style="white-space:pre;">target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
+block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
+status: <span class="aligner">    </span><span id="mineStatus4"></span>
 </div>
 </div>
 </div>
