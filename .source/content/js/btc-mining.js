@@ -258,6 +258,9 @@ function initProofOfWorkForm() {
     dropdownNumChars += '<option value="64">match all 64 characters</option>\n';
     document.getElementById('difficulty3').innerHTML = dropdownNumChars;
 
+    // border the target digits
+    borderTheDigits2('#match3', new Array(64));
+
     // init the mining prefix
     var prefix = getRandomAlpha(10);
     document.getElementById('inputMessage3Prefix').value = prefix;
@@ -288,11 +291,11 @@ function runHash3Clicked(e, params) {
     var statistics = '\n' // init
     for (var numChars = 1; numChars <= 64; numChars++) {
         if (!params.attempts.hasOwnProperty(numChars)) continue;
-        var minedStatus = ' not yet mined after ';
+        var minedStatus = ' not yet mined after '; // init
         if (params.attempts['matchFound' + numChars]) minedStatus = ' mined in ';
-        statistics += 'difficulty of ' + numChars + ' character' +
-        plural('s', numChars > 1) + minedStatus + params.attempts[numChars] +
-        ' attempt' + plural('s', params.attempts[numChars] > 1) + '\n';
+        statistics += numChars + ' digit' + plural('s', numChars > 1) +
+        minedStatus + params.attempts[numChars] + ' attempt' +
+        plural('s', params.attempts[numChars] > 1) + '\n';
     }
     document.getElementById('mining3Statistics').innerText = statistics;
 }
