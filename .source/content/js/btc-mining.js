@@ -1,6 +1,8 @@
+// init globals
 var passColor = '#7db904'; // green
 var failColor = 'red';
-var stopHashingForm2 = false; // global
+var stopHashingForm = {}; // eg {2: false}
+var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
 var txsPerBlock = [];
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
@@ -42,16 +44,19 @@ addEvent(window, 'load', function() {
         firstTime: true,
         hashMatch: document.getElementById('match1').innerText,
         matchFound: false,
-        previousMessage: '',
+        previousNonce: '',
         formNum: 1,
-        hashRateData: []
+        hashRateData: [],
+        prefix: '' // no prefix
     };
+    stopHashingForm[1] = false;
+    difficultyChars[1] = 64; // match all characters
     addEvent(document.getElementById('btnRunHash1'), 'click', function() {
-        runHash1Or2Clicked(hash1Params);
+        runHash1Clicked(hash1Params);
     });
     addEvent(document.getElementById('inputMessage1'), 'keyup', function(e) {
         if (e.keyCode != 13) return; // only allow the enter key
-        runHash1Or2Clicked(hash1Params);
+        runHash1Clicked(hash1Params);
     });
     addEvent(
         document.getElementById('form1').querySelector('button.wrap-nowrap'),
@@ -64,11 +69,14 @@ addEvent(window, 'load', function() {
         firstTime: true,
         hashMatch: document.getElementById('match2').innerText,
         matchFound: false,
-        previousMessage: '',
+        previousNonce: '',
         formNum: 2,
         state: 'stopped',
-        hashRateData: []
+        hashRateData: [],
+        prefix: '' // no prefix
     };
+    stopHashingForm[2] = false;
+    difficultyChars[2] = 64; // match all characters
     addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
         runHash2Clicked(e, hash2Params);
     });
@@ -81,20 +89,28 @@ addEvent(window, 'load', function() {
     // form 3 - proof of work
     var hash3Params = {
         firstTime: true,
+        hashMatch: document.getElementById('match3').innerText,
         matchFound: false,
-        previousMessage: '',
+        previousNonce: '',
+        formNum: 3,
         state: 'stopped',
-        hashDurationData: []
+        hashRateData: [],
+        attempts: {}, // eg 5 chars: 10 attempts
+        prefix: initProofOfWorkForm()
     };
-    hash3Params.prefix = initProofOfWorkForm();
     addEvent(document.getElementById('btnRunHash3'), 'click', function(e) {
         runHash3Clicked(e, hash3Params);
     });
+    difficultyChars[3] = 1; // init: match first character only
+    addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
     addEvent(
         document.getElementById('form3').querySelector('button.wrap-nowrap'),
         'click',
         runHashWrapClicked
     );
+
+    // dragable blockchain svg
+    initBlockchainSVG();
 
     // form 4 - bitcoin mining
     addEvent(document.getElementById('version4'), 'keyup, change', version4Changed);
@@ -121,7 +137,6 @@ addEvent(window, 'load', function() {
         'click',
         runHashWrapClicked
     );
-    initBlockchainSVG();
 });
 
 function runHashWrapClicked(e) {
@@ -166,121 +181,44 @@ function runHash0Clicked() {
     hash0Results.closest('.codeblock-container').style.display = 'block';
 }
 
-// forms 1 and 2
+// form 1
+function runHash1Clicked(params) {
+    runHash1Or2Or3Clicked(params);
+    document.getElementById('info1').getElementsByTagName('span')[0].
+    innerText = getAverageHashRate(params.hashRateData);
+}
+
+// form 2
 function runHash2Clicked(e, params) {
     switch (params.state) {
         case 'running':
-            stopHashingForm2 = true;
+            stopHashingForm[2] = true;
             params.state = 'stopped';
             e.currentTarget.innerHTML = 'Run SHA256 Automatically';
             renderHashing2Duration(params.hashRateData); // update the paragraph
             break;
         case 'stopped':
-            stopHashingForm2 = false;
+            stopHashingForm[2] = false;
             params.state = 'running';
             e.currentTarget.innerHTML = 'Stop';
             (function loop(params) {
-                if (stopHashingForm2) return;
-                runHash1Or2Clicked(params);
+                if (stopHashingForm[2]) return;
+                runHash1Or2Or3Clicked(params);
+
+                document.getElementById('info2').getElementsByTagName('span')[0].
+                innerText = getAverageHashRate(params.hashRateData);
+
                 setTimeout(function() { loop(params); }, 0);
             })(params);
-            document.getElementById('showHash2Rate').style.display = 'inline';
             break;
     }
-}
-
-function runHash1Or2Clicked(params) {
-    if (stopHashingForm2 && (params.formNum == 2)) return false; // stop running if in a loop
-    if (params.firstTime) {
-        document.getElementById('showHash' + params.formNum + 'Rate').style.
-        display = 'inline';
-        document.getElementById('showHash' + params.formNum + 'Results').style.
-        display = 'inline';
-        params.firstTime = false;
-    }
-    var message = document.getElementById('inputMessage' + params.formNum).value;
-    var overridePass = false;
-    if (params.matchFound && (params.previousMessage == message)) {
-        if (document.getElementById('inputCheckbox' + params.formNum).checked) {
-            overridePass = true;
-        }
-        else return;
-    }
-
-    document.getElementById('preImage' + params.formNum).innerText = message;
-    var bitArray = sjcl.hash.sha256.hash(message);
-    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
-
-    // update the latest hash times for averaging later
-    params.hashRateData.push((new Date()).getTime()); // push on the end
-    while (params.hashRateData.length > 10) {
-        params.hashRateData.shift(); // pop from the start
-    }
-
-    params.matchFound = (params.hashMatch == sha256Hash);
-    if (params.matchFound && !overridePass) {
-        document.getElementById('inputCheckbox' + params.formNum).checked = false;
-    }
-    document.getElementsByClassName('hash' + params.formNum + 'Rate')[0].innerText =
-    getAverageHashRate(params.hashRateData);
-    document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
-    var wrapButtonIsOn = (
-        document.getElementById('hash' + params.formNum + 'Result').
-        closest('.form-container').querySelector('button.wrap-nowrap').
-        getAttribute('wrapped') == 'true'
-    );
-    var incrementPreImage = document.getElementById('inputCheckbox' + params.formNum).checked;
-    var currentMessage = message; // save before modification
-    if (incrementPreImage) message = incrementAlpha(message);
-    document.getElementById('inputMessage' + params.formNum).value = message;
-
-    // fix up the alignment if the pre-image length hash changed
-    if (
-        !wrapButtonIsOn
-        && (params.previousMessage.length != message.length)
-    ) alignText(document.getElementById('codeblock' + params.formNum + 'HashResults'));
-
-    var matches = alphaInCommon(params.hashMatch, sha256Hash);
-    borderTheDigits2(
-        '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
-    );
-
-    var numMatches = countMatches(matches);
-    var status = (params.matchFound ? 'pass' : 'fail') + ' (because ';
-    if (params.matchFound) status += 'all digits';
-    else {
-        if (numMatches == 0) status += '0';
-        else if (numMatches > 0) status += 'only ' + numMatches;
-        status += ' of ' + params.hashMatch.length + ' digits';
-    }
-    status += ' match)';
-    document.getElementById('matchStatus' + params.formNum).innerText = status;
-    document.getElementById('matchStatus' + params.formNum).style.color =
-    (params.matchFound ? passColor : failColor);
-
-    // prepare for next round
-    params.previousMessage = currentMessage;
-    return true; // keep running if in a loop
-}
-
-function getAverageHashRate(hashRateData, numberOnly) {
-    // add up the diffs between each item in the list
-    var sum = 0;
-    for (var i = 1; i < hashRateData.length; i++) {
-        sum += (hashRateData[i] - hashRateData[i - 1]);
-    }
-    var average = 0;
-    if (sum == 0) average = 0; // avoid div by 0
-    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
-    if (average < 1 && (numberOnly != true)) average = 'less than 1';
-    return average;
 }
 
 function renderHashing2Duration(hashRateData) {
     var hashRate = getAverageHashRate(hashRateData, true);
     if (hashRate < 1) return;
+    document.getElementsByClassName('hash2Rate')[0].innerText = hashRate;
     document.getElementsByClassName('hash2Rate')[1].innerText = hashRate;
-    document.getElementsByClassName('hash2Rate')[2].innerText = hashRate;
     document.getElementById('showHowLongForThisDevice').style.display = 'inline';
     // x hashes per second takes ((2^256) / x) seconds =
     // = ((2^256) / (x * 60 * 60 *  24 * 365)) years
@@ -295,8 +233,21 @@ function renderHashing2Duration(hashRateData) {
     durationInMillionPow10Years + ',000'.repeat(20) + ' years';
 }
 
-// form 3
+// forms 1 and 2
+function getAverageHashRate(hashRateData, numberOnly) {
+    // add up the diffs between each item in the list
+    var sum = 0;
+    for (var i = 1; i < hashRateData.length; i++) {
+        sum += (hashRateData[i] - hashRateData[i - 1]);
+    }
+    var average = 0;
+    if (sum == 0) average = 0; // avoid div by 0
+    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
+    if (average < 1 && (numberOnly != true)) average = 'less than 1';
+    return average;
+}
 
+// form 3
 function initProofOfWorkForm() {
     // init the dropdown list for the number of characters to match
     var dropdownNumChars = '<option value="1">match first character only</option>\n';
@@ -308,12 +259,131 @@ function initProofOfWorkForm() {
     document.getElementById('difficulty3').innerHTML = dropdownNumChars;
 
     // init the mining prefix
-    var prefix = Math.floor(1000000000 * Math.random());
+    var prefix = getRandomAlpha(10);
     document.getElementById('inputMessage3Prefix').value = prefix;
     return prefix;
 }
 
+function difficulty3Changed(e) {
+    difficultyChars[3] = parseInt(e.currentTarget.value);
+    document.getElementById('btnRunHash3').disabled = false;
+}
+
 function runHash3Clicked(e, params) {
+    if (!params.attempts.hasOwnProperty(difficultyChars[3])) {
+        params.attempts[difficultyChars[3]] = 1;
+        params.attempts['matchFound' + difficultyChars[3]] = false;
+    } else params.attempts[difficultyChars[3]]++;
+    runHash1Or2Or3Clicked(params);
+    document.getElementById('info3').getElementsByTagName('span')[0].innerText =
+    params.attempts[difficultyChars[3]] + ' attempt' +
+    plural('s', params.attempts[difficultyChars[3]] > 1);
+    if (params.matchFound) {
+        params.attempts['matchFound' + difficultyChars[3]] = true;
+        e.currentTarget.disabled = true;
+        document.getElementById('inputMessage3').value = alphabet[0];
+        document.getElementById('difficulty3').
+        getElementsByTagName('option')[difficultyChars[3] - 1].disabled = true;
+    }
+    var statistics = '\n' // init
+    for (var numChars = 1; numChars <= 64; numChars++) {
+        if (!params.attempts.hasOwnProperty(numChars)) continue;
+        var minedStatus = ' not yet mined after ';
+        if (params.attempts['matchFound' + numChars]) minedStatus = ' mined in ';
+        statistics += 'difficulty of ' + numChars + ' character' +
+        plural('s', numChars > 1) + minedStatus + params.attempts[numChars] +
+        ' attempt' + plural('s', params.attempts[numChars] > 1) + '\n';
+    }
+    document.getElementById('mining3Statistics').innerText = statistics;
+}
+
+// forms 1, 2 and 3
+function runHash1Or2Or3Clicked(params) {
+    // stop running if in a loop
+    if (stopHashingForm[params.formNum]) return false;
+
+    if (params.firstTime) {
+        document.getElementById('info' + params.formNum).style.display =
+        'inline';
+        document.getElementById('showResults' + params.formNum).style.display =
+        'inline';
+        params.firstTime = false;
+    }
+    var nonce = document.getElementById('inputMessage' + params.formNum).value;
+    var overridePass = false; // keep going after a match is found?
+    var inputCheckbox = document.getElementById('inputCheckbox' + params.formNum);
+    if (params.matchFound && (params.previousNonce == nonce)) {
+        if (inputCheckbox != null && inputCheckbox.checked) {
+            overridePass = true;
+        }
+        else return;
+    }
+
+    document.getElementById('preImage' + params.formNum).innerText =
+    params.prefix + nonce;
+    var bitArray = sjcl.hash.sha256.hash(params.prefix + nonce);
+    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
+
+    // update the latest hash times for averaging later
+    params.hashRateData.push((new Date()).getTime()); // push on the end
+    while (params.hashRateData.length > 10) {
+        params.hashRateData.shift(); // pop from the start
+    }
+
+    params.matchFound = (
+        params.hashMatch.substr(0, difficultyChars[params.formNum]) ==
+        sha256Hash.substr(0, difficultyChars[params.formNum])
+    );
+    if (params.matchFound && !overridePass && inputCheckbox != null) {
+        inputCheckbox.checked = false;
+    }
+    document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
+    var wrapButtonIsOn = (
+        document.getElementById('form' + params.formNum).
+        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+    );
+    var incrementPreImage = (inputCheckbox == null || inputCheckbox.checked);
+    var currentNonce = nonce; // save before modification
+    if (incrementPreImage) nonce = incrementAlpha(nonce);
+    document.getElementById('inputMessage' + params.formNum).value = nonce;
+
+    // fix up the alignment if the pre-image length hash changed
+    if (
+        !wrapButtonIsOn
+        && (params.previousNonce.length != nonce.length)
+    ) alignText(document.getElementById('codeblock' + params.formNum + 'HashResults'));
+
+    var matches = alphaInCommon(params.hashMatch, sha256Hash);
+    // only show matches upto the difficulty
+    matches = matchResolution(matches, difficultyChars[params.formNum]);
+    borderTheDigits2(
+        '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
+    );
+
+    var numMatches = countMatches(matches);
+    var status = (params.matchFound ? 'pass' : 'fail') + ' (because ';
+    if (params.matchFound) status += 'all digits';
+    else {
+        if (numMatches == 0) status += '0';
+        else if (numMatches > 0) status += 'only ' + numMatches;
+        status += ' of ' + difficultyChars[params.formNum] + ' digits';
+    }
+    status += ' match)';
+    document.getElementById('matchStatus' + params.formNum).innerText = status;
+    document.getElementById('matchStatus' + params.formNum).style.color =
+    (params.matchFound ? passColor : failColor);
+
+    // prepare for next round
+    params.previousNonce = currentNonce;
+    return true; // keep running if in a loop
+}
+
+function matchResolution(matches, resolution) {
+    foreach (matches, function(i) {
+        if (i < resolution) return; // continue
+        matches[i] = null;
+    });
+    return matches;
 }
 
 // iterate the given text through the alphabet, such that:
@@ -343,6 +413,14 @@ function incrementAlpha(text) {
     }
 }
 
+function getRandomAlpha(length) {
+    var randomAlpha = ''; // init
+    for (var i = 0; i < length; i++) {
+        randomAlpha += alphabet[Math.round((alphabet.length - 1) * Math.random())];
+    }
+    return randomAlpha;
+}
+
 function alphaInCommon(text1, text2) {
     var inCommon = [];
     for (var i = 0; i < text1.length; i++) { // undefined when dne
@@ -353,9 +431,9 @@ function alphaInCommon(text1, text2) {
 
 function countMatches(matchArray) {
     var matches = 0; // init
-    for (var i = 0; i < matchArray.length; i++) {
-        if (matchArray[i] === true) matches++;
-    }
+    foreach (matchArray, function(i, el) {
+        if (el === true) matches++;
+    });
     return matches;
 }
 
@@ -384,28 +462,34 @@ function borderTheDigits(cssSelectors, num2Color, pass) {
 }
 
 function borderTheDigits2(cssSelectors, matchArray) {
-    var subjectEls = document.querySelectorAll(cssSelectors);
-    for (var i = 0; i < subjectEls.length; i++) {
-        var text = subjectEls[i].innerText; // get
-        var newText = '';
-        for (var letterI = 0; letterI < matchArray.length; letterI++) {
+    foreach (document.querySelectorAll(cssSelectors), function (i, el) {
+        var text = el.innerText; // get
+        var newHTML = '';
+        foreach (matchArray, function (letterI) {
             var border = '';
             var borderLeft = '';
-            if (matchArray[letterI] === true) {
-                border = 'border:1px solid ' + passColor + ';';
-            } else if (matchArray[letterI] === false) {
-                border = 'border:1px solid ' + failColor + ';';
+            switch (matchArray[letterI]) {
+                case true:
+                    border = 'border:1px solid ' + passColor + ';';
+                    break;
+                case false:
+                    border = 'border:1px solid ' + failColor + ';';
+                    break;
             }
-            if (matchArray[letterI - 1] === true) {
-                borderLeft = 'border-left:1px solid ' + passColor + ';';
+            switch (matchArray[letterI - 1]) {
+                case true:
+                    borderLeft = 'border-left:1px solid ' + passColor + ';';
+                    break;
+                case false:
+                    if (matchArray[letterI] != null) break;
+                    borderLeft = 'border-left:1px solid ' + failColor + ';';
+                    break;
             }
-            newText += '<span class="individual-digit" style="' + border +
-            borderLeft + '">' +
-                text[letterI] +
-            '</span>';
-        }
-        subjectEls[i].innerHTML = newText; // set
-    }
+            newHTML += '<span class="individual-digit" style="' + border +
+            borderLeft + '">' + text[letterI] + '</span>';
+        });
+        el.innerHTML = newHTML; // set
+    });
 }
 
 function version4Changed() {

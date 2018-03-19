@@ -202,6 +202,13 @@ function unalignText(codeblock) {
     });
 }
 
+function plural(wordEnding, plural) {
+    switch (wordEnding) {
+        case 's':
+            if (plural) return 's';
+            else return '';
+    }
+}
 // events for all pages
 
 // nav-menu open/close (mobile only)

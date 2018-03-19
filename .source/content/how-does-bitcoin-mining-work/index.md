@@ -162,8 +162,8 @@ you will not be able to invert this hash. Seriously - give it a go:
     <div class="left">
         <span class="line-spacer hidden-phone"></span>
         <span class="line-spacer hidden-phone"></span>
-        <span id="showHash1Rate" style="display:none;">
-            (Average hash rate: <span class="hash1Rate"></span> hashes per second)
+        <span id="info1" style="display:none;">
+            (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
     <div class="codeblock-container">
@@ -174,7 +174,7 @@ you will not be able to invert this hash. Seriously - give it a go:
             </button>
         </div><br>
         <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="showHash1Results" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
+<span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
@@ -205,8 +205,8 @@ on your device:
     <div class="left">
         <span class="line-spacer hidden-phone"></span>
         <span class="line-spacer hidden-phone"></span>
-        <span id="showHash2Rate" style="display:none;">
-            (Average hash rate: <span class="hash2Rate"></span> hashes per second)
+        <span id="info2" style="display:none;">
+            (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
     <br><br>
@@ -218,7 +218,7 @@ on your device:
             </button>
         </div><br>
         <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
-<span id="showHash2Results" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
+<span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span></div>
     </div>
 </div>
@@ -229,15 +229,15 @@ can calculate that it is going to take <span id="howLongForThisDeviceWords"></sp
 to try enough combinations to invert this hash and find the solution. That's
 <span id="howLongForThisDeviceNumber"></span>.</span>
 
-When it comes hashing, <span class="hash2Rate"></span> is actually not quick at
-all. Specialized computer chips are built to run billions of hashes per second.
-At the time of writing (March 2018) the total global SHA256 hashpower is
-25,000,000,000,000,000,000 hashes per second, or 25 million million million
-hashes per second, but even at this rate it would take 146 million million
-million million million million million million years to try all pre-image
-combinations for SHA256. Thats about a million million million years quicker
-than your device, but it doesn't really matter - by the time it comes around our
-sun will have long since burned out and humanity will be long gone.
+When it comes hashing, <span class="hash2Rate"></span> hashes per second is
+actually not quick at all. Specialized computer chips are built to run billions
+of hashes per second. At the time of writing (March 2018) the total global
+SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second, or 25 million
+million million hashes per second, but even at this rate it would take 146
+million million million million million million million million years to try all
+pre-image combinations for SHA256. Thats about a million million million years
+quicker than your device, but it doesn't really matter - by the time it comes
+around our sun will have long since burned out and humanity will be long gone.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
@@ -285,8 +285,8 @@ solution try changing the difficulty:
         <button id="btnRunHash3">Mine with SHA256</button>
     </div>
     <div class="left">
-        <span id="showMining3Duration" style="display:none;">
-            (Mining duration: <span class="mining3Duration"></span>)
+        <span id="info3" style="display:none;">
+            (<span></span>)
         </span>
     </div>
     <br><br>
@@ -297,9 +297,9 @@ solution try changing the difficulty:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock3MiningResults" class="codeblock" style="white-space:pre;">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
-<span id="showMining3Results" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="mining3Result" class="individual-digits"></span>
-status: <span id="miningStatus3"></span>
+        <div id="codeblock3HashResults" class="codeblock" style="white-space:pre;">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
+<span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
+status: <span id="matchStatus3"></span>
 <span id="mining3Statistics"></span></span></div>
     </div>
 </div>
