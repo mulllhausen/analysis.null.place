@@ -286,7 +286,7 @@ solution try changing the difficulty:
     </div>
     <div class="left">
         <span id="info3" style="display:none;">
-            (<span></span>)
+            (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
     <br><br>

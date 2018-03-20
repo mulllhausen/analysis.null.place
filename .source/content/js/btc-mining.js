@@ -184,8 +184,6 @@ function runHash0Clicked() {
 // form 1
 function runHash1Clicked(params) {
     runHash1Or2Or3Clicked(params);
-    document.getElementById('info1').getElementsByTagName('span')[0].
-    innerText = getAverageHashRate(params.hashRateData);
 }
 
 // form 2
@@ -204,16 +202,13 @@ function runHash2Clicked(e, params) {
             (function loop(params) {
                 if (stopHashingForm[2]) return;
                 runHash1Or2Or3Clicked(params);
-
-                document.getElementById('info2').getElementsByTagName('span')[0].
-                innerText = getAverageHashRate(params.hashRateData);
-
                 setTimeout(function() { loop(params); }, 0);
             })(params);
             break;
     }
 }
 
+// update the paragraph text with stats
 function renderHashing2Duration(hashRateData) {
     var hashRate = getAverageHashRate(hashRateData, true);
     if (hashRate < 1) return;
@@ -231,20 +226,6 @@ function renderHashing2Duration(hashRateData) {
 
     document.getElementById('howLongForThisDeviceNumber').innerText =
     durationInMillionPow10Years + ',000'.repeat(20) + ' years';
-}
-
-// forms 1 and 2
-function getAverageHashRate(hashRateData, numberOnly) {
-    // add up the diffs between each item in the list
-    var sum = 0;
-    for (var i = 1; i < hashRateData.length; i++) {
-        sum += (hashRateData[i] - hashRateData[i - 1]);
-    }
-    var average = 0;
-    if (sum == 0) average = 0; // avoid div by 0
-    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
-    if (average < 1 && (numberOnly != true)) average = 'less than 1';
-    return average;
 }
 
 // form 3
@@ -269,35 +250,84 @@ function initProofOfWorkForm() {
 
 function difficulty3Changed(e) {
     difficultyChars[3] = parseInt(e.currentTarget.value);
+    // enable mining again after a difficulty change
     document.getElementById('btnRunHash3').disabled = false;
 }
 
 function runHash3Clicked(e, params) {
-    if (!params.attempts.hasOwnProperty(difficultyChars[3])) {
-        params.attempts[difficultyChars[3]] = 1;
-        params.attempts['matchFound' + difficultyChars[3]] = false;
-    } else params.attempts[difficultyChars[3]]++;
-    runHash1Or2Or3Clicked(params);
-    document.getElementById('info3').getElementsByTagName('span')[0].innerText =
-    params.attempts[difficultyChars[3]] + ' attempt' +
-    plural('s', params.attempts[difficultyChars[3]] > 1);
-    if (params.matchFound) {
-        params.attempts['matchFound' + difficultyChars[3]] = true;
-        e.currentTarget.disabled = true;
-        document.getElementById('inputMessage3').value = alphabet[0];
-        document.getElementById('difficulty3').
-        getElementsByTagName('option')[difficultyChars[3] - 1].disabled = true;
+    switch (params.state) {
+        case 'running':
+            stopHashingForm[3] = true;
+            params.state = 'stopped';
+            e.currentTarget.innerHTML = 'Mine with SHA256';
+            document.getElementById('difficulty3').disabled = false;
+            break;
+        case 'stopped':
+            stopHashingForm[3] = false;
+            params.state = 'running';
+            e.currentTarget.innerHTML = 'Stop';
+            if (!params.attempts.hasOwnProperty(difficultyChars[3])) {
+                params.attempts[difficultyChars[3]] = 0;
+                params.attempts['matchFound' + difficultyChars[3]] = false;
+            }
+            document.getElementById('difficulty3').disabled = true;
+            (function loop(params) {
+
+                if (stopHashingForm[3]) return;
+                runHash1Or2Or3Clicked(params);
+                params.attempts[difficultyChars[3]]++;
+                if (params.matchFound) {
+                    stopHashingForm[3] = true;
+                    params.state = 'stopped';
+                    params.attempts['matchFound' + difficultyChars[3]] = true;
+                    var btn = document.getElementById('btnRunHash3');
+                    btn.disabled = true; // disabled until difficulty is changed
+                    btn.innerHTML = 'Mine with SHA256';
+                    document.getElementById('difficulty3').
+                    getElementsByTagName('option')[difficultyChars[3] - 1].
+                    disabled = true;
+                    // allow the difficulty to be changed now we have stopped
+                    document.getElementById('difficulty3').disabled = false;
+                }
+                var statistics = '\n' // init
+                for (var numChars = 1; numChars <= 64; numChars++) {
+                    if (!params.attempts.hasOwnProperty(numChars)) continue;
+                    var attempts = params.attempts[numChars];
+                    var minedStatus = ' not yet mined after '; // init
+                    if (params.attempts['matchFound' + numChars]) minedStatus =
+                    ' mined in ';
+                    if (!params.attempts.hasOwnProperty('luck' + numChars)) {
+                        params.attempts['luck' + numChars] = ''; // init
+                    }
+                    if (
+                        params.attempts['matchFound' + numChars] &&
+                        (params.attempts['luck' + numChars] == '')
+                    ) {
+                        // the average number of attempts is (16^numChars) / 2
+                        // very lucky is less than half of that
+                        var luckyThreshold = Math.floor(Math.pow(16, numChars) / 4);
+                        var unluckyThreshold = 3 * luckyThreshold;
+                        var lucky = '';
+                        if (attempts < luckyThreshold) {
+                            lucky = ' (very lucky';
+                        } else if (attempts > unluckyThreshold) {
+                            lucky = ' (very unlucky';
+                        } else lucky = ' (pretty standard';
+                        lucky += ' - the average is ' + (luckyThreshold * 2) +
+                        ' attempts)';
+                        params.attempts['luck' + numChars] = lucky;
+                    }
+                    statistics += numChars + ' digit' + plural('s', numChars > 1) +
+                    minedStatus + attempts + ' attempt' +
+                    plural('s', attempts > 1) +
+                    params.attempts['luck' + numChars] + '\n';
+                }
+                document.getElementById('mining3Statistics').innerText = statistics;
+
+                setTimeout(function() { loop(params); }, 0);
+            })(params);
+            break;
     }
-    var statistics = '\n' // init
-    for (var numChars = 1; numChars <= 64; numChars++) {
-        if (!params.attempts.hasOwnProperty(numChars)) continue;
-        var minedStatus = ' not yet mined after '; // init
-        if (params.attempts['matchFound' + numChars]) minedStatus = ' mined in ';
-        statistics += numChars + ' digit' + plural('s', numChars > 1) +
-        minedStatus + params.attempts[numChars] + ' attempt' +
-        plural('s', params.attempts[numChars] > 1) + '\n';
-    }
-    document.getElementById('mining3Statistics').innerText = statistics;
 }
 
 // forms 1, 2 and 3
@@ -332,6 +362,8 @@ function runHash1Or2Or3Clicked(params) {
     while (params.hashRateData.length > 10) {
         params.hashRateData.shift(); // pop from the start
     }
+    document.getElementById('info' + params.formNum).getElementsByTagName('span')[0].
+    innerText = getAverageHashRate(params.hashRateData);
 
     params.matchFound = (
         params.hashMatch.substr(0, difficultyChars[params.formNum]) ==
@@ -379,6 +411,19 @@ function runHash1Or2Or3Clicked(params) {
     // prepare for next round
     params.previousNonce = currentNonce;
     return true; // keep running if in a loop
+}
+
+function getAverageHashRate(hashRateData, numberOnly) {
+    // add up the diffs between each item in the list
+    var sum = 0;
+    for (var i = 1; i < hashRateData.length; i++) {
+        sum += (hashRateData[i] - hashRateData[i - 1]);
+    }
+    var average = 0;
+    if (sum == 0) average = 0; // avoid div by 0
+    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
+    if (average < 1 && (numberOnly != true)) average = 'less than 1';
+    return average;
 }
 
 function matchResolution(matches, resolution) {
