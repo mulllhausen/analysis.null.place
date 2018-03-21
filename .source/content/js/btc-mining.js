@@ -26,10 +26,10 @@ var miningData = { // note: raw values are taken directly from the input field
 
     target: null
 };
-addEvent(window, 'load', function() {
+addEvent(window, 'load', function () {
     // form 0 - hashing demo
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
-    addEvent(document.getElementById('inputMessage0'), 'keyup', function(e) {
+    addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash0Clicked();
     });
@@ -51,12 +51,12 @@ addEvent(window, 'load', function() {
     };
     stopHashingForm[1] = false;
     difficultyChars[1] = 64; // match all characters
-    addEvent(document.getElementById('btnRunHash1'), 'click', function() {
-        runHash1Clicked(hash1Params);
+    addEvent(document.getElementById('btnRunHash1'), 'click', function () {
+        runHash1Or2Or3Clicked(hash1Params);
     });
-    addEvent(document.getElementById('inputMessage1'), 'keyup', function(e) {
+    addEvent(document.getElementById('inputMessage1'), 'keyup', function (e) {
         if (e.keyCode != 13) return; // only allow the enter key
-        runHash1Clicked(hash1Params);
+        runHash1Or2Or3Clicked(hash1Params);
     });
     addEvent(
         document.getElementById('form1').querySelector('button.wrap-nowrap'),
@@ -77,7 +77,7 @@ addEvent(window, 'load', function() {
     };
     stopHashingForm[2] = false;
     difficultyChars[2] = 64; // match all characters
-    addEvent(document.getElementById('btnRunHash2'), 'click', function(e) {
+    addEvent(document.getElementById('btnRunHash2'), 'click', function (e) {
         runHash2Clicked(e, hash2Params);
     });
     addEvent(
@@ -98,7 +98,7 @@ addEvent(window, 'load', function() {
         attempts: {}, // eg 5 chars: 10 attempts
         prefix: initProofOfWorkForm()
     };
-    addEvent(document.getElementById('btnRunHash3'), 'click', function(e) {
+    addEvent(document.getElementById('btnRunHash3'), 'click', function (e) {
         runHash3Clicked(e, hash3Params);
     });
     difficultyChars[3] = 1; // init: match first character only
@@ -181,11 +181,6 @@ function runHash0Clicked() {
     hash0Results.closest('.codeblock-container').style.display = 'block';
 }
 
-// form 1
-function runHash1Clicked(params) {
-    runHash1Or2Or3Clicked(params);
-}
-
 // form 2
 function runHash2Clicked(e, params) {
     switch (params.state) {
@@ -202,7 +197,7 @@ function runHash2Clicked(e, params) {
             (function loop(params) {
                 if (stopHashingForm[2]) return;
                 runHash1Or2Or3Clicked(params);
-                setTimeout(function() { loop(params); }, 0);
+                setTimeout(function () { loop(params); }, 0);
             })(params);
             break;
     }
@@ -240,7 +235,7 @@ function initProofOfWorkForm() {
     document.getElementById('difficulty3').innerHTML = dropdownNumChars;
 
     // border the target digits
-    borderTheDigits2('#match3', new Array(64));
+    borderTheDigits('#match3', new Array(64));
 
     // init the mining prefix
     var prefix = getRandomAlpha(10);
@@ -324,7 +319,7 @@ function runHash3Clicked(e, params) {
                 }
                 document.getElementById('mining3Statistics').innerText = statistics;
 
-                setTimeout(function() { loop(params); }, 0);
+                setTimeout(function () { loop(params); }, 0);
             })(params);
             break;
     }
@@ -391,7 +386,7 @@ function runHash1Or2Or3Clicked(params) {
     var matches = alphaInCommon(params.hashMatch, sha256Hash);
     // only show matches upto the difficulty
     matches = matchResolution(matches, difficultyChars[params.formNum]);
-    borderTheDigits2(
+    borderTheDigits(
         '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
     );
 
@@ -427,7 +422,7 @@ function getAverageHashRate(hashRateData, numberOnly) {
 }
 
 function matchResolution(matches, resolution) {
-    foreach (matches, function(i) {
+    foreach (matches, function (i) {
         if (i < resolution) return; // continue
         matches[i] = null;
     });
@@ -479,37 +474,15 @@ function alphaInCommon(text1, text2) {
 
 function countMatches(matchArray) {
     var matches = 0; // init
-    foreach (matchArray, function(i, el) {
+    foreach (matchArray, function (i, el) {
         if (el === true) matches++;
     });
     return matches;
 }
 
-// todo - merge with borderTheDigits2
-function borderTheDigits(cssSelectors, num2Color, pass) {
-    foreach(document.querySelectorAll(cssSelectors), function(i, el) {
-        var text = el.innerText; // get
-        var newText = '';
-        for (var letterI = 0; letterI < text.length; letterI++) {
-            var style = '';
-            if (num2Color != null) {
-                if (letterI < num2Color) style = 'style="border: 1px solid ' + passColor + '"';
-                else if (letterI == num2Color) {
-                    style = 'style="border: 1px solid ' + (pass ? passColor : failColor) + '"';
-                }
-                else if (letterI == (num2Color + 1)) {
-                    style = 'style="border-left: 1px solid ' + (pass ? passColor : failColor) + '"';
-                }
-            }
-            newText += '<span class="individual-digit"' + style + '>' +
-                text[letterI] +
-            '</span>';
-        }
-        el.innerHTML = newText; // set
-    });
-}
-
-function borderTheDigits2(cssSelectors, matchArray) {
+function borderTheDigits(cssSelectors, matchArray, failPrecedence) {
+    failPrecedence = (failPrecedence == true); // off by default
+    var passPrecedence = !failPrecedence; // on by default
     foreach (document.querySelectorAll(cssSelectors), function (i, el) {
         var text = el.innerText; // get
         var newHTML = '';
@@ -526,10 +499,11 @@ function borderTheDigits2(cssSelectors, matchArray) {
             }
             switch (matchArray[letterI - 1]) {
                 case true:
+                    if ((matchArray[letterI] != null) && failPrecedence) break;
                     borderLeft = 'border-left:1px solid ' + passColor + ';';
                     break;
                 case false:
-                    if (matchArray[letterI] != null) break;
+                    if ((matchArray[letterI] != null) && passPrecedence) break;
                     borderLeft = 'border-left:1px solid ' + failColor + ';';
                     break;
             }
@@ -723,7 +697,7 @@ function bits4Changed() {
     miningData.bits = toLittleEndian(this.value);
     miningData.target = bits2target(this.value);
     document.getElementById('target4').innerText = miningData.target;
-    borderTheDigits('#target4'); // erase colors
+    borderTheDigits('#target4', new Array(64)); // erase colors
     setButtons(true, 'RunHash4');
     miningData.bitsRaw = this.value; // last
 }
@@ -774,7 +748,7 @@ function nonce4Changed() {
 function resetMiningStatus() {
     document.getElementById('blockhash4').innerText = '';
     document.getElementById('mineStatus4').innerText = '';
-    borderTheDigits('#target4'); // erase colors
+    borderTheDigits('#target4', new Array(64)); // erase colors
 }
 
 function mine4AndRenderResults() {
@@ -787,13 +761,13 @@ function mine4AndRenderResults() {
     document.getElementById('blockhash4').innerText = minedResult.blockhash;
     borderTheDigits(
         '#block4MiningResults .individual-digits',
-        minedResult.resolution,
-        minedResult.status
+        minedResult.matches,
+        true // fail precedence
     );
 
     if (minedResult.status) {
         popup('success!', 'you mined a block');
-        setTimeout(function() { hidePopup(); }, 2000);
+        setTimeout(function () { hidePopup(); }, 2000);
         setButtons(false, 'RunHash4');
         document.getElementById('mineStatus4').innerHTML = 'pass';
         document.getElementById('mineStatus4').style.color = passColor;
@@ -817,10 +791,17 @@ function mine() {
     var sha256BitArray = sjcl.hash.sha256.hash(sjcl.hash.sha256.hash(bitArray));
     var sha256Hash = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray));
     var miningStatus = hexCompare(sha256Hash, miningData.target, true); // sha256 <= target ?
+    var matches = [];
+    for (var i = 0; i < 64; i++) {
+        if (i < miningStatus.resolution) matches.push(true);
+        else if (i == miningStatus.resolution) matches.push(false)
+        else matches.push(null);
+    }
     return {
         blockhash: sha256Hash,
         status: miningStatus.status,
-        resolution: miningStatus.resolution
+        resolution: miningStatus.resolution,
+        matches: matches
     };
 }
 
@@ -906,7 +887,7 @@ function initBlockchainSVG() {
     var borderTop = 1;
 
     // fetch the number of txs per block
-    var getNumBlockTxs = function(blockNum) {
+    var getNumBlockTxs = function (blockNum) {
         if (blockNum < txsPerBlock.length) return;
 
         var endRange = (Math.ceil(blockNum / 1000) * 1000) - 1;
@@ -915,7 +896,7 @@ function initBlockchainSVG() {
         var startRange = Math.floor(blockNum / 1000) * 1000;
         ajax(
             '/json/btc_txs_per_block_' + startRange + '-' + endRange + '.json',
-            function(json) {
+            function (json) {
             try {
                 var numTxsArray = JSON.parse(json).txsPerBlock;
                 txsPerBlock = txsPerBlock.concat(numTxsArray);
@@ -929,7 +910,7 @@ function initBlockchainSVG() {
     // render the correct number of transactions for each block
     var txHeight = svgDefs.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
     height;
-    var renderBlockTxs = function(blockEl, blockNum) {
+    var renderBlockTxs = function (blockEl, blockNum) {
         // wipe all txs from the btc-txs group in this block
         var txs = blockEl.getElementsByClassName('btc-txs')[0];
         txs.parentNode.replaceChild(txs.cloneNode(false), txs);
@@ -977,7 +958,7 @@ function initBlockchainSVG() {
     // that the blocks are positioned the same as they currently are
     var blockAndBracesWidth = blockWidth + bracesWidth + (2 * horizontalPadding);
     var numVisibleBlocks = Math.floor(svgWidth / blockAndBracesWidth);
-    var resetView = function() {
+    var resetView = function () {
         var viewLeft = svgView.getBoundingClientRect().left;
         var allBlocks = svgView.getElementsByClassName('btc-block');
         var leftmostBlock = parseInt(allBlocks[0].id.replace(/[a-z]/g, ''));
@@ -1018,7 +999,7 @@ function initBlockchainSVG() {
     var dx = 0, dy = 0; // init scope
     var dragging = false; // init scope
     var svgHeight = svg.getBoundingClientRect().height; // pre-compute
-    addEvent(svg, 'mousedown, touchstart', function(e) {
+    addEvent(svg, 'mousedown, touchstart', function (e) {
         switch (e.type) {
             case 'touchstart':
                 e.cancelBubble = true;
@@ -1034,7 +1015,7 @@ function initBlockchainSVG() {
         dragging = true;
     });
     var instructionsHidden = false; // init
-    addEvent(svg, 'mousemove, touchmove', function(e) {
+    addEvent(svg, 'mousemove, touchmove', function (e) {
         switch (e.type) {
             case 'touchmove': e.cancelBubble = true; break;
             case 'mousemove': e.stopPropagation(); break;
@@ -1068,7 +1049,7 @@ function initBlockchainSVG() {
         if (dy > 0) dy = 0; // only allow dragging up
         svgView.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
     });
-    addEvent(svg, 'mouseup, mouseleave, touchend', function(e) {
+    addEvent(svg, 'mouseup, mouseleave, touchend', function (e) {
         switch (e.type) {
             case 'touchmove': e.cancelBubble = true; break;
             case 'mousemove': e.stopPropagation(); break;
