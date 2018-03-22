@@ -268,6 +268,9 @@ Lets give it a go. Click the *Mine with SHA256* button and once you find the
 solution try changing the difficulty:
 
 <div class="form-container" id="form3">
+    <input type="checkbox" id="inputCheckbox3">
+    <label for="inputCheckbox3">mine automatically</label>
+    <br><br>
     <div class="left">
         <label for="difficulty3" class="for-select">difficulty</label><br>
         <select id="difficulty3"></select>
@@ -282,9 +285,11 @@ solution try changing the difficulty:
     </div>
     <div class="left">
         <span class="line-spacer hidden-phone"></span>
-        <button id="btnRunHash3">Mine with SHA256</button>
+        <button id="btnRunHash3">Mine manually with SHA256</button>
     </div>
     <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <span class="line-spacer hidden-phone"></span>
         <span id="info3" style="display:none;">
             (Average hash rate: <span></span> hashes per second)
         </span>
@@ -299,8 +304,7 @@ solution try changing the difficulty:
         </div><br>
         <div id="codeblock3HashResults" class="codeblock" style="white-space:pre;">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
 <span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
-status: <span id="matchStatus3"></span>
-<span id="mining3Statistics"></span></span></div>
+status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
     </div>
 </div>
 
@@ -439,6 +443,9 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
 <ul id="blockHeader4Error" class="error"></ul>
+<input type="checkbox" id="inputCheckbox4">
+<label for="inputCheckbox4">mine automatically</label>
+<br><br>
 <button id="btnRunHash4">mine (with SHA256)</button>
 <div class="codeblock-container">
     <div class="button-background">

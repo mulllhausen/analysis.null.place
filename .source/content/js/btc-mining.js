@@ -47,6 +47,7 @@ addEvent(window, 'load', function () {
         previousNonce: '',
         formNum: 1,
         hashRateData: [],
+        checkboxPurpose: 'increment preimage',
         prefix: '' // no prefix
     };
     stopHashingForm[1] = false;
@@ -73,6 +74,7 @@ addEvent(window, 'load', function () {
         formNum: 2,
         state: 'stopped',
         hashRateData: [],
+        checkboxPurpose: 'increment preimage',
         prefix: '' // no prefix
     };
     stopHashingForm[2] = false;
@@ -95,6 +97,7 @@ addEvent(window, 'load', function () {
         formNum: 3,
         state: 'stopped',
         hashRateData: [],
+        checkboxPurpose: 'mine automatically',
         attempts: {}, // eg 5 chars: 10 attempts
         prefix: initProofOfWorkForm()
     };
@@ -103,10 +106,11 @@ addEvent(window, 'load', function () {
     });
     difficultyChars[3] = 1; // init: match first character only
     addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
+    addEvent(document.getElementById('inputCheckbox3'), 'click', checkbox3Changed);
     addEvent(
         document.getElementById('form3').querySelector('button.wrap-nowrap'),
         'click',
-        runHashWrapClicked
+        runHashWrap3Clicked
     );
 
     // dragable blockchain svg
@@ -249,23 +253,38 @@ function difficulty3Changed(e) {
     document.getElementById('btnRunHash3').disabled = false;
 }
 
+function checkbox3Changed(e) {
+    document.getElementById('btnRunHash3').innerText = 'Mine ' + (
+        e.currentTarget.checked ? 'automatically' : 'manually'
+    ) + ' with SHA256';
+}
+
 function runHash3Clicked(e, params) {
+    var mineAutomatically = document.getElementById('inputCheckbox3').checked;
+    var btnText = 'Mine ' + (mineAutomatically ? 'automatically' : 'manually') +
+    ' with SHA256';
+
     switch (params.state) {
         case 'running':
             stopHashingForm[3] = true;
             params.state = 'stopped';
-            e.currentTarget.innerHTML = 'Mine with SHA256';
+            e.currentTarget.innerText = btnText;
+            // allow the inputs to be changed now we have stopped
             document.getElementById('difficulty3').disabled = false;
+            document.getElementById('inputCheckbox3').disabled = false;
             break;
         case 'stopped':
             stopHashingForm[3] = false;
             params.state = 'running';
-            e.currentTarget.innerHTML = 'Stop';
+            if (mineAutomatically) {
+                e.currentTarget.innerText = 'Stop';
+                document.getElementById('difficulty3').disabled = true;
+                document.getElementById('inputCheckbox3').disabled = true;
+            }
             if (!params.attempts.hasOwnProperty(difficultyChars[3])) {
                 params.attempts[difficultyChars[3]] = 0;
                 params.attempts['matchFound' + difficultyChars[3]] = false;
             }
-            document.getElementById('difficulty3').disabled = true;
             (function loop(params) {
 
                 if (stopHashingForm[3]) return;
@@ -277,14 +296,15 @@ function runHash3Clicked(e, params) {
                     params.attempts['matchFound' + difficultyChars[3]] = true;
                     var btn = document.getElementById('btnRunHash3');
                     btn.disabled = true; // disabled until difficulty is changed
-                    btn.innerHTML = 'Mine with SHA256';
+                    btn.innerText = btnText;
                     document.getElementById('difficulty3').
                     getElementsByTagName('option')[difficultyChars[3] - 1].
                     disabled = true;
-                    // allow the difficulty to be changed now we have stopped
+                    // allow the inputs to be changed now we have stopped
                     document.getElementById('difficulty3').disabled = false;
-                }
-                var statistics = '\n' // init
+                    document.getElementById('inputCheckbox3').disabled = false;
+                } else if (!mineAutomatically) params.state = 'stopped';
+                var statistics = '\n\n'; // init
                 for (var numChars = 1; numChars <= 64; numChars++) {
                     if (!params.attempts.hasOwnProperty(numChars)) continue;
                     var attempts = params.attempts[numChars];
@@ -302,12 +322,16 @@ function runHash3Clicked(e, params) {
                         // very lucky is less than half of that
                         var luckyThreshold = Math.floor(Math.pow(16, numChars) / 4);
                         var unluckyThreshold = 3 * luckyThreshold;
-                        var lucky = '';
+                        var lucky = ' (';
                         if (attempts < luckyThreshold) {
-                            lucky = ' (very lucky';
+                            lucky += 'very lucky';
                         } else if (attempts > unluckyThreshold) {
-                            lucky = ' (very unlucky';
-                        } else lucky = ' (pretty standard';
+                            lucky += 'very unlucky';
+                        } else if (attempts < (luckyThreshold * 2)) {
+                            lucky += 'a bit lucky';
+                        } else if (attempts > (luckyThreshold * 2)) {
+                            lucky += 'a bit unlucky';
+                        } else lucky += 'pretty standard';
                         lucky += ' - the average is ' + (luckyThreshold * 2) +
                         ' attempts)';
                         params.attempts['luck' + numChars] = lucky;
@@ -319,10 +343,16 @@ function runHash3Clicked(e, params) {
                 }
                 document.getElementById('mining3Statistics').innerText = statistics;
 
-                setTimeout(function () { loop(params); }, 0);
+                if (mineAutomatically) setTimeout(function () { loop(params); }, 0);
             })(params);
             break;
     }
+}
+
+function runHashWrap3Clicked(e) {
+    runHashWrapClicked(e);
+    var mining3Statistics = document.getElementById('mining3Statistics');
+    mining3Statistics.innerText = '\n\n' + mining3Statistics.innerText.trim();
 }
 
 // forms 1, 2 and 3
@@ -341,7 +371,8 @@ function runHash1Or2Or3Clicked(params) {
     var overridePass = false; // keep going after a match is found?
     var inputCheckbox = document.getElementById('inputCheckbox' + params.formNum);
     if (params.matchFound && (params.previousNonce == nonce)) {
-        if (inputCheckbox != null && inputCheckbox.checked) {
+        // not able to mine again after success for 'mine automatically'
+        if (params.checkboxPurpose == 'increment preimage' && inputCheckbox.checked) {
             overridePass = true;
         }
         else return;
@@ -364,7 +395,11 @@ function runHash1Or2Or3Clicked(params) {
         params.hashMatch.substr(0, difficultyChars[params.formNum]) ==
         sha256Hash.substr(0, difficultyChars[params.formNum])
     );
-    if (params.matchFound && !overridePass && inputCheckbox != null) {
+    if (
+        params.matchFound &&
+        !overridePass &&
+        params.checkboxPurpose == 'increment preimage'
+    ) {
         inputCheckbox.checked = false;
     }
     document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
@@ -372,7 +407,9 @@ function runHash1Or2Or3Clicked(params) {
         document.getElementById('form' + params.formNum).
         querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
     );
-    var incrementPreImage = (inputCheckbox == null || inputCheckbox.checked);
+    var incrementPreImage = (
+        params.checkboxPurpose == 'mine automatically' || inputCheckbox.checked
+    );
     var currentNonce = nonce; // save before modification
     if (incrementPreImage) nonce = incrementAlpha(nonce);
     document.getElementById('inputMessage' + params.formNum).value = nonce;
