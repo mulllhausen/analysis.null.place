@@ -33,11 +33,6 @@ addEvent(window, 'load', function () {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash0Clicked();
     });
-    addEvent(
-        document.getElementById('form0').querySelector('button.wrap-nowrap'),
-        'click',
-        runHashWrapClicked
-    );
 
     // form 1 - hashing manually to match hash
     var hash1Params = { // use an object for pass-by-reference
@@ -59,11 +54,6 @@ addEvent(window, 'load', function () {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash1Or2Or3Clicked(hash1Params);
     });
-    addEvent(
-        document.getElementById('form1').querySelector('button.wrap-nowrap'),
-        'click',
-        runHashWrapClicked
-    );
 
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
@@ -82,11 +72,6 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('btnRunHash2'), 'click', function (e) {
         runHash2Clicked(e, hash2Params);
     });
-    addEvent(
-        document.getElementById('form2').querySelector('button.wrap-nowrap'),
-        'click',
-        runHashWrapClicked
-    );
 
     // form 3 - proof of work
     var hash3Params = {
@@ -107,11 +92,6 @@ addEvent(window, 'load', function () {
     difficultyChars[3] = 1; // init: match first character only
     addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
     addEvent(document.getElementById('inputCheckbox3'), 'click', checkbox3Changed);
-    addEvent(
-        document.getElementById('form3').querySelector('button.wrap-nowrap'),
-        'click',
-        runHashWrap3Clicked
-    );
 
     // dragable blockchain svg
     initBlockchainSVG();
@@ -136,11 +116,9 @@ addEvent(window, 'load', function () {
     triggerEvent(document.getElementById('nonce4'), 'change');
 
     addEvent(document.getElementById('btnRunHash4'), 'click', mine4AndRenderResults);
-    addEvent(
-        document.getElementById('form4').querySelector('button.wrap-nowrap'),
-        'click',
-        runHashWrapClicked
-    );
+
+    // forms 0 - 4
+    addEvent(document.querySelector('button.wrap-nowrap'), 'click', runHashWrapClicked);
 });
 
 function runHashWrapClicked(e) {
@@ -383,7 +361,7 @@ function runHash1Or2Or3Clicked(params) {
     var bitArray = sjcl.hash.sha256.hash(params.prefix + nonce);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
 
-    // update the latest hash times for averaging later
+    // update the latest hash times and render the average rate
     params.hashRateData.push((new Date()).getTime()); // push on the end
     while (params.hashRateData.length > 10) {
         params.hashRateData.shift(); // pop from the start
@@ -806,13 +784,15 @@ function mine4AndRenderResults() {
         popup('success!', 'you mined a block');
         setTimeout(function () { hidePopup(); }, 2000);
         setButtons(false, 'RunHash4');
-        document.getElementById('mineStatus4').innerHTML = 'pass';
+        document.getElementById('mineStatus4').innerText = 'pass (because ' +
+        minedResult.blockhash[minedResult.resolution] + ' is less than ' +
+        miningData.target[minedResult.resolution] + ')';
         document.getElementById('mineStatus4').style.color = passColor;
         return;
     }
-    var explanation = 'because ' + minedResult.blockhash[minedResult.resolution] +
-    ' is greater than ' + miningData.target[minedResult.resolution];
-    document.getElementById('mineStatus4').innerText = 'fail (' + explanation + ')';
+    document.getElementById('mineStatus4').innerText = 'fail (because ' +
+    minedResult.blockhash[minedResult.resolution] + ' is greater than ' +
+    miningData.target[minedResult.resolution] + ')';
     document.getElementById('mineStatus4').style.color = failColor;
 }
 
@@ -831,8 +811,10 @@ function mine() {
     var matches = [];
     for (var i = 0; i < 64; i++) {
         if (i < miningStatus.resolution) matches.push(true);
-        else if (i == miningStatus.resolution) matches.push(false)
-        else matches.push(null);
+        else if (i == miningStatus.resolution) {
+            if (miningStatus.status) matches.push(true);
+            else matches.push(false);
+        } else matches.push(null);
     }
     return {
         blockhash: sha256Hash,
@@ -890,7 +872,7 @@ function hexCompare(hex1, hex2, getResolution) {
         if (hex1Nibble == hex2Nibble) continue;
         if (getResolution) resolution += nibbleI;
         return {
-            status: hex2int(hex1Nibble) <= hex2int(hex2Nibble),
+            status: hex2int(hex1Nibble) < hex2int(hex2Nibble),
             resolution: resolution
         };
     }

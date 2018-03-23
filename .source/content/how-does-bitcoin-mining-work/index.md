@@ -443,10 +443,7 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
 <ul id="blockHeader4Error" class="error"></ul>
-<input type="checkbox" id="inputCheckbox4">
-<label for="inputCheckbox4">mine automatically</label>
-<br><br>
-<button id="btnRunHash4">mine (with SHA256)</button>
+<button id="btnRunHash4">Mine manually with SHA256</button>
 <div class="codeblock-container">
     <div class="button-background">
         <button class="wrap-nowrap" wrapped="false">
