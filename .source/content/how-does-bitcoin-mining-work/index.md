@@ -108,30 +108,32 @@ hashing:
 them into another string of characters. We call the initial characters the
 <i>pre-image</i> and we call the output the <i>hash</i>.</p>
 <p></p>
-<p>A hashing algorithm has the following properties relevant to bitcoin mining:</p>
+<p>A cryptographic hashing algorithm has the following properties relevant to
+bitcoin mining:</p>
 <p></p>
 <ol>
     <li>it is deterministic - the same pre-image always results in the same hash</li>
     <li>it is quick to compute the hash value for any given pre-image</li>
     <li>it is impossible to reverse a cryptographic hash and recover a pre-image
     from its hash value, except by trying all possible pre-images</li>
-    <li>a small change to a pre-image should change the hash value so extensively
+    <li>a small change to a pre-image changes the hash value so extensively
     that the new hash value appears uncorrelated with the old hash value</li>
 </ol>
 </blockquote>
 
-Lets investigate these properties. Properties 1 and 2 are quite plain to see -
-hashing `hello world!` with *SHA256* always gives
-`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` and takes
-less than 4 milliseconds (depending on your computer speed), which is fairly
-quick. However it must be noted that performing the hash always takes at least
-*some* time, even if it is a very small amount of time. This fact will be
-important when we discuss hashing in relation to bitcoin mining later on.
+Lets investigate these properties. Properties 1 and 2 are quite obvious - earlier
+when we hashed `hello world!` with *SHA256* it always gave
+`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` and took
+<span id="helloWorldHashSpeed">less than 4 milliseconds (depending on the speed
+of your device)</span>, which is fairly quick. However it must be noted that
+performing the hash always takes at least *some* time, even if it is a very small
+amount of time. This fact will be important when we discuss hashing in relation
+to bitcoin mining later on.
 
 Property 3 explains that hashing is a one-way process. We can easily get from
 a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
-hash back to its pre-image is called *inverting* the hash.
+hash back to its pre-image is called *inverting the hash*.
 
 <div class="codeblock" style="white-space:pre;">easy:       pre-image -> SHA256 -> hash
 
@@ -166,6 +168,13 @@ you will not be able to invert this hash. Seriously - give it a go:
             (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
+    <div class="left">
+        <span class="line-spacer hidden-phone"></span>
+        <span class="line-spacer hidden-phone"></span>
+        <span id="info1" style="display:none;">
+            Hint: click the checkbox to have the pre-image change automatically
+        </span>
+    </div>
     <div class="codeblock-container">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -186,9 +195,9 @@ different possible hash values. There are approximately that many atoms in the
 universe! So don't feel bad for not being able to invert
 `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` - for all
 intents and purposes it cannot be inverted. And that is true even when computers
-do the hashing at their maximum speeds. If you click the button below then you
-can have your device cycle through all pre-images at the maximum speed possible
-on your device:
+do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
+button below then you can have your device cycle through pre-images and show you
+the results at its maximum possible speed:
 
 <div class="form-container" id="form2">
     <input type="checkbox" id="inputCheckbox2" checked disabled>
@@ -229,15 +238,15 @@ can calculate that it is going to take <span id="howLongForThisDeviceWords"></sp
 to try enough combinations to invert this hash and find the solution. That's
 <span id="howLongForThisDeviceNumber"></span>.</span>
 
-When it comes hashing, <span class="hash2Rate"></span> hashes per second is
-actually not quick at all. Specialized computer chips are built to run billions
-of hashes per second. At the time of writing (March 2018) the total global
-SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second, or 25 million
-million million hashes per second, but even at this rate it would take 146
-million million million million million million million million years to try all
-pre-image combinations for SHA256. Thats about a million million million years
-quicker than your device, but it doesn't really matter - by the time it comes
-around our sun will have long since burned out and humanity will be long gone.
+When it comes hashing, <span class="hash2Rate">30</span> hashes per second is
+actually not quick at all by computer standards. Specialized computer chips are
+built to run billions of hashes per second. At the time of writing (March 2018)
+the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second,
+or 25 million million million hashes per second, but even at this rate it would
+take 146 million million million million million million million million years
+to try all pre-image combinations for SHA256. Thats about a million million
+million years quicker than your device, but it doesn't really matter - by the
+time it comes around our sun will have long since burned out.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
@@ -252,19 +261,25 @@ is no better than trying any other different pre-image - they all completely
 modify the resulting hash.
 
 Now that we have discussed the properties of cryptographic hashing we can
-investigate how it is used in a technique known as *proof of work*. *Proof of work*,
-as the name implies, is a way for one computer to prove to another computer that
-it has completed a certain amount of work. The *work* is cryptographic hashing
-of a pre-image (incremented after each attempt). Because the output of a
-cryptographic hash is simultaneously random and deterministic, then once we have
-found the correct pre-image we can submit it as the solution to another computer,
-which can verify that it is indeed correct. "But wait", you might be thinking,
-"didn't you say that it would take millions of years to try all the pre-images
-for SHA256 before we find one which matches the output?" And indeed that is true.
-But the beauty of *proof of work* is that we don't have to match the entire
-SHA256 output - we need only match a specified number of characters.
+investigate how it is used in a technique known as *proof of work*, also known
+as *mining*. *Proof of work*, as the name implies, is a way for one computer to
+prove to another computer that it has completed a certain amount of work. Lets
+call the computer doing the work the *miner*, and the other computer the
+*examiner*. The examiner sets the test for the miner to pass by giving it 3 things:
 
-Lets give it a go. Click the *Mine with SHA256* button and once you find the
+- part of a pre-image
+- a hash value that must be matched (called the target)
+- the difficulty level of the test
+
+The test works like this: the miner takes the pre-image it has been given and
+appends a bunch of random charaters (called a nonce) to the end of it. It then
+hashes the whole thing and checks if it matches the target given by the examiner.
+However, it does not need to match the entire hash (that would take millions of
+years), but rather it just needs to match part of the hash - as specified by the
+difficulty level.
+
+That all sounds very complicated, but don't worry, it will be much clearer after
+you give it a go. Click the *Mine with SHA256* button and once you find the
 solution try changing the difficulty:
 
 <div class="form-container" id="form3">
@@ -281,7 +296,7 @@ solution try changing the difficulty:
     </div>
     <div class="left">
         <label for="inputMessage3" class="for-textbox">pre-image nonce</label><br>
-        <input id="inputMessage3" type="text" value="a" disabled>
+        <input id="inputMessage3" type="text" value="a">
     </div>
     <div class="left">
         <span class="line-spacer hidden-phone"></span>
@@ -308,11 +323,42 @@ status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></spa
     </div>
 </div>
 
+Whenever you pass the test, you can send the nonce back to the examiner and it
+can verify that you did indeed pass by running the hash for itself. It will take
+you lots of attempts at hashing to pass the test, but it only takes the examiner
+a single hash to know whether you passed or failed. This means that you are doing
+all the work and the examiner barely does any at all.
+
+As you can see, the higher the difficulty, the more attempts it will take on
+average to pass the test. From the results you can also see that there is a
+degree of luck involved in mining - sometimes it takes less attempts than
+expected and sometimes it takes more. This is because hashing is a random process.
+
+Another thing to note is that the examiner can set the target value without
+having to hash a pre-image to get it. The examiner does not need to know the
+answer to the test before it gives it to the miner. In this way, mining is
+different from a normal school exam. All that matters is that the examiner can
+verify the test once the miner submits the nonce as a solution.
+
+The final thing to understand from this section, before we move on to bitcoin
+mining, is that the test we have done here - matching a specified number of
+characters at the start of the target - is just one of many possible types of
+proof-of-work test. The only criteria for a good proof-of-work test is that the
+examiner must be able to fine-tune the number of attempts it takes the miner to
+pass. Here are some other possible proof-of-work tests:
+
+- matching a specified number of characters at the right-hand-side of the target
+- matching a specified number of characters anywhere within the target
+- treat both the target and the mined hash as (hexadecimal) numbers, set the
+target to some large number, and mandate that the miner must find a hash lower
+than the target
+
+That last type of proof-of-work test is the one used in bitcoin mining.
 
 ## bitcoin mining
 
-Now that you know all about hashing, we can apply this knowledge to bitcoin
-mining.
+Now that we have explored hashing and mining in general, we can apply this
+knowledge to bitcoin mining.
 
 > Bitcoin mining involves computers competing to find part of the pre-image of
 the hash of the next block in the bitcoin blockchain. The winner receives
