@@ -47,7 +47,7 @@ a few times and then try typing different things in the *pre-image* field:
 
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
-The differences between these hashing alporithms are not important for the sake
+The differences between these hashing algorithms are not important for the sake
 of this article - all that is important is to recognise that *SHA256* is merely
 one of many hashing algorithms - the one that is used in bitcoin mining (more on
 that soon). The output of a cryptographic hash is actually a number, however
@@ -265,15 +265,15 @@ investigate how it is used in a technique known as *proof of work*, also known
 as *mining*. *Proof of work*, as the name implies, is a way for one computer to
 prove to another computer that it has completed a certain amount of work. Lets
 call the computer doing the work the *miner*, and the other computer the
-*examiner*. The examiner sets the test for the miner to pass by giving it 3 things:
+*examiner*. The examiner sets a test for the miner to pass by giving it 3 things:
 
 - part of a pre-image
 - a hash value that must be matched (called the target)
 - the difficulty level of the test
 
 The test works like this: the miner takes the pre-image it has been given and
-appends a bunch of random charaters (called a nonce) to the end of it. It then
-hashes the whole thing and checks if it matches the target given by the examiner.
+appends a bunch of random data (called a nonce) to the end of it. It then hashes
+the whole thing and checks if it matches the target given by the examiner.
 However, it does not need to match the entire hash (that would take millions of
 years), but rather it just needs to match part of the hash - as specified by the
 difficulty level.
@@ -342,10 +342,10 @@ verify the test once the miner submits the nonce as a solution.
 
 The final thing to understand from this section, before we move on to bitcoin
 mining, is that the test we have done here - matching a specified number of
-characters at the start of the target - is just one of many possible types of
-proof-of-work test. The only criteria for a good proof-of-work test is that the
-examiner must be able to fine-tune the number of attempts it takes the miner to
-pass. Here are some other possible proof-of-work tests:
+characters at the left-hand-side of the target - is just one of many possible
+types of proof-of-work test. The only criteria for a good proof-of-work test is
+that the examiner must be able to fine-tune the number of attempts it takes the
+miner to pass. Here are some other possible proof-of-work tests:
 
 - matching a specified number of characters at the right-hand-side of the target
 - matching a specified number of characters anywhere within the target
@@ -360,21 +360,21 @@ That last type of proof-of-work test is the one used in bitcoin mining.
 Now that we have explored hashing and mining in general, we can apply this
 knowledge to bitcoin mining.
 
-> Bitcoin mining involves computers competing to find part of the pre-image of
-the hash of the next block in the bitcoin blockchain. The winner receives
-bitcoins as a reward.
+> Bitcoin mining involves computers competing to find the nonce part of the
+pre-image for the hash of the next block in the bitcoin blockchain. The winner
+receives bitcoins as a reward.
 
-That sentence contains a couple of new concepts, and once you understand them
+That definition contains a couple of new concepts, and once you understand them
 then it will make perfect sense:
 
 - a bitcoin block
 - the bitcoin blockchain
 
 When someone sends some bitcoins to someone else, they begin by opening their
-bitcoin wallet (which is a program, app or website running on their computer or
-phone), and then type in the recipient and the amount of bitcoin they want to
-send to them. The bitcoin wallet uses this information to construct a
-transaction. Here is an example bitcoin transaction:
+bitcoin wallet (which is a program, app or website running on their device), and
+then type in the recipient and the amount of bitcoin they want to send to them.
+The bitcoin wallet uses this information to construct a transaction. Here is an
+example bitcoin transaction:
 
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
@@ -383,16 +383,16 @@ transaction. Here is an example bitcoin transaction:
     <div class="media-caption">example bitcoin transaction</div>
 </div></div>
 
-For the purposes of this article the details of this transaction are not important,
+For the purposes of this article, the details of this transaction are not important,
 but if you are curious you can view all of this transaction's information [here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082). However the only thing you really need to
 understand at this point is that a bitcoin transaction is just a string of characters.
 
 Once the wallet software has created the transaction it sends it out over the
 internet to all the other bitcoin nodes it can find (a bitcoin node is just a
-computer or phone running the bitcoin software). You might have expected the
-transaction to only be sent to the person who is receiving the bitcoins, but
-that is not the case. Infact that person does not even have to have their wallet
-software running for the transaction to be processed.
+device running the bitcoin software). You might have expected the transaction to
+only be sent to the person who is receiving the bitcoins, but that is not the
+case. Infact that person does not even have to have their wallet software
+running for the transaction to be processed.
 
 Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
 on these later). These miners gather the transactions they receive and put them
@@ -409,8 +409,8 @@ into a block:
 </div></div>
 
 A bitcoin block consists of a header, followed by a list of transactions. The
-block shown here only has 3 transactions, but blocks containing thousands of
-transactions are most common.
+block shown here only has 3 transactions, for simplicity, but blocks containing
+thousands of transactions are most common.
 
 Just as bitcoin transactions are a string of characters, so is the block header.
 The header contains all the data needed to uniquely identify the block:
@@ -426,13 +426,14 @@ The header contains all the data needed to uniquely identify the block:
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
+Lets look at each of these fields within the block header:
 
-The *version* field is just a number indicating the current version of the
-bitcoin protocol.
+The *version* is just a number indicating the current version of the bitcoin
+protocol.
 
-The *previous block hash* field is where the *blockchain* concept comes in - the
+The *previous block hash* is where the *blockchain* concept comes in - the
 current block references the previous block so that blocks build upon each other
-over time.
+over time, like so:
 
 <div class="form-container">
     <object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
@@ -440,23 +441,36 @@ over time.
 <div class="media-caption">the bitcoin blockchain</div>
 
 The *previous block hash* is found by doing a *SHA265* hash twice in succession
-on the previous block header. As we saw in the hashing section at the start,
-that is a very quick thing for a computer to do.
+on all the data in the previous block header. As we saw in the hashing section
+earlier, that is a very quick thing for a computer to do.
 
 The *merkle root* is loosely defined as a hash of all transactions contained
 within the block. The transaction data is the pre-image and the *merkle root* is
-the hash. The transactions in a block will always have the same merkle root,
-because hashing is deterministic, and the merkle root is only 32 bytes, whereas
-all of the transactions can come to 1MB, so it is more efficient.
+the hash. This another useful feature of cryptographic hashing - it can be used
+to summarise a large amonut of data in a very small amount of data. The
+transactions in a block generally take up over 1MB, however the merkle root is
+only 32 bytes (64 hexadecimal digits).
 
+The *timestamp* is the current date and time of the block.
 
-- timestamp: the current date-time of the block
-- difficulty: this is a representation of the 
+The *difficulty* is a description of how many attempts, on average, a miner will
+need to make to find a solution to the test. As mentioned at the end of the
+previous section on hashing, the test in bitcoin mining involves finding a hash
+that is lower than a given target. The *difficulty* value in the block header
+specifies what that target value is. The way this works is quite technical and
+is not necessary to understand bitcoin mining, however if you are curious I have
+included it in the annex (the final section of this article). The basic principle
+however is simple - increasing the difficulty lowers the target value so that
+miners will have to put in more hashing attempts, and decreasing the difficulty
+raises the target value so that miners will have to put in fewer hashing
+attempts.
 
+Finally the *nonce* is something we have already discussed in the section on
+hashing. The only difference here is that with bitcoin the nonce is an integer.
 
-The bitcoin blockchain is basically a chain of blocks. Each block references the
-previous block, right back to the very first block created by Satoshi Nakamoto on
-4 Jan 2009.
+OK, lets dive into a practical simulation of bitcoin mining to see how all this
+works. Click the *mine* button a few times and have a look at what this does, both
+to the results area and to the nonce in the block header:
 
 <div class="form-container" id="form4">
 <div class="media-container"><div class="media-positioner">
@@ -497,12 +511,90 @@ previous block, right back to the very first block created by Satoshi Nakamoto o
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block4MiningResults" class="codeblock" style="white-space:pre;">target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
+<div id="block4MiningResults" class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
+target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
 status: <span class="aligner">    </span><span id="mineStatus4"></span>
 </div>
 </div>
 </div>
+
+The data in the simulation block header is actually that of the very first
+bitcoin block ever. It was mined by Satoshi Nakamoto - the creater(s) of Bitcoin
+on the 3rd of January 2009.
+
+As you can see, each mining attempt increments the nonce by 1. To find the block
+hash, all of the data in the block header shown here is hashed with SHA256 twice
+- i.e. it is all put together in one big string of characters and then hashed
+once with SHA256, and then that result is hashed with SHA256 again. There is a
+walkthrough of this process in the following annex section, however the details
+are really not important in order to understand how bitcoin mining works.
+
+The biggest apparent difference between this mining example and the one in the
+previous section on hashing is that the test here involves comparing two
+hexadecimal numbers, whereas previously the test involved matching a certain
+number of digits from the left-hand-side. However there is a actually a lot of
+similarity between these two types of test. Lets forget about hexadecimal
+numbers for a moment and just look at some unrelated decimal numbers:
+
+<div class="codeblock" style="white-space:pre;">1000000000000
+      1000000
+</div>
+
+It is obvious that the first number is bigger than the second number - the first
+one is longer so clearly it must be bigger. But how about if we zero-pad them so
+that they are the same length? They are still the same numbers, but now they are
+the same length:
+
+<div class="codeblock" style="white-space:pre;">1000000000000
+0000001000000
+</div>
+
+How can we tell which is bigger? The easiest way is to begin at the
+left-hand-side of the number compare the digits:
+
+<div class="codeblock" style="white-space:pre;"><span class="individual-digit">1</span>000000000000
+<span class="individual-digit">0</span>000001000000
+</div>
+
+Because `1` is greater than `0` then we know that the first number must be a
+bigger number.
+
+OK, now what if we pad them both to 64 digits? Again they are exactly the same
+numbers as before, and they are the same length, but now they have lots of
+leading zeros:
+
+<div class="codeblock" style="white-space:pre;">0000000000000000000000000000000000000000000000000001000000000000
+0000000000000000000000000000000000000000000000000000000001000000
+</div>
+
+The way to tell which is larger is again to begin at the left-hand-side and keep
+moving to the right until we find a digit that is different. Then the digit that
+is higher belongs to the bigger number:
+
+<div class="codeblock" style="white-space:pre;"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
+<span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000
+</div>
+
+That's the technique for decimal numbers, and it is exactly the same for
+hexadecimal numbers. The only difference is that decimal numbers go from `0` to
+`9` whereas hexadecimal numbers go from `0` to `f`, as you will recall from the
+start of this article. If you now go back and mine a few more times in the
+previous simulation then the results should make a lot more sense.
+
+So finally we arrive at the end of this article on bitcoin mining. You now know
+all about hashing and how hashing is used in bitcoin for mining. There is a bit
+more information in the annex to fill in some small gaps, however everything
+already covered above is certainly enough to understand what bitcoin mining is
+and to get a feel for the amount of effort that it requires even for the fastest
+computers on the planet.
+
+All that remains now is to mine a block. We can cheat at this because the above
+block was already mined by Satoshi Nakomoto. If we [inspect the blockchain](
+http://blockchain.info/block-height/0) we can see that the correct nonce is
+2,083,236,893. <a id="makeBlockPass4">Click here</a> to copy the nonce back into
+the previous mining simulation and then click the *mine* button to see what
+happens.
 
 ## annex
 
@@ -512,7 +604,9 @@ for those (such as myself) who like to leave no stone unturned.
 - version int to version in hex
 - merkle root from transaction hash
 - timestamp to unixtime
-- bits to target
+- difficulty to target
 - nonce to hex
 - block to hex
+
+nonce is not big enough - increment the timestamp by a second
 

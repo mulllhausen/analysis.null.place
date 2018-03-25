@@ -27,6 +27,9 @@ var miningData = { // note: raw values are taken directly from the input field
     target: null
 };
 addEvent(window, 'load', function () {
+    // border the digits anywhere on the page initially (grey only)
+    initBorderTheDigits();
+
     // form 0 - hashing demo
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
     addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
@@ -117,9 +120,21 @@ addEvent(window, 'load', function () {
 
     addEvent(document.getElementById('btnRunHash4'), 'click', mine4AndRenderResults);
 
+    addEvent(document.getElementById('makeBlockPass4'), 'click', function () {
+        scrollToElement(document.getElementById('form4'));
+        resetBlock4(true);
+    });
+
     // forms 0 - 4
     addEvent(document.querySelector('button.wrap-nowrap'), 'click', runHashWrapClicked);
 });
+
+function initBorderTheDigits() {
+    var elementsToBorder = document.getElementsByClassName('individual-digits');
+    foreach(elementsToBorder, function (i, el) {
+        borderTheDigits(el, new Array(el.innerText.length));
+    });
+}
 
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
@@ -215,9 +230,6 @@ function initProofOfWorkForm() {
     }
     dropdownNumChars += '<option value="64">match all 64 characters</option>\n';
     document.getElementById('difficulty3').innerHTML = dropdownNumChars;
-
-    // border the target digits
-    borderTheDigits('#match3', new Array(64));
 
     // init the mining prefix
     var prefix = getRandomAlpha(10);
@@ -495,10 +507,13 @@ function countMatches(matchArray) {
     return matches;
 }
 
-function borderTheDigits(cssSelectors, matchArray, failPrecedence) {
+function borderTheDigits(elements, matchArray, failPrecedence) {
     failPrecedence = (failPrecedence == true); // off by default
     var passPrecedence = !failPrecedence; // on by default
-    foreach (document.querySelectorAll(cssSelectors), function (i, el) {
+    if (typeof elements == 'string') elements = document.querySelectorAll(elements);
+    else if (elements.length == null) elements = [elements];
+
+    foreach (elements, function (i, el) {
         var text = el.innerText; // get
         var newHTML = '';
         foreach (matchArray, function (letterI) {
@@ -760,6 +775,27 @@ function nonce4Changed() {
     miningData.nonceRaw = this.value; // last
 }
 
+// reset the block and clear any errors
+function resetBlock4(pass) {
+    document.getElementById('version4').value = 1;
+    triggerEvent(document.getElementById('version4'), 'change');
+
+    document.getElementById('prevHash4').value = '0000000000000000000000000000000000000000000000000000000000000000';
+    triggerEvent(document.getElementById('prevHash4'), 'change');
+
+    document.getElementById('merkleRoot4').value = '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b';
+    triggerEvent(document.getElementById('merkleRoot4'), 'change');
+
+    document.getElementById('timestamp4').value = '03 Jan 2009 18:15:05 GMT';
+    triggerEvent(document.getElementById('timestamp4'), 'change');
+
+    document.getElementById('bits4').value = '1d00ffff';
+    triggerEvent(document.getElementById('bits4'), 'change');
+
+    document.getElementById('nonce4').value = pass ? 2083236893 : 0;
+    triggerEvent(document.getElementById('nonce4'), 'change');
+}
+
 function resetMiningStatus() {
     document.getElementById('blockhash4').innerText = '';
     document.getElementById('mineStatus4').innerText = '';
@@ -767,11 +803,7 @@ function resetMiningStatus() {
 }
 
 function mine4AndRenderResults() {
-    miningData.nonceInt += 1;
-    if (miningData.nonceInt > 0xffffffff) miningData.nonceInt = 0;
-    document.getElementById('nonce4').value = miningData.nonceInt;
-    miningData.nonceRaw = miningData.nonceInt;
-    miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
+    document.getElementById('nonce4Results').innerText = miningData.nonceInt;
     var minedResult = mine(); // using global var miningData
     document.getElementById('blockhash4').innerText = minedResult.blockhash;
     borderTheDigits(
@@ -788,12 +820,19 @@ function mine4AndRenderResults() {
         minedResult.blockhash[minedResult.resolution] + ' is less than ' +
         miningData.target[minedResult.resolution] + ')';
         document.getElementById('mineStatus4').style.color = passColor;
-        return;
+    } else {
+        document.getElementById('mineStatus4').innerText = 'fail (because ' +
+        minedResult.blockhash[minedResult.resolution] + ' is greater than ' +
+        miningData.target[minedResult.resolution] + ')';
+        document.getElementById('mineStatus4').style.color = failColor;
     }
-    document.getElementById('mineStatus4').innerText = 'fail (because ' +
-    minedResult.blockhash[minedResult.resolution] + ' is greater than ' +
-    miningData.target[minedResult.resolution] + ')';
-    document.getElementById('mineStatus4').style.color = failColor;
+
+    // increment the nonce
+    miningData.nonceInt += 1;
+    if (miningData.nonceInt > 0xffffffff) miningData.nonceInt = 0;
+    document.getElementById('nonce4').value = miningData.nonceInt;
+    miningData.nonceRaw = miningData.nonceInt;
+    miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
 }
 
 function mine() {

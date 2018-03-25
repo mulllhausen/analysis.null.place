@@ -209,6 +209,11 @@ function plural(wordEnding, plural) {
             else return '';
     }
 }
+
+function scrollToElement(element) {
+    element.scrollIntoView();
+}
+
 // events for all pages
 
 // nav-menu open/close (mobile only)
