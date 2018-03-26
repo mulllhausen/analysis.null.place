@@ -6,6 +6,7 @@ var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
 var txsPerBlock = [];
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
+    versionInt : null,
     version: null,
 
     prevHashRaw: null,
@@ -15,6 +16,7 @@ var miningData = { // note: raw values are taken directly from the input field
     merkleRoot: null,
 
     timestampRaw: null,
+    timestampUnixtime: null,
     timestamp: null,
 
     bitsRaw: null,
@@ -127,6 +129,14 @@ addEvent(window, 'load', function () {
 
     // forms 0 - 4
     addEvent(document.querySelector('button.wrap-nowrap'), 'click', runHashWrapClicked);
+
+    // annex - form 5
+    addEvent(document.getElementById('version5'), 'keyup, change', version5Changed);
+    triggerEvent(document.getElementById('version5'), 'change');
+
+    // annex - form 6
+    addEvent(document.getElementById('timestamp6'), 'keyup, change', timestamp6Changed);
+    triggerEvent(document.getElementById('timestamp6'), 'change');
 });
 
 function initBorderTheDigits() {
@@ -544,235 +554,278 @@ function borderTheDigits(elements, matchArray, failPrecedence) {
     });
 }
 
-function version4Changed() {
-    if (this.value != this.value.trim()) this.value = this.value.trim();
-    if (this.value == miningData.versionRaw) return;
-    deleteElementById('version4Error1');
-    deleteElementById('version4Error2');
-    deleteElementById('version4Error3');
-    resetMiningStatus();
-    if (!stringIsInt(this.value)) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'version4Error1',
-            'the version must be an integer'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.versionRaw = this.value; // last
-        return;
-    }
-    var version4 = parseInt(this.value);
-    if (version4 < 0) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'version4Error1',
-            'the version must be greater than 0'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.versionRaw = this.value; // last
-        return;
-    }
-    if (version4 > 0xffffffff) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'version4Error2',
-            'the version must be lower than ' + 0xffffffff
-        );
-        setButtons(false, 'RunHash4');
-        miningData.versionRaw = this.value; // last
-        return;
-    }
-    miningData.version = toLittleEndian(int2hex(version4, 8));
-    setButtons(true, 'RunHash4');
-    miningData.versionRaw = this.value; // last
+function borderTheBytes(bytes) {
+    var bytesArray = bytes.match(/.{2}/g);
+    var open = '<span class="individual-digit">';
+    var close = '</span>';
+    return open + bytesArray.join(close + open) + close;
 }
 
-function prevHash4Changed() {
-    if (this.value != this.value.trim()) this.value = this.value.trim();
-    if (this.value == miningData.prevHashRaw) return;
-    deleteElementById('prevHash4Error1');
-    deleteElementById('prevHash4Error2');
-    resetMiningStatus();
-    if (!isHex(this.value)) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'prevHash4Error1',
-            'the previous block hash must only contain hexadecimal digits'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.prevHashRaw = this.value; // last
-        return;
-    }
-    if (this.value.length != 64) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'prevHash4Error2',
-            'the previous block hash must be 32 bytes long'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.prevHashRaw = this.value; // last
-        return;
-    }
-    miningData.prevHash = toLittleEndian(this.value);
-    setButtons(true, 'RunHash4');
-    miningData.prevHashRaw = this.value; // last
+function addError(formNum, errorType, errorText) {
+    addLi2Ul('#form' + formNum + ' .error', null, errorText, errorType + 'Error');
 }
 
-function merkleRoot4Changed() {
-    if (this.value != this.value.trim()) this.value = this.value.trim();
-    if (this.value == miningData.merkleRootRaw) return;
-    deleteElementById('merkleRoot4Error1');
-    deleteElementById('merkleRoot4Error2');
+function noOtherErrors4() {
+    return (document.querySelectorAll('#form4 ul.error li').length == 0);
+}
+
+function versionChanged(versionFromInput, formNum) {
+    var data = { // init
+        status: true,
+        versionInt: null,
+        version: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .versionError'));
+    function addError2(errorText) { addError(formNum, 'version', errorText); }
+    if (!stringIsInt(versionFromInput)) {
+        addError2('the version must be an integer');
+        data.status = false;
+        return data;
+    }
+    data.versionInt = parseInt(versionFromInput);
+    if (data.versionInt < 0) {
+        addError2('the version must be greater than 0');
+        data.status = false;
+        return data;
+    }
+    if (data.versionInt > 0xffffffff) {
+        addError2('the version must be lower than ' + 0xffffffff);
+        data.status = false;
+        return data;
+    }
+    data.version = toLittleEndian(int2hex(data.versionInt, 8));
+    return data;
+}
+
+function version4Changed(e) {
+    var newVersion = trimInputValue(e.currentTarget);
+    if (newVersion == miningData.versionRaw) return; // exit if no change
+
+    var data = versionChanged(newVersion, 4);
     resetMiningStatus();
-    if (!isHex(this.value)) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'merkleRoot4Error1',
-            'the merkle root must only contain hexadecimal digits'
-        );
+    if (!data.status) {
         setButtons(false, 'RunHash4');
-        miningData.merkleRootRaw = this.value; // last
+        miningData.versionRaw = newVersion; // last
         return;
     }
-    if (this.value.length != 64) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'merkleRoot4Error2',
-            'the merkle root must be 32 bytes long'
-        );
+    miningData.version = data.version;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.versionRaw = newVersion; // last
+}
+
+function prevHashChanged(prevHashFromInput, formNum) {
+    var data = { // init
+        status: true,
+        prevHash: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .prevHashError'));
+    function addError2(errorText) { addError(formNum, 'prevHash', errorText); }
+    if (!isHex(prevHashFromInput)) {
+        addError2('the previous block hash must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    if (prevHashFromInput.length != 64) {
+        addError2('the previous block hash must be 32 bytes long');
+        data.status = false;
+        return data;
+    }
+    data.prevHash = toLittleEndian(prevHashFromInput);
+    return data;
+}
+
+function prevHash4Changed(e) {
+    var newPrevHash = trimInputValue(e.currentTarget);
+    if (newPrevHash == miningData.prevHashRaw) return; // exit if no change
+    var data = prevHashChanged(newPrevHash, 4);
+    resetMiningStatus();
+    if (!data.status) {
         setButtons(false, 'RunHash4');
-        miningData.merkleRootRaw = this.value; // last
+        miningData.prevHashRaw = newPrevHash; // last
         return;
     }
-    miningData.merkleRoot = toLittleEndian(this.value);
-    setButtons(true, 'RunHash4');
-    miningData.merkleRootRaw = this.value; // last
+    miningData.prevHash = data.prevHash;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.prevHashRaw = newPrevHash; // last
+}
+
+function merkleRootChanged(merkleRootFromInput, formNum) {
+    var data = { // init
+        status: true,
+        merkleRoot: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .merkleRootError'));
+    function addError2(errorText) { addError(formNum, 'merkleRoot', errorText); }
+    if (!isHex(merkleRootFromInput)) {
+        addError2('the merkle root must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    if (merkleRootFromInput.length != 64) {
+        addError2('the merkle root must be 32 bytes long');
+        data.status = false;
+        return data;
+    }
+    data.merkleRoot = toLittleEndian(merkleRootFromInput);
+    return data;
+}
+
+function merkleRoot4Changed(e) {
+    var newMerkleRoot = trimInputValue(e.currentTarget);
+    if (newMerkleRoot == miningData.merkleRootRaw) return; // exit if no change
+
+    var data = merkleRootChanged(newMerkleRoot, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.merkleRootRaw = newMerkleRoot; // last
+        return;
+    }
+    miningData.merkleRoot = data.merkleRoot;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.merkleRootRaw = newMerkleRoot; // last
 }
 
 // the timetstamp can be either an integer (unixtime) or a date string
-function timestamp4Changed() {
-    // do not trim, or the user will not be able to put spaces between words
-    if (this.value == miningData.timestampRaw) return;
-    deleteElementById('timestamp4Error1');
-    deleteElementById('timestamp4Error2');
-    deleteElementById('timestamp4Error3');
-    resetMiningStatus();
-    if (stringIsInt(Date.parse(this.value))) {
-        var timestamp4 = unixtime(this.value);
-        document.getElementById('timestamp4Explanation').innerText = '';
-    } else if (stringIsInt(this.value)) {
-        var timestamp4 = parseInt(this.value);
-        document.getElementById('timestamp4Explanation').innerText = '(unixtime)';
+function timestampChanged(timestampFromInput, formNum) {
+    var data = { // init
+        status: true,
+        timestampUnixtime: null,
+        timestamp: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .timestampError'));
+    function addError2(errorText) { addError(formNum, 'timestamp', errorText); }
+    if (stringIsInt(Date.parse(timestampFromInput))) {
+        data.timestampUnixtime = unixtime(timestampFromInput);
+        document.getElementById('timestamp' + formNum + 'Explanation').innerText = '';
+    } else if (stringIsInt(timestampFromInput)) {
+        data.timestampUnixtime = parseInt(timestampFromInput);
+        document.getElementById('timestamp' + formNum + 'Explanation').innerText =
+        '(unixtime)';
     } else {
-        addLi2Ul(
-            'blockHeader4Error',
-            'timestamp4Error1',
-            'the timestamp must either be a valid date-time, or be an integer (unixtime)'
+        addError2(
+            'the timestamp must either be a valid date-time, or be an integer' +
+            ' (unixtime)'
         );
-        setButtons(false, 'RunHash4');
-        miningData.timestampRaw = this.value; // last
-        return;
+        data.status = false;
+        return data;
     }
-    if (timestamp4 < 1231006505) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'timestamp4Error1',
-            'the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.timestampRaw = this.value; // last
-        return;
+    if (data.timestampUnixtime < 1231006505) {
+        addError2('the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)');
+        data.status = false;
+        return data;
     }
-    if (timestamp4 > 0xffffffff) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'timestamp4Error1',
-            'the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.timestampRaw = this.value; // last
-        return;
+    if (data.timestampUnixtime > 0xffffffff) {
+        addError2('the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)');
+        data.status = false;
+        return data;
     }
-    miningData.timestamp = toLittleEndian(int2hex(timestamp4, 8));
-    setButtons(true, 'RunHash4');
-    miningData.timestampRaw = this.value; // last
+    data.timestamp = toLittleEndian(int2hex(data.timestampUnixtime, 8));
+    return data;
 }
 
-function bits4Changed() {
-    if (this.value != this.value.trim()) this.value = this.value.trim();
-    if (this.value == miningData.bitsRaw) return;
+function timestamp4Changed(e) {
+    // do not trim, or the user will not be able to put spaces between words
+    var newTimestamp = e.currentTarget.value;
+    if (newTimestamp == miningData.timestampRaw) return; // exit if no change
+    var data = timestampChanged(newTimestamp, 4);
     resetMiningStatus();
-    deleteElementById('bits4Error1');
-    deleteElementById('bits4Error2');
-    if (this.value.length != 8) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'bits4Error1',
-            'the difficulty must be 4 bytes long'
-        );
+    if (!data.status) {
         setButtons(false, 'RunHash4');
-        miningData.bitsRaw = this.value; // last
+        miningData.timestampRaw = newTimestamp; // last
         return;
     }
-    if (!isHex(this.value)) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'bits4Error2',
-            'the difficulty must only contain hexadecimal digits'
-        );
+    miningData.timestamp = data.timestamp;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.timestampRaw = newTimestamp; // last
+}
+
+function bitsChanged(bitsFromInput, formNum) {
+    var data = { // init
+        status: true,
+        bits: null,
+        target: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .bitsError'));
+    function addError2(errorText) { addError(formNum, 'bits', errorText); }
+    if (bitsFromInput.length != 8) {
+        addError2('the difficulty must be 4 bytes long');
+        data.status = false;
+        return data;
+    }
+    if (!isHex(bitsFromInput)) {
+        addError2('the difficulty must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    data.bits = toLittleEndian(bitsFromInput);
+    data.target = bits2target(bitsFromInput);
+    return data;
+}
+
+function bits4Changed(e) {
+    var newBits = trimInputValue(e.currentTarget);
+    if (newBits == miningData.bitsRaw) return; // exit if no change
+
+    var data = bitsChanged(newBits, 4);
+    resetMiningStatus();
+    if (!data.status) {
         setButtons(false, 'RunHash4');
-        miningData.bitsRaw = this.value; // last
+        miningData.bitsRaw = newBits; // last
         return;
     }
-    miningData.bits = toLittleEndian(this.value);
-    miningData.target = bits2target(this.value);
+    miningData.bits = data.bits;
+    miningData.target = data.target;
     document.getElementById('target4').innerText = miningData.target;
     borderTheDigits('#target4', new Array(64)); // erase colors
-    setButtons(true, 'RunHash4');
-    miningData.bitsRaw = this.value; // last
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.bitsRaw = newBits; // last
 }
 
-function nonce4Changed() {
-    if (this.value != this.value.trim()) this.value = this.value.trim();
-    if (this.value == miningData.nonceRaw) return;
-    deleteElementById('nonce4Error1');
-    deleteElementById('nonce4Error2');
-    deleteElementById('nonce4Error3');
+function nonceChanged(nonceFromInput, formNum) {
+    var data = { // init
+        status: true,
+        nonce: null,
+        nonceInt: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .nonceError'));
+    function addError2(errorText) { addError(formNum, 'nonce', errorText); }
+    if (!stringIsInt(nonceFromInput)) {
+        addError2('the nonce must be an integer');
+        data.status = false;
+        return data;
+    }
+    var nonceInt = parseInt(nonceFromInput);
+    if (nonceInt < 0) {
+        addError2('the nonce must be greater than 0');
+        data.status = false;
+        return data;
+    }
+    if (nonceInt > 0xffffffff) {
+        addError2('the nonce must be lower than ' + 0xffffffff);
+        data.status = false;
+        return data;
+    }
+    data.nonceInt = nonceInt;
+    data.nonce = toLittleEndian(int2hex(nonceInt, 8));
+    return data;
+}
+
+function nonce4Changed(e) {
+    var newNonce = trimInputValue(e.currentTarget);
+    if (newNonce == miningData.nonceRaw) return; // exit if no change
+
+    var data = nonceChanged(newNonce, 4);
     resetMiningStatus();
-    if (!stringIsInt(this.value)) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'nonce4Error1',
-            'the nonce must be an integer'
-        );
+    if (!data.status) {
         setButtons(false, 'RunHash4');
-        miningData.nonceRaw = this.value; // last
+        miningData.nonceRaw = newNonce; // last
         return;
     }
-    miningData.nonceInt = parseInt(this.value);
-    if (miningData.nonceInt < 0) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'nonce4Error2',
-            'the nonce must be greater than 0'
-        );
-        setButtons(false, 'RunHash4');
-        miningData.nonceRaw = this.value; // last
-        return;
-    }
-    if (miningData.nonceInt > 0xffffffff) {
-        addLi2Ul(
-            'blockHeader4Error',
-            'nonce4Error3',
-            'the nonce must be lower than ' + 0xffffffff
-        );
-        setButtons(false, 'RunHash4');
-        miningData.nonceRaw = this.value; // last
-        return;
-    }
-    miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
-    setButtons(true, 'RunHash4');
-    miningData.nonceRaw = this.value; // last
+    miningData.nonceInt = data.nonceInt;
+    miningData.nonce = data.nonce;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.nonceRaw = newNonce; // last
 }
 
 // reset the block and clear any errors
@@ -780,10 +833,12 @@ function resetBlock4(pass) {
     document.getElementById('version4').value = 1;
     triggerEvent(document.getElementById('version4'), 'change');
 
-    document.getElementById('prevHash4').value = '0000000000000000000000000000000000000000000000000000000000000000';
+    document.getElementById('prevHash4').value =
+    '0000000000000000000000000000000000000000000000000000000000000000';
     triggerEvent(document.getElementById('prevHash4'), 'change');
 
-    document.getElementById('merkleRoot4').value = '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b';
+    document.getElementById('merkleRoot4').value =
+    '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b';
     triggerEvent(document.getElementById('merkleRoot4'), 'change');
 
     document.getElementById('timestamp4').value = '03 Jan 2009 18:15:05 GMT';
@@ -937,6 +992,52 @@ function toLittleEndian(hexStr) {
     return hexStr.match(/.{2}/g).reverse().join('')
 }
 
+// form 5 (understanding 'version')
+function version5Changed(e) {
+    var version = trimInputValue(e.currentTarget);
+    var data = versionChanged(version, 5);
+    var codeblockContainer = document.querySelector('#form5 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    var codeblockHTML =
+    'convert to hex:                  ' + int2hex(data.versionInt) + '\n' +
+    'convert to 4 bytes (big endian): ' +
+    borderTheBytes(int2hex(data.versionInt, 8)) + '\n' +
+    'convert to little endian:        ' + borderTheBytes(data.version);
+    document.querySelector('#form5 .codeblock').innerHTML = codeblockHTML;
+}
+
+// form 6 (understanding 'timestamp')
+function timestamp6Changed(e) {
+    var timestamp = trimInputValue(e.currentTarget);
+    var data = timestampChanged(timestamp, 6);
+    var codeblockContainer = document.querySelector('#form6 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    var dateGMT = new Date( // for visually checking bad inputs
+        (data.timestampUnixtime * 1000) +
+        (new Date(data.timestampUnixtime * 1000).getTimezoneOffset() * 60000)
+    );
+    var codeblockHTML =
+    'timestamp:                                    ' + dateGMT + '\n' +
+    'convert to unixtime (int):                    ' +
+    data.timestampUnixtime + '\n' +
+
+    'convert to hex (always 4 bytes - big endian): ' +
+    borderTheBytes(int2hex(data.timestampUnixtime, 8)) + '\n' +
+
+    'convert to little endian:                     ' +
+    borderTheBytes(data.timestamp);
+    document.querySelector('#form6 .codeblock').innerHTML = codeblockHTML;
+}
+
+// dragable blockchain svg
 function initBlockchainSVG() {
     var svg = document.getElementById('blockchainSVG').contentDocument.
     getElementsByTagName('svg')[0];

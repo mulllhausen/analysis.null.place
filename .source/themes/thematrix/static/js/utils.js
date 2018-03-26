@@ -1,5 +1,17 @@
 // common functions used on many pages
 
+function trim(str) {
+    return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+}
+
+function trimLeft(str) {
+    return str.replace(/^[\s\uFEFF\xA0]+/g, '');
+}
+
+function trimRight(str) {
+    return str.replace(/[\s\uFEFF\xA0]+$/g, '');
+}
+
 function unixtime(date) {
     switch (typeof date) {
         case 'string': // eg 03 Jan 2009 18:15:05 GMT
@@ -23,14 +35,26 @@ function isNodeList(elements) {
     }
 }
 
+function foreach(els, callback) {
+    if (isNodeList(els) || (els instanceof Array)) {
+        for (var i = 0; i < els.length; i++) {
+            if (callback(i, els[i]) === false) break;
+        }
+    } else if (typeof els === 'object') {
+        for (var key in els) {
+            if (!els.hasOwnProperty(key)) continue;
+            if (callback(key, els[key]) === false) break;
+        }
+    }
+}
+
 function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var typesArr = types.split(',');
     var elements = (isNodeList(element) ? element : [element]);
-    for (var elI = 0; elI < elements.length; elI++) {
-        var el = elements[elI];
-        for (var typeI = 0; typeI < typesArr.length; typeI++) {
-            var type = typesArr[typeI].replace(/ /g, '');
+    foreach (elements, function (elI, el) {
+        foreach (typesArr, function (typeI, type) {
+            type = type.replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
             } else if (el.attachEvent) {
@@ -38,8 +62,8 @@ function addEvent(element, types, callback) {
             } else {
                 el['on' + type] = callback;
             }
-        }
-    }
+        });
+    });
 }
 
 function triggerEvent(element, type) {
@@ -62,18 +86,30 @@ function hidePopup() {
     document.getElementById('fullpagePopupNotification').style.display = 'none';
 }
 
-function addLi2Ul(ulID, liID, errorText) {
-    var ul = document.getElementById(ulID);
+function addLi2Ul(ul, liID, text, className) {
+    if (typeof ul == 'string') ul = document.querySelector(ul);
     var li = document.createElement('li');
-    li.id = liID;
-    li.appendChild(document.createTextNode(errorText));
+    if (liID != null) li.id = liID;
+    if (className != null) li.className = className;
+    li.appendChild(document.createTextNode(text));
     ul.appendChild(li);
 }
 
 function deleteElementById(elID) {
-    var el = document.getElementById(elID);
+    deleteElement(document.getElementById(elID));
+}
+
+function deleteElement(el) {
     if (el == null) return;
     el.parentNode.removeChild(el);
+}
+
+function deleteElements(element) {
+    var elements = (isNodeList(element) ? element : [element]);
+    if (elements.length == 0) return;
+    foreach (elements, function (i, el) {
+        deleteElement(el);
+    });
 }
 
 function isHex(val) {
@@ -86,28 +122,16 @@ function stringIsInt(x)  {
 }
 
 function setButtons(enable) {
-    for (var i = 1; i < arguments.length; i++) {
-        document.getElementById('btn' + arguments[i]).disabled = !enable;
-    }
+    foreach (arguments, function (i, arg) {
+        if (i == 0) return; // continue
+        document.getElementById('btn' + arg).disabled = !enable;
+    });
 }
 
 // find needle in haystack - works for strings as well as arrays
 function inArray(needle, haystack) {
     // note: does not work with with NaN or ie < 9
     return (haystack.indexOf(needle) > -1);
-}
-
-function foreach(els, callback) {
-    if (isNodeList(els) || (els instanceof Array)) {
-        for (var i = 0; i < els.length; i++) {
-            if (callback(i, els[i]) === false) break;
-        }
-    } else if (typeof els === 'object') {
-        for (var key in els) {
-            if (!els.hasOwnProperty(key)) continue;
-            if (callback(key, els[key]) === false) break;
-        }
-    }
 }
 
 function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
@@ -212,6 +236,29 @@ function plural(wordEnding, plural) {
 
 function scrollToElement(element) {
     element.scrollIntoView();
+}
+
+// trim an <input type="text"> and maintain cursor position
+function trimInputValue(inputEl) {
+    var noChange = true;
+    var value = inputEl.value;
+    var initialLength = value.length;
+    if (initialLength == 0) return value;
+    var newValue = trim(value);
+    if (value == newValue) return value;
+
+    // from here on, we know there are trim-related changes
+
+    var cursor = { start: inputEl.selectionStart, end: inputEl.selectionEnd };
+
+    var trimmedLeft = trimLeft(value);
+    if (trimmedLeft.length != initialLength) {
+        cursor.start -= (initialLength - trimmedLeft.length);
+        cursor.end -= (initialLength - trimmedLeft.length);
+    }
+    inputEl.value = newValue;
+    inputEl.setSelectionRange(cursor.start, cursor.end);
+    return newValue;
 }
 
 // events for all pages
