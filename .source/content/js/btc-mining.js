@@ -137,6 +137,33 @@ addEvent(window, 'load', function () {
     // annex - form 6
     addEvent(document.getElementById('timestamp6'), 'keyup, change', timestamp6Changed);
     triggerEvent(document.getElementById('timestamp6'), 'change');
+
+    // annex - form 7
+    addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
+    triggerEvent(document.getElementById('bits7'), 'change');
+
+    // annex - form 8
+    addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
+    triggerEvent(document.getElementById('nonce8'), 'change');
+
+    // annex - form 9
+    addEvent(document.getElementById('version9'), 'keyup, change', version9Changed);
+    triggerEvent(document.getElementById('version9'), 'change');
+
+    addEvent(document.getElementById('prevHash9'), 'keyup, change', prevHash9Changed);
+    triggerEvent(document.getElementById('prevHash9'), 'change');
+
+    addEvent(document.getElementById('merkleRoot9'), 'keyup, change', merkleRoot9Changed);
+    triggerEvent(document.getElementById('merkleRoot9'), 'change');
+
+    addEvent(document.getElementById('timestamp9'), 'keyup, change', timestamp9Changed);
+    triggerEvent(document.getElementById('timestamp9'), 'change');
+
+    addEvent(document.getElementById('bits9'), 'keyup, change', bits9Changed);
+    triggerEvent(document.getElementById('bits9'), 'change');
+
+    addEvent(document.getElementById('nonce9'), 'keyup, change', nonce9Changed);
+    triggerEvent(document.getElementById('nonce9'), 'change');
 });
 
 function initBorderTheDigits() {
@@ -582,18 +609,19 @@ function versionChanged(versionFromInput, formNum) {
         data.status = false;
         return data;
     }
-    data.versionInt = parseInt(versionFromInput);
-    if (data.versionInt < 0) {
+    var versionInt = parseInt(versionFromInput);
+    if (versionInt < 0) {
         addError2('the version must be greater than 0');
         data.status = false;
         return data;
     }
-    if (data.versionInt > 0xffffffff) {
+    if (versionInt > 0xffffffff) {
         addError2('the version must be lower than ' + 0xffffffff);
         data.status = false;
         return data;
     }
-    data.version = toLittleEndian(int2hex(data.versionInt, 8));
+    data.versionInt = versionInt;
+    data.version = toLittleEndian(int2hex(versionInt, 8));
     return data;
 }
 
@@ -695,13 +723,14 @@ function timestampChanged(timestampFromInput, formNum) {
     };
     deleteElements(document.querySelectorAll('#form' + formNum + ' .timestampError'));
     function addError2(errorText) { addError(formNum, 'timestamp', errorText); }
+    var timestampUnixtime;
     if (stringIsInt(Date.parse(timestampFromInput))) {
-        data.timestampUnixtime = unixtime(timestampFromInput);
+        var timestampUnixtime = unixtime(timestampFromInput);
         document.getElementById('timestamp' + formNum + 'Explanation').innerText = '';
     } else if (stringIsInt(timestampFromInput)) {
-        data.timestampUnixtime = parseInt(timestampFromInput);
+        var timestampUnixtime = parseInt(timestampFromInput);
         document.getElementById('timestamp' + formNum + 'Explanation').innerText =
-        '(unixtime)';
+        ' (unixtime)';
     } else {
         addError2(
             'the timestamp must either be a valid date-time, or be an integer' +
@@ -710,16 +739,17 @@ function timestampChanged(timestampFromInput, formNum) {
         data.status = false;
         return data;
     }
-    if (data.timestampUnixtime < 1231006505) {
+    if (timestampUnixtime < 1231006505) {
         addError2('the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)');
         data.status = false;
         return data;
     }
-    if (data.timestampUnixtime > 0xffffffff) {
+    if (timestampUnixtime > 0xffffffff) {
         addError2('the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)');
         data.status = false;
         return data;
     }
+    data.timestampUnixtime = timestampUnixtime;
     data.timestamp = toLittleEndian(int2hex(data.timestampUnixtime, 8));
     return data;
 }
@@ -758,8 +788,14 @@ function bitsChanged(bitsFromInput, formNum) {
         data.status = false;
         return data;
     }
+    var target = bits2target(bitsFromInput);
+    if (target == null) {
+        addError2('the target length cannot be more than 32 bytes');
+        data.status = false;
+        return data;
+    }
+    data.target = target;
     data.bits = toLittleEndian(bitsFromInput);
-    data.target = bits2target(bitsFromInput);
     return data;
 }
 
@@ -862,7 +898,7 @@ function mine4AndRenderResults() {
     var minedResult = mine(); // using global var miningData
     document.getElementById('blockhash4').innerText = minedResult.blockhash;
     borderTheDigits(
-        '#block4MiningResults .individual-digits',
+        '#form4 .codeblock .individual-digits',
         minedResult.matches,
         true // fail precedence
     );
@@ -918,6 +954,7 @@ function mine() {
     };
 }
 
+// todo - fix this https://bitcoin.stackexchange.com/questions/30467
 function bits2target(bits) {
     if (bits.length != 8) return null;
 
@@ -1012,21 +1049,20 @@ function version5Changed(e) {
 
 // form 6 (understanding 'timestamp')
 function timestamp6Changed(e) {
-    var timestamp = trimInputValue(e.currentTarget);
-    var data = timestampChanged(timestamp, 6);
+    var data = timestampChanged(e.currentTarget.value, 6);
     var codeblockContainer = document.querySelector('#form6 .codeblock-container');
     if (!data.status) {
         codeblockContainer.style.display = 'none';
         return;
     }
     codeblockContainer.style.display = 'block';
-    var dateGMT = new Date( // for visually checking bad inputs
-        (data.timestampUnixtime * 1000) +
-        (new Date(data.timestampUnixtime * 1000).getTimezoneOffset() * 60000)
-    );
+
+    // for visually checking bad inputs
+    var dateGMT = (new Date((data.timestampUnixtime * 1000))).toGMTString();
+
     var codeblockHTML =
     'timestamp:                                    ' + dateGMT + '\n' +
-    'convert to unixtime (int):                    ' +
+    'convert to unixtime (integer):                ' +
     data.timestampUnixtime + '\n' +
 
     'convert to hex (always 4 bytes - big endian): ' +
@@ -1035,6 +1071,123 @@ function timestamp6Changed(e) {
     'convert to little endian:                     ' +
     borderTheBytes(data.timestamp);
     document.querySelector('#form6 .codeblock').innerHTML = codeblockHTML;
+}
+
+// form 7 (understanding 'difficulty')
+function bits7Changed(e) {
+    var difficulty = trimInputValue(e.currentTarget);
+    var data = bitsChanged(difficulty, 7);
+    var codeblockContainer = document.querySelector('#form7 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+
+    var lenHex = difficulty.substring(0, 2);
+    var len = hex2int(lenHex); // just byte 1
+    var msbytes = difficulty.substring(2);
+    var codeblockHTML =
+    'difficulty:                         ' + borderTheBytes(difficulty) + '\n' +
+    'extract the target length (byte 1): ' + lenHex + ' hex = ' + len +
+    ' decimal\n' +
+    'extract the target prefix:          ' + borderTheBytes(msbytes) + '\n' +
+    '\n' +
+    'set the prefix to the length and\n' +
+    'zero-pad to 32 bytes to get target: ' + borderTheBytes(data.target) + '\n' +
+    '\n' +
+    'convert to bits (little endian):    ' + borderTheBytes(data.bits);
+    document.querySelector('#form7 .codeblock').innerHTML = codeblockHTML;
+}
+
+// form 8 (understanding 'nonce')
+function nonce8Changed(e) {
+    var nonce = trimInputValue(e.currentTarget);
+    var data = nonceChanged(nonce, 8);
+    var codeblockContainer = document.querySelector('#form8 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    var codeblockHTML =
+    'convert to hex:                  ' + int2hex(data.nonceInt) + '\n' +
+    'convert to 4 bytes (big endian): ' +
+    borderTheBytes(int2hex(data.nonceInt, 8)) + '\n' +
+    'convert to little endian:        ' + borderTheBytes(data.nonce);
+    document.querySelector('#form8 .codeblock').innerHTML = codeblockHTML;
+}
+
+// form 9 - block header bytes from header fields
+function version9Changed(e) {
+    var version = trimInputValue(e.currentTarget);
+    var data = versionChanged(version, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#version9Output').innerHTML = borderTheBytes(data.version);
+}
+
+function prevHash9Changed(e) {
+    var prevHash = trimInputValue(e.currentTarget);
+    var data = prevHashChanged(prevHash, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#prevHash9Output').innerHTML = borderTheBytes(data.prevHash);
+}
+
+function merkleRoot9Changed(e) {
+    var merkleRoot = trimInputValue(e.currentTarget);
+    var data = merkleRootChanged(merkleRoot, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#merkleRoot9Output').innerHTML = borderTheBytes(data.merkleRoot);
+}
+
+function timestamp9Changed(e) {
+    var data = timestampChanged(e.currentTarget.value, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#timestamp9Output').innerHTML = borderTheBytes(data.timestamp);
+}
+
+function bits9Changed(e) {
+    var bits = trimInputValue(e.currentTarget);
+    var data = bitsChanged(bits, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#bits9Output').innerHTML = borderTheBytes(data.bits);
+}
+
+function nonce9Changed(e) {
+    var nonce = trimInputValue(e.currentTarget);
+    var data = nonceChanged(nonce, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#nonce9Output').innerHTML = borderTheBytes(data.nonce);
 }
 
 // dragable blockchain svg

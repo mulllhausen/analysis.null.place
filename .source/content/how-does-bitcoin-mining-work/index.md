@@ -488,7 +488,7 @@ to the results area and to the nonce in the block header:
             <input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp <span id="timestamp4Explanation"></span><br>
+            timestamp<span id="timestamp4Explanation"></span><br>
             <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
@@ -502,7 +502,7 @@ to the results area and to the nonce in the block header:
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<ul id="xyzblockHeader4Error" class="error"></ul>
+<ul class="error"></ul>
 <button id="btnRunHash4">Mine manually with SHA256</button>
 <div class="codeblock-container">
     <div class="button-background">
@@ -511,7 +511,7 @@ to the results area and to the nonce in the block header:
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div id="block4MiningResults" class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
+<div class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
 status: <span class="aligner">    </span><span id="mineStatus4"></span>
@@ -603,19 +603,18 @@ for those (such as myself) who like to leave no stone unturned.
 
 - version int to version in hex
 
-<div class="form-container" id="form5">
+<div class="form-container annex" id="form5">
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
-    <br>
     <ul class="error"></ul>
     <div class="codeblock-container">
         <div class="button-background">
-            <button class="wrap-nowrap" wrapped="true">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock"></div>
+        <div class="codeblock" style="white-space:pre;"></div>
     </div>
 </div>
 
@@ -625,76 +624,97 @@ todo?
 
 - timestamp to unixtime
 
-<div class="form-container" id="form6">
-    <label for="timestamp6" class="for-textbox">timestamp</label><br>
-    <span id="timestamp6Explanation"></span><br>
+<div class="form-container annex" id="form6">
+    <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
-    <br>
     <ul class="error"></ul>
     <div class="codeblock-container">
         <div class="button-background">
-            <button class="wrap-nowrap" wrapped="true">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock"></div>
+        <div class="codeblock" style="white-space:pre;"></div>
     </div>
 </div>
 
-<input id="timestamp5" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
 - difficulty to target
-<input id="bits5" type="text" class="data-value" size="8" value="1d00ffff">
+
+<div class="form-container annex" id="form7">
+    <label for="bits7" class="for-textbox">difficulty</label><br>
+    <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+    <ul class="error"></ul>
+    <div class="codeblock-container">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock" style="white-space:pre;"></div>
+    </div>
+</div>
+
 - nonce to hex
-<input id="nonce4" type="text" class="data-value" size="10" value="0">
+
+<div class="form-container annex" id="form8">
+    <label for="nonce8" class="for-textbox">nonce</label><br>
+    <input id="nonce8" type="text" class="data-value" size="10" value="0">
+    <ul class="error"></ul>
+    <div class="codeblock-container">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock" style="white-space:pre;"></div>
+    </div>
+</div>
+
 - entire block to hex
-<div class="form-container" id="form6">
+
+<div class="form-container" id="form9">
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version6" type="text" class="data-value" size="2" value="1">
+            <input id="version9" type="text" class="data-value" size="2" value="1">
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash6" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash9" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot6" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot9" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp <span id="timestamp6Explanation"></span><br>
-            <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            timestamp<span id="timestamp9Explanation"></span><br>
+            <input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
             difficulty<br>
-            <input id="bits6" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits9" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce6" type="text" class="data-value" size="10" value="0">
+            <input id="nonce9" type="text" class="data-value" size="10" value="0">
         </td></tr>
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
-<ul id="blockHeader6Error" class="error"></ul>
-<button id="btnRunHash6">Mine manually with SHA256</button>
+<ul  class="error"></ul>
 <div class="codeblock-container">
     <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+        <button class="wrap-nowrap" wrapped="true">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true"></i>
         </button>
     </div><br>
-<div id="block6MiningResults" class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce6Results">0</span>
-target: <span class="aligner">    </span><span id="target6" class="individual-digits"></span>
-block hash: <span class="aligner"></span><span id="blockhash6" class="individual-digits"></span>
-status: <span class="aligner">    </span><span id="mineStatus6"></span>
-</div>
+<div class="codeblock"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></div>
 </div>
 </div>
 
-
-nonce is not big enough - increment the timestamp by a second
-
+if nonce is not big enough - increment the timestamp by 1 second

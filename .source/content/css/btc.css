@@ -22,12 +22,18 @@ pre {
     text-align: center;
     min-width: 100px;
 }
-#block1MiningResults.codeblock {
+#form4 .codeblock {
     word-break: break-word;
 }
 .btc-header-definition input {
     text-align: center;
     font-family: monospace;
+}
+.annex input {
+    font-family: monospace;
+}
+#form9 .codeblock .outputField {
+    margin-right: 8px;
 }
 .individual-digit {
     border: 1px solid #565656;
