@@ -1129,6 +1129,7 @@ function version9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#version9Output').innerHTML = borderTheBytes(data.version);
+    renderHashes9();
 }
 
 function prevHash9Changed(e) {
@@ -1141,6 +1142,7 @@ function prevHash9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#prevHash9Output').innerHTML = borderTheBytes(data.prevHash);
+    renderHashes9();
 }
 
 function merkleRoot9Changed(e) {
@@ -1153,6 +1155,7 @@ function merkleRoot9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#merkleRoot9Output').innerHTML = borderTheBytes(data.merkleRoot);
+    renderHashes9();
 }
 
 function timestamp9Changed(e) {
@@ -1164,6 +1167,7 @@ function timestamp9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#timestamp9Output').innerHTML = borderTheBytes(data.timestamp);
+    renderHashes9();
 }
 
 function bits9Changed(e) {
@@ -1176,6 +1180,7 @@ function bits9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#bits9Output').innerHTML = borderTheBytes(data.bits);
+    renderHashes9();
 }
 
 function nonce9Changed(e) {
@@ -1188,6 +1193,20 @@ function nonce9Changed(e) {
     }
     codeblockContainer.style.display = 'block';
     document.querySelector('#nonce9Output').innerHTML = borderTheBytes(data.nonce);
+    renderHashes9();
+}
+
+function renderHashes9() {
+    var block9Hex = document.getElementById('block9Bytes').textContent;
+    if (block9Hex.length != 160) return;
+
+    var bitArray = sjcl.codec.hex.toBits(block9Hex);
+    var sha256BitArray1 = sjcl.hash.sha256.hash(bitArray);
+    var sha256BitArray2 = sjcl.hash.sha256.hash(sha256BitArray1);
+    var sha256Hash1 = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray1));
+    var sha256Hash2 = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray2));
+    document.getElementById('firstSHA256Output9').innerText = sha256Hash1;
+    document.getElementById('secondSHA256Output9').innerText = sha256Hash2;
 }
 
 // dragable blockchain svg

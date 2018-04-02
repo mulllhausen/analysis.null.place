@@ -145,7 +145,7 @@ the pre-image for the resulting hash is - for example, if I give you the hash
 `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
 already know that a corresponding SHA256 pre-image is `hello world!`, since we
 already hashed `hello world!` with SHA256 earlier and it gave this result. But
-if I give you `ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22`
+if I give you `32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`
 then you will not be able to find the pre-image which results in this hash - i.e.
 you will not be able to invert this hash. Seriously - give it a go:
 
@@ -182,7 +182,7 @@ you will not be able to invert this hash. Seriously - give it a go:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span></div>
     </div>
@@ -193,7 +193,7 @@ The difficulty of inverting a *SHA256* hash is due its length being so large!
 115792089237316195423570985008687907853269984665640564039457584007913129639936
 different possible hash values. There are approximately that many atoms in the
 universe! So don't feel bad for not being able to invert
-`ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22` - for all
+`32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7` - for all
 intents and purposes it cannot be inverted. And that is true even when computers
 do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
 button below then you can have your device cycle through pre-images and show you
@@ -226,7 +226,7 @@ the results at its maximum possible speed:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">ab50638d692c4342675a028fe7c926387fe6fbd677d9417b5a32449b78b0af22</span>
+        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span></div>
     </div>
@@ -713,7 +713,9 @@ todo?
             <i class="fa fa-arrows-h" aria-hidden="true"></i>
         </button>
     </div><br>
-<div class="codeblock"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></div>
+<div class="codeblock">block header (hex): <span class="aligner"></span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
+block header -> SHA256 -> <span class="aligner"></span><span id="firstSHA256Output9"></span>
+block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span></div>
 </div>
 </div>
 
