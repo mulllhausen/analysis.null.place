@@ -38,9 +38,7 @@ pre {
 .individual-digit {
     border: 1px solid #565656;
     margin: 0 0 0 -1px;
-    padding-right: 2px;
-    padding-left: 1px;
-    padding-top: 2px;
+    padding: 2px 2px 0 1px;
 }
 ul.error {
     list-style: none;

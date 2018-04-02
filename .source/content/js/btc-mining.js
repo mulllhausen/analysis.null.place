@@ -32,6 +32,9 @@ addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
 
+    // put newlines in codeblocks
+    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
+
     // form 0 - hashing demo
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
     addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
@@ -127,9 +130,6 @@ addEvent(window, 'load', function () {
         resetBlock4(true);
     });
 
-    // forms 0 - 4
-    addEvent(document.querySelector('button.wrap-nowrap'), 'click', runHashWrapClicked);
-
     // annex - form 5
     addEvent(document.getElementById('version5'), 'keyup, change', version5Changed);
     triggerEvent(document.getElementById('version5'), 'change');
@@ -176,9 +176,18 @@ function initBorderTheDigits() {
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
     var codeblock = btn.closest('.form-container').querySelector('.codeblock');
-    if (btn.getAttribute('wrapped') == 'true') codeblock.innerHTML = codeblock.
-    innerHTML.replace(/\n/g, '\n\n');
-    else codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n');
+    if (btn.getAttribute('wrapped') == 'true') {
+        codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n').
+        replace(/\n/g, '\n\n');
+        foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
+            el.innerHTML = '';
+        });
+    } else {
+        codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n');
+        foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
+            el.innerHTML = '\n';
+        });
+    }
 }
 
 // form 0
@@ -331,7 +340,7 @@ function runHash3Clicked(e, params) {
                     document.getElementById('difficulty3').disabled = false;
                     document.getElementById('inputCheckbox3').disabled = false;
                 } else if (!mineAutomatically) params.state = 'stopped';
-                var statistics = '\n\n'; // init
+                var statistics = '\n<span class="preserve-newline">\n</span>'; // init
                 for (var numChars = 1; numChars <= 64; numChars++) {
                     if (!params.attempts.hasOwnProperty(numChars)) continue;
                     var attempts = params.attempts[numChars];
@@ -368,7 +377,8 @@ function runHash3Clicked(e, params) {
                     plural('s', attempts > 1) +
                     params.attempts['luck' + numChars] + '\n';
                 }
-                document.getElementById('mining3Statistics').innerText = statistics;
+                document.getElementById('mining3Statistics').innerHTML =
+                trimRight(statistics);
 
                 if (mineAutomatically) setTimeout(function () { loop(params); }, 0);
             })(params);
@@ -1092,10 +1102,10 @@ function bits7Changed(e) {
     'extract the target length (byte 1): ' + lenHex + ' hex = ' + len +
     ' decimal\n' +
     'extract the target prefix:          ' + borderTheBytes(msbytes) + '\n' +
-    '\n' +
+    '<span class="preserve-newline">\n</span>' +
     'set the prefix to the length and\n' +
     'zero-pad to 32 bytes to get target: ' + borderTheBytes(data.target) + '\n' +
-    '\n' +
+    '<span class="preserve-newline">\n</span>' +
     'convert to bits (little endian):    ' + borderTheBytes(data.bits);
     document.querySelector('#form7 .codeblock').innerHTML = codeblockHTML;
 }

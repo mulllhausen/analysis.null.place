@@ -514,8 +514,7 @@ to the results area and to the nonce in the block header:
 <div class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
-status: <span class="aligner">    </span><span id="mineStatus4"></span>
-</div>
+status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
 </div>
 </div>
 
@@ -714,7 +713,9 @@ todo?
         </button>
     </div><br>
 <div class="codeblock">block header (hex): <span class="aligner"></span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
+
 block header -> SHA256 -> <span class="aligner"></span><span id="firstSHA256Output9"></span>
+
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span></div>
 </div>
 </div>
