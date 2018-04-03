@@ -964,7 +964,6 @@ function mine() {
     };
 }
 
-// todo - fix this https://bitcoin.stackexchange.com/questions/30467
 function bits2target(bits) {
     if (bits.length != 8) return null;
 
@@ -980,9 +979,6 @@ function bits2target(bits) {
 
     // make up to 32 bytes
     if (target.length < 64) return '0'.repeat(64 - target.length) + target;
-
-    // chop down to the last 32 bytes
-    //if (target.length > 64) return target.substr(-64);
 }
 
 // true if hex1 <= hex2
@@ -1213,10 +1209,20 @@ function renderHashes9() {
     var bitArray = sjcl.codec.hex.toBits(block9Hex);
     var sha256BitArray1 = sjcl.hash.sha256.hash(bitArray);
     var sha256BitArray2 = sjcl.hash.sha256.hash(sha256BitArray1);
-    var sha256Hash1 = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray1));
-    var sha256Hash2 = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray2));
-    document.getElementById('firstSHA256Output9').innerText = sha256Hash1;
-    document.getElementById('secondSHA256Output9').innerText = sha256Hash2;
+    var sha256Hash1 = sjcl.codec.hex.fromBits(sha256BitArray1);
+    var sha256Hash2 = sjcl.codec.hex.fromBits(sha256BitArray2);
+
+    document.getElementById('firstSHA256Output9').innerHTML =
+    borderTheBytes(sha256Hash1);
+
+    document.getElementById('firstSHA256OutputLE9').innerHTML =
+    borderTheBytes(toLittleEndian(sha256Hash1));
+
+    document.getElementById('secondSHA256Output9').innerHTML =
+    borderTheBytes(sha256Hash2);
+
+    document.getElementById('secondSHA256OutputLE9').innerHTML =
+    borderTheBytes(toLittleEndian(sha256Hash2));
 }
 
 // dragable blockchain svg

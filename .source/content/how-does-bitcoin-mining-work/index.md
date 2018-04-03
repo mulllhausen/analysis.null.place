@@ -598,9 +598,17 @@ happens.
 ## annex
 
 This section goes into all the detail skipped above. It is really just intended
-for those (such as myself) who like to leave no stone unturned.
+for those (such as myself) who like to leave no stone unturned. One thing that
+was not previously explained in detail was how the bitcoin block hashes are
+derived from the block header. The block header is stored as bytes in the
+bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
+field in the block header were shown in formats which are easy for humans to
+understand, however conversions must be done to arrive at the storage method
+used by bitcoin.
 
-- version int to version in hex
+The *version* is stored in the blockchain as 4 bytes. Try altering the
+human-readable *version* value to see how this changes the value stored in the
+blockchain:
 
 <div class="form-container annex" id="form5">
     <label for="version5" class="for-textbox">version</label><br>
@@ -617,11 +625,13 @@ for those (such as myself) who like to leave no stone unturned.
     </div>
 </div>
 
-- merkle root from transaction hash
+Note that converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
+format simply means reversing the bytes.
 
-todo?
-
-- timestamp to unixtime
+The *timestamp* is also stored in the blockchain as 4 bytes. This currently
+imposes some restrictions on the permissible date range. Try altering the
+human-readable *timestamp* value to see how this changes the value stored in the
+blockchain:
 
 <div class="form-container annex" id="form6">
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
@@ -638,7 +648,11 @@ todo?
     </div>
 </div>
 
-- difficulty to target
+The bitcoin *difficulty* (generally called *bits* when expressed in its 4-byte
+compact format) is somewhat similar to
+[floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
+*Bits* are stored in the blockchain, and the *target* is used as a threshold
+during mining:
 
 <div class="form-container annex" id="form7">
     <label for="bits7" class="for-textbox">difficulty</label><br>
@@ -655,7 +669,7 @@ todo?
     </div>
 </div>
 
-- nonce to hex
+The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
 <div class="form-container annex" id="form8">
     <label for="nonce8" class="for-textbox">nonce</label><br>
@@ -672,7 +686,9 @@ todo?
     </div>
 </div>
 
-- entire block to hex
+OK, now we can put all this together. Note how each field in the human readable
+block header is converted to bytes to be stored in the blockchain, and how these
+are concatenated together. The block header is always 80 bytes:
 
 <div class="form-container" id="form9">
 <div class="media-container"><div class="media-positioner">
@@ -716,8 +732,19 @@ todo?
 
 block header -> SHA256 -> <span class="aligner"></span><span id="firstSHA256Output9"></span>
 
-block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span></div>
+convert to little endian: <span class="aligner"></span><span id="firstSHA256OutputLE9"></span>
+
+block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
+
+convert to little endian: <span class="aligner"></span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 </div>
+
+If you are very astute you will notice that copying and pasting this block header
+into the *SHA256* hash forms from the start of this article gives a different
+result to the *SHA256* hashes here. This is because these hashes are implemented
+with the knowledge that the pre-image is a hexadecimal number, whereas the hashes
+in the first section were implemented for a pre-image expressed in bytes. If you
+were to convert the ...
 
 if nonce is not big enough - increment the timestamp by 1 second
