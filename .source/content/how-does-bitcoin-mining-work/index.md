@@ -135,7 +135,7 @@ a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting the hash*.
 
-<div class="codeblock" style="white-space:pre;">easy:       pre-image -> SHA256 -> hash
+<div class="codeblock">easy:       pre-image -> SHA256 -> hash
 
 impossible: pre-image <- SHA256 <- hash
 </div>
@@ -182,7 +182,7 @@ you will not be able to invert this hash. Seriously - give it a go:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock1HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span></div>
     </div>
@@ -226,7 +226,7 @@ the results at its maximum possible speed:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock2HashResults" class="codeblock" style="white-space:pre;">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span></div>
     </div>
@@ -317,7 +317,7 @@ solution try changing the difficulty:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock3HashResults" class="codeblock" style="white-space:pre;">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
+        <div id="codeblock3HashResults" class="codeblock">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
 <span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
 status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
     </div>
@@ -511,7 +511,7 @@ to the results area and to the nonce in the block header:
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div class="codeblock" style="white-space:pre;">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
+<div class="codeblock">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
 status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
@@ -536,7 +536,7 @@ number of digits from the left-hand-side. However there is a actually a lot of
 similarity between these two types of test. Lets forget about hexadecimal
 numbers for a moment and just look at some unrelated decimal numbers:
 
-<div class="codeblock" style="white-space:pre;">1000000000000
+<div class="codeblock">1000000000000
       1000000
 </div>
 
@@ -545,14 +545,14 @@ one is longer so clearly it must be bigger. But how about if we zero-pad them so
 that they are the same length? They are still the same numbers, but now they are
 the same length:
 
-<div class="codeblock" style="white-space:pre;">1000000000000
+<div class="codeblock">1000000000000
 0000001000000
 </div>
 
 How can we tell which is bigger? The easiest way is to begin at the
 left-hand-side of the number compare the digits:
 
-<div class="codeblock" style="white-space:pre;"><span class="individual-digit">1</span>000000000000
+<div class="codeblock"><span class="individual-digit">1</span>000000000000
 <span class="individual-digit">0</span>000001000000
 </div>
 
@@ -570,7 +570,7 @@ leading zeros:
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-    <div class="codeblock" style="white-space:pre;">0000000000000000000000000000000000000000000000000001000000000000
+    <div class="codeblock">0000000000000000000000000000000000000000000000000001000000000000
 
 0000000000000000000000000000000000000000000000000000000001000000</div>
 </div>
@@ -586,7 +586,7 @@ is higher belongs to the bigger number:
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-    <div class="codeblock" style="white-space:pre;"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
+    <div class="codeblock"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
 
 <span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000</div>
 </div>
@@ -637,7 +637,9 @@ blockchain:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock" style="white-space:pre;"></div>
+        <div class="codeblock">convert to hex: <span class="aligner">                 </span><span id="version5Hex"></span>
+convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5Bytes"></span>
+convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span></div>
     </div>
 </div>
 
@@ -660,7 +662,10 @@ blockchain:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock" style="white-space:pre;"></div>
+        <div class="codeblock">timestamp: <span class="aligner">                                   </span><span id="timestamp6GMT"></span>
+convert to unixtime (integer): <span class="aligner">               </span><span id="timestamp6Unixtime"></span>
+convert to hex (always 4 bytes - big endian): <span class="aligner"></span><span id="timestamp6Bytes"></span>
+convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span></div>
     </div>
 </div>
 
@@ -681,7 +686,12 @@ during mining:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock" style="white-space:pre;"></div>
+        <div class="codeblock">difficulty: <span class="aligner">                        </span><span id="difficulty7"></span>
+extract the target length (byte 1): <span class="aligner"></span><span id="lenHex7"></span> hex = <span id="len7"></span> decimal
+extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span>
+set the prefix to the length and
+zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="target7"></span>
+convert to bits (little endian): <span class="aligner">   </span><span id="bits7LE"></span></div>
     </div>
 </div>
 
@@ -698,7 +708,9 @@ The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock" style="white-space:pre;"></div>
+        <div class="codeblock">convert to hex: <span class="aligner">                 </span><span id="nonce8Hex"></span>
+convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8Bytes"></span>
+convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span></div>
     </div>
 </div>
 
@@ -744,11 +756,11 @@ are concatenated together. The block header is always 80 bytes:
             <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
-<div class="codeblock">block header (hex): <span class="aligner"></span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
-block header -> SHA256 -> <span class="aligner"></span><span id="firstSHA256Output9"></span>
-convert to little endian: <span class="aligner"></span><span id="firstSHA256OutputLE9"></span>
+<div class="codeblock">block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
+block header -> SHA256 -> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
+convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
-convert to little endian: <span class="aligner"></span><span id="secondSHA256OutputLE9"></span></div>
+convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 </div>
 
@@ -764,7 +776,7 @@ were to convert the ...
     <label for="inputCheckbox10">pre-image is hex</label>
     <br><br>
     <label for="inputMessage10" class="for-textbox">pre-image</label><br>
-    <input id="inputMessage10" type="text" value="0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c">
+    <textarea id="inputMessage10">0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c</textarea>
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -772,8 +784,7 @@ were to convert the ...
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner"></span><span id="sha256Output10"></span>
-
+        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
 pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
     </div>
 </div>

@@ -1060,12 +1060,12 @@ function version5Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    var codeblockHTML =
-    'convert to hex:                  ' + int2hex(data.versionInt) + '\n' +
-    'convert to 4 bytes (big endian): ' +
-    borderTheBytes(int2hex(data.versionInt, 8)) + '\n' +
-    'convert to little endian:        ' + borderTheBytes(data.version);
-    document.querySelector('#form5 .codeblock').innerHTML = codeblockHTML;
+    document.getElementById('version5Hex').innerText = int2hex(data.versionInt);
+    document.getElementById('version5Bytes').innerHTML =
+    borderTheBytes(int2hex(data.versionInt, 8));
+
+    document.getElementById('version5BytesLE').innerHTML =
+    borderTheBytes(data.version);
 }
 
 // form 6 (understanding 'timestamp')
@@ -1081,17 +1081,13 @@ function timestamp6Changed(e) {
     // for visually checking bad inputs
     var dateGMT = (new Date((data.timestampUnixtime * 1000))).toGMTString();
 
-    var codeblockHTML =
-    'timestamp:                                    ' + dateGMT + '\n' +
-    'convert to unixtime (integer):                ' +
-    data.timestampUnixtime + '\n' +
+    document.getElementById('timestamp6GMT').innerText = dateGMT;
+    document.getElementById('timestamp6Unixtime').innerText = data.timestampUnixtime;
+    document.getElementById('timestamp6Bytes').innerHTML =
+    borderTheBytes(int2hex(data.timestampUnixtime, 8));
 
-    'convert to hex (always 4 bytes - big endian): ' +
-    borderTheBytes(int2hex(data.timestampUnixtime, 8)) + '\n' +
-
-    'convert to little endian:                     ' +
+    document.getElementById('timestamp6BytesLE').innerHTML =
     borderTheBytes(data.timestamp);
-    document.querySelector('#form6 .codeblock').innerHTML = codeblockHTML;
 }
 
 // form 7 (understanding 'difficulty')
@@ -1108,17 +1104,13 @@ function bits7Changed(e) {
     var lenHex = difficulty.substring(0, 2);
     var len = hex2int(lenHex); // just byte 1
     var msbytes = difficulty.substring(2);
-    var codeblockHTML =
-    'difficulty:                         ' + borderTheBytes(difficulty) + '\n' +
-    'extract the target length (byte 1): ' + lenHex + ' hex = ' + len +
-    ' decimal\n' +
-    'extract the target prefix:          ' + borderTheBytes(msbytes) + '\n' +
-    '<span class="preserve-newline">\n</span>' +
-    'set the prefix to the length and\n' +
-    'zero-pad to 32 bytes to get target: ' + borderTheBytes(data.target) + '\n' +
-    '<span class="preserve-newline">\n</span>' +
-    'convert to bits (little endian):    ' + borderTheBytes(data.bits);
-    document.querySelector('#form7 .codeblock').innerHTML = codeblockHTML;
+
+    document.getElementById('difficulty7').innerHTML = borderTheBytes(difficulty);
+    document.getElementById('lenHex7').innerText = lenHex;
+    document.getElementById('len7').innerText = len;
+    document.getElementById('msBytes7').innerHTML = borderTheBytes(msbytes);
+    document.getElementById('target7').innerHTML = borderTheBytes(data.target);
+    document.getElementById('bits7LE').innerHTML = borderTheBytes(data.bits)
 }
 
 // form 8 (understanding 'nonce')
@@ -1131,12 +1123,10 @@ function nonce8Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    var codeblockHTML =
-    'convert to hex:                  ' + int2hex(data.nonceInt) + '\n' +
-    'convert to 4 bytes (big endian): ' +
-    borderTheBytes(int2hex(data.nonceInt, 8)) + '\n' +
-    'convert to little endian:        ' + borderTheBytes(data.nonce);
-    document.querySelector('#form8 .codeblock').innerHTML = codeblockHTML;
+    document.getElementById('nonce8Hex').innerText = int2hex(data.nonceInt);
+    document.getElementById('nonce8Bytes').innerHTML =
+    borderTheBytes(int2hex(data.nonceInt, 8));
+    document.getElementById('nonce8BytesLE').innerHTML = borderTheBytes(data.nonce);
 }
 
 // form 9 - block header bytes from header fields

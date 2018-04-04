@@ -55,7 +55,7 @@ label {
 label.for-textbox:after, label.for-select:after {
     content: ": "
 }
-input[type="text"], select {/*made to look like it is a small hole in the page*/
+textarea, input[type="text"], select {/*made to look like it is a small hole in the page*/
     box-sizing: border-box;/*keep the input from overflowing its parent*/
     margin: 5px 0 5px 0;
     font-size: 14px;
@@ -83,7 +83,7 @@ input[type="text"], select {/*made to look like it is a small hole in the page*/
 select {
     padding: 6px 10px;/*keep to the same height as text input*/
 }
-input[type="text"]:focus, select:focus {/*appears deeper when in focus*/
+textarea:focus, input[type="text"]:focus, select:focus {/*appears deeper when in focus*/
     outline: none;
     box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
@@ -523,7 +523,7 @@ blockquote {
     position: relative;
     font-family: monospace;
     font-size: 14px;
-    white-space: pre-wrap;/*initial value*/
+    white-space: pre;/*initial value*/
     word-break: break-word;
     word-wrap: break-word;
     overflow: auto;

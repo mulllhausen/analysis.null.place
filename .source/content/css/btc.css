@@ -49,11 +49,14 @@ ul.error li {
 #blockchainSVG {
     width: 100%;
 }
-#form10 input[type="text"] {
+#form10 textarea {
     width: 100%;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     #form4 input, #form9 input {
         max-width: 75vw;
+    }
+    #form10 textarea {
+        height: 8em;
     }
 }
