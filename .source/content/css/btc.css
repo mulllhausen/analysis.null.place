@@ -41,6 +41,7 @@ ul.error {
     list-style: none;
     margin-left: 0;
     margin-bottom: 20px;
+    display: inline;
 }
 ul.error li {
     color: red;

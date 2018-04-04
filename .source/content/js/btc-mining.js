@@ -203,6 +203,15 @@ function runHashWrapClicked(e) {
             el.innerHTML = '\n';
         });
     }
+    // always one newline except when wrapped on phone
+    foreach(codeblock.querySelectorAll('.always-one-newline'), function (i, el) {
+        if (btn.getAttribute('wrapped') == 'true' && deviceType == 'phone') {
+            el.style.display = 'none';
+        } else {
+            el.innerHTML = '\n';
+            el.style.display = 'inline';
+        }
+    });
 }
 
 // form 0

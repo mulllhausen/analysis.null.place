@@ -571,7 +571,6 @@ leading zeros:
         </button>
     </div><br>
     <div class="codeblock">0000000000000000000000000000000000000000000000000001000000000000
-
 0000000000000000000000000000000000000000000000000000000001000000</div>
 </div>
 
@@ -587,7 +586,6 @@ is higher belongs to the bigger number:
         </button>
     </div><br>
     <div class="codeblock"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
-
 <span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000</div>
 </div>
 
@@ -688,9 +686,11 @@ during mining:
         </div><br>
         <div class="codeblock">difficulty: <span class="aligner">                        </span><span id="difficulty7"></span>
 extract the target length (byte 1): <span class="aligner"></span><span id="lenHex7"></span> hex = <span id="len7"></span> decimal
-extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span>
-set the prefix to the length and
-zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="target7"></span>
+extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span><span class="preserve-newline">
+</span>
+set the prefix to the length and <span class="always-one-newline">
+</span>zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="target7"></span><span class="preserve-newline">
+</span>
 convert to bits (little endian): <span class="aligner">   </span><span id="bits7LE"></span></div>
     </div>
 </div>
