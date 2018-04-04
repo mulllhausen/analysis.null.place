@@ -34,11 +34,11 @@ a few times and then try typing different things in the *pre-image* field:
         <span class="line-spacer hidden-phone"></span>
         <span id="hash0Duration"></span>
     </div>
-    <div class="codeblock-container" style="display:none;">
+    <div class="codeblock-container auto-wrap-on-mobile" style="display:none;">
         <div class="button-background">
-            <button class="wrap-nowrap" wrapped="true">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
         <div id="hash0Results" class="codeblock"></div>
@@ -175,7 +175,7 @@ you will not be able to invert this hash. Seriously - give it a go:
             Hint: click the checkbox to have the pre-image change automatically
         </span>
     </div>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -219,7 +219,7 @@ the results at its maximum possible speed:
         </span>
     </div>
     <br><br>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -310,7 +310,7 @@ solution try changing the difficulty:
         </span>
     </div>
     <br><br>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -504,7 +504,7 @@ to the results area and to the nonce in the block header:
 </div></div>
 <ul class="error"></ul>
 <button id="btnRunHash4">Mine manually with SHA256</button>
-<div class="codeblock-container">
+<div class="codeblock-container auto-wrap-on-mobile">
     <div class="button-background">
         <button class="wrap-nowrap" wrapped="false">
             <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -563,16 +563,32 @@ OK, now what if we pad them both to 64 digits? Again they are exactly the same
 numbers as before, and they are the same length, but now they have lots of
 leading zeros:
 
-<div class="codeblock" style="white-space:pre;">0000000000000000000000000000000000000000000000000001000000000000
-0000000000000000000000000000000000000000000000000000000001000000
+<div class="codeblock-container auto-wrap-on-mobile">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+        </button>
+    </div><br>
+    <div class="codeblock" style="white-space:pre;">0000000000000000000000000000000000000000000000000001000000000000
+
+0000000000000000000000000000000000000000000000000000000001000000</div>
 </div>
 
 The way to tell which is larger is again to begin at the left-hand-side and keep
 moving to the right until we find a digit that is different. Then the digit that
 is higher belongs to the bigger number:
 
-<div class="codeblock" style="white-space:pre;"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
-<span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000
+<div class="codeblock-container auto-wrap-on-mobile">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+        </button>
+    </div><br>
+    <div class="codeblock" style="white-space:pre;"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
+
+<span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000</div>
 </div>
 
 That's the technique for decimal numbers, and it is exactly the same for
@@ -614,7 +630,7 @@ blockchain:
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -637,7 +653,7 @@ blockchain:
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
     <ul class="error"></ul>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -658,7 +674,7 @@ during mining:
     <label for="bits7" class="for-textbox">difficulty</label><br>
     <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
     <ul class="error"></ul>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -675,7 +691,7 @@ The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="0">
     <ul class="error"></ul>
-    <div class="codeblock-container">
+    <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
                 <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
@@ -715,27 +731,23 @@ are concatenated together. The block header is always 80 bytes:
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce9" type="text" class="data-value" size="10" value="0">
+            <input id="nonce9" type="text" class="data-value" size="10" value="2083236893">
         </td></tr>
     </table>
     <div class="media-caption">the bitcoin block header</div>
 </div></div>
 <ul  class="error"></ul>
-<div class="codeblock-container">
+<div class="codeblock-container auto-wrap-on-mobile">
     <div class="button-background">
-        <button class="wrap-nowrap" wrapped="true">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true" style="display:none;"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true"></i>
+        <button class="wrap-nowrap" wrapped="false">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
         </button>
     </div><br>
 <div class="codeblock">block header (hex): <span class="aligner"></span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
-
 block header -> SHA256 -> <span class="aligner"></span><span id="firstSHA256Output9"></span>
-
 convert to little endian: <span class="aligner"></span><span id="firstSHA256OutputLE9"></span>
-
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
-
 convert to little endian: <span class="aligner"></span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 </div>
@@ -746,5 +758,24 @@ result to the *SHA256* hashes here. This is because these hashes are implemented
 with the knowledge that the pre-image is a hexadecimal number, whereas the hashes
 in the first section were implemented for a pre-image expressed in bytes. If you
 were to convert the ...
+
+<div class="form-container" id="form10">
+    <input type="checkbox" id="inputCheckbox10" checked>
+    <label for="inputCheckbox10">pre-image is hex</label>
+    <br><br>
+    <label for="inputMessage10" class="for-textbox">pre-image</label><br>
+    <input id="inputMessage10" type="text" value="0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c">
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner"></span><span id="sha256Output10"></span>
+
+pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
+    </div>
+</div>
 
 if nonce is not big enough - increment the timestamp by 1 second

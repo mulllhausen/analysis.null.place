@@ -164,6 +164,21 @@ addEvent(window, 'load', function () {
 
     addEvent(document.getElementById('nonce9'), 'keyup, change', nonce9Changed);
     triggerEvent(document.getElementById('nonce9'), 'change');
+
+    // form 10 - hashing hex and ascii
+    addEvent(document.getElementById('inputMessage10'), 'keyup, change', runHash10Changed);
+    triggerEvent(document.getElementById('inputMessage10'), 'change');
+    addEvent(document.getElementById('inputCheckbox10'), 'click', runHash10Changed);
+
+    switch (deviceType) {
+        case 'phone':
+            toggleAllCodeblockWrapsMobile();
+            break;
+        case 'tablet':
+            break;
+        case 'pc':
+            break;
+    }
 });
 
 function initBorderTheDigits() {
@@ -175,7 +190,7 @@ function initBorderTheDigits() {
 
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
-    var codeblock = btn.closest('.form-container').querySelector('.codeblock');
+    var codeblock = btn.closest('.codeblock-container').querySelector('.codeblock');
     if (btn.getAttribute('wrapped') == 'true') {
         codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n').
         replace(/\n/g, '\n\n');
@@ -1223,6 +1238,21 @@ function renderHashes9() {
 
     document.getElementById('secondSHA256OutputLE9').innerHTML =
     borderTheBytes(toLittleEndian(sha256Hash2));
+}
+
+function runHash10Changed() {
+    var isHexCheckbox = document.getElementById('inputCheckbox10');
+    var preImage = document.getElementById('inputMessage10').value;
+    if (isHexCheckbox.checked && isHex(preImage)) {
+        preImage = sjcl.codec.hex.toBits(preImage);
+    } else {
+        isHexCheckbox.checked = false;
+    }
+    var sha256Hash = sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(preImage));
+    document.getElementById('sha256Output10').innerHTML = borderTheBytes(sha256Hash);
+    document.getElementById('sha256OutputLE10').innerHTML = borderTheBytes(
+        toLittleEndian(sha256Hash)
+    );
 }
 
 // dragable blockchain svg

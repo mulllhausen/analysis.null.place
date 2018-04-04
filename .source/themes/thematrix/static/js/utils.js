@@ -1,5 +1,9 @@
 // common functions used on many pages
 
+var deviceType = window.getComputedStyle(
+    document.getElementsByTagName('body')[0], ':before'
+).getPropertyValue('content').replace(/"/g, '');
+
 function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
@@ -50,8 +54,8 @@ function foreach(els, callback) {
 
 function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
-    var typesArr = types.split(',');
     var elements = (isNodeList(element) ? element : [element]);
+    var typesArr = types.split(',');
     foreach (elements, function (elI, el) {
         foreach (typesArr, function (typeI, type) {
             type = type.replace(/ /g, '');
@@ -67,12 +71,16 @@ function addEvent(element, types, callback) {
 }
 
 function triggerEvent(element, type) {
-    if ('createEvent' in document) {
-        var evt = document.createEvent('HTMLEvents');
-        evt.initEvent(type, false, true);
-        element.dispatchEvent(evt);
-    }
-    else element.fireEvent('on' + type);
+    if (element == null || typeof(element) == 'undefined') return;
+    var elements = (isNodeList(element) ? element : [element]);
+    foreach (elements, function (elI, el) {
+        if ('createEvent' in document) {
+            var evt = document.createEvent('HTMLEvents');
+            evt.initEvent(type, false, true);
+            el.dispatchEvent(evt);
+        }
+        else el.fireEvent('on' + type);
+    });
 }
 
 function popup(heading, detail) {
@@ -261,6 +269,31 @@ function trimInputValue(inputEl) {
     return newValue;
 }
 
+function toggleCodeblockWrap(e) {
+    var btn = e.currentTarget;
+    var codeblock = btn.parentNode.parentNode.querySelector('.codeblock');
+    if (btn.getAttribute('wrapped') == 'true') {
+        codeblock.style.whiteSpace = 'pre';
+        btn.querySelector('i.fa-level-down').style.display = 'inline-block';
+        btn.querySelector('i.fa-arrows-h').style.display = 'none';
+        alignText(codeblock);
+        btn.setAttribute('wrapped', 'false');
+    } else {
+        codeblock.style.whiteSpace = 'pre-wrap';
+        btn.querySelector('i.fa-level-down').style.display = 'none';
+        btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
+        unalignText(codeblock);
+        btn.setAttribute('wrapped', 'true');
+    }
+}
+
+function toggleAllCodeblockWrapsMobile() {
+    triggerEvent(
+        document.querySelectorAll('.auto-wrap-on-mobile button.wrap-nowrap'),
+        'click'
+    );
+}
+
 // events for all pages
 
 // nav-menu open/close (mobile only)
@@ -283,20 +316,8 @@ addEvent(document.getElementsByTagName('button'), 'click', function(e) {
 });
 
 // button to toggle between word-wrap and no-wrap on a codeblock
-addEvent(document.querySelectorAll('.codeblock-container button.wrap-nowrap'), 'click', function(e) {
-    var btn = e.currentTarget;
-    var codeblock = btn.parentNode.parentNode.querySelector('.codeblock');
-    if (btn.getAttribute('wrapped') == 'true') {
-        codeblock.style.whiteSpace = 'pre';
-        btn.querySelector('i.fa-level-down').style.display = 'inline-block';
-        btn.querySelector('i.fa-arrows-h').style.display = 'none';
-        alignText(codeblock);
-        btn.setAttribute('wrapped', 'false');
-    } else {
-        codeblock.style.whiteSpace = 'pre-wrap';
-        btn.querySelector('i.fa-level-down').style.display = 'none';
-        btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
-        unalignText(codeblock);
-        btn.setAttribute('wrapped', 'true');
-    }
-});
+addEvent(
+    document.querySelectorAll('.codeblock-container button.wrap-nowrap'),
+    'click',
+    toggleCodeblockWrap
+);
