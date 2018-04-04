@@ -423,7 +423,7 @@ function runHash1Or2Or3Clicked(params) {
 
     if (params.firstTime) {
         document.getElementById('info' + params.formNum).style.display =
-        'inline';
+        'inline-block';
         document.getElementById('showResults' + params.formNum).style.display =
         'inline';
         params.firstTime = false;

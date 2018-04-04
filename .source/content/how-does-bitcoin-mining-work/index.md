@@ -21,17 +21,15 @@ cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
 a few times and then try typing different things in the *pre-image* field:
 <div class="form-container" id="form0">
+    <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
-        <label for="inputMessage0" class="for-textbox">pre-image</label><br>
         <input id="inputMessage0" type="text" value="hello world!">
     </div>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
         <button id="btnRunHash0">SHA256</button>
     </div>
+    <br>
     <div class="left">
-        <span class="line-spacer"></span>
-        <span class="line-spacer hidden-phone"></span>
         <span id="hash0Duration"></span>
     </div>
     <div class="codeblock-container auto-wrap-on-mobile" style="display:none;">
@@ -153,26 +151,17 @@ you will not be able to invert this hash. Seriously - give it a go:
     <input type="checkbox" id="inputCheckbox1" checked>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
+    <label for="inputMessage1" class="for-textbox">pre-image</label><br>
     <div class="left">
-        <label for="inputMessage1" class="for-textbox">pre-image</label><br>
         <input id="inputMessage1" type="text" value="a">
     </div>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
         <button id="btnRunHash1">SHA256</button>
     </div>
+    <br>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
-        <span class="line-spacer hidden-phone"></span>
         <span id="info1" style="display:none;">
             (Average hash rate: <span></span> hashes per second)
-        </span>
-    </div>
-    <div class="left">
-        <span class="line-spacer hidden-phone"></span>
-        <span class="line-spacer hidden-phone"></span>
-        <span id="info1" style="display:none;">
-            Hint: click the checkbox to have the pre-image change automatically
         </span>
     </div>
     <div class="codeblock-container auto-wrap-on-mobile">
@@ -203,17 +192,15 @@ the results at its maximum possible speed:
     <input type="checkbox" id="inputCheckbox2" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
+    <label for="inputMessage2" class="for-textbox">pre-image</label><br>
     <div class="left">
-        <label for="inputMessage2" class="for-textbox">pre-image</label><br>
         <input id="inputMessage2" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
         <button id="btnRunHash2">Run SHA256 Automatically</button>
     </div>
+    <br>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
-        <span class="line-spacer hidden-phone"></span>
         <span id="info2" style="display:none;">
             (Average hash rate: <span></span> hashes per second)
         </span>
@@ -299,15 +286,11 @@ solution try changing the difficulty:
         <input id="inputMessage3" type="text" value="a">
     </div>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
         <button id="btnRunHash3">Mine manually with SHA256</button>
     </div>
+    <br>
     <div class="left">
-        <span class="line-spacer hidden-phone"></span>
-        <span class="line-spacer hidden-phone"></span>
-        <span id="info3" style="display:none;">
-            (Average hash rate: <span></span> hashes per second)
-        </span>
+        <span id="info3" style="display:none;">(Average hash rate: <span></span> hashes per second)</span>
     </div>
     <br><br>
     <div class="codeblock-container auto-wrap-on-mobile">

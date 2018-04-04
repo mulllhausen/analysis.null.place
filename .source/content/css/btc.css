@@ -1,3 +1,19 @@
+#btnRunHash3 {
+    margin-top: 21px;
+}
+#info3 {
+    margin-top: 28px;
+}
+@media (max-width: 486px) {/*when x <= 486px*/
+    #btnRunHash3 {
+        margin-top: 0;
+    }
+}
+@media (max-width: 734px) {/*when x <= 734px*/
+    #info3 {
+        margin-top: 0;
+    }
+}
 pre {
     margin: 10px;
 }
@@ -52,6 +68,7 @@ ul.error li {
 }
 #form10 textarea {
     width: 100%;
+    resize: vertical;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     #form4 input, #form9 input {
