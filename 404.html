@@ -12,7 +12,7 @@
         <meta charset="utf-8"/>
         <title>error 404</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="description" content="Blog by Peter Miller focusing mainly on cryptocurrencies, software development and economics"/>
+        <meta name="description" content="Blog by Peter Miller"/>
         <meta name="author" content="Peter Miller"/>
 
         <meta property="og:site_name" content="analysis"/>
@@ -22,11 +22,11 @@
         <meta property="og:image" content="http://null.place/theme/img/shattered-glass-matrix.png"/>
         <meta property="og:image:width" content="266"/>
         <meta property="og:image:height" content="266"/>
-        <meta property="og:description" content="Blog by Peter Miller focusing mainly on cryptocurrencies, software development and economics"/>
+        <meta property="og:description" content="Blog by Peter Miller"/>
         <meta property="fb:app_id" content="2040066019560327"/>
 
         <meta itemprop="name" content="analysis"/>
-        <meta itemprop="description" content="Blog by Peter Miller focusing mainly on cryptocurrencies, software development and economics"/>
+        <meta itemprop="description" content="Blog by Peter Miller"/>
         <meta itemprop="image" content="http://null.place/theme/img/shattered-glass-matrix.png"/>
 
 
@@ -53,12 +53,17 @@
     </head>
 
     <body>
+        <div id="fullpagePopupNotification" class="popup-fullpage" style="display:none;">
+            <span class="popup-centerer">
+                <h1><span id="fullpagePopupHeading"></span></h1><br>
+                <span id="fullpagePopupDetail"></span>
+            </span>
+        </div>
         <div class="top-bar hidden-pc">
             <a class="brand" href="http://null.place/">analysis</a>
 <div class="logo-container">
     <div class="logo-positioner">
         <div class="logo-cropper">
-            <img src="http://null.place/theme/img/matrix-background.png" id="logo_background_fallback">
             <canvas class="matrix-text-green"></canvas>
             <canvas class="matrix-text-white"></canvas>
             <img src="http://null.place/theme/img/shattered-glass-2b.png" id="logo_img" alt="website logo">
@@ -105,7 +110,6 @@
 <div class="logo-container">
     <div class="logo-positioner">
         <div class="logo-cropper">
-            <img src="http://null.place/theme/img/matrix-background.png" id="logo_background_fallback">
             <canvas class="matrix-text-green"></canvas>
             <canvas class="matrix-text-white"></canvas>
             <img src="http://null.place/theme/img/shattered-glass-black.png" id="logo_img" alt="website logo">
@@ -123,12 +127,13 @@
 
         <footer class="invisible">
             <address id="about">
-                Blog by Peter Miller focusing mainly on cryptocurrencies, software development and economics.
+                Blog by Peter Miller.
                 <br>
-                Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-                <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-                and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>.
-                Hosted on <a href="https://github.com/mulllhausen/mulllhausen.github.io">github <i class="fa fa-github"></i></a>.
+                Created with <span class="keep-together"><a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                <span class="keep-together"><a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                <span class="keep-together"><a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                and <span class="keep-together"><a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a></span>.
+                Hosted on <span class="keep-together"><a href="https://github.com/mulllhausen/mulllhausen.github.io">github <i class="fa fa-github"></i></a></span>.
                 <br>
                 <a href="http://null.place/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp;&nbsp;&nbsp;
                 <a href="http://null.place/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
