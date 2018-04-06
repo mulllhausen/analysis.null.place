@@ -1,4 +1,5 @@
 {% if GOOGLE_ANALYTICS_TRACKING_ID %}
+{% if (not article) or (article.status != "draft") %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_TRACKING_ID }}"></script>
     <script>
@@ -7,4 +8,5 @@
         gtag('js', new Date());
         gtag('config', '{{ GOOGLE_ANALYTICS_TRACKING_ID }}');
     </script>
+{% endif %}
 {% endif %}
