@@ -5,8 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
 SITEURL = ''
-BLOG_DESCRIPTION = 'Blog by ' + AUTHOR + ' focusing mainly on cryptocurrencies,' \
-' software development and economics'
+BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 
 PATH = 'content'
 
@@ -19,7 +18,7 @@ DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
 THEME = "./themes/thematrix"
 
-# Feed generation is usually not desired when developing
+# feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
@@ -60,4 +59,6 @@ DELETE_OUTPUT_DIRECTORY = False
 
 GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 
-STATIC_PATHS = ['images', 'scripts', 'css']
+STATIC_PATHS = ['img', 'js', 'css', 'json']
+
+LOAD_CONTENT_CACHE = False

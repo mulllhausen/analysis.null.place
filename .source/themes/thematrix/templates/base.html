@@ -66,6 +66,12 @@
     </head>
 
     <body>
+        <div id="fullpagePopupNotification" class="popup-fullpage" style="display:none;">
+            <span class="popup-centerer">
+                <h1><span id="fullpagePopupHeading"></span></h1><br>
+                <span id="fullpagePopupDetail"></span>
+            </span>
+        </div>
         <div class="top-bar hidden-pc">
             <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
             {% with position="top" %}
@@ -99,10 +105,11 @@
             <address id="about">
                 {{ BLOG_DESCRIPTION }}.
                 <br>
-                Created with <a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-                <a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a>,
-                and <a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a>.
-                Hosted on <a href="{{ GITHUB_URL }}">github <i class="fa fa-github"></i></a>.
+                Created with <span class="keep-together"><a href="https://getpelican.com/">Pelican <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                <span class="keep-together"><a href="https://www.python.org/">python <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                <span class="keep-together"><a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript <i class="fa fa-external-link" aria-hidden="true"></i></a></span>,
+                and <span class="keep-together"><a href="http://fontawesome.io/">Font Awesome <i class="fa fa-external-link" aria-hidden="true"></i></a></span>.
+                Hosted on <span class="keep-together"><a href="{{ GITHUB_URL }}">github <i class="fa fa-github"></i></a></span>.
                 <br>
                 <a href="{{ SITEURL }}/feeds/all.rss.xml"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a>&nbsp;&nbsp;&nbsp;
                 <a href="{{ SITEURL }}/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
@@ -136,7 +143,7 @@
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
                 {% for script in scripts %}
-        <script src="{{ SITEURL }}/scripts/{{ script }}"></script>
+        <script src="{{ SITEURL }}/js/{{ script }}"></script>
                 {% endfor %}
             {% endif %}
         {% endif %}

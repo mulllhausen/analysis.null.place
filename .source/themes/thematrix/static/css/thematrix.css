@@ -12,7 +12,7 @@ html, body{
     max-height: 100%;
 
     font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -23,13 +23,9 @@ html, body{
     background-color: #000000;/*black*/
     overflow: auto;/*expand to height of children*/
 }
-p {
-    /*white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: -o-pre-wrap;*/
+p, li {
     word-wrap: break-word;
-    line-height: 19px;
+    line-height: 26px;
 }
 a, a:visited, a:active, a:hover {
     color: #7db904;/*green*/
@@ -53,12 +49,14 @@ ul, ol {
     padding: 0;
 }
 label {
+    font-size: 14px;
     font-style: italic;
 }
-label:after {
+label.for-textbox:after, label.for-select:after {
     content: ": "
 }
-input[type="text"] {/*made to look like it is a small hole in the page*/
+textarea, input[type="text"], select {/*made to look like it is a small hole in the page*/
+    box-sizing: border-box;/*keep the input from overflowing its parent*/
     margin: 5px 0 5px 0;
     font-size: 14px;
     color: #bbbbbb;/*off-white*/
@@ -79,17 +77,18 @@ input[type="text"] {/*made to look like it is a small hole in the page*/
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222222', endColorstr='#333333', GradientType=0);
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
     -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
-    -moz-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1),0 -1px 0 rgba(255, 255, 255, 0.075);
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
+    -moz-box-shadow:    inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
+    box-shadow:         inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
 }
-input[type="text"]:focus {/*appears deeper when in focus*/
+select {
+    padding: 6px 10px;/*keep to the same height as text input*/
+}
+textarea:focus, input[type="text"]:focus, select:focus {/*appears deeper when in focus*/
     outline: none;
     box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
-@media (max-width: 800px) {/*when x <= 800px*/
-    input {
-        max-width: 14em;
-    }
+select option:disabled {
+    cursor: not-allowed;
 }
 button, button:visited, button:hover {/*made to look like a small bump in the page*/
     font-size: 14px;
@@ -113,18 +112,21 @@ button, button:visited, button:hover {/*made to look like a small bump in the pa
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),0 1px 0 rgba(255, 255, 255, 0.075);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
+    -moz-box-shadow:    inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
+    box-shadow:         inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
 }
-button:active, button:focus {/*appears flat while clicked*/
+button:active, button:focus, button:disabled {/*appears flat while clicked*/
     box-shadow: none;
     background-image: none;
     background-color: #222222;
     outline: none;
 }
+button:disabled {
+    cursor: not-allowed;
+}
 footer {
     position: relative;/*changed by js in autofooter.js*/
-    padding: 30px;
+    padding: 20px;
     clear: both;
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
@@ -136,11 +138,11 @@ abbr[title] {
     font-size: 12px;
 }
 code, pre {
-    font-family: Menlo,Monaco,"Courier New",monospace;
-    font-size: 12px;
+    font-family: monospace;
+    font-size: 13px;
     border-radius: 4px;
     padding: 2px 4px 1px 4px;
-    color: #ae81ff;/*purple*/
+    color: #7db904;/*green*/
     background-color: #2b2b2b;/*dark-grey*/
     border: 1px solid #6a6a6a;/*light-grey*/
     white-space: pre-wrap;
@@ -148,10 +150,14 @@ code, pre {
     white-space: -pre-wrap;
     white-space: -o-pre-wrap;
     word-wrap: break-word;
+    text-align: left;
 }
 pre {
     padding: 10px;
     display: inline-block;
+}
+code {
+    word-break: break-all;
 }
 /* end raw element styles */
 
@@ -164,18 +170,25 @@ pre {
 .col-1 {
     margin-right: 200px;
     overflow-x: hidden;
-    padding: 30px;
+    padding: 20px;
 }
 .col-2 {
     float: right;
     display: inline-block;
-    padding: 30px 30px 0 0;
+    padding: 30px 30px 0 20px;
+}
+
+body:before {
+    display: none;
 }
 
 /* 1 column layout is for phones, small portrait tablets, etc */
 @media (max-width: 800px) {/*when x <= 800px*/
+    body:before {
+        content: "phone";/*never seen, but used by javascript*/
+    }
     .hidden-phone {
-        display: none;
+        display: none !important;
     }
     .col-2 {
         display: none;
@@ -190,14 +203,20 @@ pre {
     position: relative;
 }
 @media (min-width: 801px) {/*when x >= 801px*/
+    body:before {
+        content: "tablet";/*never seen, but used by javascript*/
+    }
     .hidden-pc {
-        display: none;
+        display: none !important;
     }
     .col-2 {
         width: 200px;
     }
 }
 @media (min-width: 1201px) {/*when x >= 1201px*/
+    body:before {
+        content: "pc";/*never seen, but used by javascript*/
+    }
     .col-2 {
         width: 300px;
     }
@@ -361,6 +380,10 @@ img#logo_img {
     margin-bottom: 20px;
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
+    line-height: 24px;
+}
+.info-box .fa-hashtag {
+    font-size: 90%;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
@@ -372,6 +395,7 @@ address#about {
     font-style: normal;
     padding-top: 15px;
     border-top: 2px solid #2b2b2b;/*dark-grey*/
+    line-height: 20px;
 }
 
 /* begin list styles */
@@ -393,8 +417,28 @@ ul.taglist {
 ul.taglist li {
     margin-bottom: 5px;
 }
+.entry-content ol, .entry-content ul {
+    list-style-position: inside;
+}
+.entry-content ul {
+    list-style-type: none;
+}
+.entry-content ul li:before {
+    content: "\2011 \a0\a0";/*dash space space in utf8*/
+}
 /* end list styles */
 
+.left {
+    font-size: 14px;
+    float: left;
+    margin: 0 20px 10px 0;
+}
+.left .line-spacer {
+    display: block;
+}
+.left .line-spacer:after {
+    content: "\00a0";/*nbsp in utf8*/
+}
 .keep-together {
     display: inline-block;
 }
@@ -408,10 +452,14 @@ ul.taglist li {
     display: table;
     margin: 0 auto;
 }
-.entry-content .media-container > .media-positioner > .media-caption {
+.media-caption {
     width: 100%;
+    font-size: 15px;
     margin-top: 5px;
     text-align: center;
+}
+.form-container + .media-caption {
+    margin-top: -10px;
 }
 .popup-fullpage {
     position: fixed;
@@ -435,12 +483,24 @@ ul.taglist li {
     border-radius: 4px;
     padding: 10px;
     margin: 20px 0 20px 0;
+    overflow: hidden;/*border outside floats*/
+}
+.horizontal-center {
+    text-align: center;
+}
+
+blockquote {
+    background-color: #101010;/*very-dark-grey*/
+    display: inline-block;
+    margin: 0;
+    padding: 0 30px 0 30px;
 }
 
 /* begin codeblock */
 .codeblock-container {
     display: block;
     position: relative;
+    clear: both;
 }
 .codeblock-container .button-background {
     position: absolute;
@@ -456,15 +516,19 @@ ul.taglist li {
 .codeblock {/*note: if you want <pre> within a .codeblock then you have to do it yourself*/
     padding: 10px;
     display: block;
-    margin: 10px 0 0 0;
-    line-height: 19px;
+    margin: 8px 0 0 0;
+    line-height: 21px;
     background-color: #2b2b2b;/*dark-grey*/
-    border-radius: 4px 0 4px 4px;
+    border-radius: 4px;
     position: relative;
     font-family: monospace;
-    white-space: pre-wrap;/*initial value*/
-    word-break: break-all;
+    font-size: 14px;
+    white-space: pre;/*initial value*/
+    word-break: break-word;
     word-wrap: break-word;
     overflow: auto;
+}
+.button-background+br+.codeblock {
+    border-top-right-radius: 0;
 }
 /* end codeblock */

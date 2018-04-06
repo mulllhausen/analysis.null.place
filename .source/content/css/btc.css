@@ -1,0 +1,80 @@
+#btnRunHash3 {
+    margin-top: 21px;
+}
+#info3 {
+    margin-top: 28px;
+}
+@media (max-width: 486px) {/*when x <= 486px*/
+    #btnRunHash3 {
+        margin-top: 0;
+    }
+}
+@media (max-width: 734px) {/*when x <= 734px*/
+    #info3 {
+        margin-top: 0;
+    }
+}
+pre {
+    margin: 10px;
+}
+.btc-transaction-full {
+    font-size: 15px;
+    line-height: 17px;
+    border: 1px solid #6a6a6a;/*light-grey*/
+    word-break: break-all;
+    padding: 10px;
+    font-family: monospace;
+    background-color: #2b2b2b;/*dark-grey*/
+}
+.btc-block-mini, .btc-header-definition {
+    border-collapse: collapse;
+    font-size: 15px;
+}
+.btc-transaction-mini, .btc-block-header-mini, .btc-header-definition .btc-header-field {
+    border: 1px solid #6a6a6a;/*light-grey*/
+    padding: 5px;
+    border-collapse: collapse;
+    background-color: #2b2b2b;/*dark-grey*/
+    text-align: center;
+    min-width: 100px;
+}
+.btc-header-definition input {
+    text-align: center;
+    font-family: monospace;
+}
+.annex input {
+    font-family: monospace;
+}
+#form9 .codeblock .outputField {
+    margin-right: 8px;
+}
+.individual-digit {
+    border: 1px solid #565656;
+    margin: 0 0 0 -1px;
+    padding: 2px 2px 0 1px;
+}
+ul.error {
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+    display: inline;
+}
+ul.error li {
+    color: red;
+    margin-bottom: 5px;
+}
+#blockchainSVG {
+    width: 100%;
+}
+#form10 textarea {
+    width: 100%;
+    resize: vertical;
+}
+@media (max-width: 800px) {/*when x <= 800px*/
+    #form4 input, #form9 input {
+        max-width: 75vw;
+    }
+    #form10 textarea {
+        height: 8em;
+    }
+}

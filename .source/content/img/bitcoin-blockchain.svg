@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+
+<svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="300"
+class="global">
+<style type="text/css"><![CDATA[
+    .global {
+        fill: none;
+        font-family: arial, sans-serif;
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* IE/Edge */
+        user-select: none;           /* non-prefixed version, currently*/
+        pointer-events: all;
+        cursor: move;
+    }
+    .btc-header-field rect, .btc-tx rect {
+        fill: #2b2b2b;/*dark-grey*/
+        stroke: #6a6a6a;/*light-grey*/
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
+    text {
+        text-anchor: middle;/*horizontal*/
+        fill: #bbbbbb;/*off-white*/
+    }
+    .btc-block > text {
+        font-size: 12px;
+    }
+    .btc-header-field > text, .btc-tx > text {
+        font-size: 16px;
+    }
+    .braces path {
+        fill: #2b2b2b;/*dark-grey*/
+    }
+    .big-instructions {
+        transform: rotate(15deg);
+        transform-origin: -500px 215vw;
+    }
+    .big-instructions text {
+        font-size: 14vw;
+        animation: hideshow 3s infinite linear;
+    }
+    @keyframes hideshow {
+        0% { opacity: 0.9; }
+        50% { opacity: 0.3; }
+        100% { opacity: 0.9; }
+    }
+]]></style>
+    <defs>
+        <g id="block" class="btc-block">
+            <text x="75" y="10">block number x</text>
+            <g class="btc-header" transform="translate(0,20)">
+                <g class="btc-header-field" transform="translate(0,0)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">version</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,30)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">previous block hash</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,60)">
+                    <rect x="0" y="0" width="150" height="30" class="btc-header-field"/>
+                    <text x="75" y="21">merkle root</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,90)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">timestamp</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,120)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">difficulty</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,150)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">nonce</text>
+                </g>
+                <g class="btc-header-field" transform="translate(0,180)">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">merkle root</text>
+                </g>
+            </g>
+            <g class="btc-txs" transform="translate(0,230)">
+                <g class="btc-tx">
+                    <rect x="0" y="0" width="150" height="30"/>
+                    <text x="75" y="21">transaction 1</text>
+                </g>
+            </g>
+        </g>
+        <g id="braces" class="braces">
+            <path
+                d="M0,0 C 60,0 0,102.5 50,102.5
+                S 45,42.5 90,42.5
+                L90,35 L100,45 L90,55 L90,47.5
+                C 55,47.5 100,107.5 50,107.5
+                S 60,210 0,210
+                L0,205
+                C 50,205 0,105 40,105
+                C 0,105 50,5 0,5
+                Z"
+            />
+            <text y="75">
+                <tspan x="50" dy="1.4em">
+                    SHA256
+                </tspan>
+                <tspan x="50" dy="1.4em">
+                    twice
+                </tspan>
+            </text>
+        </g>
+        <g class="big-instructions">
+            <text x="0" y="0">drag across</text>
+        </g>
+    </defs>
+    <g id="view">
+    </g>
+</svg>
