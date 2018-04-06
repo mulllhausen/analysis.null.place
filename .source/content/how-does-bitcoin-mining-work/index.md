@@ -773,3 +773,4 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
 </div>
 
 if nonce is not big enough - increment the timestamp by 1 second
+luck calculator for hashing bits

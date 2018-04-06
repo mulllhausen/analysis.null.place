@@ -45,7 +45,7 @@ addEvent(window, 'load', function () {
     // form 1 - hashing manually to match hash
     var hash1Params = { // use an object for pass-by-reference
         firstTime: true,
-        hashMatch: document.getElementById('match1').innerText,
+        hashMatch: document.getElementById('match1').textContent,
         matchFound: false,
         previousNonce: '',
         formNum: 1,
@@ -66,7 +66,7 @@ addEvent(window, 'load', function () {
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
         firstTime: true,
-        hashMatch: document.getElementById('match2').innerText,
+        hashMatch: document.getElementById('match2').textContent,
         matchFound: false,
         previousNonce: '',
         formNum: 2,
@@ -84,7 +84,7 @@ addEvent(window, 'load', function () {
     // form 3 - proof of work
     var hash3Params = {
         firstTime: true,
-        hashMatch: document.getElementById('match3').innerText,
+        hashMatch: document.getElementById('match3').textContent,
         matchFound: false,
         previousNonce: '',
         formNum: 3,
@@ -184,7 +184,7 @@ addEvent(window, 'load', function () {
 function initBorderTheDigits() {
     var elementsToBorder = document.getElementsByClassName('individual-digits');
     foreach(elementsToBorder, function (i, el) {
-        borderTheDigits(el, new Array(el.innerText.length));
+        borderTheDigits(el, new Array(el.textContent.length));
     });
 }
 
@@ -234,7 +234,7 @@ function runHash0Clicked() {
     }
     durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
     durationExplanationShort += 'ms)';
-    document.getElementById('hash0Duration').innerText = durationExplanationLong;
+    document.getElementById('hash0Duration').innerHTML = durationExplanationLong;
     var wrapButtonIsOn = (
         form0.querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
     );
@@ -274,8 +274,8 @@ function runHash2Clicked(e, params) {
 function renderHashing2Duration(hashRateData) {
     var hashRate = getAverageHashRate(hashRateData, true);
     if (hashRate < 1) return;
-    document.getElementsByClassName('hash2Rate')[0].innerText = hashRate;
-    document.getElementsByClassName('hash2Rate')[1].innerText = hashRate;
+    document.getElementsByClassName('hash2Rate')[0].innerHTML = hashRate;
+    document.getElementsByClassName('hash2Rate')[1].innerHTML = hashRate;
     document.getElementById('showHowLongForThisDevice').style.display = 'inline';
     // x hashes per second takes ((2^256) / x) seconds =
     // = ((2^256) / (x * 60 * 60 *  24 * 365)) years
@@ -283,10 +283,10 @@ function renderHashing2Duration(hashRateData) {
     // = ((2^256) / (x * 60 * 60 *  24 * 365 * (1000000^10))) million^10 years
     // = (3671743063 / x) million^10 years
     var durationInMillionPow10Years = addThousandCommas(Math.round(3671743063 / hashRate));
-    document.getElementById('howLongForThisDeviceWords').innerText =
+    document.getElementById('howLongForThisDeviceWords').innerHTML =
     durationInMillionPow10Years + ' million'.repeat(10) + ' years';
 
-    document.getElementById('howLongForThisDeviceNumber').innerText =
+    document.getElementById('howLongForThisDeviceNumber').innerHTML =
     durationInMillionPow10Years + ',000'.repeat(20) + ' years';
 }
 
@@ -314,7 +314,7 @@ function difficulty3Changed(e) {
 }
 
 function checkbox3Changed(e) {
-    document.getElementById('btnRunHash3').innerText = 'Mine ' + (
+    document.getElementById('btnRunHash3').innerHTML = 'Mine ' + (
         e.currentTarget.checked ? 'automatically' : 'manually'
     ) + ' with SHA256';
 }
@@ -328,7 +328,7 @@ function runHash3Clicked(e, params) {
         case 'running':
             stopHashingForm[3] = true;
             params.state = 'stopped';
-            e.currentTarget.innerText = btnText;
+            e.currentTarget.innerHTML = btnText;
             // allow the inputs to be changed now we have stopped
             document.getElementById('difficulty3').disabled = false;
             document.getElementById('inputCheckbox3').disabled = false;
@@ -337,7 +337,7 @@ function runHash3Clicked(e, params) {
             stopHashingForm[3] = false;
             params.state = 'running';
             if (mineAutomatically) {
-                e.currentTarget.innerText = 'Stop';
+                e.currentTarget.innerHTML = 'Stop';
                 document.getElementById('difficulty3').disabled = true;
                 document.getElementById('inputCheckbox3').disabled = true;
             }
@@ -356,7 +356,7 @@ function runHash3Clicked(e, params) {
                     params.attempts['matchFound' + difficultyChars[3]] = true;
                     var btn = document.getElementById('btnRunHash3');
                     btn.disabled = true; // disabled until difficulty is changed
-                    btn.innerText = btnText;
+                    btn.innerHTML = btnText;
                     document.getElementById('difficulty3').
                     getElementsByTagName('option')[difficultyChars[3] - 1].
                     disabled = true;
@@ -413,7 +413,7 @@ function runHash3Clicked(e, params) {
 function runHashWrap3Clicked(e) {
     runHashWrapClicked(e);
     var mining3Statistics = document.getElementById('mining3Statistics');
-    mining3Statistics.innerText = '\n\n' + mining3Statistics.innerText.trim();
+    mining3Statistics.innerHTML = '\n\n' + mining3Statistics.textContent.trim();
 }
 
 // forms 1, 2 and 3
@@ -439,7 +439,7 @@ function runHash1Or2Or3Clicked(params) {
         else return;
     }
 
-    document.getElementById('preImage' + params.formNum).innerText =
+    document.getElementById('preImage' + params.formNum).innerHTML =
     params.prefix + nonce;
     var bitArray = sjcl.hash.sha256.hash(params.prefix + nonce);
     var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
@@ -450,7 +450,7 @@ function runHash1Or2Or3Clicked(params) {
         params.hashRateData.shift(); // pop from the start
     }
     document.getElementById('info' + params.formNum).getElementsByTagName('span')[0].
-    innerText = getAverageHashRate(params.hashRateData);
+    innerHTML = getAverageHashRate(params.hashRateData);
 
     params.matchFound = (
         params.hashMatch.substr(0, difficultyChars[params.formNum]) ==
@@ -497,7 +497,7 @@ function runHash1Or2Or3Clicked(params) {
         status += ' of ' + difficultyChars[params.formNum] + ' digits';
     }
     status += ' match)';
-    document.getElementById('matchStatus' + params.formNum).innerText = status;
+    document.getElementById('matchStatus' + params.formNum).innerHTML = status;
     document.getElementById('matchStatus' + params.formNum).style.color =
     (params.matchFound ? passColor : failColor);
 
@@ -585,7 +585,7 @@ function borderTheDigits(elements, matchArray, failPrecedence) {
     else if (elements.length == null) elements = [elements];
 
     foreach (elements, function (i, el) {
-        var text = el.innerText; // get
+        var text = el.textContent; // get
         var newHTML = '';
         foreach (matchArray, function (letterI) {
             var border = '';
@@ -760,10 +760,10 @@ function timestampChanged(timestampFromInput, formNum) {
     var timestampUnixtime;
     if (stringIsInt(Date.parse(timestampFromInput))) {
         var timestampUnixtime = unixtime(timestampFromInput);
-        document.getElementById('timestamp' + formNum + 'Explanation').innerText = '';
+        document.getElementById('timestamp' + formNum + 'Explanation').innerHTML = '';
     } else if (stringIsInt(timestampFromInput)) {
         var timestampUnixtime = parseInt(timestampFromInput);
-        document.getElementById('timestamp' + formNum + 'Explanation').innerText =
+        document.getElementById('timestamp' + formNum + 'Explanation').innerHTML =
         ' (unixtime)';
     } else {
         addError2(
@@ -846,7 +846,7 @@ function bits4Changed(e) {
     }
     miningData.bits = data.bits;
     miningData.target = data.target;
-    document.getElementById('target4').innerText = miningData.target;
+    document.getElementById('target4').innerHTML = miningData.target;
     borderTheDigits('#target4', new Array(64)); // erase colors
     if (noOtherErrors4()) setButtons(true, 'RunHash4');
     miningData.bitsRaw = newBits; // last
@@ -922,15 +922,15 @@ function resetBlock4(pass) {
 }
 
 function resetMiningStatus() {
-    document.getElementById('blockhash4').innerText = '';
-    document.getElementById('mineStatus4').innerText = '';
+    document.getElementById('blockhash4').innerHTML = '';
+    document.getElementById('mineStatus4').innerHTML = '';
     borderTheDigits('#target4', new Array(64)); // erase colors
 }
 
 function mine4AndRenderResults() {
-    document.getElementById('nonce4Results').innerText = miningData.nonceInt;
+    document.getElementById('nonce4Results').innerHTML = miningData.nonceInt;
     var minedResult = mine(); // using global var miningData
-    document.getElementById('blockhash4').innerText = minedResult.blockhash;
+    document.getElementById('blockhash4').innerHTML = minedResult.blockhash;
     borderTheDigits(
         '#form4 .codeblock .individual-digits',
         minedResult.matches,
@@ -941,12 +941,12 @@ function mine4AndRenderResults() {
         popup('success!', 'you mined a block');
         setTimeout(function () { hidePopup(); }, 2000);
         setButtons(false, 'RunHash4');
-        document.getElementById('mineStatus4').innerText = 'pass (because ' +
+        document.getElementById('mineStatus4').innerHTML = 'pass (because ' +
         minedResult.blockhash[minedResult.resolution] + ' is less than ' +
         miningData.target[minedResult.resolution] + ')';
         document.getElementById('mineStatus4').style.color = passColor;
     } else {
-        document.getElementById('mineStatus4').innerText = 'fail (because ' +
+        document.getElementById('mineStatus4').innerHTML = 'fail (because ' +
         minedResult.blockhash[minedResult.resolution] + ' is greater than ' +
         miningData.target[minedResult.resolution] + ')';
         document.getElementById('mineStatus4').style.color = failColor;
@@ -1069,7 +1069,7 @@ function version5Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.getElementById('version5Hex').innerText = int2hex(data.versionInt);
+    document.getElementById('version5Hex').innerHTML = int2hex(data.versionInt);
     document.getElementById('version5Bytes').innerHTML =
     borderTheBytes(int2hex(data.versionInt, 8));
 
@@ -1090,8 +1090,8 @@ function timestamp6Changed(e) {
     // for visually checking bad inputs
     var dateGMT = (new Date((data.timestampUnixtime * 1000))).toGMTString();
 
-    document.getElementById('timestamp6GMT').innerText = dateGMT;
-    document.getElementById('timestamp6Unixtime').innerText = data.timestampUnixtime;
+    document.getElementById('timestamp6GMT').innerHTML = dateGMT;
+    document.getElementById('timestamp6Unixtime').innerHTML = data.timestampUnixtime;
     document.getElementById('timestamp6Bytes').innerHTML =
     borderTheBytes(int2hex(data.timestampUnixtime, 8));
 
@@ -1115,8 +1115,8 @@ function bits7Changed(e) {
     var msbytes = difficulty.substring(2);
 
     document.getElementById('difficulty7').innerHTML = borderTheBytes(difficulty);
-    document.getElementById('lenHex7').innerText = lenHex;
-    document.getElementById('len7').innerText = len;
+    document.getElementById('lenHex7').innerHTML = lenHex;
+    document.getElementById('len7').innerHTML = len;
     document.getElementById('msBytes7').innerHTML = borderTheBytes(msbytes);
     document.getElementById('target7').innerHTML = borderTheBytes(data.target);
     document.getElementById('bits7LE').innerHTML = borderTheBytes(data.bits)
@@ -1132,7 +1132,7 @@ function nonce8Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.getElementById('nonce8Hex').innerText = int2hex(data.nonceInt);
+    document.getElementById('nonce8Hex').innerHTML = int2hex(data.nonceInt);
     document.getElementById('nonce8Bytes').innerHTML =
     borderTheBytes(int2hex(data.nonceInt, 8));
     document.getElementById('nonce8BytesLE').innerHTML = borderTheBytes(data.nonce);

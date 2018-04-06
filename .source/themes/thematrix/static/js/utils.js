@@ -84,8 +84,8 @@ function triggerEvent(element, type) {
 }
 
 function popup(heading, detail) {
-    document.getElementById('fullpagePopupHeading').innerText = heading;
-    document.getElementById('fullpagePopupDetail').innerText = detail;
+    document.getElementById('fullpagePopupHeading').innerHTML = heading;
+    document.getElementById('fullpagePopupDetail').innerHTML = detail;
     document.getElementById('fullpagePopupNotification').style.display = 'table';
     setTimeout(hidePopup, 3000);
 }
@@ -192,7 +192,7 @@ function alignText(codeblock) {
 
     // put the aligners in
     foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
-        el.innerText = uniqueTextAligner;
+        el.innerHTML = uniqueTextAligner;
     });
     lines = codeblock.innerHTML.split('\n');
 
@@ -222,7 +222,7 @@ function alignText(codeblock) {
         if (inArray(lineI, linesWithoutAlignment)) return; // continue
         var linePartsForCalc = linesNoHTML[lineI].split(uniqueTextAligner);
         // remove the unique aligner and align the text
-        codeblock.querySelectorAll('.aligner')[alignerNum].innerText =
+        codeblock.querySelectorAll('.aligner')[alignerNum].innerHTML =
         ' '.repeat(biggestIndentPos - linePartsForCalc[0].length);
         alignerNum++;
     });
@@ -230,7 +230,7 @@ function alignText(codeblock) {
 
 function unalignText(codeblock) {
     foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
-        el.innerText = '';
+        el.innerHTML = '';
     });
 }
 
