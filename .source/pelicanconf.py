@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Peter Miller'
+AUTHOR = u'peter miller'
 SITENAME = u'analysis'
 SITEURL = ''
-BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
+BLOG_DESCRIPTION = 'blog by ' + AUTHOR
 
 PATH = 'content'
 

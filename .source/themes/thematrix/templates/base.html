@@ -58,10 +58,8 @@
         <link rel="apple-touch-icon" sizes="72x72" href="{{ SITEURL }}/theme/img/apple-touch-icon-72x72.png"/>
         <link rel="apple-touch-icon" sizes="114x114" href="{{ SITEURL }}/theme/img/apple-touch-icon-114x114.png"/>
 
-        <link href="{{ SITEURL }}/{{ FEED }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed"/>
-        {% if FEED_RSS %}
-        <link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed"/>
-        {% endif %}
+        <link href="{{ SITEURL }}/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed"/>
+        <link href="{{ SITEURL }}/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed"/>
         {% include 'adsense.html' %}
     </head>
 
