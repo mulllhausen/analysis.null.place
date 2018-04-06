@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'peter miller'
+AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
 SITEURL = ''
-BLOG_DESCRIPTION = 'blog by ' + AUTHOR
+BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 
 PATH = 'content'
 
@@ -16,7 +16,7 @@ DEFAULT_LANG = u'en'
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
-THEME = "./themes/thematrix"
+THEME = './themes/thematrix'
 
 # feed generation is usually not desired when developing
 FEED_ALL_ATOM = None

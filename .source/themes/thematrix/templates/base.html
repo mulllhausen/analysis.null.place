@@ -37,13 +37,11 @@
 
         {# le styles #}
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
-        {% if article %}
-            {% if article.stylesheets %}
-                {% set stylesheets = article.stylesheets.split(',') %}
-                {% for stylesheet in stylesheets %}
+        {% if (article and article.stylesheets) %}
+            {% set stylesheets = article.stylesheets.split(',') %}
+            {% for stylesheet in stylesheets %}
         <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
         {% endif %}
 
         {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
@@ -58,8 +56,8 @@
         <link rel="apple-touch-icon" sizes="72x72" href="{{ SITEURL }}/theme/img/apple-touch-icon-72x72.png"/>
         <link rel="apple-touch-icon" sizes="114x114" href="{{ SITEURL }}/theme/img/apple-touch-icon-114x114.png"/>
 
-        <link href="{{ SITEURL }}/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed"/>
-        <link href="{{ SITEURL }}/feeds/all.rss.xml" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} RSS Feed"/>
+        <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" rel="self" title="{{ SITENAME }} ATOM Feed"/>
+        <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" rel="self" title="{{ SITENAME }} RSS Feed"/>
         {% include 'adsense.html' %}
     </head>
 
@@ -137,13 +135,11 @@
 
         <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
 
-        {% if article %}
-            {% if article.scripts %}
-                {% set scripts = article.scripts.split(',') %}
-                {% for script in scripts %}
+        {% if (article and article.scripts) %}
+            {% set scripts = article.scripts.split(',') %}
+            {% for script in scripts %}
         <script src="{{ SITEURL }}/js/{{ script }}"></script>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
         {% endif %}
 
         {% include 'facebook_analytics.html' %}
