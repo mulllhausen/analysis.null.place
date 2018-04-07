@@ -1286,6 +1286,7 @@ function initBlockchainSVG() {
     // render the correct number of transactions for each block
     var txHeight = svgDefs.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
     height;
+    if (txHeight == 0) txHeight = 30; // damn ff bug
     var renderBlockTxs = function (blockEl, blockNum) {
         // wipe all txs from the btc-txs group in this block
         var txs = blockEl.getElementsByClassName('btc-txs')[0];
@@ -1300,13 +1301,15 @@ function initBlockchainSVG() {
         }
     };
 
-    // copy blocks and braces to render a blockchain 3x as wide as the svg
+    // copy blocks and braces to render a blockchain viewWidthMultiple times as
+    // wide as the svg
     var svgWidth = svg.getBoundingClientRect().width; // pre-compute
-    var horizontalPadding = 0; // between blocks and braces (init)
+    var horizontalPadding = 1; // between blocks and braces (init)
     var blockWidth = svg.getElementById('block').getBoundingClientRect().width;
     var bracesWidth = svg.getElementById('braces').getBoundingClientRect().width;
     var viewWidth = 0; // init
-    for (var blockNum = 0; viewWidth <= (svgWidth * 3); blockNum++) {
+    var viewWidthMultiple = 3;
+    for (var blockNum = 0; viewWidth <= (svgWidth * viewWidthMultiple); blockNum++) {
         var block = svg.getElementById('block').cloneNode(true);
         block.getElementsByTagName('text')[0].textContent = 'block ' + blockNum;
         block.id = 'block' + blockNum;
@@ -1315,6 +1318,9 @@ function initBlockchainSVG() {
             'translate(' + (viewWidth + horizontalPadding) + ')'
         );
         svgView.appendChild(block);
+        if (blockWidth == 0) blockWidth = svgView.querySelector('.btc-block').
+        getBoundingClientRect().width; // damn ff bug
+
         viewWidth += horizontalPadding + blockWidth;
         horizontalPadding = 15; // always 15 after the first block
 
@@ -1324,6 +1330,8 @@ function initBlockchainSVG() {
             'translate(' + (viewWidth + horizontalPadding) + ',20)'
         );
         svgView.appendChild(braces);
+        if (bracesWidth == 0) bracesWidth = svgView.querySelector('.braces').
+        getBoundingClientRect().width; // damn ff bug
         viewWidth += horizontalPadding + bracesWidth;
     }
 
@@ -1363,7 +1371,7 @@ function initBlockchainSVG() {
             allBlocks[i].getElementsByTagName('text')[0].textContent = 'block ' +
             newBlockNum;
             renderBlockTxs(allBlocks[i], newBlockNum);
-            getNumBlockTxs(newBlockNum + (3 * numVisibleBlocks)); // fetch ahead
+            getNumBlockTxs(newBlockNum + (viewWidthMultiple * numVisibleBlocks)); // fetch ahead
             currentBlockNum++
         }
         return {dx: translateX, dy: viewTop};

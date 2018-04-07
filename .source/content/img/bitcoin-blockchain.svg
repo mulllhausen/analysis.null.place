@@ -66,7 +66,7 @@ class="global">
                     <text x="75" y="21">previous block hash</text>
                 </g>
                 <g class="btc-header-field" transform="translate(0,60)">
-                    <rect x="0" y="0" width="150" height="30" class="btc-header-field"/>
+                    <rect x="0" y="0" width="150" height="30"/>
                     <text x="75" y="21">merkle root</text>
                 </g>
                 <g class="btc-header-field" transform="translate(0,90)">
