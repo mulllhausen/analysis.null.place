@@ -78,3 +78,8 @@ ul.error li {
         height: 8em;
     }
 }
+@media (max-width: 23em) {/*when x <= 23em*/
+    #easyImpossibleCodeblock {
+        white-space: pre-line;
+    }
+}

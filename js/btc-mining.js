@@ -1260,7 +1260,8 @@ function initBlockchainSVG() {
     getElementsByTagName('svg')[0];
     var svgDefs = svg.getElementsByTagName('defs')[0];
     var svgView = svg.getElementById('view');
-    var borderTop = 1;
+    var borderTop = 1; // border of the svg
+    var borderLeft = 1; // border of the block
 
     // fetch the number of txs per block
     var getNumBlockTxs = function (blockNum) {
@@ -1301,14 +1302,14 @@ function initBlockchainSVG() {
         }
     };
 
-    // copy blocks and braces to render a blockchain viewWidthMultiple times as
-    // wide as the svg
+    // copy blocks and braces to render a blockchain that is viewWidthMultiple
+    // times as wide as the svg
     var svgWidth = svg.getBoundingClientRect().width; // pre-compute
-    var horizontalPadding = 1; // between blocks and braces (init)
+    var horizontalPadding = borderLeft; // between blocks and braces (init)
     var blockWidth = svg.getElementById('block').getBoundingClientRect().width;
     var bracesWidth = svg.getElementById('braces').getBoundingClientRect().width;
     var viewWidth = 0; // init
-    var viewWidthMultiple = 3;
+    var viewWidthMultiple = 7; // view width = viewWidthMultiple x svg width
     for (var blockNum = 0; viewWidth <= (svgWidth * viewWidthMultiple); blockNum++) {
         var block = svg.getElementById('block').cloneNode(true);
         block.getElementsByTagName('text')[0].textContent = 'block ' + blockNum;
@@ -1342,20 +1343,22 @@ function initBlockchainSVG() {
     // that the blocks are positioned the same as they currently are
     var blockAndBracesWidth = blockWidth + bracesWidth + (2 * horizontalPadding);
     var numVisibleBlocks = Math.floor(svgWidth / blockAndBracesWidth);
+    var leftThreshold = svgWidth * Math.floor(viewWidthMultiple / 2);
     var resetView = function () {
         var viewLeft = svgView.getBoundingClientRect().left;
         var allBlocks = svgView.getElementsByClassName('btc-block');
         var leftmostBlock = parseInt(allBlocks[0].id.replace(/[a-z]/g, ''));
-        if ((viewLeft > -svgWidth) && (leftmostBlock == 0)) return null;
+        if ((viewLeft > -leftThreshold) && (leftmostBlock == 0)) return null;
 
-        // put viewLeft somewhere back between -svgWidth and actionZone
+        // put viewLeft somewhere back between -leftThreshold and actionZone
         var blocksPastActionZone = Math.trunc(
-            (svgWidth + viewLeft) / blockAndBracesWidth
+            (leftThreshold + viewLeft) / blockAndBracesWidth
         );
         if (blocksPastActionZone == 0) return null;
         // never let the leftmost block index be less than 0
         if (leftmostBlock < blocksPastActionZone) blocksPastActionZone = leftmostBlock;
-        var translateX = viewLeft - (blocksPastActionZone * blockAndBracesWidth);
+        var translateX = viewLeft - borderLeft -
+        (blocksPastActionZone * blockAndBracesWidth);
         var viewTop = svgView.getBoundingClientRect().top + borderTop;
         svgView.setAttribute(
             'transform', 'translate(' + translateX + ',' + viewTop + ')'
