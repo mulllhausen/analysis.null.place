@@ -382,7 +382,7 @@ on these later). These miners gather the transactions they receive and put them
 into a block:
 
 <div class="media-container"><div class="media-positioner">
-    <table class="btc-block-mini">
+    <table>
         <tr><td class="btc-block-header-mini">header</td></tr>
         <tr><td class="btc-transaction-mini">transaction 1</td></tr>
         <tr><td class="btc-transaction-mini">transaction 2</td></tr>
@@ -772,5 +772,21 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
     </div>
 </div>
 
+luck calculator for hashing bits (16<sup>num hex digits</sup>) / 2
+
+<div class="form-container annex" id="form11">
+    <label for="difficulty11" class="for-select">difficulty</label><br>
+    <select id="difficulty11"></select>
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="difficulty11Calculation" class="codeblock"></div>
+    </div>
+</div>
+
+
 if nonce is not big enough - increment the timestamp by 1 second
-luck calculator for hashing bits

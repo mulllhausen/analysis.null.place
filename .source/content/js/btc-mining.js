@@ -3,6 +3,7 @@ var passColor = '#7db904'; // green
 var failColor = 'red';
 var stopHashingForm = {}; // eg {2: false}
 var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
+var difficultyAttempts = {}; // ie {1:8, 2: 128, etc}
 var txsPerBlock = [];
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
@@ -94,6 +95,7 @@ addEvent(window, 'load', function () {
         attempts: {}, // eg 5 chars: 10 attempts
         prefix: initProofOfWorkForm()
     };
+    initDifficultyLevelDropdown(3);
     addEvent(document.getElementById('btnRunHash3'), 'click', function (e) {
         runHash3Clicked(e, hash3Params);
     });
@@ -169,6 +171,11 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('inputMessage10'), 'keyup, change', runHash10Changed);
     triggerEvent(document.getElementById('inputMessage10'), 'change');
     addEvent(document.getElementById('inputCheckbox10'), 'click', runHash10Changed);
+
+    // form 11 - luck calculator
+    initDifficultyLevelDropdown(11);
+    initDifficultyAttempts();
+    addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
 
     switch (deviceType) {
         case 'phone':
@@ -290,8 +297,8 @@ function renderHashing2Duration(hashRateData) {
     durationInMillionPow10Years + ',000'.repeat(20) + ' years';
 }
 
-// form 3
-function initProofOfWorkForm() {
+// form 3 and form 11
+function initDifficultyLevelDropdown(formNum) {
     // init the dropdown list for the number of characters to match
     var dropdownNumChars = '<option value="1">match first character only</option>\n';
     for (var i = 2; i < 64; i++) {
@@ -299,8 +306,11 @@ function initProofOfWorkForm() {
         ' characters only</option>\n';
     }
     dropdownNumChars += '<option value="64">match all 64 characters</option>\n';
-    document.getElementById('difficulty3').innerHTML = dropdownNumChars;
+    document.getElementById('difficulty' + formNum).innerHTML = dropdownNumChars;
+}
 
+// form 3
+function initProofOfWorkForm() {
     // init the mining prefix
     var prefix = getRandomAlpha(10);
     document.getElementById('inputMessage3Prefix').value = prefix;
@@ -399,7 +409,8 @@ function runHash3Clicked(e, params) {
                     statistics += numChars + ' digit' + plural('s', numChars > 1) +
                     minedStatus + attempts + ' attempt' +
                     plural('s', attempts > 1) +
-                    params.attempts['luck' + numChars] + '\n';
+                    params.attempts['luck' + numChars] +
+                    (deviceType == 'phone' ? '\n\n' : '\n');
                 }
                 document.getElementById('mining3Statistics').innerHTML =
                 trimRight(statistics);
@@ -1254,6 +1265,25 @@ function runHash10Changed() {
     );
 }
 
+function initDifficultyAttempts() {
+    ajax(
+        '/json/hex-trial-attempts.json',
+        function (json) {
+        try {
+            difficultyAttempts = JSON.parse(json).attemptsForHexCharacters;
+            triggerEvent(document.getElementById('difficulty11'), 'change');
+        }
+        catch (err) {}
+    });
+}
+
+function difficulty11Changed(e) {
+    var numDifficultyChars = parseInt(e.currentTarget.value);
+    document.getElementById('difficulty11Calculation').innerHTML =
+    '(16<sup>' + numDifficultyChars + '</sup>)/2 = ' +
+    addThousandCommas(difficultyAttempts[numDifficultyChars]);
+}
+
 // dragable blockchain svg
 function initBlockchainSVG() {
     var svg = document.getElementById('blockchainSVG').contentDocument.
@@ -1279,7 +1309,7 @@ function initBlockchainSVG() {
                 txsPerBlock = txsPerBlock.concat(numTxsArray);
                 // this will create a huge array, but javascript can handle it :)
             }
-            catch(err) {}
+            catch (err) {}
         });
     };
     getNumBlockTxs(1); // fetch json via ajax to init the txsPerBlock array
