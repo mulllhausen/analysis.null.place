@@ -133,7 +133,7 @@ a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting the hash*.
 
-<div class="codeblock">easy:       pre-image -> SHA256 -> hash
+<div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image -> SHA256 -> hash
 
 impossible: pre-image <- SHA256 <- hash
 </div>
