@@ -26,15 +26,8 @@ pre {
     font-family: monospace;
     background-color: #2b2b2b;/*dark-grey*/
 }
-.btc-block-mini, .btc-header-definition {
-    border-collapse: collapse;
-    font-size: 15px;
-}
 .btc-transaction-mini, .btc-block-header-mini, .btc-header-definition .btc-header-field {
-    border: 1px solid #6a6a6a;/*light-grey*/
     padding: 5px;
-    border-collapse: collapse;
-    background-color: #2b2b2b;/*dark-grey*/
     text-align: center;
     min-width: 100px;
 }
