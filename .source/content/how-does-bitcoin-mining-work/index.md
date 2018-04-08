@@ -12,7 +12,7 @@ The simplest definition of Bitcoin mining I can think of is this:
 
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
-puzzle. The answer found by the winner is verified by all participants and the
+puzzle. The answer found by the winner is verified by all participants. The
 winner receives bitcoins as a reward.
 </p></blockquote>
 
@@ -26,8 +26,8 @@ whole process fun.
 
 The article has 3 parts:
 
-- cryptographic hashing - some background material needed to understand bitcoin
-mining
+- cryptographic hashing - this is background material needed to understand
+bitcoin mining
 - bitcoin mining
 - annex - filling in some of the fine detail not discussed earlier
 
@@ -135,7 +135,7 @@ bitcoin mining:</p>
 </ol>
 </blockquote>
 
-Lets investigate these properties.
+Lets investigate these properties:
 
 Properties 1 and 2 are quite obvious - earlier when we hashed `hello world!`
 with *SHA256* it always gave
@@ -277,16 +277,18 @@ call the computer doing the work the *miner*, and the other computer the
 - the difficulty level of the test
 
 The test works like this: the miner takes the pre-image it has been given and
-appends a bunch of random data (called a nonce) to the end of it. It then hashes
-the whole thing and checks if it matches the target given by the examiner.
-However, it does not need to match the entire hash (that would take millions of
-years), but rather it just needs to match part of the hash - as specified by the
-difficulty level.
+appends a bunch of random data (called a
+[nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce)) to the end of it. It
+then hashes the whole thing and checks if it matches the target given by the
+examiner. However, it does not need to match the entire hash (that would take
+millions of years), but rather it just needs to match part of the hash - as
+specified by the difficulty level.
 
 That all sounds very complicated, but don't worry, it will be much clearer after
 you give it a go. Click the *Mine with SHA256* button and once you find the
 solution try changing the difficulty:
 
+<a name="form3"></a>
 <div class="form-container" id="form3">
     <input type="checkbox" id="inputCheckbox3">
     <label for="inputCheckbox3">mine automatically</label>
@@ -337,9 +339,9 @@ expected and sometimes it takes more. This is because hashing is a random proces
 
 Another thing to note is that the examiner can set the target value without
 having to hash a pre-image to get it. The examiner does not need to know the
-answer to the test before it gives it to the miner. In this way, mining is
-different from a normal school exam. All that matters is that the examiner can
-verify the test once the miner submits the nonce as a solution.
+answer to the test before it gives it sets the test for the miner. In this way,
+mining is different from a normal school exam. All that matters is that the
+examiner can verify the test once the miner submits the nonce as a solution.
 
 The final thing to understand from this section, before we move on to bitcoin
 mining, is that the test we have done here - matching a specified number of
@@ -447,10 +449,10 @@ earlier, that is a very quick thing for a computer to do.
 
 The *merkle root* is loosely defined as a hash of all transactions contained
 within the block. The transaction data is the pre-image and the *merkle root* is
-the hash. This another useful feature of cryptographic hashing - it can be used
-to summarise a large amonut of data in a very small amount of data. The
-transactions in a block generally take up over 1MB, however the merkle root is
-only 32 bytes (64 hexadecimal digits).
+the hash. This is another useful feature of cryptographic hashing - it can be
+used to summarise a large amonut of data using only a very small amount of data.
+The transactions in a block generally take up over 1MB, however the merkle root
+is only 32 bytes (64 hexadecimal digits).
 
 The *timestamp* is the current date and time of the block.
 
@@ -470,8 +472,8 @@ Finally the *nonce* is something we have already discussed in the section on
 hashing. The only difference here is that with bitcoin the nonce is an integer.
 
 OK, lets dive into a practical simulation of bitcoin mining to see how all this
-works. Click the *mine* button a few times and have a look at what this does, both
-to the results area and to the nonce in the block header:
+works. Click the *Mine manually with SHA256* button a few times and have a look
+at what this does, both to the results area and to the nonce in the block header:
 
 <div class="form-container" id="form4">
 <div class="media-container"><div class="media-positioner">
@@ -607,8 +609,8 @@ All that remains now is to mine a block. We can cheat at this because the above
 block was already mined by Satoshi Nakomoto. If we [inspect the blockchain](
 http://blockchain.info/block-height/0) we can see that the correct nonce is
 2,083,236,893. <a id="makeBlockPass4">Click here</a> to copy the nonce back into
-the previous mining simulation and then click the *mine* button to see what
-happens.
+the previous mining simulation and then click the *Mine manually with SHA256*
+button to see what happens.
 
 ## annex
 
@@ -715,9 +717,10 @@ convert to little endian: <span class="aligner">       </span><span id="nonce8By
     </div>
 </div>
 
-OK, now we can put all this together. Note how each field in the human readable
-block header is converted to bytes to be stored in the blockchain, and how these
-are concatenated together. The block header is always 80 bytes:
+Now we can put all this together. In the following form, note how each field in
+the human-readable block header is converted to bytes to be stored in the
+blockchain, and how these are concatenated together. The block header is always
+80 bytes:
 
 <div class="form-container" id="form9">
 <div class="media-container"><div class="media-positioner">
@@ -747,7 +750,7 @@ are concatenated together. The block header is always 80 bytes:
             <input id="nonce9" type="text" class="data-value" size="10" value="2083236893">
         </td></tr>
     </table>
-    <div class="media-caption">the bitcoin block header</div>
+    <div class="media-caption">human-readable bitcoin block header</div>
 </div></div>
 <ul  class="error"></ul>
 <div class="codeblock-container auto-wrap-on-mobile">
@@ -765,12 +768,13 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
-If you are very astute you will notice that copying and pasting this block header
-into the *SHA256* hash forms from the start of this article gives a different
-result to the *SHA256* hashes here. This is because these hashes are implemented
-with the knowledge that the pre-image is a hexadecimal number, whereas the hashes
-in the first section were implemented for a pre-image expressed in bytes. If you
-were to convert the ...
+If you are very astute you would have noticed that copying and pasting this
+block header into the *SHA256* hash forms at the start of this article gives a
+different result to the *SHA256* hashes here. This is because these hashes are
+implemented upon the pre-image as a hexadecimal number, whereas the hashes
+in the first section were implemented for a pre-image expressed in bytes. You
+can see the difference in the following form by ticking and unticking the
+*pre-image is hex* checkbox and observing how the resulting hash changes:
 
 <div class="form-container" id="form10">
     <input type="checkbox" id="inputCheckbox10" checked>
@@ -790,7 +794,27 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
     </div>
 </div>
 
-luck calculator for hashing bits (16<sup>num hex digits</sup>) / 2
+That covers most of the nitty-gritty detail regarding the process of hashing a
+bitcoin block.
+
+The final thing to discuss is the luck involved in mining. As you may have
+guessed, each bitcoin block will contain different data to all the blocks that
+have come before it. No other block will have the same transactions, the same
+timestamp, the same previous block hash, etc as the current block. This means
+that miners will need to try lots of nonce values in order to mine a block - i.e.
+they cannot simply guess the nonce value straight away. The more digits that
+must be matched, the more hashing attempts that must be made on average. In fact
+the average number of hashing attempts needed to match a hex digit with a hash
+can be calculated using the following expession:
+
+<div class="horizontal-center">
+<pre>
+average attempts = (16<sup>number of hex digits</sup>) / 2
+</pre>
+</div>
+
+I have created a difficulty calculator so you can see the average number of
+hashes that must be made for a given difficulty:
 
 <div class="form-container annex" id="form11">
     <label for="difficulty11" class="for-select">difficulty</label><br>
@@ -806,5 +830,19 @@ luck calculator for hashing bits (16<sup>num hex digits</sup>) / 2
     </div>
 </div>
 
+Of course, a miner may be lucky or unlucky. You will have noticed this when you
+tried mining using the [final form](#form3) of the *cryptographic hashing*
+section - sometimes you find a valid nonce in many fewer attempts than the
+average, and sometimes in many more. The process is random, just like trying to
+shake a 6 with a dice.
 
-if nonce is not big enough - increment the timestamp by 1 second
+Interestingly, if 9 or more characters must be matched, then the nonce alone is
+not large enough for the average number of attempts that must be made. Matching 9
+characters will require on average 34,359,738,368 double-hash attempts, however
+the nonce field is only 4 bytes long and so has a maximum value of 4,294,967,295.
+What is a miner to do if it reaches 4,294,967,295 attempts and a solution has
+still not been found? One option is to increment the timestamp field in the
+block by 1 second and begin mining again with a nonce of 0. But what if the
+miners are so fast that they can hash at more than 4,294,967,295 hashes per
+second? In that case they can change some redundant data in the first transaction
+of the block they are currently mining and reset the nonce to 0.
