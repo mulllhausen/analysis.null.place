@@ -151,9 +151,9 @@ a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting the hash*.
 
-<div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> hash
+<div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image -> SHA256 -> hash
 
-impossible: pre-image <span class="fa-arrow"><i class="fa fa-arrow-left" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-left" aria-hidden="true"></i></span> hash
+impossible: pre-image <- SHA256 <- hash
 </div>
 
 If we start with a pre-image and then hash it, then of course we will know what
@@ -189,8 +189,8 @@ you will not be able to invert this hash. Seriously - give it a go:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
-<span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="hash1Result" class="individual-digits"></span>
+        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+<span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
@@ -231,8 +231,8 @@ the results at its maximum possible speed:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
-<span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="hash2Result" class="individual-digits"></span>
+        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+<span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span></div>
     </div>
 </div>
@@ -319,7 +319,7 @@ solution try changing the difficulty:
             </button>
         </div><br>
         <div id="codeblock3HashResults" class="codeblock">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
-<span id="showResults3" style="display:none;"><span id="preImage3"> </span> <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
+<span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
 status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
     </div>
 </div>
@@ -758,9 +758,9 @@ are concatenated together. The block header is always 80 bytes:
         </button>
     </div><br>
 <div class="codeblock">block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
-block header <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
+block header -> SHA256 -> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
-block header <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="secondSHA256Output9"></span>
+block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 </div>
@@ -785,8 +785,8 @@ were to convert the ...
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="hash10Results" class="codeblock">pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner">                </span><span id="sha256Output10"></span>
-pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 (little endian) <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
+        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
+pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
     </div>
 </div>
 
