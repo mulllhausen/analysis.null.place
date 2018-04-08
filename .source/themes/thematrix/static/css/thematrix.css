@@ -560,6 +560,6 @@ blockquote {
 }
 .codeblock span.fa-arrow {/*make sure the font awesome arrow has a single character width*/
     position: relative;
-    padding: 0 0 0 0.6em;
+    padding: 0 0 0 0.58em;
 }
 /* end codeblock */
