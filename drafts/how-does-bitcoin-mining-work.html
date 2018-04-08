@@ -69,7 +69,7 @@
         <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
     </a>
     <a href="http://null.place/archives/" >
-        <i class="fa fa-book" aria-hidden="true"></i> all<sup>&nbsp;</sup>
+        <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>
     </a>
     <a href="http://null.place/tags/" >
         <i class="fa fa-hashtag" aria-hidden="true"></i> all<sup>&nbsp;</sup>
@@ -88,7 +88,7 @@
         <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
     </a>
     <a href="http://null.place/archives/" >
-        <i class="fa fa-book" aria-hidden="true"></i> all<sup>&nbsp;</sup>
+        <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>
     </a>
     <a href="http://null.place/tags/" >
         <i class="fa fa-hashtag" aria-hidden="true"></i> all<sup>&nbsp;</sup>
@@ -106,14 +106,17 @@
 </div>            </div>
             <div class="col-1">
 <section id="content">
-        <article>
-                <header>
-                        <h1>
-                            how does bitcoin mining work?
-                        </h1>
-                </header>
-                <div class="entry-content">
-                <div class="info-box">
+    <article>
+        <header>
+            <h1>
+            <span class="article-fa-icon">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            </span>
+            how does bitcoin mining work?
+            </h1>
+        </header>
+        <div class="entry-content">
+            <div class="info-box">
 
 <a href="http://null.place/cryptocurrencies/"><i class="fa fa-folder-open-o" aria-hidden="true"></i> cryptocurrencies</a>
 
@@ -123,12 +126,28 @@
 	<span class="keep-together"><a href="http://null.place/tag/bitcoin/"><i class="fa fa-hashtag" aria-hidden="true"></i>bitcoin</a></span>
 	<span class="keep-together"><a href="http://null.place/tag/mining/"><i class="fa fa-hashtag" aria-hidden="true"></i>mining</a></span>
 	<span class="keep-together"><a href="http://null.place/tag/proof-of-work/"><i class="fa fa-hashtag" aria-hidden="true"></i>proof-of-work</a></span>
-                </div>
-                <p>This article is for people who want to understand the inner workings of bitcoin
-mining. I have made it interactive so that you can simulate the mining algorithms
-for yourself and get a feel for how mining really works. While the concepts here
-are not simple, they should be easily accessible to an interested layperson. And
-I hope the interacivity will make an otherwise dry subject fun.</p>
+            </div>
+            <p>The simplest definition of Bitcoin mining I can think of is this:</p>
+<blockquote><p>
+Bitcoin mining involves computers competing with each other to solve a random
+puzzle. The answer found by the winner is verified by all participants and the
+winner receives bitcoins as a reward.
+</p></blockquote>
+
+<p>In this article I will delve into what exactly this <em>random puzzle</em> is, and how
+the solution found by the winner can be verified. I have made the article
+interactive so that you can simulate the mining algorithms for yourself and get
+a feel for how mining really works. While the concepts here are not simple, they
+are presented so as to be easily understood by someone with no knowledge of
+programming, cryptography or bitcoin. And I hope the interacivity will make the
+whole process fun.</p>
+<p>The article has 3 parts:</p>
+<ul>
+<li>cryptographic hashing - some background material needed to understand bitcoin
+mining</li>
+<li>bitcoin mining</li>
+<li>annex - filling in some of the fine detail not discussed earlier</li>
+</ul>
 <h2>cryptographic hashing</h2>
 <p>To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -160,12 +179,11 @@ a few times and then try typing different things in the <em>pre-image</em> field
 hashing algorithms - <em>SHA128</em>, <em>SHA512</em>, <em>MD5</em>, <em>RIPEMD128</em>, <em>RIPEMD160</em>, etc.
 The differences between these hashing algorithms are not important for the sake
 of this article - all that is important is to recognise that <em>SHA256</em> is merely
-one of many hashing algorithms - the one that is used in bitcoin mining (more on
-that soon). The output of a cryptographic hash is actually a number, however
-that may not have been obvious when you ran the <em>SHA256</em> hash above, since that
-number is written in hexadecimal format - i.e. base 16. To explain what that
-means, here are some hexadecimal values side by side with their decimal
-equivalent values:</p>
+one of many hashing algorithms - the one that is used in bitcoin mining. The
+output of a cryptographic hash is actually a number, however that may not have
+been obvious when you ran the <em>SHA256</em> hash above, since that number is written
+in hexadecimal format - i.e. base 16. To explain what that means, here are some
+hexadecimal values side by side with their decimal equivalent values:</p>
 <div class="horizontal-center">
 <pre>
 hex 0 = dec 0
@@ -229,8 +247,9 @@ bitcoin mining:</p>
 </ol>
 </blockquote>
 
-<p>Lets investigate these properties. Properties 1 and 2 are quite obvious - earlier
-when we hashed <code>hello world!</code> with <em>SHA256</em> it always gave
+<p>Lets investigate these properties.</p>
+<p>Properties 1 and 2 are quite obvious - earlier when we hashed <code>hello world!</code>
+with <em>SHA256</em> it always gave
 <code>7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9</code> and took
 <span id="helloWorldHashSpeed">less than 4 milliseconds (depending on the speed
 of your device)</span>, which is fairly quick. However it must be noted that
@@ -241,9 +260,9 @@ to bitcoin mining later on.</p>
 a pre-image to its hash, but it is impossible to programatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called <em>inverting the hash</em>.</p>
-<div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image -> SHA256 -> hash
+<div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> hash
 
-impossible: pre-image <- SHA256 <- hash
+impossible: pre-image <span class="fa-arrow"><i class="fa fa-arrow-left" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-left" aria-hidden="true"></i></span> hash
 </div>
 
 <p>If we start with a pre-image and then hash it, then of course we will know what
@@ -278,8 +297,8 @@ you will not be able to invert this hash. Seriously - give it a go:</p>
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
-<span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
+        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+<span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
@@ -319,8 +338,8 @@ the results at its maximum possible speed:</p>
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
-<span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
+        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+<span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span><span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span></div>
     </div>
 </div>
@@ -402,7 +421,7 @@ solution try changing the difficulty:</p>
             </button>
         </div><br>
         <div id="codeblock3HashResults" class="codeblock">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
-<span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
+<span id="showResults3" style="display:none;"><span id="preImage3"> </span> <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
 status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
     </div>
 </div>
@@ -474,7 +493,7 @@ running for the transaction to be processed.</p>
 on these later). These miners gather the transactions they receive and put them
 into a block:</p>
 <div class="media-container"><div class="media-positioner">
-    <table class="btc-block-mini">
+    <table>
         <tr><td class="btc-block-header-mini">header</td></tr>
         <tr><td class="btc-transaction-mini">transaction 1</td></tr>
         <tr><td class="btc-transaction-mini">transaction 2</td></tr>
@@ -803,9 +822,9 @@ are concatenated together. The block header is always 80 bytes:</p>
         </button>
     </div><br>
 <div class="codeblock">block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
-block header -> SHA256 -> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
+block header <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
-block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
+block header <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="secondSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 </div>
@@ -829,15 +848,31 @@ were to convert the ...</p>
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
-pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
+        <div id="hash10Results" class="codeblock">pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner">                </span><span id="sha256Output10"></span>
+pre-image <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> SHA256 (little endian) <span class="fa-arrow"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
     </div>
 </div>
 
-<p>if nonce is not big enough - increment the timestamp by 1 second
-luck calculator for hashing bits</p>
-                </div><!-- /.entry-content -->
-        </article>
+<p>luck calculator for hashing bits (16<sup>num hex digits</sup>) / 2</p>
+<div class="form-container annex" id="form11">
+    <label for="difficulty11" class="for-select">difficulty</label><br>
+    <select id="difficulty11"></select>
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div id="difficulty11Calculation" class="codeblock"></div>
+    </div>
+</div>
+
+<p>if nonce is not big enough - increment the timestamp by 1 second</p>
+        </div><!-- /.entry-content -->
+
+
+    </article>
 </section>
             </div>
         </div>

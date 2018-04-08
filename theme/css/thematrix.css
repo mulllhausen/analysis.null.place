@@ -221,12 +221,15 @@ body:before {
         width: 300px;
     }
 }
-/*section#content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}*/
+table {
+    border-collapse: collapse;
+    font-size: 15px;
+}
+td {
+    border: 1px solid #6a6a6a;/*light-grey*/
+    border-collapse: collapse;
+    background-color: #2b2b2b;/*dark-grey*/
+}
 article {
     overflow-x: hidden;
 }
@@ -259,6 +262,12 @@ a.brand, a.brand:hover {
 }
 .side-bar ul.nav-menu {
     margin: 10px 10px 0 10px;
+}
+ul.nav-menu .fa-file-text-o {
+    margin-right: 1px;
+}
+ul.nav-menu .fa-hashtag {
+    margin-right: -1px;
 }
 /* end side bar */
 
@@ -374,6 +383,17 @@ img#logo_img {
     border: 2px solid black;
 }
 /* end logo stuff */
+
+h1 i.fa-file-text-o {
+    font-size: 85%;
+    position: absolute;
+    top: 3px;
+    left: 0;
+}
+h1 .article-fa-icon {
+    position: relative;
+    padding: 0 0 0 1em;
+}
 
 .info-box {
     padding: 15px;
@@ -531,5 +551,15 @@ blockquote {
 }
 .button-background+br+.codeblock {
     border-top-right-radius: 0;
+}
+.codeblock .fa-arrow-left, .codeblock .fa-arrow-right {
+    font-size: 85%;
+    position: absolute;
+    top: 3px;
+    left: 0;
+}
+.codeblock span.fa-arrow {/*make sure the font awesome arrow has a single character width*/
+    position: relative;
+    padding: 0 0 0 0.58em;
 }
 /* end codeblock */
