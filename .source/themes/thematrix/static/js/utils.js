@@ -1,8 +1,15 @@
-// common functions used on many pages
+// common definitions used on many pages
+
+var leftArrow = '<span class="fa-arrow">' +
+'<i class="fa fa-arrow-left" aria-hidden="true"></i></span>';
+var rightArrow = '<span class="fa-arrow">' +
+'<i class="fa fa-arrow-right" aria-hidden="true"></i></span>';
 
 var deviceType = window.getComputedStyle(
     document.getElementsByTagName('body')[0], ':before'
 ).getPropertyValue('content').replace(/"/g, '');
+
+// common functions used on many pages
 
 function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
@@ -27,7 +34,7 @@ function unixtime(date) {
     }
 }
 
-NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function() {
+NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function () {
     return true;
 };
 
@@ -144,8 +151,8 @@ function inArray(needle, haystack) {
 
 function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
     var retObj = {};
-    foreach(arguments, function(i, obj) {
-        foreach(obj, function(k, v) {
+    foreach(arguments, function (i, obj) {
+        foreach(obj, function (k, v) {
             retObj[k] = v;
         });
     });
@@ -168,7 +175,7 @@ function addThousandCommas(number) {
 function ajax(url, callback) {
     // doesn't work on opera mini :(
     var xhttp = new XMLHttpRequest();
-    addEvent(xhttp, 'readystatechange', function() {
+    addEvent(xhttp, 'readystatechange', function () {
         if (this.readyState != XMLHttpRequest.DONE) return;
         if (this.status != 200) return;
         callback(this.responseText);
@@ -177,7 +184,7 @@ function ajax(url, callback) {
     xhttp.send();
 }
 
-Element.prototype.up = function(num) {
+Element.prototype.up = function (num) {
     var el = this;
     for (var i = 0; i < num; i++) el = el.parentNode;
     return el;
@@ -191,7 +198,7 @@ function alignText(codeblock) {
     if (lines.length == 1) return;
 
     // put the aligners in
-    foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
+    foreach(codeblock.querySelectorAll('.aligner'), function (i, el) {
         el.innerHTML = uniqueTextAligner;
     });
     lines = codeblock.innerHTML.split('\n');
@@ -200,11 +207,13 @@ function alignText(codeblock) {
     var biggestIndentPos = 0; // init
     var linesWithoutAlignment = []; // init
     var linesNoHTML = {}; // init (avoid unnecessary dom operations)
-    foreach (lines, function(lineI, line) {
+    var regexArrow = new RegExp(leftArrow + '|' + rightArrow, 'g');
+    foreach (lines, function (lineI, line) {
         if (!inArray(uniqueTextAligner, line)) {
             linesWithoutAlignment.push(lineI);
             return; // continue
         }
+        line = line.replace(regexArrow, '-');
         // strip html tags out (but keep content between)
         if (inArray('<', line) && inArray('>', line)) {
             var tmp = document.createElement('div');
@@ -218,7 +227,7 @@ function alignText(codeblock) {
 
     // do the indentation on each line
     var alignerNum = 0;
-    foreach (lines, function(lineI, line) {
+    foreach (lines, function (lineI, line) {
         if (inArray(lineI, linesWithoutAlignment)) return; // continue
         var linePartsForCalc = linesNoHTML[lineI].split(uniqueTextAligner);
         // remove the unique aligner and align the text
@@ -229,7 +238,7 @@ function alignText(codeblock) {
 }
 
 function unalignText(codeblock) {
-    foreach(codeblock.querySelectorAll('.aligner'), function(i, el) {
+    foreach(codeblock.querySelectorAll('.aligner'), function (i, el) {
         el.innerHTML = '';
     });
 }
@@ -297,7 +306,7 @@ function toggleAllCodeblockWrapsMobile() {
 // events for all pages
 
 // nav-menu open/close (mobile only)
-addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
+addEvent(document.getElementById('btnNavbar'), 'click', function (e) {
     var btn = e.currentTarget;
     var menu = document.getElementById('navMenu');
     if (btn.getAttribute('menu-is-collapsed') == 'true') {
@@ -311,7 +320,7 @@ addEvent(document.getElementById('btnNavbar'), 'click', function(e) {
 
 // prevent css :focus from persisting after a click, but allow it to remain
 // after focus via keyboard tabbing
-addEvent(document.getElementsByTagName('button'), 'click', function(e) {
+addEvent(document.getElementsByTagName('button'), 'click', function (e) {
     e.currentTarget.blur();
 });
 

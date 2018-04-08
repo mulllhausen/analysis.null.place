@@ -247,9 +247,9 @@ function runHash0Clicked() {
     );
     var hash0Results = document.getElementById('hash0Results');
     hash0Results.innerHTML = (
-        message + ' <span class="aligner"></span>-> SHA256 -> ' + sha256Hash +
-        ' ' + durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
-        hash0Results.innerHTML
+        message + ' <span class="aligner"></span>' + rightArrow + ' SHA256 ' +
+        rightArrow + ' ' + sha256Hash + ' ' + durationExplanationShort + '\n' +
+        (wrapButtonIsOn ? '\n' : '') + hash0Results.innerHTML
     ).trim();
     if (!wrapButtonIsOn) alignText(hash0Results);
     hash0Results.closest('.codeblock-container').style.display = 'block';
