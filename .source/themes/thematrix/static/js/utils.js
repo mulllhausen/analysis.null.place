@@ -1,10 +1,5 @@
 // common definitions used on many pages
 
-var leftArrow = '<span class="fa-arrow">' +
-'<i class="fa fa-arrow-left" aria-hidden="true"></i></span>';
-var rightArrow = '<span class="fa-arrow">' +
-'<i class="fa fa-arrow-right" aria-hidden="true"></i></span>';
-
 var deviceType = window.getComputedStyle(
     document.getElementsByTagName('body')[0], ':before'
 ).getPropertyValue('content').replace(/"/g, '');
@@ -207,13 +202,11 @@ function alignText(codeblock) {
     var biggestIndentPos = 0; // init
     var linesWithoutAlignment = []; // init
     var linesNoHTML = {}; // init (avoid unnecessary dom operations)
-    var regexArrow = new RegExp(leftArrow + '|' + rightArrow, 'g');
     foreach (lines, function (lineI, line) {
         if (!inArray(uniqueTextAligner, line)) {
             linesWithoutAlignment.push(lineI);
             return; // continue
         }
-        line = line.replace(regexArrow, '-');
         // strip html tags out (but keep content between)
         if (inArray('<', line) && inArray('>', line)) {
             var tmp = document.createElement('div');

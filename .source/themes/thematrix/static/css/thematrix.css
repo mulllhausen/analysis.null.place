@@ -552,16 +552,4 @@ blockquote {
 .button-background+br+.codeblock {
     border-top-right-radius: 0;
 }
-.codeblock .fa-arrow-left, .codeblock .fa-arrow-right {
-    font-size: 12px;
-    position: absolute;
-    top: 2px;
-    left: 0;
-}
-.codeblock span.fa-arrow {/*make sure the font awesome arrow has a single character width*/
-    position: relative;
-    padding: 0 0 0 8px;
-    box-sizing: border-box;
-    border: none;
-}
 /* end codeblock */

@@ -75,7 +75,4 @@ ul.error li {
     #easyImpossibleCodeblock {
         white-space: pre-line;
     }
-    #easyImpossibleCodeblock span.fa-arrow {
-        padding: 0 0 0 1.2em;
-    }
 }
