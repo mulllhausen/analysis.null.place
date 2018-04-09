@@ -4,7 +4,7 @@
         {% include 'google_analytics.html' %}
         <meta charset="utf-8"/>
         <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, user-scalable=no"/>
         <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
         <meta name="author" content="{{ AUTHOR }}"/>
 
@@ -43,6 +43,12 @@
         <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
             {% endfor %}
         {% endif %}
+
+        {# le browser and os styles #}
+        <meta name="theme-color" content="#000000"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta name="msapplication-navbutton-color" content="#000000"/>
 
         {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
         <!--[if lt IE 9]>
