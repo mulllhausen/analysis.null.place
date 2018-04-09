@@ -334,14 +334,14 @@ all the work and the examiner barely does any at all.
 
 As you can see, the higher the difficulty, the more attempts it will take on
 average to pass the test. From the results you can also see that there is a
-degree of luck involved in mining - sometimes it takes less attempts than
+degree of luck involved in mining - sometimes it takes fewer attempts than
 expected and sometimes it takes more. This is because hashing is a random process.
 
 Another thing to note is that the examiner can set the target value without
 having to hash a pre-image to get it. The examiner does not need to know the
-answer to the test before it gives it sets the test for the miner. In this way,
-mining is different from a normal school exam. All that matters is that the
-examiner can verify the test once the miner submits the nonce as a solution.
+answer to the test before it sets the test for the miner. In this way, mining is
+different from a normal school exam. All that matters is that the examiner can
+verify the test once the miner submits the nonce as a solution.
 
 The final thing to understand from this section, before we move on to bitcoin
 mining, is that the test we have done here - matching a specified number of
