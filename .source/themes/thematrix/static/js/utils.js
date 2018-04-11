@@ -63,7 +63,7 @@ function addEvent(element, types, callback) {
             type = type.replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
-            } else if (el.attachEvent) {
+            } else if (el.attachEvent) { // ie
                 el.attachEvent('on' + type, callback);
             } else {
                 el['on' + type] = callback;
