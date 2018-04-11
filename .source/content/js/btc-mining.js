@@ -64,6 +64,13 @@ addEvent(window, 'load', function () {
         runHash1Or2Or3Clicked(hash1Params);
     });
 
+    // dec to hex table
+    addEvent(
+        document.querySelector('#dec2hexTable .instructions'),
+        'click',
+        showMoreDec2Hex
+    );
+
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
         firstTime: true,
@@ -253,6 +260,22 @@ function runHash0Clicked() {
     ).trim();
     if (!wrapButtonIsOn) alignText(hash0Results);
     hash0Results.closest('.codeblock-container').style.display = 'block';
+}
+
+var latestDec = 19;
+function showMoreDec2Hex() {
+    var table = document.getElementById('dec2hexData');
+    var chunkOfRows = table.innerHTML; // init
+    var stopAt = latestDec + 15;
+    for (; latestDec <= stopAt; latestDec++) {
+        chunkOfRows += '<tr>' +
+            '<td>' + latestDec + '</td><td>' + int2hex(latestDec) + '</td>' +
+        '</tr>';
+    }
+    table.innerHTML = chunkOfRows;
+
+    var scrollDiv = document.querySelector('#dec2hexTable .vertical-scroll');
+    scrollDiv.scrollTop = scrollDiv.scrollHeight;
 }
 
 // form 2

@@ -36,7 +36,8 @@ bitcoin mining
 To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, lets just dive in and give it a go. Click the *SHA256* button
-a few times and then try typing different things in the *pre-image* field:
+a few times and look carefully at what it does, then try typing different things
+in the *pre-image* field and clicking the *SHA256* button to see what that does:
 <div class="form-container" id="form0">
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
@@ -70,43 +71,36 @@ been obvious when you ran the *SHA256* hash above, since that number is written
 in hexadecimal format - i.e. base 16. To explain what that means, here are some
 hexadecimal values side by side with their decimal equivalent values:
 
-<div class="horizontal-center">
-<pre>
-hex 0 = dec 0
-hex 1 = dec 1
-hex 2 = dec 2
-hex 3 = dec 3
-hex 4 = dec 4
-hex 5 = dec 5
-hex 6 = dec 6
-hex 7 = dec 7
-hex 8 = dec 8
-hex 9 = dec 9
-hex a = dec 10
-hex b = dec 11
-hex c = dec 12
-hex d = dec 13
-hex e = dec 14
-hex f = dec 15
-</pre>
-<pre>
-hex 10 = dec 16
-hex 11 = dec 17
-hex 12 = dec 18
-hex 13 = dec 19
-hex 14 = dec 20
-hex 15 = dec 21
-hex 16 = dec 22
-hex 17 = dec 23
-hex 18 = dec 24
-hex 19 = dec 25
-hex 1a = dec 26
-hex 1b = dec 27
-hex 1c = dec 28
-hex 1d = dec 29
-hex 1e = dec 30
-hex 1f = dec 31
-</pre>
+<div class="horizontal-center" id="dec2hexTable">
+    <div class="constrainWidth">
+        <table class="header">
+            <tr> <td>decimal</td> <td>hexadecimal</td> </tr>
+        </table>
+        <div class="vertical-scroll">
+            <table id="dec2hexData">
+                <tr> <td>0</td>  <td>0</td>  </tr>
+                <tr> <td>1</td>  <td>1</td>  </tr>
+                <tr> <td>2</td>  <td>2</td>  </tr>
+                <tr> <td>3</td>  <td>3</td>  </tr>
+                <tr> <td>4</td>  <td>4</td>  </tr>
+                <tr> <td>5</td>  <td>5</td>  </tr>
+                <tr> <td>6</td>  <td>6</td>  </tr>
+                <tr> <td>7</td>  <td>7</td>  </tr>
+                <tr> <td>8</td>  <td>8</td>  </tr>
+                <tr> <td>9</td>  <td>9</td>  </tr>
+                <tr> <td>10</td> <td>a</td>  </tr>
+                <tr> <td>11</td> <td>b</td>  </tr>
+                <tr> <td>12</td> <td>c</td>  </tr>
+                <tr> <td>13</td> <td>d</td>  </tr>
+                <tr> <td>14</td> <td>e</td>  </tr>
+                <tr> <td>15</td> <td>f</td>  </tr>
+                <tr> <td>16</td> <td>10</td> </tr>
+                <tr> <td>17</td> <td>11</td> </tr>
+                <tr> <td>18</td> <td>12</td> </tr>
+            </table>
+        </div>
+        <div class="instructions noselect">click for more</div>
+    </div>
 </div>
 
 Don't worry, you won't need to do any hexadecimal conversions in this article.
@@ -702,7 +696,7 @@ The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
 <div class="form-container annex" id="form8">
     <label for="nonce8" class="for-textbox">nonce</label><br>
-    <input id="nonce8" type="text" class="data-value" size="10" value="0">
+    <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
