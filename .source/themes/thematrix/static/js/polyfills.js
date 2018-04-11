@@ -83,6 +83,28 @@ if (!Element.prototype.closest) Element.prototype.closest = function(query) {
     return null;
 };
 
+// fix for stupid ie. thanks to
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
+if (!Math.trunc) {
+    Math.trunc = function(v) {
+        v = +v;
+        if (!isFinite(v)) return v;
+        return (v - (v % 1)) || ((v < 0) ? -0 : (v === 0 ? v : 0));
+
+        // returns:
+        //  0        ->  0
+        // -0        -> -0
+        //  0.2      ->  0
+        // -0.2      -> -0
+        //  0.7      ->  0
+        // -0.7      -> -0
+        //  Infinity ->  Infinity
+        // -Infinity -> -Infinity
+        //  NaN      ->  NaN
+        //  null     ->  0
+    };
+}
+
 window.requestAnimationFrame = function() {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||

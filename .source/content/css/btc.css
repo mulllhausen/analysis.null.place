@@ -1,3 +1,47 @@
+#dec2hexTable .constrainWidth {
+    display: inline-block;/*horizontal center*/
+    width: 250px;
+}
+#dec2hexTable .header {
+    width: 100%;
+}
+#dec2hexTable .header td {
+    background-color: #101010;
+}
+#dec2hexTable .header td:first-child {
+    width: 125px;
+}
+.vertical-scroll {
+    display: block;
+    overflow-y: scroll;
+    height: 300px;
+    width: 100%;
+}
+table#dec2hexData {
+    font-family: monospace;
+    font-size: 13px;
+    width: 100%;
+}
+table#dec2hexData tr:first-child td {
+    border-top: none;
+}
+table#dec2hexData tr td:first-child {
+    width: 125px;
+}
+table#dec2hexData tr:nth-child(2n + 2) td {
+    background-color: #252525;
+}
+#dec2hexTable .instructions {
+    cursor: pointer;
+    border: 1px solid #6a6a6a;
+    background-color: #2b2b2b;
+    padding: 4px;
+    margin-top: -1px;
+    background-color: #101010;
+}
+#dec2hexTable td {
+    padding: 4px;
+}
 #btnRunHash3 {
     margin-top: 21px;
 }
