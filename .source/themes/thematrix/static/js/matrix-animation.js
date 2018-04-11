@@ -1,8 +1,8 @@
 // code to run a matrix-movie animation in a <canvas>
 
 function init_all_matrix_canvases(green_text_canvas_class_name, white_text_canvas_class_name) {
-    var green_text_canvases = document.getElementsByClassName(green_text_canvas_class_name);
-    var white_text_canvases = document.getElementsByClassName(white_text_canvas_class_name);
+    var green_text_canvases = document.querySelectorAll(green_text_canvas_class_name);
+    var white_text_canvases = document.querySelectorAll(white_text_canvas_class_name);
     for (var i = 0; i < green_text_canvases.length; i++) {
         init_matrix_canvas(green_text_canvases[i], white_text_canvases[i]);
     }

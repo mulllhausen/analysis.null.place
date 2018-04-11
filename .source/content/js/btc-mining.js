@@ -189,7 +189,7 @@ addEvent(window, 'load', function () {
 });
 
 function initBorderTheDigits() {
-    var elementsToBorder = document.getElementsByClassName('individual-digits');
+    var elementsToBorder = document.querySelectorAll('.individual-digits');
     foreach(elementsToBorder, function (i, el) {
         borderTheDigits(el, new Array(el.textContent.length));
     });
@@ -281,8 +281,8 @@ function runHash2Clicked(e, params) {
 function renderHashing2Duration(hashRateData) {
     var hashRate = getAverageHashRate(hashRateData, true);
     if (hashRate < 1) return;
-    document.getElementsByClassName('hash2Rate')[0].innerHTML = hashRate;
-    document.getElementsByClassName('hash2Rate')[1].innerHTML = hashRate;
+    document.querySelectorAll('.hash2Rate')[0].innerHTML = hashRate;
+    document.querySelectorAll('.hash2Rate')[1].innerHTML = hashRate;
     document.getElementById('showHowLongForThisDevice').style.display = 'inline';
     // x hashes per second takes ((2^256) / x) seconds =
     // = ((2^256) / (x * 60 * 60 *  24 * 365)) years
@@ -1315,17 +1315,17 @@ function initBlockchainSVG() {
     getNumBlockTxs(1); // fetch json via ajax to init the txsPerBlock array
 
     // render the correct number of transactions for each block
-    var txHeight = svgDefs.getElementsByClassName('btc-tx')[0].getBoundingClientRect().
+    var txHeight = svgDefs.querySelectorAll('.btc-tx')[0].getBoundingClientRect().
     height;
     if (txHeight == 0) txHeight = 30; // damn ff bug
     var renderBlockTxs = function (blockEl, blockNum) {
         // wipe all txs from the btc-txs group in this block
-        var txs = blockEl.getElementsByClassName('btc-txs')[0];
+        var txs = blockEl.querySelectorAll('.btc-txs')[0];
         txs.parentNode.replaceChild(txs.cloneNode(false), txs);
-        var newTxs = blockEl.getElementsByClassName('btc-txs')[0];
+        var newTxs = blockEl.querySelectorAll('.btc-txs')[0];
 
         for (var i = 0; i < txsPerBlock[blockNum]; i++) {
-            var tx = svgDefs.getElementsByClassName('btc-tx')[0].cloneNode(true);
+            var tx = svgDefs.querySelectorAll('.btc-tx')[0].cloneNode(true);
             tx.setAttribute('transform', 'translate(0,' + (txHeight * i) + ')');
             tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
             newTxs.appendChild(tx);
@@ -1367,7 +1367,7 @@ function initBlockchainSVG() {
     }
 
     // append the instructions
-    svg.appendChild(svgDefs.getElementsByClassName('big-instructions')[0]);
+    svg.appendChild(svgDefs.querySelectorAll('.big-instructions')[0]);
 
     // roughly center the view in the x direction and offset to give the illiusion
     // that the blocks are positioned the same as they currently are
@@ -1376,7 +1376,7 @@ function initBlockchainSVG() {
     var leftThreshold = svgWidth * Math.floor(viewWidthMultiple / 2);
     var resetView = function () {
         var viewLeft = svgView.getBoundingClientRect().left;
-        var allBlocks = svgView.getElementsByClassName('btc-block');
+        var allBlocks = svgView.querySelectorAll('.btc-block');
         var leftmostBlock = parseInt(allBlocks[0].id.replace(/[a-z]/g, ''));
         if ((viewLeft > -leftThreshold) && (leftmostBlock == 0)) return null;
 
@@ -1440,7 +1440,7 @@ function initBlockchainSVG() {
         if (!dragging) return;
 
         if (!instructionsHidden) {
-            svg.removeChild(svg.getElementsByClassName('big-instructions')[0]);
+            svg.removeChild(svg.querySelectorAll('.big-instructions')[0]);
             instructionsHidden = true;
         }
         switch (e.type) {
