@@ -21,7 +21,7 @@ the solution found by the winner can be verified. I have made the article
 interactive so that you can simulate the mining algorithms for yourself and get
 a feel for how mining really works. While the concepts here are not simple, they
 are presented so as to be easily understood by someone with no knowledge of
-programming, cryptography or bitcoin. And I hope the interacivity will make the
+programming, cryptography or bitcoin. And I hope the interactivity will make the
 whole process fun.
 
 The article has 3 parts:
@@ -35,7 +35,7 @@ bitcoin mining
 
 To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
-at the start, lets just dive in and give it a go. Click the *SHA256* button
+at the start, let's just dive in and give it a go. Click the *SHA256* button
 a few times and look carefully at what it does, then try typing different things
 in the *pre-image* field and clicking the *SHA256* button to see what that does:
 <div class="form-container" id="form0">
@@ -66,7 +66,7 @@ hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing algorithms are not important for the sake
 of this article - all that is important is to recognise that *SHA256* is merely
 one of many hashing algorithms - the one that is used in bitcoin mining. The
-output of a cryptographic hash is actually a number, however that may not have
+output of a cryptographic hash is actually a number; however, that may not have
 been obvious when you ran the *SHA256* hash above, since that number is written
 in hexadecimal format - i.e. base 16. To explain what that means, here are some
 hexadecimal values side by side with their decimal equivalent values:
@@ -108,7 +108,7 @@ All you need to remember here is that hexadecimal digits go from `0` to `9` to
 `a` to `f`.
 
 OK, so now that you have tried cryptographic hashing, and you know about
-hexadecimal format, lets have a look at the formal definition of cryptographic
+hexadecimal format, let's have a look at the formal definition of cryptographic
 hashing:
 
 <blockquote>
@@ -141,7 +141,7 @@ amount of time. This fact will be important when we discuss hashing in relation
 to bitcoin mining later on.
 
 Property 3 explains that hashing is a one-way process. We can easily get from
-a pre-image to its hash, but it is impossible to programatically get from a
+a pre-image to its hash, but it is impossible to programmatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
 hash back to its pre-image is called *inverting the hash*.
 
@@ -195,7 +195,7 @@ The difficulty of inverting a *SHA256* hash is due its length being so large!
 different possible hash values. There are approximately that many atoms in the
 universe! So don't feel bad for not being able to invert
 `32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7` - for all
-intents and purposes it cannot be inverted. And that is true even when computers
+intents and purposes, it cannot be inverted. And that is true even when computers
 do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
 button below then you can have your device cycle through pre-images and show you
 the results at its maximum possible speed:
@@ -237,15 +237,15 @@ can calculate that it is going to take <span id="howLongForThisDeviceWords"></sp
 to try enough combinations to invert this hash and find the solution. That's
 <span id="howLongForThisDeviceNumber"></span>.</span>
 
-When it comes hashing, <span class="hash2Rate">30</span> hashes per second is
+When it comes to hashing, <span class="hash2Rate">30</span> hashes per second is
 actually not quick at all by computer standards. Specialized computer chips are
 built to run billions of hashes per second. At the time of writing (March 2018)
 the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second,
 or 25 million million million hashes per second, but even at this rate it would
 take 146 million million million million million million million million years
-to try all pre-image combinations for SHA256. Thats about a million million
+to try all pre-image combinations for SHA256. That's about a million million
 million years quicker than your device, but it doesn't really matter - by the
-time it comes around our sun will have long since burned out.
+time it comes around, our sun will have long since burned out.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
@@ -275,7 +275,7 @@ appends a bunch of random data (called a
 [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce)) to the end of it. It
 then hashes the whole thing and checks if it matches the target given by the
 examiner. However, it does not need to match the entire hash (that would take
-millions of years), but rather it just needs to match part of the hash - as
+millions of years); rather, it just needs to match part of the hash, as
 specified by the difficulty level.
 
 That all sounds very complicated, but don't worry, it will be much clearer after
@@ -327,7 +327,7 @@ a single hash to know whether you passed or failed. This means that you are doin
 all the work and the examiner barely does any at all.
 
 As you can see, the higher the difficulty, the more attempts it will take on
-average to pass the test. From the results you can also see that there is a
+average to pass the test. From the results, you can also see that there is a
 degree of luck involved in mining - sometimes it takes fewer attempts than
 expected and sometimes it takes more. This is because hashing is a random process.
 
@@ -346,9 +346,9 @@ miner to pass. Here are some other possible proof-of-work tests:
 
 - matching a specified number of characters at the right-hand-side of the target
 - matching a specified number of characters anywhere within the target
-- treat both the target and the mined hash as (hexadecimal) numbers, set the
-target to some large number, and mandate that the miner must find a hash lower
-than the target
+- treating both the target and the mined hash as (hexadecimal) numbers, setting
+the target to some large number, and mandating that the miner must find a hash
+lower than the target
 
 That last type of proof-of-work test is the one used in bitcoin mining.
 
@@ -361,17 +361,17 @@ knowledge to bitcoin mining.
 pre-image for the hash of the next block in the bitcoin blockchain. The winner
 receives bitcoins as a reward.
 
-That definition contains a couple of new concepts, and once you understand them
-then it will make perfect sense:
+That definition contains a couple of new concepts, and once you understand them,
+it will make perfect sense:
 
 - a bitcoin block
 - the bitcoin blockchain
 
 When someone sends some bitcoins to someone else, they begin by opening their
 bitcoin wallet (which is a program, app or website running on their device), and
-then type in the recipient and the amount of bitcoin they want to send to them.
-The bitcoin wallet uses this information to construct a transaction. Here is an
-example bitcoin transaction:
+then typing in the address of the recipient and the amount of bitcoin they want
+to send to them. The bitcoin wallet uses this information to construct a
+transaction. Here is an example bitcoin transaction:
 
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
@@ -380,15 +380,18 @@ example bitcoin transaction:
     <div class="media-caption">example bitcoin transaction</div>
 </div></div>
 
-For the purposes of this article, the details of this transaction are not important,
-but if you are curious you can view all of this transaction's information [here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082). However the only thing you really need to
-understand at this point is that a bitcoin transaction is just a string of characters.
+For the purposes of this article, the details of this transaction are not
+important, but if you are curious you can view all of this transaction's
+information
+[here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082).
+However, the only thing you really need to understand at this point is that a
+bitcoin transaction is just a string of characters.
 
-Once the wallet software has created the transaction it sends it out over the
+Once the wallet software has created the transaction, it sends it out over the
 internet to all the other bitcoin nodes it can find (a bitcoin node is just a
 device running the bitcoin software). You might have expected the transaction to
 only be sent to the person who is receiving the bitcoins, but that is not the
-case. Infact that person does not even have to have their wallet software
+case. In fact, that person does not even have to have their wallet software
 running for the transaction to be processed.
 
 Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
@@ -444,7 +447,7 @@ earlier, that is a very quick thing for a computer to do.
 The *merkle root* is loosely defined as a hash of all transactions contained
 within the block. The transaction data is the pre-image and the *merkle root* is
 the hash. This is another useful feature of cryptographic hashing - it can be
-used to summarise a large amonut of data using only a very small amount of data.
+used to summarise a large amount of data using only a very small amount of data.
 The transactions in a block generally take up over 1MB, however the merkle root
 is only 32 bytes (64 hexadecimal digits).
 
@@ -455,12 +458,12 @@ need to make to find a solution to the test. As mentioned at the end of the
 previous section on hashing, the test in bitcoin mining involves finding a hash
 that is lower than a given target. The *difficulty* value in the block header
 specifies what that target value is. The way this works is quite technical and
-is not necessary to understand bitcoin mining, however if you are curious I have
-included it in the annex (the final section of this article). The basic principle
-however is simple - increasing the difficulty lowers the target value so that
-miners will have to put in more hashing attempts, and decreasing the difficulty
-raises the target value so that miners will have to put in fewer hashing
-attempts.
+is not necessary to understand bitcoin mining; however, if you are curious, I
+have included it in the annex (the final section of this article). The basic
+principle, however, is simple - increasing the difficulty lowers the target
+value so that miners will have to put in more hashing attempts, and decreasing
+the difficulty raises the target value so that miners will have to put in fewer
+hashing attempts.
 
 Finally the *nonce* is something we have already discussed in the section on
 hashing. The only difference here is that with bitcoin the nonce is an integer.
@@ -516,7 +519,7 @@ status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
 </div>
 
 The data in the simulation block header is actually that of the very first
-bitcoin block ever. It was mined by Satoshi Nakamoto - the creater(s) of Bitcoin
+bitcoin block ever. It was mined by Satoshi Nakamoto - the creator(s) of Bitcoin
 on the 3rd of January 2009.
 
 As you can see, each mining attempt increments the nonce by 1. To find the block
@@ -529,8 +532,8 @@ are really not important in order to understand how bitcoin mining works.
 The biggest apparent difference between this mining example and the one in the
 previous section on hashing is that the test here involves comparing two
 hexadecimal numbers, whereas previously the test involved matching a certain
-number of digits from the left-hand-side. However there is a actually a lot of
-similarity between these two types of test. Lets forget about hexadecimal
+number of digits from the left-hand-side. However, there is actually a lot of
+similarity between these two types of test. Let's forget about hexadecimal
 numbers for a moment and just look at some unrelated decimal numbers:
 
 <div class="codeblock">1000000000000
@@ -794,12 +797,12 @@ bitcoin block.
 The final thing to discuss is the luck involved in mining. As you may have
 guessed, each bitcoin block will contain different data to all the blocks that
 have come before it. No other block will have the same transactions, the same
-timestamp, the same previous block hash, etc as the current block. This means
+timestamp, the same previous block hash, etc, as the current block. This means
 that miners will need to try lots of nonce values in order to mine a block - i.e.
 they cannot simply guess the nonce value straight away. The more digits that
 must be matched, the more hashing attempts that must be made on average. In fact
 the average number of hashing attempts needed to match a hex digit with a hash
-can be calculated using the following expession:
+can be calculated using the following expression:
 
 <div class="horizontal-center">
 <pre>
