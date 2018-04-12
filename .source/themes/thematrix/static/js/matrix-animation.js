@@ -29,8 +29,8 @@ function init_matrix_canvas(green_text_canvas, white_text_canvas) {
     var white_text_ctx = white_text_canvas.getContext('2d');
     var cw = 300;
     var ch = 200;
-    var charArr = ['杕','丁','丂','七','丄','丅','丆','万','丈','三','上','下',
-    '丌','不','与','丏','丐','丑','丒','专','且','丕','世','丗','丘','丙','业'];
+    var charArr = ['杕','の','丂','七','丄','当','次','万','丈','三','国','下',
+    '丌','不','与','丏','よ','丑','丒','专','且','丕','世','丗','丘','丙','业'];
     var fallingCharArr = [];
 
     // we want (canvas.width, fontsize) = (42px, 30) = (270px, 16)
