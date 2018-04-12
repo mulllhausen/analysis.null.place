@@ -562,8 +562,7 @@ blockquote {
     font-family: monospace;
     font-size: 14px;
     white-space: pre;/*initial value*/
-    word-break: break-word;
-    word-wrap: break-word;
+    word-break: break-all;
     overflow: auto;
 }
 .button-background+br+.codeblock {
