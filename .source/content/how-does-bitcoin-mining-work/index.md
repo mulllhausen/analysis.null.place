@@ -36,8 +36,9 @@ bitcoin mining
 To understand bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, let's just dive in and give it a go. Click the *SHA256* button
-a few times and look carefully at what it does, then try typing different things
-in the *pre-image* field and clicking the *SHA256* button to see what that does:
+a few times and look carefully at what this does each time, then try typing
+different things in the *pre-image* field and clicking the *SHA256* button to
+see what that does:
 <div class="form-container" id="form0">
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
@@ -65,11 +66,24 @@ in the *pre-image* field and clicking the *SHA256* button to see what that does:
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing algorithms are not important for the sake
 of this article - all that is important is to recognise that *SHA256* is merely
-one of many hashing algorithms - the one that is used in bitcoin mining. The
-output of a cryptographic hash is actually a number; however, that may not have
-been obvious when you ran the *SHA256* hash above, since that number is written
-in hexadecimal format - i.e. base 16. To explain what that means, here are some
-hexadecimal values side by side with their decimal equivalent values:
+one of many hashing algorithms - the one that is used in bitcoin mining.
+
+<blockquote>
+<p>Cryptographic hashing involves taking a string of characters and transforming
+them into another string of characters. We call the input characters the
+<i>pre-image</i> and we call the output the <i>hash</i>:</p>
+</blockquote>
+
+<div class="horizontal-center">
+<div id="hashingFlowchartContainer">
+    <object id="hashingFlowchartSVG" data="/img/hashing-flowchart.svg" type="image/svg+xml"></object>
+</div>
+</div>
+
+The output of a cryptographic hash is actually a number; however, that may not
+have been obvious when you ran the *SHA256* hash above, since that number is
+written in hexadecimal format - i.e. base 16. To explain what that means, here
+are some hexadecimal values side by side with their decimal equivalent values:
 
 <div class="horizontal-center" id="dec2hexTable">
     <div class="constrainWidth">
@@ -112,10 +126,6 @@ hexadecimal format, let's have a look at the formal definition of cryptographic
 hashing:
 
 <blockquote>
-<p>Cryptographic hashing involves taking a string of characters and transforming
-them into another string of characters. We call the initial characters the
-<i>pre-image</i> and we call the output the <i>hash</i>.</p>
-<p></p>
 <p>A cryptographic hashing algorithm has the following properties relevant to
 bitcoin mining:</p>
 <p></p>

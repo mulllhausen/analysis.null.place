@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+
+<svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="40"
+viewBox="0 0 430 40"
+class="global">
+<style type="text/css"><![CDATA[
+    .global {
+        fill: none;
+        font-family: arial, sans-serif;
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* IE/Edge */
+        user-select: none;
+        pointer-events: none;
+    }
+    rect {
+        fill: #2b2b2b;/*dark-grey*/
+        stroke: #6a6a6a;/*light-grey*/
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
+    text {
+        text-anchor: middle;/*horizontal*/
+        fill: #bbbbbb;/*off-white*/
+        font-size: 16px;
+    }
+    path {
+        fill: #2b2b2b;/*dark-grey*/
+    }
+]]></style>
+    <defs>
+        <g id="box">
+            <rect x="0" y="0" width="150" height="30"/>
+            <text x="75" y="21">SHA256</text>
+        </g>
+        <g id="arrow" class="arrow">
+            <path
+                d="M0,7.5
+                L40,7.5 L40,0 L50,10 L40,20 L40,12.5 L0,12.5
+                Z"
+            />
+        </g>
+    </defs>
+    <text x="40" y="14">pre-image</text>
+    <text x="40" y="31">(input)</text>
+    <use x="90" y="7.5" href="#arrow"/>
+    <use x="150" y="2.5" href="#box"/>
+    <use x="310" y="7.5" href="#arrow"/>
+    <text x="400" y="14">hash</text>
+    <text x="400" y="31">(output)</text>
+</svg>
