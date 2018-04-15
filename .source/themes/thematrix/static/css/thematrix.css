@@ -545,7 +545,7 @@ blockquote {
 .codeblock-container button {
     padding: 0 5px;
     margin: 4px;
-    min-width: 26px;
+    width: 26px;/*min width would be better, but this is not supported by ie*/
 }
 .codeblock {/*note: if you want <pre> within a .codeblock then you have to do it yourself*/
     padding: 10px;
