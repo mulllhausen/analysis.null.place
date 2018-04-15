@@ -43,6 +43,13 @@ addEvent(window, 'load', function () {
         runHash0Clicked();
     });
 
+    // dec to hex table
+    addEvent(
+        document.querySelector('#dec2hexTable .instructions'),
+        'click',
+        showMoreDec2Hex
+    );
+
     // form 1 - hashing manually to match hash
     var hash1Params = { // use an object for pass-by-reference
         firstTime: true,
@@ -63,13 +70,6 @@ addEvent(window, 'load', function () {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash1Or2Or3Clicked(hash1Params);
     });
-
-    // dec to hex table
-    addEvent(
-        document.querySelector('#dec2hexTable .instructions'),
-        'click',
-        showMoreDec2Hex
-    );
 
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
@@ -272,7 +272,13 @@ function showMoreDec2Hex() {
             '<td>' + latestDec + '</td><td>' + int2hex(latestDec) + '</td>' +
         '</tr>';
     }
-    table.innerHTML = chunkOfRows;
+    try {
+        table.innerHTML = chunkOfRows;
+    } catch(e) {
+        // fucking internet explorer!
+        // http://webbugtrack.blogspot.com.au/2007/12/bug-210-no-innerhtml-support-on-tables.html
+        table.outerHTML = '<table id="dec2hexData">' + chunkOfRows + '</table>';
+    }
 
     var scrollDiv = document.querySelector('#dec2hexTable .vertical-scroll');
     scrollDiv.scrollTop = scrollDiv.scrollHeight;
@@ -329,7 +335,10 @@ function initDifficultyLevelDropdown(formNum) {
         ' characters only</option>\n';
     }
     dropdownNumChars += '<option value="64">match all 64 characters</option>\n';
-    document.getElementById('difficulty' + formNum).innerHTML = dropdownNumChars;
+    // use outerhtml because ie cannot handle innerhtml for select elements
+    // stackoverflow.com/a/8557846
+    document.getElementById('difficulty' + formNum).outerHTML =
+    '<select id="difficulty' + formNum + '">' + dropdownNumChars + '</select>';
 }
 
 // form 3
