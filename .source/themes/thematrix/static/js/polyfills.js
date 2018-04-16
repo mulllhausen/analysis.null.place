@@ -1,6 +1,6 @@
 // string repeat polyfill
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat#Polyfill
-if (!String.prototype.repeat) String.prototype.repeat = function(count) {
+if (!String.prototype.repeat) String.prototype.repeat = function (count) {
     'use strict';
     if (this == null) {
         throw new TypeError('can\'t convert ' + this + ' to object');
@@ -34,8 +34,8 @@ if (!String.prototype.repeat) String.prototype.repeat = function(count) {
 };
 
 // polyfill for ie to do negative substr (github.com/tommymessbauer/substr-polyfill)
-if ('ab'.substr(-1) != 'b') String.prototype.substr = function(substr) {
-    return function(start, length) {
+if ('ab'.substr(-1) != 'b') String.prototype.substr = function (substr) {
+    return function (start, length) {
         // did we get a negative start?
         if (start < 0) {
             // calculate how much it is from the beginning of the string
@@ -50,7 +50,7 @@ if ('ab'.substr(-1) != 'b') String.prototype.substr = function(substr) {
     }
 }(String.prototype.substr);
 
-if (!String.prototype.trim) String.prototype.trim = function() {
+if (!String.prototype.trim) String.prototype.trim = function () {
     return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 };
 
@@ -58,7 +58,7 @@ if (!String.prototype.trim) String.prototype.trim = function() {
 if (!Element.prototype.matches) Element.prototype.matches =
 Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 
-if (!Element.prototype.closest) Element.prototype.closest = function(query) {
+if (!Element.prototype.closest) Element.prototype.closest = function (query) {
     var el = this;
     if (Element.prototype.matches) { // ie 9+
         if (!document.documentElement.contains(el)) return null;
@@ -86,7 +86,7 @@ if (!Element.prototype.closest) Element.prototype.closest = function(query) {
 // fix for stupid ie. thanks to
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
 if (!Math.trunc) {
-    Math.trunc = function(v) {
+    Math.trunc = function (v) {
         v = +v;
         if (!isFinite(v)) return v;
         return (v - (v % 1)) || ((v < 0) ? -0 : (v === 0 ? v : 0));
@@ -105,24 +105,24 @@ if (!Math.trunc) {
     };
 }
 
-window.requestAnimationFrame = function() {
+window.requestAnimationFrame = function () {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
-        function(f) {
+        function (f) {
             window.setTimeout(f, 1e3/60);
         }
 }();
 
-window.cancelAnimationFrame = function() {
+window.cancelAnimationFrame = function () {
     return window.cancelAnimationFrame ||
         window.webkitCancelAnimationFrame ||
         window.mozCancelAnimationFrame ||
         window.msCancelAnimationFrame ||
         window.oCancelAnimationFrame ||
-        function(id) {
+        function (id) {
             window.clearTimeout(id);
         }
 }();

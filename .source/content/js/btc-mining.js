@@ -981,8 +981,7 @@ function mine4AndRenderResults() {
     );
 
     if (minedResult.status) {
-        popup('success!', 'you mined a block');
-        setTimeout(function () { hidePopup(); }, 2000);
+        popup('success!', 'you mined a block', 3000);
         setButtons(false, 'RunHash4');
         document.getElementById('mineStatus4').innerHTML = 'pass (because ' +
         minedResult.blockhash[minedResult.resolution] + ' is less than ' +
@@ -1313,7 +1312,8 @@ function difficulty11Changed(e) {
     var numDifficultyChars = parseInt(e.currentTarget.value);
     document.getElementById('difficulty11Calculation').innerHTML =
     '(16<sup>' + numDifficultyChars + '</sup>)/2 = ' +
-    addThousandCommas(difficultyAttempts[numDifficultyChars]);
+    addThousandCommas(difficultyAttempts[numDifficultyChars]) +
+    ' hashes on average';
 }
 
 // dragable blockchain svg

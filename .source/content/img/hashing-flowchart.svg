@@ -50,9 +50,9 @@ class="global">
     </defs>
     <text x="40" y="14">pre-image</text>
     <text x="40" y="31">(input)</text>
-    <use x="90" y="7.5" href="#arrow"/>
-    <use x="150" y="2.5" href="#box"/>
-    <use x="310" y="7.5" href="#arrow"/>
+    <use x="90" y="7.5" xlink:href="#arrow"/>
+    <use x="150" y="2.5" xlink:href="#box"/>
+    <use x="310" y="7.5" xlink:href="#arrow"/>
     <text x="400" y="14">hash</text>
     <text x="400" y="31">(output)</text>
 </svg>
