@@ -1312,7 +1312,8 @@ function difficulty11Changed(e) {
     var numDifficultyChars = parseInt(e.currentTarget.value);
     document.getElementById('difficulty11Calculation').innerHTML =
     '(16<sup>' + numDifficultyChars + '</sup>)/2 = ' +
-    addThousandCommas(difficultyAttempts[numDifficultyChars]);
+    addThousandCommas(difficultyAttempts[numDifficultyChars]) +
+    ' hashes on average';
 }
 
 // dragable blockchain svg

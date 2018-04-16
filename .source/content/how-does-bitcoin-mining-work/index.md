@@ -1,9 +1,8 @@
 title: how does bitcoin mining work?
 slug: how-does-bitcoin-mining-work
-date: 2017-11-28 
+date: 2018-04-17
 category: cryptocurrencies
 tags: bitcoin, mining, proof-of-work
-status: draft
 stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
 summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
@@ -82,9 +81,8 @@ them into another string of characters. We call the input characters the
 
 The output of a cryptographic hash is actually a number; however, that may not
 have been obvious when you ran the *SHA256* hash above, since that number is
-written in hexadecimal format (known as *hex*) - i.e. base 16. To explain what
-that means, here are some hexadecimal values side by side with their decimal
-equivalent values:
+written in hexadecimal format - i.e. base 16. To explain what that means, here
+are some hexadecimal values side by side with their decimal equivalent values:
 
 <div class="horizontal-center" id="dec2hexTable">
     <div class="constrainWidth">
@@ -250,13 +248,13 @@ to try enough combinations to invert this hash and find the solution. That's
 
 When it comes to hashing, <span class="hash2Rate">30</span> hashes per second is
 actually not quick at all by computer standards. Specialized computer chips are
-built to run billions of hashes per second. At the time of writing (March 2018)
-the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second,
-i.e. 25 million million million hashes per second, but even at this rate it would
-take 146 million million million million million million million million years
-to try all pre-image combinations for SHA256. That's about a million million
-million years quicker than your device, but it doesn't really matter - by the
-time it comes around, our sun will have long since burned out.
+built to run billions of hashes per second. At the time I'm writing this (March
+2018) the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per
+second, i.e. 25 million million million hashes per second, but even at this rate
+it would take 146 million million million million million million million million
+years to try all pre-image combinations for SHA256. That's about a million
+million million years quicker than your device, but it doesn't really matter -
+by the time it comes around, our sun will have long since burned out.
 
 "Ok", you might think to yourself, "but maybe I don't need to try all the
 possible combinations to produce the hash I'm after - maybe I can just skip
@@ -290,8 +288,8 @@ millions of years); rather, it just needs to match part of the hash, as
 specified by the difficulty level.
 
 That all sounds very complicated, but don't worry, it will be much clearer after
-you give it a go. Click the *Mine with SHA256* button and once you find the
-solution try changing the difficulty:
+you give it a go. Click the *Mine with SHA256* button and look carefully at what
+this does. Once you find the solution, try changing the difficulty:
 
 <a name="form3"></a>
 <div class="form-container" id="form3">
@@ -331,15 +329,16 @@ status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></spa
     </div>
 </div>
 
-Whenever you pass the test, you can send the nonce back to the examiner and it
-can verify that you did indeed pass by running the hash for itself. It will take
-you lots of attempts at hashing to pass the test, but it only takes the examiner
-a single hash to know whether you passed or failed. This means that you are doing
-all the work and the examiner barely does any at all.
+In that scenario, your device was the miner. When you passed the test, you would
+give the nonce back to the examiner and it could verify that you did indeed pass
+by running the hash for itself. It would have taken your device a lot of attempts
+at hashing to pass the test (i.e. a lot of work), but it only takes the examiner
+a single hash to know whether you passed or failed. This means that your device
+is doing all the work and the examiner barely does any at all.
 
-As you can see, the higher the difficulty, the more attempts it will take on
-average to pass the test. From the results, you can also see that there is a
-degree of luck involved in mining - sometimes it takes fewer attempts than
+As you would have noticed, the higher the difficulty, the more attempts it will
+take on average to pass the test. From the results, you can also see that there
+is a degree of luck involved in mining - sometimes it takes fewer attempts than
 expected and sometimes it takes more. This is because hashing is a random process.
 
 Another thing to note is that the examiner can set the target value without
@@ -347,6 +346,17 @@ having to hash a pre-image to get it. The examiner does not need to know the
 answer to the test before it sets the test for the miner. In this way, mining is
 different from a normal school exam. All that matters is that the examiner can
 verify the test once the miner submits the nonce as a solution.
+
+You may be wondering why the examiner must supply part of the pre-image to the
+miner. Why not just let the miner determine the entire pre-image itself? The
+answer is that this is necessary to ensure that the miner always has to do work
+(i.e. do lots of hashing) to find a solution to the puzzle. If the miner was
+allowed to determine the entire pre-image itself, then once it had found a
+solution for a given difficulty, it could simply re-use that solution over and
+over and thus avoid doing any work. To ensure that the miner always does work,
+the examiner generates a new pre-image prefix every time it sets a test for the
+miner. This way, the miner has to find a new nonce for every test, even if the
+difficulty does not change.
 
 The final thing to understand from this section, before we move on to bitcoin
 mining, is that the test we have done here - matching a specified number of
@@ -405,9 +415,8 @@ be sent only to the person who is receiving the bitcoins, but that is not the
 case. In fact, that person does not even have to have their wallet software
 running for the transaction to be processed.
 
-Some of the bitcoin nodes which receive the transaction are bitcoin miners (more
-on these later). These miners gather the transactions they receive and put them
-into a block:
+Some of the bitcoin nodes which receive the transaction are bitcoin miners.
+These miners gather the transactions they receive and put them into a block:
 
 <div class="media-container"><div class="media-positioner">
     <table>
@@ -439,8 +448,8 @@ The header contains all the data needed to uniquely identify the block:
 </div></div>
 Lets look at each of these fields within the block header:
 
-The *version* is just a number indicating the current version of the bitcoin
-protocol.
+The *version* is just a number indicating the current version of the [Bitcoin
+protocol](https://en.bitcoin.it/wiki/Protocol_rules).
 
 The *previous block hash* is where the *blockchain* concept comes in - the
 current block references the previous block so that blocks build upon each other
@@ -472,9 +481,9 @@ specifies what that target value is. The way this works is quite technical and
 is not necessary to understand bitcoin mining; however, if you are curious, I
 have included it in the annex (the final section of this article). The basic
 principle, however, is simple - increasing the difficulty lowers the target
-value so that miners will have to put in more hashing attempts, and decreasing
-the difficulty raises the target value so that miners will have to put in fewer
-hashing attempts.
+value so that miners will have to do more hashing attempts, and decreasing the
+difficulty raises the target value so that miners will have to do fewer hashing
+attempts.
 
 Finally the *nonce* is something we have already discussed in the section on
 hashing. The only difference here is that with bitcoin the nonce is an integer.
@@ -538,7 +547,8 @@ hash, all of the data in the block header shown here is hashed with SHA256 twice
 I.e. it is all put together in one big string of characters and then hashed
 once with SHA256, and then that result is hashed with SHA256 again. There is a
 walkthrough of this process in the following annex section; however, the details
-are really not important in order to understand how bitcoin mining works.
+are really not important in order to get a high-level understanding of how
+bitcoin mining works.
 
 The biggest apparent difference between this mining example and the one in the
 previous section on hashing is that the test here involves comparing two
@@ -570,8 +580,8 @@ left-hand-side of the number and compare each digit:
 Because `1` is greater than `0` then we know that the first number must be a
 bigger number.
 
-OK, now what if we pad them both to 64 digits? Again they are exactly the same
-numbers as before, and they are the same length, but now they have lots of
+OK, now what if we zero-pad them both to 64 digits? Again they are exactly the
+same numbers as before, and they are the same length, but now they have lots of
 leading zeros:
 
 <div class="codeblock-container auto-wrap-on-mobile">
@@ -839,18 +849,19 @@ hashes that must be made for a given difficulty:
 </div>
 
 Of course, a miner may be lucky or unlucky. You will have noticed this when you
-tried mining using the [final form](#form3) of the *cryptographic hashing*
+tried mining in the [final scenario](#form3) of the *cryptographic hashing*
 section - sometimes you find a valid nonce in many fewer attempts than the
 average, and sometimes in many more. The process is random, just like trying to
 shake a 6 with a dice.
 
-Interestingly, if 9 or more characters must be matched, then the nonce alone is
-not large enough for the average number of attempts that must be made. Matching 9
-characters will require on average 34,359,738,368 double-hash attempts; however,
-the nonce field is only 4 bytes long and so has a maximum value of 4,294,967,295.
-What is a miner to do if it reaches 4,294,967,295 attempts and a solution has
-still not been found? One option is to increment the timestamp field in the
-block by 1 second and begin mining again with a nonce of 0. But what if the
-miners are so fast that they can hash at more than 4,294,967,295 hashes per
-second? In that case they can change some redundant data in the first transaction
-of the block they are currently mining and reset the nonce to 0.
+Interestingly, if 9 or more digits must be matched, then the nonce alone is
+not large enough for the average number of attempts that must be made. Matching
+9 characters will require on average 34,359,738,368 double-hash attempts;
+however, the bitcoin nonce field is only 4 bytes long and so has a maximum value
+of 4,294,967,295. What is a bitcoin miner to do if it reaches 4,294,967,295
+attempts and a solution has still not been found? One option is to increment the
+timestamp field in the block by 1 second and begin mining again with a nonce of
+0. But what if the miners are so fast that they can hash at more than
+4,294,967,295 hashes per second? In that case they can change some redundant
+data in the first transaction of the block they are currently mining and reset
+the nonce to 0.

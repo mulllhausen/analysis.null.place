@@ -167,7 +167,7 @@ code {
         background: #000000;
     }
     ::-webkit-scrollbar-thumb {
-        background: #101010;
+        background: #404040;
     }
     ::-webkit-scrollbar-thumb:hover {
         background: #6a6a6a;
