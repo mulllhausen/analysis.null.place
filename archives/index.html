@@ -65,6 +65,14 @@
                 <span id="fullpagePopupDetail"></span>
             </span>
         </div>
+        <script>
+            if (window.hasOwnProperty == null) {
+                document.getElementById('fullpagePopupHeading').innerHTML = 'your browser is too old';
+                document.getElementById('fullpagePopupDetail').innerHTML = 'sorry, this blog cannot run on your browser';
+                document.getElementById('fullpagePopupNotification').style.display = 'table';
+                nonExistentFunctionThatHaltsJavascript();
+            }
+        </script>
         <div class="top-bar hidden-pc">
             <a class="brand" href="http://null.place/">analysis</a>
 <div class="logo-container">
@@ -81,11 +89,8 @@
             </button>
             <div id="navMenu" class="nav-menu-phone">
 <ul class="nav-menu">
-    <a href="http://null.place/example-category-a/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a<sup> 3</sup>
-    </a>
-    <a href="http://null.place/example-category-b/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
+    <a href="http://null.place/cryptocurrencies/" >
+        <i class="fa fa-folder-open-o" aria-hidden="true"></i> cryptocurrencies<sup> 1</sup>
     </a>
     <a href="http://null.place/archives/" class="active">
         <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>
@@ -100,11 +105,8 @@
             <div class="col-2">                <div class="side-bar">
                     <a class="brand" href="http://null.place/">analysis</a>
 <ul class="nav-menu">
-    <a href="http://null.place/example-category-a/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a<sup> 3</sup>
-    </a>
-    <a href="http://null.place/example-category-b/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
+    <a href="http://null.place/cryptocurrencies/" >
+        <i class="fa fa-folder-open-o" aria-hidden="true"></i> cryptocurrencies<sup> 1</sup>
     </a>
     <a href="http://null.place/archives/" class="active">
         <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>
@@ -128,18 +130,8 @@
 <h1>all articles</h1>
 
 <dl class="inline">
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-b/example-article-6/'>example article 6</a></dd>
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-a/example-article-5/'>example article 5</a></dd>
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-b/example-article-4/'>example article 4</a></dd>
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-a/example-article-3/'>example article 3</a></dd>
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-b/example-article-2/'>example article 2</a></dd>
-	<dt>2017-11-19</dt>
-	<dd><a href='http://null.place/example-category-a/example-article-1/'>example article 1</a></dd>
+	<dt>2018-04-17</dt>
+	<dd><a href='http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/'>how does bitcoin mining work?</a></dd>
 </dl>
 </section>
             </div>

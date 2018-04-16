@@ -1,2 +1,796 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="http://null.place/" rel="alternate"></link><link href="http://null.place/feeds/all.atom.xml" rel="self"></link><id>http://null.place/</id><updated>2017-11-19T23:32:56+10:30</updated><entry><title>example article 6</title><link href="http://null.place/example-category-b/example-article-6/" rel="alternate"></link><published>2017-11-19T23:32:56+10:30</published><updated>2017-11-19T23:32:56+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-b/example-article-6/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag60"></category><category term="example_tag61"></category></entry><entry><title>example article 5</title><link href="http://null.place/example-category-a/example-article-5/" rel="alternate"></link><published>2017-11-19T23:32:44+10:30</published><updated>2017-11-19T23:32:44+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-a/example-article-5/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag50"></category><category term="example_tag51"></category></entry><entry><title>example article 4</title><link href="http://null.place/example-category-b/example-article-4/" rel="alternate"></link><published>2017-11-19T23:32:33+10:30</published><updated>2017-11-19T23:32:33+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-b/example-article-4/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag40"></category><category term="example_tag41"></category></entry><entry><title>example article 3</title><link href="http://null.place/example-category-a/example-article-3/" rel="alternate"></link><published>2017-11-19T23:32:15+10:30</published><updated>2017-11-19T23:32:15+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-a/example-article-3/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag30"></category><category term="example_tag31"></category></entry><entry><title>example article 2</title><link href="http://null.place/example-category-b/example-article-2/" rel="alternate"></link><published>2017-11-19T23:32:04+10:30</published><updated>2017-11-19T23:32:04+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-b/example-article-2/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag20"></category><category term="example_tag21"></category></entry><entry><title>example article 1</title><link href="http://null.place/example-category-a/example-article-1/" rel="alternate"></link><published>2017-11-19T23:31:47+10:30</published><updated>2017-11-19T23:31:47+10:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2017-11-19:/example-category-a/example-article-1/</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;p&gt;blah blah&lt;/p&gt;</content><category term="example_tag10"></category><category term="example_tag11"></category></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="http://null.place/" rel="alternate"></link><link href="http://null.place/feeds/all.atom.xml" rel="self"></link><id>http://null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">&lt;p&gt;An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.&lt;/p&gt;</summary><content type="html">&lt;p&gt;The simplest definition of Bitcoin mining I can think of is this:&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;
+Bitcoin mining involves computers competing with each other to solve a random
+puzzle. The answer found by the winner is verified by all participants. The
+winner receives bitcoins as a reward.
+&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;In this article I will delve into what exactly this &lt;em&gt;random puzzle&lt;/em&gt; is, and how
+the solution found by the winner can be verified. I have made the article
+interactive so that you can simulate the mining algorithms for yourself and get
+a feel for how mining really works. While the concepts here are not simple, they
+are presented so as to be easily understood by someone with no knowledge of
+programming, cryptography or bitcoin. And I hope the interactivity will make the
+whole process fun.&lt;/p&gt;
+&lt;p&gt;The article has 3 parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cryptographic hashing - this is background material needed to understand
+bitcoin mining&lt;/li&gt;
+&lt;li&gt;bitcoin mining&lt;/li&gt;
+&lt;li&gt;annex - filling in some of the fine detail not discussed earlier&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;cryptographic hashing&lt;/h2&gt;
+&lt;p&gt;To understand bitcoin mining, it is first necessary to understand what
+cryptographic hashing is and how it works. Rather than bore you with definitions
+at the start, let's just dive in and give it a go. Click the &lt;em&gt;SHA256&lt;/em&gt; button
+a few times and look carefully at what this does each time, then try typing
+different things in the &lt;em&gt;pre-image&lt;/em&gt; field and clicking the &lt;em&gt;SHA256&lt;/em&gt; button to
+see what that does:
+&lt;div class="form-container" id="form0"&gt;
+    &lt;label for="inputMessage0" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;input id="inputMessage0" type="text" value="hello world!"&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;button id="btnRunHash0"&gt;SHA256&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;span id="hash0Duration"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile" style="display:none;"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="hash0Results" class="codeblock"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;SHA256&lt;/em&gt; stands for &lt;em&gt;Secure Hash Algorithm (256 bits)&lt;/em&gt;. There are many different
+hashing algorithms - &lt;em&gt;SHA128&lt;/em&gt;, &lt;em&gt;SHA512&lt;/em&gt;, &lt;em&gt;MD5&lt;/em&gt;, &lt;em&gt;RIPEMD128&lt;/em&gt;, &lt;em&gt;RIPEMD160&lt;/em&gt;, etc.
+The differences between these hashing algorithms are not important for the sake
+of this article. All that is important is to recognise that &lt;em&gt;SHA256&lt;/em&gt; is merely
+one of many hashing algorithms - the one that is used in bitcoin mining.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cryptographic hashing involves taking a string of characters and transforming
+them into another string of characters. We call the input characters the
+&lt;i&gt;pre-image&lt;/i&gt; and we call the output the &lt;i&gt;hash&lt;/i&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class="horizontal-center"&gt;
+&lt;div id="hashingFlowchartContainer"&gt;
+    &lt;object id="hashingFlowchartSVG" data="/img/hashing-flowchart.svg" type="image/svg+xml"&gt;&lt;/object&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The output of a cryptographic hash is actually a number; however, that may not
+have been obvious when you ran the &lt;em&gt;SHA256&lt;/em&gt; hash above, since that number is
+written in hexadecimal format - i.e. base 16. To explain what that means, here
+are some hexadecimal values side by side with their decimal equivalent values:&lt;/p&gt;
+&lt;div class="horizontal-center" id="dec2hexTable"&gt;
+    &lt;div class="constrainWidth"&gt;
+        &lt;table class="header"&gt;
+            &lt;tr&gt; &lt;td&gt;decimal&lt;/td&gt; &lt;td&gt;hexadecimal&lt;/td&gt; &lt;/tr&gt;
+        &lt;/table&gt;
+        &lt;div class="vertical-scroll"&gt;
+            &lt;table id="dec2hexData"&gt;
+                &lt;tr&gt; &lt;td&gt;0&lt;/td&gt;  &lt;td&gt;0&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;1&lt;/td&gt;  &lt;td&gt;1&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;2&lt;/td&gt;  &lt;td&gt;2&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;3&lt;/td&gt;  &lt;td&gt;3&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;4&lt;/td&gt;  &lt;td&gt;4&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;5&lt;/td&gt;  &lt;td&gt;5&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;6&lt;/td&gt;  &lt;td&gt;6&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;7&lt;/td&gt;  &lt;td&gt;7&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;8&lt;/td&gt;  &lt;td&gt;8&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;9&lt;/td&gt;  &lt;td&gt;9&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;10&lt;/td&gt; &lt;td&gt;a&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;11&lt;/td&gt; &lt;td&gt;b&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;12&lt;/td&gt; &lt;td&gt;c&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;13&lt;/td&gt; &lt;td&gt;d&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;14&lt;/td&gt; &lt;td&gt;e&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;15&lt;/td&gt; &lt;td&gt;f&lt;/td&gt;  &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;16&lt;/td&gt; &lt;td&gt;10&lt;/td&gt; &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;17&lt;/td&gt; &lt;td&gt;11&lt;/td&gt; &lt;/tr&gt;
+                &lt;tr&gt; &lt;td&gt;18&lt;/td&gt; &lt;td&gt;12&lt;/td&gt; &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+        &lt;div class="instructions noselect"&gt;click for more&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Don't worry, you won't need to do any hexadecimal conversions while following
+this article. All you need to remember here is that hexadecimal digits go from
+&lt;code&gt;0&lt;/code&gt; to &lt;code&gt;9&lt;/code&gt; to &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;OK, so now that you have tried cryptographic hashing, and you know about
+hexadecimal format, let's have a look at the formal definition of cryptographic
+hashing:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A cryptographic hashing algorithm has the following properties relevant to
+bitcoin mining:&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;ol&gt;
+    &lt;li&gt;it is deterministic - the same pre-image always results in the same hash&lt;/li&gt;
+    &lt;li&gt;it is quick to compute the hash value for any given pre-image&lt;/li&gt;
+    &lt;li&gt;it is impossible to reverse a cryptographic hash and recover a pre-image
+    from its hash value, except by trying all possible pre-images&lt;/li&gt;
+    &lt;li&gt;a small change to a pre-image changes the hash value so extensively
+    that the new hash value appears uncorrelated with the old hash value&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Lets investigate these properties:&lt;/p&gt;
+&lt;p&gt;Properties 1 and 2 are quite obvious - earlier when we hashed &lt;code&gt;hello world!&lt;/code&gt;
+with &lt;em&gt;SHA256&lt;/em&gt; it always gave
+&lt;code&gt;7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9&lt;/code&gt; and took
+&lt;span id="helloWorldHashSpeed"&gt;less than 4 milliseconds (depending on the speed
+of your device)&lt;/span&gt;, which is fairly quick. However, it must be noted that
+performing the hash always takes at least &lt;em&gt;some&lt;/em&gt; time, even if it is a very small
+amount of time. This fact will be important when we discuss hashing in relation
+to bitcoin mining later on.&lt;/p&gt;
+&lt;p&gt;Property 3 explains that hashing is a one-way process. We can easily get from
+a pre-image to its hash, but it is impossible to programmatically get from a
+cryptographic hash back to its pre-image. The process of trying to get from a
+hash back to its pre-image is called &lt;em&gt;inverting the hash&lt;/em&gt;.&lt;/p&gt;
+&lt;div id="easyImpossibleCodeblock" class="codeblock"&gt;easy:       pre-image -&gt; SHA256 -&gt; hash
+
+impossible: pre-image &lt;- SHA256 &lt;- hash
+&lt;/div&gt;
+
+&lt;p&gt;If we start with a pre-image and then hash it, then of course we already know
+what the pre-image for the resulting hash is. For example, if I give you the
+hash &lt;code&gt;7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9&lt;/code&gt; then you
+already know that a corresponding SHA256 pre-image is &lt;code&gt;hello world!&lt;/code&gt;, since we
+already hashed &lt;code&gt;hello world!&lt;/code&gt; with SHA256 earlier and it gave this result. But
+if I give you &lt;code&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/code&gt;
+then you will not be able to find the pre-image which results in this hash - i.e.
+you will not be able to invert this hash. Seriously - give it a go:&lt;/p&gt;
+&lt;div class="form-container" id="form1"&gt;
+    &lt;input type="checkbox" id="inputCheckbox1" checked&gt;
+    &lt;label for="inputCheckbox1"&gt;automatically increment pre-image after each hash&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;label for="inputMessage1" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;input id="inputMessage1" type="text" value="a"&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;button id="btnRunHash1"&gt;SHA256&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;span id="info1" style="display:none;"&gt;
+            (Average hash rate: &lt;span&gt;&lt;/span&gt; hashes per second)
+        &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="codeblock1HashResults" class="codeblock"&gt;? &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="match1" class="individual-digits"&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/span&gt;
+&lt;span id="showResults1" style="display:none;"&gt;&lt;span id="preImage1"&gt;&lt;/span&gt; &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="hash1Result" class="individual-digits"&gt;&lt;/span&gt;
+status: &lt;span id="matchStatus1"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The difficulty of inverting a &lt;em&gt;SHA256&lt;/em&gt; hash is due its enormous length! &lt;em&gt;SHA256&lt;/em&gt;
+has 2&lt;sup&gt;256&lt;/sup&gt; possible different hash values. That's
+115792089237316195423570985008687907853269984665640564039457584007913129639936
+different possible hash values. There are approximately that many atoms in the
+universe! So don't feel bad for not being able to invert
+&lt;code&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/code&gt;. For all
+intents and purposes, it cannot be inverted. And that is true even when computers
+do the hashing at their maximum speeds. If you click the &lt;em&gt;Run SHA256 Automatically&lt;/em&gt;
+button below then you can have your device cycle through pre-images and show you
+the results at its maximum possible speed:&lt;/p&gt;
+&lt;div class="form-container" id="form2"&gt;
+    &lt;input type="checkbox" id="inputCheckbox2" checked disabled&gt;
+    &lt;label for="inputCheckbox2"&gt;automatically increment pre-image after each hash&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;label for="inputMessage2" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;input id="inputMessage2" type="text" value="a" disabled&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;button id="btnRunHash2"&gt;Run SHA256 Automatically&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;span id="info2" style="display:none;"&gt;
+            (Average hash rate: &lt;span&gt;&lt;/span&gt; hashes per second)
+        &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="codeblock2HashResults" class="codeblock"&gt;? &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="match2" class="individual-digits"&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/span&gt;
+&lt;span id="showResults2" style="display:none;"&gt;&lt;span id="preImage2"&gt; &lt;/span&gt; &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="hash2Result" class="individual-digits"&gt;&lt;/span&gt;
+status: &lt;span id="matchStatus2"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;span id="showHowLongForThisDevice" style="display:none;"&gt;Using your device's
+average hash rate of &lt;span class="hash2Rate"&gt;&lt;/span&gt; hashes per second, then we
+can calculate that it is going to take &lt;span id="howLongForThisDeviceWords"&gt;&lt;/span&gt;
+to try enough combinations to invert this hash and find the solution. That's
+&lt;span id="howLongForThisDeviceNumber"&gt;&lt;/span&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;When it comes to hashing, &lt;span class="hash2Rate"&gt;30&lt;/span&gt; hashes per second is
+actually not quick at all by computer standards. Specialized computer chips are
+built to run billions of hashes per second. At the time I'm writing this (March
+2018) the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per
+second, i.e. 25 million million million hashes per second, but even at this rate
+it would take 146 million million million million million million million million
+years to try all pre-image combinations for SHA256. That's about a million
+million million years quicker than your device, but it doesn't really matter -
+by the time it comes around, our sun will have long since burned out.&lt;/p&gt;
+&lt;p&gt;"Ok", you might think to yourself, "but maybe I don't need to try all the
+possible combinations to produce the hash I'm after - maybe I can just skip
+ahead ... If the pre-image I start with does not give a hash that is close to
+what I want, then I will just choose a pre-image further along that gives a hash
+closer to what I want, and then make minor adjustments until I zero in on the
+hash." But alas, this is not how cryptographic hashing works - Property 4 tells
+us that hashes are both deterministic and random. They are deterministic because
+a pre-image will always hash to the same value, but that value is random, so
+there can be no process of zeroing in. Trying a pre-image that is "further along"
+is no better than trying any other different pre-image - they all completely
+modify the resulting hash.&lt;/p&gt;
+&lt;p&gt;Now that we have discussed the properties of cryptographic hashing, we can
+investigate how it is used in a technique known as &lt;em&gt;proof of work&lt;/em&gt;, also known
+as &lt;em&gt;mining&lt;/em&gt;. &lt;em&gt;Proof of work&lt;/em&gt;, as the name implies, is a way for one computer to
+prove to another computer that it has completed a certain amount of work. Let's
+call the computer doing the work the &lt;em&gt;miner&lt;/em&gt;, and the other computer the
+&lt;em&gt;examiner&lt;/em&gt;. The examiner sets a test for the miner to pass by giving it 3 things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;part of a pre-image&lt;/li&gt;
+&lt;li&gt;a hash value that must be matched (called the target)&lt;/li&gt;
+&lt;li&gt;the difficulty level of the test&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The test works like this: the miner takes the pre-image it has been given and
+appends a bunch of random data (called a
+&lt;a href="https://en.wikipedia.org/wiki/Cryptographic_nonce"&gt;nonce&lt;/a&gt;) to the end of it. It
+then hashes the whole thing and checks if it matches the target given by the
+examiner. However, it does not need to match the entire hash (that would take
+millions of years); rather, it just needs to match part of the hash, as
+specified by the difficulty level.&lt;/p&gt;
+&lt;p&gt;That all sounds very complicated, but don't worry, it will be much clearer after
+you give it a go. Click the &lt;em&gt;Mine with SHA256&lt;/em&gt; button and look carefully at what
+this does. Once you find the solution, try changing the difficulty:&lt;/p&gt;
+&lt;p&gt;&lt;a name="form3"&gt;&lt;/a&gt;
+&lt;div class="form-container" id="form3"&gt;
+    &lt;input type="checkbox" id="inputCheckbox3"&gt;
+    &lt;label for="inputCheckbox3"&gt;mine automatically&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;label for="difficulty3" class="for-select"&gt;difficulty&lt;/label&gt;&lt;br&gt;
+        &lt;select id="difficulty3"&gt;&lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;label for="inputMessage3Prefix" class="for-textbox"&gt;pre-image prefix&lt;/label&gt;&lt;br&gt;
+        &lt;input id="inputMessage3Prefix" type="text" value="" disabled&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;label for="inputMessage3" class="for-textbox"&gt;pre-image nonce&lt;/label&gt;&lt;br&gt;
+        &lt;input id="inputMessage3" type="text" value="a"&gt;
+    &lt;/div&gt;
+    &lt;div class="left"&gt;
+        &lt;button id="btnRunHash3"&gt;Mine manually with SHA256&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;br&gt;
+    &lt;div class="left"&gt;
+        &lt;span id="info3" style="display:none;"&gt;(Average hash rate: &lt;span&gt;&lt;/span&gt; hashes per second)&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="codeblock3HashResults" class="codeblock"&gt;SHA256 target: &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="match3" class="individual-digits"&gt;0000000000000000000000000000000000000000000000000000000000000000&lt;/span&gt;
+&lt;span id="showResults3" style="display:none;"&gt;&lt;span id="preImage3"&gt; &lt;/span&gt; -&amp;gt; SHA256 -&amp;gt; &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="hash3Result" class="individual-digits"&gt;&lt;/span&gt;
+status: &lt;span id="matchStatus3"&gt;&lt;/span&gt;&lt;span id="mining3Statistics"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;In that scenario, your device was the miner. When you passed the test, you would
+give the nonce back to the examiner and it could verify that you did indeed pass
+by running the hash for itself. It would have taken your device a lot of attempts
+at hashing to pass the test (i.e. a lot of work), but it only takes the examiner
+a single hash to know whether you passed or failed. This means that your device
+is doing all the work and the examiner barely does any at all.&lt;/p&gt;
+&lt;p&gt;As you would have noticed, the higher the difficulty, the more attempts it will
+take on average to pass the test. From the results, you can also see that there
+is a degree of luck involved in mining - sometimes it takes fewer attempts than
+expected and sometimes it takes more. This is because hashing is a random process.&lt;/p&gt;
+&lt;p&gt;Another thing to note is that the examiner can set the target value without
+having to hash a pre-image to get it. The examiner does not need to know the
+answer to the test before it sets the test for the miner. In this way, mining is
+different from a normal school exam. All that matters is that the examiner can
+verify the test once the miner submits the nonce as a solution.&lt;/p&gt;
+&lt;p&gt;You may be wondering why the examiner must supply part of the pre-image to the
+miner. Why not just let the miner determine the entire pre-image itself? The
+answer is that this is necessary to ensure that the miner always has to do work
+(i.e. do lots of hashing) to find a solution to the puzzle. If the miner was
+allowed to determine the entire pre-image itself, then once it had found a
+solution for a given difficulty, it could simply re-use that solution over and
+over and thus avoid doing any work. To ensure that the miner always does work,
+the examiner generates a new pre-image prefix every time it sets a test for the
+miner. This way, the miner has to find a new nonce for every test, even if the
+difficulty does not change.&lt;/p&gt;
+&lt;p&gt;The final thing to understand from this section, before we move on to bitcoin
+mining, is that the test we have done here - matching a specified number of
+characters at the left-hand-side of the target - is just one of many possible
+types of proof-of-work test. The only criteria for a good proof-of-work test is
+that the examiner must be able to fine-tune the number of attempts it takes the
+miner to pass. Here are some other possible proof-of-work tests:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;matching a specified number of characters at the right-hand-side of the target&lt;/li&gt;
+&lt;li&gt;matching a specified number of characters anywhere within the target&lt;/li&gt;
+&lt;li&gt;treating both the target and the mined hash as (hexadecimal) numbers, setting
+the target to some large number, and requiring the miner to find a hash lower
+than the target&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That last type of proof-of-work test is the one used in bitcoin mining.&lt;/p&gt;
+&lt;h2&gt;bitcoin mining&lt;/h2&gt;
+&lt;p&gt;Now that we have explored hashing and mining in general, we can apply this
+knowledge to bitcoin mining.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bitcoin mining involves computers competing to find the nonce part of the
+pre-image for the hash of the next block in the bitcoin blockchain. The winner
+receives bitcoins as a reward.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That explanation contains a couple of new concepts, and once you understand them
+then the process will make perfect sense:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a bitcoin block&lt;/li&gt;
+&lt;li&gt;the bitcoin blockchain&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When someone sends some bitcoins to someone else, they begin by opening their
+bitcoin wallet (which is a program, app or website running on their device), and
+then typing in the address of the recipient and the amount of bitcoin they want
+to send to them. The bitcoin wallet uses this information to construct a
+transaction. Here is an example bitcoin transaction:&lt;/p&gt;
+&lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
+    &lt;div class="btc-transaction-full"&gt;
+        01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000
+    &lt;/div&gt;
+    &lt;div class="media-caption"&gt;example bitcoin transaction&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the purposes of this article, the details of this transaction are not
+important, but if you are curious you can view all of this transaction's
+information
+&lt;a href="https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082"&gt;here&lt;/a&gt;.
+However, the only thing you really need to understand at this point is that a
+bitcoin transaction is just a string of characters.&lt;/p&gt;
+&lt;p&gt;Once the wallet software has created the transaction, it sends it out over the
+internet to all the other bitcoin nodes it can find (a bitcoin node is just a
+device running the bitcoin software). You might have expected the transaction to
+be sent only to the person who is receiving the bitcoins, but that is not the
+case. In fact, that person does not even have to have their wallet software
+running for the transaction to be processed.&lt;/p&gt;
+&lt;p&gt;Some of the bitcoin nodes which receive the transaction are bitcoin miners.
+These miners gather the transactions they receive and put them into a block:&lt;/p&gt;
+&lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
+    &lt;table&gt;
+        &lt;tr&gt;&lt;td class="btc-block-header-mini"&gt;header&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-transaction-mini"&gt;transaction 1&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-transaction-mini"&gt;transaction 2&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-transaction-mini"&gt;transaction 3&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class="media-caption"&gt;a bitcoin block&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A bitcoin block consists of a header, followed by a list of transactions. The
+block shown here only has 3 transactions, for simplicity, but blocks containing
+thousands of transactions are most common.&lt;/p&gt;
+&lt;p&gt;Just as bitcoin transactions are a string of characters, so is the block header.
+The header contains all the data needed to uniquely identify the block:&lt;/p&gt;
+&lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
+    &lt;table class="btc-header-definition"&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;version&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;previous block hash&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;merkle root&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;timestamp&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;difficulty&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;nonce&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class="media-caption"&gt;the bitcoin block header&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Lets look at each of these fields within the block header:&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;version&lt;/em&gt; is just a number indicating the current version of the &lt;a href="https://en.bitcoin.it/wiki/Protocol_rules"&gt;Bitcoin
+protocol&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;previous block hash&lt;/em&gt; is where the &lt;em&gt;blockchain&lt;/em&gt; concept comes in - the
+current block references the previous block so that blocks build upon each other
+over time, like so:&lt;/p&gt;
+&lt;div class="form-container"&gt;
+    &lt;object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"&gt;&lt;/object&gt;
+&lt;/div&gt;
+
+&lt;div class="media-caption"&gt;the bitcoin blockchain&lt;/div&gt;
+
+&lt;p&gt;The &lt;em&gt;previous block hash&lt;/em&gt; is found by doing a &lt;em&gt;SHA265&lt;/em&gt; hash twice in succession
+on all the data in the previous block header. As we saw in the hashing section
+earlier, that is a very quick thing for a computer to do.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;merkle root&lt;/em&gt; is loosely defined as a hash of all transactions contained
+within the block. The transaction data is the pre-image and the &lt;em&gt;merkle root&lt;/em&gt; is
+the hash. This is another useful feature of cryptographic hashing - a very small
+amount of data can be used to summarise a large amount of data. The transactions
+in a block generally take up over 1MB, but the merkle root is only 32 bytes (64
+hexadecimal digits).&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;timestamp&lt;/em&gt; is the current date and time of the block.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;difficulty&lt;/em&gt; is a description of how many attempts, on average, a miner will
+need to make to find a solution to the test. As mentioned at the end of the
+previous section on hashing, the test in bitcoin mining involves finding a hash
+that is lower than a given target. The &lt;em&gt;difficulty&lt;/em&gt; value in the block header
+specifies what that target value is. The way this works is quite technical and
+is not necessary to understand bitcoin mining; however, if you are curious, I
+have included it in the annex (the final section of this article). The basic
+principle, however, is simple - increasing the difficulty lowers the target
+value so that miners will have to do more hashing attempts, and decreasing the
+difficulty raises the target value so that miners will have to do fewer hashing
+attempts.&lt;/p&gt;
+&lt;p&gt;Finally the &lt;em&gt;nonce&lt;/em&gt; is something we have already discussed in the section on
+hashing. The only difference here is that with bitcoin the nonce is an integer.&lt;/p&gt;
+&lt;p&gt;OK, lets dive into a practical simulation of bitcoin mining to see how all this
+works. Click the &lt;em&gt;Mine manually with SHA256&lt;/em&gt; button a few times and have a look
+at what this does, both to the results area and to the nonce in the block header:&lt;/p&gt;
+&lt;div class="form-container" id="form4"&gt;
+&lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
+    &lt;table class="btc-header-definition"&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            version&lt;br&gt;
+            &lt;input id="version4" type="text" class="data-value" size="2" value="1"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            previous block hash&lt;br&gt;
+            &lt;input id="prevHash4" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            merkle root&lt;br&gt;
+            &lt;input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            timestamp&lt;span id="timestamp4Explanation"&gt;&lt;/span&gt;&lt;br&gt;
+            &lt;input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            difficulty&lt;br&gt;
+            &lt;input id="bits4" type="text" class="data-value" size="8" value="1d00ffff"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            nonce&lt;br&gt;
+            &lt;input id="nonce4" type="text" class="data-value" size="10" value="0"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class="media-caption"&gt;the bitcoin block header&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;ul class="error"&gt;&lt;/ul&gt;
+&lt;button id="btnRunHash4"&gt;Mine manually with SHA256&lt;/button&gt;
+&lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+    &lt;div class="button-background"&gt;
+        &lt;button class="wrap-nowrap" wrapped="false"&gt;
+            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;&lt;br&gt;
+&lt;div class="codeblock"&gt;nonce: &lt;span class="aligner"&gt;     &lt;/span&gt;&lt;span id="nonce4Results"&gt;0&lt;/span&gt;
+target: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="target4" class="individual-digits"&gt;&lt;/span&gt;
+block hash: &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="blockhash4" class="individual-digits"&gt;&lt;/span&gt;
+status: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="mineStatus4"&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The data in the simulation block header is actually that of the very first
+bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of bitcoin,
+on 3rd January 2009.&lt;/p&gt;
+&lt;p&gt;As you can see, each mining attempt increments the nonce by 1. To find the block
+hash, all of the data in the block header shown here is hashed with SHA256 twice.
+I.e. it is all put together in one big string of characters and then hashed
+once with SHA256, and then that result is hashed with SHA256 again. There is a
+walkthrough of this process in the following annex section; however, the details
+are really not important in order to get a high-level understanding of how
+bitcoin mining works.&lt;/p&gt;
+&lt;p&gt;The biggest apparent difference between this mining example and the one in the
+previous section on hashing is that the test here involves comparing two
+hexadecimal numbers, whereas previously the test involved matching a certain
+number of digits from the left-hand-side. However, there is actually a lot of
+similarity between these two types of test. Let's forget about hexadecimal
+numbers for a moment and just look at some unrelated decimal numbers:&lt;/p&gt;
+&lt;div class="codeblock"&gt;1000000000000
+      1000000
+&lt;/div&gt;
+
+&lt;p&gt;It is obvious that the first number is bigger than the second number. The first
+one is longer, so clearly it must be bigger. But how about if we zero-pad them
+(i.e. put zeros before the left-most digit) so that they are the same length?
+They are still the same numbers, but now they are the same length:&lt;/p&gt;
+&lt;div class="codeblock"&gt;1000000000000
+0000001000000
+&lt;/div&gt;
+
+&lt;p&gt;How can we tell which is bigger? The easiest way is to begin at the
+left-hand-side of the number and compare each digit:&lt;/p&gt;
+&lt;div class="codeblock"&gt;&lt;span class="individual-digit"&gt;1&lt;/span&gt;000000000000
+&lt;span class="individual-digit"&gt;0&lt;/span&gt;000001000000
+&lt;/div&gt;
+
+&lt;p&gt;Because &lt;code&gt;1&lt;/code&gt; is greater than &lt;code&gt;0&lt;/code&gt; then we know that the first number must be a
+bigger number.&lt;/p&gt;
+&lt;p&gt;OK, now what if we zero-pad them both to 64 digits? Again they are exactly the
+same numbers as before, and they are the same length, but now they have lots of
+leading zeros:&lt;/p&gt;
+&lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+    &lt;div class="button-background"&gt;
+        &lt;button class="wrap-nowrap" wrapped="false"&gt;
+            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;&lt;br&gt;
+    &lt;div class="codeblock"&gt;0000000000000000000000000000000000000000000000000001000000000000
+0000000000000000000000000000000000000000000000000000000001000000&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The way to tell which is larger is again to begin at the left-hand-side and keep
+moving to the right until we find a digit that is different. Then the digit that
+is higher belongs to the bigger number:&lt;/p&gt;
+&lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+    &lt;div class="button-background"&gt;
+        &lt;button class="wrap-nowrap" wrapped="false"&gt;
+            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;&lt;br&gt;
+    &lt;div class="codeblock"&gt;&lt;span class="individual-digits"&gt;0000000000000000000000000000000000000000000000000001&lt;/span&gt;000000000000
+&lt;span class="individual-digits"&gt;0000000000000000000000000000000000000000000000000000&lt;/span&gt;000001000000&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;That's the technique for decimal numbers, and it is exactly the same for
+hexadecimal numbers. The only difference is that decimal numbers go from &lt;code&gt;0&lt;/code&gt; to
+&lt;code&gt;9&lt;/code&gt; whereas hexadecimal numbers go from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;, as you will recall from the
+start of this article. If you now go back and mine a few more times in the
+previous simulation then the results should make a lot more sense.&lt;/p&gt;
+&lt;p&gt;So finally we arrive at the end of this article on bitcoin mining. You now know
+all about hashing and how hashing is used in bitcoin mining. There is a bit more
+information in the annex to fill in some small gaps, however, everything already
+covered above is certainly enough to understand what bitcoin mining is and to
+get a feel for the amount of effort that it requires even for the fastest
+computers on the planet.&lt;/p&gt;
+&lt;p&gt;All that remains now is to mine a block. We can cheat at this because the above
+block was already mined by Satoshi Nakomoto. If we &lt;a href="http://blockchain.info/block-height/0"&gt;inspect the blockchain&lt;/a&gt; we can see that the correct nonce is
+2,083,236,893. &lt;a id="makeBlockPass4"&gt;Click here&lt;/a&gt; to copy the nonce back into
+the previous mining simulation and then click the &lt;em&gt;Mine manually with SHA256&lt;/em&gt;
+button to see what happens.&lt;/p&gt;
+&lt;h2&gt;annex&lt;/h2&gt;
+&lt;p&gt;This section goes into all the detail skipped above. It is really just intended
+for those (such as myself) who like to leave no stone unturned. One thing that
+was not previously explained in detail was how the bitcoin block hashes are
+derived from the block header. The block header is stored as bytes in the
+bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
+field in the block header were shown in formats which are easy for humans to
+understand; however, conversions must be done to arrive at the storage method
+used by bitcoin.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;version&lt;/em&gt; is stored in the blockchain as 4 bytes. Try altering the
+human-readable &lt;em&gt;version&lt;/em&gt; value to see how this changes the value stored in the
+blockchain:&lt;/p&gt;
+&lt;div class="form-container annex" id="form5"&gt;
+    &lt;label for="version5" class="for-textbox"&gt;version&lt;/label&gt;&lt;br&gt;
+    &lt;input id="version5" type="text" class="data-value" size="10" value="1"&gt;
+    &lt;ul class="error"&gt;&lt;/ul&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="version5Hex"&gt;&lt;/span&gt;
+convert to 4 bytes (big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="version5Bytes"&gt;&lt;/span&gt;
+convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;span id="version5BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note that &lt;em&gt;converting to &lt;a href="https://en.wikipedia.org/wiki/Endianness"&gt;little endian&lt;/a&gt;
+format&lt;/em&gt; simply means reversing the bytes.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;timestamp&lt;/em&gt; is also stored in the blockchain as 4 bytes. This currently
+imposes some restrictions on the permissible date range. Try altering the
+human-readable &lt;em&gt;timestamp&lt;/em&gt; value to see how this changes the value stored in the
+blockchain:&lt;/p&gt;
+&lt;div class="form-container annex" id="form6"&gt;
+    &lt;label for="timestamp6" class="for-textbox"&gt;timestamp&lt;span id="timestamp6Explanation"&gt;&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
+    &lt;input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
+    &lt;ul class="error"&gt;&lt;/ul&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div class="codeblock"&gt;timestamp: &lt;span class="aligner"&gt;                                   &lt;/span&gt;&lt;span id="timestamp6GMT"&gt;&lt;/span&gt;
+convert to unixtime (integer): &lt;span class="aligner"&gt;               &lt;/span&gt;&lt;span id="timestamp6Unixtime"&gt;&lt;/span&gt;
+convert to hex (always 4 bytes - big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="timestamp6Bytes"&gt;&lt;/span&gt;
+convert to little endian: &lt;span class="aligner"&gt;                    &lt;/span&gt;&lt;span id="timestamp6BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The bitcoin &lt;em&gt;difficulty&lt;/em&gt; (generally called &lt;em&gt;bits&lt;/em&gt; when expressed in its 4-byte
+compact format) is somewhat similar to
+&lt;a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic"&gt;floating point notation&lt;/a&gt;.
+&lt;em&gt;Bits&lt;/em&gt; are stored in the blockchain, and the &lt;em&gt;target&lt;/em&gt; is used as a threshold
+during mining:&lt;/p&gt;
+&lt;div class="form-container annex" id="form7"&gt;
+    &lt;label for="bits7" class="for-textbox"&gt;difficulty&lt;/label&gt;&lt;br&gt;
+    &lt;input id="bits7" type="text" class="data-value" size="8" value="1d00ffff"&gt;
+    &lt;ul class="error"&gt;&lt;/ul&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div class="codeblock"&gt;difficulty: &lt;span class="aligner"&gt;                        &lt;/span&gt;&lt;span id="difficulty7"&gt;&lt;/span&gt;
+extract the target length (byte 1): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="lenHex7"&gt;&lt;/span&gt; hex = &lt;span id="len7"&gt;&lt;/span&gt; decimal
+extract the target prefix: &lt;span class="aligner"&gt;         &lt;/span&gt;&lt;span id="msBytes7"&gt;&lt;/span&gt;&lt;span class="preserve-newline"&gt;
+&lt;/span&gt;
+set the prefix to the length and &lt;span class="always-one-newline"&gt;
+&lt;/span&gt;zero-pad to 32 bytes to get target: &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="target7"&gt;&lt;/span&gt;&lt;span class="preserve-newline"&gt;
+&lt;/span&gt;
+convert to bits (little endian): &lt;span class="aligner"&gt;   &lt;/span&gt;&lt;span id="bits7LE"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The human readable &lt;em&gt;nonce&lt;/em&gt; is stored in the blockchain as 4 little endian bytes:&lt;/p&gt;
+&lt;div class="form-container annex" id="form8"&gt;
+    &lt;label for="nonce8" class="for-textbox"&gt;nonce&lt;/label&gt;&lt;br&gt;
+    &lt;input id="nonce8" type="text" class="data-value" size="10" value="2083236893"&gt;
+    &lt;ul class="error"&gt;&lt;/ul&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="nonce8Hex"&gt;&lt;/span&gt;
+convert to 4 bytes (big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="nonce8Bytes"&gt;&lt;/span&gt;
+convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;span id="nonce8BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we can put all this together. In the following form, note how each field in
+the human-readable block header is converted to bytes to be stored in the
+blockchain, and how these are concatenated together. The block header is always
+80 bytes:&lt;/p&gt;
+&lt;div class="form-container" id="form9"&gt;
+&lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
+    &lt;table class="btc-header-definition"&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            version&lt;br&gt;
+            &lt;input id="version9" type="text" class="data-value" size="2" value="1"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            previous block hash&lt;br&gt;
+            &lt;input id="prevHash9" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            merkle root&lt;br&gt;
+            &lt;input id="merkleRoot9" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            timestamp&lt;span id="timestamp9Explanation"&gt;&lt;/span&gt;&lt;br&gt;
+            &lt;input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            difficulty&lt;br&gt;
+            &lt;input id="bits9" type="text" class="data-value" size="8" value="1d00ffff"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td class="btc-header-field"&gt;
+            nonce&lt;br&gt;
+            &lt;input id="nonce9" type="text" class="data-value" size="10" value="2083236893"&gt;
+        &lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class="media-caption"&gt;human-readable bitcoin block header&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;ul  class="error"&gt;&lt;/ul&gt;
+&lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+    &lt;div class="button-background"&gt;
+        &lt;button class="wrap-nowrap" wrapped="false"&gt;
+            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;&lt;br&gt;
+&lt;div class="codeblock"&gt;block header (hex): &lt;span class="aligner"&gt;                &lt;/span&gt;&lt;span id="block9Bytes"&gt;&lt;span id="version9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="prevHash9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="merkleRoot9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="timestamp9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="bits9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="nonce9Output" class="outputField"&gt;&lt;/span&gt;&lt;/span&gt;
+block header -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;          &lt;/span&gt;&lt;span id="firstSHA256Output9"&gt;&lt;/span&gt;
+convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt;span id="firstSHA256OutputLE9"&gt;&lt;/span&gt;
+block header -&gt; SHA256 -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="secondSHA256Output9"&gt;&lt;/span&gt;
+convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt;span id="secondSHA256OutputLE9"&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you are very astute, you would have noticed that copying and pasting this
+block header into the &lt;em&gt;SHA256&lt;/em&gt; hash forms at the start of this article gives a
+different result to the &lt;em&gt;SHA256&lt;/em&gt; hashes here. This is because these hashes are
+implemented upon the pre-image as a hexadecimal number, whereas the hashes
+in the first section were implemented for a pre-image expressed in bytes. You
+can see the difference in the following form by ticking and unticking the
+&lt;em&gt;pre-image is hex&lt;/em&gt; checkbox and observing how the resulting hash changes:&lt;/p&gt;
+&lt;div class="form-container" id="form10"&gt;
+    &lt;input type="checkbox" id="inputCheckbox10" checked&gt;
+    &lt;label for="inputCheckbox10"&gt;pre-image is hex&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;label for="inputMessage10" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
+    &lt;textarea id="inputMessage10"&gt;0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c&lt;/textarea&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="hash10Results" class="codeblock"&gt;pre-image -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;                &lt;/span&gt;&lt;span id="sha256Output10"&gt;&lt;/span&gt;
+pre-image -&gt; SHA256 (little endian) -&gt; &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="sha256OutputLE10"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;That covers most of the nitty-gritty detail regarding the process of hashing a
+bitcoin block.&lt;/p&gt;
+&lt;p&gt;The final thing to discuss is the luck involved in mining. As you may have
+guessed, each bitcoin block will contain different data to all the blocks that
+have come before it. No other block will have the same transactions, the same
+timestamp, the same previous block hash, etc, as the current block. This means
+that miners will need to try lots of nonce values in order to mine a block - i.e.
+they cannot simply guess the nonce value straight away. The more digits that
+must be matched, the more hashing attempts that must be made on average. In fact
+the average number of hashing attempts needed to match a hex digit with a hash
+can be calculated using the following expression:&lt;/p&gt;
+&lt;div class="horizontal-center"&gt;
+&lt;pre&gt;
+average attempts = (16&lt;sup&gt;number of hex digits&lt;/sup&gt;) / 2
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I have created a difficulty calculator so you can see the average number of
+hashes that must be made for a given difficulty:&lt;/p&gt;
+&lt;div class="form-container annex" id="form11"&gt;
+    &lt;label for="difficulty11" class="for-select"&gt;difficulty&lt;/label&gt;&lt;br&gt;
+    &lt;select id="difficulty11"&gt;&lt;/select&gt;
+    &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
+        &lt;div class="button-background"&gt;
+            &lt;button class="wrap-nowrap" wrapped="false"&gt;
+                &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;&lt;br&gt;
+        &lt;div id="difficulty11Calculation" class="codeblock"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Of course, a miner may be lucky or unlucky. You will have noticed this when you
+tried mining in the &lt;a href="#form3"&gt;final scenario&lt;/a&gt; of the &lt;em&gt;cryptographic hashing&lt;/em&gt;
+section - sometimes you find a valid nonce in many fewer attempts than the
+average, and sometimes in many more. The process is random, just like trying to
+shake a 6 with a dice.&lt;/p&gt;
+&lt;p&gt;Interestingly, if 9 or more digits must be matched, then the nonce alone is
+not large enough for the average number of attempts that must be made. Matching
+9 characters will require on average 34,359,738,368 double-hash attempts;
+however, the bitcoin nonce field is only 4 bytes long and so has a maximum value
+of 4,294,967,295. What is a bitcoin miner to do if it reaches 4,294,967,295
+attempts and a solution has still not been found? One option is to increment the
+timestamp field in the block by 1 second and begin mining again with a nonce of
+0. But what if the miners are so fast that they can hash at more than
+4,294,967,295 hashes per second? In that case they can change some redundant
+data in the first transaction of the block they are currently mining and reset
+the nonce to 0.&lt;/p&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>

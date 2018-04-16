@@ -65,6 +65,14 @@
                 <span id="fullpagePopupDetail"></span>
             </span>
         </div>
+        <script>
+            if (window.hasOwnProperty == null) {
+                document.getElementById('fullpagePopupHeading').innerHTML = 'your browser is too old';
+                document.getElementById('fullpagePopupDetail').innerHTML = 'sorry, this blog cannot run on your browser';
+                document.getElementById('fullpagePopupNotification').style.display = 'table';
+                nonExistentFunctionThatHaltsJavascript();
+            }
+        </script>
         <div class="top-bar hidden-pc">
             <a class="brand" href="http://null.place/">analysis</a>
 <div class="logo-container">
@@ -81,11 +89,8 @@
             </button>
             <div id="navMenu" class="nav-menu-phone">
 <ul class="nav-menu">
-    <a href="http://null.place/example-category-a/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a<sup> 3</sup>
-    </a>
-    <a href="http://null.place/example-category-b/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
+    <a href="http://null.place/cryptocurrencies/" >
+        <i class="fa fa-folder-open-o" aria-hidden="true"></i> cryptocurrencies<sup> 1</sup>
     </a>
     <a href="http://null.place/archives/" >
         <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>
@@ -100,11 +105,8 @@
             <div class="col-2">                <div class="side-bar">
                     <a class="brand" href="http://null.place/">analysis</a>
 <ul class="nav-menu">
-    <a href="http://null.place/example-category-a/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category a<sup> 3</sup>
-    </a>
-    <a href="http://null.place/example-category-b/" >
-        <i class="fa fa-folder-open-o" aria-hidden="true"></i> example category b<sup> 3</sup>
+    <a href="http://null.place/cryptocurrencies/" >
+        <i class="fa fa-folder-open-o" aria-hidden="true"></i> cryptocurrencies<sup> 1</sup>
     </a>
     <a href="http://null.place/archives/" >
         <i class="fa fa-file-text-o" aria-hidden="true"></i> all<sup>&nbsp;</sup>

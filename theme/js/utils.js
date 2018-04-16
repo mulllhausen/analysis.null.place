@@ -317,6 +317,14 @@ addEvent(document.getElementsByTagName('button'), 'click', function (e) {
     e.currentTarget.blur();
 });
 
+// prevent css :focus from persisting after a <select> change - internet
+// explorer keeps the selection highlighted, which is ugly. apply the onchange
+// to the body to cover dynamically added <select> elements
+addEvent(document.getElementsByTagName('body')[0], 'change', function (e) {
+    if (e.target.tagName.toLowerCase() != 'select') return;
+    e.target.blur();
+});
+
 // button to toggle between word-wrap and no-wrap on a codeblock
 addEvent(
     document.querySelectorAll('.codeblock-container button.wrap-nowrap'),

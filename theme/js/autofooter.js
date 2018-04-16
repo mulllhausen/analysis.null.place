@@ -13,8 +13,8 @@ function make_sticky_footer() {
     clearTimeout(timeout_id_resize_footer);
     timeout_id_resize_footer = setTimeout(function() {
         var footer_bottom = footer_el.getBoundingClientRect().bottom;
-        var body_bottom = document.body.getBoundingClientRect().bottom;
-        if (footer_bottom < body_bottom) {
+        var body_bottom = document.documentElement.clientHeight;
+        if (footer_bottom <= body_bottom) {
             // if the bottom of the footer is above the bottom of the body then
             // set position:absolute. the css already has bottom:0.
             footer_el.style.position = 'absolute';

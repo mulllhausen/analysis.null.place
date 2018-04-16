@@ -6,33 +6,8 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>http://null.place/example-category-b/example-article-6/</loc>
-        <lastmod>2017-11-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://null.place/example-category-a/example-article-5/</loc>
-        <lastmod>2017-11-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://null.place/example-category-b/example-article-4/</loc>
-        <lastmod>2017-11-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://null.place/example-category-a/example-article-3/</loc>
-        <lastmod>2017-11-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://null.place/example-category-b/example-article-2/</loc>
-        <lastmod>2017-11-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>http://null.place/example-category-a/example-article-1/</loc>
-        <lastmod>2017-11-19</lastmod>
+        <loc>http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/</loc>
+        <lastmod>2018-04-17</lastmod>
         <priority>0.8</priority>
     </url>
 </urlset>
