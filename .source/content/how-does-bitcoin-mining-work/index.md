@@ -65,7 +65,7 @@ see what that does:
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. There are many different
 hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*, *RIPEMD160*, etc.
 The differences between these hashing algorithms are not important for the sake
-of this article - all that is important is to recognise that *SHA256* is merely
+of this article. All that is important is to recognise that *SHA256* is merely
 one of many hashing algorithms - the one that is used in bitcoin mining.
 
 <blockquote>
@@ -82,8 +82,9 @@ them into another string of characters. We call the input characters the
 
 The output of a cryptographic hash is actually a number; however, that may not
 have been obvious when you ran the *SHA256* hash above, since that number is
-written in hexadecimal format - i.e. base 16. To explain what that means, here
-are some hexadecimal values side by side with their decimal equivalent values:
+written in hexadecimal format (known as *hex*) - i.e. base 16. To explain what
+that means, here are some hexadecimal values side by side with their decimal
+equivalent values:
 
 <div class="horizontal-center" id="dec2hexTable">
     <div class="constrainWidth">
@@ -117,9 +118,9 @@ are some hexadecimal values side by side with their decimal equivalent values:
     </div>
 </div>
 
-Don't worry, you won't need to do any hexadecimal conversions in this article.
-All you need to remember here is that hexadecimal digits go from `0` to `9` to
-`a` to `f`.
+Don't worry, you won't need to do any hexadecimal conversions while following
+this article. All you need to remember here is that hexadecimal digits go from
+`0` to `9` to `a` to `f`.
 
 OK, so now that you have tried cryptographic hashing, and you know about
 hexadecimal format, let's have a look at the formal definition of cryptographic
@@ -145,7 +146,7 @@ Properties 1 and 2 are quite obvious - earlier when we hashed `hello world!`
 with *SHA256* it always gave
 `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` and took
 <span id="helloWorldHashSpeed">less than 4 milliseconds (depending on the speed
-of your device)</span>, which is fairly quick. However it must be noted that
+of your device)</span>, which is fairly quick. However, it must be noted that
 performing the hash always takes at least *some* time, even if it is a very small
 amount of time. This fact will be important when we discuss hashing in relation
 to bitcoin mining later on.
@@ -160,9 +161,9 @@ hash back to its pre-image is called *inverting the hash*.
 impossible: pre-image <- SHA256 <- hash
 </div>
 
-If we start with a pre-image and then hash it, then of course we will know what
-the pre-image for the resulting hash is - for example, if I give you the hash
-`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
+If we start with a pre-image and then hash it, then of course we already know
+what the pre-image for the resulting hash is. For example, if I give you the
+hash `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
 already know that a corresponding SHA256 pre-image is `hello world!`, since we
 already hashed `hello world!` with SHA256 earlier and it gave this result. But
 if I give you `32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`
@@ -199,12 +200,12 @@ status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
 
-The difficulty of inverting a *SHA256* hash is due its length being so large!
-*SHA256* has 2<sup>256</sup> possible different hash values. That's
+The difficulty of inverting a *SHA256* hash is due its enormous length! *SHA256*
+has 2<sup>256</sup> possible different hash values. That's
 115792089237316195423570985008687907853269984665640564039457584007913129639936
 different possible hash values. There are approximately that many atoms in the
 universe! So don't feel bad for not being able to invert
-`32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7` - for all
+`32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`. For all
 intents and purposes, it cannot be inverted. And that is true even when computers
 do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
 button below then you can have your device cycle through pre-images and show you
@@ -251,7 +252,7 @@ When it comes to hashing, <span class="hash2Rate">30</span> hashes per second is
 actually not quick at all by computer standards. Specialized computer chips are
 built to run billions of hashes per second. At the time of writing (March 2018)
 the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per second,
-or 25 million million million hashes per second, but even at this rate it would
+i.e. 25 million million million hashes per second, but even at this rate it would
 take 146 million million million million million million million million years
 to try all pre-image combinations for SHA256. That's about a million million
 million years quicker than your device, but it doesn't really matter - by the
@@ -269,10 +270,10 @@ there can be no process of zeroing in. Trying a pre-image that is "further along
 is no better than trying any other different pre-image - they all completely
 modify the resulting hash.
 
-Now that we have discussed the properties of cryptographic hashing we can
+Now that we have discussed the properties of cryptographic hashing, we can
 investigate how it is used in a technique known as *proof of work*, also known
 as *mining*. *Proof of work*, as the name implies, is a way for one computer to
-prove to another computer that it has completed a certain amount of work. Lets
+prove to another computer that it has completed a certain amount of work. Let's
 call the computer doing the work the *miner*, and the other computer the
 *examiner*. The examiner sets a test for the miner to pass by giving it 3 things:
 
@@ -357,8 +358,8 @@ miner to pass. Here are some other possible proof-of-work tests:
 - matching a specified number of characters at the right-hand-side of the target
 - matching a specified number of characters anywhere within the target
 - treating both the target and the mined hash as (hexadecimal) numbers, setting
-the target to some large number, and mandating that the miner must find a hash
-lower than the target
+the target to some large number, and requiring the miner to find a hash lower
+than the target
 
 That last type of proof-of-work test is the one used in bitcoin mining.
 
@@ -371,8 +372,8 @@ knowledge to bitcoin mining.
 pre-image for the hash of the next block in the bitcoin blockchain. The winner
 receives bitcoins as a reward.
 
-That definition contains a couple of new concepts, and once you understand them,
-it will make perfect sense:
+That explanation contains a couple of new concepts, and once you understand them
+then the process will make perfect sense:
 
 - a bitcoin block
 - the bitcoin blockchain
@@ -400,7 +401,7 @@ bitcoin transaction is just a string of characters.
 Once the wallet software has created the transaction, it sends it out over the
 internet to all the other bitcoin nodes it can find (a bitcoin node is just a
 device running the bitcoin software). You might have expected the transaction to
-only be sent to the person who is receiving the bitcoins, but that is not the
+be sent only to the person who is receiving the bitcoins, but that is not the
 case. In fact, that person does not even have to have their wallet software
 running for the transaction to be processed.
 
@@ -456,10 +457,10 @@ earlier, that is a very quick thing for a computer to do.
 
 The *merkle root* is loosely defined as a hash of all transactions contained
 within the block. The transaction data is the pre-image and the *merkle root* is
-the hash. This is another useful feature of cryptographic hashing - it can be
-used to summarise a large amount of data using only a very small amount of data.
-The transactions in a block generally take up over 1MB, however the merkle root
-is only 32 bytes (64 hexadecimal digits).
+the hash. This is another useful feature of cryptographic hashing - a very small
+amount of data can be used to summarise a large amount of data. The transactions
+in a block generally take up over 1MB, but the merkle root is only 32 bytes (64
+hexadecimal digits).
 
 The *timestamp* is the current date and time of the block.
 
@@ -529,14 +530,14 @@ status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
 </div>
 
 The data in the simulation block header is actually that of the very first
-bitcoin block ever. It was mined by Satoshi Nakamoto - the creator(s) of Bitcoin
-on the 3rd of January 2009.
+bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of bitcoin,
+on 3rd January 2009.
 
 As you can see, each mining attempt increments the nonce by 1. To find the block
-hash, all of the data in the block header shown here is hashed with SHA256 twice
-- i.e. it is all put together in one big string of characters and then hashed
+hash, all of the data in the block header shown here is hashed with SHA256 twice.
+I.e. it is all put together in one big string of characters and then hashed
 once with SHA256, and then that result is hashed with SHA256 again. There is a
-walkthrough of this process in the following annex section, however the details
+walkthrough of this process in the following annex section; however, the details
 are really not important in order to understand how bitcoin mining works.
 
 The biggest apparent difference between this mining example and the one in the
@@ -550,17 +551,17 @@ numbers for a moment and just look at some unrelated decimal numbers:
       1000000
 </div>
 
-It is obvious that the first number is bigger than the second number - the first
-one is longer so clearly it must be bigger. But how about if we zero-pad them so
-that they are the same length? They are still the same numbers, but now they are
-the same length:
+It is obvious that the first number is bigger than the second number. The first
+one is longer, so clearly it must be bigger. But how about if we zero-pad them
+(i.e. put zeros before the left-most digit) so that they are the same length?
+They are still the same numbers, but now they are the same length:
 
 <div class="codeblock">1000000000000
 0000001000000
 </div>
 
 How can we tell which is bigger? The easiest way is to begin at the
-left-hand-side of the number compare the digits:
+left-hand-side of the number and compare each digit:
 
 <div class="codeblock"><span class="individual-digit">1</span>000000000000
 <span class="individual-digit">0</span>000001000000
@@ -606,10 +607,10 @@ start of this article. If you now go back and mine a few more times in the
 previous simulation then the results should make a lot more sense.
 
 So finally we arrive at the end of this article on bitcoin mining. You now know
-all about hashing and how hashing is used in bitcoin for mining. There is a bit
-more information in the annex to fill in some small gaps, however everything
-already covered above is certainly enough to understand what bitcoin mining is
-and to get a feel for the amount of effort that it requires even for the fastest
+all about hashing and how hashing is used in bitcoin mining. There is a bit more
+information in the annex to fill in some small gaps, however, everything already
+covered above is certainly enough to understand what bitcoin mining is and to
+get a feel for the amount of effort that it requires even for the fastest
 computers on the planet.
 
 All that remains now is to mine a block. We can cheat at this because the above
@@ -627,7 +628,7 @@ was not previously explained in detail was how the bitcoin block hashes are
 derived from the block header. The block header is stored as bytes in the
 bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
 field in the block header were shown in formats which are easy for humans to
-understand, however conversions must be done to arrive at the storage method
+understand; however, conversions must be done to arrive at the storage method
 used by bitcoin.
 
 The *version* is stored in the blockchain as 4 bytes. Try altering the
@@ -651,8 +652,8 @@ convert to little endian: <span class="aligner">       </span><span id="version5
     </div>
 </div>
 
-Note that converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
-format simply means reversing the bytes.
+Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
+format* simply means reversing the bytes.
 
 The *timestamp* is also stored in the blockchain as 4 bytes. This currently
 imposes some restrictions on the permissible date range. Try altering the
@@ -775,7 +776,7 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
-If you are very astute you would have noticed that copying and pasting this
+If you are very astute, you would have noticed that copying and pasting this
 block header into the *SHA256* hash forms at the start of this article gives a
 different result to the *SHA256* hashes here. This is because these hashes are
 implemented upon the pre-image as a hexadecimal number, whereas the hashes
@@ -845,7 +846,7 @@ shake a 6 with a dice.
 
 Interestingly, if 9 or more characters must be matched, then the nonce alone is
 not large enough for the average number of attempts that must be made. Matching 9
-characters will require on average 34,359,738,368 double-hash attempts, however
+characters will require on average 34,359,738,368 double-hash attempts; however,
 the nonce field is only 4 bytes long and so has a maximum value of 4,294,967,295.
 What is a miner to do if it reaches 4,294,967,295 attempts and a solution has
 still not been found? One option is to increment the timestamp field in the
