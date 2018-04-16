@@ -981,8 +981,7 @@ function mine4AndRenderResults() {
     );
 
     if (minedResult.status) {
-        popup('success!', 'you mined a block');
-        setTimeout(function () { hidePopup(); }, 2000);
+        popup('success!', 'you mined a block', 3000);
         setButtons(false, 'RunHash4');
         document.getElementById('mineStatus4').innerHTML = 'pass (because ' +
         minedResult.blockhash[minedResult.resolution] + ' is less than ' +

@@ -74,6 +74,14 @@
                 <span id="fullpagePopupDetail"></span>
             </span>
         </div>
+        <script>
+            if (window.hasOwnProperty == null) {
+                document.getElementById('fullpagePopupHeading').innerHTML = 'your browser is too old';
+                document.getElementById('fullpagePopupDetail').innerHTML = 'sorry, this blog cannot run on your browser';
+                document.getElementById('fullpagePopupNotification').style.display = 'table';
+                nonExistentFunctionThatHaltsJavascript();
+            }
+        </script>
         <div class="top-bar hidden-pc">
             <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
             {% with position="top" %}
