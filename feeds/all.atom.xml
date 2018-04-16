@@ -11,17 +11,17 @@ the solution found by the winner can be verified. I have made the article
 interactive so that you can simulate the mining algorithms for yourself and get
 a feel for how mining really works. While the concepts here are not simple, they
 are presented so as to be easily understood by someone with no knowledge of
-programming, cryptography or bitcoin. And I hope the interactivity will make the
+programming, cryptography or Bitcoin. And I hope the interactivity will make the
 whole process fun.&lt;/p&gt;
 &lt;p&gt;The article has 3 parts:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;cryptographic hashing - this is background material needed to understand
-bitcoin mining&lt;/li&gt;
-&lt;li&gt;bitcoin mining&lt;/li&gt;
+Bitcoin mining&lt;/li&gt;
+&lt;li&gt;Bitcoin mining&lt;/li&gt;
 &lt;li&gt;annex - filling in some of the fine detail not discussed earlier&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;cryptographic hashing&lt;/h2&gt;
-&lt;p&gt;To understand bitcoin mining, it is first necessary to understand what
+&lt;p&gt;To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
 at the start, let's just dive in and give it a go. Click the &lt;em&gt;SHA256&lt;/em&gt; button
 a few times and look carefully at what this does each time, then try typing
@@ -49,11 +49,13 @@ see what that does:
         &lt;div id="hash0Results" class="codeblock"&gt;&lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;SHA256&lt;/em&gt; stands for &lt;em&gt;Secure Hash Algorithm (256 bits)&lt;/em&gt;. There are many different
-hashing algorithms - &lt;em&gt;SHA128&lt;/em&gt;, &lt;em&gt;SHA512&lt;/em&gt;, &lt;em&gt;MD5&lt;/em&gt;, &lt;em&gt;RIPEMD128&lt;/em&gt;, &lt;em&gt;RIPEMD160&lt;/em&gt;, etc.
-The differences between these hashing algorithms are not important for the sake
-of this article. All that is important is to recognise that &lt;em&gt;SHA256&lt;/em&gt; is merely
-one of many hashing algorithms - the one that is used in bitcoin mining.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;SHA256&lt;/em&gt; stands for &lt;em&gt;Secure Hash Algorithm (256 bits)&lt;/em&gt;. &lt;em&gt;Algorithm&lt;/em&gt; sounds
+complicated but really it is just a series of operations done by a computer.
+There are many different hashing algorithms - &lt;em&gt;SHA128&lt;/em&gt;, &lt;em&gt;SHA512&lt;/em&gt;, &lt;em&gt;MD5&lt;/em&gt;,
+&lt;em&gt;RIPEMD128&lt;/em&gt;, &lt;em&gt;RIPEMD160&lt;/em&gt;, etc. The differences between these hashing algorithms
+are not important for the sake of this article. All that is important is to
+recognise that &lt;em&gt;SHA256&lt;/em&gt; is merely one of many hashing algorithms - the one that
+is used in Bitcoin mining.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Cryptographic hashing involves taking a string of characters and transforming
 them into another string of characters. We call the input characters the
@@ -107,10 +109,11 @@ this article. All you need to remember here is that hexadecimal digits go from
 &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;9&lt;/code&gt; to &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;OK, so now that you have tried cryptographic hashing, and you know about
 hexadecimal format, let's have a look at the formal definition of cryptographic
-hashing:&lt;/p&gt;
+hashing. Some parts of the definition may not make sense at first, but I will
+be explaining them in detail in the paragraphs that follow.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;A cryptographic hashing algorithm has the following properties relevant to
-bitcoin mining:&lt;/p&gt;
+Bitcoin mining:&lt;/p&gt;
 &lt;p&gt;&lt;/p&gt;
 &lt;ol&gt;
     &lt;li&gt;it is deterministic - the same pre-image always results in the same hash&lt;/li&gt;
@@ -130,7 +133,7 @@ with &lt;em&gt;SHA256&lt;/em&gt; it always gave
 of your device)&lt;/span&gt;, which is fairly quick. However, it must be noted that
 performing the hash always takes at least &lt;em&gt;some&lt;/em&gt; time, even if it is a very small
 amount of time. This fact will be important when we discuss hashing in relation
-to bitcoin mining later on.&lt;/p&gt;
+to Bitcoin mining later on.&lt;/p&gt;
 &lt;p&gt;Property 3 explains that hashing is a one-way process. We can easily get from
 a pre-image to its hash, but it is impossible to programmatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
@@ -143,8 +146,8 @@ impossible: pre-image &lt;- SHA256 &lt;- hash
 &lt;p&gt;If we start with a pre-image and then hash it, then of course we already know
 what the pre-image for the resulting hash is. For example, if I give you the
 hash &lt;code&gt;7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9&lt;/code&gt; then you
-already know that a corresponding SHA256 pre-image is &lt;code&gt;hello world!&lt;/code&gt;, since we
-already hashed &lt;code&gt;hello world!&lt;/code&gt; with SHA256 earlier and it gave this result. But
+already know that a corresponding &lt;em&gt;SHA256&lt;/em&gt; pre-image is &lt;code&gt;hello world!&lt;/code&gt;, since we
+already hashed &lt;code&gt;hello world!&lt;/code&gt; with &lt;em&gt;SHA256&lt;/em&gt; earlier and it gave this result. But
 if I give you &lt;code&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/code&gt;
 then you will not be able to find the pre-image which results in this hash - i.e.
 you will not be able to invert this hash. Seriously - give it a go:&lt;/p&gt;
@@ -225,16 +228,18 @@ can calculate that it is going to take &lt;span id="howLongForThisDeviceWords"&g
 to try enough combinations to invert this hash and find the solution. That's
 &lt;span id="howLongForThisDeviceNumber"&gt;&lt;/span&gt;.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;When it comes to hashing, &lt;span class="hash2Rate"&gt;30&lt;/span&gt; hashes per second is
-actually not quick at all by computer standards. Specialized computer chips are
-built to run billions of hashes per second. At the time I'm writing this (March
-2018) the total global SHA256 hashpower is 25,000,000,000,000,000,000 hashes per
-second, i.e. 25 million million million hashes per second, but even at this rate
-it would take 146 million million million million million million million million
-years to try all pre-image combinations for SHA256. That's about a million
-million million years quicker than your device, but it doesn't really matter -
-by the time it comes around, our sun will have long since burned out.&lt;/p&gt;
-&lt;p&gt;"Ok", you might think to yourself, "but maybe I don't need to try all the
-possible combinations to produce the hash I'm after - maybe I can just skip
+actually not quick at all by computer standards. Specialized computer chips
+called &lt;a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit"&gt;ASICs&lt;/a&gt;
+are built to run billions of hashes per second. At the time I'm writing this
+(March 2018) the total global &lt;em&gt;SHA256&lt;/em&gt; hashpower is 25,000,000,000,000,000,000
+hashes per second, i.e. 25 million million million hashes per second, but even
+at this rate it would take 146 million million million million million million
+million million years to try enough different pre-images to invert a &lt;em&gt;SHA256&lt;/em&gt;
+hash. That's about a million million million years quicker than your device, but
+it doesn't really matter - by the time it comes around, our sun will have long
+since burned out.&lt;/p&gt;
+&lt;p&gt;"Ok", you might think to yourself, "but maybe I don't need to try millions and
+millions of pre-images to produce the hash I'm after - maybe I can just skip
 ahead ... If the pre-image I start with does not give a hash that is close to
 what I want, then I will just choose a pre-image further along that gives a hash
 closer to what I want, and then make minor adjustments until I zero in on the
@@ -327,7 +332,7 @@ over and thus avoid doing any work. To ensure that the miner always does work,
 the examiner generates a new pre-image prefix every time it sets a test for the
 miner. This way, the miner has to find a new nonce for every test, even if the
 difficulty does not change.&lt;/p&gt;
-&lt;p&gt;The final thing to understand from this section, before we move on to bitcoin
+&lt;p&gt;The final thing to understand from this section, before we move on to Bitcoin
 mining, is that the test we have done here - matching a specified number of
 characters at the left-hand-side of the target - is just one of many possible
 types of proof-of-work test. The only criteria for a good proof-of-work test is
@@ -340,31 +345,32 @@ miner to pass. Here are some other possible proof-of-work tests:&lt;/p&gt;
 the target to some large number, and requiring the miner to find a hash lower
 than the target&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;That last type of proof-of-work test is the one used in bitcoin mining.&lt;/p&gt;
+&lt;p&gt;That last type of proof-of-work test is the one used in Bitcoin mining and is
+explained in detail in the following section.&lt;/p&gt;
 &lt;h2&gt;bitcoin mining&lt;/h2&gt;
 &lt;p&gt;Now that we have explored hashing and mining in general, we can apply this
-knowledge to bitcoin mining.&lt;/p&gt;
+knowledge to Bitcoin mining.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Bitcoin mining involves computers competing to find the nonce part of the
-pre-image for the hash of the next block in the bitcoin blockchain. The winner
+pre-image for the hash of the next block in the Bitcoin blockchain. The winner
 receives bitcoins as a reward.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;That explanation contains a couple of new concepts, and once you understand them
 then the process will make perfect sense:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;a bitcoin block&lt;/li&gt;
-&lt;li&gt;the bitcoin blockchain&lt;/li&gt;
+&lt;li&gt;a Bitcoin block&lt;/li&gt;
+&lt;li&gt;the Bitcoin blockchain&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;When someone sends some bitcoins to someone else, they begin by opening their
-bitcoin wallet (which is a program, app or website running on their device), and
+Bitcoin wallet (which is a program, app or website running on their device), and
 then typing in the address of the recipient and the amount of bitcoin they want
-to send to them. The bitcoin wallet uses this information to construct a
-transaction. Here is an example bitcoin transaction:&lt;/p&gt;
+to send to them. The Bitcoin wallet uses this information to construct a
+transaction. Here is an example Bitcoin transaction:&lt;/p&gt;
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;div class="btc-transaction-full"&gt;
         01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0102ffffffff0100f2052a01000000434104d46c4968bde02899d2aa0963367c7a6ce34eec332b32e42e5f3407e052d64ac625da6f0718e7b302140434bd725706957c092db53805b821a85b23a7ac61725bac00000000
     &lt;/div&gt;
-    &lt;div class="media-caption"&gt;example bitcoin transaction&lt;/div&gt;
+    &lt;div class="media-caption"&gt;example Bitcoin transaction&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For the purposes of this article, the details of this transaction are not
@@ -372,14 +378,14 @@ important, but if you are curious you can view all of this transaction's
 information
 &lt;a href="https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082"&gt;here&lt;/a&gt;.
 However, the only thing you really need to understand at this point is that a
-bitcoin transaction is just a string of characters.&lt;/p&gt;
+Bitcoin transaction is just a string of characters.&lt;/p&gt;
 &lt;p&gt;Once the wallet software has created the transaction, it sends it out over the
-internet to all the other bitcoin nodes it can find (a bitcoin node is just a
-device running the bitcoin software). You might have expected the transaction to
+internet to all the other Bitcoin nodes it can find (a Bitcoin node is just a
+device running the Bitcoin software). You might have expected the transaction to
 be sent only to the person who is receiving the bitcoins, but that is not the
 case. In fact, that person does not even have to have their wallet software
 running for the transaction to be processed.&lt;/p&gt;
-&lt;p&gt;Some of the bitcoin nodes which receive the transaction are bitcoin miners.
+&lt;p&gt;Some of the Bitcoin nodes which receive the transaction are Bitcoin miners.
 These miners gather the transactions they receive and put them into a block:&lt;/p&gt;
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table&gt;
@@ -388,13 +394,13 @@ These miners gather the transactions they receive and put them into a block:&lt;
         &lt;tr&gt;&lt;td class="btc-transaction-mini"&gt;transaction 2&lt;/td&gt;&lt;/tr&gt;
         &lt;tr&gt;&lt;td class="btc-transaction-mini"&gt;transaction 3&lt;/td&gt;&lt;/tr&gt;
     &lt;/table&gt;
-    &lt;div class="media-caption"&gt;a bitcoin block&lt;/div&gt;
+    &lt;div class="media-caption"&gt;a Bitcoin block&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;A bitcoin block consists of a header, followed by a list of transactions. The
+&lt;p&gt;A Bitcoin block consists of a header, followed by a list of transactions. The
 block shown here only has 3 transactions, for simplicity, but blocks containing
 thousands of transactions are most common.&lt;/p&gt;
-&lt;p&gt;Just as bitcoin transactions are a string of characters, so is the block header.
+&lt;p&gt;Just as Bitcoin transactions are a string of characters, so is the block header.
 The header contains all the data needed to uniquely identify the block:&lt;/p&gt;
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table class="btc-header-definition"&gt;
@@ -405,12 +411,13 @@ The header contains all the data needed to uniquely identify the block:&lt;/p&gt
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;difficulty&lt;/td&gt;&lt;/tr&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;nonce&lt;/td&gt;&lt;/tr&gt;
     &lt;/table&gt;
-    &lt;div class="media-caption"&gt;the bitcoin block header&lt;/div&gt;
+    &lt;div class="media-caption"&gt;the Bitcoin block header&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Lets look at each of these fields within the block header:&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;version&lt;/em&gt; is just a number indicating the current version of the &lt;a href="https://en.bitcoin.it/wiki/Protocol_rules"&gt;Bitcoin
-protocol&lt;/a&gt;.&lt;/p&gt;
+protocol&lt;/a&gt; (i.e. the rules governing
+Bitcoin behaviour).&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;previous block hash&lt;/em&gt; is where the &lt;em&gt;blockchain&lt;/em&gt; concept comes in - the
 current block references the previous block so that blocks build upon each other
 over time, like so:&lt;/p&gt;
@@ -418,11 +425,14 @@ over time, like so:&lt;/p&gt;
     &lt;object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 
-&lt;div class="media-caption"&gt;the bitcoin blockchain&lt;/div&gt;
+&lt;div class="media-caption"&gt;the Bitcoin blockchain&lt;/div&gt;
 
-&lt;p&gt;The &lt;em&gt;previous block hash&lt;/em&gt; is found by doing a &lt;em&gt;SHA265&lt;/em&gt; hash twice in succession
-on all the data in the previous block header. As we saw in the hashing section
-earlier, that is a very quick thing for a computer to do.&lt;/p&gt;
+&lt;p&gt;Looking at that diagram, we can see that the &lt;em&gt;previous block hash&lt;/em&gt; value in the
+current block is found by doing a &lt;em&gt;SHA265&lt;/em&gt; hash twice in succession on all the
+data in the previous block header. For example, the &lt;em&gt;previous block hash&lt;/em&gt; for
+block 1 would be found by hashing the entire block 0 header twice. As we saw in
+the hashing section earlier, doing two &lt;em&gt;SHA256&lt;/em&gt; hashes will only take a computer
+a fraction of a second to complete.&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;merkle root&lt;/em&gt; is loosely defined as a hash of all transactions contained
 within the block. The transaction data is the pre-image and the &lt;em&gt;merkle root&lt;/em&gt; is
 the hash. This is another useful feature of cryptographic hashing - a very small
@@ -432,18 +442,18 @@ hexadecimal digits).&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;timestamp&lt;/em&gt; is the current date and time of the block.&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;difficulty&lt;/em&gt; is a description of how many attempts, on average, a miner will
 need to make to find a solution to the test. As mentioned at the end of the
-previous section on hashing, the test in bitcoin mining involves finding a hash
+previous section on hashing, the test in Bitcoin mining involves finding a hash
 that is lower than a given target. The &lt;em&gt;difficulty&lt;/em&gt; value in the block header
 specifies what that target value is. The way this works is quite technical and
-is not necessary to understand bitcoin mining; however, if you are curious, I
+is not necessary to understand Bitcoin mining; however, if you are curious, I
 have included it in the annex (the final section of this article). The basic
 principle, however, is simple - increasing the difficulty lowers the target
 value so that miners will have to do more hashing attempts, and decreasing the
 difficulty raises the target value so that miners will have to do fewer hashing
 attempts.&lt;/p&gt;
 &lt;p&gt;Finally the &lt;em&gt;nonce&lt;/em&gt; is something we have already discussed in the section on
-hashing. The only difference here is that with bitcoin the nonce is an integer.&lt;/p&gt;
-&lt;p&gt;OK, lets dive into a practical simulation of bitcoin mining to see how all this
+hashing. The only difference here is that with Bitcoin the nonce is an integer.&lt;/p&gt;
+&lt;p&gt;OK, lets dive into a practical simulation of Bitcoin mining to see how all this
 works. Click the &lt;em&gt;Mine manually with SHA256&lt;/em&gt; button a few times and have a look
 at what this does, both to the results area and to the nonce in the block header:&lt;/p&gt;
 &lt;div class="form-container" id="form4"&gt;
@@ -474,7 +484,7 @@ at what this does, both to the results area and to the nonce in the block header
             &lt;input id="nonce4" type="text" class="data-value" size="10" value="0"&gt;
         &lt;/td&gt;&lt;/tr&gt;
     &lt;/table&gt;
-    &lt;div class="media-caption"&gt;the bitcoin block header&lt;/div&gt;
+    &lt;div class="media-caption"&gt;the Bitcoin block header&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;ul class="error"&gt;&lt;/ul&gt;
 &lt;button id="btnRunHash4"&gt;Mine manually with SHA256&lt;/button&gt;
@@ -493,15 +503,15 @@ status: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="mineStatus4"&g
 &lt;/div&gt;
 
 &lt;p&gt;The data in the simulation block header is actually that of the very first
-bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of bitcoin,
+bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
 on 3rd January 2009.&lt;/p&gt;
 &lt;p&gt;As you can see, each mining attempt increments the nonce by 1. To find the block
-hash, all of the data in the block header shown here is hashed with SHA256 twice.
-I.e. it is all put together in one big string of characters and then hashed
-once with SHA256, and then that result is hashed with SHA256 again. There is a
-walkthrough of this process in the following annex section; however, the details
-are really not important in order to get a high-level understanding of how
-bitcoin mining works.&lt;/p&gt;
+hash, all of the data in the block header shown here is hashed with &lt;em&gt;SHA256&lt;/em&gt;
+twice. I.e. it is all put together in one big string of characters and then
+hashed once with &lt;em&gt;SHA256&lt;/em&gt;, and then that result is hashed with &lt;em&gt;SHA256&lt;/em&gt; again.
+There is a walkthrough of this process in the following annex section; however,
+the details are really not important in order to get a high-level understanding
+of how Bitcoin mining works.&lt;/p&gt;
 &lt;p&gt;The biggest apparent difference between this mining example and the one in the
 previous section on hashing is that the test here involves comparing two
 hexadecimal numbers, whereas previously the test involved matching a certain
@@ -561,10 +571,10 @@ hexadecimal numbers. The only difference is that decimal numbers go from &lt;cod
 &lt;code&gt;9&lt;/code&gt; whereas hexadecimal numbers go from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;, as you will recall from the
 start of this article. If you now go back and mine a few more times in the
 previous simulation then the results should make a lot more sense.&lt;/p&gt;
-&lt;p&gt;So finally we arrive at the end of this article on bitcoin mining. You now know
-all about hashing and how hashing is used in bitcoin mining. There is a bit more
+&lt;p&gt;So finally we arrive at the end of this article on Bitcoin mining. You now know
+all about hashing and how hashing is used in Bitcoin mining. There is a bit more
 information in the annex to fill in some small gaps, however, everything already
-covered above is certainly enough to understand what bitcoin mining is and to
+covered above is certainly enough to understand what Bitcoin mining is and to
 get a feel for the amount of effort that it requires even for the fastest
 computers on the planet.&lt;/p&gt;
 &lt;p&gt;All that remains now is to mine a block. We can cheat at this because the above
@@ -575,12 +585,12 @@ button to see what happens.&lt;/p&gt;
 &lt;h2&gt;annex&lt;/h2&gt;
 &lt;p&gt;This section goes into all the detail skipped above. It is really just intended
 for those (such as myself) who like to leave no stone unturned. One thing that
-was not previously explained in detail was how the bitcoin block hashes are
+was not previously explained in detail was how the Bitcoin block hashes are
 derived from the block header. The block header is stored as bytes in the
-bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
+Bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
 field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
-used by bitcoin.&lt;/p&gt;
+used by Bitcoin.&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;version&lt;/em&gt; is stored in the blockchain as 4 bytes. Try altering the
 human-readable &lt;em&gt;version&lt;/em&gt; value to see how this changes the value stored in the
 blockchain:&lt;/p&gt;
@@ -625,7 +635,7 @@ convert to little endian: &lt;span class="aligner"&gt;                    &lt;/s
     &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The bitcoin &lt;em&gt;difficulty&lt;/em&gt; (generally called &lt;em&gt;bits&lt;/em&gt; when expressed in its 4-byte
+&lt;p&gt;The Bitcoin &lt;em&gt;difficulty&lt;/em&gt; (generally called &lt;em&gt;bits&lt;/em&gt; when expressed in its 4-byte
 compact format) is somewhat similar to
 &lt;a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic"&gt;floating point notation&lt;/a&gt;.
 &lt;em&gt;Bits&lt;/em&gt; are stored in the blockchain, and the &lt;em&gt;target&lt;/em&gt; is used as a threshold
@@ -702,7 +712,7 @@ blockchain, and how these are concatenated together. The block header is always
             &lt;input id="nonce9" type="text" class="data-value" size="10" value="2083236893"&gt;
         &lt;/td&gt;&lt;/tr&gt;
     &lt;/table&gt;
-    &lt;div class="media-caption"&gt;human-readable bitcoin block header&lt;/div&gt;
+    &lt;div class="media-caption"&gt;human-readable Bitcoin block header&lt;/div&gt;
 &lt;/div&gt;&lt;/div&gt;
 &lt;ul  class="error"&gt;&lt;/ul&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
@@ -746,9 +756,9 @@ pre-image -&gt; SHA256 (little endian) -&gt; &lt;span class="aligner"&gt;&lt;/sp
 &lt;/div&gt;
 
 &lt;p&gt;That covers most of the nitty-gritty detail regarding the process of hashing a
-bitcoin block.&lt;/p&gt;
+Bitcoin block.&lt;/p&gt;
 &lt;p&gt;The final thing to discuss is the luck involved in mining. As you may have
-guessed, each bitcoin block will contain different data to all the blocks that
+guessed, each Bitcoin block will contain different data to all the blocks that
 have come before it. No other block will have the same transactions, the same
 timestamp, the same previous block hash, etc, as the current block. This means
 that miners will need to try lots of nonce values in order to mine a block - i.e.
@@ -786,8 +796,8 @@ shake a 6 with a dice.&lt;/p&gt;
 &lt;p&gt;Interestingly, if 9 or more digits must be matched, then the nonce alone is
 not large enough for the average number of attempts that must be made. Matching
 9 characters will require on average 34,359,738,368 double-hash attempts;
-however, the bitcoin nonce field is only 4 bytes long and so has a maximum value
-of 4,294,967,295. What is a bitcoin miner to do if it reaches 4,294,967,295
+however, the Bitcoin nonce field is only 4 bytes long and so has a maximum value
+of 4,294,967,295. What is a Bitcoin miner to do if it reaches 4,294,967,295
 attempts and a solution has still not been found? One option is to increment the
 timestamp field in the block by 1 second and begin mining again with a nonce of
 0. But what if the miners are so fast that they can hash at more than
