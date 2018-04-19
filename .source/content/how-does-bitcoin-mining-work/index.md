@@ -39,6 +39,7 @@ a few times and look carefully at what this does each time, then try typing
 different things in the *pre-image* field and clicking the *SHA256* button to
 see what that does:
 <div class="form-container" id="form0">
+    <a href="#form0"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
         <input id="inputMessage0" type="text" value="hello world!">
@@ -172,6 +173,7 @@ then you will not be able to find the pre-image which results in this hash - i.e
 you will not be able to invert this hash. Seriously - give it a go:
 
 <div class="form-container" id="form1">
+    <a href="#form1"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox1" checked>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
@@ -213,6 +215,7 @@ button below then you can have your device cycle through pre-images and show you
 the results at its maximum possible speed:
 
 <div class="form-container" id="form2">
+    <a href="#form2"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox2" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
@@ -298,6 +301,7 @@ this does. Once you find the solution, try changing the difficulty:
 
 <a name="form3"></a>
 <div class="form-container" id="form3">
+    <a href="#form3"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox3">
     <label for="inputCheckbox3">mine automatically</label>
     <br><br>
@@ -462,7 +466,8 @@ The *previous block hash* is where the *blockchain* concept comes in - the
 current block references the previous block so that blocks build upon each other
 over time, like so:
 
-<div class="form-container">
+<div id="dragableBlockchain" class="form-container">
+    <a href="#dragableBlockchain"><i class="fa fa-link" aria-hidden="true"></i></a>
     <object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
 </div>
 <div class="media-caption">the Bitcoin blockchain</div>
@@ -503,6 +508,7 @@ works. Click the *Mine manually with SHA256* button a few times and have a look
 at what this does, both to the results area and to the nonce in the block header:
 
 <div class="form-container" id="form4">
+<a href="#form4"><i class="fa fa-link" aria-hidden="true"></i></a>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -656,6 +662,7 @@ human-readable *version* value to see how this changes the value stored in the
 blockchain:
 
 <div class="form-container annex" id="form5">
+    <a href="#form5"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
@@ -681,6 +688,7 @@ human-readable *timestamp* value to see how this changes the value stored in the
 blockchain:
 
 <div class="form-container annex" id="form6">
+    <a href="#form6"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
     <ul class="error"></ul>
@@ -705,6 +713,7 @@ compact format) is somewhat similar to
 during mining:
 
 <div class="form-container annex" id="form7">
+    <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="bits7" class="for-textbox">difficulty</label><br>
     <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
     <ul class="error"></ul>
@@ -729,6 +738,7 @@ convert to bits (little endian): <span class="aligner">   </span><span id="bits7
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
 <div class="form-container annex" id="form8">
+    <a href="#form8"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
@@ -751,6 +761,7 @@ blockchain, and how these are concatenated together. The block header is always
 80 bytes:
 
 <div class="form-container" id="form9">
+<a href="#form9"><i class="fa fa-link" aria-hidden="true"></i></a>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -805,6 +816,7 @@ can see the difference in the following form by ticking and unticking the
 *pre-image is hex* checkbox and observing how the resulting hash changes:
 
 <div class="form-container" id="form10">
+    <a href="#form10"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox10" checked>
     <label for="inputCheckbox10">pre-image is hex</label>
     <br><br>
@@ -845,6 +857,7 @@ I have created a difficulty calculator so you can see the average number of
 hashes that must be made for a given difficulty:
 
 <div class="form-container annex" id="form11">
+    <a href="#form11"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="difficulty11" class="for-select">difficulty</label><br>
     <select id="difficulty11"></select>
     <div class="codeblock-container auto-wrap-on-mobile">
