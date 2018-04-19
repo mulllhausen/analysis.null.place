@@ -28,6 +28,7 @@ a few times and look carefully at what this does each time, then try typing
 different things in the &lt;em&gt;pre-image&lt;/em&gt; field and clicking the &lt;em&gt;SHA256&lt;/em&gt; button to
 see what that does:
 &lt;div class="form-container" id="form0"&gt;
+    &lt;a href="#form0"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="inputMessage0" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
     &lt;div class="left"&gt;
         &lt;input id="inputMessage0" type="text" value="hello world!"&gt;
@@ -152,6 +153,7 @@ if I give you &lt;code&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67
 then you will not be able to find the pre-image which results in this hash - i.e.
 you will not be able to invert this hash. Seriously - give it a go:&lt;/p&gt;
 &lt;div class="form-container" id="form1"&gt;
+    &lt;a href="#form1"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;input type="checkbox" id="inputCheckbox1" checked&gt;
     &lt;label for="inputCheckbox1"&gt;automatically increment pre-image after each hash&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -192,6 +194,7 @@ do the hashing at their maximum speeds. If you click the &lt;em&gt;Run SHA256 Au
 button below then you can have your device cycle through pre-images and show you
 the results at its maximum possible speed:&lt;/p&gt;
 &lt;div class="form-container" id="form2"&gt;
+    &lt;a href="#form2"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;input type="checkbox" id="inputCheckbox2" checked disabled&gt;
     &lt;label for="inputCheckbox2"&gt;automatically increment pre-image after each hash&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -272,6 +275,7 @@ you give it a go. Click the &lt;em&gt;Mine with SHA256&lt;/em&gt; button and loo
 this does. Once you find the solution, try changing the difficulty:&lt;/p&gt;
 &lt;p&gt;&lt;a name="form3"&gt;&lt;/a&gt;
 &lt;div class="form-container" id="form3"&gt;
+    &lt;a href="#form3"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;input type="checkbox" id="inputCheckbox3"&gt;
     &lt;label for="inputCheckbox3"&gt;mine automatically&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -421,7 +425,8 @@ Bitcoin behaviour).&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;previous block hash&lt;/em&gt; is where the &lt;em&gt;blockchain&lt;/em&gt; concept comes in - the
 current block references the previous block so that blocks build upon each other
 over time, like so:&lt;/p&gt;
-&lt;div class="form-container"&gt;
+&lt;div id="dragableBlockchain" class="form-container"&gt;
+    &lt;a href="#dragableBlockchain"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 
@@ -457,6 +462,7 @@ hashing. The only difference here is that with Bitcoin the nonce is an integer.&
 works. Click the &lt;em&gt;Mine manually with SHA256&lt;/em&gt; button a few times and have a look
 at what this does, both to the results area and to the nonce in the block header:&lt;/p&gt;
 &lt;div class="form-container" id="form4"&gt;
+&lt;a href="#form4"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table class="btc-header-definition"&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;
@@ -595,6 +601,7 @@ used by Bitcoin.&lt;/p&gt;
 human-readable &lt;em&gt;version&lt;/em&gt; value to see how this changes the value stored in the
 blockchain:&lt;/p&gt;
 &lt;div class="form-container annex" id="form5"&gt;
+    &lt;a href="#form5"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="version5" class="for-textbox"&gt;version&lt;/label&gt;&lt;br&gt;
     &lt;input id="version5" type="text" class="data-value" size="10" value="1"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
@@ -618,6 +625,7 @@ imposes some restrictions on the permissible date range. Try altering the
 human-readable &lt;em&gt;timestamp&lt;/em&gt; value to see how this changes the value stored in the
 blockchain:&lt;/p&gt;
 &lt;div class="form-container annex" id="form6"&gt;
+    &lt;a href="#form6"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="timestamp6" class="for-textbox"&gt;timestamp&lt;span id="timestamp6Explanation"&gt;&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
     &lt;input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
@@ -641,6 +649,7 @@ compact format) is somewhat similar to
 &lt;em&gt;Bits&lt;/em&gt; are stored in the blockchain, and the &lt;em&gt;target&lt;/em&gt; is used as a threshold
 during mining:&lt;/p&gt;
 &lt;div class="form-container annex" id="form7"&gt;
+    &lt;a href="#form7"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="bits7" class="for-textbox"&gt;difficulty&lt;/label&gt;&lt;br&gt;
     &lt;input id="bits7" type="text" class="data-value" size="8" value="1d00ffff"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
@@ -664,6 +673,7 @@ convert to bits (little endian): &lt;span class="aligner"&gt;   &lt;/span&gt;&lt
 
 &lt;p&gt;The human readable &lt;em&gt;nonce&lt;/em&gt; is stored in the blockchain as 4 little endian bytes:&lt;/p&gt;
 &lt;div class="form-container annex" id="form8"&gt;
+    &lt;a href="#form8"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="nonce8" class="for-textbox"&gt;nonce&lt;/label&gt;&lt;br&gt;
     &lt;input id="nonce8" type="text" class="data-value" size="10" value="2083236893"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
@@ -685,6 +695,7 @@ the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
 80 bytes:&lt;/p&gt;
 &lt;div class="form-container" id="form9"&gt;
+&lt;a href="#form9"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table class="btc-header-definition"&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;
@@ -738,6 +749,7 @@ in the first section were implemented for a pre-image expressed in bytes. You
 can see the difference in the following form by ticking and unticking the
 &lt;em&gt;pre-image is hex&lt;/em&gt; checkbox and observing how the resulting hash changes:&lt;/p&gt;
 &lt;div class="form-container" id="form10"&gt;
+    &lt;a href="#form10"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;input type="checkbox" id="inputCheckbox10" checked&gt;
     &lt;label for="inputCheckbox10"&gt;pre-image is hex&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -775,6 +787,7 @@ average attempts = (16&lt;sup&gt;number of hex digits&lt;/sup&gt;) / 2
 &lt;p&gt;I have created a difficulty calculator so you can see the average number of
 hashes that must be made for a given difficulty:&lt;/p&gt;
 &lt;div class="form-container annex" id="form11"&gt;
+    &lt;a href="#form11"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
     &lt;label for="difficulty11" class="for-select"&gt;difficulty&lt;/label&gt;&lt;br&gt;
     &lt;select id="difficulty11"&gt;&lt;/select&gt;
     &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;

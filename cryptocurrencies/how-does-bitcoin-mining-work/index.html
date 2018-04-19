@@ -178,6 +178,7 @@ a few times and look carefully at what this does each time, then try typing
 different things in the <em>pre-image</em> field and clicking the <em>SHA256</em> button to
 see what that does:
 <div class="form-container" id="form0">
+    <a href="#form0"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
         <input id="inputMessage0" type="text" value="hello world!">
@@ -302,6 +303,7 @@ if I give you <code>32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc98
 then you will not be able to find the pre-image which results in this hash - i.e.
 you will not be able to invert this hash. Seriously - give it a go:</p>
 <div class="form-container" id="form1">
+    <a href="#form1"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox1" checked>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
@@ -342,6 +344,7 @@ do the hashing at their maximum speeds. If you click the <em>Run SHA256 Automati
 button below then you can have your device cycle through pre-images and show you
 the results at its maximum possible speed:</p>
 <div class="form-container" id="form2">
+    <a href="#form2"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox2" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
@@ -422,6 +425,7 @@ you give it a go. Click the <em>Mine with SHA256</em> button and look carefully 
 this does. Once you find the solution, try changing the difficulty:</p>
 <p><a name="form3"></a>
 <div class="form-container" id="form3">
+    <a href="#form3"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox3">
     <label for="inputCheckbox3">mine automatically</label>
     <br><br>
@@ -571,7 +575,8 @@ Bitcoin behaviour).</p>
 <p>The <em>previous block hash</em> is where the <em>blockchain</em> concept comes in - the
 current block references the previous block so that blocks build upon each other
 over time, like so:</p>
-<div class="form-container">
+<div id="dragableBlockchain" class="form-container">
+    <a href="#dragableBlockchain"><i class="fa fa-link" aria-hidden="true"></i></a>
     <object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"></object>
 </div>
 
@@ -607,6 +612,7 @@ hashing. The only difference here is that with Bitcoin the nonce is an integer.<
 works. Click the <em>Mine manually with SHA256</em> button a few times and have a look
 at what this does, both to the results area and to the nonce in the block header:</p>
 <div class="form-container" id="form4">
+<a href="#form4"><i class="fa fa-link" aria-hidden="true"></i></a>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -745,6 +751,7 @@ used by Bitcoin.</p>
 human-readable <em>version</em> value to see how this changes the value stored in the
 blockchain:</p>
 <div class="form-container annex" id="form5">
+    <a href="#form5"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
@@ -768,6 +775,7 @@ imposes some restrictions on the permissible date range. Try altering the
 human-readable <em>timestamp</em> value to see how this changes the value stored in the
 blockchain:</p>
 <div class="form-container annex" id="form6">
+    <a href="#form6"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
     <ul class="error"></ul>
@@ -791,6 +799,7 @@ compact format) is somewhat similar to
 <em>Bits</em> are stored in the blockchain, and the <em>target</em> is used as a threshold
 during mining:</p>
 <div class="form-container annex" id="form7">
+    <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="bits7" class="for-textbox">difficulty</label><br>
     <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
     <ul class="error"></ul>
@@ -814,6 +823,7 @@ convert to bits (little endian): <span class="aligner">   </span><span id="bits7
 
 <p>The human readable <em>nonce</em> is stored in the blockchain as 4 little endian bytes:</p>
 <div class="form-container annex" id="form8">
+    <a href="#form8"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
@@ -835,6 +845,7 @@ the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
 80 bytes:</p>
 <div class="form-container" id="form9">
+<a href="#form9"><i class="fa fa-link" aria-hidden="true"></i></a>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -888,6 +899,7 @@ in the first section were implemented for a pre-image expressed in bytes. You
 can see the difference in the following form by ticking and unticking the
 <em>pre-image is hex</em> checkbox and observing how the resulting hash changes:</p>
 <div class="form-container" id="form10">
+    <a href="#form10"><i class="fa fa-link" aria-hidden="true"></i></a>
     <input type="checkbox" id="inputCheckbox10" checked>
     <label for="inputCheckbox10">pre-image is hex</label>
     <br><br>
@@ -925,6 +937,7 @@ average attempts = (16<sup>number of hex digits</sup>) / 2
 <p>I have created a difficulty calculator so you can see the average number of
 hashes that must be made for a given difficulty:</p>
 <div class="form-container annex" id="form11">
+    <a href="#form11"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="difficulty11" class="for-select">difficulty</label><br>
     <select id="difficulty11"></select>
     <div class="codeblock-container auto-wrap-on-mobile">
