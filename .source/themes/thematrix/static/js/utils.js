@@ -131,6 +131,10 @@ function stringIsInt(x)  {
     return (x == parseInt(x, 10));
 }
 
+function stringIsFloat(x)  {
+    return (x == parseFloat(x));
+}
+
 function setButtons(enable) {
     foreach (arguments, function (i, arg) {
         if (i == 0) return; // continue

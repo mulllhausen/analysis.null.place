@@ -7,8 +7,6 @@ stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
 summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
 
-The simplest definition of Bitcoin mining I can think of is this:
-
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -657,6 +655,8 @@ field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
 used by Bitcoin.
 
+### version
+
 The *version* is stored in the blockchain as 4 bytes. Try altering the
 human-readable *version* value to see how this changes the value stored in the
 blockchain:
@@ -682,6 +682,8 @@ convert to little endian: <span class="aligner">       </span><span id="version5
 Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
 format* simply means reversing the bytes.
 
+### timestamp
+
 The *timestamp* is also stored in the blockchain as 4 bytes. This currently
 imposes some restrictions on the permissible date range. Try altering the
 human-readable *timestamp* value to see how this changes the value stored in the
@@ -706,6 +708,8 @@ convert to little endian: <span class="aligner">                    </span><span
     </div>
 </div>
 
+### bits / difficulty / target
+
 The Bitcoin *difficulty* (generally called *bits* when expressed in its 4-byte
 compact format) is somewhat similar to
 [floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
@@ -714,8 +718,23 @@ during mining:
 
 <div class="form-container annex" id="form7">
     <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
-    <label for="bits7" class="for-textbox">difficulty</label><br>
-    <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+    <div class="left">
+        <label for="difficulty7" class="for-textbox">difficulty</label><br>
+        <input id="difficulty7" type="text" class="data-value" size="20" value="1">
+    </div>
+    <div class="left">
+        <label for="bits7" class="for-textbox">bits
+        <span id="bitsAreHex7Container">
+            (<input type="checkbox" id="bitsAreHex7" checked>
+            <label for="bitsAreHex7">hex</label>)</label>
+        </span>
+        <br>
+        <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+    </div>
+    <div class="left" id="targetParent">
+        <label for="target7" class="for-textbox">target</label><br>
+        <input id="target7" type="text" class="data-value" size="64" value="00000000ffff0000000000000000000000000000000000000000000000000000">
+    </div>
     <ul class="error"></ul>
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
@@ -724,16 +743,22 @@ during mining:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock">difficulty: <span class="aligner">                        </span><span id="difficulty7"></span>
+        <div class="codeblock">bits (hex): <span class="aligner">                        </span><span id="bitsOut7"></span>
 extract the target length (byte 1): <span class="aligner"></span><span id="lenHex7"></span> hex = <span id="len7"></span> decimal
 extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span><span class="preserve-newline">
 </span>
 set the prefix to the length and <span class="always-one-newline">
-</span>zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="target7"></span><span class="preserve-newline">
+</span>zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="targetOut7"></span><span class="preserve-newline">
 </span>
-convert to bits (little endian): <span class="aligner">   </span><span id="bits7LE"></span></div>
+bits (little endian): <span class="aligner">              </span><span id="bits7LE"></span>
+bits (base 10 integer): <span class="aligner">            </span><span id="bitsInt7"></span>
+difficulty (derived from bits): <span class="aligner">    </span><span id="difficultyFromBits7"></span><span id="difficultyErrors7" style="display:none;">
+original difficulty: <span class="aligner">               </span><span id="originalDifficulty7"></span>
+difficulty error: <span class="aligner">                  </span><span id="difficultyError7"></span></span></div>
     </div>
 </div>
+
+### nonce
 
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
@@ -754,6 +779,8 @@ convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8By
 convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span></div>
     </div>
 </div>
+
+### block hashing in detail
 
 Now we can put all this together. In the following form, note how each field in
 the human-readable block header is converted to bytes to be stored in the
@@ -807,6 +834,8 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
+### hashing hex vs ascii
+
 If you are very astute, you would have noticed that copying and pasting this
 block header into the *SHA256* hash forms at the start of this article gives a
 different result to the *SHA256* hashes here. This is because these hashes are
@@ -836,6 +865,8 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
 
 That covers most of the nitty-gritty detail regarding the process of hashing a
 Bitcoin block.
+
+### mining attempts calculator
 
 The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that

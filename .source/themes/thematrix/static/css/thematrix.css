@@ -34,12 +34,17 @@ a, a:visited, a:active, a:hover {
 a:hover {
     cursor: pointer;
 }
-h1 {
-    font-size: 24px;
-}
 h1, h2, h3, h4, h5, h6 {
     color: #7db904;/*green*/
     margin: 0 0 10px 0;
+    font-weight: bold;
+}
+h1, h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+    font-weight: normal;
 }
 ul, ol {
     padding: 0;
@@ -182,6 +187,7 @@ code {
     margin-right: -200px;
 }
 .col-1 {
+    margin-left: 130px;
     margin-right: 200px;
     overflow-x: hidden;
     padding: 20px;
@@ -209,6 +215,7 @@ body:before {
     }
     .col-1 {
         margin-right: 0;
+        margin-left: 0;
     }
 }
 

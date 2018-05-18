@@ -148,7 +148,10 @@ addEvent(window, 'load', function () {
     triggerEvent(document.getElementById('timestamp6'), 'change');
 
     // annex - form 7
+    addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
     addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
+    addEvent(document.getElementById('bitsAreHex7'), 'click', bits7Changed);
+    addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
     triggerEvent(document.getElementById('bits7'), 'change');
 
     // annex - form 8
@@ -847,32 +850,56 @@ function timestamp4Changed(e) {
     miningData.timestampRaw = newTimestamp; // last
 }
 
-function bitsChanged(bitsFromInput, formNum) {
+function bitsChanged(bitsFromInput, inHex, formNum) {
     var data = { // init
         status: true,
-        bits: null,
+        bits: null, // in little endian hex
+        bitsDec: null,
+        bitsBE: null, // in big endian hex
         target: null
     };
     deleteElements(document.querySelectorAll('#form' + formNum + ' .bitsError'));
     function addError2(errorText) { addError(formNum, 'bits', errorText); }
+
+    var h = ''; // init
+    if (!inHex) { // is base 10
+        bitsFromInput = bitsFromInput.toString();
+        if (inArray('.', bitsFromInput)) { // just 1 check for base 10 bits
+            addError2('when bits is base 10 it cannot contain decimal places');
+            data.status = false;
+            return data;
+        }
+        bitsFromInput = bitsFromInput.replace(/,/g, '');
+        if (!stringIsInt(bitsFromInput)) {
+            addError2('when bits is not hex, it can only contain numbers 0 to 9');
+            data.status = false;
+            return data;
+        }
+        data.bitsDec = parseInt(bitsFromInput);
+        bitsFromInput = int2hex(data.bitsDec);
+        h = ' (derived from base 10 bits)';
+    }
     if (bitsFromInput.length != 8) {
-        addError2('the difficulty must be 4 bytes long');
+        addError2('bits' + h + ' must be 4 bytes long');
         data.status = false;
         return data;
     }
     if (!isHex(bitsFromInput)) {
-        addError2('the difficulty must only contain hexadecimal digits');
+        addError2('bits' + h + ' must only contain hexadecimal digits');
         data.status = false;
         return data;
     }
     var target = bits2target(bitsFromInput);
+    if (inHex) h = ' (derived from bits)';
     if (target == null) {
-        addError2('the target length cannot be more than 32 bytes');
+        addError2('the target'+ h + ' cannot have a length of more than 32 bytes');
         data.status = false;
         return data;
     }
     data.target = target;
+    data.bitsBE = bitsFromInput;
     data.bits = toLittleEndian(bitsFromInput);
+    if (data.bitsDec == null) data.bitsDec = hex2int(bitsFromInput);
     return data;
 }
 
@@ -880,7 +907,8 @@ function bits4Changed(e) {
     var newBits = trimInputValue(e.currentTarget);
     if (newBits == miningData.bitsRaw) return; // exit if no change
 
-    var data = bitsChanged(newBits, 4);
+    var inHex = true;
+    var data = bitsChanged(newBits, inHex, 4);
     resetMiningStatus();
     if (!data.status) {
         setButtons(false, 'RunHash4');
@@ -893,6 +921,44 @@ function bits4Changed(e) {
     borderTheDigits('#target4', new Array(64)); // erase colors
     if (noOtherErrors4()) setButtons(true, 'RunHash4');
     miningData.bitsRaw = newBits; // last
+}
+
+function targetChanged(targetFromInput, formNum) {
+    var data = { // init
+        status: true,
+        target: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .targetError'));
+    function addError2(errorText) { addError(formNum, 'target', errorText); }
+    if (!isHex(targetFromInput)) {
+        addError2('the target must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    if (targetFromInput.length != 64) {
+        addError2('the target must be 32 bytes long');
+        data.status = false;
+        return data;
+    }
+    data.target = targetFromInput;
+    return data;
+}
+
+function difficultyChanged(difficultyFromInput, formNum) {
+    var data = { // init
+        status: true,
+        difficulty: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .difficultyError'));
+    function addError2(errorText) { addError(formNum, 'difficulty', errorText); }
+    difficultyFromInput = difficultyFromInput.replace(/,/g, '');
+    if (!stringIsFloat(difficultyFromInput)) {
+        addError2('the difficulty must be a number in base 10');
+        data.status = false;
+        return data;
+    }
+    data.difficulty = parseFloat(difficultyFromInput);
+    return data;
 }
 
 function nonceChanged(nonceFromInput, formNum) {
@@ -1047,6 +1113,66 @@ function bits2target(bits) {
     if (target.length < 64) return '0'.repeat(64 - target.length) + target;
 }
 
+// thanks to https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
+var diffCalcMaxBody = Math.log(0x00ffff);
+var diffCalcScaland = Math.log(256);
+function bits2difficulty(bits) {
+    if (bits.length != 8) return null;
+    var bitsInt = hex2int(bits);
+    return Math.exp(
+        diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
+        (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >> 24)))
+    );
+}
+
+// target is a hex string
+function target2bits(target) {
+    var unpaddedTarget = target.replace(/^0+/, '');
+    if ((unpaddedTarget.length % 2) == 1) unpaddedTarget = '0' + unpaddedTarget;
+    if (unpaddedTarget.length < 6) unpaddedTarget =
+    '0'.repeat(6 - unpaddedTarget.length) + unpaddedTarget;
+    var prefix = unpaddedTarget.substring(0, 6);
+    var numBytes = unpaddedTarget.length / 2;
+    return int2hex(numBytes, 2) + prefix;
+}
+
+function target2difficulty(target) {
+    return bits2difficulty(target2bits(target));
+}
+
+function difficulty2target(difficulty) {
+    return bits2target(difficulty2bits(difficulty));
+}
+
+// the initial bits are 0x1d00ffff
+// ie 0xffff << (0x1d * 2)
+// current_target = difficulty_1_target / difficulty
+function difficulty2bits(difficulty) {
+    var isNegative = false;
+    if (difficulty < 0) {
+        isNegative = true;
+        difficulty *= -1;
+    }
+    for (var shiftBytes = 1; true; shiftBytes++) {
+        var compact = (0x00ffff * (0x100 ** shiftBytes)) / difficulty;
+        if (compact >= 0xffff) break;
+    }
+    compact &= 0xffffff; // convert to int < 0xffffff
+    var size = 0x1d - shiftBytes;
+
+    // the 0x00800000 bit denotes the sign, so if it is already set, divide the
+    // mantissa by 0x100 and increase the size by a byte
+    if (compact & 0x800000) {
+        compact >>= 8;
+        size++;
+    }
+    if ((compact & ~0x007fffff) != 0) throw "'bits' mantissa out of bounds";
+    if (size >= 256) throw "'bits' size out of bounds";
+    compact |= (size << 24); // bit-mask the size byte onto the start
+    compact |= (isNegative && ((compact & 0x007fffff) ? 0x00800000 : 0));
+    return int2hex(compact, 8);
+}
+
 // true if hex1 <= hex2
 function hexCompare(hex1, hex2, getResolution) {
     var hex1bak = hex1;
@@ -1142,26 +1268,90 @@ function timestamp6Changed(e) {
 }
 
 // form 7 (understanding 'difficulty')
-function bits7Changed(e) {
+function difficulty7Changed(e) {
     var difficulty = trimInputValue(e.currentTarget);
-    var data = bitsChanged(difficulty, 7);
+    var data = difficultyChanged(difficulty, 7);
+    renderForm7Codeblock(data.status, data.difficulty, null, null, null);
+}
+
+function target7Changed(e) {
+    var target = trimInputValue(e.currentTarget);
+    var data = targetChanged(target, 7);
+    renderForm7Codeblock(data.status, null, null, null, data.target);
+}
+
+function bits7Changed() {
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var inHex = document.getElementById('bitsAreHex7').checked;
+    var data = bitsChanged(bits, inHex, 7);
+    renderForm7Codeblock(data.status, null, data.bitsBE, data.bitsDec, null);
+}
+
+function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     var codeblockContainer = document.querySelector('#form7 .codeblock-container');
-    if (!data.status) {
+    if (!ok) {
         codeblockContainer.style.display = 'none';
         return;
     }
     codeblockContainer.style.display = 'block';
-
-    var lenHex = difficulty.substring(0, 2);
+    var showDifficultyErrors = false;
+    if (difficulty !== null) {
+        showDifficultyErrors = true;
+        if (bits === null) {
+            bits = difficulty2bits(difficulty);
+            document.getElementById('bits7').value = bits;
+            bitsDec = hex2int(bits);
+        }
+        if (target === null) {
+            target = difficulty2target(difficulty);
+            document.getElementById('target7').value = target;
+        }
+    } else if (bits !== null) {
+        if (difficulty === null) {
+            difficulty = bits2difficulty(bits);
+            document.getElementById('difficulty7').value = difficulty;
+        }
+        if (target === null) {
+            target = bits2target(bits);
+            document.getElementById('target7').value = target;
+        }
+    } else if (target !== null) {
+        if (difficulty === null) {
+            difficulty = target2difficulty(target);
+            document.getElementById('difficulty7').value = difficulty;
+        }
+        if (bits === null) {
+            bits = target2bits(target);
+            document.getElementById('bits7').value = bits;
+            bitsDec = hex2int(bits);
+        }
+    }
+    var lenHex = bits.substring(0, 2);
     var len = hex2int(lenHex); // just byte 1
-    var msbytes = difficulty.substring(2);
+    var msbytes = bits.substring(2);
+    var difficultyFromBits7 = bits2difficulty(bits);
 
-    document.getElementById('difficulty7').innerHTML = borderTheBytes(difficulty);
+    document.getElementById('bitsOut7').innerHTML = borderTheBytes(bits);
     document.getElementById('lenHex7').innerHTML = lenHex;
     document.getElementById('len7').innerHTML = len;
     document.getElementById('msBytes7').innerHTML = borderTheBytes(msbytes);
-    document.getElementById('target7').innerHTML = borderTheBytes(data.target);
-    document.getElementById('bits7LE').innerHTML = borderTheBytes(data.bits)
+    document.getElementById('targetOut7').innerHTML = borderTheBytes(target);
+    document.getElementById('bits7LE').innerHTML = borderTheBytes(toLittleEndian(bits));
+    document.getElementById('bitsInt7').innerHTML = bitsDec;
+    document.getElementById('difficultyFromBits7').innerHTML = difficultyFromBits7;
+
+    if (showDifficultyErrors) {
+        document.getElementById('difficultyErrors7').style.display = 'inline';
+        document.getElementById('originalDifficulty7').innerHTML = difficulty;
+        var difficultyErrorAbs = Math.abs(difficulty - difficultyFromBits7);
+        var difficultyErrorPercentage = difficultyErrorAbs * 100 / difficulty;
+        document.getElementById('difficultyError7').innerHTML =
+        difficultyErrorAbs + ' (' + difficultyErrorPercentage + '%)';
+    } else {
+        document.getElementById('difficultyErrors7').style.display = 'none';
+        document.getElementById('originalDifficulty7').innerHTML = '';
+        document.getElementById('difficultyError7').innerHTML = '';
+    }
 }
 
 // form 8 (understanding 'nonce')
@@ -1234,7 +1424,8 @@ function timestamp9Changed(e) {
 
 function bits9Changed(e) {
     var bits = trimInputValue(e.currentTarget);
-    var data = bitsChanged(bits, 9);
+    var inHex = true;
+    var data = bitsChanged(bits, inHex, 9);
     var codeblockContainer = document.querySelector('#form9 .codeblock-container');
     if (!data.status) {
         codeblockContainer.style.display = 'none';
