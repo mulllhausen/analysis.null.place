@@ -743,7 +743,7 @@ during mining:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock">bits (hex): <span class="aligner">                        </span><span id="bitsOut7"></span>
+        <div class="codeblock">bits (hex - big endian): <span class="aligner">           </span><span id="bitsOut7"></span>
 extract the target length (byte 1): <span class="aligner"></span><span id="lenHex7"></span> hex = <span id="len7"></span> decimal
 extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span><span class="preserve-newline">
 </span>

@@ -150,7 +150,7 @@ addEvent(window, 'load', function () {
     // annex - form 7
     addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
     addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
-    addEvent(document.getElementById('bitsAreHex7'), 'click', bits7Changed);
+    addEvent(document.getElementById('bitsAreHex7'), 'click', bitsAreHex7Changed);
     addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
     triggerEvent(document.getElementById('bits7'), 'change');
 
@@ -1224,7 +1224,18 @@ function int2hex(intiger, leftPad) {
 function toLittleEndian(hexStr) {
     if (hexStr.length <= 2) return hexStr;
     if (hexStr.length % 2 == 1) hexStr = '0' + hexStr;
-    return hexStr.match(/.{2}/g).reverse().join('')
+    return hexStr.match(/.{2}/g).reverse().join('');
+}
+
+// javascript is accurate to 15 sig digits (ieee754 double precision)
+// number arg could be: -123,456,798.123456 or 1.2e+10 or -3.33333e-10 or 0.001
+function to15SigDigits(number) {
+    var numStrOriginal = number.toString();
+    var parts = numStrOriginal.split('e');
+    var numStrClean = parts[0].replace(/[^0-9]/g, '');
+    if (numStrClean.length <= 15) return number;
+    parts[0] = parts[0].substr(0, parts[0].length - (numStrClean.length - 15));
+    return parseFloat(parts[0] + ((parts.length > 1) ? 'e' + parts[1] : ''));
 }
 
 // form 5 (understanding 'version')
@@ -1280,6 +1291,13 @@ function target7Changed(e) {
     renderForm7Codeblock(data.status, null, null, null, data.target);
 }
 
+function bitsAreHex7Changed(e) {
+    var inHex = e.currentTarget.checked;
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var data = bitsChanged(bits, !inHex, 7);
+    document.getElementById('bits7').value = inHex ? data.bitsBE : data.bitsDec;
+}
+
 function bits7Changed() {
     var bits = trimInputValue(document.getElementById('bits7'));
     var inHex = document.getElementById('bitsAreHex7').checked;
@@ -1295,12 +1313,13 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     }
     codeblockContainer.style.display = 'block';
     var showDifficultyErrors = false;
+    var bitsInHex = document.getElementById('bitsAreHex7').checked;
     if (difficulty !== null) {
         showDifficultyErrors = true;
         if (bits === null) {
             bits = difficulty2bits(difficulty);
-            document.getElementById('bits7').value = bits;
             bitsDec = hex2int(bits);
+            document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
         }
         if (target === null) {
             target = difficulty2target(difficulty);
@@ -1322,14 +1341,14 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         }
         if (bits === null) {
             bits = target2bits(target);
-            document.getElementById('bits7').value = bits;
             bitsDec = hex2int(bits);
+            document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
         }
     }
     var lenHex = bits.substring(0, 2);
     var len = hex2int(lenHex); // just byte 1
     var msbytes = bits.substring(2);
-    var difficultyFromBits7 = bits2difficulty(bits);
+    var difficultyFromBits7 = to15SigDigits(bits2difficulty(bits));
 
     document.getElementById('bitsOut7').innerHTML = borderTheBytes(bits);
     document.getElementById('lenHex7').innerHTML = lenHex;
@@ -1343,8 +1362,13 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     if (showDifficultyErrors) {
         document.getElementById('difficultyErrors7').style.display = 'inline';
         document.getElementById('originalDifficulty7').innerHTML = difficulty;
-        var difficultyErrorAbs = Math.abs(difficulty - difficultyFromBits7);
-        var difficultyErrorPercentage = difficultyErrorAbs * 100 / difficulty;
+        difficulty = to15SigDigits(difficulty);
+        var difficultyErrorAbs = to15SigDigits(
+            Math.abs(difficulty - difficultyFromBits7)
+        );
+        var difficultyErrorPercentage = to15SigDigits(
+            difficultyErrorAbs * 100 / difficulty
+        );
         document.getElementById('difficultyError7').innerHTML =
         difficultyErrorAbs + ' (' + difficultyErrorPercentage + '%)';
     } else {
