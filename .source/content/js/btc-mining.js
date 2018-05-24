@@ -1096,6 +1096,35 @@ function mine() {
     };
 }
 
+// same logic as arith_uint256::SetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the bits value: 4 byte hex string
+// returns [target, negative, overflow]
+function setCompact(compact) {
+    // in the bitcoin src, typeof compact = uint32_t. enforce the same here.
+    if (compact.length != 8) return [null, null, null];
+    var target = ''; // init
+    compact = hex2int(compact);
+    // javascript's zero-fill right shift is equivalent to c++'s >> on a uint32_t
+    var size = compact >>> 24;
+    var word = compact & 0x007fffff;
+    if (size <= 3) {
+        word >>= 8 * (3 - size);
+        target = int2hex(word, 64);
+    } else {
+        // bitcoin src uses:
+        // uint256 target = word << 8 * (size - 3);
+        // use a string instead since javascript cannot handle 256bit integers
+        target = leftPad(int2hex(word) + '00'.repeat(size - 3), 64).substr(-64);
+    }
+    negative = (word != 0) && ((compact & 0x00800000) != 0);
+    overflow = (word != 0) && (
+        (size > 34) ||
+        ((word > 0xff) && (size > 33)) ||
+        ((word > 0xffff) && (size > 32))
+    );
+    return [target, negative, overflow];
+}
+
 function bits2target(bits) {
     if (bits.length != 8) return null;
 
@@ -1123,6 +1152,76 @@ function bits2difficulty(bits) {
         diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
         (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >> 24)))
     );
+}
+
+// returns the position of the highest bit set plus one, or 0 if the value is 0
+// same logic as base_uint<BITS>::bits() const in bitcoin/src/arith_uint256.cpp
+// input is the target value: 32 byte hex string
+// returns unsigned int between 0 and 288
+function bits(target) {
+    var width = 256 / 32; // 256 bits / int32
+    for (var pos = width - 1, i = 0; pos >= 0; pos--, i++) {
+        var int32 = hex2int(target.substr(i * width, width));
+        if (int32 == 0) continue;
+        for (var nbits = 31; nbits > 0; nbits--) {
+            if (int32 & (2 ** nbits)) return (32 * pos) + nbits + 1;
+        }
+        return (32 * pos) + 1;
+    }
+    return 0;
+}
+
+// same logic as uint64_t GetLow64() in bitcoin/src/arith_uint256.h
+// input is the target value: 32 byte hex string
+// returns the last 64 bits (8 bytes)
+function getLow64(target) {
+    // bitcoin src uses:
+    // return pn[0] | (uint64_t)pn[1] << 32;
+    return target.substr(-16);
+}
+
+// same logic as arith_uint256::GetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the target value: 32 byte hex string
+// returns [status, bits as an int, error message]
+function getCompact(target, negative) {
+    var size = Math.floor((bits(target) + 7) / 8);
+
+    // in bitcoin src this is a uint32_t, which javascript can handle
+    var compact = 0; // init
+
+    target = target.replace(/^0+/, '');
+    if (size <= 3) {
+        // bitcoin src uses:
+        // nCompact = GetLow64() << 8 * (3 - nSize);
+        // use a hex string since javascript cannot handle 64 bit ints
+        compact = hex2int(getLow64(target) + '00'.repeat(3 - size));
+    } else {
+        // bitcoin src uses:
+        // arith_uint256 bn = *this >> 8 * (nSize - 3);
+        // compact = bn.GetLow64();
+        // ie chop off (size - 3) bytes from the right to always keep 3 bytes
+        var chopped = target.substring(0, target.length - (2 * (size - 3)));
+        compact = hex2int(getLow64(chopped));
+    }
+    // the 0x00800000 bit denotes the sign. thus, if it is already set, divide
+    // the mantissa by 256 and increase the exponent.
+    if (compact & 0x00800000) {
+        compact >>= 8;
+        size++;
+    }
+    if ((compact & ~0x007fffff) !== 0) return [
+        false,
+        null,
+        '(compact & ~0x007fffff) !== 0, where compact = ' + compact.toString()
+    ];
+    if (size >= 256) return [
+        false,
+        null,
+        'size >= 256, where size = ' + size.toString()
+    ];
+    compact |= size << 24;
+    compact |= (negative && (compact & 0x007fffff) ? 0x00800000 : 0);
+    return [true, compact, ''];
 }
 
 // target is a hex string
@@ -1215,10 +1314,16 @@ function hex2int(hexStr) {
     return parseInt(hexStr, 16);
 }
 
-function int2hex(intiger, leftPad) {
+function int2hex(intiger, leftPadLen) {
     var hex = intiger.toString(16);
-    if (leftPad == null || hex.length >= leftPad) return hex;
-    return '0'.repeat(leftPad - hex.length) + hex;
+    if (leftPadLen == null) return hex;
+    return leftPad(hex, leftPadLen);
+}
+
+function leftPad(strToPad, padToLen, padChar) {
+    if (strToPad.length >= padToLen) return strToPad;
+    if (padChar == null) padChar = '0';
+    return padChar.repeat(padToLen - strToPad.length) + strToPad;
 }
 
 function toLittleEndian(hexStr) {
@@ -1311,6 +1416,9 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         codeblockContainer.style.display = 'none';
         return;
     }
+    deleteElements(document.querySelectorAll('#form7 .bitsError'));
+    deleteElements(document.querySelectorAll('#form7 .difficultyError'));
+    deleteElements(document.querySelectorAll('#form7 .targetError'));
     codeblockContainer.style.display = 'block';
     var showDifficultyErrors = false;
     var bitsInHex = document.getElementById('bitsAreHex7').checked;
