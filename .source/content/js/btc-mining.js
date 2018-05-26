@@ -889,14 +889,14 @@ function bitsChanged(bitsFromInput, inHex, formNum) {
         data.status = false;
         return data;
     }
-    var target = bits2target(bitsFromInput);
+    var targetx = bits2target(bitsFromInput); // [target, negative, overflow]
     if (inHex) h = ' (derived from bits)';
-    if (target == null) {
+    if (targetx[0] == null) {
         addError2('the target'+ h + ' cannot have a length of more than 32 bytes');
         data.status = false;
         return data;
     }
-    data.target = target;
+    data.target = targetx[0];
     data.bitsBE = bitsFromInput;
     data.bits = toLittleEndian(bitsFromInput);
     if (data.bitsDec == null) data.bitsDec = hex2int(bitsFromInput);
@@ -935,8 +935,9 @@ function targetChanged(targetFromInput, formNum) {
         data.status = false;
         return data;
     }
-    if (targetFromInput.length != 64) {
-        addError2('the target must be 32 bytes long');
+    var x = target2bits(targetFromInput); // [status, bits (int), error message]
+    if (x[0] == false) {
+        addError2(x[2]);
         data.status = false;
         return data;
     }
@@ -1126,6 +1127,8 @@ function setCompact(compact) {
 }
 
 function bits2target(bits) {
+    return setCompact(bits); // [target, negative, overflow]
+/*
     if (bits.length != 8) return null;
 
     var len = hex2int(bits.substring(0, 2)); // just byte 1
@@ -1140,17 +1143,17 @@ function bits2target(bits) {
 
     // make up to 32 bytes
     if (target.length < 64) return '0'.repeat(64 - target.length) + target;
+*/
 }
 
 // thanks to https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
 var diffCalcMaxBody = Math.log(0x00ffff);
 var diffCalcScaland = Math.log(256);
 function bits2difficulty(bits) {
-    if (bits.length != 8) return null;
-    var bitsInt = hex2int(bits);
+    var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
     return Math.exp(
         diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
-        (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >> 24)))
+        (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >>> 24)))
     );
 }
 
@@ -1184,6 +1187,8 @@ function getLow64(target) {
 // input is the target value: 32 byte hex string
 // returns [status, bits as an int, error message]
 function getCompact(target, negative) {
+    if (target.length != 64) return [false, null, 'target must be 32 bytes'];
+
     var size = Math.floor((bits(target) + 7) / 8);
 
     // in bitcoin src this is a uint32_t, which javascript can handle
@@ -1219,13 +1224,19 @@ function getCompact(target, negative) {
         null,
         'size >= 256, where size = ' + size.toString()
     ];
-    compact |= size << 24;
-    compact |= (negative && (compact & 0x007fffff) ? 0x00800000 : 0);
+    compact |= (2 ** size); // splice size into bits value
+    compact |= ((negative === true) && (compact & 0x007fffff) ? 0x00800000 : 0);
     return [true, compact, ''];
 }
 
 // target is a hex string
 function target2bits(target) {
+    if (target[0] == '-') {
+        isNegative = true;
+        target = target.substr(1);
+    }
+    return getCompact(target, isNegative); // [status, bits (int), error message]
+/*
     var unpaddedTarget = target.replace(/^0+/, '');
     if ((unpaddedTarget.length % 2) == 1) unpaddedTarget = '0' + unpaddedTarget;
     if (unpaddedTarget.length < 6) unpaddedTarget =
@@ -1233,14 +1244,16 @@ function target2bits(target) {
     var prefix = unpaddedTarget.substring(0, 6);
     var numBytes = unpaddedTarget.length / 2;
     return int2hex(numBytes, 2) + prefix;
+*/
 }
 
 function target2difficulty(target) {
-    return bits2difficulty(target2bits(target));
+    var x = target2bits(target); // [status, bits (int), error message]
+    return [x[0], bits2difficulty(x[1]), x[2]];
 }
 
 function difficulty2target(difficulty) {
-    return bits2target(difficulty2bits(difficulty));
+    return bits2target(difficulty2bits(difficulty)); // [target, negative, overflow]
 }
 
 // the initial bits are 0x1d00ffff
@@ -1422,16 +1435,21 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     codeblockContainer.style.display = 'block';
     var showDifficultyErrors = false;
     var bitsInHex = document.getElementById('bitsAreHex7').checked;
+    var isNegative = false;
+    var overflowed = false;
     if (difficulty !== null) {
         showDifficultyErrors = true;
         if (bits === null) {
             bits = difficulty2bits(difficulty);
-            bitsDec = hex2int(bits);
+            bitsDec = hex2int(bits)
             document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
         }
         if (target === null) {
-            target = difficulty2target(difficulty);
+            targetx = difficulty2target(difficulty); // [target, negative, overflow]
+            target = targetx[0];
             document.getElementById('target7').value = target;
+            isNegative = targetx[1];
+            overflowed = targetx[2];
         }
     } else if (bits !== null) {
         if (difficulty === null) {
@@ -1439,17 +1457,21 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
             document.getElementById('difficulty7').value = difficulty;
         }
         if (target === null) {
-            target = bits2target(bits);
+            targetx = bits2target(bits); // [target, negative, overflow]
+            target = targetx[0];
             document.getElementById('target7').value = target;
+            isNegative = targetx[1];
+            overflowed = targetx[2];
         }
     } else if (target !== null) {
+        if (target[0] == '-') isNegative = true;
         if (difficulty === null) {
-            difficulty = target2difficulty(target);
+            difficulty = target2difficulty(target)[1]; // [status, difficulty (int), error message]
             document.getElementById('difficulty7').value = difficulty;
         }
         if (bits === null) {
-            bits = target2bits(target);
-            bitsDec = hex2int(bits);
+            bitsDec = target2bits(target)[1]; // [status, bits (int), error message]
+            bits = int2hex(bitsDec, 8);
             document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
         }
     }

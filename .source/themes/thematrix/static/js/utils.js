@@ -123,7 +123,7 @@ function deleteElements(element) {
 }
 
 function isHex(val) {
-    var regex = /^[0-9a-f]+$/gi;
+    var regex = /^-?[0-9a-f]+$/gi;
     return regex.test(val);
 }
 
