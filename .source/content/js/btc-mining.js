@@ -1128,22 +1128,6 @@ function setCompact(compact) {
 
 function bits2target(bits) {
     return setCompact(bits); // [target, negative, overflow]
-/*
-    if (bits.length != 8) return null;
-
-    var len = hex2int(bits.substring(0, 2)); // just byte 1
-    if (len > 32) return null; // max length = 32 bytes
-
-    var msbytes = bits.substring(2);
-    var target = msbytes; // init
-    var numTrailingBytes = len - (msbytes.length / 2);
-    if (numTrailingBytes > 0) target += '00'.repeat(numTrailingBytes);
-
-    if (target.length == 64) return target;
-
-    // make up to 32 bytes
-    if (target.length < 64) return '0'.repeat(64 - target.length) + target;
-*/
 }
 
 // thanks to https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
@@ -1151,7 +1135,12 @@ var diffCalcMaxBody = Math.log(0x00ffff);
 var diffCalcScaland = Math.log(256);
 function bits2difficulty(bits) {
     var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
-    return Math.exp(
+    var neg = 1;
+    if (bitsInt & 0x00800000) {
+        neg = -1;
+        bitsInt &= ~0x00800000;
+    }
+    return neg * Math.exp(
         diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
         (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >>> 24)))
     );
@@ -1236,15 +1225,6 @@ function target2bits(target) {
         target = target.substr(1);
     }
     return getCompact(target, isNegative); // [status, bits (int), error message]
-/*
-    var unpaddedTarget = target.replace(/^0+/, '');
-    if ((unpaddedTarget.length % 2) == 1) unpaddedTarget = '0' + unpaddedTarget;
-    if (unpaddedTarget.length < 6) unpaddedTarget =
-    '0'.repeat(6 - unpaddedTarget.length) + unpaddedTarget;
-    var prefix = unpaddedTarget.substring(0, 6);
-    var numBytes = unpaddedTarget.length / 2;
-    return int2hex(numBytes, 2) + prefix;
-*/
 }
 
 function target2difficulty(target) {
@@ -1454,7 +1434,7 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     } else if (bits !== null) {
         if (difficulty === null) {
             difficulty = bits2difficulty(bits);
-            document.getElementById('difficulty7').value = difficulty;
+            document.getElementById('difficulty7').value = to15SigDigits(difficulty);
         }
         if (target === null) {
             targetx = bits2target(bits); // [target, negative, overflow]
@@ -1467,7 +1447,7 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         if (target[0] == '-') isNegative = true;
         if (difficulty === null) {
             difficulty = target2difficulty(target)[1]; // [status, difficulty (int), error message]
-            document.getElementById('difficulty7').value = difficulty;
+            document.getElementById('difficulty7').value = to15SigDigits(difficulty);
         }
         if (bits === null) {
             bitsDec = target2bits(target)[1]; // [status, bits (int), error message]
@@ -1479,12 +1459,17 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     var len = hex2int(lenHex); // just byte 1
     var msbytes = bits.substring(2);
     var difficultyFromBits7 = to15SigDigits(bits2difficulty(bits));
-
+    var posTarget = target; // init
+    var sign = ''; // init
+    if (isNegative) {
+        posTarget = target.substr(1);
+        sign = '-';
+    }
     document.getElementById('bitsOut7').innerHTML = borderTheBytes(bits);
     document.getElementById('lenHex7').innerHTML = lenHex;
     document.getElementById('len7').innerHTML = len;
     document.getElementById('msBytes7').innerHTML = borderTheBytes(msbytes);
-    document.getElementById('targetOut7').innerHTML = borderTheBytes(target);
+    document.getElementById('targetOut7').innerHTML = sign + borderTheBytes(posTarget);
     document.getElementById('bits7LE').innerHTML = borderTheBytes(toLittleEndian(bits));
     document.getElementById('bitsInt7').innerHTML = bitsDec;
     document.getElementById('difficultyFromBits7').innerHTML = difficultyFromBits7;
