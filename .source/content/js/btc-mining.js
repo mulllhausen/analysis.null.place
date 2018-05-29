@@ -1130,20 +1130,36 @@ function bits2target(bits) {
     return setCompact(bits); // [target, negative, overflow]
 }
 
-// thanks to https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
+// the bitcoin wiki gives this method of converting from bits to difficulty. the
+// logic is different to the bitcoin src code.
+// https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
 var diffCalcMaxBody = Math.log(0x00ffff);
 var diffCalcScaland = Math.log(256);
-function bits2difficulty(bits) {
+function bits2difficultyWiki(bits) {
     var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
-    var neg = 1;
-    if (bitsInt & 0x00800000) {
-        neg = -1;
-        bitsInt &= ~0x00800000;
-    }
-    return neg * Math.exp(
+    return Math.exp(
         diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
         (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >>> 24)))
     );
+}
+
+// same logic as double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
+// in src/rpc/blockchain.cpp
+// input is the bits value (a 4 byte hex string, or equivalent int)
+// returns a javascript Number (ieee754 double precision)
+function bits2difficulty(bits) {
+    var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
+    var shift = (bitsInt >>> 24) & 0xff;
+    var diff = parseFloat(0x0000ffff) / parseFloat(bitsInt & 0x00ffffff);
+    while (shift < 29) {
+        diff *= 256.0;
+        shift++;
+    }
+    while (shift > 29) {
+        diff /= 256.0;
+        shift--;
+    }
+    return diff;
 }
 
 // returns the position of the highest bit set plus one, or 0 if the value is 0
@@ -1161,6 +1177,12 @@ function bits(target) {
         return (32 * pos) + 1;
     }
     return 0;
+}
+
+// same logic as static bool DoubleEquals(double a, double b, double epsilon)
+// in src/test/blockchain_tests.cpp
+function doubleEquals(a, b, epsilon) {
+    return Math.abs(a - b) < epsilon;
 }
 
 // same logic as uint64_t GetLow64() in bitcoin/src/arith_uint256.h
@@ -1328,12 +1350,15 @@ function toLittleEndian(hexStr) {
 // javascript is accurate to 15 sig digits (ieee754 double precision)
 // number arg could be: -123,456,798.123456 or 1.2e+10 or -3.33333e-10 or 0.001
 function to15SigDigits(number) {
+    return number.toPrecision(15);
+/*
     var numStrOriginal = number.toString();
     var parts = numStrOriginal.split('e');
     var numStrClean = parts[0].replace(/[^0-9]/g, '');
     if (numStrClean.length <= 15) return number;
     parts[0] = parts[0].substr(0, parts[0].length - (numStrClean.length - 15));
     return parseFloat(parts[0] + ((parts.length > 1) ? 'e' + parts[1] : ''));
+*/
 }
 
 // form 5 (understanding 'version')
