@@ -74,8 +74,11 @@
             "negative": false,
             "overflow": false
         }, {
+            "original_bits": "02008000",
             "target": "0000000000000000000000000000000000000000000000000000000000000080",
-            "reconverted_bits": "02008000"
+            "reconverted_bits": "02008000",
+            "negative": false,
+            "overflow": false
         }, {
             "original_bits": "01fedcba",
             "target": "000000000000000000000000000000000000000000000000000000000000007e",
@@ -127,7 +130,10 @@
             "target": "3456000000000000000000000000000000000000000000000000000000000000",
             "negative": false,
             "overflow": true
-        }, {
+        }
+    ],
+    "for-later": [
+        {
             "original_bits": "1f111111",
             "difficulty": 0.000001,
             "error_threshold": 0.00001

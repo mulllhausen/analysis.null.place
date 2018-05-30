@@ -168,7 +168,7 @@ code {
         width: 10px;
         height: 10px;
     }
-    ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
         background: #000000;
     }
     ::-webkit-scrollbar-thumb {

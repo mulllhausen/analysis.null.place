@@ -153,6 +153,7 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('bitsAreHex7'), 'click', bitsAreHex7Changed);
     addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
     triggerEvent(document.getElementById('bits7'), 'change');
+    addEvent(document.getElementById('runDifficultyUnitTests'), 'click', runDifficultyUnitTests);
 
     // annex - form 8
     addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
@@ -1235,13 +1236,17 @@ function getCompact(target, negative) {
         null,
         'size >= 256, where size = ' + size.toString()
     ];
-    compact |= (2 ** size); // splice size into bits value
+    // bitcoin src uses:
+    // nCompact |= nSize << 24;
+    compact |= (size * (2 ** 24)); // splice size into bits value
+
     compact |= ((negative === true) && (compact & 0x007fffff) ? 0x00800000 : 0);
     return [true, compact, ''];
 }
 
 // target is a hex string
 function target2bits(target) {
+    var isNegative = false;
     if (target[0] == '-') {
         isNegative = true;
         target = target.substr(1);
@@ -1515,6 +1520,76 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         document.getElementById('difficultyErrors7').style.display = 'none';
         document.getElementById('originalDifficulty7').innerHTML = '';
         document.getElementById('difficultyError7').innerHTML = '';
+    }
+}
+
+var doneDifficultyTests = false;
+function runDifficultyUnitTests() {
+    if (doneDifficultyTests) return;
+    doneDifficultyTests = true;
+    document.getElementById('unitTests7').style.display = 'block';
+    ajax('/json/unittest-bits.json', function (json) {
+        try {
+            var testsData = JSON.parse(json).tests;
+            renderTestResults(testsData);
+        } catch (err) {
+            console.log(err);
+        }
+    });
+    function renderTestResults(testsData) {
+        var codeblockEl = document.querySelector('#unitTests7 .codeblock');
+        codeblockEl.innerHTML = ''; // init
+        var pass = '<span style="color:' + passColor + '">pass</span>';
+        var fail = '<span style="color:' + failColor + '">fail</span>';
+        var s = '<span class="aligner">'; // start aligner
+        var e = '</span>'; // end aligner
+        var n = '\n<span class="preserve-newline">\n</span>\n';
+        foreach(testsData, function (testNum, testData) {
+            var target = bits2target(testData['original_bits']); // [target, negative, overflow]
+            var reconvertedBits = target2bits(target[0]); // [status, bits (int), error message]
+            var targetPass = (testData['target'] == target[0]) ? pass : fail;
+            var reconvertedBitsPass =
+            (testData['reconverted_bits'] == int2hex(reconvertedBits[1], 8)) ?
+            pass : fail;
+            var negativePass = (target[1] == testData['negative']) ? pass : fail;
+            var overflowPass = (target[2] == testData['overflow']) ? pass : fail;
+            var tmp = ((testNum == 0) ? '' : n) + 'test ' + testNum + '\n' +
+            'bits: ' + s + '                         ' + e +
+            testData['original_bits'] + '\n' +
+
+            'expected target: ' + s + '              ' + e +
+            testData['target'] + '\n' +
+
+            'derived target: ' + s + '               ' + e + target[0] + '\n' +
+
+            'target check: ' + s + '                 ' + e + targetPass + '\n' +
+
+            'expected reconverted bits: ' + s + '    ' + e +
+            testData['reconverted_bits'] + '\n' +
+
+            'derived reconverted bits: ' + s + '     ' + e +
+            int2hex(reconvertedBits[1], 8) + '\n' +
+
+            'reconverted bits check: ' + s + '       ' + e +
+            reconvertedBitsPass + '\n' +
+
+            'target is negative (expected): ' + s + e +
+            (testData['negative'] ? 'yes' : 'no') + '\n' +
+
+            'target is negative (derived): ' + s + ' ' + e +
+            (target[1] ? 'yes' : 'no') + '\n' +
+
+            'negative check: ' + s + '               ' + e + negativePass + '\n' +
+
+            'target overflowed (expected): ' + s + ' ' + e + (target[2] ? 'yes' : 'no') + '\n' +
+
+            'target overflowed (derived): ' + s + '  ' + e +
+            (testData['overflow'] ? 'yes' : 'no') + '\n' +
+
+            'target overflow check: ' + s + '        ' + e + overflowPass;
+
+            codeblockEl.innerHTML = (codeblockEl.innerHTML + tmp).trim();
+        });
     }
 }
 

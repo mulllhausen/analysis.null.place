@@ -758,6 +758,20 @@ difficulty error: <span class="aligner">                  </span><span id="diffi
     </div>
 </div>
 
+<a id="runDifficultyUnitTests">click here</a> to run unit tests using data from the bitcoin source code
+
+<div class="form-container annex" id="unitTests7" style="display:none;">
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock"></div>
+    </div>
+</div>
+
 ### nonce
 
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:

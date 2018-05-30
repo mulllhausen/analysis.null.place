@@ -98,6 +98,12 @@ pre {
 #form7 input {
     max-width: 100%;
 }
+#unitTests7 .codeblock {
+    max-height: 200px;
+}
+#unitTests7 .codeblock-container .button-background {
+    right: 10px;/*=scrollbar width*/
+}
 #bitsAreHex7Container {
     position: relative;
 }
