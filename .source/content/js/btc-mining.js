@@ -1128,7 +1128,9 @@ function setCompact(compact) {
 }
 
 function bits2target(bits) {
-    return setCompact(bits); // [target, negative, overflow]
+    var targetx = setCompact(bits); // [target, negative, overflow]
+    if (targetx[1]) targetx[0] = '-' + targetx[0];
+    return targetx;
 }
 
 // the bitcoin wiki gives this method of converting from bits to difficulty. the
@@ -1581,7 +1583,8 @@ function runDifficultyUnitTests() {
 
             'negative check: ' + s + '               ' + e + negativePass + '\n' +
 
-            'target overflowed (expected): ' + s + ' ' + e + (target[2] ? 'yes' : 'no') + '\n' +
+            'target overflowed (expected): ' + s + ' ' + e +
+            (target[2] ? 'yes' : 'no') + '\n' +
 
             'target overflowed (derived): ' + s + '  ' + e +
             (testData['overflow'] ? 'yes' : 'no') + '\n' +
