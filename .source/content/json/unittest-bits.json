@@ -6,153 +6,244 @@
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": "Infinity",
+            "difficulty_threshold_high": "Infinity",
+            "cpp_difficulty": "Infinity"
         }, {
             "original_bits": "00123456",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 379118614736497601523054939281842080687041243276276159466332271673344,
+            "difficulty_threshold_high": 379118614736497697304026243399895728083730440170600135637527408148480,
+            "cpp_difficulty": 3.79119e+68
         }, {
             "original_bits": "01003456",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 131871929006696290260966773305883156548534028920425397052772131536896,
+            "difficulty_threshold_high": 131871929006696338151452425364909980246878627367587385138369699774464,
+            "cpp_difficulty": 1.31872e+68
         }, {
             "original_bits": "02000056",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 80251639936033652660080092405717730662289119916165817210261928411136,
+            "difficulty_threshold_high": 80251639936033676605322918435231142511461419139746811253060712529920,
+            "cpp_difficulty": 8.02516e+67
         }, {
             "original_bits": "03000000",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": "Infinity",
+            "difficulty_threshold_high": "Infinity",
+            "cpp_difficulty": "Infinity"
         }, {
             "original_bits": "04000000",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": "Infinity",
+            "difficulty_threshold_high": "Infinity",
+            "cpp_difficulty": "Infinity"
         }, {
             "original_bits": "00923456",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 47205414309149501725663025467136798955867701742124786193107792166912,
+            "difficulty_threshold_high": 47205414309149513698284438481893504880453851353915283214507184226304,
+            "cpp_difficulty": 4.72054e+67
         }, {
             "original_bits": "01803456",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 210285508583511721337472990442634337962690687641269978532207919104,
+            "difficulty_threshold_high": 210285508583511768105525385031527720480605334562326607522049294336,
+            "cpp_difficulty": 2.10286e+65
         }, {
             "original_bits": "02800056",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 822731289816852847334875684274946633889721752923536552831746048,
+            "difficulty_threshold_high": 822731289816853030022580350637811409350325842458914009823313920,
+            "cpp_difficulty": 8.22731e+62
         }, {
             "original_bits": "03800000",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 3213827048660672485828533541087486130579037825539891699646464,
+            "difficulty_threshold_high": 3213827048660673199452379894067426659722022550287459891019776,
+            "cpp_difficulty": 3.21383e+60
         }, {
             "original_bits": "04800000",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 12554011908830751897767709144872992697574366506015201951744,
+            "difficulty_threshold_high": 12554011908830754685360858961200885389539150587060390199296,
+            "cpp_difficulty": 1.2554e+58
         }, {
             "original_bits": "01123456",
             "target": "0000000000000000000000000000000000000000000000000000000000000012",
             "reconverted_bits": "01120000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 1480932088814443755949433356569695627683754856547953747915360436224,
+            "difficulty_threshold_high": 1480932088814444130093852513280842687827072031916406779834091438080,
+            "cpp_difficulty": 1.48093e+66
         }, {
             "original_bits": "02008000",
             "target": "0000000000000000000000000000000000000000000000000000000000000080",
             "reconverted_bits": "02008000",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 210621369461025832031258774148709491053627822934582342428030664704,
+            "difficulty_threshold_high": 210621369461025878799311168737602873571542469855638971417872039936,
+            "cpp_difficulty": 2.10621e+65
         }, {
             "original_bits": "01fedcba",
             "target": "-000000000000000000000000000000000000000000000000000000000000007e",
             "reconverted_bits": "01fe0000",
             "negative": true,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 105780825487675117292642068750104756587119734317061468621065158656,
+            "difficulty_threshold_high": 105780825487675164060694463338998139105034381238118097610906533888,
+            "cpp_difficulty": 1.05781e+65
         }, {
             "original_bits": "02123456",
             "target": "0000000000000000000000000000000000000000000000000000000000001234",
             "reconverted_bits": "02123400",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 5784890971931420921677474049100373545639667408390444327794376704,
+            "difficulty_threshold_high": 5784890971931422383179111380003291749324500124673463983726919680,
+            "cpp_difficulty": 5.78489e+63
         }, {
             "original_bits": "03123456",
             "target": "0000000000000000000000000000000000000000000000000000000000123456",
             "reconverted_bits": "03123456",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 22597230359107112975302633004298334162654950814025173155446784,
+            "difficulty_threshold_high": 22597230359107118684293403828137858395798828612005718686433280,
+            "cpp_difficulty": 2.25972e+61
         }, {
             "original_bits": "04123456",
             "target": "0000000000000000000000000000000000000000000000000000000012345600",
             "reconverted_bits": "04123456",
-            "overflow": false
+            "negative": false,
+            "overflow": false,
+            "difficulty_threshold_low": 88270431090262160059775910173040367822870901617285832638464,
+            "difficulty_threshold_high": 88270431090262182360521108703663509358589174265647338618880,
+            "cpp_difficulty": 8.82704e+58
         }, {
             "original_bits": "04923456",
             "target": "-0000000000000000000000000000000000000000000000000000000012345600",
             "reconverted_bits": "04923456",
             "negative": true,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 10990866997546866006605100228250212724289787407527860764672,
+            "difficulty_threshold_high": 10990866997546868794198250044578105416254571488573049012224,
+            "cpp_difficulty": 1.09909e+58
         }, {
             "original_bits": "05009234",
             "target": "0000000000000000000000000000000000000000000000000000000092340000",
             "reconverted_bits": "05009234",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 10990965646803625531096643928624400246389842432991531368448,
+            "difficulty_threshold_high": 10990965646803628318689793744952292938354626514036719616000,
+            "cpp_difficulty": 1.0991e+58
         }, {
             "original_bits": "20123456",
             "target": "1234560000000000000000000000000000000000000000000000000000000000",
             "reconverted_bits": "20123456",
             "negative": false,
-            "overflow": false
+            "overflow": false,
+            "difficulty_threshold_low": 0,
+            "difficulty_threshold_high": 0.00001000327413,
+            "cpp_difficulty": 3.27413e-9
         }, {
             "original_bits": "ff123456",
             "target": "0000000000000000000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "00000000",
             "negative": false,
-            "overflow": true
+            "overflow": true,
+            "difficulty_threshold_low": 0,
+            "difficulty_threshold_high": 0,
+            "cpp_difficulty": 0
         }, {
             "original_bits": "21123456",
             "target": "3456000000000000000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "20345600",
             "negative": false,
-            "overflow": true
-        }
-    ],
-    "for-later": [
-        {
+            "overflow": true,
+            "difficulty_threshold_low": 0,
+            "difficulty_threshold_high": 0.0000100000127896,
+            "cpp_difficulty": 1.27896e-11
+        }, {
             "original_bits": "1f111111",
-            "difficulty": 0.000001,
-            "error_threshold": 0.00001
+            "target": "0011111100000000000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "1f111111",
+            "negative": false,
+            "overflow": false,
+            "difficulty_threshold_low": 0,
+            "difficulty_threshold_high": 0.000011,
+            "cpp_difficulty": 0.000001
         }, {
             "original_bits": "1ef88f6f",
-            "difficulty": 0.000016,
-            "error_threshold": 0.00001
+            "target": "-0000788f6f000000000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "1ef88f6f",
+            "negative": true,
+            "overflow": false,
+            "difficulty_threshold_low": 0.000006,
+            "difficulty_threshold_high": 0.000026,
+            "cpp_difficulty": 0.000016
         }, {
             "original_bits": "1df88f6f",
-            "difficulty": 0.004023,
-            "error_threshold": 0.00001
+            "target": "-000000788f6f0000000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "1df88f6f",
+            "negative": true,
+            "overflow": false,
+            "difficulty_threshold_low": 0.004013,
+            "difficulty_threshold_high": 0.004033,
+            "cpp_difficulty": 0.004023
         }, {
             "original_bits": "1cf88f6f",
-            "difficulty": 1.029916,
-            "error_threshold": 0.00001
+            "target": "-00000000788f6f00000000000000000000000000000000000000000000000000",
+            "reconverted_bits": "1cf88f6f",
+            "negative": true,
+            "overflow": false,
+            "difficulty_threshold_low": 1.029906,
+            "difficulty_threshold_high": 1.029926,
+            "cpp_difficulty": 1.029916
         }, {
             "original_bits": "12345678",
-            "difficulty": 5913134931067755359633408.0,
-            "error_threshold": 0.00001
+            "target": "0000000000000000000000000000345678000000000000000000000000000000",
+            "reconverted_bits": "12345678",
+            "negative": false,
+            "overflow": false,
+            "difficulty_threshold_low": 5913134931067755359633408,
+            "difficulty_threshold_high": 5913134931067756433375232,
+            "cpp_difficulty": 5913134931067755359633408.0
         }
     ]
 }
