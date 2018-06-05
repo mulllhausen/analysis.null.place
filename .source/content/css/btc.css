@@ -98,6 +98,13 @@ pre {
 #form7 input {
     max-width: 100%;
 }
+#form7 .warnings {
+    color: orange;
+    display: block;
+    float: left;
+    clear: both;
+    margin: 10px 0 10px 0;
+}
 #unitTests7 .codeblock {
     max-height: 200px;
 }

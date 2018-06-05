@@ -959,7 +959,13 @@ function difficultyChanged(difficultyFromInput, formNum) {
         data.status = false;
         return data;
     }
-    data.difficulty = parseFloat(difficultyFromInput);
+    var difficultyFloat = parseFloat(difficultyFromInput);
+    if (difficultyFloat < 0) {
+        addError2('the difficulty cannot be negative');
+        data.status = false;
+        return data;
+    }
+    data.difficulty = difficultyFloat;
     return data;
 }
 
@@ -1268,9 +1274,11 @@ function difficulty2target(difficulty) {
 // the initial bits are 0x1d00ffff
 // ie 0xffff << (0x1d * 2)
 // current_target = difficulty_1_target / difficulty
+// note that the bitcoin src does not do this conversion
 function difficulty2bits(difficulty) {
     var isNegative = false;
     if (difficulty < 0) {
+        throw 'difficulty cannot be negative'; // unlike target, which can be
         isNegative = true;
         difficulty *= -1;
     }
@@ -1287,8 +1295,8 @@ function difficulty2bits(difficulty) {
         compact >>= 8;
         size++;
     }
-    if ((compact & ~0x007fffff) != 0) throw "'bits' mantissa out of bounds";
-    if (size >= 256) throw "'bits' size out of bounds";
+    if ((compact & ~0x007fffff) != 0) throw '\'bits\' mantissa out of bounds';
+    if (size >= 256) throw '\'bits\' size out of bounds';
     compact |= (size << 24); // bit-mask the size byte onto the start
     compact |= (isNegative && ((compact & 0x007fffff) ? 0x00800000 : 0));
     return int2hex(compact, 8);
@@ -1437,6 +1445,8 @@ function bits7Changed() {
 
 function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     var codeblockContainer = document.querySelector('#form7 .codeblock-container');
+    var warningsEl = document.querySelector('#form7 .warnings');
+    warningsEl.style.display = 'none';
     if (!ok) {
         codeblockContainer.style.display = 'none';
         return;
@@ -1516,6 +1526,9 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         var difficultyErrorPercentage = to15SigDigits(
             difficultyErrorAbs * 100 / difficulty
         );
+        if (parseFloat(difficultyErrorPercentage) > 0) {
+            warningsEl.style.display = 'block';
+        }
         document.getElementById('difficultyError7').innerHTML =
         difficultyErrorAbs + ' (' + difficultyErrorPercentage + '%)';
     } else {

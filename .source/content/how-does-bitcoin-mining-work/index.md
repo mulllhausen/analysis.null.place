@@ -736,6 +736,7 @@ during mining:
         <input id="target7" type="text" class="data-value" size="64" value="00000000ffff0000000000000000000000000000000000000000000000000000">
     </div>
     <ul class="error"></ul>
+    <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
