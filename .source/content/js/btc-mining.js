@@ -1158,9 +1158,9 @@ function setCompact(compact, levelOfDetail) {
         });
     }
     results.isNegative = (word != 0) && ((compact & 0x00800000) != 0);
-    var not = results.isNegative ? '' : ' not';
-    var posneg = results.isNegative ? 'negative' : 'positive';
     if (levelOfDetail >= 2) {
+        var not = results.isNegative ? '' : ' not';
+        var posneg = results.isNegative ? 'negative' : 'positive';
         results.steps.push({
             left: 'the target is ' + posneg + ' because the 0x00800000 bit is' +
             not + ' set in the original bits value',
@@ -1443,6 +1443,7 @@ function getCompact(target, negative, levelOfDetail) {
     var results = {
         status: false, // init
         finalBitsInt: null,
+        finalBitsHex: null,
         statusMessage: '',
         sizeInt: null,
         steps: []
@@ -1552,6 +1553,7 @@ function getCompact(target, negative, levelOfDetail) {
     }
     results.status = true;
     results.finalBitsInt = compact;
+    results.finalBitsHex = int2hex(compact, 8);
     return results;
 }
 
@@ -2002,11 +2004,10 @@ function runDifficultyUnitTests() {
         foreach(testsData, function (testNum, testData) {
             var targetx = bits2target(testData['original_bits']);
             var bitsx = target2bits(targetx.target);
-            var reconvertedBits = bitsx.finalBitsInt;
+            var reconvertedBits = bitsx.finalBitsHex;
             var targetPass = (testData['target'] == targetx.target) ? pass : fail;
             var reconvertedBitsPass =
-            (testData['reconverted_bits'] == int2hex(reconvertedBits[1], 8)) ?
-            pass : fail;
+            (testData['reconverted_bits'] == reconvertedBits) ? pass : fail;
             var negativePass = (targetx.isNegative == testData['negative']) ?
             pass : fail;
             var overflowPass = (targetx.isOverflow == testData['overflow']) ?
@@ -2037,8 +2038,8 @@ function runDifficultyUnitTests() {
             'reconverted bits (expected): ' + s + '  ' + e +
             testData['reconverted_bits'] + '\n' +
 
-            'reconverted bits (derived): ' + s + '   ' + e +
-            int2hex(reconvertedBits[1], 8) + '\n' +
+            'reconverted bits (derived): ' + s + '   ' + e + reconvertedBits +
+            '\n' +
 
             'reconverted bits check: ' + s + '       ' + e +
             reconvertedBitsPass + '\n' +
