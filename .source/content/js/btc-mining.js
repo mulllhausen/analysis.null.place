@@ -1093,7 +1093,6 @@ function mine() {
 
 // same logic as arith_uint256::SetCompact() in bitcoin/src/arith_uint256.cpp
 // input is the bits value: 4 byte hex string
-// returns [target, negative, overflow]
 function setCompact(compact, levelOfDetail) {
     var results = {
         status: false, // init
@@ -1241,7 +1240,6 @@ function bits2difficultyWiki(bits) {
 // same logic as double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
 // in src/rpc/blockchain.cpp
 // input is the bits value (a 4 byte hex string, or equivalent int)
-// returns a javascript Number (ieee754 double precision)
 function bits2difficulty(bits, levelOfDetail) {
     if (levelOfDetail == null) levelOfDetail = 0;
     var results = {
@@ -1438,7 +1436,6 @@ function getLow64(target) {
 
 // same logic as arith_uint256::GetCompact() in bitcoin/src/arith_uint256.cpp
 // input is the target value: 32 byte hex string
-// returns [status, bits as an int, error message]
 function getCompact(target, negative, levelOfDetail) {
     var results = {
         status: false, // init
@@ -1920,7 +1917,7 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         if (difficulty === null) {
             var difficultyx = bits2difficulty(bits, levelOfDetail);
             difficulty = difficultyx.difficulty;
-            document.getElementById('difficulty7').value = to15SigDigits(difficulty);
+            document.getElementById('difficulty7').value = difficulty;
             steps = steps.concat(difficultyx.steps);
         }
         if (target === null) {
@@ -1940,7 +1937,7 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         if (difficulty === null) {
             var difficultyx = bits2difficulty(bits, levelOfDetail);
             difficulty = difficultyx.difficulty;
-            document.getElementById('difficulty7').value = to15SigDigits(difficulty);
+            document.getElementById('difficulty7').value = difficulty;
             steps = steps.concat(difficultyx.steps);
         }
     }
@@ -1948,9 +1945,9 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     alignText(codeblock);
 }
 
+var aligner = ' <span class="aligner"> </span>';
 function formatCodeblockSteps(steps, leftMaxChars) {
     var p = '<span class="preserve-newline">\n</span>\n';
-    var a = ' <span class="aligner"> </span>';
     var codeblockHTML = '';
     foreach(steps, function (i, step) {
         if (step.left == '\n') {
@@ -1960,7 +1957,8 @@ function formatCodeblockSteps(steps, leftMaxChars) {
         step.left = wrapCodeblockLeft(step.left, leftMaxChars).trim();
         if (step.right == null) step.right = '';
         else step.left += ':';
-        codeblockHTML += step.left + a + step.right + p;
+        if (steps.length == (i + 1)) p = ''; // no newline on the end
+        codeblockHTML += step.left + aligner + step.right + p;
     });
     return codeblockHTML;
 }
@@ -1974,7 +1972,7 @@ function wrapCodeblockLeft(leftCol, leftMaxChars) {
     foreach(words, function (i, word) {
         charCount += word.length + 1;
         if (charCount > leftMaxChars) { // too long
-            newLeftCol += n + word + ' ';
+            newLeftCol += aligner + n + word + ' ';
             charCount = word.length + 1;
         } else {
             newLeftCol += word + ' ';
@@ -2024,7 +2022,8 @@ function runDifficultyUnitTests() {
                 (difficulty > difficultyUpper)
             ) difficultyPass = fail;
 
-            var tmp = ((testNum == 0) ? '' : n) + 'test ' + testNum + '\n' +
+            var tmp = ((testNum == 0) ? '' : n) + '<u>test ' + testNum +
+            '</u>\n' +
             'bits: ' + s + '                         ' + e +
             testData['original_bits'] + '\n' +
 

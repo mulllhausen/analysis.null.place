@@ -448,7 +448,7 @@ The header contains all the data needed to uniquely identify the block:
         <tr><td class="btc-header-field">previous block hash</td></tr>
         <tr><td class="btc-header-field">merkle root</td></tr>
         <tr><td class="btc-header-field">timestamp</td></tr>
-        <tr><td class="btc-header-field">difficulty</td></tr>
+        <tr><td class="btc-header-field">bits</td></tr>
         <tr><td class="btc-header-field">nonce</td></tr>
     </table>
     <div class="media-caption">the Bitcoin block header</div>
@@ -525,7 +525,7 @@ at what this does, both to the results area and to the nonce in the block header
             <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
-            difficulty<br>
+            bits<br>
             <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
@@ -714,7 +714,51 @@ The Bitcoin *difficulty* (generally called *bits* when expressed in its 4-byte
 compact format) is a form of
 [floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
 *Bits* are stored in the blockchain, and the *target* is used as a threshold
-during mining:
+during mining. The first byte of the *bits* value is the exponent (called the
+*size* during the *bits* -> *target* and *target* -> *bits* conversions, and
+*shift* during the *bits* -> *difficulty* conversion) and the final 3 bytes are
+the mantissa (called the *word* during the *bits* -> *target* conversion and
+*compact* during the *target* -> *bits* conversion). There is no reason for the
+different naming conventions - the Bitcoin source code is just inconsistent.
+Setting bit `00800000` in the *bits* value makes the target negative.
+
+The Bitcoin source code also calculates a *difficulty* value as a division of
+the first block's target,
+`00000000ffff0000000000000000000000000000000000000000000000000000`:
+
+<div class="horizontal-center">
+<pre>
+difficulty = first-block-target / current-target
+</pre>
+</div>
+
+As the difficulty increases, the target decreases. This makes sense, since it
+takes more hashpower to mine a block hash below a lower target. The difficulty
+can never be negative, so converting a negative *bits* value to *difficulty* and
+back will give a different result to the original value.
+
+In the following box you can convert between *bits*, *target* and *difficulty*.
+To perform these calculations I have carefully transcribed the c++ Bitcoin
+source code into Javascript. This might sound like it would give inaccurate
+results, however all the unit tests from the Bitcoin source code pass. Please
+<a id="runDifficultyUnitTests">click here</a> to view the unit tests.
+
+<div class="form-container annex" id="unitTests7" style="display:none;">
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock"></div>
+    </div>
+</div>
+
+Note that numbers in Javascript are
+[IEEE 754 double precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format),
+which means that they are accurate to 15 significant digits. Bitcoin also uses
+double precision for its *difficulty* values, so the results are compatible.
 
 <div class="form-container annex" id="form7">
     <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -737,20 +781,6 @@ during mining:
     </div>
     <ul class="error"></ul>
     <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock"></div>
-    </div>
-</div>
-
-<a id="runDifficultyUnitTests">click here</a> to run unit tests using data from the bitcoin source code
-
-<div class="form-container annex" id="unitTests7" style="display:none;">
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
