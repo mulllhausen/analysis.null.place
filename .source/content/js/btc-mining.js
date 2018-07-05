@@ -148,8 +148,12 @@ addEvent(window, 'load', function () {
     triggerEvent(document.getElementById('timestamp6'), 'change');
 
     // annex - form 7
+    addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
     addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
+    addEvent(document.getElementById('bitsAreHex7'), 'click', bitsAreHex7Changed);
+    addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
     triggerEvent(document.getElementById('bits7'), 'change');
+    addEvent(document.getElementById('runDifficultyUnitTests'), 'click', runDifficultyUnitTests);
 
     // annex - form 8
     addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
@@ -533,7 +537,7 @@ function runHash1Or2Or3Clicked(params) {
 
     var numMatches = countMatches(matches);
     var status = (params.matchFound ? 'pass' : 'fail') + ' (because ';
-    if (params.matchFound) status += 'all digits';
+    if (params.matchFound) status += 'the required digits';
     else {
         if (numMatches == 0) status += '0';
         else if (numMatches > 0) status += 'only ' + numMatches;
@@ -658,8 +662,9 @@ function borderTheDigits(elements, matchArray, failPrecedence) {
     });
 }
 
-function borderTheBytes(bytes) {
-    var bytesArray = bytes.match(/.{2}/g);
+function borderTheChars(bytes, numChars) {
+    var re = new RegExp('.{' + numChars + '}', 'g');
+    var bytesArray = bytes.match(re);
     var open = '<span class="individual-digit">';
     var close = '</span>';
     return open + bytesArray.join(close + open) + close;
@@ -847,32 +852,45 @@ function timestamp4Changed(e) {
     miningData.timestampRaw = newTimestamp; // last
 }
 
-function bitsChanged(bitsFromInput, formNum) {
+function bitsChanged(bitsFromInput, inHex, formNum) {
     var data = { // init
         status: true,
-        bits: null,
+        bits: null, // in little endian hex
+        bitsDec: null,
+        bitsBE: null, // in big endian hex
         target: null
     };
     deleteElements(document.querySelectorAll('#form' + formNum + ' .bitsError'));
     function addError2(errorText) { addError(formNum, 'bits', errorText); }
-    if (bitsFromInput.length != 8) {
-        addError2('the difficulty must be 4 bytes long');
+
+    var h = 'bits'; // init
+    if (!inHex) { // is base 10
+        bitsFromInput = bitsFromInput.toString();
+        if (inArray('.', bitsFromInput)) { // just 1 check for base 10 bits
+            addError2('when bits is base 10 it cannot contain decimal places');
+            data.status = false;
+            return data;
+        }
+        bitsFromInput = bitsFromInput.replace(/,/g, '');
+        if (!stringIsInt(bitsFromInput)) {
+            addError2('when bits is not hex, it can only contain numbers 0 to 9');
+            data.status = false;
+            return data;
+        }
+        data.bitsDec = parseInt(bitsFromInput);
+        bitsFromInput = int2hex(data.bitsDec);
+        h = 'hex bits (derived from base 10 bits)';
+    }
+    var targetx = bits2target(bitsFromInput);
+    if (targetx.status == false) {
+        addError2(targetx.statusMessage.replace('bits', h));
         data.status = false;
         return data;
     }
-    if (!isHex(bitsFromInput)) {
-        addError2('the difficulty must only contain hexadecimal digits');
-        data.status = false;
-        return data;
-    }
-    var target = bits2target(bitsFromInput);
-    if (target == null) {
-        addError2('the target length cannot be more than 32 bytes');
-        data.status = false;
-        return data;
-    }
-    data.target = target;
+    data.target = targetx.target;
+    data.bitsBE = bitsFromInput;
     data.bits = toLittleEndian(bitsFromInput);
+    if (data.bitsDec == null) data.bitsDec = hex2int(bitsFromInput);
     return data;
 }
 
@@ -880,7 +898,8 @@ function bits4Changed(e) {
     var newBits = trimInputValue(e.currentTarget);
     if (newBits == miningData.bitsRaw) return; // exit if no change
 
-    var data = bitsChanged(newBits, 4);
+    var inHex = true;
+    var data = bitsChanged(newBits, inHex, 4);
     resetMiningStatus();
     if (!data.status) {
         setButtons(false, 'RunHash4');
@@ -893,6 +912,48 @@ function bits4Changed(e) {
     borderTheDigits('#target4', new Array(64)); // erase colors
     if (noOtherErrors4()) setButtons(true, 'RunHash4');
     miningData.bitsRaw = newBits; // last
+}
+
+function targetChanged(targetFromInput, formNum) {
+    var data = { // init
+        status: true,
+        target: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .targetError'));
+    function addError2(errorText) { addError(formNum, 'target', errorText); }
+    if (!isHex(targetFromInput)) {
+        addError2('the target must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    var bitsx = target2bits(targetFromInput); // [status, bits (int), error message]
+    if (bitsx.status == false) {
+        addError2(bitsx.statusMessage);
+        data.status = false;
+        return data;
+    }
+    data.target = targetFromInput;
+    return data;
+}
+
+function difficultyChanged(difficultyFromInput, formNum) {
+    var data = { // init
+        status: true,
+        difficulty: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .difficultyError'));
+    function addError2(errorText) { addError(formNum, 'difficulty', errorText); }
+    difficultyFromInput = difficultyFromInput.replace(/,/g, '');
+
+    var bitsx = difficulty2bits(difficultyFromInput);
+    if (bitsx.status == false) {
+        addError2(bitsx.statusMessage);
+        data.status = false;
+        return data;
+    }
+    var difficultyFloat = parseFloat(difficultyFromInput);
+    data.difficulty = difficultyFloat;
+    return data;
 }
 
 function nonceChanged(nonceFromInput, formNum) {
@@ -1030,21 +1091,655 @@ function mine() {
     };
 }
 
-function bits2target(bits) {
-    if (bits.length != 8) return null;
+// same logic as arith_uint256::SetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the bits value: 4 byte hex string
+function setCompact(compact, levelOfDetail) {
+    var results = {
+        status: false, // init
+        target: null,
+        isNegative: null,
+        isOverflow: null,
+        statusMessage: '',
+        steps: []
+    };
+    // in the bitcoin src, typeof compact = uint32_t. enforce the same here.
+    if (compact.length != 8) {
+        results.statusMessage = 'bits must be 4 bytes long';
+        return results;
+    }
+    if (!isHex(compact)) {
+        results.statusMessage = 'bits must only contain hexadecimal digits';
+        return results;
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'in the Bitcoin source code this conversion uses function' +
+        ' setCompact(). \'bits\' here is made up of 1 \'size\' byte followed' +
+        ' by 3 \'compact\' bytes',
+        right: null
+    });
+    results.target = ''; // init
+    var compactHex = compact;
+    compact = hex2int(compact);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'bits',
+        right: '0x' + borderTheChars(compactHex, 2) + ' = ' + compact
+    });
+    // javascript's zero-fill right shift is equivalent to c++'s >> on a uint32_t
+    var size = compact >>> 24;
+    var sizeHex = int2hex(size, 2);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the \'size\' byte',
+        right: '0x' + compactHex + ' >> 24 = 0x' + sizeHex + ' = ' + size
+    });
+    var word = compact & 0x007fffff;
+    var wordHex = int2hex(word, 8);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the 3 \'word\' bytes',
+        right: '0x' + compactHex + ' & 0x007fffff = 0x' + wordHex + ' = ' + word
+    });
+    if (size <= 3) {
+        var rightShiftBy = 8 * (3 - size);
+        word >>= rightShiftBy;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the size is <= 3, so shift the mantissa right by ' +
+            ' 8 * (3 - size) = ' + rightShiftBy + ' bits to get',
+            right: word
+        });
+        results.target = int2hex(word, 64);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'convert the mantissa to 32 bytes to get the target value',
+            right: '0x' + results.target
+        });
+    } else {
+        // bitcoin src uses:
+        // uint256 target = word << 8 * (size - 3);
+        // use a string instead since javascript cannot handle 256bit integers
+        results.target = leftPad(int2hex(word) + '00'.repeat(size - 3), 64).substr(-64);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the \'size\' is > 3 so shift the \'word\' left by' +
+            ' 8 * (size - 3) = ' + (8 * (size - 3)) + ' bits and convert to' +
+            ' 32 bytes to get the target value',
+            right: '0x' + results.target
+        });
+    }
+    results.isNegative = (word != 0) && ((compact & 0x00800000) != 0);
+    if (levelOfDetail >= 2) {
+        var not = results.isNegative ? '' : ' not';
+        var posneg = results.isNegative ? 'negative' : 'positive';
+        results.steps.push({
+            left: 'the target is ' + posneg + ' because the 0x00800000 bit is' +
+            not + ' set in the original bits value',
+            right: null
+        });
+        results.steps.push({
+            left: 'negative status',
+            right: posneg
+        });
+    }
 
-    var len = hex2int(bits.substring(0, 2)); // just byte 1
-    if (len > 32) return null; // max length = 32 bytes
+    var overflowReason1 = (size > 34);
+    var overflowReason2 = (word > 0xff) && (size > 33);
+    var overflowReason3 = (word > 0xffff) && (size > 32);
+    if (word == 0) {
+        results.isOverflow = false;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the target is zero. overflow status',
+            right: 'false'
+        });
+    } else {
+        if (overflowReason1) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 34. overflow status',
+                right: 'true'
+            });
+        } else if (overflowReason2) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 33 and the mantissa (' +
+                word + ') is greater than 0xff. overflow status',
+                right: 'true'
+            });
+        } else if (overflowReason3) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 32 and the mantissa (' +
+                word + ') is greater than 0xffff. overflow status',
+                right: 'true'
+            });
+        } else {
+            results.isOverflow = false;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'overflow status',
+                right: 'false'
+            });
+        }
+    }
+    results.status = true;
+    return results;
+}
 
-    var msbytes = bits.substring(2);
-    var target = msbytes; // init
-    var numTrailingBytes = len - (msbytes.length / 2);
-    if (numTrailingBytes > 0) target += '00'.repeat(numTrailingBytes);
+function bits2target(bits, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var targetx = setCompact(bits, levelOfDetail);
+    if (levelOfDetail >= 1) targetx.steps.unshift({ // prepend
+        left: '<u>bits -> target</u>',
+        right: null
+    });
+    if (targetx.isNegative) targetx.target = '-' + targetx.target;
+    return targetx;
+}
 
-    if (target.length == 64) return target;
+// the bitcoin wiki gives this method of converting from bits to difficulty. the
+// logic is different to the bitcoin src code.
+// https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
+var diffCalcMaxBody = Math.log(0x00ffff);
+var diffCalcScaland = Math.log(256);
+function bits2difficultyWiki(bits) {
+    var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
+    return Math.exp(
+        diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
+        (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >>> 24)))
+    );
+}
 
-    // make up to 32 bytes
-    if (target.length < 64) return '0'.repeat(64 - target.length) + target;
+// same logic as double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
+// in src/rpc/blockchain.cpp
+// input is the bits value (a 4 byte hex string, or equivalent int)
+function bits2difficulty(bits, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var results = {
+        status: false, // init
+        statusMessage: '',
+        difficulty: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) {
+        results.steps.push({
+            left: '<u>bits -> difficulty</u>',
+            right: null
+        });
+        results.steps.push({
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getDifficulty()',
+            right: null
+        });
+    }
+    if (typeof bits == 'number') {
+        var bitsInt = bits;
+        if (bitsInt > 0xffffffff) {
+            results.statusMessage = 'bits value must be 4 bytes';
+            return results;
+        }
+    } else {
+        if (bits.length != 8) {
+            results.statusMessage = 'bits value must be 4 bytes';
+            return results;
+        }
+        var bitsInt = hex2int(bits);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'bits',
+            right: '0x' + borderTheChars(bits, 2) + ' = ' + bitsInt
+        });
+    }
+    var shift = (bitsInt >>> 24) & 0xff;
+    var shiftHex = int2hex(shift, 2);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the first byte (called the \'shift\' value here)',
+        right: '(0x' + bits + ' >> 24) & 0xff = 0x' + shiftHex + ' = ' + shift
+    });
+    results.difficulty = parseFloat(0x0000ffff) / parseFloat(bitsInt & 0x00ffffff);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'initialise the difficulty to 0x0000ffff / (bits & 0x00ffffff)',
+        right: '0x0000ffff / (0x' + bits + ' & 0x00ffffff) = ' + results.difficulty
+    });
+    if ((shift < 29) && (levelOfDetail >= 2)) results.steps.push({
+        left: 'begin looping until \'shift\' (' + shift + ') increases to 29',
+        right: null
+    });
+    while (shift < 29) {
+        var prevDifficulty = results.difficulty;
+        results.difficulty *= 256.0;
+        shift++;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'multiply difficulty by 256 to get',
+                right: prevDifficulty + ' * 256 = ' + results.difficulty
+            });
+            results.steps.push({
+                left: 'increment the \'shift\' value to',
+                right: shift
+            });
+            if (shift < 29) results.steps.push({
+                left: 'continue looping until \'shift\' value increases to 29',
+                right: null
+            });
+        }
+    }
+    if ((shift > 29) && (levelOfDetail >= 2)) results.steps.push({
+        left: 'begin looping until \'shift\' (' + shift + ') decreases to 29',
+        right: null
+    });
+    while (shift > 29) {
+        results.difficulty /= 256.0;
+        shift--;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'divide difficulty by 256 to get',
+                right: results.difficulty
+            });
+            results.steps.push({
+                left: 'decrement the \'shift\' value to',
+                right: shift
+            });
+            if (shift > 29) results.steps.push({
+                left: 'continue looping until \'shift\' value decreases to 29',
+                right: null
+            });
+        }
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'the \'shift\' value is equal to 29 so we\'re finished. the' +
+        ' final difficulty is',
+        right: results.difficulty
+    });
+    results.status = true;
+    return results;
+}
+
+// returns the position of the highest bit set plus one, or 0 if the value is 0
+// same logic as base_uint<BITS>::bits() const in bitcoin/src/arith_uint256.cpp
+// input 1 is the target value: 32 byte hex string
+// input 2 is the levelOfDetail: [null|0], 1, 2
+// returns an object containing the unsigned int result between 0 and 288
+function bits(target, levelOfDetail) {
+    var results = {
+        size: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'begin finding the target\'s \'size\'',
+        right: null
+    });
+    var width = 8; // = 256 bits / int32
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'split the target into 8 chunks of 4 bytes',
+        right: '0x' + borderTheChars(target, 8)
+    });
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'begin looping through the chunks, starting from chunk 7 - the' +
+        ' leftmost chunk',
+        right: null
+    });
+    for (var pos = width - 1, i = 0; pos >= 0; pos--, i++) {
+        var chunk = target.substr(i * width, width);
+        var int32 = hex2int(chunk);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'chunk ' + pos,
+            right: '0x' + chunk + ' = ' + int32
+        });
+        if (int32 == 0) {
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the chunk value is 0. ' +
+                ((pos == 0) ? 'exit the loop here.' : 'skip to next chunk.'),
+                right: null
+            });
+            continue;
+        }
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the chunk value is not 0. begin looping through each bit' +
+            ' of the chunk, starting from the most significant bit.',
+            right: null
+        });
+        for (var nbits = 31; nbits > 0; nbits--) {
+            if (int32 & (2 ** nbits)) {
+                var size = (32 * pos) + nbits + 1;
+                if (levelOfDetail >= 2) {
+                    results.steps.push({
+                        left: 'bit ' + nbits + ' in chunk ' + pos + ' is set.' +
+                        ' so the \'size\' is the number of bits in the ' + pos +
+                        ' chunks to the right (32 bits per chunk), plus the' +
+                        ' number of bits in this chunk (' + nbits + ') plus 1.' +
+                        ' size',
+                        right: '(32 * ' + pos + ') + ' + nbits + ' + 1 = ' +
+                        size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+                    });
+                } else if (levelOfDetail == 1) results.steps.push({
+                    left: 'calculated the \'size\' to be',
+                    right: size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+                });
+                results.size = size;
+                return results;
+            }
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'bit ' + nbits + ' is not set. skip to the next bit',
+                right: null
+            });
+        }
+        var size = (32 * pos) + 1;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'just return the number of bits in the chunks',
+                right: '(32 * ' + pos + ') + 1 = ' + size + ' bits = 0x' +
+                int2hex(size, 2) + ' bits'
+            });
+        } else if (levelOfDetail == 1) results.steps.push({
+            left: 'calculated the \'size\' to be',
+            right: size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+        });
+        results.size = size;
+        return results;
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'calculated the \'size\' to be',
+        right: '0 bits = 0x00 bits'
+    });
+    results.size = 0;
+    return results;
+}
+
+// same logic as uint64_t GetLow64() in bitcoin/src/arith_uint256.h
+// input is the target value: 32 byte hex string
+// returns the last 64 bits (8 bytes)
+function getLow64(target) {
+    // bitcoin src uses:
+    // return pn[0] | (uint64_t)pn[1] << 32;
+    return target.substr(-16);
+}
+
+// same logic as arith_uint256::GetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the target value: 32 byte hex string
+function getCompact(target, negative, levelOfDetail) {
+    var results = {
+        status: false, // init
+        finalBitsInt: null,
+        finalBitsHex: null,
+        statusMessage: '',
+        sizeInt: null,
+        steps: []
+    };
+    if (target.length != 64) {
+        results.statusMessage = 'the target must be 32 bytes';
+        return results;
+    }
+    var bitsResult = bits(target, levelOfDetail);
+    results.steps = results.steps.concat(bitsResult.steps);
+
+    results.size = Math.floor((bitsResult.size + 7) / 8);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'convert the \'size\' from bits to bytes - add 7 and divide by 8',
+        right: '(' + bitsResult.size + ' + 7) / 8 = ' + results.size + ' = 0x' +
+        int2hex(results.size, 2)
+    });
+
+    // in bitcoin src this is a uint32_t, which javascript can handle
+    var compact = 0; // init
+
+    target = target.replace(/^0+/, ''); // strip leading zeros
+    if (results.size <= 3) {
+        // bitcoin src uses:
+        // nCompact = GetLow64() << 8 * (3 - nSize);
+        // use a hex string since javascript cannot handle 64 bit ints
+        var low64 = leftPad(getLow64(target), 8);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'size\' (' + results.size + ') is <= 3. initialize' +
+            ' \'compact\' to the lowest 64 bits of the target',
+            right: '0x' + low64 + ' = ' + hex2int(low64)
+        });
+        var compactHex = low64 + '00'.repeat(3 - results.size);
+        compactHex = leftPad(compactHex.substr(-8), 8);
+        compact = hex2int(compactHex);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'compact\' <<= 8 * (3 - size)',
+            right: '0x' + low64 + ' << 8 * (3 - ' + results.size + ') = 0x' +
+            compactHex + ' = ' + compact
+        });
+    } else {
+        // bitcoin src uses:
+        // arith_uint256 bn = *this >> 8 * (nSize - 3);
+        // compact = bn.GetLow64();
+        // ie chop off (size - 3) bytes from the right to always keep 3 bytes
+        var chopped = leftPad(target.substring(
+            0, target.length - (2 * (results.size - 3))
+        ), 6);
+        var compactHex = leftPad(getLow64(chopped), 8);
+        compact = hex2int(compactHex);
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: '\'size\' (' + results.size + ') is > 3. initialize' +
+                ' \'compact\' by extracting 3 bytes from the target - from' +
+                ' 3 bytes below \'size\' (' + (results.size - 3) + ') to the' +
+                ' \'size\' byte (' + results.size + ')',
+                right: '0x' + chopped
+            });
+            results.steps.push({
+                left: 'keep only the lowest 64 bits in \'compact\'',
+                right: '0x' + compactHex + ' = ' + compact
+            });
+        }
+    }
+    // the 0x00800000 bit denotes the sign. thus, if it is already set, divide
+    // the mantissa by 256 and increase the exponent.
+    if (compact & 0x00800000) {
+        var prevCompact = compact;
+        compact >>= 8;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'compact\' bit 0x00800000 is set which would make \'bits\'' +
+            ' negative. so shift \'compact\' right by 8 bits',
+            right: '0x' + int2hex(prevCompact, 8) + ' >> 8 = 0x' +
+            int2hex(compact, 8)
+        });
+        results.size++;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'and increment the \'size\' to',
+            right: results.size + ' = 0x' + int2hex(results.size, 2)
+        });
+    }
+    if ((compact & ~0x007fffff) !== 0) {
+        results.statusMessage = '(compact & ~0x007fffff) !== 0, where compact' +
+        ' = 0x' + int2hex(compact, 8);
+        return results;
+    }
+    if (results.size >= 256) {
+        results.statusMessage = 'size >= 256, where size = ' +
+        results.size;
+        return results;
+    }
+    // bitcoin src uses:
+    // nCompact |= nSize << 24;
+    compact |= (results.size * (2 ** 24)); // splice size into bits value
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'combine the \'size\' and \'compact\' to get \'bits\'',
+        right: '0x' + int2hex(compact, 8) + ' = ' + compact
+    });
+
+    if ((negative === true) && (compact & 0x007fffff)) {
+        compact |= 0x00800000;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the target is negative but the \'bits\' did not have the' +
+            ' bit at 0x00800000 set, so set it',
+            right: '0x' + int2hex(compact, 8) + ' = ' + compact
+        });
+    }
+    results.status = true;
+    results.finalBitsInt = compact;
+    results.finalBitsHex = int2hex(compact, 8);
+    return results;
+}
+
+// target is a hex string
+function target2bits(target, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var isNegative = false;
+    if (target[0] == '-') {
+        isNegative = true;
+        target = target.substr(1);
+    }
+    var bitsx = getCompact(target, isNegative, levelOfDetail);
+    if (levelOfDetail >= 1) { // prepend
+        bitsx.steps = [{
+            left: '<u>target -> bits</u>',
+            right: null
+        }, {
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte '+
+            ' followed by 3 \'compact\' bytes',
+            right: null
+        }].concat(bitsx.steps);
+    }
+    return bitsx;
+}
+
+function target2difficulty(target, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var bitsx = target2bits(target, levelOfDetail);
+    if (!bitsx.status) return bitsx;
+    var difficultyx = bits2difficulty(bitsx.finalBitsInt, levelOfDetail);
+    difficultyx.steps = bitsx.steps.concat(difficultyx.steps);
+    return difficultyx;
+}
+
+function difficulty2target(difficulty, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var bitsx = difficulty2bits(difficulty);
+    if (!bitsx.status) return bitsx;
+    var targetx = bits2target(bitsx.finalBitsHex, levelOfDetail);
+    targetx.steps = bitsx.steps.concat(targetx.steps);
+    return targetx;
+}
+
+// the initial bits are 0x1d00ffff
+// ie 0xffff << (0x1d * 2)
+// current_target = difficulty_1_target / difficulty
+// note that the bitcoin src does not do this conversion
+function difficulty2bits(difficulty, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var results = {
+        status: false, // init
+        finalBitsInt: null,
+        finalBitsHex: null,
+        statusMessage: '',
+        sizeInt: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) {
+        results.steps.push({
+            left: '<u>difficulty -> bits</u>',
+            right: null
+        });
+        results.steps.push({
+            left: 'the Bitcoin source code never has a need to do this' +
+            ' calculation so the results here may vary from other' +
+            ' implementations. \'bits\' here is made up of 1 \'size\' byte' +
+            ' followed by 3 \'word\' bytes.',
+            right: null
+        });
+    }
+    var isNegative = false;
+    if (typeof difficulty == 'string') {
+        if (!stringIsFloat(difficulty)) {
+            results.statusMessage = 'the difficulty must be a number in base 10';
+            return results;
+        }
+        difficulty = parseFloat(difficulty);
+    }
+    if (difficulty < 0) {
+        results.statusMessage = 'difficulty cannot be negative';
+        // unlike target, which can be
+        return results;
+        isNegative = true;
+        difficulty *= -1;
+    }
+    if (!isFinite(difficulty)) {
+        results.statusMessage = 'difficulty cannot be infinite';
+        return results;
+    }
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'begin looping and checking the \'word\' value for each' +
+        ' incremented \'shift\' value. word = (0x00ffff * (0x100 ^ shift)) / ' +
+        ' difficulty, where \'difficulty\'',
+        right: difficulty
+    });
+    for (var shiftBytes = 1; true; shiftBytes++) {
+        var word = (0x00ffff * (0x100 ** shiftBytes)) / difficulty;
+        var wordHex = word < 1 ? '' : '0x' + int2hex(word, 6) + ' = ';
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'when \'shift\' = ' + shiftBytes + ', \'word\'',
+            right: '(0x00ffff * (0x100 ^ ' + shiftBytes + ')) / ' + difficulty
+            + ' = ' + wordHex + word
+        });
+        if (word >= 0xffff) {
+            if (levelOfDetail >= 2) results.steps.push({
+                left: '\'word\' >= 0xffff so exit the loop here. \'shift\'',
+                right: shiftBytes
+            });
+            break;
+        }
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'word\' < 0xffff so continue looping',
+            right: null
+        });
+    }
+    word &= 0xffffff; // convert to int < 0xffffff
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'cap \'word\' to a maximum of 0xffffff',
+        right: '0x' + int2hex(word, 6) + ' = ' + word
+    });
+    var size = 0x1d - shiftBytes;
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'calculate size = 0x1d - shift',
+        right: '0x1d - ' + shiftBytes + ' = 0x' + int2hex(size, 2) + ' = ' + size
+    });
+
+    // the 0x00800000 bit denotes the sign, so if it is already set, divide the
+    // mantissa by 0x100 and increase the size by a byte
+    if (word & 0x800000) {
+        var oldWord = word;
+        word >>= 8;
+        size++;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'the sign bit (0x800000) is set so shift \'word\' right' +
+                ' by 8 bits and increase the \'size\' by a byte',
+                right: '0x' + int2hex(oldWord, 6) + ' >> 8 = 0x' +
+                int2hex(word, 6) + ' = ' + word
+            });
+            results.steps.push({
+                left: 'new \'size\'',
+                right: '0x' + int2hex(size, 2) + ' = ' + size
+            });
+        }
+    }
+    if ((word & ~0x007fffff) != 0) {
+        results.statusMessage = 'the \'bits\' \'word\' is out of bounds';
+        return results;
+    }
+    if (size > 0xff) {
+        results.statusMessage = 'the \'bits\' \'size\' is out of bounds';
+        return results;
+    }
+    var bits = (size << 24) | word;
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'combine the \'size\' and the \'word\' to get \'bits\'. bits' +
+        ' = (size << 24) | word',
+        right: '(0x' + int2hex(size, 2) + ' << 24) | 0x' + int2hex(word, 6) +
+        ' = 0x' + int2hex(bits, 8) + ' = ' + bits
+    });
+
+    // this never happens because the difficulty is not permitted to be negative
+    if (isNegative && (bits & 0x007fffff)) {
+        bits |= 0x00800000;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the difficulty is negative but the bits did not have the' +
+            ' bit at 0x00800000 set, so set it',
+            right: '0x' + int2hex(bits, 8) + ' = ' + bits
+        });
+    }
+    results.sizeInt = size;
+    results.finalBitsInt = bits;
+    results.finalBitsHex = int2hex(bits, 8);
+    results.status = true;
+    return results;
 }
 
 // true if hex1 <= hex2
@@ -1089,16 +1784,29 @@ function hex2int(hexStr) {
     return parseInt(hexStr, 16);
 }
 
-function int2hex(intiger, leftPad) {
+function int2hex(intiger, leftPadLen) {
+    intiger = Math.trunc(intiger); // zero the decimal places
     var hex = intiger.toString(16);
-    if (leftPad == null || hex.length >= leftPad) return hex;
-    return '0'.repeat(leftPad - hex.length) + hex;
+    if (leftPadLen == null) return hex;
+    return leftPad(hex, leftPadLen);
+}
+
+function leftPad(strToPad, padToLen, padChar) {
+    if (strToPad.length >= padToLen) return strToPad;
+    if (padChar == null) padChar = '0';
+    return padChar.repeat(padToLen - strToPad.length) + strToPad;
 }
 
 function toLittleEndian(hexStr) {
     if (hexStr.length <= 2) return hexStr;
     if (hexStr.length % 2 == 1) hexStr = '0' + hexStr;
-    return hexStr.match(/.{2}/g).reverse().join('')
+    return hexStr.match(/.{2}/g).reverse().join('');
+}
+
+// javascript is accurate to 15 sig digits (ieee754 double precision)
+// number arg could be: -123,456,798.123456 or 1.2e+10 or -3.33333e-10 or 0.001
+function to15SigDigits(number) {
+    return number.toPrecision(15);
 }
 
 // form 5 (understanding 'version')
@@ -1113,10 +1821,10 @@ function version5Changed(e) {
     codeblockContainer.style.display = 'block';
     document.getElementById('version5Hex').innerHTML = int2hex(data.versionInt);
     document.getElementById('version5Bytes').innerHTML =
-    borderTheBytes(int2hex(data.versionInt, 8));
+    borderTheChars(int2hex(data.versionInt, 8), 2);
 
     document.getElementById('version5BytesLE').innerHTML =
-    borderTheBytes(data.version);
+    borderTheChars(data.version, 2);
 }
 
 // form 6 (understanding 'timestamp')
@@ -1135,33 +1843,235 @@ function timestamp6Changed(e) {
     document.getElementById('timestamp6GMT').innerHTML = dateGMT;
     document.getElementById('timestamp6Unixtime').innerHTML = data.timestampUnixtime;
     document.getElementById('timestamp6Bytes').innerHTML =
-    borderTheBytes(int2hex(data.timestampUnixtime, 8));
+    borderTheChars(int2hex(data.timestampUnixtime, 8), 2);
 
     document.getElementById('timestamp6BytesLE').innerHTML =
-    borderTheBytes(data.timestamp);
+    borderTheChars(data.timestamp, 2);
 }
 
-// form 7 (understanding 'difficulty')
-function bits7Changed(e) {
+// form 7 (understanding bits/difficulty/target)
+function difficulty7Changed(e) {
     var difficulty = trimInputValue(e.currentTarget);
-    var data = bitsChanged(difficulty, 7);
+    var data = difficultyChanged(difficulty, 7);
+    var bits = null; // not yet known
+    var bitsDec = null; // not yet known
+    var target = null; // not yet known
+    renderForm7Codeblock(data.status, data.difficulty, bits, bitsDec, target);
+}
+
+function target7Changed(e) {
+    var target = trimInputValue(e.currentTarget);
+    var data = targetChanged(target, 7);
+    var difficulty = null; // not yet known
+    var bits = null; // not yet known
+    var bitsDec = null; // not yet known
+    renderForm7Codeblock(data.status, difficulty, bits, bitsDec, data.target);
+}
+
+function bitsAreHex7Changed(e) {
+    var inHex = e.currentTarget.checked;
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var data = bitsChanged(bits, !inHex, 7);
+    document.getElementById('bits7').value = inHex ? data.bitsBE : data.bitsDec;
+}
+
+function bits7Changed() {
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var inHex = document.getElementById('bitsAreHex7').checked;
+    var data = bitsChanged(bits, inHex, 7);
+    var difficulty = null; // not yet known
+    var target = null; // not yet known
+    renderForm7Codeblock(data.status, difficulty, data.bitsBE, data.bitsDec, target);
+}
+
+function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
+    var levelOfDetail = 2;
+    var n = '<span class="always-one-newline">\n</span>';
     var codeblockContainer = document.querySelector('#form7 .codeblock-container');
-    if (!data.status) {
+    var codeblock = codeblockContainer.querySelector('.codeblock');
+    codeblock.innerHTML = '';
+    var warningsEl = document.querySelector('#form7 .warnings');
+    warningsEl.style.display = 'none';
+    if (!ok) {
         codeblockContainer.style.display = 'none';
         return;
     }
+    deleteElements(document.querySelectorAll('#form7 .bitsError'));
+    deleteElements(document.querySelectorAll('#form7 .difficultyError'));
+    deleteElements(document.querySelectorAll('#form7 .targetError'));
     codeblockContainer.style.display = 'block';
+    var showDifficultyErrors = false;
+    var bitsInHex = document.getElementById('bitsAreHex7').checked;
+    var steps = [];
+    if (difficulty !== null) {
+        showDifficultyErrors = true;
+        if (bits === null) {
+            var bitsx = difficulty2bits(difficulty, levelOfDetail);
+            bits = bitsx.finalBitsHex;
+            document.getElementById('bits7').value = bitsInHex ?
+            bits : bitsx.finalBitsInt;
+            steps = steps.concat(bitsx.steps);
+        }
+        if (target === null) {
+            var targetx = difficulty2target(difficulty, levelOfDetail);
+            target = targetx.target;
+            document.getElementById('target7').value = target;
+            steps = steps.concat(targetx.steps);
+        }
+    } else if (bits !== null) {
+        if (difficulty === null) {
+            var difficultyx = bits2difficulty(bits, levelOfDetail);
+            difficulty = difficultyx.difficulty;
+            document.getElementById('difficulty7').value = difficulty;
+            steps = steps.concat(difficultyx.steps);
+        }
+        if (target === null) {
+            var targetx = bits2target(bits, levelOfDetail);
+            target = targetx.target;
+            document.getElementById('target7').value = target;
+            steps = steps.concat(targetx.steps);
+        }
+    } else if (target !== null) {
+        if (bits === null) {
+            var bitsx = target2bits(target, levelOfDetail);
+            bitsDec = bitsx.finalBitsInt;
+            bits = int2hex(bitsDec, 8);
+            document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
+            steps = steps.concat(bitsx.steps);
+        }
+        if (difficulty === null) {
+            var difficultyx = bits2difficulty(bits, levelOfDetail);
+            difficulty = difficultyx.difficulty;
+            document.getElementById('difficulty7').value = difficulty;
+            steps = steps.concat(difficultyx.steps);
+        }
+    }
+    codeblock.innerHTML = formatCodeblockSteps(steps, 50);
+    alignText(codeblock);
+}
 
-    var lenHex = difficulty.substring(0, 2);
-    var len = hex2int(lenHex); // just byte 1
-    var msbytes = difficulty.substring(2);
+var aligner = ' <span class="aligner"> </span>';
+function formatCodeblockSteps(steps, leftMaxChars) {
+    var p = '<span class="preserve-newline">\n</span>\n';
+    var codeblockHTML = '';
+    foreach(steps, function (i, step) {
+        if (step.left == '\n') {
+            codeblockHTML += (p + p);
+            return;
+        }
+        step.left = wrapCodeblockLeft(step.left, leftMaxChars).trim();
+        if (step.right == null) step.right = '';
+        else step.left += ':';
+        if (steps.length == (i + 1)) p = ''; // no newline on the end
+        codeblockHTML += step.left + aligner + step.right + p;
+    });
+    return codeblockHTML;
+}
 
-    document.getElementById('difficulty7').innerHTML = borderTheBytes(difficulty);
-    document.getElementById('lenHex7').innerHTML = lenHex;
-    document.getElementById('len7').innerHTML = len;
-    document.getElementById('msBytes7').innerHTML = borderTheBytes(msbytes);
-    document.getElementById('target7').innerHTML = borderTheBytes(data.target);
-    document.getElementById('bits7LE').innerHTML = borderTheBytes(data.bits)
+function wrapCodeblockLeft(leftCol, leftMaxChars) {
+    if (leftCol.length <= leftMaxChars) return leftCol;
+    var n = '<span class="always-one-newline">\n</span>';
+    var words = leftCol.split(' ');
+    var charCount = 0; // init
+    var newLeftCol = ''; // init
+    foreach(words, function (i, word) {
+        charCount += word.length + 1;
+        if (charCount > leftMaxChars) { // too long
+            newLeftCol += aligner + n + word + ' ';
+            charCount = word.length + 1;
+        } else {
+            newLeftCol += word + ' ';
+        }
+    });
+    return newLeftCol;
+}
+
+function runDifficultyUnitTests() {
+    document.getElementById('unitTests7').style.display = 'block';
+    var codeblockEl = document.querySelector('#unitTests7 .codeblock');
+    ajax('/json/unittest-bits.json', function (json) {
+        try {
+            var testsData = JSON.parse(json).tests;
+            renderTestResults(testsData);
+        } catch (err) {
+            codeblockEl.innerHTML = 'failed to fetch unit-test data';
+        }
+    });
+    function renderTestResults(testsData) {
+        codeblockEl.innerHTML = ''; // init
+        var pass = '<span style="color:' + passColor + '">pass</span>';
+        var fail = '<span style="color:' + failColor + '">fail</span>';
+        var s = '<span class="aligner">'; // start aligner
+        var e = '</span>'; // end aligner
+        var n = '\n<span class="preserve-newline">\n</span>\n';
+        foreach(testsData, function (testNum, testData) {
+            var targetx = bits2target(testData['original_bits']);
+            var bitsx = target2bits(targetx.target);
+            var reconvertedBits = bitsx.finalBitsHex;
+            var targetPass = (testData['target'] == targetx.target) ? pass : fail;
+            var reconvertedBitsPass =
+            (testData['reconverted_bits'] == reconvertedBits) ? pass : fail;
+            var negativePass = (targetx.isNegative == testData['negative']) ?
+            pass : fail;
+            var overflowPass = (targetx.isOverflow == testData['overflow']) ?
+            pass : fail;
+            var difficultyx = bits2difficulty(testData['original_bits']);
+            var difficulty = difficultyx.difficulty;
+            var difficultyLower = testData['difficulty_threshold_low'];
+            var difficultyUpper = testData['difficulty_threshold_high'];
+            var difficultyPass = pass; // init
+            if (
+                (difficultyLower == 'Infinity' && difficulty != Infinity) ||
+                (difficultyUpper == 'Infinity' && difficulty != Infinity) ||
+                (difficulty < difficultyLower) ||
+                (difficulty > difficultyUpper)
+            ) difficultyPass = fail;
+
+            var tmp = ((testNum == 0) ? '' : n) + '<u>test ' + testNum +
+            '</u>\n' +
+            'bits: ' + s + '                         ' + e +
+            testData['original_bits'] + '\n' +
+
+            'target (expected): ' + s + '            ' + e +
+            testData['target'] + '\n' +
+
+            'target (derived): ' + s + '             ' + e + targetx.target + '\n' +
+
+            'target check: ' + s + '                 ' + e + targetPass + '\n' +
+
+            'reconverted bits (expected): ' + s + '  ' + e +
+            testData['reconverted_bits'] + '\n' +
+
+            'reconverted bits (derived): ' + s + '   ' + e + reconvertedBits +
+            '\n' +
+
+            'reconverted bits check: ' + s + '       ' + e +
+            reconvertedBitsPass + '\n' +
+
+            'target is negative (expected): ' + s + e +
+            (testData['negative'] ? 'yes' : 'no') + '\n' +
+
+            'target is negative (derived): ' + s + ' ' + e +
+            (targetx.isNegative ? 'yes' : 'no') + '\n' +
+
+            'target is negative check: ' + s + '     ' + e + negativePass + '\n' +
+
+            'target overflowed (expected): ' + s + ' ' + e +
+            (targetx.isOverflow ? 'yes' : 'no') + '\n' +
+
+            'target overflowed (derived): ' + s + '  ' + e +
+            (testData['overflow'] ? 'yes' : 'no') + '\n' +
+
+            'target overflow check: ' + s + '        ' + e + overflowPass + '\n' +
+
+            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower + '\n' +
+            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper + '\n' +
+            'difficulty (derived): ' + s + '         ' + e + difficulty + '\n' +
+            'difficulty check: ' + s + '             ' + e + difficultyPass;
+
+            codeblockEl.innerHTML = (codeblockEl.innerHTML + tmp).trim();
+        });
+    }
 }
 
 // form 8 (understanding 'nonce')
@@ -1176,8 +2086,8 @@ function nonce8Changed(e) {
     codeblockContainer.style.display = 'block';
     document.getElementById('nonce8Hex').innerHTML = int2hex(data.nonceInt);
     document.getElementById('nonce8Bytes').innerHTML =
-    borderTheBytes(int2hex(data.nonceInt, 8));
-    document.getElementById('nonce8BytesLE').innerHTML = borderTheBytes(data.nonce);
+    borderTheChars(int2hex(data.nonceInt, 8), 2);
+    document.getElementById('nonce8BytesLE').innerHTML = borderTheChars(data.nonce, 2);
 }
 
 // form 9 - block header bytes from header fields
@@ -1190,7 +2100,7 @@ function version9Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#version9Output').innerHTML = borderTheBytes(data.version);
+    document.querySelector('#version9Output').innerHTML = borderTheChars(data.version, 2);
     renderHashes9();
 }
 
@@ -1203,7 +2113,7 @@ function prevHash9Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#prevHash9Output').innerHTML = borderTheBytes(data.prevHash);
+    document.querySelector('#prevHash9Output').innerHTML = borderTheChars(data.prevHash, 2);
     renderHashes9();
 }
 
@@ -1216,7 +2126,7 @@ function merkleRoot9Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#merkleRoot9Output').innerHTML = borderTheBytes(data.merkleRoot);
+    document.querySelector('#merkleRoot9Output').innerHTML = borderTheChars(data.merkleRoot, 2);
     renderHashes9();
 }
 
@@ -1228,20 +2138,21 @@ function timestamp9Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#timestamp9Output').innerHTML = borderTheBytes(data.timestamp);
+    document.querySelector('#timestamp9Output').innerHTML = borderTheChars(data.timestamp, 2);
     renderHashes9();
 }
 
 function bits9Changed(e) {
     var bits = trimInputValue(e.currentTarget);
-    var data = bitsChanged(bits, 9);
+    var inHex = true;
+    var data = bitsChanged(bits, inHex, 9);
     var codeblockContainer = document.querySelector('#form9 .codeblock-container');
     if (!data.status) {
         codeblockContainer.style.display = 'none';
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#bits9Output').innerHTML = borderTheBytes(data.bits);
+    document.querySelector('#bits9Output').innerHTML = borderTheChars(data.bits, 2);
     renderHashes9();
 }
 
@@ -1254,7 +2165,7 @@ function nonce9Changed(e) {
         return;
     }
     codeblockContainer.style.display = 'block';
-    document.querySelector('#nonce9Output').innerHTML = borderTheBytes(data.nonce);
+    document.querySelector('#nonce9Output').innerHTML = borderTheChars(data.nonce, 2);
     renderHashes9();
 }
 
@@ -1269,16 +2180,16 @@ function renderHashes9() {
     var sha256Hash2 = sjcl.codec.hex.fromBits(sha256BitArray2);
 
     document.getElementById('firstSHA256Output9').innerHTML =
-    borderTheBytes(sha256Hash1);
+    borderTheChars(sha256Hash1, 2);
 
     document.getElementById('firstSHA256OutputLE9').innerHTML =
-    borderTheBytes(toLittleEndian(sha256Hash1));
+    borderTheChars(toLittleEndian(sha256Hash1), 2);
 
     document.getElementById('secondSHA256Output9').innerHTML =
-    borderTheBytes(sha256Hash2);
+    borderTheChars(sha256Hash2, 2);
 
     document.getElementById('secondSHA256OutputLE9').innerHTML =
-    borderTheBytes(toLittleEndian(sha256Hash2));
+    borderTheChars(toLittleEndian(sha256Hash2), 2);
 }
 
 function runHash10Changed() {
@@ -1290,9 +2201,9 @@ function runHash10Changed() {
         isHexCheckbox.checked = false;
     }
     var sha256Hash = sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(preImage));
-    document.getElementById('sha256Output10').innerHTML = borderTheBytes(sha256Hash);
-    document.getElementById('sha256OutputLE10').innerHTML = borderTheBytes(
-        toLittleEndian(sha256Hash)
+    document.getElementById('sha256Output10').innerHTML = borderTheChars(sha256Hash, 2);
+    document.getElementById('sha256OutputLE10').innerHTML = borderTheChars(
+        toLittleEndian(sha256Hash), 2
     );
 }
 

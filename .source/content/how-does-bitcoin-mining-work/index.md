@@ -7,8 +7,6 @@ stylesheets: btc.css
 scripts: sjcl.min.js,btc-mining.js
 summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
 
-The simplest definition of Bitcoin mining I can think of is this:
-
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -16,7 +14,7 @@ winner receives bitcoins as a reward.
 </p></blockquote>
 
 In this article I will delve into what exactly this *random puzzle* is, and how
-the solution found by the winner can be verified. I have made the article
+the solution found by the winner is verified. I have made the article
 interactive so that you can simulate the mining algorithms for yourself and get
 a feel for how mining really works. While the concepts here are not simple, they
 are presented so as to be easily understood by someone with no knowledge of
@@ -63,12 +61,12 @@ see what that does:
 </div>
 
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. *Algorithm* sounds
-complicated but really it is just a series of operations done by a computer.
-There are many different hashing algorithms - *SHA128*, *SHA512*, *MD5*,
-*RIPEMD128*, *RIPEMD160*, etc. The differences between these hashing algorithms
-are not important for the sake of this article. All that is important is to
-recognise that *SHA256* is merely one of many hashing algorithms - the one that
-is used in Bitcoin mining.
+complicated but it just means a series of operations done by a computer. There
+are many different hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*,
+*RIPEMD160*, etc. The differences between these hashing algorithms are not
+important for the sake of this article. All that is important is to recognise
+that *SHA256* is merely one of many hashing algorithms - the one that is used in
+Bitcoin mining.
 
 <blockquote>
 <p>Cryptographic hashing involves taking a string of characters and transforming
@@ -204,10 +202,10 @@ status: <span id="matchStatus1"></span></span></div>
 </div>
 
 The difficulty of inverting a *SHA256* hash is due its enormous length! *SHA256*
-has 2<sup>256</sup> possible different hash values. That's
+has approximately 2<sup>256</sup> possible different hash values. That's
 115792089237316195423570985008687907853269984665640564039457584007913129639936
-different possible hash values. There are approximately that many atoms in the
-universe! So don't feel bad for not being able to invert
+different possible hash values. There are about that many atoms in the universe!
+So don't feel bad for not being able to invert
 `32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`. For all
 intents and purposes, it cannot be inverted. And that is true even when computers
 do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
@@ -287,13 +285,13 @@ call the computer doing the work the *miner*, and the other computer the
 - a hash value that must be matched (called the target)
 - the difficulty level of the test
 
-The test works like this: the miner takes the pre-image it has been given and
-appends a bunch of random data (called a
+The test works like this: the miner takes the part of the pre-image it has been
+given and appends a bunch of random data (called a
 [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce)) to the end of it. It
 then hashes the whole thing and checks if it matches the target given by the
-examiner. However, it does not need to match the entire hash (that would take
-millions of years); rather, it just needs to match part of the hash, as
-specified by the difficulty level.
+examiner. However, it does not need to match the entire target hash (that would
+take millions of years); rather, it just needs to match part of the target hash,
+as specified by the difficulty level.
 
 That all sounds very complicated, but don't worry, it will be much clearer after
 you give it a go. Click the *Mine with SHA256* button and look carefully at what
@@ -362,17 +360,17 @@ answer is that this is necessary to ensure that the miner always has to do work
 (i.e. do lots of hashing) to find a solution to the puzzle. If the miner was
 allowed to determine the entire pre-image itself, then once it had found a
 solution for a given difficulty, it could simply re-use that solution over and
-over and thus avoid doing any work. To ensure that the miner always does work,
-the examiner generates a new pre-image prefix every time it sets a test for the
-miner. This way, the miner has to find a new nonce for every test, even if the
-difficulty does not change.
+over and thus avoid doing any work. To ensure that the miner always does work
+every time the examiner gives the miner a test, the examiner generates a new
+pre-image prefix as part of every test. This way, the miner has to find a new
+nonce for every test, even if the difficulty does not change.
 
 The final thing to understand from this section, before we move on to Bitcoin
 mining, is that the test we have done here - matching a specified number of
 characters at the left-hand-side of the target - is just one of many possible
 types of proof-of-work test. The only criteria for a good proof-of-work test is
 that the examiner must be able to fine-tune the number of attempts it takes the
-miner to pass. Here are some other possible proof-of-work tests:
+miner to pass. Here are some examples of other proof-of-work tests:
 
 - matching a specified number of characters at the right-hand-side of the target
 - matching a specified number of characters anywhere within the target
@@ -402,7 +400,7 @@ When someone sends some bitcoins to someone else, they begin by opening their
 Bitcoin wallet (which is a program, app or website running on their device), and
 then typing in the address of the recipient and the amount of bitcoin they want
 to send to them. The Bitcoin wallet uses this information to construct a
-transaction. Here is an example Bitcoin transaction:
+transaction. Here is a real Bitcoin transaction taken from the blockchain:
 
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
@@ -412,8 +410,7 @@ transaction. Here is an example Bitcoin transaction:
 </div></div>
 
 For the purposes of this article, the details of this transaction are not
-important, but if you are curious you can view all of this transaction's
-information
+important, but if you are curious you can view all of its information
 [here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082).
 However, the only thing you really need to understand at this point is that a
 Bitcoin transaction is just a string of characters.
@@ -439,8 +436,8 @@ These miners gather the transactions they receive and put them into a block:
 </div></div>
 
 A Bitcoin block consists of a header, followed by a list of transactions. The
-block shown here only has 3 transactions, for simplicity, but blocks containing
-thousands of transactions are most common.
+block shown here only has 3 transactions, but blocks containing thousands of
+transactions are most common.
 
 Just as Bitcoin transactions are a string of characters, so is the block header.
 The header contains all the data needed to uniquely identify the block:
@@ -451,7 +448,7 @@ The header contains all the data needed to uniquely identify the block:
         <tr><td class="btc-header-field">previous block hash</td></tr>
         <tr><td class="btc-header-field">merkle root</td></tr>
         <tr><td class="btc-header-field">timestamp</td></tr>
-        <tr><td class="btc-header-field">difficulty</td></tr>
+        <tr><td class="btc-header-field">bits</td></tr>
         <tr><td class="btc-header-field">nonce</td></tr>
     </table>
     <div class="media-caption">the Bitcoin block header</div>
@@ -488,17 +485,17 @@ hexadecimal digits).
 
 The *timestamp* is the current date and time of the block.
 
-The *difficulty* is a description of how many attempts, on average, a miner will
-need to make to find a solution to the test. As mentioned at the end of the
-previous section on hashing, the test in Bitcoin mining involves finding a hash
-that is lower than a given target. The *difficulty* value in the block header
-specifies what that target value is. The way this works is quite technical and
-is not necessary to understand Bitcoin mining; however, if you are curious, I
-have included it in the annex (the final section of this article). The basic
-principle, however, is simple - increasing the difficulty lowers the target
-value so that miners will have to do more hashing attempts, and decreasing the
-difficulty raises the target value so that miners will have to do fewer hashing
-attempts.
+*Bits* is a field which denotes the current mining difficulty. It is a
+description of how many attempts, on average, a miner will need to make to find
+a solution to the test. As mentioned at the end of the previous section on
+hashing, the test in Bitcoin mining involves finding a hash that is lower than a
+given target. The *bits* value in the block header specifies what that target
+value is. The way this works is quite technical and is not necessary to
+understand Bitcoin mining; however, if you are curious, I have included full
+details [in the annex](#annexSectionBits). The basic principle, however, is
+simple - increasing the difficulty lowers the target value so that miners will
+have to do more hashing attempts, and decreasing the difficulty raises the
+target value so that miners will have to do fewer hashing attempts.
 
 Finally the *nonce* is something we have already discussed in the section on
 hashing. The only difference here is that with Bitcoin the nonce is an integer.
@@ -528,7 +525,7 @@ at what this does, both to the results area and to the nonce in the block header
             <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
-            difficulty<br>
+            bits<br>
             <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
@@ -657,6 +654,8 @@ field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
 used by Bitcoin.
 
+### version
+
 The *version* is stored in the blockchain as 4 bytes. Try altering the
 human-readable *version* value to see how this changes the value stored in the
 blockchain:
@@ -682,6 +681,8 @@ convert to little endian: <span class="aligner">       </span><span id="version5
 Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
 format* simply means reversing the bytes.
 
+### timestamp
+
 The *timestamp* is also stored in the blockchain as 4 bytes. This currently
 imposes some restrictions on the permissible date range. Try altering the
 human-readable *timestamp* value to see how this changes the value stored in the
@@ -706,17 +707,78 @@ convert to little endian: <span class="aligner">                    </span><span
     </div>
 </div>
 
-The Bitcoin *difficulty* (generally called *bits* when expressed in its 4-byte
-compact format) is somewhat similar to
+<span id="annexSectionBits"></span>
+### bits / difficulty / target
+
+*Bits*, *difficulty* and *target* are three different ways of expressing the
+same thing - namely the amount of work involved in mining. *Bits* is a compact
+format used in the block header. It only uses 4 bytes, which saves a lot of
+space compared to the 32 byte *target*. *Difficulty* is the inverse ratio of a
+given *target* to the *target* in the very first Bitcoin block. *Difficulty* in
+the Bitcoin source code is a double precision number, which means that it is
+accurate to 15 significant digits. The Bitcoin source code has functions for
+converting between *bits*, *target* and *difficulty*.
+
+*Bits* is a form of
 [floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
-*Bits* are stored in the blockchain, and the *target* is used as a threshold
-during mining:
+The first byte of the *bits* value is the exponent (called the *size* during the
+*bits* -> *target* and *target* -> *bits* conversions, and *shift* during the
+*bits* -> *difficulty* conversion) and the final 3 bytes of the *bits* value are
+the mantissa (called the *word* during the *bits* -> *target* conversion and
+*compact* during the *target* -> *bits* conversion). There is no reason for the
+different naming conventions - the Bitcoin source code is just inconsistent.
+Setting bit `00800000` in the *bits* value makes the target negative.
+
+As discussed in the previous section on Bitcoin mining, *target* is used as the
+threshold during mining. It is a 32 byte (ie. 256 bit) number.
+
+*Difficulty* is a human-readable indication of the amount of work involved in
+mining, relative to the work required to mine the very first Bitcoin block. So
+for example, a *difficulty* of 2 means that it will take twice as much work, on
+average, to mine a block as it took to mine the first block. *Difficulty* is
+calculated as:
+
+<div class="horizontal-center">
+<pre>
+difficulty = first_block_target / current_target
+</pre>
+</div>
+
+The first block target was
+`00000000ffff0000000000000000000000000000000000000000000000000000`.
+
+As the *difficulty* increases, the target decreases. This makes sense, since it
+takes more hashpower to mine a block hash below a lower target. According to the
+Bitcoin source code, the *difficulty* can never be negative, so converting a
+negative *bits* value to *difficulty* and back will give a different result to
+the original value.
+
+In the following box you can convert between *bits*, *target* and *difficulty*.
+To perform these calculations I have carefully transcribed the c++ Bitcoin
+source code into Javascript which runs on this page. The textarea explains
+exactly what the original Bitcoin source code does to perform the conversions.
 
 <div class="form-container annex" id="form7">
     <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
-    <label for="bits7" class="for-textbox">difficulty</label><br>
-    <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+    <div class="left">
+        <label for="difficulty7" class="for-textbox">difficulty</label><br>
+        <input id="difficulty7" type="text" class="data-value" size="20" value="1">
+    </div>
+    <div class="left">
+        <label for="bits7" class="for-textbox">bits
+        <span id="bitsAreHex7Container">
+            (<input type="checkbox" id="bitsAreHex7" checked>
+            <label for="bitsAreHex7">hex</label>)</label>
+        </span>
+        <br>
+        <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+    </div>
+    <div class="left" id="targetParent">
+        <label for="target7" class="for-textbox">target</label><br>
+        <input id="target7" type="text" class="data-value" size="64" value="00000000ffff0000000000000000000000000000000000000000000000000000">
+    </div>
     <ul class="error"></ul>
+    <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">
@@ -724,16 +786,39 @@ during mining:
                 <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
             </button>
         </div><br>
-        <div class="codeblock">difficulty: <span class="aligner">                        </span><span id="difficulty7"></span>
-extract the target length (byte 1): <span class="aligner"></span><span id="lenHex7"></span> hex = <span id="len7"></span> decimal
-extract the target prefix: <span class="aligner">         </span><span id="msBytes7"></span><span class="preserve-newline">
-</span>
-set the prefix to the length and <span class="always-one-newline">
-</span>zero-pad to 32 bytes to get target: <span class="aligner"></span><span id="target7"></span><span class="preserve-newline">
-</span>
-convert to bits (little endian): <span class="aligner">   </span><span id="bits7LE"></span></div>
+        <div class="codeblock"></div>
     </div>
 </div>
+
+The Bitcoin source code
+[has unit tests](https://github.com/bitcoin/bitcoin/tree/master/src/test) for
+the following conversions:
+
+- *bits* -> *target* -> *bits* - in file [arith_uint256_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/arith_uint256_tests.cpp)
+- *bits* -> *difficulty* - in file [blockchain_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/blockchain_tests.cpp)
+
+To ensure that the conversions in the previous box are accurate, I have
+reproduced those unit tests in Javascript here. Note that numbers in Javascript
+are
+[IEEE 754 double precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format),
+which means that they are accurate to 15 significant digits. Bitcoin also uses
+double precision for its *difficulty* values, so the results are compatible.
+Please
+<a id="runDifficultyUnitTests">click here</a> to run the unit tests.
+
+<div class="form-container annex" id="unitTests7" style="display:none;">
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock"></div>
+    </div>
+</div>
+
+### nonce
 
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
@@ -754,6 +839,8 @@ convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8By
 convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span></div>
     </div>
 </div>
+
+### block hashing in detail
 
 Now we can put all this together. In the following form, note how each field in
 the human-readable block header is converted to bytes to be stored in the
@@ -807,6 +894,8 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
+### hashing hex vs ascii
+
 If you are very astute, you would have noticed that copying and pasting this
 block header into the *SHA256* hash forms at the start of this article gives a
 different result to the *SHA256* hashes here. This is because these hashes are
@@ -836,6 +925,8 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
 
 That covers most of the nitty-gritty detail regarding the process of hashing a
 Bitcoin block.
+
+### mining attempts calculator
 
 The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that

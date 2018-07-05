@@ -91,6 +91,39 @@ pre {
 .annex input {
     font-family: monospace;
 }
+#form7 #targetParent {
+    max-width: 100%;
+    margin-bottom: 0;
+}
+#form7 input {
+    max-width: 100%;
+}
+#form7 .warnings {
+    color: orange;
+    display: block;
+    float: left;
+    clear: both;
+    margin: 10px 0 10px 0;
+}
+#form7 .codeblock, #unitTests7 .codeblock {
+    max-height: 200px;
+}
+#form7 .codeblock-container .button-background,
+#unitTests7 .codeblock-container .button-background {
+    right: 10px;/*=scrollbar width*/
+}
+#bitsAreHex7Container {
+    position: relative;
+}
+#bitsAreHex7 {
+    position: absolute;
+    margin: 0;
+    bottom: 1px;
+    left: 7px;
+}
+#bitsAreHex7Container label {
+    padding-left: 14px;
+}
 #form9 .codeblock .outputField {
     margin-right: 8px;
 }
@@ -108,6 +141,10 @@ ul.error {
 ul.error li {
     color: red;
     margin-bottom: 5px;
+}
+#form7 .error {
+    float: left;
+    margin: 0;
 }
 #blockchainSVG {
     width: 100%;
