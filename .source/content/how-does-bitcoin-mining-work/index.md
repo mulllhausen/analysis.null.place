@@ -492,10 +492,10 @@ hashing, the test in Bitcoin mining involves finding a hash that is lower than a
 given target. The *bits* value in the block header specifies what that target
 value is. The way this works is quite technical and is not necessary to
 understand Bitcoin mining; however, if you are curious, I have included full
-details [in the annex](#annexSectionBits). The basic principle, however, is simple -
-increasing the difficulty lowers the target value so that miners will have to do
-more hashing attempts, and decreasing the difficulty raises the target value so
-that miners will have to do fewer hashing attempts.
+details [in the annex](#annexSectionBits). The basic principle, however, is
+simple - increasing the difficulty lowers the target value so that miners will
+have to do more hashing attempts, and decreasing the difficulty raises the
+target value so that miners will have to do fewer hashing attempts.
 
 Finally the *nonce* is something we have already discussed in the section on
 hashing. The only difference here is that with Bitcoin the nonce is an integer.
@@ -710,55 +710,53 @@ convert to little endian: <span class="aligner">                    </span><span
 <span id="annexSectionBits"></span>
 ### bits / difficulty / target
 
-The Bitcoin *difficulty* (generally called *bits* when expressed in its 4-byte
-compact format) is a form of
+*Bits*, *difficulty* and *target* are three different ways of expressing the
+same thing - namely the amount of work involved in mining. *Bits* is a compact
+format used in the block header. It only uses 4 bytes, which saves a lot of
+space compared to the 32 byte *target*. *Difficulty* is the inverse ratio of a
+given *target* to the *target* in the very first Bitcoin block. *Difficulty* in
+the Bitcoin source code is a double precision number, which means that it is
+accurate to 15 significant digits. The Bitcoin source code has functions for
+converting between *bits*, *target* and *difficulty*.
+
+*Bits* is a form of
 [floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
-*Bits* are stored in the blockchain, and the *target* is used as a threshold
-during mining. The first byte of the *bits* value is the exponent (called the
-*size* during the *bits* -> *target* and *target* -> *bits* conversions, and
-*shift* during the *bits* -> *difficulty* conversion) and the final 3 bytes are
+The first byte of the *bits* value is the exponent (called the *size* during the
+*bits* -> *target* and *target* -> *bits* conversions, and *shift* during the
+*bits* -> *difficulty* conversion) and the final 3 bytes of the *bits* value are
 the mantissa (called the *word* during the *bits* -> *target* conversion and
 *compact* during the *target* -> *bits* conversion). There is no reason for the
 different naming conventions - the Bitcoin source code is just inconsistent.
 Setting bit `00800000` in the *bits* value makes the target negative.
 
-The Bitcoin source code also calculates a *difficulty* value as a division of
-the first block's target,
-`00000000ffff0000000000000000000000000000000000000000000000000000`:
+As discussed in the previous section on Bitcoin mining, *target* is used as the
+threshold during mining. It is a 32 byte (ie. 256 bit) number.
+
+*Difficulty* is a human-readable indication of the amount of work involved in
+mining, relative to the work required to mine the very first Bitcoin block. So
+for example, a *difficulty* of 2 means that it will take twice as much work, on
+average, to mine a block as it took to mine the first block. *Difficulty* is
+calculated as:
 
 <div class="horizontal-center">
 <pre>
-difficulty = first-block-target / current-target
+difficulty = first_block_target / current_target
 </pre>
 </div>
 
-As the difficulty increases, the target decreases. This makes sense, since it
-takes more hashpower to mine a block hash below a lower target. The difficulty
-can never be negative, so converting a negative *bits* value to *difficulty* and
-back will give a different result to the original value.
+The first block target was
+`00000000ffff0000000000000000000000000000000000000000000000000000`.
+
+As the *difficulty* increases, the target decreases. This makes sense, since it
+takes more hashpower to mine a block hash below a lower target. According to the
+Bitcoin source code, the *difficulty* can never be negative, so converting a
+negative *bits* value to *difficulty* and back will give a different result to
+the original value.
 
 In the following box you can convert between *bits*, *target* and *difficulty*.
 To perform these calculations I have carefully transcribed the c++ Bitcoin
-source code into Javascript. This might sound like it would give inaccurate
-results, however all the unit tests from the Bitcoin source code pass. Please
-<a id="runDifficultyUnitTests">click here</a> to view the unit tests.
-
-<div class="form-container annex" id="unitTests7" style="display:none;">
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock"></div>
-    </div>
-</div>
-
-Note that numbers in Javascript are
-[IEEE 754 double precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format),
-which means that they are accurate to 15 significant digits. Bitcoin also uses
-double precision for its *difficulty* values, so the results are compatible.
+source code into Javascript which runs on this page. The textarea explains
+exactly what the original Bitcoin source code does to perform the conversions.
 
 <div class="form-container annex" id="form7">
     <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -781,6 +779,34 @@ double precision for its *difficulty* values, so the results are compatible.
     </div>
     <ul class="error"></ul>
     <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
+    <div class="codeblock-container auto-wrap-on-mobile">
+        <div class="button-background">
+            <button class="wrap-nowrap" wrapped="false">
+                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+            </button>
+        </div><br>
+        <div class="codeblock"></div>
+    </div>
+</div>
+
+The Bitcoin source code
+[has unit tests](https://github.com/bitcoin/bitcoin/tree/master/src/test) for
+the following conversions:
+
+- *bits* -> *target* -> *bits* - in file [arith_uint256_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/arith_uint256_tests.cpp)
+- *bits* -> *difficulty* - in file [blockchain_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/blockchain_tests.cpp)
+
+To ensure that the conversions in the previous box are accurate, I have
+reproduced those unit tests in Javascript here. Note that numbers in Javascript
+are
+[IEEE 754 double precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format),
+which means that they are accurate to 15 significant digits. Bitcoin also uses
+double precision for its *difficulty* values, so the results are compatible.
+Please
+<a id="runDifficultyUnitTests">click here</a> to run the unit tests.
+
+<div class="form-container annex" id="unitTests7" style="display:none;">
     <div class="codeblock-container auto-wrap-on-mobile">
         <div class="button-background">
             <button class="wrap-nowrap" wrapped="false">

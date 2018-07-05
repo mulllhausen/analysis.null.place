@@ -1111,6 +1111,12 @@ function setCompact(compact, levelOfDetail) {
         results.statusMessage = 'bits must only contain hexadecimal digits';
         return results;
     }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'in the Bitcoin source code this conversion uses function' +
+        ' setCompact(). \'bits\' here is made up of 1 \'size\' byte followed' +
+        ' by 3 \'compact\' bytes',
+        right: null
+    });
     results.target = ''; // init
     var compactHex = compact;
     compact = hex2int(compact);
@@ -1122,13 +1128,13 @@ function setCompact(compact, levelOfDetail) {
     var size = compact >>> 24;
     var sizeHex = int2hex(size, 2);
     if (levelOfDetail >= 2) results.steps.push({
-        left: 'extract the first byte (called the \'size\' here)',
+        left: 'extract the \'size\' byte',
         right: '0x' + compactHex + ' >> 24 = 0x' + sizeHex + ' = ' + size
     });
     var word = compact & 0x007fffff;
     var wordHex = int2hex(word, 8);
     if (levelOfDetail >= 2) results.steps.push({
-        left: 'extract the final 3 bytes (called the \'word\' here)',
+        left: 'extract the 3 \'word\' bytes',
         right: '0x' + compactHex + ' & 0x007fffff = 0x' + wordHex + ' = ' + word
     });
     if (size <= 3) {
@@ -1248,10 +1254,17 @@ function bits2difficulty(bits, levelOfDetail) {
         difficulty: null,
         steps: []
     };
-    if (levelOfDetail >= 1) results.steps.push({
-        left: '<u>bits -> difficulty</u>',
-        right: null
-    });
+    if (levelOfDetail >= 1) {
+        results.steps.push({
+            left: '<u>bits -> difficulty</u>',
+            right: null
+        });
+        results.steps.push({
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getDifficulty()',
+            right: null
+        });
+    }
     if (typeof bits == 'number') {
         var bitsInt = bits;
         if (bitsInt > 0xffffffff) {
@@ -1564,15 +1577,15 @@ function target2bits(target, levelOfDetail) {
     }
     var bitsx = getCompact(target, isNegative, levelOfDetail);
     if (levelOfDetail >= 1) { // prepend
-        bitsx.steps.unshift({
-            left: 'note that \'bits\' is made up of 1 \'size\' byte and 3' +
-            ' \'compact\' bytes',
-            right: null
-        });
-        bitsx.steps.unshift({ // prepend
+        bitsx.steps = [{
             left: '<u>target -> bits</u>',
             right: null
-        });
+        }, {
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte '+
+            ' followed by 3 \'compact\' bytes',
+            right: null
+        }].concat(bitsx.steps);
     }
     return bitsx;
 }
@@ -1615,9 +1628,9 @@ function difficulty2bits(difficulty, levelOfDetail) {
             right: null
         });
         results.steps.push({
-            left: 'note that the bitcoin source code never has a need to do' +
-            ' this calculation so the results here may vary from other' +
-            ' implementations. \'bits\' is made up of 1 \'size\' byte' +
+            left: 'the Bitcoin source code never has a need to do this' +
+            ' calculation so the results here may vary from other' +
+            ' implementations. \'bits\' here is made up of 1 \'size\' byte' +
             ' followed by 3 \'word\' bytes.',
             right: null
         });
@@ -1794,14 +1807,6 @@ function toLittleEndian(hexStr) {
 // number arg could be: -123,456,798.123456 or 1.2e+10 or -3.33333e-10 or 0.001
 function to15SigDigits(number) {
     return number.toPrecision(15);
-/*
-    var numStrOriginal = number.toString();
-    var parts = numStrOriginal.split('e');
-    var numStrClean = parts[0].replace(/[^0-9]/g, '');
-    if (numStrClean.length <= 15) return number;
-    parts[0] = parts[0].substr(0, parts[0].length - (numStrClean.length - 15));
-    return parseFloat(parts[0] + ((parts.length > 1) ? 'e' + parts[1] : ''));
-*/
 }
 
 // form 5 (understanding 'version')
