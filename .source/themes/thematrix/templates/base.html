@@ -157,6 +157,7 @@
         {% endif %}
 
         {% include 'facebook_analytics.html' %}
+        {% if article %}{% include 'disqus_script.html' %}{% endif %}
         {% include 'piwik.html' %}
     </body>
 </html>

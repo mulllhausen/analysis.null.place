@@ -54,11 +54,15 @@ DEFAULT_PAGINATION = False
 DISPLAY_PAGES_ON_MENU = False
 DELETE_OUTPUT_DIRECTORY = False
 
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
-
 GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 
 STATIC_PATHS = ['img', 'js', 'css', 'json']
 
 LOAD_CONTENT_CACHE = False
+
+# debug settings:
+
+# Uncomment following line if you want document-relative URLs when developing
+#RELATIVE_URLS = True
+
+DISQUS_SITENAME = 'analysis-null-place'
