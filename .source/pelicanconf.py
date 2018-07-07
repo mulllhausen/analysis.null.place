@@ -65,4 +65,5 @@ LOAD_CONTENT_CACHE = False
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-DISQUS_SITENAME = 'analysis-null-place'
+# uncomment to view disqus in localhost
+#DISQUS_SITENAME = 'analysis-null-place'
