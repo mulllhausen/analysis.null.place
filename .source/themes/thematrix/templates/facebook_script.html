@@ -2,22 +2,42 @@
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId  : '{{ FACEBOOK_APP_ID }}',
-                cookie : true,
-                xfbml  : true,
-                version: 'v2.11'
+                appId: '{{ FACEBOOK_APP_ID }}',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.0'
             });
             FB.AppEvents.logPageView();
+            FB.Event.subscribe('xfbml.render', renderedFB);
+            FB.Event.subscribe('comment.create', updateCommentCount);
+            FB.Event.subscribe('comment.remove', updateCommentCount);
         };
-        function initFBComments() {
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId={{ FACEBOOK_APP_ID }}&autoLogAppEvents=1';
-                fjs.parentNode.insertBefore(js, fjs);
-            } (document, 'script', 'facebook-jssdk'));
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId={{ FACEBOOK_APP_ID }}&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        } (document, 'script', 'facebook-jssdk'));
+        function renderedFB() {
+            // fb comments are initially set to display:none with css, however
+            // fb changes this with js when loaded. so re-hide them now until
+            // the user wants to see them
+            document.querySelector('.fb-comments').style.display = 'none';
+        }
+        function updateCommentCount() {
+            ajax(
+                'https://graph.facebook.com/v2.1/' +
+                encodeURIComponent('{{ SITEURL }}/{{ article.url }}') +
+                '?fields=share&method=get&pretty=0&sdk=joey&suppress_http_code=1',
+                function(json) {
+                    try {
+                        document.querySelector('.fb-comments-count span').
+                        innerHTML = JSON.parse(json).share.comment_count;
+                    } catch (err) {}
+                }
+            );
         }
     </script>
 {% endif %}
