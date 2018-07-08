@@ -1045,9 +1045,23 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 4,294,967,295 hashes per second? In that case they can change some redundant
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.</p>
-        </div><!-- /.entry-content -->
-
-
+        </div>
+<div class="comments info-box">
+    <div class="choose-comments-platform">
+        Comment with
+        <span class="comment-with fb"><i class="fa fa-facebook" aria-hidden="true"></i></span>
+        <span class="comments-count fb-comments-count" data-href="http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/">0</span>
+or        <span class="comment-with disqus"><img src="/theme/img/disqus_logo.png" alt="Disqus"></span>
+        <span class="comments-count disqus-comment-count" data-disqus-identifier="how does bitcoin mining work?">0</span>
+    </div>
+<div id="disqus_thread" class="disqus-comments"></div><div id="fb-root"></div>
+    <div class="fb-comments"
+        data-href="http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/"
+        data-numposts="20"
+        data-colorscheme="dark"
+        data-order-by="reverse_time"
+        data-width="100%"
+    ></div></div>
     </article>
 </section>
             </div>
@@ -1067,7 +1081,6 @@ the nonce to 0.</p>
                 <a href="http://null.place/feeds/all.atom.xml"><i class="fa fa-rss" aria-hidden="true"></i> Atom</a>
             </address>
         </footer>
-
 
         <script src="http://null.place/theme/js/polyfills.js"></script>
         <script src="http://null.place/theme/js/utils.js"></script>
@@ -1091,24 +1104,104 @@ the nonce to 0.</p>
         <script src="http://null.place/js/sjcl.min.js"></script>
         <script src="http://null.place/js/btc-mining.js"></script>
 
+<script>
+var disqus_config = function () {
+this.page.url = 'http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/';    this.page.identifier = 'how does bitcoin mining work?';
+    this.page.sortOrder = 'newest';
+    this.callbacks.onNewComment = [function(data) { disqusCommentAdded();}]
+};
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://analysis-null-place.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+function disqusCommentAdded() {
+    // update the comment count. beware the 10 minute delay (stackoverflow.com/q/38586878)
+    DISQUSWIDGETS.getCount({ reset: true });
+}
+</script>
+<script id="dsq-count-scr" src="https://analysis-null-place.disqus.com/count.js" async></script>
+<noscript>Please enable Javascript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId  : '2040066019560327',
-                cookie : true,
-                xfbml  : true,
-                version: 'v2.11'
+                appId: '2040066019560327',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.0'
             });
             FB.AppEvents.logPageView();
+            FB.Event.subscribe('xfbml.render', renderedFB);
+            FB.Event.subscribe('comment.create', updateCommentCount);
+            FB.Event.subscribe('comment.remove', updateCommentCount);
         };
-
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=2040066019560327&autoLogAppEvents=1';
             fjs.parentNode.insertBefore(js, fjs);
         } (document, 'script', 'facebook-jssdk'));
+        function renderedFB() {
+            // fb comments are initially set to display:none with css, however
+            // fb changes this with js when loaded. so re-hide them now until
+            // the user wants to see them
+            document.querySelector('.fb-comments').style.display = 'none';
+        }
+        function updateCommentCount() {
+            ajax(
+                'https://graph.facebook.com/v2.1/' +
+                encodeURIComponent('http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/') +
+                '?fields=share&method=get&pretty=0&sdk=joey&suppress_http_code=1',
+                function(json) {
+                    try {
+                        document.querySelector('.fb-comments-count span').
+                        innerHTML = JSON.parse(json).share.comment_count;
+                    } catch (err) {}
+                }
+            );
+        }
     </script>
+<script>
+var commentsPlatforms = [
+'FB','Disqus'];
+addEvent(window, 'load', function () {
+    foreach(commentsPlatforms, function(i, platformI) {
+        addEvent( // 'button' event
+            document.querySelector('.comment-with.' + platformI.toLowerCase()),
+            'click',
+            function(e) { renderComments(platformI); }
+        );
+        addEvent( // 'button-count' event
+            document.querySelector(
+                '.comment-with.' + platformI.toLowerCase() + '+span'
+            ),
+            'click',
+            function(e) { renderComments(platformI); }
+        );
+    });
+});
+
+function renderComments(platformI) {
+    document.querySelector('.choose-comments-platform').style.marginBottom = '30px';
+    foreach(commentsPlatforms, function(j, platformJ) {
+        var commentsArea = document.querySelector(
+            '.' + platformJ.toLowerCase() + '-comments'
+        );
+        var button = document.querySelector(
+            '.comment-with.' + platformJ.toLowerCase()
+        );
+        if (platformI == platformJ) { // show this comments platform
+            commentsArea.style.display = 'block';
+            button.classList.add('selected');
+        } else { // hide all other comments platforms
+            commentsArea.style.display = 'none';
+            button.classList.remove('selected');
+        }
+    });
+}
+</script>
     </body>
 </html>

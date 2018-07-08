@@ -579,6 +579,44 @@ blockquote {
 }
 /* end codeblock */
 
+/* begin comments section */
+.fb-root, .fb-comments, .disqus-comments {
+    display: none;/*initially hidden*/
+}
+.comments {
+    margin-top: 100px;
+    overflow: hidden;
+}
+.comment-with {
+    padding: 5px 8px;
+    background-color: #000000;/*black*/
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+.comment-with.selected, .comment-with:hover {
+    cursor: pointer;
+    border: 1px solid #6a6a6a;
+}
+.comment-with .fa-facebook {
+    padding: 3px;/*make same width as disqus*/
+}
+.comment-with.disqus img {
+    width: 16px;
+    margin-bottom: -2px;
+}
+.comments-count {
+    vertical-align: super;
+    font-size: smaller;
+    cursor: pointer;
+    color: #000000;/*black*/
+    margin-left: -12px;
+    background-color: #7db904;/*green*/
+    padding: 0 3px;
+    border-radius: 20px;
+}
+
+/* end comments section */
+
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
