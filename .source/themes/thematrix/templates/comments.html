@@ -1,7 +1,19 @@
-{% if DISQUS_SITENAME %}
-    <p>There are
-        <a href="{{ SITEURL }}/{{ article.url }}#disqus_thread">
-            comments
-        </a>.
-    </p>
+{% if (DISQUS_SITENAME or SHOW_FACEBOOK_COMMENTS) %}
+<div class="comments info-box">
+    <div class="choose-comments-platform">
+        Comment using
+        <span class="comment-with fb"><i class="fa fa-facebook" aria-hidden="true"></i></span>
+        or
+        <span class="comment-with disqus">Disqus</span>
+    </div>
+    {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
+    {% if SHOW_FACEBOOK_COMMENTS %}<div id="fb-root"></div>
+    <div class="fb-comments"
+        data-href="{{ SITEURL }}/{{ article.url }}"
+        data-numposts="20"
+        data-colorscheme="dark"
+        data-order-by="social"
+        data-width="100%"
+    ></div>{% endif %}
+</div>
 {% endif %}

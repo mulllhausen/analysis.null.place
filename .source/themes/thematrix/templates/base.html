@@ -17,8 +17,8 @@
         <meta property="og:image:width" content="266"/>
         <meta property="og:image:height" content="266"/>
         <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-        {% if FACEBOOK_ANALYTICS_ID %}
-        <meta property="fb:app_id" content="{{ FACEBOOK_ANALYTICS_ID }}"/>
+        {% if FACEBOOK_APP_ID %}
+        <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}"/>
         {% endif %}
 
         {# le schema.org markup for Google+ #}
@@ -154,8 +154,10 @@
             {% endfor %}
         {% endif %}
 
-        {% include 'facebook_analytics.html' %}
-        {% if article %}{% include 'disqus_script.html' %}{% endif %}
+        {% if article %}
+            {% include 'disqus_script.html' %}
+            {% include 'facebook_script.html' %}
+        {% endif %}
         {% include 'piwik.html' %}
     </body>
 </html>

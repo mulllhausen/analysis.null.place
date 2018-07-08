@@ -24,10 +24,7 @@
             </div>
             {{ article.content }}
         </div>
-
-        {% if DISQUS_SITENAME %}
-        <div id="disqus_thread"></div>
-        {% endif %}
+        {% include 'comments.html' %}
     </article>
 </section>
 {% endblock %}

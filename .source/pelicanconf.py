@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
-SITEURL = ''
 BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 
 PATH = 'content'
@@ -62,8 +61,17 @@ LOAD_CONTENT_CACHE = False
 
 # debug settings:
 
+# add 127.0.0.1 null.place to /etc/hosts for this (it is necessary if you want
+# to debug the fb comments section on localhost)
+#SITE_HOSTNAME = 'null.place'
+#SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
+
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-# uncomment to view disqus in localhost
+# uncomment to view disqus on localhost
 #DISQUS_SITENAME = 'analysis-null-place'
+
+# uncomment to view facebook comments on localhost
+#FACEBOOK_APP_ID = '2040066019560327'
+#SHOW_FACEBOOK_COMMENTS = True
