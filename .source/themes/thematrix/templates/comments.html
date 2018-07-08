@@ -1,13 +1,13 @@
-{% if (DISQUS_SITENAME or SHOW_FACEBOOK_COMMENTS) %}
+{% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
 <div class="comments info-box">
     <div class="choose-comments-platform">
         Comment using
         <span class="comment-with fb"><i class="fa fa-facebook" aria-hidden="true"></i></span>
         or
-        <span class="comment-with disqus">Disqus</span>
+        <span class="comment-with disqus"><img src="/theme/img/disqus_logo.png" alt="Disqus"></span>
     </div>
     {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
-    {% if SHOW_FACEBOOK_COMMENTS %}<div id="fb-root"></div>
+    {% if FACEBOOK_APP_ID %}<div id="fb-root"></div>
     <div class="fb-comments"
         data-href="{{ SITEURL }}/{{ article.url }}"
         data-numposts="20"

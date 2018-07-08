@@ -1,0 +1,39 @@
+{% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
+<script>
+var commentsPlatforms = ['FB', 'Disqus'];
+var alreadyLoaded = [];
+addEvent(window, 'load', function () {
+    foreach(commentsPlatforms, function(i, platformI) {
+        addEvent( // 'button' event
+            document.querySelector('.comment-with.' + platformI.toLowerCase()),
+            'click',
+            function (e) {
+                document.querySelector('.choose-comments-platform').style.
+                marginBottom = '30px';
+                // first hide all other comments platforms
+                foreach(commentsPlatforms, function(j, platformJ) {
+                    var commentsArea = document.querySelector(
+                        '.' + platformJ.toLowerCase() + '-comments'
+                    );
+                    var button = document.querySelector(
+                        '.comment-with.' + platformJ.toLowerCase()
+                    );
+                    if (platformI == platformJ) {
+                        commentsArea.style.display = 'block';
+                        button.classList.add('selected');
+                    } else {
+                        commentsArea.style.display = 'none';
+                        button.classList.remove('selected');
+                    }
+                });
+                if (inArray(platformI, alreadyLoaded)) return;
+                var fn = window['init' + platformI + 'Comments'];
+                if (typeof fn !== 'function') return;
+                fn();
+                alreadyLoaded.push(platformI);
+            }
+        );
+    });
+});
+</script>
+{% endif %}

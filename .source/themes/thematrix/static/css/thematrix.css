@@ -582,13 +582,24 @@ blockquote {
 /* begin comments section */
 .comments {
     margin-top: 100px;
-}
-.choose-comments-platform {
-    margin-bottom: 30px;
+    overflow: hidden;
 }
 .comment-with {
     padding: 5px 8px;
     background-color: #000000;/*black*/
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+.comment-with.selected, .comment-with:hover {
+    cursor: pointer;
+    border: 1px solid #6a6a6a;
+}
+.comment-with .fa-facebook {
+    padding: 3px;/*make same width as disqus*/
+}
+.comment-with.disqus img {
+    width: 16px;
+    margin-bottom: -2px;
 }
 
 /* end comments section */
