@@ -1,7 +1,25 @@
-{% if DISQUS_SITENAME %}
-    <p>There are
-        <a href="{{ SITEURL }}/{{ article.url }}#disqus_thread">
-            comments
-        </a>.
-    </p>
+{% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
+<div class="comments info-box">
+    <div class="choose-comments-platform">
+        Comment with
+        {% if FACEBOOK_APP_ID %}
+        <span class="comment-with fb"><i class="fa fa-facebook" aria-hidden="true"></i></span>
+        <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/{{ article.url }}">0</span>
+        {% endif %}
+        {% if DISQUS_SITENAME and FACEBOOK_APP_ID %}or{% endif %}
+        {% if DISQUS_SITENAME %}
+        <span class="comment-with disqus"><img src="/theme/img/disqus_logo.png" alt="Disqus"></span>
+        <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
+        {% endif %}
+    </div>
+    {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
+    {% if FACEBOOK_APP_ID %}<div id="fb-root"></div>
+    <div class="fb-comments"
+        data-href="{{ SITEURL }}/{{ article.url }}"
+        data-numposts="20"
+        data-colorscheme="dark"
+        data-order-by="reverse_time"
+        data-width="100%"
+    ></div>{% endif %}
+</div>
 {% endif %}
