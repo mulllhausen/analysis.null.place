@@ -3,3 +3,4 @@
 - add google ads
 - create fallbacks for cdn files
 - give all headings id links
+- add <noscript></noscript>
