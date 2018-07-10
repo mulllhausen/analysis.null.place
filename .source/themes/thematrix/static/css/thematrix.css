@@ -580,9 +580,6 @@ blockquote {
 /* end codeblock */
 
 /* begin comments section */
-.fb-root, .fb-comments, .disqus-comments {
-    display: none;/*initially hidden*/
-}
 .comments {
     margin-top: 100px;
     overflow: hidden;

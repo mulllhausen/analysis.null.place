@@ -4,7 +4,8 @@ var disqus_config = function () {
     {% if (SITEURL != '') %}this.page.url = '{{ SITEURL }}/{{ article.url }}';{% endif %}
     this.page.identifier = '{{ article.title }}';
     this.page.sortOrder = 'newest';
-    this.callbacks.onNewComment = [function(data) { disqusCommentAdded();}]
+    this.callbacks.onReady = [disqusReady];
+    this.callbacks.onNewComment = [disqusCommentUpdated];
 };
 (function() {
     var d = document, s = d.createElement('script');
@@ -12,9 +13,20 @@ var disqus_config = function () {
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
 })();
-function disqusCommentAdded() {
-    // update the comment count. beware the 10 minute delay (stackoverflow.com/q/38586878)
+function disqusCommentUpdated(data) {
+    // update the comment count. beware the 10 minute delay
+    // (stackoverflow.com/q/38586878)
+    // could use a local var to keep track of comment count here to avoid the
+    // 10 minute delay? but there is no event when a comment gets deleted, so it
+    // would not be 100% accurate.
     DISQUSWIDGETS.getCount({ reset: true });
+}
+var disqusHideAlreadyDone = false;
+function disqusReady(data) {
+    // hide disqus platform until the user clicks the icon
+    if (disqusHideAlreadyDone) return;
+    document.querySelector('.disqus-comments').style.display = 'none';
+    disqusHideAlreadyDone = true;
 }
 </script>
 <script id="dsq-count-scr" src="https://{{ DISQUS_SITENAME }}.disqus.com/count.js" async></script>
