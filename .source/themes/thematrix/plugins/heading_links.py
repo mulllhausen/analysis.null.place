@@ -16,8 +16,9 @@ def process_headings(html):
             find = m.group(0)
             heading_text = m.group(2)
             hid = re.sub('[^a-zA-Z0-9]', '_', heading_text)
-            hid = re.sub('_+', '_', hid).strip('_')
-            replace = '<h%d id="%s">%s</h%d>' % (h, hid, heading_text, h)
+            hid = 'heading_' + re.sub('_+', '_', hid).strip('_')
+            replace = '<h%d id="%s"><a href="#%s">%s</a></h%d>' % \
+            (h, hid, hid, heading_text, h)
             html = html.replace(find, replace)
 
     return html
@@ -29,7 +30,8 @@ def register():
 
 if __name__ == '__main__':
     test_data = '<h1>hi there</h1><h3>??sup??</h3>'
-    expected_res = '<h1 id="hi_there">hi there</h1><h3 id="sup">??sup??</h3>'
+    expected_res = '<h1 id="heading_hi_there"><a href="#heading_hi_there">' + \
+    'hi there</a></h1><h3 id="heading_sup"><a href="#heading_sup">??sup??</a></h3>'
     res = process_headings(test_data)
     if res == expected_res:
         print "pass"
