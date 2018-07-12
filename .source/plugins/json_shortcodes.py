@@ -15,7 +15,7 @@ import json
 import jinja2
 import os
 
-def process_shortcodes(data_from_pelican):
+def process_content(data_from_pelican):
     if not data_from_pelican._content:
         return
 
@@ -72,7 +72,7 @@ def process_shortcode(template, json_data):
 
 def register():
     # process the content only
-    signals.content_object_init.connect(process_shortcodes)
+    signals.content_object_init.connect(process_content)
 
 if __name__ == '__main__':
     print 'test 1'
