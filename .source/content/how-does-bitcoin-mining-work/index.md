@@ -28,7 +28,7 @@ Bitcoin mining
 - Bitcoin mining
 - annex - filling in some of the fine detail not discussed earlier
 
-## cryptographic hashing
+[h{"h":2,"t":"cryptographic hashing"}]
 
 To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -49,15 +49,7 @@ see what that does:
     <div class="left">
         <span id="hash0Duration"></span>
     </div>
-    <div class="codeblock-container auto-wrap-on-mobile" style="display:none;">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="hash0Results" class="codeblock"></div>
-    </div>
+    [codeblock{"id":"hash0Results","hide":1}]
 </div>
 
 *SHA256* stands for *Secure Hash Algorithm (256 bits)*. *Algorithm* sounds
@@ -188,17 +180,9 @@ you will not be able to invert this hash. Seriously - give it a go:
             (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+    [codeblock{"id":"codeblock1HashResults","start":1}]? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
-status: <span id="matchStatus1"></span></span></div>
-    </div>
+status: <span id="matchStatus1"></span></span>[codeblock{"end":1}]
 </div>
 
 The difficulty of inverting a *SHA256* hash is due its enormous length! *SHA256*
@@ -381,7 +365,7 @@ than the target
 That last type of proof-of-work test is the one used in Bitcoin mining and is
 explained in detail in the following section.
 
-## bitcoin mining
+[h{"h":2,"t":"bitcoin mining"}]
 
 Now that we have explored hashing and mining in general, we can apply this
 knowledge to Bitcoin mining.
@@ -492,7 +476,7 @@ hashing, the test in Bitcoin mining involves finding a hash that is lower than a
 given target. The *bits* value in the block header specifies what that target
 value is. The way this works is quite technical and is not necessary to
 understand Bitcoin mining; however, if you are curious, I have included full
-details [in the annex](#annexSectionBits). The basic principle, however, is
+details [in the annex](#heading_bits_difficulty_target). The basic principle, however, is
 simple - increasing the difficulty lowers the target value so that miners will
 have to do more hashing attempts, and decreasing the difficulty raises the
 target value so that miners will have to do fewer hashing attempts.
@@ -643,7 +627,7 @@ http://blockchain.info/block-height/0) we can see that the correct nonce is
 the previous mining simulation and then click the *Mine manually with SHA256*
 button to see what happens.
 
-## annex
+[h{"h":2,"t":"annex"}]
 
 This section goes into all the detail skipped above. It is really just intended
 for those (such as myself) who like to leave no stone unturned. One thing that
@@ -654,7 +638,7 @@ field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
 used by Bitcoin.
 
-### version
+[h{"h":3,"t":"version"}]
 
 The *version* is stored in the blockchain as 4 bytes. Try altering the
 human-readable *version* value to see how this changes the value stored in the
@@ -681,7 +665,7 @@ convert to little endian: <span class="aligner">       </span><span id="version5
 Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
 format* simply means reversing the bytes.
 
-### timestamp
+[h{"h":3,"t":"timestamp"}]
 
 The *timestamp* is also stored in the blockchain as 4 bytes. This currently
 imposes some restrictions on the permissible date range. Try altering the
@@ -707,8 +691,7 @@ convert to little endian: <span class="aligner">                    </span><span
     </div>
 </div>
 
-<span id="annexSectionBits"></span>
-### bits / difficulty / target
+[h{"h":3,"t":"bits / difficulty / target"}]
 
 *Bits*, *difficulty* and *target* are three different ways of expressing the
 same thing - namely the amount of work involved in mining. *Bits* is a compact
@@ -818,7 +801,7 @@ Please
     </div>
 </div>
 
-### nonce
+[h{"h":3,"t":"nonce"}]
 
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
@@ -840,7 +823,7 @@ convert to little endian: <span class="aligner">       </span><span id="nonce8By
     </div>
 </div>
 
-### block hashing in detail
+[h{"h":3,"t":"block hashing in detail"}]
 
 Now we can put all this together. In the following form, note how each field in
 the human-readable block header is converted to bytes to be stored in the
@@ -894,7 +877,7 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
-### hashing hex vs ascii
+[h{"h":3,"t":"hashing hex vs ascii"}]
 
 If you are very astute, you would have noticed that copying and pasting this
 block header into the *SHA256* hash forms at the start of this article gives a
@@ -926,7 +909,7 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
 That covers most of the nitty-gritty detail regarding the process of hashing a
 Bitcoin block.
 
-### mining attempts calculator
+[h{"h":3,"t":"mining attempts calculator"}]
 
 The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that

@@ -58,8 +58,8 @@ GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 STATIC_PATHS = ['img', 'js', 'css', 'json']
 
 LOAD_CONTENT_CACHE = False
-PLUGIN_PATHS = [THEME + "/plugins", "plugins"]
-PLUGINS = ["heading_links", "json_shortcodes"]
+PLUGIN_PATHS = ["plugins"]
+PLUGINS = ["json_shortcodes"]
 
 # debug settings:
 
