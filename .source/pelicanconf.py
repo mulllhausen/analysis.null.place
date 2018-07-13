@@ -58,6 +58,8 @@ GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 STATIC_PATHS = ['img', 'js', 'css', 'json']
 
 LOAD_CONTENT_CACHE = False
+PLUGIN_PATHS = [THEME + '/plugins']
+PLUGINS = ['jinja2content']
 
 # debug settings:
 
