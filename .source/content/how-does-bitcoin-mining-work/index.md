@@ -28,7 +28,7 @@ Bitcoin mining
 - Bitcoin mining
 - annex - filling in some of the fine detail not discussed earlier
 
-## cryptographic hashing
+{% with h=2,t="cryptographic hashing" %}{% include 'h.html' %}{% endwith %}
 
 To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -381,7 +381,7 @@ than the target
 That last type of proof-of-work test is the one used in Bitcoin mining and is
 explained in detail in the following section.
 
-## bitcoin mining
+{% with h=2,t="bitcoin mining" %}{% include 'h.html' %}{% endwith %}
 
 Now that we have explored hashing and mining in general, we can apply this
 knowledge to Bitcoin mining.
@@ -643,7 +643,7 @@ http://blockchain.info/block-height/0) we can see that the correct nonce is
 the previous mining simulation and then click the *Mine manually with SHA256*
 button to see what happens.
 
-## annex
+{% with h=2,t="annex" %}{% include 'h.html' %}{% endwith %}
 
 This section goes into all the detail skipped above. It is really just intended
 for those (such as myself) who like to leave no stone unturned. One thing that
@@ -654,7 +654,7 @@ field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
 used by Bitcoin.
 
-### version
+{% with h=3,t="version" %}{% include 'h.html' %}{% endwith %}
 
 The *version* is stored in the blockchain as 4 bytes. Try altering the
 human-readable *version* value to see how this changes the value stored in the
@@ -681,7 +681,7 @@ convert to little endian: <span class="aligner">       </span><span id="version5
 Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
 format* simply means reversing the bytes.
 
-### timestamp
+{% with h=3,t="timestamp" %}{% include 'h.html' %}{% endwith %}
 
 The *timestamp* is also stored in the blockchain as 4 bytes. This currently
 imposes some restrictions on the permissible date range. Try altering the
@@ -708,7 +708,7 @@ convert to little endian: <span class="aligner">                    </span><span
 </div>
 
 <span id="annexSectionBits"></span>
-### bits / difficulty / target
+{% with h=3,t="bits / difficulty / target" %}{% include 'h.html' %}{% endwith %}
 
 *Bits*, *difficulty* and *target* are three different ways of expressing the
 same thing - namely the amount of work involved in mining. *Bits* is a compact
@@ -818,7 +818,7 @@ Please
     </div>
 </div>
 
-### nonce
+{% with h=3,t="nonce" %}{% include 'h.html' %}{% endwith %}
 
 The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
 
@@ -840,7 +840,7 @@ convert to little endian: <span class="aligner">       </span><span id="nonce8By
     </div>
 </div>
 
-### block hashing in detail
+{% with h=3,t="block hashing in detail" %}{% include 'h.html' %}{% endwith %}
 
 Now we can put all this together. In the following form, note how each field in
 the human-readable block header is converted to bytes to be stored in the
@@ -894,7 +894,7 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
-### hashing hex vs ascii
+{% with h=3,t="hashing hex vs ascii" %}{% include 'h.html' %}{% endwith %}
 
 If you are very astute, you would have noticed that copying and pasting this
 block header into the *SHA256* hash forms at the start of this article gives a
@@ -926,7 +926,7 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
 That covers most of the nitty-gritty detail regarding the process of hashing a
 Bitcoin block.
 
-### mining attempts calculator
+{% with h=3,t="mining attempts calculator" %}{% include 'h.html' %}{% endwith %}
 
 The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that

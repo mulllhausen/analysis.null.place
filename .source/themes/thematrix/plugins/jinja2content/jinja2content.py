@@ -2,6 +2,7 @@
 jinja2content.py
 ----------------
 
+note: only works in python 3, due to super()
 Pelican plugin that processes Markdown files as jinja templates.
 
 """
