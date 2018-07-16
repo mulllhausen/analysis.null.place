@@ -1,11 +1,15 @@
-title: how does bitcoin mining work?
-slug: how-does-bitcoin-mining-work
-date: 2018-04-17
-category: cryptocurrencies
-tags: bitcoin, mining, proof-of-work
-stylesheets: btc.css
-scripts: sjcl.min.js,btc-mining.js
-summary: An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.
+<html>
+    <head>
+        <title>how does bitcoin mining work?</title>
+        <meta name="slug" content="how-does-bitcoin-mining-work" />
+        <meta name="date" content="2018-04-17" />
+        <meta name="category" content="cryptocurrencies" />
+        <meta name="tags" content="bitcoin, mining, proof-of-work" />
+        <meta name="stylesheets" content="btc.css" />
+        <meta name="scripts" content="sjcl.min.js,btc-mining.js" />
+        <meta name="summary" content="An interactive walkthrough of bitcoin mining. No prior knowledge is necessary." />
+    </head>
+    <body>
 
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
@@ -13,29 +17,35 @@ puzzle. The answer found by the winner is verified by all participants. The
 winner receives bitcoins as a reward.
 </p></blockquote>
 
-In this article I will delve into what exactly this *random puzzle* is, and how
-the solution found by the winner is verified. I have made the article
+<p>In this article I will delve into what exactly this <i>random puzzle</i> is,
+and how the solution found by the winner is verified. I have made the article
 interactive so that you can simulate the mining algorithms for yourself and get
 a feel for how mining really works. While the concepts here are not simple, they
 are presented so as to be easily understood by someone with no knowledge of
 programming, cryptography or Bitcoin. And I hope the interactivity will make the
-whole process fun.
+whole process fun.</p>
 
-The article has 3 parts:
+<p>The article has 3 parts:</p>
 
-- cryptographic hashing - this is background material needed to understand
-Bitcoin mining
-- Bitcoin mining
-- annex - filling in some of the fine detail not discussed earlier
+<ul>
+    <li><a href="#heading_cryptographic_hashing">cryptographic hashing</a> -
+this is background material needed to understand Bitcoin mining</li>
+    <li><a href="#heading_bitcoin_mining">Bitcoin mining</a></li>
+    <li><a href="#heading_annex">annex</a> - filling in some of the fine detail
+not discussed earlier</li>
+</ul>
 
-{% with h=2,t="cryptographic hashing" %}{% include 'h.html' %}{% endwith %}
+{% with h=2,t="cryptographic hashing" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-To understand Bitcoin mining, it is first necessary to understand what
+<p>To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
-at the start, let's just dive in and give it a go. Click the *SHA256* button
-a few times and look carefully at what this does each time, then try typing
-different things in the *pre-image* field and clicking the *SHA256* button to
-see what that does:
+at the start, let's just dive in and give it a go. Click the <i>SHA256</i>
+button a few times and look carefully at what this does each time, then try
+typing different things in the <i>pre-image</i> field and clicking the
+<i>SHA256</i> button to see what that does:</p>
+
 <div class="form-container" id="form0">
     <a href="#form0"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
@@ -60,19 +70,19 @@ see what that does:
     </div>
 </div>
 
-*SHA256* stands for *Secure Hash Algorithm (256 bits)*. *Algorithm* sounds
-complicated but it just means a series of operations done by a computer. There
-are many different hashing algorithms - *SHA128*, *SHA512*, *MD5*, *RIPEMD128*,
-*RIPEMD160*, etc. The differences between these hashing algorithms are not
-important for the sake of this article. All that is important is to recognise
-that *SHA256* is merely one of many hashing algorithms - the one that is used in
-Bitcoin mining.
+<p><i>SHA256</i> stands for <i>Secure Hash Algorithm (256 bits)</i>.
+<i>Algorithm</i> sounds complicated but it just means a series of operations
+done by a computer. There are many different hashing algorithms - <i>SHA128</i>,
+<i>SHA512</i>, <i>MD5</i>, <i>RIPEMD128</i>, <i>RIPEMD160</i>, etc. The
+differences between these hashing algorithms are not important for the sake of
+this article. All that is important is to recognise that <i>SHA256</i> is merely
+one of many hashing algorithms - the one that is used in Bitcoin mining.</p>
 
-<blockquote>
-<p>Cryptographic hashing involves taking a string of characters and transforming
+<blockquote><p>
+Cryptographic hashing involves taking a string of characters and transforming
 them into another string of characters. We call the input characters the
-<i>pre-image</i> and we call the output the <i>hash</i>:</p>
-</blockquote>
+<i>pre-image</i> and we call the output the <i>hash</i>:
+</p></blockquote>
 
 <div class="horizontal-center">
 <div id="hashingFlowchartContainer">
@@ -80,10 +90,11 @@ them into another string of characters. We call the input characters the
 </div>
 </div>
 
-The output of a cryptographic hash is actually a number; however, that may not
-have been obvious when you ran the *SHA256* hash above, since that number is
-written in hexadecimal format - i.e. base 16. To explain what that means, here
-are some hexadecimal values side by side with their decimal equivalent values:
+<p>The output of a cryptographic hash is actually a number; however, that may
+not have been obvious when you ran the <i>SHA256</i> hash above, since that
+number is written in hexadecimal format - i.e. base 16. To explain what that
+means, here are some hexadecimal values side by side with their decimal
+equivalent values:</p>
 
 <div class="horizontal-center" id="dec2hexTable">
     <div class="constrainWidth">
@@ -117,58 +128,60 @@ are some hexadecimal values side by side with their decimal equivalent values:
     </div>
 </div>
 
-Don't worry, you won't need to do any hexadecimal conversions while following
+<p>Don't worry, you won't need to do any hexadecimal conversions while following
 this article. All you need to remember here is that hexadecimal digits go from
-`0` to `9` to `a` to `f`.
+<code>0</code> to <code>9</code> to <code>a</code> to <code>f</code>.</p>
 
-OK, so now that you have tried cryptographic hashing, and you know about
+<p>OK, so now that you have tried cryptographic hashing, and you know about
 hexadecimal format, let's have a look at the formal definition of cryptographic
 hashing. Some parts of the definition may not make sense at first, but I will
-be explaining them in detail in the paragraphs that follow.
+be explaining them in detail in the paragraphs that follow.</p>
 
-<blockquote>
-<p>A cryptographic hashing algorithm has the following properties relevant to
+<blockquote><p>
+A cryptographic hashing algorithm has the following properties relevant to
 Bitcoin mining:</p>
 <p></p>
 <ol>
-    <li>it is deterministic - the same pre-image always results in the same hash</li>
+    <li>it is deterministic - the same pre-image always results in the same
+hash</li>
     <li>it is quick to compute the hash value for any given pre-image</li>
     <li>it is impossible to reverse a cryptographic hash and recover a pre-image
-    from its hash value, except by trying all possible pre-images</li>
+from its hash value, except by trying all possible pre-images</li>
     <li>a small change to a pre-image changes the hash value so extensively
-    that the new hash value appears uncorrelated with the old hash value</li>
+that the new hash value appears uncorrelated with the old hash value</li>
 </ol>
 </blockquote>
 
-Lets investigate these properties:
+<p>Lets investigate these properties:</p>
 
-Properties 1 and 2 are quite obvious - earlier when we hashed `hello world!`
-with *SHA256* it always gave
-`7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` and took
-<span id="helloWorldHashSpeed">less than 4 milliseconds (depending on the speed
-of your device)</span>, which is fairly quick. However, it must be noted that
-performing the hash always takes at least *some* time, even if it is a very small
-amount of time. This fact will be important when we discuss hashing in relation
-to Bitcoin mining later on.
+<p>Properties 1 and 2 are quite obvious - earlier when we hashed <code>hello
+world!</code> with <i>SHA256</i> it always gave
+<code>7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9</code>
+and took <span id="helloWorldHashSpeed">less than 4 milliseconds (depending on
+the speed of your device)</span>, which is fairly quick. However, it must be
+noted that performing the hash always takes at least <i>some</i> time, even if
+it is a very small amount of time. This fact will be important when we discuss
+hashing in relation to Bitcoin mining later on.</p>
 
-Property 3 explains that hashing is a one-way process. We can easily get from
+<p>Property 3 explains that hashing is a one-way process. We can easily get from
 a pre-image to its hash, but it is impossible to programmatically get from a
 cryptographic hash back to its pre-image. The process of trying to get from a
-hash back to its pre-image is called *inverting the hash*.
+hash back to its pre-image is called <i>inverting the hash</i>.</p>
 
 <div id="easyImpossibleCodeblock" class="codeblock">easy:       pre-image -> SHA256 -> hash
 
 impossible: pre-image <- SHA256 <- hash
 </div>
 
-If we start with a pre-image and then hash it, then of course we already know
+<p>If we start with a pre-image and then hash it, then of course we already know
 what the pre-image for the resulting hash is. For example, if I give you the
-hash `7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9` then you
-already know that a corresponding *SHA256* pre-image is `hello world!`, since we
-already hashed `hello world!` with *SHA256* earlier and it gave this result. But
-if I give you `32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`
-then you will not be able to find the pre-image which results in this hash - i.e.
-you will not be able to invert this hash. Seriously - give it a go:
+hash <code>7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9</code>
+then you already know that a corresponding <i>SHA256</i> pre-image is
+<code>hello world!</code>, since we already hashed <code>hello world!</code>
+with <i>SHA256</i> earlier and it gave this result. But if I give you
+<code>32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</code>
+then you will not be able to find the pre-image which results in this hash -
+i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 
 <div class="form-container" id="form1">
     <a href="#form1"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -201,16 +214,17 @@ status: <span id="matchStatus1"></span></span></div>
     </div>
 </div>
 
-The difficulty of inverting a *SHA256* hash is due its enormous length! *SHA256*
-has approximately 2<sup>256</sup> possible different hash values. That's
+<p>The difficulty of inverting a <i>SHA256</i> hash is due its enormous length!
+<i>SHA256</i> has approximately 2<sup>256</sup> possible different hash values.
+That's
 115792089237316195423570985008687907853269984665640564039457584007913129639936
 different possible hash values. There are about that many atoms in the universe!
 So don't feel bad for not being able to invert
-`32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7`. For all
-intents and purposes, it cannot be inverted. And that is true even when computers
-do the hashing at their maximum speeds. If you click the *Run SHA256 Automatically*
-button below then you can have your device cycle through pre-images and show you
-the results at its maximum possible speed:
+<code>32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</code>.
+For all intents and purposes, it cannot be inverted. And that is true even when
+computers do the hashing at their maximum speeds. If you click the <i>Run SHA256
+Automatically</i> button below then you can have your device cycle through
+pre-images and show you the results at its maximum possible speed:</p>
 
 <div class="form-container" id="form2">
     <a href="#form2"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -244,58 +258,63 @@ status: <span id="matchStatus2"></span></span></div>
     </div>
 </div>
 
-<span id="showHowLongForThisDevice" style="display:none;">Using your device's
+<p><span id="showHowLongForThisDevice" style="display:none;">Using your device's
 average hash rate of <span class="hash2Rate"></span> hashes per second, then we
 can calculate that it is going to take <span id="howLongForThisDeviceWords"></span>
 to try enough combinations to invert this hash and find the solution. That's
-<span id="howLongForThisDeviceNumber"></span>.</span>
+<span id="howLongForThisDeviceNumber"></span>.</span></p>
 
-When it comes to hashing, <span class="hash2Rate">30</span> hashes per second is
-actually not quick at all by computer standards. Specialized computer chips
-called [ASICs](https://en.wikipedia.org/wiki/Application-specific_integrated_circuit)
+<p>When it comes to hashing, <span class="hash2Rate">30</span> hashes per second
+is actually not quick at all by computer standards. Specialized computer chips
+called
+<a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit">ASICs</a>
 are built to run billions of hashes per second. At the time I'm writing this
-(March 2018) the total global *SHA256* hashpower is 25,000,000,000,000,000,000
-hashes per second, i.e. 25 million million million hashes per second, but even
-at this rate it would take 146 million million million million million million
-million million years to try enough different pre-images to invert a *SHA256*
-hash. That's about a million million million years quicker than your device, but
-it doesn't really matter - by the time it comes around, our sun will have long
-since burned out.
+(March 2018) the total global <i>SHA256</i> hashpower is
+25,000,000,000,000,000,000 hashes per second, i.e. 25 million million million
+hashes per second, but even at this rate it would take 146 million million
+million million million million million million years to try enough different
+pre-images to invert a <i>SHA256</i> hash. That's about a million million
+million years quicker than your device, but it doesn't really matter - by the
+time it comes around, our sun will have long since burned out.</p>
 
-"Ok", you might think to yourself, "but maybe I don't need to try millions and
-millions of pre-images to produce the hash I'm after - maybe I can just skip
+<p>"Ok", you might think to yourself, "but maybe I don't need to try millions
+and millions of pre-images to produce the hash I'm after - maybe I can just skip
 ahead ... If the pre-image I start with does not give a hash that is close to
 what I want, then I will just choose a pre-image further along that gives a hash
 closer to what I want, and then make minor adjustments until I zero in on the
 hash." But alas, this is not how cryptographic hashing works - Property 4 tells
 us that hashes are both deterministic and random. They are deterministic because
 a pre-image will always hash to the same value, but that value is random, so
-there can be no process of zeroing in. Trying a pre-image that is "further along"
-is no better than trying any other different pre-image - they all completely
-modify the resulting hash.
+there can be no process of zeroing in. Trying a pre-image that is "further
+along" is no better than trying any other different pre-image - they all
+completely modify the resulting hash.</p>
 
-Now that we have discussed the properties of cryptographic hashing, we can
-investigate how it is used in a technique known as *proof of work*, also known
-as *mining*. *Proof of work*, as the name implies, is a way for one computer to
-prove to another computer that it has completed a certain amount of work. Let's
-call the computer doing the work the *miner*, and the other computer the
-*examiner*. The examiner sets a test for the miner to pass by giving it 3 things:
+<p>Now that we have discussed the properties of cryptographic hashing, we can
+investigate how it is used in a technique known as <i>proof of work</i>, also
+known as <i>mining</i>. <i>Proof of work</i>, as the name implies, is a way for
+one computer to prove to another computer that it has completed a certain amount
+of work. Let's call the computer doing the work the <i>miner</i>, and the other
+computer the <i>examiner</i>. The examiner sets a test for the miner to pass by
+giving it 3 things:</p>
 
-- part of a pre-image
-- a hash value that must be matched (called the target)
-- the difficulty level of the test
+<ul>
+    <li>part of a pre-image</li>
+    <li>a hash value that must be matched (called the target)</li>
+    <li>the difficulty level of the test</li>
+</ul>
 
-The test works like this: the miner takes the part of the pre-image it has been
-given and appends a bunch of random data (called a
-[nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce)) to the end of it. It
-then hashes the whole thing and checks if it matches the target given by the
-examiner. However, it does not need to match the entire target hash (that would
-take millions of years); rather, it just needs to match part of the target hash,
-as specified by the difficulty level.
+<p>The test works like this: the miner takes the part of the pre-image it has
+been given and appends a bunch of random data (called a
+<a href="https://en.wikipedia.org/wiki/Cryptographic_nonce">nonce</a>) to the
+end of it. It then hashes the whole thing and checks if it matches the target
+given by the examiner. However, it does not need to match the entire target hash
+(that would take millions of years); rather, it just needs to match part of the
+target hash, as specified by the difficulty level.</p>
 
-That all sounds very complicated, but don't worry, it will be much clearer after
-you give it a go. Click the *Mine with SHA256* button and look carefully at what
-this does. Once you find the solution, try changing the difficulty:
+<p>That all sounds very complicated, but don't worry, it will be much clearer
+after you give it a go. Click the <i>Mine with SHA256</i> button and look
+carefully at what this does. Once you find the solution, try changing the
+difficulty:</p>
 
 <a name="form3"></a>
 <div class="form-container" id="form3">
@@ -336,26 +355,28 @@ status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></spa
     </div>
 </div>
 
-In that scenario, your device was the miner. When you passed the test, you would
-give the nonce back to the examiner and it could verify that you did indeed pass
-by running the hash for itself. It would have taken your device a lot of attempts
-at hashing to pass the test (i.e. a lot of work), but it only takes the examiner
-a single hash to know whether you passed or failed. This means that your device
-is doing all the work and the examiner barely does any at all.
+<p>In that scenario, your device was the miner. When you passed the test, you
+would give the nonce back to the examiner and it could verify that you did
+indeed pass by running the hash for itself. It would have taken your device a
+lot of attempts at hashing to pass the test (i.e. a lot of work), but it only
+takes the examiner a single hash to know whether you passed or failed. This
+means that your device is doing all the work and the examiner barely does any at
+all.</p>
 
-As you would have noticed, the higher the difficulty, the more attempts it will
-take on average to pass the test. From the results, you can also see that there
-is a degree of luck involved in mining - sometimes it takes fewer attempts than
-expected and sometimes it takes more. This is because hashing is a random process.
+<p>As you would have noticed, the higher the difficulty, the more attempts it
+will take on average to pass the test. From the results, you can also see that
+there is a degree of luck involved in mining - sometimes it takes fewer attempts
+than expected and sometimes it takes more. This is because hashing is a random
+process.</p>
 
-Another thing to note is that the examiner can set the target value without
+<p>Another thing to note is that the examiner can set the target value without
 having to hash a pre-image to get it. The examiner does not need to know the
 answer to the test before it sets the test for the miner. In this way, mining is
 different from a normal school exam. All that matters is that the examiner can
-verify the test once the miner submits the nonce as a solution.
+verify the test once the miner submits the nonce as a solution.</p>
 
-You may be wondering why the examiner must supply part of the pre-image to the
-miner. Why not just let the miner determine the entire pre-image itself? The
+<p>You may be wondering why the examiner must supply part of the pre-image to
+the miner. Why not just let the miner determine the entire pre-image itself? The
 answer is that this is necessary to ensure that the miner always has to do work
 (i.e. do lots of hashing) to find a solution to the puzzle. If the miner was
 allowed to determine the entire pre-image itself, then once it had found a
@@ -363,44 +384,54 @@ solution for a given difficulty, it could simply re-use that solution over and
 over and thus avoid doing any work. To ensure that the miner always does work
 every time the examiner gives the miner a test, the examiner generates a new
 pre-image prefix as part of every test. This way, the miner has to find a new
-nonce for every test, even if the difficulty does not change.
+nonce for every test, even if the difficulty does not change.</p>
 
-The final thing to understand from this section, before we move on to Bitcoin
+<p>The final thing to understand from this section, before we move on to Bitcoin
 mining, is that the test we have done here - matching a specified number of
 characters at the left-hand-side of the target - is just one of many possible
 types of proof-of-work test. The only criteria for a good proof-of-work test is
 that the examiner must be able to fine-tune the number of attempts it takes the
-miner to pass. Here are some examples of other proof-of-work tests:
+miner to pass. Here are some examples of other proof-of-work tests:</p>
 
-- matching a specified number of characters at the right-hand-side of the target
-- matching a specified number of characters anywhere within the target
-- treating both the target and the mined hash as (hexadecimal) numbers, setting
-the target to some large number, and requiring the miner to find a hash lower
-than the target
+<ul>
+    <li>matching a specified number of characters at the right-hand-side of the
+target</li>
+    <li>matching a specified number of characters anywhere within the
+target</li>
+    <li>treating both the target and the mined hash as (hexadecimal) numbers,
+setting the target to some large number, and requiring the miner to find a hash
+lower than the target</li>
+</ul>
 
-That last type of proof-of-work test is the one used in Bitcoin mining and is
-explained in detail in the following section.
+<p>That last type of proof-of-work test is the one used in Bitcoin mining and is
+explained in detail in the following section.</p>
 
-{% with h=2,t="bitcoin mining" %}{% include 'h.html' %}{% endwith %}
+{% with h=2,t="bitcoin mining" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-Now that we have explored hashing and mining in general, we can apply this
-knowledge to Bitcoin mining.
+<p>Now that we have explored hashing and mining in general, we can apply this
+knowledge to Bitcoin mining.</p>
 
-> Bitcoin mining involves computers competing to find the nonce part of the
+<blockquote><p>
+Bitcoin mining involves computers competing to find the nonce part of the
 pre-image for the hash of the next block in the Bitcoin blockchain. The winner
 receives bitcoins as a reward.
+</p></blockquote>
 
-That explanation contains a couple of new concepts, and once you understand them
-then the process will make perfect sense:
+<p>That explanation contains a couple of new concepts, and once you understand
+them then the process will make perfect sense:</p>
 
-- a Bitcoin block
-- the Bitcoin blockchain
+<ul>
+    <li>a Bitcoin block</li>
+    <li>the Bitcoin blockchain</li>
+</ul>
 
-When someone sends some bitcoins to someone else, they begin by opening their
+<p>When someone sends some bitcoins to someone else, they begin by opening their
 Bitcoin wallet (which is a program, app or website running on their device), and
 then typing in the address of the recipient and the amount of bitcoin they want
 to send to them. The Bitcoin wallet uses this information to construct a
-transaction. Here is a real Bitcoin transaction taken from the blockchain:
+transaction. Here is a real Bitcoin transaction taken from the blockchain:</p>
 
 <div class="media-container"><div class="media-positioner">
     <div class="btc-transaction-full">
@@ -409,21 +440,21 @@ transaction. Here is a real Bitcoin transaction taken from the blockchain:
     <div class="media-caption">example Bitcoin transaction</div>
 </div></div>
 
-For the purposes of this article, the details of this transaction are not
+<p>For the purposes of this article, the details of this transaction are not
 important, but if you are curious you can view all of its information
-[here](https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082).
+<a href="https://blockchain.info/tx/b1fea52486ce0c62bb442b530a3f0132b826c74e473d1f2c220bfa78111c5082">here</a>.
 However, the only thing you really need to understand at this point is that a
-Bitcoin transaction is just a string of characters.
+Bitcoin transaction is just a string of characters.</p>
 
-Once the wallet software has created the transaction, it sends it out over the
-internet to all the other Bitcoin nodes it can find (a Bitcoin node is just a
-device running the Bitcoin software). You might have expected the transaction to
-be sent only to the person who is receiving the bitcoins, but that is not the
+<p>Once the wallet software has created the transaction, it sends it out over
+the internet to all the other Bitcoin nodes it can find (a Bitcoin node is just
+a device running the Bitcoin software). You might have expected the transaction
+to be sent only to the person who is receiving the bitcoins, but that is not the
 case. In fact, that person does not even have to have their wallet software
-running for the transaction to be processed.
+running for the transaction to be processed.</p>
 
-Some of the Bitcoin nodes which receive the transaction are Bitcoin miners.
-These miners gather the transactions they receive and put them into a block:
+<p>Some of the Bitcoin nodes which receive the transaction are Bitcoin miners.
+These miners gather the transactions they receive and put them into a block:</p>
 
 <div class="media-container"><div class="media-positioner">
     <table>
@@ -435,12 +466,13 @@ These miners gather the transactions they receive and put them into a block:
     <div class="media-caption">a Bitcoin block</div>
 </div></div>
 
-A Bitcoin block consists of a header, followed by a list of transactions. The
+<p>A Bitcoin block consists of a header, followed by a list of transactions. The
 block shown here only has 3 transactions, but blocks containing thousands of
-transactions are most common.
+transactions are most common.</p>
 
-Just as Bitcoin transactions are a string of characters, so is the block header.
-The header contains all the data needed to uniquely identify the block:
+<p>Just as Bitcoin transactions are a string of characters, so is the block
+header. The header contains all the data needed to uniquely identify the block:
+</p>
 
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
@@ -453,15 +485,16 @@ The header contains all the data needed to uniquely identify the block:
     </table>
     <div class="media-caption">the Bitcoin block header</div>
 </div></div>
-Lets look at each of these fields within the block header:
 
-The *version* is just a number indicating the current version of the [Bitcoin
-protocol](https://en.bitcoin.it/wiki/Protocol_rules) (i.e. the rules governing
-Bitcoin behaviour).
+<p>Lets look at each of these fields within the block header:</p>
 
-The *previous block hash* is where the *blockchain* concept comes in - the
-current block references the previous block so that blocks build upon each other
-over time, like so:
+<p>The <i>version</i> is just a number indicating the current version of the
+<a href="https://en.bitcoin.it/wiki/Protocol_rules">Bitcoin protocol</a> (i.e.
+the rules governing Bitcoin behaviour).</p>
+
+<p>The <i>previous block hash</i> is where the <i>blockchain</i> concept comes
+in - the current block references the previous block so that blocks build upon
+each other over time, like so:</p>
 
 <div id="dragableBlockchain" class="form-container">
     <a href="#dragableBlockchain"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -469,40 +502,45 @@ over time, like so:
 </div>
 <div class="media-caption">the Bitcoin blockchain</div>
 
-Looking at that diagram, we can see that the *previous block hash* value in the
-current block is found by doing a *SHA265* hash twice in succession on all the
-data in the previous block header. For example, the *previous block hash* for
-block 1 would be found by hashing the entire block 0 header twice. As we saw in
-the hashing section earlier, doing two *SHA256* hashes will only take a computer
-a fraction of a second to complete.
+<p>Looking at that diagram, we can see that the <i>previous block hash</i> value
+in the current block is found by doing a <i>SHA265</i> hash twice in succession
+on all the data in the previous block header. For example, the <i>previous block
+hash</i> for block 1 would be found by hashing the entire block 0 header twice.
+As we saw in the <a href="#heading_cryptographic_hashing">hashing section</a>
+earlier, doing two <i>SHA256</i> hashes will only take a computer a fraction of
+a second to complete.</p>
 
-The *merkle root* is loosely defined as a hash of all transactions contained
-within the block. The transaction data is the pre-image and the *merkle root* is
-the hash. This is another useful feature of cryptographic hashing - a very small
-amount of data can be used to summarise a large amount of data. The transactions
-in a block generally take up over 1MB, but the merkle root is only 32 bytes (64
-hexadecimal digits).
+<p>The <i>merkle root</i> is loosely defined as a hash of all transactions
+contained within the block. The transaction data is the pre-image and the
+<i>merkle root</i> is the hash. This is another useful feature of cryptographic
+hashing - a very small amount of data can be used to summarise a large amount of
+data. The transactions in a block generally take up over 1MB, but the merkle
+root is only 32 bytes (64 hexadecimal digits).</p>
 
-The *timestamp* is the current date and time of the block.
+<p>The <i>timestamp</i> is the current date and time of the block.</p>
 
-*Bits* is a field which denotes the current mining difficulty. It is a
+<p><i>Bits</i> is a field which denotes the current mining difficulty. It is a
 description of how many attempts, on average, a miner will need to make to find
-a solution to the test. As mentioned at the end of the previous section on
-hashing, the test in Bitcoin mining involves finding a hash that is lower than a
-given target. The *bits* value in the block header specifies what that target
+a solution to the test. As mentioned at the end of the
+<a href="#heading_cryptographic_hashing">previous section on hashing</a>, the
+test in Bitcoin mining involves finding a hash that is lower than a given
+target. The <i>bits</i> value in the block header specifies what that target
 value is. The way this works is quite technical and is not necessary to
 understand Bitcoin mining; however, if you are curious, I have included full
-details [in the annex](#annexSectionBits). The basic principle, however, is
-simple - increasing the difficulty lowers the target value so that miners will
-have to do more hashing attempts, and decreasing the difficulty raises the
-target value so that miners will have to do fewer hashing attempts.
+details <a href="#heading_bits_difficulty_target">in the annex</a>. The basic
+principle, however, is simple - increasing the difficulty lowers the target
+value so that miners will have to do more hashing attempts, and decreasing the
+difficulty raises the target value so that miners will have to do fewer hashing
+attempts.</p>
 
-Finally the *nonce* is something we have already discussed in the section on
-hashing. The only difference here is that with Bitcoin the nonce is an integer.
+<p>Finally the <i>nonce</i> is something we have already discussed in the
+<a href="#heading_cryptographic_hashing">section on hashing</a>. The only
+difference here is that with Bitcoin the nonce is an integer.</p>
 
-OK, lets dive into a practical simulation of Bitcoin mining to see how all this
-works. Click the *Mine manually with SHA256* button a few times and have a look
-at what this does, both to the results area and to the nonce in the block header:
+<p>OK, lets dive into a practical simulation of Bitcoin mining to see how all
+this works. Click the <i>Mine manually with SHA256</i> button a few times and
+have a look at what this does, both to the results area and to the nonce in the
+block header:</p>
 
 <div class="form-container" id="form4">
 <a href="#form4"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -551,51 +589,53 @@ status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
 </div>
 </div>
 
-The data in the simulation block header is actually that of the very first
+<p>The data in the simulation block header is actually that of the very first
 bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
-on 3rd January 2009.
+on 3rd January 2009.</p>
 
-As you can see, each mining attempt increments the nonce by 1. To find the block
-hash, all of the data in the block header shown here is hashed with *SHA256*
-twice. I.e. it is all put together in one big string of characters and then
-hashed once with *SHA256*, and then that result is hashed with *SHA256* again.
-There is a walkthrough of this process in the following annex section; however,
-the details are really not important in order to get a high-level understanding
-of how Bitcoin mining works.
+<p>As you can see, each mining attempt increments the nonce by 1. To find the
+block hash, all of the data in the block header shown here is hashed with
+<i>SHA256</i> twice. I.e. it is all put together in one big string of characters
+and then hashed once with <i>SHA256</i>, and then that result is hashed with
+<i>SHA256</i> again. There is a walkthrough of this process in the
+<a href="#heading_annex">annex</a>; however, the details are really not
+important in order to get a high-level understanding of how Bitcoin mining
+works.</p>
 
-The biggest apparent difference between this mining example and the one in the
-previous section on hashing is that the test here involves comparing two
-hexadecimal numbers, whereas previously the test involved matching a certain
-number of digits from the left-hand-side. However, there is actually a lot of
-similarity between these two types of test. Let's forget about hexadecimal
-numbers for a moment and just look at some unrelated decimal numbers:
+<p>The biggest apparent difference between this mining example and the one in
+the <a href="#heading_cryptographic_hashing">previous section on hashing</a> is
+that the test here involves comparing two hexadecimal numbers, whereas
+previously the test involved matching a certain number of digits from the
+left-hand-side. However, there is actually a lot of similarity between these two
+types of test. Let's forget about hexadecimal numbers for a moment and just look
+at some unrelated decimal numbers:</p>
 
 <div class="codeblock">1000000000000
       1000000
 </div>
 
-It is obvious that the first number is bigger than the second number. The first
-one is longer, so clearly it must be bigger. But how about if we zero-pad them
-(i.e. put zeros before the left-most digit) so that they are the same length?
-They are still the same numbers, but now they are the same length:
+<p>It is obvious that the first number is bigger than the second number. The
+first one is longer, so clearly it must be bigger. But how about if we zero-pad
+them i.e. put zeros before the left-most digit) so that they are the same
+length? They are still the same numbers, but now they are the same length:</p>
 
 <div class="codeblock">1000000000000
 0000001000000
 </div>
 
-How can we tell which is bigger? The easiest way is to begin at the
-left-hand-side of the number and compare each digit:
+<p>How can we tell which is bigger? The easiest way is to begin at the
+left-hand-side of the number and compare each digit:</p>
 
 <div class="codeblock"><span class="individual-digit">1</span>000000000000
 <span class="individual-digit">0</span>000001000000
 </div>
 
-Because `1` is greater than `0` then we know that the first number must be a
-bigger number.
+<p>Because <code>1</code> is greater than <code>0</code> then we know that the
+first number must be a bigger number.</p>
 
-OK, now what if we zero-pad them both to 64 digits? Again they are exactly the
-same numbers as before, and they are the same length, but now they have lots of
-leading zeros:
+<p>OK, now what if we zero-pad them both to 64 digits? Again they are exactly
+the same numbers as before, and they are the same length, but now they have lots
+of leading zeros:</p>
 
 <div class="codeblock-container auto-wrap-on-mobile">
     <div class="button-background">
@@ -608,9 +648,9 @@ leading zeros:
 0000000000000000000000000000000000000000000000000000000001000000</div>
 </div>
 
-The way to tell which is larger is again to begin at the left-hand-side and keep
-moving to the right until we find a digit that is different. Then the digit that
-is higher belongs to the bigger number:
+<p>The way to tell which is larger is again to begin at the left-hand-side and
+keep moving to the right until we find a digit that is different. Then the digit
+that is higher belongs to the bigger number:</p>
 
 <div class="codeblock-container auto-wrap-on-mobile">
     <div class="button-background">
@@ -623,42 +663,47 @@ is higher belongs to the bigger number:
 <span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000</div>
 </div>
 
-That's the technique for decimal numbers, and it is exactly the same for
-hexadecimal numbers. The only difference is that decimal numbers go from `0` to
-`9` whereas hexadecimal numbers go from `0` to `f`, as you will recall from the
-start of this article. If you now go back and mine a few more times in the
-previous simulation then the results should make a lot more sense.
+<p>That's the technique for decimal numbers, and it is exactly the same for
+hexadecimal numbers. The only difference is that decimal numbers go from
+<code>0</code> to <code>9</code> whereas hexadecimal numbers go from
+<code>0</code> to <code>f</code>, as you will recall from the start of this
+article. If you now go back and mine a few more times in the previous simulation
+then the results should make a lot more sense.</p>
 
-So finally we arrive at the end of this article on Bitcoin mining. You now know
-all about hashing and how hashing is used in Bitcoin mining. There is a bit more
-information in the annex to fill in some small gaps, however, everything already
-covered above is certainly enough to understand what Bitcoin mining is and to
-get a feel for the amount of effort that it requires even for the fastest
-computers on the planet.
+<p>So finally we arrive at the end of this article on Bitcoin mining. You now
+know all about hashing and how hashing is used in Bitcoin mining. There is a bit
+more information in the <a href="#heading_annex">annex</a> to fill in some small
+gaps, however, everything already covered above is certainly enough to
+understand what Bitcoin mining is and to get a feel for the amount of effort
+that it requires even for the fastest computers on the planet.</p>
 
-All that remains now is to mine a block. We can cheat at this because the above
-block was already mined by Satoshi Nakomoto. If we [inspect the blockchain](
-http://blockchain.info/block-height/0) we can see that the correct nonce is
-2,083,236,893. <a id="makeBlockPass4">Click here</a> to copy the nonce back into
-the previous mining simulation and then click the *Mine manually with SHA256*
-button to see what happens.
+<p>All that remains now is to mine a block. We can cheat at this because the
+above block was already mined by Satoshi Nakomoto. If we
+<a href="http://blockchain.info/block-height/0">inspect the blockchain</a> we
+can see that the correct nonce is 2,083,236,893. <a id="makeBlockPass4">Click
+here</a> to copy the nonce back into the previous mining simulation and then
+click the <i>Mine manually with SHA256</i> button to see what happens.</p>
 
-{% with h=2,t="annex" %}{% include 'h.html' %}{% endwith %}
+{% with h=2,t="annex" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-This section goes into all the detail skipped above. It is really just intended
-for those (such as myself) who like to leave no stone unturned. One thing that
-was not previously explained in detail was how the Bitcoin block hashes are
-derived from the block header. The block header is stored as bytes in the
-Bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
+<p>This section goes into all the detail skipped above. It is really just
+intended for those (such as myself) who like to leave no stone unturned. One
+thing that was not previously explained in detail was how the Bitcoin block
+hashes are derived from the block header. The block header is stored as bytes in
+the Bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
 field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
-used by Bitcoin.
+used by Bitcoin.</p>
 
-{% with h=3,t="version" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="version" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-The *version* is stored in the blockchain as 4 bytes. Try altering the
-human-readable *version* value to see how this changes the value stored in the
-blockchain:
+<p>The <i>version</i> is stored in the blockchain as 4 bytes. Try altering the
+human-readable <i>version</i> value to see how this changes the value stored in
+the blockchain:</p>
 
 <div class="form-container annex" id="form5">
     <a href="#form5"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -678,15 +723,18 @@ convert to little endian: <span class="aligner">       </span><span id="version5
     </div>
 </div>
 
-Note that *converting to [little endian](https://en.wikipedia.org/wiki/Endianness)
-format* simply means reversing the bytes.
+<p>Note that <i>converting to
+<a href="https://en.wikipedia.org/wiki/Endianness">little endian</a> format</i>
+simply means reversing the bytes.</p>
 
-{% with h=3,t="timestamp" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="timestamp" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-The *timestamp* is also stored in the blockchain as 4 bytes. This currently
-imposes some restrictions on the permissible date range. Try altering the
-human-readable *timestamp* value to see how this changes the value stored in the
-blockchain:
+<p>The <i>timestamp</i> is also stored in the blockchain as 4 bytes. This
+currently imposes some restrictions on the permissible date range. Try altering
+the human-readable <i>timestamp</i> value to see how this changes the value
+stored in the blockchain:</p>
 
 <div class="form-container annex" id="form6">
     <a href="#form6"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -707,36 +755,41 @@ convert to little endian: <span class="aligner">                    </span><span
     </div>
 </div>
 
-<span id="annexSectionBits"></span>
-{% with h=3,t="bits / difficulty / target" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="bits / difficulty / target" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-*Bits*, *difficulty* and *target* are three different ways of expressing the
-same thing - namely the amount of work involved in mining. *Bits* is a compact
-format used in the block header. It only uses 4 bytes, which saves a lot of
-space compared to the 32 byte *target*. *Difficulty* is the inverse ratio of a
-given *target* to the *target* in the very first Bitcoin block. *Difficulty* in
-the Bitcoin source code is a double precision number, which means that it is
-accurate to 15 significant digits. The Bitcoin source code has functions for
-converting between *bits*, *target* and *difficulty*.
+<p><i>Bits</i>, <i>difficulty</i> and <i>target</i> are three different ways of
+expressing the same thing - namely the amount of work involved in mining.
+<i>Bits</i> is a compact format used in the block header. It only uses 4 bytes,
+which saves a lot of space compared to the 32 byte <i>target</i>.
+<i>Difficulty</i> is the inverse ratio of a given <i>target</i> to the
+<i>target</i> in the very first Bitcoin block. <i>Difficulty</i> in the Bitcoin
+source code is a double precision number, which means that it is accurate to 15
+significant digits. The Bitcoin source code has functions for converting between
+<i>bits</i>, <i>target</i> and <i>difficulty</i>.</p>
 
-*Bits* is a form of
-[floating point notation](https://en.wikipedia.org/wiki/Floating-point_arithmetic).
-The first byte of the *bits* value is the exponent (called the *size* during the
-*bits* -> *target* and *target* -> *bits* conversions, and *shift* during the
-*bits* -> *difficulty* conversion) and the final 3 bytes of the *bits* value are
-the mantissa (called the *word* during the *bits* -> *target* conversion and
-*compact* during the *target* -> *bits* conversion). There is no reason for the
-different naming conventions - the Bitcoin source code is just inconsistent.
-Setting bit `00800000` in the *bits* value makes the target negative.
+<p><i>Bits</i> is a form of
+<a href="https://en.wikipedia.org/wiki/Floating-point_arithmetic">floating point
+notation</a>. The first byte of the <i>bits</i> value is the exponent (called
+the <i>size</i> during the <i>bits</i> -> <i>target</i> and <i>target</i> ->
+<i>bits</i> conversions, and <i>shift</i> during the <i>bits</i> ->
+<i>difficulty</i> conversion) and the final 3 bytes of the <i>bits</i> value are
+the mantissa (called the <i>word</i> during the <i>bits</i> -> <i>target</i>
+conversion and <i>compact</i> during the <i>target</i> -> <i>bits</i>
+conversion). There is no reason for the different naming conventions - the
+Bitcoin source code is just inconsistent. Setting bit <code>00800000</code> in
+the <i>bits</i> value makes the target negative.</p>
 
-As discussed in the previous section on Bitcoin mining, *target* is used as the
-threshold during mining. It is a 32 byte (ie. 256 bit) number.
+<p>As discussed in the <a href="#heading_bitcoin_mining">previous section on
+Bitcoin mining</a>, <i>target</i> is used as the threshold during mining. It is
+a 32 byte (ie. 256 bit) number.</p>
 
-*Difficulty* is a human-readable indication of the amount of work involved in
-mining, relative to the work required to mine the very first Bitcoin block. So
-for example, a *difficulty* of 2 means that it will take twice as much work, on
-average, to mine a block as it took to mine the first block. *Difficulty* is
-calculated as:
+<p><i>Difficulty</i> is a human-readable indication of the amount of work
+involved in mining, relative to the work required to mine the very first Bitcoin
+block. So for example, a <i>difficulty</i> of 2 means that it will take twice as
+much work, on average, to mine a block as it took to mine the first block.
+<i>Difficulty</i> is calculated as:</p>
 
 <div class="horizontal-center">
 <pre>
@@ -744,19 +797,21 @@ difficulty = first_block_target / current_target
 </pre>
 </div>
 
-The first block target was
-`00000000ffff0000000000000000000000000000000000000000000000000000`.
+<p>The first block target was
+<code>00000000ffff0000000000000000000000000000000000000000000000000000</code>.
+</p>
 
-As the *difficulty* increases, the target decreases. This makes sense, since it
-takes more hashpower to mine a block hash below a lower target. According to the
-Bitcoin source code, the *difficulty* can never be negative, so converting a
-negative *bits* value to *difficulty* and back will give a different result to
-the original value.
+<p>As the <i>difficulty</i> increases, the target decreases. This makes sense,
+since it takes more hashpower to mine a block hash below a lower target.
+According to the Bitcoin source code, the <i>difficulty</i> can never be
+negative, so converting a negative <i>bits</i> value to <i>difficulty</i> and
+back will give a different result to the original value.</p>
 
-In the following box you can convert between *bits*, *target* and *difficulty*.
-To perform these calculations I have carefully transcribed the c++ Bitcoin
-source code into Javascript which runs on this page. The textarea explains
-exactly what the original Bitcoin source code does to perform the conversions.
+<p>In the following box you can convert between <i>bits</i>, <i>target</i> and
+<i>difficulty</i>. To perform these calculations I have carefully transcribed
+the c++ Bitcoin source code into Javascript which runs on this page. The
+textarea explains exactly what the original Bitcoin source code does to perform
+the conversions.</p>
 
 <div class="form-container annex" id="form7">
     <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -790,21 +845,23 @@ exactly what the original Bitcoin source code does to perform the conversions.
     </div>
 </div>
 
-The Bitcoin source code
-[has unit tests](https://github.com/bitcoin/bitcoin/tree/master/src/test) for
-the following conversions:
+<p>The Bitcoin source code
+<a href="https://github.com/bitcoin/bitcoin/tree/master/src/test">has unit tests</a>
+for the following conversions:</p>
 
-- *bits* -> *target* -> *bits* - in file [arith_uint256_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/arith_uint256_tests.cpp)
-- *bits* -> *difficulty* - in file [blockchain_tests.cpp](https://github.com/bitcoin/bitcoin/blob/master/src/test/blockchain_tests.cpp)
+<ul>
+    <li><i>bits</i> -> <i>target</i> -> <i>bits</i> - in file <a href="https://github.com/bitcoin/bitcoin/blob/master/src/test/arith_uint256_tests.cpp">arith_uint256_tests.cpp</a></li>
+    <li><i>bits</i> -> <i>difficulty</i> - in file <a href="https://github.com/bitcoin/bitcoin/blob/master/src/test/blockchain_tests.cpp">blockchain_tests.cpp</a></li>
+</ul>
 
-To ensure that the conversions in the previous box are accurate, I have
+<p>To ensure that the conversions in the previous box are accurate, I have
 reproduced those unit tests in Javascript here. Note that numbers in Javascript
 are
-[IEEE 754 double precision](https://en.wikipedia.org/wiki/Double-precision_floating-point_format),
+<a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format">IEEE 754 double precision</a>,
 which means that they are accurate to 15 significant digits. Bitcoin also uses
-double precision for its *difficulty* values, so the results are compatible.
-Please
-<a id="runDifficultyUnitTests">click here</a> to run the unit tests.
+double precision for its <i>difficulty</i> values, so the results are
+compatible. Please <a id="runDifficultyUnitTests">click here</a> to run the unit
+tests.</p>
 
 <div class="form-container annex" id="unitTests7" style="display:none;">
     <div class="codeblock-container auto-wrap-on-mobile">
@@ -818,9 +875,12 @@ Please
     </div>
 </div>
 
-{% with h=3,t="nonce" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="nonce" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-The human readable *nonce* is stored in the blockchain as 4 little endian bytes:
+<p>The human readable <i>nonce</i> is stored in the blockchain as 4 little
+endian bytes:</p>
 
 <div class="form-container annex" id="form8">
     <a href="#form8"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -840,12 +900,14 @@ convert to little endian: <span class="aligner">       </span><span id="nonce8By
     </div>
 </div>
 
-{% with h=3,t="block hashing in detail" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="block hashing in detail" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-Now we can put all this together. In the following form, note how each field in
-the human-readable block header is converted to bytes to be stored in the
+<p>Now we can put all this together. In the following form, note how each field
+in the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
-80 bytes:
+80 bytes:</p>
 
 <div class="form-container" id="form9">
 <a href="#form9"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -894,15 +956,18 @@ convert to little endian: <span class="aligner">          </span><span id="secon
 </div>
 </div>
 
-{% with h=3,t="hashing hex vs ascii" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="hashing hex vs ascii" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-If you are very astute, you would have noticed that copying and pasting this
-block header into the *SHA256* hash forms at the start of this article gives a
-different result to the *SHA256* hashes here. This is because these hashes are
-implemented upon the pre-image as a hexadecimal number, whereas the hashes
-in the first section were implemented for a pre-image expressed in bytes. You
-can see the difference in the following form by ticking and unticking the
-*pre-image is hex* checkbox and observing how the resulting hash changes:
+<p>If you are very astute, you would have noticed that copying and pasting this
+block header into the <i>SHA256</i> hash forms at the start of this article
+gives a different result to the <i>SHA256</i> hashes here. This is because these
+hashes are implemented upon the pre-image as a hexadecimal number, whereas the
+hashes in the <a href="#heading_cryptographic_hashing">first section</a> were
+implemented for a pre-image expressed in bytes. You can see the difference in
+the following form by ticking and unticking the <i>pre-image is hex</i> checkbox
+and observing how the resulting hash changes:</p>
 
 <div class="form-container" id="form10">
     <a href="#form10"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -923,20 +988,22 @@ pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sh
     </div>
 </div>
 
-That covers most of the nitty-gritty detail regarding the process of hashing a
-Bitcoin block.
+<p>That covers most of the nitty-gritty detail regarding the process of hashing
+a Bitcoin block.</p>
 
-{% with h=3,t="mining attempts calculator" %}{% include 'h.html' %}{% endwith %}
+{% with h=3,t="mining attempts calculator" %}
+    {% include 'h.html' %}
+{% endwith %}
 
-The final thing to discuss is the luck involved in mining. As you may have
+<p>The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that
 have come before it. No other block will have the same transactions, the same
 timestamp, the same previous block hash, etc, as the current block. This means
-that miners will need to try lots of nonce values in order to mine a block - i.e.
-they cannot simply guess the nonce value straight away. The more digits that
-must be matched, the more hashing attempts that must be made on average. In fact
-the average number of hashing attempts needed to match a hex digit with a hash
-can be calculated using the following expression:
+that miners will need to try lots of nonce values in order to mine a block -
+i.e. they cannot simply guess the nonce value straight away. The more digits
+that must be matched, the more hashing attempts that must be made on average. In
+fact the average number of hashing attempts needed to match a hex digit with a
+hash can be calculated using the following expression:</p>
 
 <div class="horizontal-center">
 <pre>
@@ -944,8 +1011,8 @@ average attempts = (16<sup>number of hex digits</sup>) / 2
 </pre>
 </div>
 
-I have created a difficulty calculator so you can see the average number of
-hashes that must be made for a given difficulty:
+<p>I have created a difficulty calculator so you can see the average number of
+hashes that must be made for a given difficulty:</p>
 
 <div class="form-container annex" id="form11">
     <a href="#form11"><i class="fa fa-link" aria-hidden="true"></i></a>
@@ -962,13 +1029,13 @@ hashes that must be made for a given difficulty:
     </div>
 </div>
 
-Of course, a miner may be lucky or unlucky. You will have noticed this when you
-tried mining in the [final scenario](#form3) of the *cryptographic hashing*
-section - sometimes you find a valid nonce in many fewer attempts than the
-average, and sometimes in many more. The process is random, just like trying to
-shake a 6 with a dice.
+<p>Of course, a miner may be lucky or unlucky. You will have noticed this when
+you tried mining in the <a href="#form3">final scenario of the <i>cryptographic
+hashing</i> section</a> - sometimes you find a valid nonce in many fewer
+attempts than the average, and sometimes in many more. The process is random,
+just like trying to shake a 6 with a dice.</p>
 
-Interestingly, if 9 or more digits must be matched, then the nonce alone is
+<p>Interestingly, if 9 or more digits must be matched, then the nonce alone is
 not large enough for the average number of attempts that must be made. Matching
 9 characters will require on average 34,359,738,368 double-hash attempts;
 however, the Bitcoin nonce field is only 4 bytes long and so has a maximum value
@@ -978,4 +1045,7 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 0. But what if the miners are so fast that they can hash at more than
 4,294,967,295 hashes per second? In that case they can change some redundant
 data in the first transaction of the block they are currently mining and reset
-the nonce to 0.
+the nonce to 0.</p>
+
+    </body>
+</html>
