@@ -59,15 +59,9 @@ typing different things in the <i>pre-image</i> field and clicking the
     <div class="left">
         <span id="hash0Duration"></span>
     </div>
-    <div class="codeblock-container auto-wrap-on-mobile" style="display:none;">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="hash0Results" class="codeblock"></div>
-    </div>
+    {% with id="hash0Results",hide=True %}
+        {% include 'codeblock.html' %}
+    {% endwith %}
 </div>
 
 <p><i>SHA256</i> stands for <i>Secure Hash Algorithm (256 bits)</i>.
@@ -201,17 +195,13 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
             (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="codeblock1HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+    {% with id="codeblock1HashResults",start=True %}
+        {% include 'codeblock.html' %}
+    {% endwith %}? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
-status: <span id="matchStatus1"></span></span></div>
-    </div>
+status: <span id="matchStatus1"></span></span>{% with end=True%}
+        {% include 'codeblock.html' %}
+    {% endwith %}
 </div>
 
 <p>The difficulty of inverting a <i>SHA256</i> hash is due its enormous length!
