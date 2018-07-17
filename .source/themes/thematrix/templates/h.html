@@ -1,6 +1,8 @@
-<h{{ h }} class="heading-with-link" id="heading_{{ t | cleanstr }}">
-    <a href="#heading_{{ t | cleanstr }}" title="link to this heading">
-        {{ t }}
+{% macro h(heading_type, text) %}
+<h{{ heading_type }} class="heading-with-link" id="heading_{{ text | cleanstr }}">
+    <a href="#heading_{{ text | cleanstr }}" title="link to this heading">
+        {{ text }}
         <i class="fa fa-link fa-rotate-90" aria-hidden="true"></i>
     </a>
-</h{{ h }}>
+</h{{ heading_type }}>
+{% endmacro %}

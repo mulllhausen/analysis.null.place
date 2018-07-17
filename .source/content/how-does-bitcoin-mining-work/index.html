@@ -10,6 +10,8 @@
         <meta name="summary" content="An interactive walkthrough of bitcoin mining. No prior knowledge is necessary." />
     </head>
     <body>
+{% from 'h.html' import h %}
+{% from 'codeblock.html' import codeblock %}
 
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
@@ -35,9 +37,7 @@ this is background material needed to understand Bitcoin mining</li>
 not discussed earlier</li>
 </ul>
 
-{% with h=2,t="cryptographic hashing" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(2, 'cryptographic hashing') }}
 
 <p>To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -59,9 +59,7 @@ typing different things in the <i>pre-image</i> field and clicking the
     <div class="left">
         <span id="hash0Duration"></span>
     </div>
-    {% with id="hash0Results",hide=True %}
-        {% include 'codeblock.html' %}
-    {% endwith %}
+{{ codeblock('hash0Results', hide = True) }}
 </div>
 
 <p><i>SHA256</i> stands for <i>Secure Hash Algorithm (256 bits)</i>.
@@ -195,13 +193,9 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
             (Average hash rate: <span></span> hashes per second)
         </span>
     </div>
-    {% with id="codeblock1HashResults",start=True %}
-        {% include 'codeblock.html' %}
-    {% endwith %}? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+{{ codeblock('codeblock1HashResults', start = True) }}? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
-status: <span id="matchStatus1"></span></span>{% with end=True%}
-        {% include 'codeblock.html' %}
-    {% endwith %}
+status: <span id="matchStatus1"></span></span>{{ codeblock(end = True) }}
 </div>
 
 <p>The difficulty of inverting a <i>SHA256</i> hash is due its enormous length!
@@ -235,17 +229,9 @@ pre-images and show you the results at its maximum possible speed:</p>
         </span>
     </div>
     <br><br>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="codeblock2HashResults" class="codeblock">? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
+{{ codeblock('codeblock2HashResults', start = True) }}? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
-status: <span id="matchStatus2"></span></span></div>
-    </div>
+status: <span id="matchStatus2"></span></span>{{ codeblock(end = True) }}
 </div>
 
 <p><span id="showHowLongForThisDevice" style="display:none;">Using your device's
@@ -332,17 +318,9 @@ difficulty:</p>
         <span id="info3" style="display:none;">(Average hash rate: <span></span> hashes per second)</span>
     </div>
     <br><br>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="codeblock3HashResults" class="codeblock">SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
+{{ codeblock('codeblock3HashResults', start = True) }}SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
 <span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
-status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
-    </div>
+status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span>{{ codeblock(end = True) }}
 </div>
 
 <p>In that scenario, your device was the miner. When you passed the test, you
@@ -396,9 +374,7 @@ lower than the target</li>
 <p>That last type of proof-of-work test is the one used in Bitcoin mining and is
 explained in detail in the following section.</p>
 
-{% with h=2,t="bitcoin mining" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(2, 'bitcoin mining') }}
 
 <p>Now that we have explored hashing and mining in general, we can apply this
 knowledge to Bitcoin mining.</p>
@@ -565,18 +541,10 @@ block header:</p>
 </div></div>
 <ul class="error"></ul>
 <button id="btnRunHash4">Mine manually with SHA256</button>
-<div class="codeblock-container auto-wrap-on-mobile">
-    <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-        </button>
-    </div><br>
-<div class="codeblock">nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
+{{ codeblock('codeblock3HashResults', start = True) }}nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
-status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
-</div>
+status: <span class="aligner">    </span><span id="mineStatus4"></span>{{ codeblock(end = True) }}
 </div>
 
 <p>The data in the simulation block header is actually that of the very first
@@ -627,31 +595,15 @@ first number must be a bigger number.</p>
 the same numbers as before, and they are the same length, but now they have lots
 of leading zeros:</p>
 
-<div class="codeblock-container auto-wrap-on-mobile">
-    <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-        </button>
-    </div><br>
-    <div class="codeblock">0000000000000000000000000000000000000000000000000001000000000000
-0000000000000000000000000000000000000000000000000000000001000000</div>
-</div>
+{{ codeblock(start = True) }}0000000000000000000000000000000000000000000000000001000000000000
+0000000000000000000000000000000000000000000000000000000001000000{{ codeblock(end = True) }}
 
 <p>The way to tell which is larger is again to begin at the left-hand-side and
 keep moving to the right until we find a digit that is different. Then the digit
 that is higher belongs to the bigger number:</p>
 
-<div class="codeblock-container auto-wrap-on-mobile">
-    <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-        </button>
-    </div><br>
-    <div class="codeblock"><span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
-<span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000</div>
-</div>
+{{ codeblock(start = True) }}<span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
+<span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000{{ codeblock(end = True) }}
 
 <p>That's the technique for decimal numbers, and it is exactly the same for
 hexadecimal numbers. The only difference is that decimal numbers go from
@@ -674,9 +626,7 @@ can see that the correct nonce is 2,083,236,893. <a id="makeBlockPass4">Click
 here</a> to copy the nonce back into the previous mining simulation and then
 click the <i>Mine manually with SHA256</i> button to see what happens.</p>
 
-{% with h=2,t="annex" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(2, 'annex') }}
 
 <p>This section goes into all the detail skipped above. It is really just
 intended for those (such as myself) who like to leave no stone unturned. One
@@ -687,9 +637,7 @@ field in the block header were shown in formats which are easy for humans to
 understand; however, conversions must be done to arrive at the storage method
 used by Bitcoin.</p>
 
-{% with h=3,t="version" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'version') }}
 
 <p>The <i>version</i> is stored in the blockchain as 4 bytes. Try altering the
 human-readable <i>version</i> value to see how this changes the value stored in
@@ -700,26 +648,16 @@ the blockchain:</p>
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock">convert to hex: <span class="aligner">                 </span><span id="version5Hex"></span>
+{{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="version5Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5Bytes"></span>
-convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span></div>
-    </div>
+convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span>{{ codeblock(end = True) }}
 </div>
 
 <p>Note that <i>converting to
 <a href="https://en.wikipedia.org/wiki/Endianness">little endian</a> format</i>
 simply means reversing the bytes.</p>
 
-{% with h=3,t="timestamp" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'timestamp') }}
 
 <p>The <i>timestamp</i> is also stored in the blockchain as 4 bytes. This
 currently imposes some restrictions on the permissible date range. Try altering
@@ -731,23 +669,13 @@ stored in the blockchain:</p>
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
     <ul class="error"></ul>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock">timestamp: <span class="aligner">                                   </span><span id="timestamp6GMT"></span>
+{{ codeblock(start = True) }}timestamp: <span class="aligner">                                   </span><span id="timestamp6GMT"></span>
 convert to unixtime (integer): <span class="aligner">               </span><span id="timestamp6Unixtime"></span>
 convert to hex (always 4 bytes - big endian): <span class="aligner"></span><span id="timestamp6Bytes"></span>
-convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span></div>
-    </div>
+convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span>{{ codeblock(end = True) }}
 </div>
 
-{% with h=3,t="bits / difficulty / target" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'bits / difficulty / target') }}
 
 <p><i>Bits</i>, <i>difficulty</i> and <i>target</i> are three different ways of
 expressing the same thing - namely the amount of work involved in mining.
@@ -824,15 +752,7 @@ the conversions.</p>
     </div>
     <ul class="error"></ul>
     <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock"></div>
-    </div>
+{{ codeblock() }}
 </div>
 
 <p>The Bitcoin source code
@@ -854,20 +774,10 @@ compatible. Please <a id="runDifficultyUnitTests">click here</a> to run the unit
 tests.</p>
 
 <div class="form-container annex" id="unitTests7" style="display:none;">
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock"></div>
-    </div>
+{{ codeblock() }}
 </div>
 
-{% with h=3,t="nonce" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'nonce') }}
 
 <p>The human readable <i>nonce</i> is stored in the blockchain as 4 little
 endian bytes:</p>
@@ -877,22 +787,12 @@ endian bytes:</p>
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div class="codeblock">convert to hex: <span class="aligner">                 </span><span id="nonce8Hex"></span>
+{{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="nonce8Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8Bytes"></span>
-convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span></div>
-    </div>
+convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span>{{ codeblock(end = True) }}
 </div>
 
-{% with h=3,t="block hashing in detail" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'block hashing in detail') }}
 
 <p>Now we can put all this together. In the following form, note how each field
 in the human-readable block header is converted to bytes to be stored in the
@@ -931,24 +831,14 @@ blockchain, and how these are concatenated together. The block header is always
     <div class="media-caption">human-readable Bitcoin block header</div>
 </div></div>
 <ul  class="error"></ul>
-<div class="codeblock-container auto-wrap-on-mobile">
-    <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
-            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-        </button>
-    </div><br>
-<div class="codeblock">block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
+{{ codeblock(start = True) }}block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
 block header -> SHA256 -> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
-convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span></div>
-</div>
+convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span>{{ codeblock(end = True) }}
 </div>
 
-{% with h=3,t="hashing hex vs ascii" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'hashing hex vs ascii') }}
 
 <p>If you are very astute, you would have noticed that copying and pasting this
 block header into the <i>SHA256</i> hash forms at the start of this article
@@ -966,24 +856,14 @@ and observing how the resulting hash changes:</p>
     <br><br>
     <label for="inputMessage10" class="for-textbox">pre-image</label><br>
     <textarea id="inputMessage10">0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c</textarea>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="hash10Results" class="codeblock">pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
-pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
-    </div>
+{{ codeblock('hash10Results', start = True) }}pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
+pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span>{{ codeblock(end = True) }}
 </div>
 
 <p>That covers most of the nitty-gritty detail regarding the process of hashing
 a Bitcoin block.</p>
 
-{% with h=3,t="mining attempts calculator" %}
-    {% include 'h.html' %}
-{% endwith %}
+{{ h(3, 'mining attempts calculator') }}
 
 <p>The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that
@@ -1008,15 +888,7 @@ hashes that must be made for a given difficulty:</p>
     <a href="#form11"><i class="fa fa-link" aria-hidden="true"></i></a>
     <label for="difficulty11" class="for-select">difficulty</label><br>
     <select id="difficulty11"></select>
-    <div class="codeblock-container auto-wrap-on-mobile">
-        <div class="button-background">
-            <button class="wrap-nowrap" wrapped="false">
-                <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
-                <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
-            </button>
-        </div><br>
-        <div id="difficulty11Calculation" class="codeblock"></div>
-    </div>
+{{ codeblock('difficulty11Calculation') }}
 </div>
 
 <p>Of course, a miner may be lucky or unlucky. You will have noticed this when
