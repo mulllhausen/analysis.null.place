@@ -1,0 +1,13 @@
+{% macro codeblock(id = None, hide = False, start = False, end = False) %}
+{% if start or (not start and not end) %}
+<div class="codeblock-container auto-wrap-on-mobile"{% if hide %} style="display:none;"{% endif %}>
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <i class="fa fa-level-down fa-rotate-90" aria-hidden="true"></i>
+            <i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"></i>
+        </button>
+    </div><br>
+    <div{% if id %} id="{{ id }}"{% endif %} class="codeblock">{% endif %}{% if end or (not start and not end) %}</div>
+</div>
+{% endif %}
+{% endmacro %}

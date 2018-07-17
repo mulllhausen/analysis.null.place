@@ -405,6 +405,18 @@ img#logo_img {
 }
 /* end logo stuff */
 
+.heading-with-link {
+    cursor: pointer;
+}
+h1 i.fa-link, h2 i.fa-link, h3 i.fa-link, h4 i.fa-link, h5 i.fa-link,
+h6 i.fa-link {
+    font-size: 85%;
+    visibility: hidden;
+}
+h1:hover i.fa-link, h2:hover i.fa-link, h3:hover i.fa-link, h4:hover i.fa-link,
+h5:hover i.fa-link, h6:hover i.fa-link {
+    visibility: visible;
+}
 h1 i.fa-file-text-o {
     font-size: 85%;
     position: absolute;
