@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="http://null.place/" rel="alternate"></link><link href="http://null.place/feeds/all.atom.xml" rel="self"></link><id>http://null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
-
 &lt;blockquote&gt;&lt;p&gt;
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -31,7 +30,6 @@ not discussed earlier&lt;/li&gt;
         &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
-
 
 &lt;p&gt;To understand Bitcoin mining, it is first necessary to understand what
 cryptographic hashing is and how it works. Rather than bore you with definitions
@@ -411,7 +409,6 @@ explained in detail in the following section.&lt;/p&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
 
-
 &lt;p&gt;Now that we have explored hashing and mining in general, we can apply this
 knowledge to Bitcoin mining.&lt;/p&gt;
 
@@ -696,7 +693,6 @@ click the &lt;i&gt;Mine manually with SHA256&lt;/i&gt; button to see what happen
     &lt;/a&gt;
 &lt;/h2&gt;
 
-
 &lt;p&gt;This section goes into all the detail skipped above. It is really just
 intended for those (such as myself) who like to leave no stone unturned. One
 thing that was not previously explained in detail was how the Bitcoin block
@@ -712,7 +708,6 @@ used by Bitcoin.&lt;/p&gt;
         &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
-
 
 &lt;p&gt;The &lt;i&gt;version&lt;/i&gt; is stored in the blockchain as 4 bytes. Try altering the
 human-readable &lt;i&gt;version&lt;/i&gt; value to see how this changes the value stored in
@@ -748,7 +743,6 @@ simply means reversing the bytes.&lt;/p&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
-
 &lt;p&gt;The &lt;i&gt;timestamp&lt;/i&gt; is also stored in the blockchain as 4 bytes. This
 currently imposes some restrictions on the permissible date range. Try altering
 the human-readable &lt;i&gt;timestamp&lt;/i&gt; value to see how this changes the value
@@ -780,7 +774,6 @@ convert to little endian: &lt;span class="aligner"&gt;                    &lt;/s
         &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
-
 
 &lt;p&gt;&lt;i&gt;Bits&lt;/i&gt;, &lt;i&gt;difficulty&lt;/i&gt; and &lt;i&gt;target&lt;/i&gt; are three different ways of
 expressing the same thing - namely the amount of work involved in mining.
@@ -907,7 +900,6 @@ tests.&lt;/p&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
-
 &lt;p&gt;The human readable &lt;i&gt;nonce&lt;/i&gt; is stored in the blockchain as 4 little
 endian bytes:&lt;/p&gt;
 
@@ -936,7 +928,6 @@ convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;sp
         &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
-
 
 &lt;p&gt;Now we can put all this together. In the following form, note how each field
 in the human-readable block header is converted to bytes to be stored in the
@@ -998,7 +989,6 @@ convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt
     &lt;/a&gt;
 &lt;/h3&gt;
 
-
 &lt;p&gt;If you are very astute, you would have noticed that copying and pasting this
 block header into the &lt;i&gt;SHA256&lt;/i&gt; hash forms at the start of this article
 gives a different result to the &lt;i&gt;SHA256&lt;/i&gt; hashes here. This is because these
@@ -1037,7 +1027,6 @@ a Bitcoin block.&lt;/p&gt;
         &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
-
 
 &lt;p&gt;The final thing to discuss is the luck involved in mining. As you may have
 guessed, each Bitcoin block will contain different data to all the blocks that
@@ -1090,6 +1079,4 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 0. But what if the miners are so fast that they can hash at more than
 4,294,967,295 hashes per second? In that case they can change some redundant
 data in the first transaction of the block they are currently mining and reset
-the nonce to 0.&lt;/p&gt;
-
-    </content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>
+the nonce to 0.&lt;/p&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>
