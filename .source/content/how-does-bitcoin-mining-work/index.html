@@ -1,18 +1,17 @@
 <html>
-    <head>
-        <title>how does bitcoin mining work?</title>
-        <meta name="slug" content="how-does-bitcoin-mining-work" />
-        <meta name="date" content="2018-04-17" />
-        <meta name="category" content="cryptocurrencies" />
-        <meta name="tags" content="bitcoin, mining, proof-of-work" />
-        <meta name="stylesheets" content="btc.css" />
-        <meta name="scripts" content="sjcl.min.js,btc-mining.js" />
-        <meta name="summary" content="An interactive walkthrough of bitcoin mining. No prior knowledge is necessary." />
-    </head>
-    <body>
+<head>
+    <title>how does bitcoin mining work?</title>
+    <meta name="slug" content="how-does-bitcoin-mining-work" />
+    <meta name="date" content="2018-04-17" />
+    <meta name="category" content="cryptocurrencies" />
+    <meta name="tags" content="bitcoin, mining, proof-of-work" />
+    <meta name="stylesheets" content="btc.css" />
+    <meta name="scripts" content="sjcl.min.js,btc-mining.js" />
+    <meta name="summary" content="An interactive walkthrough of bitcoin mining. No prior knowledge is necessary." />
+</head>
+<body>
 {% from 'h.html' import h %}
 {% from 'codeblock.html' import codeblock %}
-
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -908,6 +907,5 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 4,294,967,295 hashes per second? In that case they can change some redundant
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.</p>
-
-    </body>
+</body>
 </html>
