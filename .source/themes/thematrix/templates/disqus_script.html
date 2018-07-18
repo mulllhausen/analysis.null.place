@@ -7,12 +7,16 @@ var disqus_config = function () {
     this.callbacks.onReady = [disqusReady];
     this.callbacks.onNewComment = [disqusCommentUpdated];
 };
-(function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://{{ DISQUS_SITENAME }}.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
+function loadDisqusPlatform() {
+    // this function is called when the disqus button is first clicked
+    document.querySelector('.disqus-comments').style.marginBottom = '50px';
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://{{ DISQUS_SITENAME }}.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+}
 function disqusCommentUpdated(data) {
     // update the comment count. beware the 10 minute delay
     // (stackoverflow.com/q/38586878)
@@ -21,14 +25,24 @@ function disqusCommentUpdated(data) {
     // would not be 100% accurate.
     DISQUSWIDGETS.getCount({ reset: true });
 }
-var disqusHideAlreadyDone = false;
 function disqusReady(data) {
-    // hide disqus platform until the user clicks the icon
-    if (disqusHideAlreadyDone) return;
-    document.querySelector('.disqus-comments').style.display = 'none';
-    disqusHideAlreadyDone = true;
+    document.querySelector('.disqus-comments').style.marginBottom = '0px';
 }
+function disqusUpdateCommentCount() {
+    ajax(
+        'https://{{ DISQUS_SITENAME }}.disqus.com/count-data.js?1=' +
+        encodeURIComponent('{{ article.title }}'),
+        function(response) {
+            try {
+                var matches = response.match(/DISQUSWIDGETS.displayCount\((.*)\)/i);
+                var json = matches[1]; // capture group
+                document.querySelector('.disqus-comment-count').innerHTML = JSON.
+                parse(json).counts[0].comments;
+            } catch (err) {}
+        }
+    );
+}
+disqusUpdateCommentCount(); // init
 </script>
 <script id="dsq-count-scr" src="https://{{ DISQUS_SITENAME }}.disqus.com/count.js" async></script>
-<noscript>Please enable Javascript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 {% endif %}

@@ -623,7 +623,17 @@ blockquote {
     padding: 0 3px;
     border-radius: 20px;
 }
-
+.fb-comments-loader {
+    width: 100%;
+    text-align: center;
+    font-size: 200%;
+    margin: 30px 0;
+    display: none;/*initially hidden*/
+}
+.fb-comments-loader .fa-facebook {
+    left: -1px;
+    font-size: 70%;
+}
 /* end comments section */
 
 .noselect {

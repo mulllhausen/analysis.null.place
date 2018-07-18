@@ -9,27 +9,26 @@ window.fbAsyncInit = function() {
         version: 'v3.0'
     });
     FB.AppEvents.logPageView();
-    FB.Event.subscribe('xfbml.render', facebookRendered);
-    FB.Event.subscribe('comment.create', facebookUpdateCommentCount);
-    FB.Event.subscribe('comment.remove', facebookUpdateCommentCount);
+    FB.Event.subscribe('xfbml.render', fbRendered);
+    FB.Event.subscribe('comment.create', fbUpdateCommentCount);
+    FB.Event.subscribe('comment.remove', fbUpdateCommentCount);
 };
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = 'https://connect.facebook.net/en_US/sdk.js';
-    fjs.parentNode.insertBefore(js, fjs);
-} (document, 'script', 'facebook-jssdk'));
-var facebookHideAlreadyDone = false;
-function facebookRendered(data) {
-    // hide facebook platform until the user clicks the icon
-    if (facebookHideAlreadyDone) return;
-    document.querySelector('.fb-comments').style.display = 'none';
-    facebookHideAlreadyDone = true;
-    facebookUpdateCommentCount();
+function loadFBPlatform() {
+    // this function is called when the fb button is first clicked
+    document.querySelector('.fb-comments-loader').style.display = 'block';
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
 }
-function facebookUpdateCommentCount() {
+function fbRendered(data) {
+    document.querySelector('.fb-comments-loader').style.display = 'none';
+}
+function fbUpdateCommentCount() {
     ajax(
         'https://graph.facebook.com/v2.1/' +
         encodeURIComponent('{{ SITEURL }}/{{ article.url }}') +
@@ -42,5 +41,6 @@ function facebookUpdateCommentCount() {
         }
     );
 }
+fbUpdateCommentCount(); // init
 </script>
 {% endif %}

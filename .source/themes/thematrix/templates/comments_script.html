@@ -1,9 +1,10 @@
 {% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
 <script>
 var commentsPlatforms = [
-    {% if FACEBOOK_APP_ID %}'FB',{% endif %}
-    {% if DISQUS_SITENAME %}'Disqus'{% endif %}
+    {%- if FACEBOOK_APP_ID %}'FB',{% endif -%}
+    {%- if DISQUS_SITENAME %}'Disqus'{% endif -%}
 ];
+var doneLoading = [];
 addEvent(window, 'load', function () {
     foreach(commentsPlatforms, function(i, platformI) {
         addEvent( // 'button' event
@@ -38,6 +39,9 @@ function renderComments(platformI) {
             button.classList.remove('selected');
         }
     });
+    if (inArray(platformI, doneLoading)) return;
+    window['load' + platformI + 'Platform']();
+    doneLoading.push(platformI);
 }
 </script>
 {% endif %}
