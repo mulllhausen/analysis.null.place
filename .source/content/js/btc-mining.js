@@ -33,9 +33,6 @@ addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
 
-    // put newlines in codeblocks
-    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
-
     // form 0 - hashing demo
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
     addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
@@ -188,12 +185,14 @@ addEvent(window, 'load', function () {
     initDifficultyAttempts();
     addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
 
-    switch (deviceType) {
+    // put newlines in codeblocks
+    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
+
+    switch (getDeviceType()) {
         case 'phone':
             toggleAllCodeblockWrapsMobile();
             break;
         case 'tablet':
-            break;
         case 'pc':
             break;
     }
@@ -209,7 +208,12 @@ function initBorderTheDigits() {
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
     var codeblock = btn.closest('.codeblock-container').querySelector('.codeblock');
-    if (btn.getAttribute('wrapped') == 'true') {
+    var makeWrapped = (btn.getAttribute('wrapped') == 'true');
+    fixCodeblockNewlines(codeblock, makeWrapped);
+}
+
+function fixCodeblockNewlines(codeblock, makeWrapped) {
+    if (makeWrapped) {
         codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n').
         replace(/\n/g, '\n\n');
         foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
@@ -223,7 +227,7 @@ function runHashWrapClicked(e) {
     }
     // always one newline except when wrapped on phone
     foreach(codeblock.querySelectorAll('.always-one-newline'), function (i, el) {
-        if (btn.getAttribute('wrapped') == 'true' && deviceType == 'phone') {
+        if (makeWrapped && getDeviceType() == 'phone') {
             el.style.display = 'none';
         } else {
             el.innerHTML = '\n';
@@ -446,7 +450,7 @@ function runHash3Clicked(e, params) {
                     minedStatus + attempts + ' attempt' +
                     plural('s', attempts > 1) +
                     params.attempts['luck' + numChars] +
-                    (deviceType == 'phone' ? '\n\n' : '\n');
+                    (getDeviceType() == 'phone' ? '\n\n' : '\n');
                 }
                 document.getElementById('mining3Statistics').innerHTML =
                 trimRight(statistics);
@@ -1582,7 +1586,7 @@ function target2bits(target, levelOfDetail) {
             right: null
         }, {
             left: 'in the Bitcoin source code this conversion uses function' +
-            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte '+
+            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte' +
             ' followed by 3 \'compact\' bytes',
             right: null
         }].concat(bitsx.steps);
@@ -1884,6 +1888,7 @@ function bits7Changed() {
     renderForm7Codeblock(data.status, difficulty, data.bitsBE, data.bitsDec, target);
 }
 
+var alignedOnce = false;
 function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     var levelOfDetail = 2;
     var n = '<span class="always-one-newline">\n</span>';
@@ -1947,10 +1952,16 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         }
     }
     codeblock.innerHTML = formatCodeblockSteps(steps, 50);
-    alignText(codeblock);
+    var wrapButtonIsOn = (
+        codeblockContainer.querySelector('button.wrap-nowrap').
+        getAttribute('wrapped') == 'true'
+    );
+    fixCodeblockNewlines(codeblock, wrapButtonIsOn);
+    if (wrapButtonIsOn) unalignText(codeblock);
+    else alignText(codeblock);
 }
 
-var aligner = ' <span class="aligner"> </span>';
+var aligner = '<span class="aligner"> </span>';
 function formatCodeblockSteps(steps, leftMaxChars) {
     var p = '<span class="preserve-newline">\n</span>\n';
     var codeblockHTML = '';
@@ -1961,7 +1972,7 @@ function formatCodeblockSteps(steps, leftMaxChars) {
         }
         step.left = wrapCodeblockLeft(step.left, leftMaxChars).trim();
         if (step.right == null) step.right = '';
-        else step.left += ':';
+        else step.left += ': ';
         if (steps.length == (i + 1)) p = ''; // no newline on the end
         codeblockHTML += step.left + aligner + step.right + p;
     });

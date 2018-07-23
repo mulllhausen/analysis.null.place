@@ -108,9 +108,11 @@ pre {
 #form7 .codeblock, #unitTests7 .codeblock {
     max-height: 200px;
 }
-#form7 .codeblock-container .button-background,
-#unitTests7 .codeblock-container .button-background {
-    right: 10px;/*=scrollbar width*/
+@media (min-width: 800px) {/*when x >= 800px*/
+    #form7 .codeblock-container .button-background,
+    #unitTests7 .codeblock-container .button-background {
+        right: 10px;/*=scrollbar width*/
+    }
 }
 #bitsAreHex7Container {
     position: relative;
