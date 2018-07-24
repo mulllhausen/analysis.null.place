@@ -293,11 +293,31 @@ function toggleCodeblockWrap(e) {
     }
 }
 
+// note: this function should only be called when on mobile
 function toggleAllCodeblockWrapsMobile() {
     triggerEvent(
         document.querySelectorAll('.auto-wrap-on-mobile button.wrap-nowrap'),
         'click'
     );
+}
+
+// convert a list like [1,2,3] to something like "1, 2, and 3"
+function englishList(list, joinWord, finalJoinWord) {
+    var english = ''; // init
+    foreach(list, function (i, el) {
+        english += el;
+        switch(i) {
+            case (list.length - 2): // penultimate
+                english += finalJoinWord;
+                break;
+            case (list.length - 1): // last
+                break;
+            default:
+                english += joinWord;
+                break;
+        }
+    });
+    return english;
 }
 
 // events for all pages

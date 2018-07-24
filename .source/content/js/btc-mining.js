@@ -33,6 +33,9 @@ addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
 
+    // put newlines in codeblocks when wrap button is clicked
+    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
+
     // form 0 - hashing demo
     addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
     addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
@@ -184,9 +187,6 @@ addEvent(window, 'load', function () {
     initDifficultyLevelDropdown(11);
     initDifficultyAttempts();
     addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
-
-    // put newlines in codeblocks
-    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
 
     switch (getDeviceType()) {
         case 'phone':
@@ -2003,10 +2003,10 @@ function runDifficultyUnitTests() {
     ajax('/json/unittest-bits.json', function (json) {
         try {
             var testsData = JSON.parse(json).tests;
-            renderTestResults(testsData);
         } catch (err) {
             codeblockEl.innerHTML = 'failed to fetch unit-test data';
         }
+        renderTestResults(testsData);
     });
     function renderTestResults(testsData) {
         codeblockEl.innerHTML = ''; // init
@@ -2015,49 +2015,57 @@ function runDifficultyUnitTests() {
         var s = '<span class="aligner">'; // start aligner
         var e = '</span>'; // end aligner
         var n = '\n<span class="preserve-newline">\n</span>\n';
+        var failedTests = [];
         foreach(testsData, function (testNum, testData) {
             var targetx = bits2target(testData['original_bits']);
             var bitsx = target2bits(targetx.target);
             var reconvertedBits = bitsx.finalBitsHex;
-            var targetPass = (testData['target'] == targetx.target) ? pass : fail;
+            var targetPass = (testData['target'] == targetx.target);
+            var targetPassText = targetPass ? pass : fail;
             var reconvertedBitsPass =
-            (testData['reconverted_bits'] == reconvertedBits) ? pass : fail;
-            var negativePass = (targetx.isNegative == testData['negative']) ?
-            pass : fail;
-            var overflowPass = (targetx.isOverflow == testData['overflow']) ?
-            pass : fail;
+            (testData['reconverted_bits'] == reconvertedBits);
+            var reconvertedBitsPassText = reconvertedBitsPass ? pass : fail;
+            var negativePass = (targetx.isNegative == testData['negative']);
+            var negativePassText = negativePass ? pass : fail;
+            var overflowPass = (targetx.isOverflow == testData['overflow']);
+            var overflowPassText = overflowPass ? pass : fail;
             var difficultyx = bits2difficulty(testData['original_bits']);
             var difficulty = difficultyx.difficulty;
             var difficultyLower = testData['difficulty_threshold_low'];
             var difficultyUpper = testData['difficulty_threshold_high'];
-            var difficultyPass = pass; // init
+            var difficultyPass = true; // init
             if (
                 (difficultyLower == 'Infinity' && difficulty != Infinity) ||
                 (difficultyUpper == 'Infinity' && difficulty != Infinity) ||
                 (difficulty < difficultyLower) ||
                 (difficulty > difficultyUpper)
-            ) difficultyPass = fail;
+            ) difficultyPass = false;
+            var difficultyPassText = difficultyPass ? pass : fail;
+            var thisTestPass = (
+                targetPass && reconvertedBitsPass && negativePass &&
+                overflowPass && difficultyPass
+            );
+            if (!thisTestPass) failedTests.push(testNum);
 
             var tmp = ((testNum == 0) ? '' : n) + '<u>test ' + testNum +
-            '</u>\n' +
+            '</u>: ' + (thisTestPass ? pass : fail) + '\n' +
             'bits: ' + s + '                         ' + e +
             testData['original_bits'] + '\n' +
 
             'target (expected): ' + s + '            ' + e +
             testData['target'] + '\n' +
 
-            'target (derived): ' + s + '             ' + e + targetx.target + '\n' +
-
-            'target check: ' + s + '                 ' + e + targetPass + '\n' +
-
+            'target (derived): ' + s + '             ' + e + targetx.target +
+            '\n' +
+            'target check: ' + s + '                 ' + e + targetPassText +
+            '\n' +
             'reconverted bits (expected): ' + s + '  ' + e +
             testData['reconverted_bits'] + '\n' +
 
             'reconverted bits (derived): ' + s + '   ' + e + reconvertedBits +
             '\n' +
-
             'reconverted bits check: ' + s + '       ' + e +
-            reconvertedBitsPass + '\n' +
+            reconvertedBitsPassText + '\n' +
 
             'target is negative (expected): ' + s + e +
             (testData['negative'] ? 'yes' : 'no') + '\n' +
@@ -2065,23 +2073,37 @@ function runDifficultyUnitTests() {
             'target is negative (derived): ' + s + ' ' + e +
             (targetx.isNegative ? 'yes' : 'no') + '\n' +
 
-            'target is negative check: ' + s + '     ' + e + negativePass + '\n' +
-
+            'target is negative check: ' + s + '     ' + e + negativePassText +
+            '\n' +
             'target overflowed (expected): ' + s + ' ' + e +
             (targetx.isOverflow ? 'yes' : 'no') + '\n' +
 
             'target overflowed (derived): ' + s + '  ' + e +
             (testData['overflow'] ? 'yes' : 'no') + '\n' +
 
-            'target overflow check: ' + s + '        ' + e + overflowPass + '\n' +
-
-            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower + '\n' +
-            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper + '\n' +
+            'target overflow check: ' + s + '        ' + e + overflowPassText +
+            '\n' +
+            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower +
+            '\n' +
+            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper +
+            '\n' +
             'difficulty (derived): ' + s + '         ' + e + difficulty + '\n' +
-            'difficulty check: ' + s + '             ' + e + difficultyPass;
+            'difficulty check: ' + s + '             ' + e + difficultyPassText;
 
             codeblockEl.innerHTML = (codeblockEl.innerHTML + tmp).trim();
         });
+        document.getElementById('overallStatus7').style.display = 'block';
+        document.getElementById('overallStatusPass7').innerHTML =
+        (failedTests.length == 0) ? pass : fail + ' (due to test' +
+        (failedTests.length > 1 ? 's' : '') + ' ' +
+        englishList(failedTests, ', ', ' and ') + ')';
+        var wrapButtonIsOn = (
+            document.querySelector('#unitTests7 button.wrap-nowrap').
+            getAttribute('wrapped') == 'true'
+        );
+        fixCodeblockNewlines(codeblockEl, wrapButtonIsOn);
+        if (wrapButtonIsOn) unalignText(codeblockEl);
+        else alignText(codeblockEl);
     }
 }
 
