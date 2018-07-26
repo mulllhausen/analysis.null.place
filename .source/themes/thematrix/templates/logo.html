@@ -3,7 +3,7 @@
         <div class="logo-cropper">
             <canvas class="matrix-text-green"></canvas>
             <canvas class="matrix-text-white"></canvas>
-            <img src="{{ SITEURL }}/theme/img/shattered-glass-{{ '2b' if position == 'top' else 'black' }}.png" id="logo_img" alt="website logo">
+            <img src="{{ QS_LINK['/theme/img/shattered-glass-2b.png'] if position == 'top' else QS_LINK['/theme/img/shattered-glass-black.png'] }}" id="logo_img" alt="website logo">
         </div>
         <div class="logo-hide-border-artifacts"></div>
     </div>

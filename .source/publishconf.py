@@ -11,7 +11,7 @@ sys.path.append(os.curdir)
 from pelicanconf import *
 
 SITE_HOSTNAME = 'null.place'
-SITEURL = 'http://' + SITE_HOSTNAME
+SITEURL = 'https://' + SITE_HOSTNAME
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'

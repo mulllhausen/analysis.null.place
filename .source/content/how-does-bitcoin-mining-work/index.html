@@ -145,8 +145,8 @@ that the new hash value appears uncorrelated with the old hash value</li>
 
 <p>Lets investigate these properties:</p>
 
-<p>Properties 1 and 2 are quite obvious - earlier when we hashed <code>hello
-world!</code> with <i>SHA256</i> it always gave
+<p>Properties 1 and 2 are quite obvious - earlier when we hashed
+<code>hello world!</code> with <i>SHA256</i> it always gave
 <code>7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9</code>
 and took <span id="helloWorldHashSpeed">less than 4 milliseconds (depending on
 the speed of your device)</span>, which is fairly quick. However, it must be
@@ -773,6 +773,9 @@ compatible. Please <a id="runDifficultyUnitTests">click here</a> to run the unit
 tests.</p>
 
 <div class="form-container annex" id="unitTests7" style="display:none;">
+    <span id="overallStatus7" style="display:none;">Status of all tests:
+        <span id="overallStatusPass7"></span>
+    </span>
 {{ codeblock() }}
 </div>
 
@@ -819,7 +822,7 @@ blockchain, and how these are concatenated together. The block header is always
             <input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
         </td></tr>
         <tr><td class="btc-header-field">
-            difficulty<br>
+            bits<br>
             <input id="bits9" type="text" class="data-value" size="8" value="1d00ffff">
         </td></tr>
         <tr><td class="btc-header-field">
