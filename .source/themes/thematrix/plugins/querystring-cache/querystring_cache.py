@@ -2,14 +2,14 @@ from pelican import signals
 import os
 import hashlib
 import base64
-import pudb
+#import pudb
 
 def create_static_links(generator):
     """
     get a dict of file urls with hashes in the querystring and add this to the
     context so that it is available within template files
     """
-    pu.db
+    #pu.db
     hashes = {}
     # add all files from the theme's static dir to the dict
     for static_path in generator.settings['THEME_STATIC_PATHS']:
@@ -41,7 +41,7 @@ def create_static_links(generator):
 
 buffer_size = 5 * 1024 * 1024 # read files in chunks of 5MB each
 def get_file_hash(basename):
-    """get the file hash in a memory efficient manner"""
+    """get the file hash in a memory-efficient manner"""
     sha256 = hashlib.sha256()
     with open(basename, 'rb') as f:
         while True:
@@ -52,18 +52,5 @@ def get_file_hash(basename):
 
     return base64.urlsafe_b64encode(sha256.digest()).replace('=', '')
 
-def create_article_links(data_from_pelican):
-    """convert all links"""
-    if not data_from_pelican._content:
-        return
-    #pu.db
-    #article_scripts = data_from_pelican.scripts.split(',')
-    #for script in article_scripts:
-    #    # script eg btc-mining.js
-    #    full_static_path = os.path.join(generator.theme, script)
-        
-
 def register():
-    """plugin registration"""
-    signals.generator_init.connect(create_static_links) # templates
-    signals.content_object_init.connect(create_article_links) # articles
+    signals.generator_init.connect(create_static_links)
