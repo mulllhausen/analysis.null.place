@@ -10,7 +10,7 @@
         <span class="comments-count fb-comment-count">0</span>
         {% endif %}
         {% if DISQUS_SITENAME %}
-        <span class="comment-with disqus"><img src="/theme/img/disqus_logo.png" alt="Disqus"></span>
+        <span class="comment-with disqus"><img src="{{ QS_LINK['/theme/img/disqus_logo.png'] }}" alt="Disqus"></span>
         <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
         {% endif %}
     </div>

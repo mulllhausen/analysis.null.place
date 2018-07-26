@@ -13,7 +13,7 @@
         <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
         <meta property="og:type" content="article"/>
         <meta property="og:url" content="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}"/>
-        <meta property="og:image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+        <meta property="og:image" content="{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}"/>
         <meta property="og:image:width" content="266"/>
         <meta property="og:image:height" content="266"/>
         <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
@@ -24,7 +24,7 @@
         {# le schema.org markup for Google+ #}
         <meta itemprop="name" content="{{ SITENAME }}"/>
         <meta itemprop="description" content="{% block google_title %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-        <meta itemprop="image" content="{{ SITEURL }}/theme/img/shattered-glass-matrix.png"/>
+        <meta itemprop="image" content="{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}"/>
 
         {# le twitter card data # }
         <meta name="twitter:card" content="summary_large_image"/>
@@ -36,11 +36,11 @@
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
         {# le styles #}
-        <link rel="stylesheet" href="{{ SITEURL }}/theme/css/thematrix.css"/>
+        <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
         {% if (article and article.stylesheets) %}
             {% set stylesheets = article.stylesheets.split(',') %}
             {% for stylesheet in stylesheets %}
-        <link rel="stylesheet" href="{{ SITEURL }}/css/{{ stylesheet }}"/>
+        <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
             {% endfor %}
         {% endif %}
 
@@ -56,11 +56,11 @@
         <![endif]-->
 
         {# le fav and touch icons #}
-        <link rel="shortcut icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon"/>
-        <link rel="icon" href="{{ SITEURL }}/theme/img/favicon.ico" type="image/x-icon"/>
-        <link rel="apple-touch-icon" href="{{ SITEURL }}/theme/img/apple-touch-icon.png"/>
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ SITEURL }}/theme/img/apple-touch-icon-72x72.png"/>
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ SITEURL }}/theme/img/apple-touch-icon-114x114.png"/>
+        <link rel="shortcut icon" href="{{ QS_LINK['/theme/img/favicon.ico'] }}" type="image/x-icon"/>
+        <link rel="icon" href="{{ QS_LINK['/theme/img/favicon.ico'] }}" type="image/x-icon"/>
+        <link rel="apple-touch-icon" href="{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}"/>
 
         <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" rel="self" title="{{ SITENAME }} ATOM Feed"/>
         <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" rel="self" title="{{ SITENAME }} RSS Feed"/>
@@ -127,9 +127,9 @@
         </footer>
 
         {# le javascript - at the end of the document so the pages load faster #}
-        <script src="{{ SITEURL }}/theme/js/polyfills.js"></script>
-        <script src="{{ SITEURL }}/theme/js/utils.js"></script>
-        <script src="{{ SITEURL }}/theme/js/matrix-animation.js"></script>
+        <script src="{{ QS_LINK['/theme/js/polyfills.js'] }}"></script>
+        <script src="{{ QS_LINK['/theme/js/utils.js'] }}"></script>
+        <script src="{{ QS_LINK['/theme/js/matrix-animation.js'] }}"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
             var timeout_id_resize_logo;
@@ -145,12 +145,12 @@
         {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
         <script src="https://use.fontawesome.com/95559d6484.js"></script>
 
-        <script src="{{ SITEURL }}/theme/js/autofooter.js"></script>
+        <script src="{{ QS_LINK['/theme/js/autofooter.js'] }}"></script>
 
         {% if (article and article.scripts) %}
             {% set scripts = article.scripts.split(',') %}
             {% for script in scripts %}
-        <script src="{{ SITEURL }}/js/{{ script }}"></script>
+        <script src="{{ QS_LINK['/js/' + script] }}"></script>
             {% endfor %}
         {% endif %}
 
