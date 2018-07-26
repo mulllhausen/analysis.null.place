@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="http://null.place/" rel="alternate"></link><link href="http://null.place/feeds/all.atom.xml" rel="self"></link><id>http://null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="http://null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://null.place/" rel="alternate"></link><link href="https://null.place/feeds/all.atom.xml" rel="self"></link><id>https://null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="https://null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
 &lt;blockquote&gt;&lt;p&gt;
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -147,8 +147,8 @@ that the new hash value appears uncorrelated with the old hash value&lt;/li&gt;
 
 &lt;p&gt;Lets investigate these properties:&lt;/p&gt;
 
-&lt;p&gt;Properties 1 and 2 are quite obvious - earlier when we hashed &lt;code&gt;hello
-world!&lt;/code&gt; with &lt;i&gt;SHA256&lt;/i&gt; it always gave
+&lt;p&gt;Properties 1 and 2 are quite obvious - earlier when we hashed
+&lt;code&gt;hello world!&lt;/code&gt; with &lt;i&gt;SHA256&lt;/i&gt; it always gave
 &lt;code&gt;7509e5bda0c762d2bac7f90d758b5b2263fa01ccbc542ab5e3df163be08e6ca9&lt;/code&gt;
 and took &lt;span id="helloWorldHashSpeed"&gt;less than 4 milliseconds (depending on
 the speed of your device)&lt;/span&gt;, which is fairly quick. However, it must be
@@ -881,6 +881,9 @@ compatible. Please &lt;a id="runDifficultyUnitTests"&gt;click here&lt;/a&gt; to 
 tests.&lt;/p&gt;
 
 &lt;div class="form-container annex" id="unitTests7" style="display:none;"&gt;
+    &lt;span id="overallStatus7" style="display:none;"&gt;Status of all tests:
+        &lt;span id="overallStatusPass7"&gt;&lt;/span&gt;
+    &lt;/span&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
@@ -955,7 +958,7 @@ blockchain, and how these are concatenated together. The block header is always
             &lt;input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
         &lt;/td&gt;&lt;/tr&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;
-            difficulty&lt;br&gt;
+            bits&lt;br&gt;
             &lt;input id="bits9" type="text" class="data-value" size="8" value="1d00ffff"&gt;
         &lt;/td&gt;&lt;/tr&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;

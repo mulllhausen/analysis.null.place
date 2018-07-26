@@ -1,10 +1,10 @@
-// common definitions used on many pages
-
-var deviceType = window.getComputedStyle(
-    document.getElementsByTagName('body')[0], ':before'
-).getPropertyValue('content').replace(/"/g, '');
-
 // common functions used on many pages
+
+function getDeviceType() {
+    return window.getComputedStyle(
+        document.getElementsByTagName('body')[0], ':before'
+    ).getPropertyValue('content').replace(/"/g, '');
+}
 
 function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
@@ -58,8 +58,8 @@ function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
     var typesArr = types.split(',');
-    foreach (elements, function (elI, el) {
-        foreach (typesArr, function (typeI, type) {
+    foreach(elements, function (elI, el) {
+        foreach(typesArr, function (typeI, type) {
             type = type.replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
@@ -75,7 +75,7 @@ function addEvent(element, types, callback) {
 function triggerEvent(element, type) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
-    foreach (elements, function (elI, el) {
+    foreach(elements, function (elI, el) {
         if ('createEvent' in document) {
             var evt = document.createEvent('HTMLEvents');
             evt.initEvent(type, false, true);
@@ -117,7 +117,7 @@ function deleteElement(el) {
 function deleteElements(element) {
     var elements = (isNodeList(element) ? element : [element]);
     if (elements.length == 0) return;
-    foreach (elements, function (i, el) {
+    foreach(elements, function (i, el) {
         deleteElement(el);
     });
 }
@@ -136,7 +136,7 @@ function stringIsFloat(x)  {
 }
 
 function setButtons(enable) {
-    foreach (arguments, function (i, arg) {
+    foreach(arguments, function (i, arg) {
         if (i == 0) return; // continue
         document.getElementById('btn' + arg).disabled = !enable;
     });
@@ -193,6 +193,7 @@ Element.prototype.up = function (num) {
 // per line
 var uniqueTextAligner = '|%|'; // something never used in the codeblock
 function alignText(codeblock) {
+    codeblock.style.whiteSpace = 'pre';
     var lines = codeblock.innerHTML.split('\n');
     if (lines.length == 1) return;
 
@@ -206,7 +207,7 @@ function alignText(codeblock) {
     var biggestIndentPos = 0; // init
     var linesWithoutAlignment = []; // init
     var linesNoHTML = {}; // init (avoid unnecessary dom operations)
-    foreach (lines, function (lineI, line) {
+    foreach(lines, function (lineI, line) {
         if (!inArray(uniqueTextAligner, line)) {
             linesWithoutAlignment.push(lineI);
             return; // continue
@@ -224,7 +225,7 @@ function alignText(codeblock) {
 
     // do the indentation on each line
     var alignerNum = 0;
-    foreach (lines, function (lineI, line) {
+    foreach(lines, function (lineI, line) {
         if (inArray(lineI, linesWithoutAlignment)) return; // continue
         var linePartsForCalc = linesNoHTML[lineI].split(uniqueTextAligner);
         // remove the unique aligner and align the text
@@ -235,6 +236,7 @@ function alignText(codeblock) {
 }
 
 function unalignText(codeblock) {
+    codeblock.style.whiteSpace = 'pre-wrap';
     foreach(codeblock.querySelectorAll('.aligner'), function (i, el) {
         el.innerHTML = '';
     });
@@ -279,13 +281,11 @@ function toggleCodeblockWrap(e) {
     var btn = e.currentTarget;
     var codeblock = btn.parentNode.parentNode.querySelector('.codeblock');
     if (btn.getAttribute('wrapped') == 'true') {
-        codeblock.style.whiteSpace = 'pre';
         btn.querySelector('i.fa-level-down').style.display = 'inline-block';
         btn.querySelector('i.fa-arrows-h').style.display = 'none';
         alignText(codeblock);
         btn.setAttribute('wrapped', 'false');
     } else {
-        codeblock.style.whiteSpace = 'pre-wrap';
         btn.querySelector('i.fa-level-down').style.display = 'none';
         btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
         unalignText(codeblock);
@@ -293,11 +293,31 @@ function toggleCodeblockWrap(e) {
     }
 }
 
+// note: this function should only be called when on mobile
 function toggleAllCodeblockWrapsMobile() {
     triggerEvent(
         document.querySelectorAll('.auto-wrap-on-mobile button.wrap-nowrap'),
         'click'
     );
+}
+
+// convert a list like [1,2,3] to something like "1, 2, and 3"
+function englishList(list, joinWord, finalJoinWord) {
+    var english = ''; // init
+    foreach(list, function (i, el) {
+        english += el;
+        switch(i) {
+            case (list.length - 2): // penultimate
+                english += finalJoinWord;
+                break;
+            case (list.length - 1): // last
+                break;
+            default:
+                english += joinWord;
+                break;
+        }
+    });
+    return english;
 }
 
 // events for all pages

@@ -33,7 +33,7 @@ addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
 
-    // put newlines in codeblocks
+    // put newlines in codeblocks when wrap button is clicked
     addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
 
     // form 0 - hashing demo
@@ -188,12 +188,11 @@ addEvent(window, 'load', function () {
     initDifficultyAttempts();
     addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
 
-    switch (deviceType) {
+    switch (getDeviceType()) {
         case 'phone':
             toggleAllCodeblockWrapsMobile();
             break;
         case 'tablet':
-            break;
         case 'pc':
             break;
     }
@@ -209,7 +208,12 @@ function initBorderTheDigits() {
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
     var codeblock = btn.closest('.codeblock-container').querySelector('.codeblock');
-    if (btn.getAttribute('wrapped') == 'true') {
+    var makeWrapped = (btn.getAttribute('wrapped') == 'true');
+    fixCodeblockNewlines(codeblock, makeWrapped);
+}
+
+function fixCodeblockNewlines(codeblock, makeWrapped) {
+    if (makeWrapped) {
         codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n').
         replace(/\n/g, '\n\n');
         foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
@@ -223,7 +227,7 @@ function runHashWrapClicked(e) {
     }
     // always one newline except when wrapped on phone
     foreach(codeblock.querySelectorAll('.always-one-newline'), function (i, el) {
-        if (btn.getAttribute('wrapped') == 'true' && deviceType == 'phone') {
+        if (makeWrapped && getDeviceType() == 'phone') {
             el.style.display = 'none';
         } else {
             el.innerHTML = '\n';
@@ -446,7 +450,7 @@ function runHash3Clicked(e, params) {
                     minedStatus + attempts + ' attempt' +
                     plural('s', attempts > 1) +
                     params.attempts['luck' + numChars] +
-                    (deviceType == 'phone' ? '\n\n' : '\n');
+                    (getDeviceType() == 'phone' ? '\n\n' : '\n');
                 }
                 document.getElementById('mining3Statistics').innerHTML =
                 trimRight(statistics);
@@ -1582,7 +1586,7 @@ function target2bits(target, levelOfDetail) {
             right: null
         }, {
             left: 'in the Bitcoin source code this conversion uses function' +
-            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte '+
+            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte' +
             ' followed by 3 \'compact\' bytes',
             right: null
         }].concat(bitsx.steps);
@@ -1884,6 +1888,7 @@ function bits7Changed() {
     renderForm7Codeblock(data.status, difficulty, data.bitsBE, data.bitsDec, target);
 }
 
+var alignedOnce = false;
 function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
     var levelOfDetail = 2;
     var n = '<span class="always-one-newline">\n</span>';
@@ -1947,10 +1952,16 @@ function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
         }
     }
     codeblock.innerHTML = formatCodeblockSteps(steps, 50);
-    alignText(codeblock);
+    var wrapButtonIsOn = (
+        codeblockContainer.querySelector('button.wrap-nowrap').
+        getAttribute('wrapped') == 'true'
+    );
+    fixCodeblockNewlines(codeblock, wrapButtonIsOn);
+    if (wrapButtonIsOn) unalignText(codeblock);
+    else alignText(codeblock);
 }
 
-var aligner = ' <span class="aligner"> </span>';
+var aligner = '<span class="aligner"> </span>';
 function formatCodeblockSteps(steps, leftMaxChars) {
     var p = '<span class="preserve-newline">\n</span>\n';
     var codeblockHTML = '';
@@ -1961,7 +1972,7 @@ function formatCodeblockSteps(steps, leftMaxChars) {
         }
         step.left = wrapCodeblockLeft(step.left, leftMaxChars).trim();
         if (step.right == null) step.right = '';
-        else step.left += ':';
+        else step.left += ': ';
         if (steps.length == (i + 1)) p = ''; // no newline on the end
         codeblockHTML += step.left + aligner + step.right + p;
     });
@@ -1992,10 +2003,10 @@ function runDifficultyUnitTests() {
     ajax('/json/unittest-bits.json', function (json) {
         try {
             var testsData = JSON.parse(json).tests;
-            renderTestResults(testsData);
         } catch (err) {
             codeblockEl.innerHTML = 'failed to fetch unit-test data';
         }
+        renderTestResults(testsData);
     });
     function renderTestResults(testsData) {
         codeblockEl.innerHTML = ''; // init
@@ -2004,49 +2015,57 @@ function runDifficultyUnitTests() {
         var s = '<span class="aligner">'; // start aligner
         var e = '</span>'; // end aligner
         var n = '\n<span class="preserve-newline">\n</span>\n';
+        var failedTests = [];
         foreach(testsData, function (testNum, testData) {
             var targetx = bits2target(testData['original_bits']);
             var bitsx = target2bits(targetx.target);
             var reconvertedBits = bitsx.finalBitsHex;
-            var targetPass = (testData['target'] == targetx.target) ? pass : fail;
+            var targetPass = (testData['target'] == targetx.target);
+            var targetPassText = targetPass ? pass : fail;
             var reconvertedBitsPass =
-            (testData['reconverted_bits'] == reconvertedBits) ? pass : fail;
-            var negativePass = (targetx.isNegative == testData['negative']) ?
-            pass : fail;
-            var overflowPass = (targetx.isOverflow == testData['overflow']) ?
-            pass : fail;
+            (testData['reconverted_bits'] == reconvertedBits);
+            var reconvertedBitsPassText = reconvertedBitsPass ? pass : fail;
+            var negativePass = (targetx.isNegative == testData['negative']);
+            var negativePassText = negativePass ? pass : fail;
+            var overflowPass = (targetx.isOverflow == testData['overflow']);
+            var overflowPassText = overflowPass ? pass : fail;
             var difficultyx = bits2difficulty(testData['original_bits']);
             var difficulty = difficultyx.difficulty;
             var difficultyLower = testData['difficulty_threshold_low'];
             var difficultyUpper = testData['difficulty_threshold_high'];
-            var difficultyPass = pass; // init
+            var difficultyPass = true; // init
             if (
                 (difficultyLower == 'Infinity' && difficulty != Infinity) ||
                 (difficultyUpper == 'Infinity' && difficulty != Infinity) ||
                 (difficulty < difficultyLower) ||
                 (difficulty > difficultyUpper)
-            ) difficultyPass = fail;
+            ) difficultyPass = false;
+            var difficultyPassText = difficultyPass ? pass : fail;
+            var thisTestPass = (
+                targetPass && reconvertedBitsPass && negativePass &&
+                overflowPass && difficultyPass
+            );
+            if (!thisTestPass) failedTests.push(testNum);
 
             var tmp = ((testNum == 0) ? '' : n) + '<u>test ' + testNum +
-            '</u>\n' +
+            '</u>: ' + (thisTestPass ? pass : fail) + '\n' +
             'bits: ' + s + '                         ' + e +
             testData['original_bits'] + '\n' +
 
             'target (expected): ' + s + '            ' + e +
             testData['target'] + '\n' +
 
-            'target (derived): ' + s + '             ' + e + targetx.target + '\n' +
-
-            'target check: ' + s + '                 ' + e + targetPass + '\n' +
-
+            'target (derived): ' + s + '             ' + e + targetx.target +
+            '\n' +
+            'target check: ' + s + '                 ' + e + targetPassText +
+            '\n' +
             'reconverted bits (expected): ' + s + '  ' + e +
             testData['reconverted_bits'] + '\n' +
 
             'reconverted bits (derived): ' + s + '   ' + e + reconvertedBits +
             '\n' +
-
             'reconverted bits check: ' + s + '       ' + e +
-            reconvertedBitsPass + '\n' +
+            reconvertedBitsPassText + '\n' +
 
             'target is negative (expected): ' + s + e +
             (testData['negative'] ? 'yes' : 'no') + '\n' +
@@ -2054,23 +2073,37 @@ function runDifficultyUnitTests() {
             'target is negative (derived): ' + s + ' ' + e +
             (targetx.isNegative ? 'yes' : 'no') + '\n' +
 
-            'target is negative check: ' + s + '     ' + e + negativePass + '\n' +
-
+            'target is negative check: ' + s + '     ' + e + negativePassText +
+            '\n' +
             'target overflowed (expected): ' + s + ' ' + e +
             (targetx.isOverflow ? 'yes' : 'no') + '\n' +
 
             'target overflowed (derived): ' + s + '  ' + e +
             (testData['overflow'] ? 'yes' : 'no') + '\n' +
 
-            'target overflow check: ' + s + '        ' + e + overflowPass + '\n' +
-
-            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower + '\n' +
-            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper + '\n' +
+            'target overflow check: ' + s + '        ' + e + overflowPassText +
+            '\n' +
+            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower +
+            '\n' +
+            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper +
+            '\n' +
             'difficulty (derived): ' + s + '         ' + e + difficulty + '\n' +
-            'difficulty check: ' + s + '             ' + e + difficultyPass;
+            'difficulty check: ' + s + '             ' + e + difficultyPassText;
 
             codeblockEl.innerHTML = (codeblockEl.innerHTML + tmp).trim();
         });
+        document.getElementById('overallStatus7').style.display = 'block';
+        document.getElementById('overallStatusPass7').innerHTML =
+        (failedTests.length == 0) ? pass : fail + ' (due to test' +
+        (failedTests.length > 1 ? 's' : '') + ' ' +
+        englishList(failedTests, ', ', ' and ') + ')';
+        var wrapButtonIsOn = (
+            document.querySelector('#unitTests7 button.wrap-nowrap').
+            getAttribute('wrapped') == 'true'
+        );
+        fixCodeblockNewlines(codeblockEl, wrapButtonIsOn);
+        if (wrapButtonIsOn) unalignText(codeblockEl);
+        else alignText(codeblockEl);
     }
 }
 
