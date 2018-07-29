@@ -23,11 +23,13 @@ def process_content(data_from_pelican):
     theme_dir = os.path.join(data_from_pelican.settings['THEME'], 'templates')
     jinja_environment = data_from_pelican.settings['JINJA_ENVIRONMENT']
     jenv = Environment(
-        loader=FileSystemLoader(theme_dir),
+        loader = FileSystemLoader(theme_dir),
         **jinja_environment
     )
     jenv.filters['cleanstr'] = cleanstr
-    data_from_pelican._content = jenv.from_string(data_from_pelican._content).render()
+    data_from_pelican._content = jenv.from_string(
+        data_from_pelican._content
+    ).render(data_from_pelican.settings)
 
 def register():
     # process the content only
