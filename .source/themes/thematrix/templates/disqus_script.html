@@ -30,8 +30,9 @@ function disqusReady(data) {
 }
 function disqusUpdateCommentCount() {
     ajax(
-        'https://{{ DISQUS_SITENAME }}.disqus.com/count-data.js?1=' +
-        encodeURIComponent('{{ article.title }}'),
+        'https://cors-anywhere.herokuapp.com/https://{{ DISQUS_SITENAME }}.' +
+        'disqus.com/count-data.js?1=' + encodeURIComponent('{{ article.title }}') +
+        '&nocache=' + unixtime(),
         function(response) {
             try {
                 var matches = response.match(/DISQUSWIDGETS.displayCount\((.*)\)/i);
