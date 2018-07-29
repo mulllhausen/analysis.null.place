@@ -79,7 +79,7 @@ them into another string of characters. We call the input characters the
 
 &lt;div class="horizontal-center"&gt;
 &lt;div id="hashingFlowchartContainer"&gt;
-    &lt;object id="hashingFlowchartSVG" data="/img/hashing-flowchart.svg" type="image/svg+xml"&gt;&lt;/object&gt;
+    &lt;object id="hashingFlowchartSVG" data="https://null.place/img/hashing-flowchart.svg?hash=NX7qzYIvGazeEX9jo6LBtyf-UTfHvFA3kZxGSCZM8B4" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -497,7 +497,7 @@ each other over time, like so:&lt;/p&gt;
 
 &lt;div id="dragableBlockchain" class="form-container"&gt;
     &lt;a href="#dragableBlockchain"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
-    &lt;object id="blockchainSVG" data="/img/bitcoin-blockchain.svg" type="image/svg+xml"&gt;&lt;/object&gt;
+    &lt;object id="blockchainSVG" data="https://null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 &lt;div class="media-caption"&gt;the Bitcoin blockchain&lt;/div&gt;
 
