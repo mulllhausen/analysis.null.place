@@ -1295,7 +1295,7 @@ the nonce to 0.</p>
         <script src="https://null.place/theme/js/autofooter.js?hash=nFX3ODnErbogn9cACWHRX5vNdYmX-LTBwZd_Q_N6b-k"></script>
 
         <script src="https://null.place/js/sjcl.min.js?hash=0JqGiPN8dEK7HmaZtG77GR2Sge8FpJJYb6D1TcTlEQo"></script>
-        <script src="https://null.place/js/btc-mining.js?hash=Kn_ByYvrobt8XV-CJsbyJuq-HgfbundUf6LavT3LmKU"></script>
+        <script src="https://null.place/js/btc-mining.js?hash=6mmso9KmCtqRzjSyojSbT8z2JpeXVWk9L57gwx-gOTs"></script>
 
 <script>
 var disqus_config = function () {
@@ -1327,8 +1327,9 @@ function disqusReady(data) {
 }
 function disqusUpdateCommentCount() {
     ajax(
-        'https://analysis-null-place.disqus.com/count-data.js?1=' +
-        encodeURIComponent('how does bitcoin mining work?'),
+        'https://cors-anywhere.herokuapp.com/https://analysis-null-place.' +
+        'disqus.com/count-data.js?1=' + encodeURIComponent('how does bitcoin mining work?') +
+        '&nocache=' + unixtime(),
         function(response) {
             try {
                 var matches = response.match(/DISQUSWIDGETS.displayCount\((.*)\)/i);

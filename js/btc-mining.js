@@ -2000,7 +2000,7 @@ function wrapCodeblockLeft(leftCol, leftMaxChars) {
 function runDifficultyUnitTests() {
     document.getElementById('unitTests7').style.display = 'block';
     var codeblockEl = document.querySelector('#unitTests7 .codeblock');
-    ajax('/json/unittest-bits.json', function (json) {
+    ajax('/json/unittest-bits.json?nocache=' + unixtime(), function (json) {
         try {
             var testsData = JSON.parse(json).tests;
         } catch (err) {
