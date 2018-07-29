@@ -37,7 +37,8 @@ def create_static_links(generator):
 
                 hashes[file_rel_url] = url
 
-    generator.context['QS_LINK'] = hashes
+    generator.context['QS_LINK'] = hashes # make available for templates
+    generator.settings['QS_LINK'] = hashes # make available for other plugins
 
 buffer_size = 5 * 1024 * 1024 # read files in chunks of 5MB each
 def get_file_hash(basename):
