@@ -27,9 +27,19 @@ def process_content(data_from_pelican):
         **jinja_environment
     )
     jenv.filters['cleanstr'] = cleanstr
-    data_from_pelican._content = jenv.from_string(
-        data_from_pelican._content
-    ).render(data_from_pelican.settings)
+
+    # convert jinja values in article metadata settings variables
+    for prop in ('console_explain_scripts', '_content'):
+
+        if not hasattr(data_from_pelican, prop):
+            continue
+
+        val = getattr(data_from_pelican, prop)
+        setattr(
+            data_from_pelican,
+            prop,
+            jenv.from_string(val).render(data_from_pelican.settings)
+        )
 
 def register():
     # process the content only
