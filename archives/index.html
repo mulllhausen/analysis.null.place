@@ -170,6 +170,18 @@
 
         <script src="https://null.place/theme/js/autofooter.js?hash=nFX3ODnErbogn9cACWHRX5vNdYmX-LTBwZd_Q_N6b-k"></script>
 
-
+        <script>
+            var consoleColors = 'color: #7db904; ';//background: #000000; ';
+            var padRight = '';//' '.repeat(200);
+            console.group('%cwelcome to analysis\'s source code' + padRight, consoleColors + 'font-size: x-large');
+            console.log('%cThis website is hosted on github. You can view the Pelican files which generate the static website files at https://github.com/mulllhausen/mulllhausen.github.io.' + padRight, consoleColors);
+            console.group('%cThe global Javascript files and their functionality are:' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/utils.js - common functions used on many pages' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/polyfills.js - polyfills to get this site working on older browsers' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/matrix-animation.js - code to animate the matrix logo' + padRight, consoleColors);
+            console.groupEnd();
+            console.log('%cPlease navigate to an article to view the Javascript files specific to that article (if any).' + padRight, consoleColors);
+            console.groupEnd();
+        </script>
     </body>
 </html>

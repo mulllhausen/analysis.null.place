@@ -1296,7 +1296,6 @@ the nonce to 0.</p>
 
         <script src="https://null.place/js/sjcl.min.js?hash=0JqGiPN8dEK7HmaZtG77GR2Sge8FpJJYb6D1TcTlEQo"></script>
         <script src="https://null.place/js/btc-mining.js?hash=6mmso9KmCtqRzjSyojSbT8z2JpeXVWk9L57gwx-gOTs"></script>
-
 <script>
 var disqus_config = function () {
 this.page.url = 'https://null.place/cryptocurrencies/how-does-bitcoin-mining-work/';    this.page.identifier = 'how does bitcoin mining work?';
@@ -1429,5 +1428,21 @@ function renderComments(platformI) {
     doneLoading.push(platformI);
 }
 </script>
+        <script>
+            var consoleColors = 'color: #7db904; ';//background: #000000; ';
+            var padRight = '';//' '.repeat(200);
+            console.group('%cwelcome to analysis\'s source code' + padRight, consoleColors + 'font-size: x-large');
+            console.log('%cThis website is hosted on github. You can view the Pelican files which generate the static website files at https://github.com/mulllhausen/mulllhausen.github.io.' + padRight, consoleColors);
+            console.group('%cThe global Javascript files and their functionality are:' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/utils.js - common functions used on many pages' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/polyfills.js - polyfills to get this site working on older browsers' + padRight, consoleColors);
+            console.log('%chttps://null.place/theme/js/matrix-animation.js - code to animate the matrix logo' + padRight, consoleColors);
+            console.groupEnd();
+            console.group('%cThe Javascript files for the \'how does bitcoin mining work?\' article are:' + padRight, consoleColors);
+            console.log('%chttps://null.place/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.' + padRight, consoleColors);
+            console.log('%chttps://null.place/js/btc-mining.js - code specifically for the \'how does bitcoin mining work?\' article.' + padRight, consoleColors);
+            console.groupEnd();
+            console.groupEnd();
+        </script>
     </body>
 </html>
