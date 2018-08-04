@@ -4,6 +4,15 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
+SITENAME_ASCIIART = r"""
+!                    _           _      
+!                   | |         (_)     
+!   __ _ _ __   __ _| |_   _ ___ _ ___  
+!  / _` | '_ \ / _` | | | | / __| / __| 
+! | (_| | | | | (_| | | |_| \__ \ \__ \ 
+!  \__,_|_| |_|\__,_|_|\__, |___/_|___/ 
+!                       __/ |           
+!                      |___/            """
 BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 
 PATH = 'content'

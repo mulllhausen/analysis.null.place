@@ -320,6 +320,53 @@ function englishList(list, joinWord, finalJoinWord) {
     return english;
 }
 
+// browser detect - only use when absolutely necessary. it may break for future
+// versions of all these browses. thanks to stackoverflow.com/a/9851769 - check
+// this link regularly for updates.
+function browserDetect() {
+    // Opera 8.0+
+    var isOpera = (
+        (!!window.opr && !!opr.addons) ||
+        !!window.opera ||
+        navigator.userAgent.indexOf(' OPR/') >= 0
+    );
+
+    // Firefox 1.0+
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+
+    // Safari 3.0+ "[object HTMLElementConstructor]"
+    var isSafari = (
+        /constructor/i.test(window.HTMLElement) ||
+        (function (p) {
+            return p.toString() === "[object SafariRemoteNotification]";
+        })(
+            !window['safari'] ||
+            (typeof safari !== 'undefined' && safari.pushNotification)
+        )
+    );
+
+    // Internet Explorer 6-11
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+    // Edge 20+
+    var isEdge = !isIE && !!window.StyleMedia;
+
+    // Chrome 1+
+    var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+    // Blink engine detection
+    var isBlink = (isChrome || isOpera) && !!window.CSS;
+    return {
+        opera: isOpera,
+        firefox: isFirefox,
+        safari: isSafari,
+        ie: isIE,
+        edge: isEdge,
+        chrome: isChrome,
+        blink: isBlink
+    };
+}
+
 // events for all pages
 
 // nav-menu open/close (mobile only)
