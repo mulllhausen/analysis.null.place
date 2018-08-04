@@ -158,32 +158,7 @@
             {% include 'facebook_script.html' %}
             {% include 'comments_script.html' %}
         {% endif %}
-        <script>
-            var consoleColors = 'color: #7db904; ';//background: #000000; ';
-            var padRight = '';//' '.repeat(200);
-            console.group('%cwelcome to {{ SITENAME }}\'s source code' + padRight, consoleColors + 'font-size: x-large');
-            console.log('%cThis website is hosted on github. You can view the Pelican files which generate the static website files at {{ GITHUB_URL }}.' + padRight, consoleColors);
-            console.group('%cThe global Javascript files and their functionality are:' + padRight, consoleColors);
-            console.log('%c{{ SITEURL }}/theme/js/utils.js - common functions used on many pages' + padRight, consoleColors);
-            console.log('%c{{ SITEURL }}/theme/js/polyfills.js - polyfills to get this site working on older browsers' + padRight, consoleColors);
-            console.log('%c{{ SITEURL }}/theme/js/matrix-animation.js - code to animate the matrix logo' + padRight, consoleColors);
-            console.groupEnd();
-        {% if article %}
-            {% if article.console_explain_scripts %}
-            console.group('%cThe Javascript files for the \'{{ article.title }}\' article are:' + padRight, consoleColors);
-                {% set console_explanations = article.console_explain_scripts.split('|') %}
-                {% for console_exp in console_explanations %}
-            console.log('%c{{ console_exp }}' + padRight, consoleColors);
-                {% endfor %}
-            console.groupEnd();
-            {% else %}
-            console.log('%cThere are no Javascript files for the \'{{ article.title }}\' article.' + padRight, consoleColors);
-            {% endif %}
-        {% else %}
-            console.log('%cPlease navigate to an article to view the Javascript files specific to that article (if any).' + padRight, consoleColors);
-        {% endif %}
-            console.groupEnd();
-        </script>
+        {% include 'console_greeter.html' %}
         {% include 'piwik.html' %}
     </body>
 </html>

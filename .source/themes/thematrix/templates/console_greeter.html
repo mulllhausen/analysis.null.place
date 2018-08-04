@@ -1,0 +1,68 @@
+{# greet developers in the console window #}
+<script>
+(function() { // separate scope
+    var styles = 'color: #7db904;';//background: #000000; ';
+    var padRight = '';//' '.repeat(200);
+    var header = 'Welcome to the source code for the ';
+    var browser = browserDetect();
+    var fullConsoleSupport = (browser.chrome || browser.safari);
+    if (fullConsoleSupport) {
+        var group = function(text, styleOverride) {
+            var localStyles = (styleOverride != null) ? styleOverride : styles;
+            console.group('%c' + text + padRight, localStyles);
+        };
+        var groupEnd = console.groupEnd;
+        var log = function(text, styleOverride) {
+            var localStyles = (styleOverride != null) ? styleOverride : styles;
+            console.log('%c' + text + padRight, localStyles);
+        };
+        header += '{{ SITENAME }}';
+    } else {
+        // no support for font size - use ascii art instead
+        // minimal support for grouping - use ascii art instead
+        var indentLevel = -3; // hack to prevent first indent (looks better)
+        var logText = ''; // init
+        var group = function(text) {
+            log(''); // empty line before groups
+            log(text);
+            indentLevel += 3;
+        };
+        var groupEnd = function() {
+            indentLevel -= 3;
+        };
+        var log = function(text) {
+            var indent = (indentLevel >= 0) ? ' '.repeat(indentLevel) : '';
+            logText += indent + text + '\n';
+        };
+        header += "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}";
+    }
+    function logEnd() {
+        if (fullConsoleSupport) return;
+        console.log('%c' + logText, styles);
+    }
+    group(header + ' blog', styles + 'font-size: x-large;');
+    log('');
+    log('This website is hosted on github. You can view the Pelican files which generate the static website files at {{ GITHUB_URL }}.');
+    group('The global Javascript files and their functionality are:');
+    log('{{ SITEURL }}/theme/js/utils.js - common functions used on many pages');
+    log('{{ SITEURL }}/theme/js/polyfills.js - polyfills to get this site working on older browsers');
+    log('{{ SITEURL }}/theme/js/matrix-animation.js - code to animate the matrix logo');
+    groupEnd();
+{% if article %}
+    {% if article.console_explain_scripts %}
+    group('The Javascript files for the \'{{ article.title }}\' article are:');
+        {% set console_explanations = article.console_explain_scripts.split('|') %}
+        {% for console_exp in console_explanations %}
+    log('{{ console_exp }}');
+        {% endfor %}
+    groupEnd();
+    {% else %}
+    log('There are no Javascript files for the \'{{ article.title }}\' article.');
+    {% endif %}
+{% else %}
+    log('Please navigate to an article to view the Javascript files specific to that article (if any).');
+{% endif %}
+    groupEnd();
+    logEnd();
+})();
+</script>
