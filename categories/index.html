@@ -146,8 +146,8 @@
             </address>
         </footer>
 
-        <script src="https://null.place/theme/js/polyfills.js?hash=x4fACe1tyMq0JpeOAMJiUo20qHhNfgrb2vQCoxXvN48"></script>
-        <script src="https://null.place/theme/js/utils.js?hash=LC-bQJBjTBeT23te-23vJrWtpsdAc3x79wN0LrjBOv4"></script>
+        <script src="https://null.place/theme/js/polyfills.js?hash=b1iA5L7f_yJo3J7SKrm7e2jQevYQ7SurzUAQjgS6q1I"></script>
+        <script src="https://null.place/theme/js/utils.js?hash=yi-22dTjAKreC9Ugy38I0nQWREfcRCQoVHtuugu28nM"></script>
         <script src="https://null.place/theme/js/matrix-animation.js?hash=AeZc4fJnZtT6XogEjqSU18GcaN6EWufBfTeYj3DKAKY"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
@@ -165,18 +165,66 @@
 
         <script src="https://null.place/theme/js/autofooter.js?hash=nFX3ODnErbogn9cACWHRX5vNdYmX-LTBwZd_Q_N6b-k"></script>
 
-        <script>
-            var consoleColors = 'color: #7db904; ';//background: #000000; ';
-            var padRight = '';//' '.repeat(200);
-            console.group('%cwelcome to analysis\'s source code' + padRight, consoleColors + 'font-size: x-large');
-            console.log('%cThis website is hosted on github. You can view the Pelican files which generate the static website files at https://github.com/mulllhausen/mulllhausen.github.io.' + padRight, consoleColors);
-            console.group('%cThe global Javascript files and their functionality are:' + padRight, consoleColors);
-            console.log('%chttps://null.place/theme/js/utils.js - common functions used on many pages' + padRight, consoleColors);
-            console.log('%chttps://null.place/theme/js/polyfills.js - polyfills to get this site working on older browsers' + padRight, consoleColors);
-            console.log('%chttps://null.place/theme/js/matrix-animation.js - code to animate the matrix logo' + padRight, consoleColors);
-            console.groupEnd();
-            console.log('%cPlease navigate to an article to view the Javascript files specific to that article (if any).' + padRight, consoleColors);
-            console.groupEnd();
-        </script>
-    </body>
+<script>
+(function() { // separate scope
+    var styles = 'color: #7db904;';//background: #000000; ';
+    var padRight = '';//' '.repeat(200);
+    var header = 'Welcome to the source code for the ';
+    var browser = browserDetect();
+    var fullConsoleSupport = (browser.chrome || browser.safari);
+    if (fullConsoleSupport) {
+        var group = function(text, styleOverride) {
+            var localStyles = (styleOverride != null) ? styleOverride : styles;
+            console.group('%c' + text + padRight, localStyles);
+        };
+        var groupEnd = console.groupEnd;
+        var log = function(text, styleOverride) {
+            var localStyles = (styleOverride != null) ? styleOverride : styles;
+            console.log('%c' + text + padRight, localStyles);
+        };
+        header += 'analysis';
+    } else {
+        // no support for font size - use ascii art instead
+        // minimal support for grouping - use ascii art instead
+        var indentLevel = -3; // hack to prevent first indent (looks better)
+        var logText = ''; // init
+        var group = function(text) {
+            log(''); // empty line before groups
+            log(text);
+            indentLevel += 3;
+        };
+        var groupEnd = function() {
+            indentLevel -= 3;
+        };
+        var log = function(text) {
+            var indent = (indentLevel >= 0) ? ' '.repeat(indentLevel) : '';
+            logText += indent + text + '\n';
+        };
+        header += "\n" +
+"                    _           _      \n" +
+"                   | |         (_)     \n" +
+"   __ _ _ __   __ _| |_   _ ___ _ ___  \n" +
+"  / _` | '_ \\ / _` | | | | / __| / __| \n" +
+" | (_| | | | | (_| | | |_| \\__ \\ \\__ \\ \n" +
+"  \\__,_|_| |_|\\__,_|_|\\__, |___/_|___/ \n" +
+"                       __/ |           \n" +
+"                      |___/            ";
+    }
+    function logEnd() {
+        if (fullConsoleSupport) return;
+        console.log('%c' + logText, styles);
+    }
+    group(header + ' blog', styles + 'font-size: x-large;');
+    log('');
+    log('This website is hosted on github. You can view the Pelican files which generate the static website files at https://github.com/mulllhausen/mulllhausen.github.io.');
+    group('The global Javascript files and their functionality are:');
+    log('https://null.place/theme/js/utils.js - common functions used on many pages');
+    log('https://null.place/theme/js/polyfills.js - polyfills to get this site working on older browsers');
+    log('https://null.place/theme/js/matrix-animation.js - code to animate the matrix logo');
+    groupEnd();
+    log('Please navigate to an article to view the Javascript files specific to that article (if any).');
+    groupEnd();
+    logEnd();
+})();
+</script>    </body>
 </html>

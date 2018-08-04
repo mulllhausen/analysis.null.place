@@ -83,6 +83,28 @@ if (!Element.prototype.closest) Element.prototype.closest = function (query) {
     return null;
 };
 
+// add console support for stupid ie. thanks to
+// https://github.com/h5bp/html5-boilerplate/blob/v5.0.0/dist/js/plugins.js
+function fixConsole(browser) {
+    var methods = [ // note: group must come before log in this list
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',  'table',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp',
+        'trace', 'warn'
+    ];
+    var console = (window.console = window.console || {});
+    var browserShouldWork = (browser.chrome || browser.safari);
+    for (var i = 0; i < methods.length; i++) {
+        var method = methods[i];
+
+        // stub undefined methods
+        if (!console[method]) {
+            if (method == 'group' && console['log']) console.group = console.log;
+            else console[method] = function() { return 'not implemented'; };
+        }
+    }
+}
+
 // fix for stupid ie. thanks to
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc
 if (!Math.trunc) {
