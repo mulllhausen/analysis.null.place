@@ -192,12 +192,12 @@
         var indentLevel = -3; // hack to prevent first indent (looks better)
         var logText = ''; // init
         var group = function(text) {
-            log(''); // empty line before groups
             log(text);
             indentLevel += 3;
         };
         var groupEnd = function() {
             indentLevel -= 3;
+            log(''); // empty line after groups
         };
         var log = function(text) {
             var indent = (indentLevel >= 0) ? ' '.repeat(indentLevel) : '';
@@ -220,6 +220,7 @@
     group(header + ' blog', styles + 'font-size: x-large;');
     log('');
     log('This website is hosted on github. You can view the Pelican files which generate the static website files at https://github.com/mulllhausen/mulllhausen.github.io.');
+    log('');
     group('The global Javascript files and their functionality are:');
     log('https://null.place/theme/js/utils.js - common functions used on many pages');
     log('https://null.place/theme/js/polyfills.js - polyfills to get this site working on older browsers');
@@ -229,5 +230,6 @@
     groupEnd();
     logEnd();
 })();
-</script>    </body>
+</script>
+    </body>
 </html>
