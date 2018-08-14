@@ -1,0 +1,25 @@
+<link rel="preload" as="script" href="https://use.fontawesome.com/95559d6484.js"/>
+<link rel="preload" as="image" href="{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}"/>
+<link rel="preload" as="image" href="{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}"/>
+<link rel="preload" as="script" href="{{ QS_LINK['/theme/js/polyfills.js'] }}"/>
+<link rel="preload" as="script" href="{{ QS_LINK['/theme/js/utils.js'] }}"/>
+<link rel="preload" as="script" href="{{ QS_LINK['/theme/js/matrix-animation.js'] }}"/>
+<link rel="preload" as="script" href="{{ QS_LINK['/theme/js/autofooter.js'] }}"/>
+{% if article %}
+    {% if article.scripts %}
+        {% set scripts = article.scripts.split(',') %}
+        {% for script in scripts %}
+<link rel="preload" as="script" href="{{ QS_LINK['/js/' + script] }}"/>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+{% if article %}
+    {% if article.img_preloads %}
+        {% set img_preloads = article.img_preloads.split(',') %}
+        {% for img_preload in img_preloads %}
+<link rel="preload" as="image" href="{{ QS_LINK['/img/' + img_preload] }}"/>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+

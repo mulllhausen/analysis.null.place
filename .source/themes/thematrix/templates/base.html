@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        {% include 'google_analytics.html' %}
         <meta charset="utf-8"/>
+        {# le styles  (must come before all scripts) #}
+        <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
+        {% if (article and article.stylesheets) %}
+            {% set stylesheets = article.stylesheets.split(',') %}
+            {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
+            {% endfor %}
+        {% endif %}
+        {% include 'google_analytics.html' %}
+
+        {# le preloads #}
+        {% include 'preloads.html' %}
+
         <title>{{ SITENAME }}</title>
         <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, user-scalable=no"/>
         <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
@@ -35,15 +47,6 @@
         { # twitter summary card with large image must be at least 280x150px # }
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg"/>#}
 
-        {# le styles #}
-        <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
-        {% if (article and article.stylesheets) %}
-            {% set stylesheets = article.stylesheets.split(',') %}
-            {% for stylesheet in stylesheets %}
-        <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
-            {% endfor %}
-        {% endif %}
-
         {# le browser and os styles #}
         <meta name="theme-color" content="#000000"/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -62,8 +65,8 @@
         <link rel="apple-touch-icon" sizes="72x72" href="{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}"/>
         <link rel="apple-touch-icon" sizes="114x114" href="{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}"/>
 
-        <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" rel="self" title="{{ SITENAME }} ATOM Feed"/>
-        <link href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" rel="self" title="{{ SITENAME }} RSS Feed"/>
+        <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" title="{{ SITENAME }} ATOM Feed"/>
+        <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" title="{{ SITENAME }} RSS Feed"/>
         {% include 'adsense.html' %}
     </head>
 
