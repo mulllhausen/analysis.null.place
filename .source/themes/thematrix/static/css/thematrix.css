@@ -259,6 +259,44 @@ article {
 }
 /* end page layout */
 
+/* begin icons */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+.icon-external-link {
+    margin-bottom: -3px;
+}
+.icon-github {
+    margin-bottom: -2px;
+    width: 0.8571428571428571em;
+}
+.icon-feed {
+    margin-bottom: -2px;
+    width: 0.7862857142857141em;
+}
+.icon-chain {
+    width: 0.9285714285714285em;
+}
+.icon-bars {
+    margin-bottom: -3px;
+    width: 0.8571428571428571em;
+}
+.icon-file-text-o {
+    width: 0.8571428571428571em;
+}
+.icon-folder-open-o {
+    width: 1.0652857142857142em;
+}
+.icon-level-down {
+    width: 0.5730714285714286em;
+}
+/* end icons */
+
 /* begin branding */
 a.brand, a.brand:hover {
     padding-top: 8px;
