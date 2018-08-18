@@ -295,6 +295,24 @@ article {
 .icon-level-down {
     width: 0.5730714285714286em;
 }
+h1 .icon-file-text-o {
+    font-size: 85%;
+}
+ul.nav-menu .icon {
+    margin-bottom: -2px;
+}
+ul.nav-menu .icon-file-text-o {
+    margin-right: 1px;
+}
+ul.nav-menu .icon-hashtag {
+    margin-right: -1px;
+}
+.info-box .icon-hashtag {
+    font-size: 90%;
+}
+.info-box .icon {
+    margin-bottom: -2px;
+}
 /* end icons */
 
 /* begin branding */
@@ -321,12 +339,6 @@ a.brand, a.brand:hover {
 }
 .side-bar ul.nav-menu {
     margin: 10px 10px 0 10px;
-}
-ul.nav-menu .fa-file-text-o {
-    margin-right: 1px;
-}
-ul.nav-menu .fa-hashtag {
-    margin-right: -1px;
 }
 /* end side bar */
 
@@ -455,16 +467,6 @@ h1:hover i.fa-link, h2:hover i.fa-link, h3:hover i.fa-link, h4:hover i.fa-link,
 h5:hover i.fa-link, h6:hover i.fa-link {
     visibility: visible;
 }
-h1 i.fa-file-text-o {
-    font-size: 85%;
-    position: absolute;
-    top: 3px;
-    left: 0;
-}
-h1 .article-fa-icon {
-    position: relative;
-    padding: 0 0 0 1em;
-}
 
 .info-box {
     padding: 15px;
@@ -472,9 +474,6 @@ h1 .article-fa-icon {
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
     line-height: 24px;
-}
-.info-box .fa-hashtag {
-    font-size: 90%;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
