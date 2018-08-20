@@ -19,16 +19,22 @@
 {#<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i>Categories</h4></li>#}
 {% for cat, articles in categories %}
 <li {% if cat == category %}class="active"{% endif %}>
-<a href="{{ SITEURL }}/{{ cat.url }}">
-    <i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ cat }}<sup> {{ articles | count }}</sup>
+<a href="{{ SITEURL }}/{{ cat.url }}"><svg class="icon icon-folder-open-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use>
+    </svg>
+    {{ cat }}<sup> {{ articles | count }}</sup>
 </a>
 </li>
 {% endfor %}
 <li {% if output_file == "archives/index.html" %}class="active"{% endif %}>
-    <a href="{{ SITEURL }}/archives/"><i class="fa fa-file-text-o" aria-hidden="true"></i> all</a>
+    <a href="{{ SITEURL }}/archives/"><svg class="icon icon-file-text-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-file-text-o"></use>
+    </svg> all</a>
 </li>
 <li {% if output_file == "tags/index.html" %}class="active"{% endif %}>
-    <a href="{{ SITEURL }}/tags/"><i class="fa fa-hashtag" aria-hidden="true"></i> all</a>
+    <a href="{{ SITEURL }}/tags/"><svg class="icon icon-hashtag">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use>
+    </svg> all</a>
 </li>
 
 {#% include 'twitter_profile.html' %}

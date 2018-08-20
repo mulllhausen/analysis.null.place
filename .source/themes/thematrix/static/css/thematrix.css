@@ -268,15 +268,10 @@ article {
     stroke: currentColor;
     fill: currentColor;
 }
-.icon-external-link {
-    margin-bottom: -3px;
-}
 .icon-github {
-    margin-bottom: -2px;
     width: 0.8571428571428571em;
 }
 .icon-feed {
-    margin-bottom: -2px;
     width: 0.7862857142857141em;
 }
 .icon-chain {
@@ -295,6 +290,9 @@ article {
 .icon-level-down {
     width: 0.5730714285714286em;
 }
+.icon-hashtag {
+    margin-bottom: -3px;
+}
 h1 .icon-file-text-o {
     font-size: 85%;
 }
@@ -305,7 +303,7 @@ ul.nav-menu .icon-file-text-o {
     margin-right: 1px;
 }
 ul.nav-menu .icon-hashtag {
-    margin-right: -1px;
+    margin: 0 -1px -3px 0;
 }
 .info-box .icon-hashtag {
     font-size: 90%;
@@ -458,13 +456,13 @@ img#logo_img {
 .heading-with-link {
     cursor: pointer;
 }
-h1 i.fa-link, h2 i.fa-link, h3 i.fa-link, h4 i.fa-link, h5 i.fa-link,
-h6 i.fa-link {
+h1 .icon-chain-90, h2 .icon-chain-90, h3 .icon-chain-90, h4 .icon-chain-90,
+h5 .icon-chain-90, h6 .icon-chain-90 {
     font-size: 85%;
     visibility: hidden;
 }
-h1:hover i.fa-link, h2:hover i.fa-link, h3:hover i.fa-link, h4:hover i.fa-link,
-h5:hover i.fa-link, h6:hover i.fa-link {
+h1:hover .icon-chain-90, h2:hover .icon-chain-90, h3:hover .icon-chain-90,
+h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
     visibility: visible;
 }
 
@@ -551,7 +549,7 @@ ul.taglist li {
 .form-container + .media-caption {
     margin-top: -10px;
 }
-.form-container > a > i.fa-link {
+.form-container > a > .icon-chain {
     position: absolute;
     right: 10px;/*match the padding of .form-container*/
 }
