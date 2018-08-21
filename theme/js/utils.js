@@ -281,13 +281,13 @@ function toggleCodeblockWrap(e) {
     var btn = e.currentTarget;
     var codeblock = btn.parentNode.parentNode.querySelector('.codeblock');
     if (btn.getAttribute('wrapped') == 'true') {
-        btn.querySelector('i.fa-level-down').style.display = 'inline-block';
-        btn.querySelector('i.fa-arrows-h').style.display = 'none';
+        btn.querySelector('.icon-level-left').style.display = 'inline-block';
+        btn.querySelector('.icon-arrows-h').style.display = 'none';
         alignText(codeblock);
         btn.setAttribute('wrapped', 'false');
     } else {
-        btn.querySelector('i.fa-level-down').style.display = 'none';
-        btn.querySelector('i.fa-arrows-h').style.display = 'inline-block';
+        btn.querySelector('.icon-level-left').style.display = 'none';
+        btn.querySelector('.icon-arrows-h').style.display = 'inline-block';
         unalignText(codeblock);
         btn.setAttribute('wrapped', 'true');
     }

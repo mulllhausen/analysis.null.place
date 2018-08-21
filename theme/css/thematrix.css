@@ -259,6 +259,58 @@ article {
 }
 /* end page layout */
 
+/* begin icons */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+.icon-github {
+    width: 0.8571428571428571em;
+}
+.icon-feed {
+    width: 0.7862857142857141em;
+}
+.icon-chain {
+    width: 0.9285714285714285em;
+}
+.icon-bars {
+    margin-bottom: -3px;
+    width: 0.8571428571428571em;
+}
+.icon-file-text-o {
+    width: 0.8571428571428571em;
+}
+.icon-folder-open-o {
+    margin-bottom: -1px;
+    width: 1.0652857142857142em;
+}
+.icon-level-down {
+    width: 0.5730714285714286em;
+}
+.icon-hashtag {
+    margin-bottom: -2px;
+}
+h1 .icon-file-text-o {
+    font-size: 85%;
+}
+ul.nav-menu .icon {
+    margin-bottom: -1px;
+}
+ul.nav-menu .icon-file-text-o {
+    margin-right: 1px;
+}
+ul.nav-menu .icon-hashtag {
+    margin: 0 -1px -3px 0;
+}
+.info-box .icon-hashtag {
+    font-size: 90%;
+}
+/* end icons */
+
 /* begin branding */
 a.brand, a.brand:hover {
     padding-top: 8px;
@@ -283,12 +335,6 @@ a.brand, a.brand:hover {
 }
 .side-bar ul.nav-menu {
     margin: 10px 10px 0 10px;
-}
-ul.nav-menu .fa-file-text-o {
-    margin-right: 1px;
-}
-ul.nav-menu .fa-hashtag {
-    margin-right: -1px;
 }
 /* end side bar */
 
@@ -408,24 +454,14 @@ img#logo_img {
 .heading-with-link {
     cursor: pointer;
 }
-h1 i.fa-link, h2 i.fa-link, h3 i.fa-link, h4 i.fa-link, h5 i.fa-link,
-h6 i.fa-link {
+h1 .icon-chain-90, h2 .icon-chain-90, h3 .icon-chain-90, h4 .icon-chain-90,
+h5 .icon-chain-90, h6 .icon-chain-90 {
     font-size: 85%;
     visibility: hidden;
 }
-h1:hover i.fa-link, h2:hover i.fa-link, h3:hover i.fa-link, h4:hover i.fa-link,
-h5:hover i.fa-link, h6:hover i.fa-link {
+h1:hover .icon-chain-90, h2:hover .icon-chain-90, h3:hover .icon-chain-90,
+h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
     visibility: visible;
-}
-h1 i.fa-file-text-o {
-    font-size: 85%;
-    position: absolute;
-    top: 3px;
-    left: 0;
-}
-h1 .article-fa-icon {
-    position: relative;
-    padding: 0 0 0 1em;
 }
 
 .info-box {
@@ -434,9 +470,6 @@ h1 .article-fa-icon {
     background-color: #2b2b2b;/*dark-grey*/
     border-radius: 4px;
     line-height: 24px;
-}
-.info-box .fa-hashtag {
-    font-size: 90%;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
@@ -514,7 +547,7 @@ ul.taglist li {
 .form-container + .media-caption {
     margin-top: -10px;
 }
-.form-container > a > i.fa-link {
+.form-container > a > .icon-chain {
     position: absolute;
     right: 10px;/*match the padding of .form-container*/
 }
@@ -597,21 +630,20 @@ blockquote {
     overflow: hidden;
 }
 .comment-with {
+    display: inline-block;
+    text-align: center;
     padding: 5px 8px;
     background-color: #000000;/*black*/
     border: 1px solid #000000;
     border-radius: 4px;
 }
+.comment-with .icon{
+    vertical-align: middle;
+    padding-bottom: 1px;
+}
 .comment-with.selected, .comment-with:hover {
     cursor: pointer;
     border: 1px solid #6a6a6a;
-}
-.comment-with .fa-facebook {
-    padding: 3px;/*make same width as disqus*/
-}
-.comment-with.disqus img {
-    width: 16px;
-    margin-bottom: -2px;
 }
 .comments-count {
     vertical-align: super;
@@ -624,15 +656,36 @@ blockquote {
     border-radius: 20px;
 }
 .fb-comments-loader {
+    position: relative;
     width: 100%;
+    height: 2em;
     text-align: center;
     font-size: 200%;
     margin: 30px 0;
     display: none;/*initially hidden*/
 }
-.fb-comments-loader .fa-facebook {
-    left: -1px;
-    font-size: 70%;
+.fb-comments-loader-inner {
+    position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    vertical-align: middle;
+}
+.fb-comments-loader .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+}
+.fb-comments-loader .icon-circle-o-notch {
+    font-size: 2em;
+}
+.fb-comments-loader .icon-facebook {
+    font-size: 0.7em;
+    padding: 0.95em;
 }
 /* end comments section */
 

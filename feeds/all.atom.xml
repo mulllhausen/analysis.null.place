@@ -27,7 +27,9 @@ not discussed earlier&lt;/li&gt;
 &lt;h2 class="heading-with-link" id="heading_cryptographic_hashing"&gt;
     &lt;a href="#heading_cryptographic_hashing" title="link to this heading"&gt;
         cryptographic hashing
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
 
@@ -39,7 +41,12 @@ typing different things in the &lt;i&gt;pre-image&lt;/i&gt; field and clicking t
 &lt;i&gt;SHA256&lt;/i&gt; button to see what that does:&lt;/p&gt;
 
 &lt;div class="form-container" id="form0"&gt;
-    &lt;a href="#form0"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form0"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;label for="inputMessage0" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
     &lt;div class="left"&gt;
         &lt;input id="inputMessage0" type="text" value="hello world!"&gt;
@@ -54,14 +61,19 @@ typing different things in the &lt;i&gt;pre-image&lt;/i&gt; field and clicking t
 &lt;div class="codeblock-container auto-wrap-on-mobile" style="display:none;"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="hash0Results" class="codeblock"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;&lt;i&gt;SHA256&lt;/i&gt; stands for &lt;i&gt;Secure Hash Algorithm (256 bits)&lt;/i&gt;.
 &lt;i&gt;Algorithm&lt;/i&gt; sounds complicated but it just means a series of operations
@@ -177,7 +189,12 @@ then you will not be able to find the pre-image which results in this hash -
 i.e. you will not be able to invert this hash. Seriously - give it a go:&lt;/p&gt;
 
 &lt;div class="form-container" id="form1"&gt;
-    &lt;a href="#form1"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form1"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;input type="checkbox" id="inputCheckbox1" checked&gt;
     &lt;label for="inputCheckbox1"&gt;automatically increment pre-image after each hash&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -197,8 +214,12 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:&lt;/p&g
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="codeblock1HashResults" class="codeblock"&gt;? &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="match1" class="individual-digits"&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/span&gt;
@@ -207,6 +228,7 @@ status: &lt;span id="matchStatus1"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;The difficulty of inverting a &lt;i&gt;SHA256&lt;/i&gt; hash is due its enormous length!
 &lt;i&gt;SHA256&lt;/i&gt; has approximately 2&lt;sup&gt;256&lt;/sup&gt; possible different hash values.
@@ -221,7 +243,12 @@ Automatically&lt;/i&gt; button below then you can have your device cycle through
 pre-images and show you the results at its maximum possible speed:&lt;/p&gt;
 
 &lt;div class="form-container" id="form2"&gt;
-    &lt;a href="#form2"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form2"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;input type="checkbox" id="inputCheckbox2" checked disabled&gt;
     &lt;label for="inputCheckbox2"&gt;automatically increment pre-image after each hash&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -242,8 +269,12 @@ pre-images and show you the results at its maximum possible speed:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="codeblock2HashResults" class="codeblock"&gt;? &lt;span class="aligner"&gt;&lt;/span&gt;-&gt; SHA256 -&gt; &lt;span id="match2" class="individual-digits"&gt;32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7&lt;/span&gt;
@@ -252,6 +283,7 @@ status: &lt;span id="matchStatus2"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;&lt;span id="showHowLongForThisDevice" style="display:none;"&gt;Using your device's
 average hash rate of &lt;span class="hash2Rate"&gt;&lt;/span&gt; hashes per second, then we
@@ -311,9 +343,13 @@ after you give it a go. Click the &lt;i&gt;Mine with SHA256&lt;/i&gt; button and
 carefully at what this does. Once you find the solution, try changing the
 difficulty:&lt;/p&gt;
 
-&lt;a name="form3"&gt;&lt;/a&gt;
 &lt;div class="form-container" id="form3"&gt;
-    &lt;a href="#form3"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form3"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;input type="checkbox" id="inputCheckbox3"&gt;
     &lt;label for="inputCheckbox3"&gt;mine automatically&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -340,8 +376,12 @@ difficulty:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="codeblock3HashResults" class="codeblock"&gt;SHA256 target: &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="match3" class="individual-digits"&gt;0000000000000000000000000000000000000000000000000000000000000000&lt;/span&gt;
@@ -350,6 +390,7 @@ status: &lt;span id="matchStatus3"&gt;&lt;/span&gt;&lt;span id="mining3Statistic
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;In that scenario, your device was the miner. When you passed the test, you
 would give the nonce back to the examiner and it could verify that you did
@@ -405,7 +446,9 @@ explained in detail in the following section.&lt;/p&gt;
 &lt;h2 class="heading-with-link" id="heading_bitcoin_mining"&gt;
     &lt;a href="#heading_bitcoin_mining" title="link to this heading"&gt;
         bitcoin mining
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
 
@@ -495,10 +538,16 @@ the rules governing Bitcoin behaviour).&lt;/p&gt;
 in - the current block references the previous block so that blocks build upon
 each other over time, like so:&lt;/p&gt;
 
-&lt;div id="dragableBlockchain" class="form-container"&gt;
-    &lt;a href="#dragableBlockchain"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;div class="form-container" id="dragableBlockchain"&gt;
+    &lt;a href="#dragableBlockchain"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;object id="blockchainSVG" data="https://null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
+
 &lt;div class="media-caption"&gt;the Bitcoin blockchain&lt;/div&gt;
 
 &lt;p&gt;Looking at that diagram, we can see that the &lt;i&gt;previous block hash&lt;/i&gt; value
@@ -542,7 +591,12 @@ have a look at what this does, both to the results area and to the nonce in the
 block header:&lt;/p&gt;
 
 &lt;div class="form-container" id="form4"&gt;
-&lt;a href="#form4"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form4"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table class="btc-header-definition"&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;
@@ -577,8 +631,12 @@ block header:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="codeblock3HashResults" class="codeblock"&gt;nonce: &lt;span class="aligner"&gt;     &lt;/span&gt;&lt;span id="nonce4Results"&gt;0&lt;/span&gt;
@@ -588,6 +646,7 @@ status: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="mineStatus4"&g
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;The data in the simulation block header is actually that of the very first
 bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
@@ -640,8 +699,12 @@ of leading zeros:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;0000000000000000000000000000000000000000000000000001000000000000
@@ -656,8 +719,12 @@ that is higher belongs to the bigger number:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;&lt;span class="individual-digits"&gt;0000000000000000000000000000000000000000000000000001&lt;/span&gt;000000000000
@@ -689,7 +756,9 @@ click the &lt;i&gt;Mine manually with SHA256&lt;/i&gt; button to see what happen
 &lt;h2 class="heading-with-link" id="heading_annex"&gt;
     &lt;a href="#heading_annex" title="link to this heading"&gt;
         annex
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
 
@@ -705,7 +774,9 @@ used by Bitcoin.&lt;/p&gt;
 &lt;h3 class="heading-with-link" id="heading_version"&gt;
     &lt;a href="#heading_version" title="link to this heading"&gt;
         version
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -714,15 +785,24 @@ human-readable &lt;i&gt;version&lt;/i&gt; value to see how this changes the valu
 the blockchain:&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form5"&gt;
-    &lt;a href="#form5"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form5"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;label for="version5" class="for-textbox"&gt;version&lt;/label&gt;&lt;br&gt;
     &lt;input id="version5" type="text" class="data-value" size="10" value="1"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="version5Hex"&gt;&lt;/span&gt;
@@ -732,6 +812,7 @@ convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;sp
 
 &lt;/div&gt;
 
+
 &lt;p&gt;Note that &lt;i&gt;converting to
 &lt;a href="https://en.wikipedia.org/wiki/Endianness"&gt;little endian&lt;/a&gt; format&lt;/i&gt;
 simply means reversing the bytes.&lt;/p&gt;
@@ -739,7 +820,9 @@ simply means reversing the bytes.&lt;/p&gt;
 &lt;h3 class="heading-with-link" id="heading_timestamp"&gt;
     &lt;a href="#heading_timestamp" title="link to this heading"&gt;
         timestamp
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -749,15 +832,24 @@ the human-readable &lt;i&gt;timestamp&lt;/i&gt; value to see how this changes th
 stored in the blockchain:&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form6"&gt;
-    &lt;a href="#form6"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form6"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;label for="timestamp6" class="for-textbox"&gt;timestamp&lt;span id="timestamp6Explanation"&gt;&lt;/span&gt;&lt;/label&gt;&lt;br&gt;
     &lt;input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;timestamp: &lt;span class="aligner"&gt;                                   &lt;/span&gt;&lt;span id="timestamp6GMT"&gt;&lt;/span&gt;
@@ -768,10 +860,13 @@ convert to little endian: &lt;span class="aligner"&gt;                    &lt;/s
 
 &lt;/div&gt;
 
+
 &lt;h3 class="heading-with-link" id="heading_bits_difficulty_target"&gt;
     &lt;a href="#heading_bits_difficulty_target" title="link to this heading"&gt;
         bits / difficulty / target
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -830,7 +925,12 @@ textarea explains exactly what the original Bitcoin source code does to perform
 the conversions.&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form7"&gt;
-    &lt;a href="#form7"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form7"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;div class="left"&gt;
         &lt;label for="difficulty7" class="for-textbox"&gt;difficulty&lt;/label&gt;&lt;br&gt;
         &lt;input id="difficulty7" type="text" class="data-value" size="20" value="1"&gt;
@@ -853,14 +953,19 @@ the conversions.&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;The Bitcoin source code
 &lt;a href="https://github.com/bitcoin/bitcoin/tree/master/src/test"&gt;has unit tests&lt;/a&gt;
@@ -887,8 +992,12 @@ tests.&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;&lt;/div&gt;
@@ -899,7 +1008,9 @@ tests.&lt;/p&gt;
 &lt;h3 class="heading-with-link" id="heading_nonce"&gt;
     &lt;a href="#heading_nonce" title="link to this heading"&gt;
         nonce
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -907,15 +1018,24 @@ tests.&lt;/p&gt;
 endian bytes:&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form8"&gt;
-    &lt;a href="#form8"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form8"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;label for="nonce8" class="for-textbox"&gt;nonce&lt;/label&gt;&lt;br&gt;
     &lt;input id="nonce8" type="text" class="data-value" size="10" value="2083236893"&gt;
     &lt;ul class="error"&gt;&lt;/ul&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="nonce8Hex"&gt;&lt;/span&gt;
@@ -925,10 +1045,13 @@ convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;sp
 
 &lt;/div&gt;
 
+
 &lt;h3 class="heading-with-link" id="heading_block_hashing_in_detail"&gt;
     &lt;a href="#heading_block_hashing_in_detail" title="link to this heading"&gt;
         block hashing in detail
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -937,8 +1060,13 @@ in the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
 80 bytes:&lt;/p&gt;
 
-&lt;div class="form-container" id="form9"&gt;
-&lt;a href="#form9"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;div class="form-container annex" id="form9"&gt;
+    &lt;a href="#form9"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
 &lt;div class="media-container"&gt;&lt;div class="media-positioner"&gt;
     &lt;table class="btc-header-definition"&gt;
         &lt;tr&gt;&lt;td class="btc-header-field"&gt;
@@ -972,8 +1100,12 @@ blockchain, and how these are concatenated together. The block header is always
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;block header (hex): &lt;span class="aligner"&gt;                &lt;/span&gt;&lt;span id="block9Bytes"&gt;&lt;span id="version9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="prevHash9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="merkleRoot9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="timestamp9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="bits9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="nonce9Output" class="outputField"&gt;&lt;/span&gt;&lt;/span&gt;
@@ -985,10 +1117,13 @@ convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt
 
 &lt;/div&gt;
 
+
 &lt;h3 class="heading-with-link" id="heading_hashing_hex_vs_ascii"&gt;
     &lt;a href="#heading_hashing_hex_vs_ascii" title="link to this heading"&gt;
         hashing hex vs ascii
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -1001,8 +1136,13 @@ implemented for a pre-image expressed in bytes. You can see the difference in
 the following form by ticking and unticking the &lt;i&gt;pre-image is hex&lt;/i&gt; checkbox
 and observing how the resulting hash changes:&lt;/p&gt;
 
-&lt;div class="form-container" id="form10"&gt;
-    &lt;a href="#form10"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;div class="form-container annex" id="form10"&gt;
+    &lt;a href="#form10"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;input type="checkbox" id="inputCheckbox10" checked&gt;
     &lt;label for="inputCheckbox10"&gt;pre-image is hex&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
@@ -1011,8 +1151,12 @@ and observing how the resulting hash changes:&lt;/p&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="hash10Results" class="codeblock"&gt;pre-image -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;                &lt;/span&gt;&lt;span id="sha256Output10"&gt;&lt;/span&gt;
@@ -1021,13 +1165,16 @@ pre-image -&gt; SHA256 (little endian) -&gt; &lt;span class="aligner"&gt;&lt;/sp
 
 &lt;/div&gt;
 
+
 &lt;p&gt;That covers most of the nitty-gritty detail regarding the process of hashing
 a Bitcoin block.&lt;/p&gt;
 
 &lt;h3 class="heading-with-link" id="heading_mining_attempts_calculator"&gt;
     &lt;a href="#heading_mining_attempts_calculator" title="link to this heading"&gt;
         mining attempts calculator
-        &lt;i class="fa fa-link fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;svg class="icon icon-chain-90"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
 
@@ -1051,20 +1198,30 @@ average attempts = (16&lt;sup&gt;number of hex digits&lt;/sup&gt;) / 2
 hashes that must be made for a given difficulty:&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form11"&gt;
-    &lt;a href="#form11"&gt;&lt;i class="fa fa-link" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#form11"&gt;
+        &lt;svg class="icon icon-chain"&gt;
+            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+
     &lt;label for="difficulty11" class="for-select"&gt;difficulty&lt;/label&gt;&lt;br&gt;
     &lt;select id="difficulty11"&gt;&lt;/select&gt;
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
-            &lt;i class="fa fa-level-down fa-rotate-90" aria-hidden="true"&gt;&lt;/i&gt;
-            &lt;i class="fa fa-arrows-h" aria-hidden="true" style="display:none;"&gt;&lt;/i&gt;
+            &lt;svg class="icon icon-level-left"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
+            &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
+                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+            &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div id="difficulty11Calculation" class="codeblock"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
+
 
 &lt;p&gt;Of course, a miner may be lucky or unlucky. You will have noticed this when
 you tried mining in the &lt;a href="#form3"&gt;final scenario of the &lt;i&gt;cryptographic
