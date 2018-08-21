@@ -12,8 +12,9 @@
     <meta name="console_explain_scripts" content="{{ SITEURL }}/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|{{ SITEURL }}/js/btc-mining.js - code specifically for the \'how does bitcoin mining work?\' article."/>
 </head>
 <body>
-{% from 'h.html' import h %}
-{% from 'codeblock.html' import codeblock %}
+{% from 'h.html' import h with context %}
+{% from 'form_container.html' import form_container with context %}
+{% from 'codeblock.html' import codeblock with context %}
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -47,8 +48,7 @@ button a few times and look carefully at what this does each time, then try
 typing different things in the <i>pre-image</i> field and clicking the
 <i>SHA256</i> button to see what that does:</p>
 
-<div class="form-container" id="form0">
-    <a href="#form0"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form0', 'start') }}
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
         <input id="inputMessage0" type="text" value="hello world!">
@@ -61,7 +61,7 @@ typing different things in the <i>pre-image</i> field and clicking the
         <span id="hash0Duration"></span>
     </div>
 {{ codeblock('hash0Results', hide = True) }}
-</div>
+{{ form_container('form0', 'end') }}
 
 <p><i>SHA256</i> stands for <i>Secure Hash Algorithm (256 bits)</i>.
 <i>Algorithm</i> sounds complicated but it just means a series of operations
@@ -176,8 +176,7 @@ with <i>SHA256</i> earlier and it gave this result. But if I give you
 then you will not be able to find the pre-image which results in this hash -
 i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 
-<div class="form-container" id="form1">
-    <a href="#form1"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form1', 'start') }}
     <input type="checkbox" id="inputCheckbox1" checked>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
@@ -197,7 +196,7 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 {{ codeblock('codeblock1HashResults', start = True) }}? <span class="aligner"></span>-> SHA256 -> <span id="match1" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults1" style="display:none;"><span id="preImage1"></span> <span class="aligner"></span>-> SHA256 -> <span id="hash1Result" class="individual-digits"></span>
 status: <span id="matchStatus1"></span></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form1', 'end') }}
 
 <p>The difficulty of inverting a <i>SHA256</i> hash is due its enormous length!
 <i>SHA256</i> has approximately 2<sup>256</sup> possible different hash values.
@@ -211,8 +210,7 @@ computers do the hashing at their maximum speeds. If you click the <i>Run SHA256
 Automatically</i> button below then you can have your device cycle through
 pre-images and show you the results at its maximum possible speed:</p>
 
-<div class="form-container" id="form2">
-    <a href="#form2"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form2', 'start') }}
     <input type="checkbox" id="inputCheckbox2" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
@@ -233,7 +231,7 @@ pre-images and show you the results at its maximum possible speed:</p>
 {{ codeblock('codeblock2HashResults', start = True) }}? <span class="aligner"></span>-> SHA256 -> <span id="match2" class="individual-digits">32bd2fb75ea9fdd49c0a9b97b015b47a9cf41f6fc2f773dde97c67bcfc9830c7</span>
 <span id="showResults2" style="display:none;"><span id="preImage2"> </span> <span class="aligner"></span>-> SHA256 -> <span id="hash2Result" class="individual-digits"></span>
 status: <span id="matchStatus2"></span></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form2', 'end') }}
 
 <p><span id="showHowLongForThisDevice" style="display:none;">Using your device's
 average hash rate of <span class="hash2Rate"></span> hashes per second, then we
@@ -293,9 +291,7 @@ after you give it a go. Click the <i>Mine with SHA256</i> button and look
 carefully at what this does. Once you find the solution, try changing the
 difficulty:</p>
 
-<a name="form3"></a>
-<div class="form-container" id="form3">
-    <a href="#form3"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form3', 'start') }}
     <input type="checkbox" id="inputCheckbox3">
     <label for="inputCheckbox3">mine automatically</label>
     <br><br>
@@ -322,7 +318,7 @@ difficulty:</p>
 {{ codeblock('codeblock3HashResults', start = True) }}SHA256 target: <span class="aligner"></span><span id="match3" class="individual-digits">0000000000000000000000000000000000000000000000000000000000000000</span>
 <span id="showResults3" style="display:none;"><span id="preImage3"> </span> -> SHA256 -> <span class="aligner"></span><span id="hash3Result" class="individual-digits"></span>
 status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form3', 'end') }}
 
 <p>In that scenario, your device was the miner. When you passed the test, you
 would give the nonce back to the examiner and it could verify that you did
@@ -463,10 +459,9 @@ the rules governing Bitcoin behaviour).</p>
 in - the current block references the previous block so that blocks build upon
 each other over time, like so:</p>
 
-<div id="dragableBlockchain" class="form-container">
-    <a href="#dragableBlockchain"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('dragableBlockchain', 'start') }}
     <object id="blockchainSVG" data="{{ QS_LINK['/img/bitcoin-blockchain.svg'] }}" type="image/svg+xml"></object>
-</div>
+{{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
 
 <p>Looking at that diagram, we can see that the <i>previous block hash</i> value
@@ -509,8 +504,7 @@ this works. Click the <i>Mine manually with SHA256</i> button a few times and
 have a look at what this does, both to the results area and to the nonce in the
 block header:</p>
 
-<div class="form-container" id="form4">
-<a href="#form4"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form4', 'start') }}
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -546,7 +540,7 @@ block header:</p>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
 status: <span class="aligner">    </span><span id="mineStatus4"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form4', 'end') }}
 
 <p>The data in the simulation block header is actually that of the very first
 bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
@@ -644,15 +638,14 @@ used by Bitcoin.</p>
 human-readable <i>version</i> value to see how this changes the value stored in
 the blockchain:</p>
 
-<div class="form-container annex" id="form5">
-    <a href="#form5"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form5', 'start', 'annex') }}
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
 {{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="version5Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5Bytes"></span>
 convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form5', 'end') }}
 
 <p>Note that <i>converting to
 <a href="https://en.wikipedia.org/wiki/Endianness">little endian</a> format</i>
@@ -665,8 +658,7 @@ currently imposes some restrictions on the permissible date range. Try altering
 the human-readable <i>timestamp</i> value to see how this changes the value
 stored in the blockchain:</p>
 
-<div class="form-container annex" id="form6">
-    <a href="#form6"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form6', 'start', 'annex') }}
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
     <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
     <ul class="error"></ul>
@@ -674,7 +666,7 @@ stored in the blockchain:</p>
 convert to unixtime (integer): <span class="aligner">               </span><span id="timestamp6Unixtime"></span>
 convert to hex (always 4 bytes - big endian): <span class="aligner"></span><span id="timestamp6Bytes"></span>
 convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form6', 'end') }}
 
 {{ h(3, 'bits / difficulty / target') }}
 
@@ -732,8 +724,7 @@ the c++ Bitcoin source code into Javascript which runs on this page. The
 textarea explains exactly what the original Bitcoin source code does to perform
 the conversions.</p>
 
-<div class="form-container annex" id="form7">
-    <a href="#form7"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form7', 'start', 'annex') }}
     <div class="left">
         <label for="difficulty7" class="for-textbox">difficulty</label><br>
         <input id="difficulty7" type="text" class="data-value" size="20" value="1">
@@ -754,7 +745,7 @@ the conversions.</p>
     <ul class="error"></ul>
     <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
 {{ codeblock() }}
-</div>
+{{ form_container('form7', 'end') }}
 
 <p>The Bitcoin source code
 <a href="https://github.com/bitcoin/bitcoin/tree/master/src/test">has unit tests</a>
@@ -786,15 +777,14 @@ tests.</p>
 <p>The human readable <i>nonce</i> is stored in the blockchain as 4 little
 endian bytes:</p>
 
-<div class="form-container annex" id="form8">
-    <a href="#form8"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form8', 'start', 'annex') }}
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
 {{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="nonce8Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8Bytes"></span>
 convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form8', 'end') }}
 
 {{ h(3, 'block hashing in detail') }}
 
@@ -803,8 +793,7 @@ in the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
 80 bytes:</p>
 
-<div class="form-container" id="form9">
-<a href="#form9"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form9', 'start', 'annex') }}
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
@@ -840,7 +829,7 @@ block header -> SHA256 -> <span class="aligner">          </span><span id="first
 convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form9', 'end') }}
 
 {{ h(3, 'hashing hex vs ascii') }}
 
@@ -853,8 +842,7 @@ implemented for a pre-image expressed in bytes. You can see the difference in
 the following form by ticking and unticking the <i>pre-image is hex</i> checkbox
 and observing how the resulting hash changes:</p>
 
-<div class="form-container" id="form10">
-    <a href="#form10"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form10', 'start', 'annex') }}
     <input type="checkbox" id="inputCheckbox10" checked>
     <label for="inputCheckbox10">pre-image is hex</label>
     <br><br>
@@ -862,7 +850,7 @@ and observing how the resulting hash changes:</p>
     <textarea id="inputMessage10">0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c</textarea>
 {{ codeblock('hash10Results', start = True) }}pre-image -> SHA256 -> <span class="aligner">                </span><span id="sha256Output10"></span>
 pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span>{{ codeblock(end = True) }}
-</div>
+{{ form_container('form10', 'end') }}
 
 <p>That covers most of the nitty-gritty detail regarding the process of hashing
 a Bitcoin block.</p>
@@ -888,12 +876,11 @@ average attempts = (16<sup>number of hex digits</sup>) / 2
 <p>I have created a difficulty calculator so you can see the average number of
 hashes that must be made for a given difficulty:</p>
 
-<div class="form-container annex" id="form11">
-    <a href="#form11"><i class="fa fa-link" aria-hidden="true"></i></a>
+{{ form_container('form11', 'start', 'annex') }}
     <label for="difficulty11" class="for-select">difficulty</label><br>
     <select id="difficulty11"></select>
 {{ codeblock('difficulty11Calculation') }}
-</div>
+{{ form_container('form11', 'end') }}
 
 <p>Of course, a miner may be lucky or unlucky. You will have noticed this when
 you tried mining in the <a href="#form3">final scenario of the <i>cryptographic

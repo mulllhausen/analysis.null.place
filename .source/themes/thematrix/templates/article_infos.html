@@ -3,7 +3,8 @@
 <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i> {{ article.author }}</a>
 {% endif %#}
 
-<a href="{{ SITEURL }}/{{ article.category.url }}"><i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ article.category }}</a>
+
+<a href="{{ SITEURL }}/{{ article.category.url }}"><svg class="icon icon-folder-open-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use></svg> {{ article.category }}</a>
 
 {#<span class="label">Date</span>#}
 (<abbr class="published" title="{{ article.date.isoformat() }}">{#<i class="icon-calendar"></i>#}{{ article.locale_date }}</abbr>)

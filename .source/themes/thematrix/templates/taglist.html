@@ -1,5 +1,11 @@
 {% if article.tags %}
 {% for tag in article.tags %}
-	<span class="keep-together"><a href="{{ SITEURL }}/{{ tag.url }}"><i class="fa fa-hashtag" aria-hidden="true"></i>{{ tag }}</a></span>
+	<span class="keep-together">
+        <a href="{{ SITEURL }}/{{ tag.url }}">
+            <svg class="icon icon-hashtag">
+                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use>
+            </svg>{{ tag }}
+        </a>
+    </span>
 {% endfor %}
 {% endif %}

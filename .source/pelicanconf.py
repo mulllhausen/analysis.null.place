@@ -85,4 +85,3 @@ PLUGINS = ['jinja2content_simple', 'querystring-cache']
 
 # uncomment to view facebook comments on localhost
 #FACEBOOK_APP_ID = '2040066019560327'
-#SHOW_FACEBOOK_COMMENTS = True

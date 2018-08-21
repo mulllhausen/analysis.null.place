@@ -2,7 +2,9 @@
 <h{{ heading_type }} class="heading-with-link" id="heading_{{ text | cleanstr }}">
     <a href="#heading_{{ text | cleanstr }}" title="link to this heading">
         {{ text }}
-        <i class="fa fa-link fa-rotate-90" aria-hidden="true"></i>
+        <svg class="icon icon-chain-90">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain-90"></use>
+        </svg>
     </a>
 </h{{ heading_type }}>
 {%- endmacro -%}

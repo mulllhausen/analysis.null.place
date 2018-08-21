@@ -1,0 +1,13 @@
+{%- macro form_container(id, piece, extra_classes = None) -%}
+{% if piece == 'start' %}
+<div class="form-container{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
+    <a href="#{{ id }}">
+        <svg class="icon icon-chain">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
+        </svg>
+    </a>
+{% endif %}
+{% if piece == 'end' %}
+</div>
+{% endif %}
+{%- endmacro -%}

@@ -2,25 +2,50 @@
 <div class="comments info-box">
     <div class="choose-comments-platform">
         Comment with your preferred platform:
-        {% if FACEBOOK_APP_ID %}
-        <span class="comment-with fb"><i class="fa fa-facebook" aria-hidden="true"></i></span>
-        {# this functionality is deprecated by the facebook api:
-        <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/{{ article.url }}">0</span>
-        previously it would automatically populate the span with a comment count #}
-        <span class="comments-count fb-comment-count">0</span>
-        {% endif %}
-        {% if DISQUS_SITENAME %}
-        <span class="comment-with disqus"><img src="{{ QS_LINK['/theme/img/disqus_logo.png'] }}" alt="Disqus"></span>
-        <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
-        {% endif %}
+        <span class="keep-together">
+            {% if FACEBOOK_APP_ID %}
+            <div class="comment-with fb">
+                <svg class="icon icon-facebook-square">
+                    <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-facebook-square"></use>
+                </svg>
+            </div>
+            {# this functionality is deprecated by the facebook api:
+            <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/{{ article.url }}">0</span>
+            previously it would automatically populate the span with a comment count #}
+            <span class="comments-count fb-comment-count">0</span>
+            {% endif %}
+            {% if DISQUS_SITENAME %}
+            <div class="comment-with disqus">
+                <svg class="icon icon-disqus">
+                    <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-disqus"></use>
+                </svg>
+            </div>
+            <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
+            {% endif %}
+        </span>
     </div>
     {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
     {% if FACEBOOK_APP_ID %}<div id="fb-root"></div>
     <div class="fb-comments-loader">
-        <span class="fa-stack">
-            <i class="fa fa-circle-o-notch fa-stack-2x fa-spin" aria-hidden="true"></i>
-            <i class="fa fa-facebook fa-stack-1x" aria-hidden="true"></i>
-        </span>
+        <div class="fb-comments-loader-inner">
+            <svg class="icon icon-circle-o-notch">
+                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
+                    <animateTransform
+                        attributeType="xml"
+                        attributeName="transform"
+                        type="rotate"
+                        from="-360 32 32"
+                        to="0 32 32"
+                        dur="2s"
+                        additive="sum"
+                        repeatCount="indefinite"
+                    />
+                </use>
+            </svg>
+            <svg class="icon icon-facebook">
+                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-facebook"></use>
+            </svg>
+        </div>
     </div>
     <div class="fb-comments"
         data-href="{{ SITEURL }}/{{ article.url }}"
