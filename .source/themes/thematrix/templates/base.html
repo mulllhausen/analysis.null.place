@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
-        {# le styles  (must come before all scripts) #}
+        {# le styles (must come before all scripts) #}
         <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
         {% if (article and article.stylesheets) %}
             {% set stylesheets = article.stylesheets.split(',') %}
@@ -144,9 +144,6 @@
                 }, 500);
             });
         </script>
-
-        {# fontawesome recommended putting this link the top of the head section, however it seems to work here #}
-        <script src="https://use.fontawesome.com/95559d6484.js"></script>
 
         <script src="{{ QS_LINK['/theme/js/autofooter.js'] }}"></script>
 
