@@ -65,10 +65,19 @@ DELETE_OUTPUT_DIRECTORY = False
 GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
 
 STATIC_PATHS = ['img', 'js', 'css', 'json']
+# files that will be merged by the static-file-merge plugin
+STATIC_FILE_MERGES = {
+    'js/base.js': [
+        'js/polyfills.js',
+        'js/utils.js',
+        'js/matrix-animation.js',
+        'js/autofooter.js'
+    ]
+}
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']
-PLUGINS = ['jinja2content_simple', 'querystring-cache']
+PLUGINS = ['static-file-merge', 'jinja2content_simple', 'querystring-cache']
 
 # debug settings:
 

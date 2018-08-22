@@ -130,9 +130,7 @@
         </footer>
 
         {# le javascript - at the end of the document so the pages load faster #}
-        <script src="{{ QS_LINK['/theme/js/polyfills.js'] }}"></script>
-        <script src="{{ QS_LINK['/theme/js/utils.js'] }}"></script>
-        <script src="{{ QS_LINK['/theme/js/matrix-animation.js'] }}"></script>
+        <script src="{{ QS_LINK['/theme/js/base.js'] }}"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
             var timeout_id_resize_logo;
@@ -144,8 +142,6 @@
                 }, 500);
             });
         </script>
-
-        <script src="{{ QS_LINK['/theme/js/autofooter.js'] }}"></script>
 
         {% if article %}
             {% if article.scripts %}
