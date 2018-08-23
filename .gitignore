@@ -1,2 +1,4 @@
 *.pyc
-static/js/base.js
+
+# ignore built files under the .source dir
+.source/themes/thematrix/static/js/base.js
