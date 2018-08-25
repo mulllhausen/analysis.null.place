@@ -77,7 +77,11 @@ STATIC_FILE_MERGES = {
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']
-PLUGINS = ['static-file-merge', 'jinja2content_simple', 'querystring-cache']
+PLUGINS = [
+    'static-file-merge',
+    'jinja2content_simple',
+    'querystring-cache'
+]
 
 # debug settings:
 

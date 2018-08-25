@@ -1396,7 +1396,7 @@ function bits(target, levelOfDetail) {
             right: null
         });
         for (var nbits = 31; nbits > 0; nbits--) {
-            if (int32 & (2 ** nbits)) {
+            if (int32 & Math.pow(2, nbits)) {
                 var size = (32 * pos) + nbits + 1;
                 if (levelOfDetail >= 2) {
                     results.steps.push({
@@ -1551,7 +1551,7 @@ function getCompact(target, negative, levelOfDetail) {
     }
     // bitcoin src uses:
     // nCompact |= nSize << 24;
-    compact |= (results.size * (2 ** 24)); // splice size into bits value
+    compact |= (results.size * Math.pow(2, 24)); // splice size into bits value
     if (levelOfDetail >= 2) results.steps.push({
         left: 'combine the \'size\' and \'compact\' to get \'bits\'',
         right: '0x' + int2hex(compact, 8) + ' = ' + compact
@@ -1665,7 +1665,7 @@ function difficulty2bits(difficulty, levelOfDetail) {
         right: difficulty
     });
     for (var shiftBytes = 1; true; shiftBytes++) {
-        var word = (0x00ffff * (0x100 ** shiftBytes)) / difficulty;
+        var word = (0x00ffff * Math.pow(0x100, shiftBytes)) / difficulty;
         var wordHex = word < 1 ? '' : '0x' + int2hex(word, 6) + ' = ';
         if (levelOfDetail >= 2) results.steps.push({
             left: 'when \'shift\' = ' + shiftBytes + ', \'word\'',

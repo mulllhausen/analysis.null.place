@@ -27,3 +27,6 @@ FACEBOOK_APP_ID = '2040066019560327'
 GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
 
 DISQUS_SITENAME = 'analysis-null-place'
+
+# add the plugins only used when publishing
+PLUGINS += ['yuicompressor']
