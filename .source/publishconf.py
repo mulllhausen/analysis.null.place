@@ -18,6 +18,7 @@ FEED_ALL_ATOM = 'feeds/all.atom.xml'
 FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 DELETE_OUTPUT_DIRECTORY = False
+DELETE_PRE_MERGE_FILES = True
 
 GOOGLE_ANALYTICS_TRACKING_ID = 'UA-110200325-1'
 
@@ -27,3 +28,6 @@ FACEBOOK_APP_ID = '2040066019560327'
 GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
 
 DISQUS_SITENAME = 'analysis-null-place'
+
+# add the plugins only used when publishing
+PLUGINS += ['yuicompressor']

@@ -130,6 +130,7 @@
         </footer>
 
         {# le javascript - at the end of the document so the pages load faster #}
+        <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
         <script src="{{ QS_LINK['/theme/js/base.js'] }}"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
