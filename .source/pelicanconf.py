@@ -74,6 +74,7 @@ STATIC_FILE_MERGES = {
         'js/autofooter.js'
     ]
 }
+DELETE_PRE_MERGE_FILES = False
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']

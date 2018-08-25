@@ -32,5 +32,17 @@ def static_file_merge(pelican_obj):
         with codecs.open(dest_abs, encoding = 'utf-8', mode = 'w') as f:
             f.write(merged_content)
 
+    # if we do not need to delete the pre-merged files then exit here
+    if not pelican_obj.settings['DELETE_PRE_MERGE_FILES']:
+        return
+
+    # we need a new loop to delete files. cannot use the earlier loop in case
+    # the same source file is used multiple times
+    for (dest_rel, sources_rel) in pelican_obj.settings['STATIC_FILE_MERGES']. \
+    iteritems():
+        for source_rel in sources_rel:
+            source_abs = os.path.join(full_static_path, source_rel)
+            os.remove(source_abs)
+
 def register():
     signals.initialized.connect(static_file_merge)
