@@ -425,7 +425,7 @@ canvas.matrix-text-green, canvas.matrix-text-white {
     left: 0;
     z-index: 2;
 }
-img#logo_img {
+.logo-img {
     width: 100%;/* expand to the width of .logo-cropper*/
     position: relative;
     z-index: 3;
