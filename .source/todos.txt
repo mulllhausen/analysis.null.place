@@ -2,6 +2,6 @@
 - add google ads
 - add <noscript></noscript>
 - fix the footer and page scrollbar
-- change images to jpeg2000 format
+- change images to webp format
 - add service workers to cache when offline
 - make id of the logo unique
