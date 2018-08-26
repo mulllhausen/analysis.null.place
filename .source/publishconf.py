@@ -18,7 +18,9 @@ FEED_ALL_ATOM = 'feeds/all.atom.xml'
 FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 DELETE_OUTPUT_DIRECTORY = False
-DELETE_PRE_MERGE_FILES = True
+
+# don't delete pre-merge files - use .gitignore instead
+DELETE_PRE_MERGE_FILES = False
 
 GOOGLE_ANALYTICS_TRACKING_ID = 'UA-110200325-1'
 
