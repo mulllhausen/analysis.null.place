@@ -1,6 +1,7 @@
-- configure for google amp viewer
-- once a real article is merged, test css on ie then delete anything not needed (eg .content width)
+- configure for google amp viewer?
 - add google ads
-- create fallbacks for cdn files
-- give all headings id links
 - add <noscript></noscript>
+- fix the footer and page scrollbar
+- change images to jpeg2000 format
+- add service workers to cache when offline
+- make id of the logo unique

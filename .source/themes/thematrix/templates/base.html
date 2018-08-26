@@ -130,6 +130,7 @@
         </footer>
 
         {# le javascript - at the end of the document so the pages load faster #}
+        {% include 'js_globals.html' %}
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
         <script src="{{ QS_LINK['/theme/js/base.js'] }}"></script>
         <script>
@@ -155,7 +156,8 @@
             {% include 'facebook_script.html' %}
             {% include 'comments_script.html' %}
         {% endif %}
-        {% include 'console_greeter.html' %}
+        {# load the console greeter later since it does not need to be available so quick #}
+        <script src="{{ QS_LINK['/theme/js/console-greeter.js'] }}"></script>
         {% include 'piwik.html' %}
     </body>
 </html>
