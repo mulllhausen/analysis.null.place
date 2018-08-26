@@ -1,5 +1,10 @@
+{#
+this script tracks visitors to the site. obviously, they can only be tracked if
+this script runs before they leave the page. so make sure to put it somewhere
+where it gets called very soon after the page loads. stackoverflow.com/q/3173571
+i have opted to use a preload and put this at the end of the html body.
+#}
 {% if GOOGLE_ANALYTICS_TRACKING_ID %}
-{% if (not article) or (article.status != "draft") %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_TRACKING_ID }}"></script>
     <script>
@@ -8,5 +13,4 @@
         gtag('js', new Date());
         gtag('config', '{{ GOOGLE_ANALYTICS_TRACKING_ID }}');
     </script>
-{% endif %}
 {% endif %}

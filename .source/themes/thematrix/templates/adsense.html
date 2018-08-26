@@ -1,5 +1,5 @@
+{# todo: move this to the end of the body and preload once ads are granted #}
 {% if GOOGLE_AD_CLIENT %}
-{% if (not article) or (article.status != "draft") %}
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({
@@ -7,5 +7,4 @@
             enable_page_level_ads: true
         });
     </script>
-{% endif %}
 {% endif %}

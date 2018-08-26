@@ -2,6 +2,11 @@
 <link rel="preload" as="image" href="{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}"/>
 <link rel="preload" as="image" href="{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}"/>
 <link rel="preload" as="script" href="{{ QS_LINK['/theme/js/base.js'] }}"/>
+
+{% if GOOGLE_ANALYTICS_TRACKING_ID %}
+<link rel="preload" as="script" href="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_TRACKING_ID }}"/>
+{% endif %}
+
 {% if article %}
     {% if article.scripts %}
         {% set scripts = article.scripts.split(',') %}
