@@ -2,3 +2,9 @@
 
 # ignore built files under the .source dir
 .source/themes/thematrix/static/js/base.js
+
+# ignore pre-merge files in the output dir
+theme/js/autofooter.js
+theme/js/matrix-animation.js
+theme/js/polyfills.js
+theme/js/utils.js
