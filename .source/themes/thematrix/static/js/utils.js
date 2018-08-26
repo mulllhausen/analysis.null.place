@@ -367,6 +367,7 @@ function browserDetect() {
         blink: isBlink
     };
 }
+siteGlobals.browser = browserDetect();
 
 // events for all pages
 
