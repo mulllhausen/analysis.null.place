@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
             {% endfor %}
         {% endif %}
-        {% include 'google_analytics.html' %}
 
         {# le preloads #}
         {% include 'preloads.html' %}
@@ -156,6 +155,7 @@
             {% include 'facebook_script.html' %}
             {% include 'comments_script.html' %}
         {% endif %}
+        {% include 'google_analytics.html' %}
         {# load the console greeter later since it does not need to be available so quick #}
         <script src="{{ QS_LINK['/theme/js/console-greeter.js'] }}"></script>
         {% include 'piwik.html' %}
