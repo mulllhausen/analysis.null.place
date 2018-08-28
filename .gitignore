@@ -8,3 +8,4 @@ theme/js/autofooter.js
 theme/js/matrix-animation.js
 theme/js/polyfills.js
 theme/js/utils.js
+theme/js/register-service-worker.js
