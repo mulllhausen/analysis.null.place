@@ -1239,4 +1239,8 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 0. But what if the miners are so fast that they can hash at more than
 4,294,967,295 hashes per second? In that case they can change some redundant
 data in the first transaction of the block they are currently mining and reset
-the nonce to 0.&lt;/p&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>
+the nonce to 0.&lt;/p&gt;
+&lt;script&gt;
+    if (typeof siteGlobals === 'undefined') var siteGlobals = {};
+    siteGlobals.unittestBitsJSON = 'https://null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4';
+&lt;/script&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>

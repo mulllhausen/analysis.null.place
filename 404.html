@@ -7,7 +7,7 @@
 <link rel="preload" as="image" href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU"/>
 <link rel="preload" as="image" href="https://null.place/theme/img/shattered-glass-2b.png?hash=xZglIfe9jc3JEEEFSTMZvUIt5VWfKS_5LJH6XBVoWpI"/>
 <link rel="preload" as="image" href="https://null.place/theme/img/shattered-glass-black.png?hash=DsMJmVokM2LTMF4Z9aPpwkFDqO1ovQPNKh9dNuLaFSg"/>
-<link rel="preload" as="script" href="https://null.place/theme/js/base.js?hash=c9AtquJC7dRZoRkWlTEitSaEoEsHp6MB32ZmWV3L524"/>
+<link rel="preload" as="script" href="https://null.place/theme/js/base.js?hash=uLPSuXp77nPAstp2BrkBqCAZuisQYWzj-FqDdCr8rq4"/>
 
 <link rel="preload" as="script" href="https://www.googletagmanager.com/gtag/js?id=UA-110200325-1"/>
 
@@ -155,9 +155,9 @@
         </footer>
 
 <script>
-var siteGlobals = {
-    sitename: 'analysis',
-    sitenameASCIIArt: "\n" +
+if (typeof siteGlobals === 'undefined') var siteGlobals = {};
+siteGlobals.sitename = 'analysis';
+siteGlobals.sitenameASCIIArt = "\n" +
 "                    _           _      \n" +
 "                   | |         (_)     \n" +
 "   __ _ _ __   __ _| |_   _ ___ _ ___  \n" +
@@ -165,11 +165,11 @@ var siteGlobals = {
 " | (_| | | | | (_| | | |_| \\__ \\ \\__ \\ \n" +
 "  \\__,_|_| |_|\\__,_|_|\\__, |___/_|___/ \n" +
 "                       __/ |           \n" +
-"                      |___/            ",
-    githubURL: 'https://github.com/mulllhausen/mulllhausen.github.io',
-    siteURL: 'https://null.place'};
+"                      |___/            ";
+siteGlobals.githubURL = 'https://github.com/mulllhausen/mulllhausen.github.io';
+siteGlobals.siteURL = 'https://null.place';
 </script>        <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
-        <script src="https://null.place/theme/js/base.js?hash=c9AtquJC7dRZoRkWlTEitSaEoEsHp6MB32ZmWV3L524"></script>
+        <script src="https://null.place/theme/js/base.js?hash=uLPSuXp77nPAstp2BrkBqCAZuisQYWzj-FqDdCr8rq4"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
             var timeout_id_resize_logo;
