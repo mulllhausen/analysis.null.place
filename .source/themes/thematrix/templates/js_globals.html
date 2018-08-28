@@ -1,13 +1,13 @@
 {# make pelican variables available to js #}
 <script>
-var siteGlobals = {
-    sitename: '{{ SITENAME }}',
-    sitenameASCIIArt: "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}",
-    githubURL: '{{ GITHUB_URL }}',
-    siteURL: '{{ SITEURL }}'{% if article %},
-    article: {
-        {% if article.title %}title: '{{ article.title }}'{% endif %}{% if article.console_explain_scripts %},
-        consoleExplainScripts: '{{ article.console_explain_scripts }}'{% endif %}
-    }{% endif %}
-};
+if (typeof siteGlobals === 'undefined') var siteGlobals = {};
+siteGlobals.sitename = '{{ SITENAME }}';
+siteGlobals.sitenameASCIIArt = "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}";
+siteGlobals.githubURL = '{{ GITHUB_URL }}';
+siteGlobals.siteURL = '{{ SITEURL }}';
+{% if article %}
+    if (!siteGlobals.hasOwnProperty('article')) siteGlobals.article = {};
+    {% if article.title %}siteGlobals.article.title = '{{ article.title }}';{% endif %}
+    {% if article.console_explain_scripts %}siteGlobals.article.consoleExplainScripts = '{{ article.console_explain_scripts }}';{% endif %}
+{% endif %}
 </script>

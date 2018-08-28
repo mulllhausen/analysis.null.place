@@ -39,7 +39,8 @@ AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
 DIRECT_TEMPLATES = [
-    'index', 'tags', 'categories', 'archives', 'sitemap', 'robots', 'CNAME'
+    'index', 'tags', 'categories', 'archives', 'sitemap', 'robots', 'CNAME',
+    'sw'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
@@ -48,6 +49,7 @@ ARCHIVES_SAVE_AS = 'archives/index.html'
 SITEMAP_SAVE_AS = 'sitemap.xml'
 ROBOTS_SAVE_AS = 'robots.txt'
 CNAME_SAVE_AS = 'CNAME'
+SW_SAVE_AS = 'sw.js'
 
 ARTICLE_URL = '{category}/{slug}/'
 ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
@@ -71,7 +73,8 @@ STATIC_FILE_MERGES = {
         'js/polyfills.js',
         'js/utils.js',
         'js/matrix-animation.js',
-        'js/autofooter.js'
+        'js/autofooter.js',
+        'js/register-service-worker.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False

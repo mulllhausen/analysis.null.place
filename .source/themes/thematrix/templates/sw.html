@@ -1,0 +1,62 @@
+{#
+this is the service worker javascript file. it must be saved to the root
+directory of the site so that it has the scope to cache any file in the site. it
+is located in the templates dir so that it can be saved to the root directory of
+the site at build and also so that it can use jinja variables.
+#}
+var version = 'analysis-null-place-v1';
+self.addEventListener('install', function (event) {
+    event.waitUntil(
+        caches.open(version).then(function (cache) {
+            return cache.addAll([
+                // common assets for all pages
+                '{{ QS_LINK['/theme/img/icons.svg'] }}',
+                '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
+                '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
+                '{{ QS_LINK['/theme/js/base.js'] }}',
+                '{{ QS_LINK['/theme/css/thematrix.css'] }}',
+                '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
+
+                // home page
+                '/',
+                '/index.html',
+
+                // archives page
+                '/archives/',
+                '/archives/index',
+
+                // tags pages
+                '/tags/',
+                '/tags/index.html',
+                '/tag/bitcoin/',
+                '/tag/bitcoin/index.html',
+                '/tag/mining/',
+                '/tag/mining/index.html',
+                '/tag/proof-of-work/',
+                '/tag/proof-of-work/index.html',
+
+                // 'how does bitcoin mining work' article page
+                '/cryptocurrencies/how-does-bitcoin-mining-work/',
+                '/cryptocurrencies/how-does-bitcoin-mining-work/index.html',
+                '{{ QS_LINK['/js/sjcl.min.js'] }}',
+                '{{ QS_LINK['/js/btc-mining.js'] }}',
+                '{{ QS_LINK['/img/hashing-flowchart.svg'] }}',
+                '{{ QS_LINK['/img/bitcoin-blockchain.svg'] }}',
+                '{{ QS_LINK['/css/btc.css'] }}',
+                '/json/btc_txs_per_block_0-999.json',
+                '/json/hex-trial-attempts.json',
+                '{{ QS_LINK['/json/unittest-bits.json'] }}'
+            ]);
+        })
+    );
+});
+
+self.addEventListener('fetch', function (event) {
+    console.log('service worker request: ' + event.request.url);
+
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+        })
+    );
+});
