@@ -1,8 +1,8 @@
 {#
-this is the service worker javascript file. it must be saved to the root
+this is the service worker javascript file (sw.js). it must be saved to the root
 directory of the site so that it has the scope to cache any file in the site. it
 is located in the templates dir so that it can be saved to the root directory of
-the site at build and also so that it can use jinja variables.
+the site at build-time, and also so that it can use pelican variables.
 #}
 var version = 'analysis-null-place-v1';
 self.addEventListener('install', function (event) {
@@ -34,6 +34,10 @@ self.addEventListener('install', function (event) {
                 '/tag/mining/index.html',
                 '/tag/proof-of-work/',
                 '/tag/proof-of-work/index.html',
+
+                // cryptocurrencies folder
+                '/cryptocurrencies/',
+                '/cryptocurrencies/index.html',
 
                 // 'how does bitcoin mining work' article page
                 '/cryptocurrencies/how-does-bitcoin-mining-work/',
