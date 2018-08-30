@@ -1,0 +1,25 @@
+{#
+this file becomes /theme/js/manifest.json in the root dir of the site. it
+enables the user to add the site to their home screen.
+#}
+{
+    "short_name": "Analysis",
+    "name": "Analysis",
+    "icons": [
+        {
+            "src": "{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }}",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "{{ QS_LINK['/theme/img/shattered-glass-matrix-266x266.png'] }}",
+            "type": "image/png",
+            "sizes": "266x266"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
+}

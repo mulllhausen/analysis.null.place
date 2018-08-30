@@ -3,6 +3,5 @@
 - add <noscript></noscript>
 - fix the footer and page scrollbar
 - change images to webp format
-- add service workers to cache when offline
 - make id of the logo unique
 - fix for firefox tracking protection https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Privacy/Tracking_Protection

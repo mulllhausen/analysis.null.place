@@ -67,6 +67,7 @@
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" title="{{ SITENAME }} ATOM Feed"/>
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" title="{{ SITENAME }} RSS Feed"/>
         {% include 'adsense.html' %}
+        <link rel="manifest" href="{{ SITEURL }}/theme/js/manifest.json"/>
     </head>
 
     <body>
