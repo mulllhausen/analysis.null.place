@@ -40,7 +40,7 @@ AUTHOR_SAVE_AS = ''
 
 DIRECT_TEMPLATES = [
     'index', 'tags', 'categories', 'archives', 'sitemap', 'robots', 'CNAME',
-    'sw'
+    'sw', 'manifest'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
@@ -50,6 +50,7 @@ SITEMAP_SAVE_AS = 'sitemap.xml'
 ROBOTS_SAVE_AS = 'robots.txt'
 CNAME_SAVE_AS = 'CNAME'
 SW_SAVE_AS = 'sw.js'
+MANIFEST_SAVE_AS = 'theme/js/manifest.json'
 
 ARTICLE_URL = '{category}/{slug}/'
 ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
