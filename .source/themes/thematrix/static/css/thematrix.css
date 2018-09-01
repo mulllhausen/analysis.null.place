@@ -641,7 +641,7 @@ blockquote {
     vertical-align: middle;
     padding-bottom: 1px;
 }
-.comment-with.selected, .comment-with:hover {
+.comment-with.selected, .comment-with:hover:not(.disallow-selection) {
     cursor: pointer;
     border: 1px solid #6a6a6a;
 }
@@ -655,7 +655,7 @@ blockquote {
     padding: 0 3px;
     border-radius: 20px;
 }
-.fb-offline, .disqus-offline {
+.platform-offline {
     color: #7db904;/*green*/
     position: relative;
     width: 100%;
@@ -664,7 +664,7 @@ blockquote {
     margin: 30px 0;
     display: none;/*initially hidden*/
 }
-.fb-comments-loader {
+.platform-comments-loader {
     position: relative;
     width: 100%;
     height: 2em;
@@ -673,7 +673,7 @@ blockquote {
     margin: 30px 0;
     display: none;/*initially hidden*/
 }
-.fb-comments-loader-inner {
+.platform-comments-loader-inner {
     position: relative;
     display: inline-block;
     width: 2em;
@@ -681,7 +681,7 @@ blockquote {
     line-height: 2em;
     vertical-align: middle;
 }
-.fb-comments-loader .icon {
+.platform-comments-loader .icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -689,10 +689,10 @@ blockquote {
     right: 0;
     text-align: center;
 }
-.fb-comments-loader .icon-circle-o-notch {
+.platform-comments-loader .icon-circle-o-notch {
     font-size: 2em;
 }
-.fb-comments-loader .icon-facebook {
+.platform-comments-loader .icon-platform {
     font-size: 0.7em;
     padding: 0.95em;
 }

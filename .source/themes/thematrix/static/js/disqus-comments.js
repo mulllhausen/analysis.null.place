@@ -9,20 +9,27 @@ var disqus_config = function () {
 };
 function loadDisqusPlatform() {
     // this function is called when the disqus button is first clicked
+    document.getElementById('disqusCommentsLoader').style.display = 'block';
     document.querySelector('.disqus-comments').style.marginBottom = '50px';
 
     // warn user when disqus is inaccessible after 15 seconds
-    siteGlobals.disqusCommentsLoadingTimer = setTimeout(disqusOffline, 15 * 1000);
+    siteGlobals.events.disqusCommentsLoadingTimer =
+    setTimeout(disqusOffline, 15 * 1000);
 
     (function () {
         var d = document, s = d.createElement('script');
         s.src = 'https://' + siteGlobals.disqusSiteName + '.disqus.com/embed.js';
+        s.id = 'disqus-script';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
 }
 function disqusOffline() {
-    document.querySelector('.disqus-offline').style.display = 'block';
+    document.getElementById('disqusOffline').style.display = 'block';
+    // remove the facebook script from the page so that the user can try again
+    deleteElementById('disqus-script');
+    document.getElementById('disqusCommentsLoader').style.display = 'none';
+    platformOffline();
 }
 function disqusCommentUpdated(data) {
     // update the comment count. beware the 10 minute delay
@@ -33,9 +40,10 @@ function disqusCommentUpdated(data) {
     DISQUSWIDGETS.getCount({ reset: true });
 }
 function disqusReady(data) {
-    clearTimeout(siteGlobals.disqusCommentsLoadingTimer);
-    document.querySelector('.disqus-offline').style.display = 'none';
+    siteGlobals.loadedCommentsPlatforms.push('Disqus'); // as per siteGlobals.commentsPlatforms
+    clearTimeout(siteGlobals.events.disqusCommentsLoadingTimer);
     document.querySelector('.disqus-comments').style.marginBottom = '0px';
+    commentsLoaded();
 }
 function disqusUpdateCommentCount() {
     ajax(

@@ -24,16 +24,41 @@
             {% endif %}
         </span>
     </div>
-    {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
-    {% if FACEBOOK_APP_ID %}<div id="fb-root"></div>
-    <div class="fb-offline">
-        <span>Facebook could not be reached. Are you offline?</span>
+
+    {% if DISQUS_SITENAME %}
+    <div id="disqus_thread" class="disqus-comments platform-comments">
+        {# disqus deletes things here once it loads #}
+        <div id="disqusCommentsLoader" class="platform-comments-loader">
+            <div class="platform-comments-loader-inner">
+                <svg class="icon icon-circle-o-notch">
+                    <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
+                        <animateTransform
+                            attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="-360 32 32"
+                            to="0 32 32"
+                            dur="2s"
+                            additive="sum"
+                            repeatCount="indefinite"
+                        />
+                    </use>
+                </svg>
+                <svg class="icon icon-disqus icon-platform">
+                    <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-disqus"></use>
+                </svg>
+            </div>
+        </div>
+        <div id="disqusOffline" class="platform-offline">
+            <span>Disqus could not be reached. Are you offline?</span>
+        </div>
     </div>
-    <div class="disqus-offline">
-        <span>Disqus could not be reached. Are you offline?</span>
-    </div>
-    <div class="fb-comments-loader">
-        <div class="fb-comments-loader-inner">
+    {% endif %}
+
+    {% if FACEBOOK_APP_ID %}
+    <div id="fb-root"></div>
+    <div id="fbCommentsLoader" class="platform-comments-loader">
+        <div class="platform-comments-loader-inner">
             <svg class="icon icon-circle-o-notch">
                 <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
                     <animateTransform
@@ -48,18 +73,22 @@
                     />
                 </use>
             </svg>
-            <svg class="icon icon-facebook">
+            <svg class="icon icon-facebook icon-platform">
                 <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-facebook"></use>
             </svg>
         </div>
     </div>
-    <div class="fb-comments"
+    <div id="fbOffline" class="platform-offline">
+        <span>Facebook could not be reached. Are you offline?</span>
+    </div>
+    <div class="fb-comments platform-comments"
         data-href="{{ SITEURL }}/{{ article.url }}"
         data-numposts="20"
         data-colorscheme="dark"
         data-order-by="reverse_time"
         data-width="100%"
-    ></div>{% endif %}
+    >{# fb doesn't like having things here - it fails to load #}</div>
+    {% endif %}
 </div>
 {% endif %}
 {% if DISQUS_SITENAME %}{# update the disqus comments count #}

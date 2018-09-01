@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
+        <title>{{ SITENAME }}</title>
         {# le styles (must come before all scripts) #}
         <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
         {% if (article and article.stylesheets) %}
@@ -14,7 +15,6 @@
         {# le preloads #}
         {% include 'preloads.html' %}
 
-        <title>{{ SITENAME }}</title>
         <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, user-scalable=no"/>
         <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
         <meta name="author" content="{{ AUTHOR }}"/>
@@ -66,6 +66,7 @@
 
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" title="{{ SITENAME }} ATOM Feed"/>
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" title="{{ SITENAME }} RSS Feed"/>
+        {% include 'js_globals.html' %}
         {% include 'adsense.html' %}
         <link rel="manifest" href="{{ SITEURL }}/theme/js/manifest.json"/>
     </head>
@@ -130,7 +131,6 @@
         </footer>
 
         {# le javascript - at the end of the document so the pages load faster #}
-        {% include 'js_globals.html' %}
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
         <script src="{{ QS_LINK['/theme/js/base.js'] }}"></script>
         <script>
