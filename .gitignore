@@ -2,10 +2,16 @@
 
 # ignore built files under the .source dir
 .source/themes/thematrix/static/js/base.js
+.source/themes/thematrix/static/js/comments-section.js
 
-# ignore pre-merge files in the output dir
+# ignore files that get merged into base.js:
 theme/js/autofooter.js
 theme/js/matrix-animation.js
 theme/js/polyfills.js
 theme/js/utils.js
 theme/js/register-service-worker.js
+
+# ignore files that get merged into comments-section.js:
+theme/js/comments-manager.js
+theme/js/facebook-comments.js
+theme/js/disqus-comments.js

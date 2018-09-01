@@ -26,6 +26,12 @@
     </div>
     {% if DISQUS_SITENAME %}<div id="disqus_thread" class="disqus-comments"></div>{% endif %}
     {% if FACEBOOK_APP_ID %}<div id="fb-root"></div>
+    <div class="fb-offline">
+        <span>Facebook could not be reached. Are you offline?</span>
+    </div>
+    <div class="disqus-offline">
+        <span>Disqus could not be reached. Are you offline?</span>
+    </div>
     <div class="fb-comments-loader">
         <div class="fb-comments-loader-inner">
             <svg class="icon icon-circle-o-notch">
@@ -55,4 +61,7 @@
         data-width="100%"
     ></div>{% endif %}
 </div>
+{% endif %}
+{% if DISQUS_SITENAME %}{# update the disqus comments count #}
+<script id="dsq-count-scr" src="https://{{ DISQUS_SITENAME }}.disqus.com/count.js" async></script>
 {% endif %}

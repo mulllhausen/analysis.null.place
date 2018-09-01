@@ -7,6 +7,7 @@
 
     // all browsers except IE support colors in the console
     var styleConsoleSupport = !siteGlobalsCopy.browser.ie;
+    var console1024CharLimit = siteGlobalsCopy.browser.ie;
 
     if (fullConsoleSupport) {
         var group = function(text, styleOverride) {
@@ -39,9 +40,27 @@
         header += siteGlobalsCopy.sitenameASCIIArt;
     }
     function logEnd() {
-        if (fullConsoleSupport) return;
-        if (styleConsoleSupport) console.log('%c' + logText, styles);
-        else console.log(logText);
+        if (fullConsoleSupport) return; // everything has already been done
+        if (styleConsoleSupport) {
+            console.log('%c' + logText, styles);
+            return;
+        }
+        if (console1024CharLimit) {
+            var logArray = logText.split('\n');
+            var printChunk = [];
+            var chunkLength = 0;
+            foreach(logArray, function (i, line) {
+                chunkLength += line.length + 1; // +1 for '\n'.length
+                if (chunkLength > 1024) {
+                    console.log(printChunk.join('\n'));
+                    printChunk = [];
+                    chunkLength = line.length + 1;
+                }
+                printChunk.push(line); // append
+            });
+            return;
+        }
+        console.log(logText);
     }
     group(header + ' blog', styles + 'font-size: x-large;');
     log('');
@@ -51,17 +70,27 @@
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/polyfills.js - polyfills to get this site working on older browsers');
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/utils.js - common functions used on many pages');
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/matrix-animation.js - code to animate the matrix logo');
+    log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/register-service-worker.js');
     groupEnd();
+    log('The service worker Javascript file is ' + siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/templates/sw.html');
+    log(''); // empty line
     if (siteGlobalsCopy.hasOwnProperty('article')) {
+        if (siteGlobalsCopy.commentsPlatforms.length > 0) {
+            group('All articles have a comments section, which is handled by ' + siteGlobalsCopy.siteURL + '/theme/js/comments-section.js. This file is built by merging and minifying the following files:');
+            log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/comments-manager.js');
+            if (inArray('FB', siteGlobalsCopy.commentsPlatforms)) log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/facebook-comments.js');
+            if (inArray('Disqus', siteGlobalsCopy.commentsPlatforms)) log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/disqus-comments.js');
+            groupEnd();
+        }
         if (siteGlobalsCopy.article.hasOwnProperty('consoleExplainScripts')) {
-            group('The Javascript files for the \'' + siteGlobalsCopy.article.title + '\' article are:');
+            group('The Javascript files specifically for the \'' + siteGlobalsCopy.article.title + '\' article are:');
                 var consoleExplanations = siteGlobalsCopy.article.consoleExplainScripts.split('|');
                 foreach(consoleExplanations, function (i, consoleExp) {
                     log(siteGlobalsCopy.githubURL + '/tree/master/.source/content/' + consoleExp);
                 });
             groupEnd();
         } else {
-            log('There are no Javascript files for the \'' + siteGlobalsCopy.article.title + '\' article.');
+            log('There are no Javascript files specifically for the \'' + siteGlobalsCopy.article.title + '\' article.');
         }
     } else {
         log('Please navigate to an article to view the Javascript files specific to that article (if any).');

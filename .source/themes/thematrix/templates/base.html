@@ -152,9 +152,7 @@
         <script src="{{ QS_LINK['/js/' + script] }}"></script>
                 {% endfor %}
             {% endif %}
-            {% include 'disqus_script.html' %}
-            {% include 'facebook_script.html' %}
-            {% include 'comments_script.html' %}
+        <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
         {% endif %}
         {% include 'google_analytics.html' %}
         {# load the console greeter later since it does not need to be available so quick #}
