@@ -1,4 +1,4 @@
-var latestCache = '2018-09-01_19:04:18';
+var latestCache = '2018-09-01_19:17:27';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -61,8 +61,7 @@ self.addEventListener('install', function (event) {
 self.addEventListener('activate', function (event) {
     // delete all caches except latestCache
     caches.keys().then(function (names) {
-        for(var i = 0; i < names.length; i++) {
-            var name = names[0];
+        for (let name of names) {
             if (name == latestCache) continue;
             caches.delete(name);
         }
