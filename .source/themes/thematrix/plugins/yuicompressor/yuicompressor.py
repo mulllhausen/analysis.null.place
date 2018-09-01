@@ -23,18 +23,25 @@ def minify(pelican):
     Minify CSS and JS with YUI Compressor
     :param pelican: The Pelican instance
     """
-    for dirpath, _, filenames in os.walk(pelican.settings['OUTPUT_PATH']):
+    skip = pelican.settings['YUICOMPRESSOR_SKIP']
+    output_path = pelican.settings['OUTPUT_PATH']
+    for dirpath, _, filenames in os.walk(output_path):
         #pu.db
         # skip dirs under dot-paths (eg .git or .source)
         if '/.' in dirpath:
             continue
 
         for name in filenames:
+            filepath = os.path.join(dirpath, name)
+            filepath_from_output = filepath.replace(output_path, '')
+
+            # skip this file?
+            if filepath_from_output in skip:
+                continue
 
             # yuicompressor only works for .css and .js files
             # we only compress the files in the output dir
             if os.path.splitext(name)[1] in ('.css', '.js'):
-                filepath = os.path.join(dirpath, name)
                 logger.info('minify %s', filepath)
                 verbose = '-v' if SHOW_OUTPUT else ''
                 call(
@@ -46,7 +53,6 @@ def minify(pelican):
             # yuicompressor doesn't like .json files (even when renamed to .js)
             # so clean them up seperately
             if '.json' in os.path.splitext(name)[1]:
-                filepath = os.path.join(dirpath, name)
                 logger.info('minify %s', filepath)
                 with open(filepath, 'r+') as f:
                     json_data = json.load(f)
