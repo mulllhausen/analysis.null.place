@@ -10,11 +10,12 @@ self.addEventListener('install', function (event) {
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
+                '{{ QS_LINK['/theme/css/thematrix.css'] }}',
                 '{{ QS_LINK['/theme/img/icons.svg'] }}',
                 '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
                 '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
-                '{{ QS_LINK['/theme/css/thematrix.css'] }}',
-                '{{ QS_LINK['/theme/img/favicon.ico'] }}',
+                '{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }},
+                '{{ QS_LINK['/theme/img/shattered-glass-matrix-512x512.png'] }},
                 '{{ QS_LINK['/theme/img/favicon.ico'] }}',
                 '{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}',
                 '{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}',
