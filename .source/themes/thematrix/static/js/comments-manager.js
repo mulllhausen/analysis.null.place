@@ -1,35 +1,29 @@
-{% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
-<script>
-var commentsPlatforms = [
-    {%- if FACEBOOK_APP_ID %}'FB',{% endif -%}
-    {%- if DISQUS_SITENAME %}'Disqus'{% endif -%}
-];
 var doneLoading = [];
 addEvent(window, 'load', function () {
-    foreach(commentsPlatforms, function(i, platformI) {
+    foreach(siteGlobals.commentsPlatforms, function (i, platformI) {
         addEvent( // 'button' event
             document.querySelector('.comment-with.' + platformI.toLowerCase()),
             'click',
-            function(e) { renderComments(platformI); }
+            function (e) { renderComments(platformI); }
         );
         addEvent( // 'button-count' event
             document.querySelector(
                 '.comment-with.' + platformI.toLowerCase() + '+span'
             ),
             'click',
-            function(e) { renderComments(platformI); }
+            function (e) { renderComments(platformI); }
         );
     });
 });
 
 function renderComments(platformI) {
     document.querySelector('.choose-comments-platform').style.marginBottom = '30px';
-    foreach(commentsPlatforms, function(j, platformJ) {
-        var commentsArea = document.querySelector(
-            '.' + platformJ.toLowerCase() + '-comments'
-        );
+    foreach(siteGlobals.commentsPlatforms, function (j, platformJ) {
         var button = document.querySelector(
             '.comment-with.' + platformJ.toLowerCase()
+        );
+        var commentsArea = document.querySelector(
+            '.' + platformJ.toLowerCase() + '-comments'
         );
         if (platformI == platformJ) { // show this comments platform
             commentsArea.style.display = 'block';
@@ -38,10 +32,14 @@ function renderComments(platformI) {
             commentsArea.style.display = 'none';
             button.classList.remove('selected');
         }
+
+        // hide offline warnings from all platforms
+        var offlineWarning = document.querySelector(
+            '.' + platformJ.toLowerCase() + '-offline'
+        );
+        offlineWarning.style.display = 'none';
     });
     if (inArray(platformI, doneLoading)) return;
     window['load' + platformI + 'Platform']();
     doneLoading.push(platformI);
 }
-</script>
-{% endif %}

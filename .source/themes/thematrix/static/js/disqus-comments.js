@@ -1,8 +1,8 @@
-{% if DISQUS_SITENAME and article %}
-<script>
 var disqus_config = function () {
-    {% if (SITEURL != '') %}this.page.url = '{{ SITEURL }}/{{ article.url }}';{% endif %}
-    this.page.identifier = '{{ article.title }}';
+    if (siteGlobals.siteURL != '') {
+        this.page.url = siteGlobals.siteURL + '/' + siteGlobals.article.url;
+    }
+    this.page.identifier = siteGlobals.article.title;
     this.page.sortOrder = 'newest';
     this.callbacks.onReady = [disqusReady];
     this.callbacks.onNewComment = [disqusCommentUpdated];
@@ -10,12 +10,19 @@ var disqus_config = function () {
 function loadDisqusPlatform() {
     // this function is called when the disqus button is first clicked
     document.querySelector('.disqus-comments').style.marginBottom = '50px';
-    (function() {
+
+    // warn user when disqus is inaccessible after 15 seconds
+    siteGlobals.disqusCommentsLoadingTimer = setTimeout(disqusOffline, 15 * 1000);
+
+    (function () {
         var d = document, s = d.createElement('script');
-        s.src = 'https://{{ DISQUS_SITENAME }}.disqus.com/embed.js';
+        s.src = 'https://' + siteGlobals.disqusSiteName + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
+}
+function disqusOffline() {
+    document.querySelector('.disqus-offline').style.display = 'block';
 }
 function disqusCommentUpdated(data) {
     // update the comment count. beware the 10 minute delay
@@ -26,14 +33,16 @@ function disqusCommentUpdated(data) {
     DISQUSWIDGETS.getCount({ reset: true });
 }
 function disqusReady(data) {
+    clearTimeout(siteGlobals.disqusCommentsLoadingTimer);
+    document.querySelector('.disqus-offline').style.display = 'none';
     document.querySelector('.disqus-comments').style.marginBottom = '0px';
 }
 function disqusUpdateCommentCount() {
     ajax(
-        'https://cors-anywhere.herokuapp.com/https://{{ DISQUS_SITENAME }}.' +
-        'disqus.com/count-data.js?1=' + encodeURIComponent('{{ article.title }}') +
+        'https://cors-anywhere.herokuapp.com/https://' + siteGlobals.disqusSiteName +
+        '.disqus.com/count-data.js?1=' + encodeURIComponent(siteGlobals.article.title) +
         '&nocache=' + unixtime(),
-        function(response) {
+        function (response) {
             try {
                 var matches = response.match(/DISQUSWIDGETS.displayCount\((.*)\)/i);
                 var json = matches[1]; // capture group
@@ -44,6 +53,3 @@ function disqusUpdateCommentCount() {
     );
 }
 disqusUpdateCommentCount(); // init
-</script>
-<script id="dsq-count-scr" src="https://{{ DISQUS_SITENAME }}.disqus.com/count.js" async></script>
-{% endif %}

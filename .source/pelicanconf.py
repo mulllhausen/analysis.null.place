@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+import time
 
 AUTHOR = u'Peter Miller'
 SITENAME = u'analysis'
@@ -18,6 +19,8 @@ BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 PATH = 'content'
 
 TIMEZONE = 'Australia/Adelaide'
+UNIXTIME = int(time.time())
+NOWYMD = time.strftime('%Y-%m-%d_%H:%M:%S')
 
 DEFAULT_LANG = u'en'
 # fs = filesystem
@@ -76,6 +79,11 @@ STATIC_FILE_MERGES = {
         'js/matrix-animation.js',
         'js/autofooter.js',
         'js/register-service-worker.js'
+    ],
+    'js/comments-section.js': [
+        'js/comments-manager.js',
+        'js/facebook-comments.js',
+        'js/disqus-comments.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False
