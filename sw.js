@@ -1,14 +1,15 @@
-var latestCache = '2018-09-01_19:50:54';
+var latestCache = '2018-09-01_19:57:15';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
+                'https://null.place/theme/css/thematrix.css?hash=G-yHo81_8kBrP6EWNQiLzOMaSd9thvxRYfxrwwX2hNU',
                 'https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU',
                 'https://null.place/theme/img/shattered-glass-2b.png?hash=xZglIfe9jc3JEEEFSTMZvUIt5VWfKS_5LJH6XBVoWpI',
                 'https://null.place/theme/img/shattered-glass-black.png?hash=DsMJmVokM2LTMF4Z9aPpwkFDqO1ovQPNKh9dNuLaFSg',
-                'https://null.place/theme/css/thematrix.css?hash=G-yHo81_8kBrP6EWNQiLzOMaSd9thvxRYfxrwwX2hNU',
-                'https://null.place/theme/img/favicon.ico?hash=jRJksAEHgEZeRuxnq6s_SglA_USOy3AlXuKoMUeGjUI',
+                'https://null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBIrSuiffAq4jPVvbhxStike2SqfBpejw9IEygJI,
+                'https://null.place/theme/img/shattered-glass-matrix-512x512.png?hash=9R0TcV3MRZa3tlvYFOznnM3R1k0j3sLFOmIIuXz5QVs,
                 'https://null.place/theme/img/favicon.ico?hash=jRJksAEHgEZeRuxnq6s_SglA_USOy3AlXuKoMUeGjUI',
                 'https://null.place/theme/img/apple-touch-icon.png?hash=FAvW32yXmjycEE9rDnCbWjONBdx1mb_Gt3abPjrs5XU',
                 'https://null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJH4DFIzn_ryh1LR6mf155XVVVCACXLvK89Oqik',
