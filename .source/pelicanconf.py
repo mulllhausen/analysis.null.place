@@ -96,6 +96,11 @@ PLUGINS = [
     'querystring-cache'
 ]
 
+# file paths relative to the output dir
+YUICOMPRESSOR_SKIP = [
+    '/sw.js' # skip this file because yuicompressor cannot handle es6
+]
+
 # debug settings:
 
 # add 127.0.0.1 null.place to /etc/hosts for this (it is necessary if you want
