@@ -1,20 +1,23 @@
 {# make pelican variables available to js #}
 <script>
-if (typeof siteGlobals === 'undefined') var siteGlobals = {};
-siteGlobals.sitename = '{{ SITENAME }}';
-siteGlobals.sitenameASCIIArt = "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}";
-siteGlobals.siteURL = '{{ SITEURL }}';
-siteGlobals.githubURL = '{{ GITHUB_URL }}';
-siteGlobals.facebookAppID = '{{ FACEBOOK_APP_ID }}';
-siteGlobals.disqusSiteName = '{{ DISQUS_SITENAME }}';
-siteGlobals.commentsPlatforms = [
-    {%- if FACEBOOK_APP_ID %}'FB',{% endif -%}
-    {%- if DISQUS_SITENAME %}'Disqus'{% endif -%}
-];
-{% if article %}
-    if (!siteGlobals.hasOwnProperty('article')) siteGlobals.article = {};
-    {% if article.title %}siteGlobals.article.title = '{{ article.title }}';{% endif %}
-    {% if article.url %}siteGlobals.article.url = '{{ article.url }}';{% endif %}
-    {% if article.console_explain_scripts %}siteGlobals.article.consoleExplainScripts = '{{ article.console_explain_scripts }}';{% endif %}
-{% endif %}
+var siteGlobals = {
+    events: {},
+    sitename: '{{ SITENAME }}',
+    sitenameASCIIArt: "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}",
+    siteURL: '{{ SITEURL }}',
+    githubURL: '{{ GITHUB_URL }}',
+    facebookAppID: '{{ FACEBOOK_APP_ID }}',
+    disqusSiteName: '{{ DISQUS_SITENAME }}',
+    commentsPlatforms: [
+        {%- if FACEBOOK_APP_ID %}'FB'{% endif -%}
+        {%- if DISQUS_SITENAME %},'Disqus'{% endif -%}
+    ],
+    {% if article %}
+    article: {
+        {%- if article.title %}title: '{{ article.title }}'{% endif -%}
+        {%- if article.url %},url: '{{ article.url }}'{% endif -%}
+        {%- if article.console_explain_scripts %},consoleExplainScripts: '{{ article.console_explain_scripts }}'{% endif -%}
+    }
+    {% endif %}
+};
 </script>

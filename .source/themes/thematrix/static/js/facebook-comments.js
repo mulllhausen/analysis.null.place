@@ -13,10 +13,10 @@ window.fbAsyncInit = function () {
 };
 function loadFBPlatform() {
     // this function is called when the fb button is first clicked
-    document.querySelector('.fb-comments-loader').style.display = 'block';
+    document.getElementById('fbCommentsLoader').style.display = 'block';
 
-    // warn user when fb is inaccessible after 30 seconds
-    siteGlobals.fbCommentsLoadingTimer = setTimeout(fbOffline, 15 * 1000);
+    // warn user when fb is inaccessible after 15 seconds
+    siteGlobals.events.fbCommentsLoadingTimer = setTimeout(fbOffline, 15 * 1000);
 
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -28,13 +28,18 @@ function loadFBPlatform() {
     } (document, 'script', 'facebook-jssdk'));
 }
 function fbOffline() {
-    document.querySelector('.fb-offline').style.display = 'block';
-    document.querySelector('.fb-comments-loader').style.display = 'none';
+    document.getElementById('fbOffline').style.display = 'block';
+    // remove the facebook script from the page so that the user can try again
+    deleteElementById('facebook-jssdk');
+    document.getElementById('fbCommentsLoader').style.display = 'none';
+    platformOffline();
 }
 function fbRendered(data) {
-    clearTimeout(siteGlobals.fbCommentsLoadingTimer);
-    document.querySelector('.fb-offline').style.display = 'none';
-    document.querySelector('.fb-comments-loader').style.display = 'none';
+    siteGlobals.loadedCommentsPlatforms.push('FB'); // as per siteGlobals.commentsPlatforms
+    clearTimeout(siteGlobals.events.fbCommentsLoadingTimer);
+    document.getElementById('fbOffline').style.display = 'none';
+    document.getElementById('fbCommentsLoader').style.display = 'none';
+    commentsLoaded();
 }
 function fbUpdateCommentCount() {
     ajax(
