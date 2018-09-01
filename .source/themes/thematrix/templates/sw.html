@@ -67,8 +67,7 @@ self.addEventListener('install', function (event) {
 self.addEventListener('activate', function (event) {
     // delete all caches except latestCache
     caches.keys().then(function (names) {
-        for(var i = 0; i < names.length; i++) {
-            var name = names[0];
+        for (let name of names) {
             if (name == latestCache) continue;
             caches.delete(name);
         }
