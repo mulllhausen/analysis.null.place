@@ -1,10 +1,10 @@
-var latestCache = '2018-09-02_00:41:37';
+var latestCache = '2018-09-06_22:20:46';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
-                'https://null.place/theme/css/thematrix.css?hash=ILZjlZg5QSTeDVB3DTwMJztJPR4g7NVYCGGIGnId8cs',
+                'https://null.place/theme/css/thematrix.css?hash=qucJggC-rSWjxY1ikgJX-RIlmBM9K7mbFAVsLTG_IjU',
                 'https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU',
                 'https://null.place/theme/img/shattered-glass-2b.png?hash=xZglIfe9jc3JEEEFSTMZvUIt5VWfKS_5LJH6XBVoWpI',
                 'https://null.place/theme/img/shattered-glass-black.png?hash=DsMJmVokM2LTMF4Z9aPpwkFDqO1ovQPNKh9dNuLaFSg',
@@ -19,7 +19,7 @@ self.addEventListener('install', function (event) {
                 'https://null.place/theme/js/manifest.json',
 
                 // articles pages
-                'https://null.place/theme/js/comments-section.js?hash=w-S3jsZVaVGnjlS-1LuvN0x5yxRFgw2Au0w1BMN-4Mc',
+                'https://null.place/theme/js/comments-section.js?hash=MaI4RrMQY80HRvbnJ3noVkmWXyWSrIB5DZaHxj3lZbw',
 
                 // home page
                 'https://null.place/',
