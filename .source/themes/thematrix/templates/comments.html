@@ -36,7 +36,7 @@
             if the browser caches the disqus script before going offline then we
             can still show the offline message to the user
         #}
-        <div id="disqusCommentsLoader" class="platform-comments-loader">
+        <div class="platform-comments-loader">
             <div class="platform-comments-loader-inner">
                 <svg class="icon icon-circle-o-notch">
                     <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
@@ -57,7 +57,7 @@
                 </svg>
             </div>
         </div>
-        <div id="disqusOffline" class="platform-offline">
+        <div class="platform-offline">
             <span>Disqus could not be reached. Are you offline?</span>
         </div>
     </div>
@@ -65,7 +65,7 @@
 
     {% if FACEBOOK_APP_ID %}
     <div id="fb-root"></div>
-    <div id="fbCommentsLoader" class="platform-comments-loader">
+    <div id="fbCommentsLoader" class="platform-comments-loader faceboook">{# deliberately use ooo to avoid style conflicts #}
         <div class="platform-comments-loader-inner">
             <svg class="icon icon-circle-o-notch">
                 <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
@@ -86,7 +86,7 @@
             </svg>
         </div>
     </div>
-    <div id="fbOffline" class="platform-offline">
+    <div class="platform-offline faceboook">{# deliberately use ooo to avoid style conflicts #}
         <span>Facebook could not be reached. Are you offline?</span>
     </div>
     <div class="fb-comments platform-comments"

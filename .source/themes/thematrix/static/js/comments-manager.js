@@ -35,12 +35,11 @@ function renderComments(platformI) {
             button.classList.remove('selected');
             button.classList.add('disallow-selection');
         }
+    });
 
-        // hide offline warnings from all platforms
-        var offlineWarning = document.getElementById(
-            platformJ.toLowerCase() + 'Offline'
-        );
-        if (offlineWarning != null) offlineWarning.style.display = 'none';
+    // hide offline warnings from all platforms
+    foreach(document.querySelectorAll('.platform-offline'), function (i, el) {
+        el.style.display = 'none';
     });
 
     // if the platform has already been successfully loaded then there is no
