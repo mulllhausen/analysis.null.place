@@ -12,8 +12,11 @@ window.fbAsyncInit = function () {
     FB.Event.subscribe('comment.remove', fbUpdateCommentCount);
 };
 function loadFBPlatform() {
-    // this function is called when the fb button is first clicked
-    document.getElementById('fbCommentsLoader').style.display = 'block';
+    // this function is called when the fb button is first clicked.
+    // no need to hide offline comments here since this is already handled in
+    // the click event in comments-manager.js.
+    document.querySelector('.platform-comments-loader.faceboook').style.
+    display = 'block';
 
     // warn user when fb is inaccessible after 15 seconds
     siteGlobals.events.fbCommentsLoadingTimer = setTimeout(fbOffline, 15 * 1000);
@@ -28,17 +31,21 @@ function loadFBPlatform() {
     } (document, 'script', 'facebook-jssdk'));
 }
 function fbOffline() {
-    document.getElementById('fbOffline').style.display = 'block';
+    document.querySelector('.platform-offline.faceboook').style.display = 'block';
+
+    document.querySelector('.platform-comments-loader.faceboook').style.
+    display = 'none';
+
     // remove the facebook script from the page so that the user can try again
     deleteElementById('facebook-jssdk');
-    document.getElementById('fbCommentsLoader').style.display = 'none';
     platformOffline();
 }
 function fbRendered(data) {
     siteGlobals.loadedCommentsPlatforms.push('FB'); // as per siteGlobals.commentsPlatforms
     clearTimeout(siteGlobals.events.fbCommentsLoadingTimer);
-    document.getElementById('fbOffline').style.display = 'none';
-    document.getElementById('fbCommentsLoader').style.display = 'none';
+    document.querySelector('.platform-offline.faceboook').style.display = 'none';
+    document.querySelector('.platform-comments-loader.faceboook').style.
+    display = 'none';
     commentsLoaded();
 }
 function fbUpdateCommentCount() {

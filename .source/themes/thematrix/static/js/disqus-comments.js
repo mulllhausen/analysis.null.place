@@ -23,8 +23,17 @@ function resetDisqusComments() {
     getElementById('disqusCommentsSilo').innerHTML;
 }
 function loadDisqusPlatform() {
-    // this function is called when the disqus button is first clicked
-    document.getElementById('disqusCommentsLoader').style.display = 'block';
+    // this function is called when the disqus button is clicked. if disqus
+    // loads correctly then this function can never be called again. but if
+    // disqus fails to load (eg because the browser is offline) then this
+    // function may be called again.
+
+    // no need to hide offline comments here since this is already handled in
+    // the click event in comments-manager.js
+
+    document.querySelector('.disqus-comments .platform-comments-loader').style.
+    display = 'block';
+
     document.querySelector('.disqus-comments').style.marginBottom = '50px';
 
     // warn user when disqus is inaccessible after 15 seconds
@@ -42,11 +51,16 @@ function loadDisqusPlatform() {
     })();
 }
 function disqusOffline() {
-    resetDisqusComments(); // erase disqus script's additions to comments section
-    document.getElementById('disqusOffline').style.display = 'block';
+    resetDisqusComments(); // erase disqus iframes etc
+
+    document.querySelector('.disqus-comments .platform-offline').style.display =
+    'block';
+
+    document.querySelector('.disqus-comments .platform-comments-loader').style.
+    display = 'none';
+
     // remove the disqus script from the page so that the user can try again
     deleteElementById('disqus-script');
-    document.getElementById('disqusCommentsLoader').style.display = 'none';
     platformOffline();
 }
 /* events currently unused by disqus
@@ -71,6 +85,16 @@ function disqusReady(data) {
     siteGlobals.loadedCommentsPlatforms.push('Disqus'); // as per siteGlobals.commentsPlatforms
     clearTimeout(siteGlobals.events.disqusCommentsLoadingTimer);
     document.querySelector('.disqus-comments').style.marginBottom = '0px';
+    try {
+        // things can get out of sync if the user's connection drops out often.
+        // so clean away any loaders that should not be there.
+        document.querySelector('.disqus-comments .platform-offline').style.
+        display = 'none';
+
+        document.querySelector('.disqus-comments .platform-comments-loader').
+        style.display = 'none';
+
+    } catch (e) {}
     commentsLoaded();
 }
 function disqusUpdateCommentCount() {
