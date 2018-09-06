@@ -28,6 +28,14 @@
     {% if DISQUS_SITENAME %}
     <div id="disqus_thread" class="disqus-comments platform-comments">
         {# disqus deletes things here once it loads #}
+    </div>
+    <div id="disqusCommentsSilo" class="hidden">
+        {#
+            the contents of #disqusCommentsSilo are always hidden. they are
+            placed into #disqus_thread before loading disqus comments. this way,
+            if the browser caches the disqus script before going offline then we
+            can still show the offline message to the user
+        #}
         <div id="disqusCommentsLoader" class="platform-comments-loader">
             <div class="platform-comments-loader-inner">
                 <svg class="icon icon-circle-o-notch">
