@@ -1,4 +1,4 @@
-var latestCache = '2018-09-06_23:50:31';
+var latestCache = '2018-09-09_20:29:49';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -19,7 +19,7 @@ self.addEventListener('install', function (event) {
                 'https://null.place/theme/js/manifest.json',
 
                 // articles pages
-                'https://null.place/theme/js/comments-section.js?hash=neyLDRCtfcbo0rM6ey4DiR14Qg54DBJTWLrj91lxncg',
+                'https://null.place/theme/js/comments-section.js?hash=wki7QgoBJ_2OPWmX8GayY4Id_wIWZ550s44vGCKK1uk',
 
                 // home page
                 'https://null.place/',
