@@ -59,7 +59,11 @@ self.addEventListener('install', function (event) {
                 '{{ QS_LINK['/css/btc.css'] }}',
                 '{{ SITEURL }}/json/btc_txs_per_block_0-999.json',
                 '{{ SITEURL }}/json/hex-trial-attempts.json',
-                '{{ QS_LINK['/json/unittest-bits.json'] }}'
+                '{{ QS_LINK['/json/unittest-bits.json'] }}',
+
+                // cookie warning notice
+                '{{ SITEURL }}/cookie-warning-notice/',
+                '{{ SITEURL }}/cookie-warning-notice/index.html'
             ]);
         })
     );

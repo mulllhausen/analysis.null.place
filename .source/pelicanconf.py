@@ -57,8 +57,8 @@ MANIFEST_SAVE_AS = 'theme/js/manifest.json'
 
 ARTICLE_URL = '{category}/{slug}/'
 ARTICLE_SAVE_AS = '{category}/{slug}/index.html'
-#PAGE_URL = 'pages/{slug}/'
-#PAGE_SAVE_AS = 'pages/{slug}/index.html'
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
 CATEGORY_URL = '{slug}/'
 CATEGORY_SAVE_AS = '{slug}/index.html'
 TAG_URL = 'tag/{slug}/'
@@ -78,12 +78,8 @@ STATIC_FILE_MERGES = {
         'js/utils.js',
         'js/matrix-animation.js',
         'js/autofooter.js',
+        'js/cookie-warning-notice.js',
         'js/register-service-worker.js'
-    ],
-    'js/comments-section.js': [
-        'js/comments-manager.js',
-        'js/facebook-comments.js',
-        'js/disqus-comments.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False
@@ -116,3 +112,11 @@ YUICOMPRESSOR_SKIP = [
 
 # uncomment to view facebook comments on localhost
 #FACEBOOK_APP_ID = '2040066019560327'
+
+if (('FACEBOOK_APP_ID' in vars()) or ('DISQUS_SITENAME' in vars())):
+    COMMENTS_SCRIPTS = ['js/comments-manager.js'] # init
+    if 'FACEBOOK_APP_ID' in vars():
+        COMMENTS_SCRIPTS.append('js/facebook-comments.js')
+    if 'DISQUS_SITENAME' in vars():
+        COMMENTS_SCRIPTS.append('js/disqus-comments.js')
+    STATIC_FILE_MERGES['js/comments-section.js'] = COMMENTS_SCRIPTS
