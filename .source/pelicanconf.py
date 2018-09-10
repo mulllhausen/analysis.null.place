@@ -42,12 +42,10 @@ AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
 DIRECT_TEMPLATES = [
-    'index', 'tags', 'categories', 'archives', 'sitemap', 'robots', 'CNAME',
-    'sw', 'manifest'
+    'index', 'tags', 'archives', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
-CATEGORIES_SAVE_AS = 'categories/index.html'
 ARCHIVES_SAVE_AS = 'archives/index.html'
 SITEMAP_SAVE_AS = 'sitemap.xml'
 ROBOTS_SAVE_AS = 'robots.txt'
