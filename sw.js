@@ -1,4 +1,4 @@
-var latestCache = '2018-09-10_23:05:23';
+var latestCache = '2018-09-10_23:27:14';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -27,7 +27,7 @@ self.addEventListener('install', function (event) {
 
                 // archives page
                 'https://null.place/archives/',
-                'https://null.place/archives/index',
+                'https://null.place/archives/index.html',
 
                 // tags pages
                 'https://null.place/tags/',
@@ -56,8 +56,8 @@ self.addEventListener('install', function (event) {
                 'https://null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4',
 
                 // cookie warning notice
-                'https://null.place/cookie-warning-notice/',
-                'https://null.place/cookie-warning-notice/index.html'
+                'https://null.place/cookie-notice/',
+                'https://null.place/cookie-notice/index.html'
             ]);
         })
     );
