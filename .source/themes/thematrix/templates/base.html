@@ -129,6 +129,7 @@
                 <a href="{{ SITEURL }}/feeds/all.atom.xml"><svg class="icon icon-feed"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-feed"></use></svg> Atom</a>
             </address>
         </footer>
+        {% include 'cookie_usage_popup.html' %}
 
         {# le javascript - at the end of the document so the pages load faster #}
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
@@ -152,7 +153,9 @@
         <script src="{{ QS_LINK['/js/' + script] }}"></script>
                 {% endfor %}
             {% endif %}
+            {% if COMMENTS_SCRIPTS %}
         <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
+            {% endif %}
         {% endif %}
         {% include 'google_analytics.html' %}
         {# load the console greeter later since it does not need to be available so quick #}

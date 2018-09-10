@@ -29,7 +29,16 @@ FACEBOOK_APP_ID = '2040066019560327'
 
 GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
 
+# disqus comments on article pages only
 DISQUS_SITENAME = 'analysis-null-place'
 
 # add the plugins only used when publishing
 PLUGINS += ['yuicompressor']
+
+if (('FACEBOOK_APP_ID' in vars()) or ('DISQUS_SITENAME' in vars())):
+    COMMENTS_SCRIPTS = ['js/comments-manager.js'] # init
+    if 'FACEBOOK_APP_ID' in vars():
+        COMMENTS_SCRIPTS.append('js/facebook-comments.js')
+    if 'DISQUS_SITENAME' in vars():
+        COMMENTS_SCRIPTS.append('js/disqus-comments.js')
+    STATIC_FILE_MERGES['js/comments-section.js'] = COMMENTS_SCRIPTS

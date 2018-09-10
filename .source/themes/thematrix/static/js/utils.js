@@ -369,6 +369,35 @@ function browserDetect() {
 }
 siteGlobals.browser = browserDetect();
 
+function Save(k, v) {
+    if (typeof Storage !== 'undefined') {
+        localStorage.setItem(k, v);
+    } else {
+        // save to cookie
+        var d = new Date();
+        var exdays = 100;
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = 'expires=' + d.toGMTString();
+        window.document.cookie = k + '=' + v + '; ' + expires;
+    }
+}
+
+function Retrieve(k) {
+    if (typeof Storage !== 'undefined') {
+        return localStorage.getItem(k);
+    } else {
+        var cookieName = k + '=';
+        var cookieArray = window.document.cookie.split(';');
+        foreach(cookieArray, function (i, c) {
+            c = c.trim();
+            if (c.indexOf(cookieName) == 0) {
+                return c.substring(cookieName.length, c.length);
+            }
+        });
+        return '';
+    }
+}
+
 // events for all pages
 
 // nav-menu open/close (mobile only)
