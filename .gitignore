@@ -10,6 +10,7 @@ theme/js/matrix-animation.js
 theme/js/polyfills.js
 theme/js/utils.js
 theme/js/register-service-worker.js
+theme/js/cookie-warning-notice.js
 
 # ignore files that get merged into comments-section.js:
 theme/js/comments-manager.js
