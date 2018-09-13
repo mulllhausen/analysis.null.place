@@ -7,7 +7,7 @@ html, body{
     width: 100%;
     max-width: 100%;
 
-    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -17,7 +17,7 @@ html, body{
     text-shadow: none;
 
     background-color: #000000;/*black*/
-    overflow: auto;/*expand to height of children*/
+    /*overflow: auto;/*do not show a scrollbar*/
 }
 p, li {
     word-wrap: break-word;
@@ -131,11 +131,16 @@ p button {
 }
 footer {
     position: relative;/*changed by js in autofooter.js*/
-    padding: 20px;
+    padding: 20px 30px 0 30px;/*when col 1 (menu and logo) is showing*/
     clear: both;
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
     bottom: 0;/*only used when js changes this to position:absolute*/
+}
+@media (max-width: 800px) {/*when x <= 800px*/
+    footer {/*when no col 1 (menu and logo) showing*/
+        padding: 20px 20px 0 20px;
+    }
 }
 abbr[title] {
     border-bottom: none;
@@ -483,8 +488,8 @@ h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
 
 address#about {
     font-style: normal;
-    padding-top: 15px;
-    border-top: 2px solid #2b2b2b;/*dark-grey*/
+    padding-top: 12px;
+    border-top: 1px solid #2b2b2b;/*dark-grey*/
     line-height: 20px;
 }
 
@@ -701,22 +706,28 @@ blockquote {
 }
 /* end comments section */
 
-/* begin cookie warnings*/
+/* begin cookie warnings */
 .cookie-warning-notice {
     display: none;/*initially hidden. shown with javascript.*/
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    height: 40px;
+    line-height: 40px;/*vertical centre*/
     background-color: #7db904;/*green*/
     color: #000000;/*black*/
     text-align: center;
     z-index: 4;
 }
 .cookie-warning-notice button, .cookie-warning-notice span {
-    margin: 3px;
+    margin: 0 2px;
 }
-/* end cookie warnings*/
+.cookie-policy-link {
+    /*make this cookie link in the footer hidden by .cookie-warning-notice*/
+    height: 40px;
+}
+/* end cookie warnings */
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
