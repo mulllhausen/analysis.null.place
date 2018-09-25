@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://null.place/</loc>
+        <loc>https://analysis.null.place/</loc>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://null.place/cryptocurrencies/how-does-bitcoin-mining-work/</loc>
+        <loc>https://analysis.null.place/cryptocurrencies/how-does-bitcoin-mining-work/</loc>
         <lastmod>2018-04-17</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://null.place/cookie-notice/</loc>
+        <loc>https://analysis.null.place/cookie-notice/</loc>
         <priority>0.8</priority>
     </url>
 

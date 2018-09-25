@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://null.place/" rel="alternate"></link><link href="https://null.place/feeds/all.atom.xml" rel="self"></link><id>https://null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="https://null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://analysis.null.place/" rel="alternate"></link><link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link><id>https://analysis.null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="https://analysis.null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:analysis.null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
 &lt;blockquote&gt;&lt;p&gt;
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -28,7 +28,7 @@ not discussed earlier&lt;/li&gt;
     &lt;a href="#heading_cryptographic_hashing" title="link to this heading"&gt;
         cryptographic hashing
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
@@ -43,7 +43,7 @@ typing different things in the &lt;i&gt;pre-image&lt;/i&gt; field and clicking t
 &lt;div class="form-container" id="form0"&gt;
     &lt;a href="#form0"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -62,10 +62,10 @@ typing different things in the &lt;i&gt;pre-image&lt;/i&gt; field and clicking t
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -91,7 +91,7 @@ them into another string of characters. We call the input characters the
 
 &lt;div class="horizontal-center"&gt;
 &lt;div id="hashingFlowchartContainer"&gt;
-    &lt;object id="hashingFlowchartSVG" data="https://null.place/img/hashing-flowchart.svg?hash=NX7qzYIvGazeEX9jo6LBtyf-UTfHvFA3kZxGSCZM8B4" type="image/svg+xml"&gt;&lt;/object&gt;
+    &lt;object id="hashingFlowchartSVG" data="https://analysis.null.place/img/hashing-flowchart.svg?hash=NX7qzYIvGazeEX9jo6LBtyf-UTfHvFA3kZxGSCZM8B4" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -191,7 +191,7 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:&lt;/p&g
 &lt;div class="form-container" id="form1"&gt;
     &lt;a href="#form1"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -215,10 +215,10 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:&lt;/p&g
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -245,7 +245,7 @@ pre-images and show you the results at its maximum possible speed:&lt;/p&gt;
 &lt;div class="form-container" id="form2"&gt;
     &lt;a href="#form2"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -270,10 +270,10 @@ pre-images and show you the results at its maximum possible speed:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -346,7 +346,7 @@ difficulty:&lt;/p&gt;
 &lt;div class="form-container" id="form3"&gt;
     &lt;a href="#form3"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -377,10 +377,10 @@ difficulty:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -447,7 +447,7 @@ explained in detail in the following section.&lt;/p&gt;
     &lt;a href="#heading_bitcoin_mining" title="link to this heading"&gt;
         bitcoin mining
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
@@ -541,11 +541,11 @@ each other over time, like so:&lt;/p&gt;
 &lt;div class="form-container" id="dragableBlockchain"&gt;
     &lt;a href="#dragableBlockchain"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
-    &lt;object id="blockchainSVG" data="https://null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4" type="image/svg+xml"&gt;&lt;/object&gt;
+    &lt;object id="blockchainSVG" data="https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4" type="image/svg+xml"&gt;&lt;/object&gt;
 &lt;/div&gt;
 
 &lt;div class="media-caption"&gt;the Bitcoin blockchain&lt;/div&gt;
@@ -593,7 +593,7 @@ block header:&lt;/p&gt;
 &lt;div class="form-container" id="form4"&gt;
     &lt;a href="#form4"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -632,10 +632,10 @@ block header:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -700,10 +700,10 @@ of leading zeros:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -720,10 +720,10 @@ that is higher belongs to the bigger number:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -757,7 +757,7 @@ click the &lt;i&gt;Mine manually with SHA256&lt;/i&gt; button to see what happen
     &lt;a href="#heading_annex" title="link to this heading"&gt;
         annex
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
@@ -775,7 +775,7 @@ used by Bitcoin.&lt;/p&gt;
     &lt;a href="#heading_version" title="link to this heading"&gt;
         version
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -787,7 +787,7 @@ the blockchain:&lt;/p&gt;
 &lt;div class="form-container annex" id="form5"&gt;
     &lt;a href="#form5"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -798,10 +798,10 @@ the blockchain:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -821,7 +821,7 @@ simply means reversing the bytes.&lt;/p&gt;
     &lt;a href="#heading_timestamp" title="link to this heading"&gt;
         timestamp
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -834,7 +834,7 @@ stored in the blockchain:&lt;/p&gt;
 &lt;div class="form-container annex" id="form6"&gt;
     &lt;a href="#form6"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -845,10 +845,10 @@ stored in the blockchain:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -865,7 +865,7 @@ convert to little endian: &lt;span class="aligner"&gt;                    &lt;/s
     &lt;a href="#heading_bits_difficulty_target" title="link to this heading"&gt;
         bits / difficulty / target
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -927,7 +927,7 @@ the conversions.&lt;/p&gt;
 &lt;div class="form-container annex" id="form7"&gt;
     &lt;a href="#form7"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -954,10 +954,10 @@ the conversions.&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -993,10 +993,10 @@ tests.&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -1009,7 +1009,7 @@ tests.&lt;/p&gt;
     &lt;a href="#heading_nonce" title="link to this heading"&gt;
         nonce
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -1020,7 +1020,7 @@ endian bytes:&lt;/p&gt;
 &lt;div class="form-container annex" id="form8"&gt;
     &lt;a href="#form8"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -1031,10 +1031,10 @@ endian bytes:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -1050,7 +1050,7 @@ convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;sp
     &lt;a href="#heading_block_hashing_in_detail" title="link to this heading"&gt;
         block hashing in detail
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -1063,7 +1063,7 @@ blockchain, and how these are concatenated together. The block header is always
 &lt;div class="form-container annex" id="form9"&gt;
     &lt;a href="#form9"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -1101,10 +1101,10 @@ blockchain, and how these are concatenated together. The block header is always
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -1122,7 +1122,7 @@ convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt
     &lt;a href="#heading_hashing_hex_vs_ascii" title="link to this heading"&gt;
         hashing hex vs ascii
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -1139,7 +1139,7 @@ and observing how the resulting hash changes:&lt;/p&gt;
 &lt;div class="form-container annex" id="form10"&gt;
     &lt;a href="#form10"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -1152,10 +1152,10 @@ and observing how the resulting hash changes:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -1173,7 +1173,7 @@ a Bitcoin block.&lt;/p&gt;
     &lt;a href="#heading_mining_attempts_calculator" title="link to this heading"&gt;
         mining attempts calculator
         &lt;svg class="icon icon-chain-90"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 &lt;/h3&gt;
@@ -1200,7 +1200,7 @@ hashes that must be made for a given difficulty:&lt;/p&gt;
 &lt;div class="form-container annex" id="form11"&gt;
     &lt;a href="#form11"&gt;
         &lt;svg class="icon icon-chain"&gt;
-            &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
+            &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain"&gt;&lt;/use&gt;
         &lt;/svg&gt;
     &lt;/a&gt;
 
@@ -1210,10 +1210,10 @@ hashes that must be made for a given difficulty:&lt;/p&gt;
     &lt;div class="button-background"&gt;
         &lt;button class="wrap-nowrap" wrapped="false"&gt;
             &lt;svg class="icon icon-level-left"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-level-left"&gt;&lt;/use&gt;
             &lt;/svg&gt;
             &lt;svg class="icon icon-arrows-h" style="display:none;"&gt;
-                &lt;use xlink:href="https://null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
+                &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-arrows-h"&gt;&lt;/use&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
@@ -1241,5 +1241,5 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.&lt;/p&gt;
 &lt;script&gt;
-    siteGlobals.unittestBitsJSON = 'https://null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4';
+    siteGlobals.unittestBitsJSON = 'https://analysis.null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4';
 &lt;/script&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>
