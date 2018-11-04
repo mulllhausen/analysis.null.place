@@ -276,10 +276,12 @@ article {
 /* end page layout */
 
 /* begin ads */
-.adsbygoogle {
+.adsbygoogle.in-feed {
+    display: block;
+}
+.adsbygoogle.skyscraper {
     margin: 0 0 30px 0;
     padding: 0;
-    background-color: #101010;/*very-dark-grey*/
     display: inline-block;
     width: 160px;
     height: 600px;
