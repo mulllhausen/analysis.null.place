@@ -1,10 +1,4 @@
 {# todo: move this to the end of the body and preload once ads are granted #}
 {% if GOOGLE_AD_CLIENT %}
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: '{{ GOOGLE_AD_CLIENT }}',
-            enable_page_level_ads: true
-        });
-    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 {% endif %}
