@@ -1,10 +1,10 @@
-var latestCache = '2018-10-01_12:55:33';
+var latestCache = '2018-11-04_23:52:28';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
-                'https://analysis.null.place/theme/css/thematrix.css?hash=zXo7PbmKMc5CYnX1xU3QbQBl-s0dTOB0Y8fvRkmfkHI',
+                'https://analysis.null.place/theme/css/thematrix.css?hash=dX9acUYt66I3hRsqyVCeXyYgnseLOU-1TmSCUxS3DOc',
                 'https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU',
                 'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIfe9jc3JEEEFSTMZvUIt5VWfKS_5LJH6XBVoWpI',
                 'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmVokM2LTMF4Z9aPpwkFDqO1ovQPNKh9dNuLaFSg',
@@ -14,7 +14,7 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32yXmjycEE9rDnCbWjONBdx1mb_Gt3abPjrs5XU',
                 'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJH4DFIzn_ryh1LR6mf155XVVVCACXLvK89Oqik',
                 'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrAGvhl48cMU0RQhmSkjlm5FVJd1K9c7WVXlbkSE',
-                'https://analysis.null.place/theme/js/base.js?hash=ydAP5IfteWIytjOoqvoCuwP6Vm4LdPjAbO92RQloon8',
+                'https://analysis.null.place/theme/js/base.js?hash=VFoQeD-rvFKwuCsRx4u7oXbXIdddPS7yBgjwbIuEdq4',
                 'https://analysis.null.place/theme/js/console-greeter.js?hash=zCriPqrRBv30DdSiS_oOtbB6-vSZ-V-0C9_PFVM4IHc',
                 'https://analysis.null.place/theme/js/manifest.json',
 
