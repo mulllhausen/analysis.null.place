@@ -1,0 +1,17 @@
+{#
+    note: all of the production-css for adsense is in thematrix.css. this file
+    is only used to turn debugging-css on or off.
+#}
+{% if TEST_ADSENSE %}
+<style>
+    .adsbygoogle {
+        background-color: #2b2b2b;/*dark-grey*/
+    }
+    .adsbygoogle:after {
+        content: "ad";
+    }
+    .adsbygoogle.in-feed {
+        height: 30px;
+    }
+</style>
+{% endif %}
