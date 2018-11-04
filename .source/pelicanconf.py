@@ -77,6 +77,7 @@ STATIC_FILE_MERGES = {
         'js/matrix-animation.js',
         'js/autofooter.js',
         'js/cookie-warning-notice.js',
+        'js/ads.js',
         'js/register-service-worker.js'
     ]
 }
@@ -94,6 +95,10 @@ PLUGINS = [
 YUICOMPRESSOR_SKIP = [
     '/sw.js' # skip this file because yuicompressor cannot handle es6
 ]
+
+GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
+GOOGLE_AD_CLIENT_SKYSCRAPER_ID = 5984463506
+TEST_ADSENSE = True
 
 # debug settings:
 

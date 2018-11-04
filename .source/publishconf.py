@@ -19,6 +19,8 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 DELETE_OUTPUT_DIRECTORY = False
 
+TEST_ADSENSE = False
+
 # don't delete pre-merge files - use .gitignore instead
 DELETE_PRE_MERGE_FILES = False
 
@@ -26,8 +28,6 @@ GOOGLE_ANALYTICS_TRACKING_ID = 'UA-110200325-1'
 
 # facebook comments on article pages only
 FACEBOOK_APP_ID = '2040066019560327'
-
-GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
 
 # disqus comments on article pages only
 DISQUS_SITENAME = 'analysis-null-place'

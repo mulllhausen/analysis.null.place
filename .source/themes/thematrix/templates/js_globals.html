@@ -8,6 +8,7 @@ var siteGlobals = {
     githubURL: '{{ GITHUB_URL }}',
     facebookAppID: '{{ FACEBOOK_APP_ID }}',
     disqusSiteName: '{{ DISQUS_SITENAME }}',
+    googleAdClient: '{{ GOOGLE_AD_CLIENT }}',
     commentsPlatforms: [
         {%- if FACEBOOK_APP_ID %}'FB'{% endif -%}
         {%- if DISQUS_SITENAME %},'Disqus'{% endif -%}
