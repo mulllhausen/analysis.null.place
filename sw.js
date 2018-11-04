@@ -1,10 +1,10 @@
-var latestCache = '2018-11-04_23:52:28';
+var latestCache = '2018-11-05_09:01:35';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
-                'https://analysis.null.place/theme/css/thematrix.css?hash=dX9acUYt66I3hRsqyVCeXyYgnseLOU-1TmSCUxS3DOc',
+                'https://analysis.null.place/theme/css/thematrix.css?hash=z--49ywYkP5N1CPyjdn1dkXmxd4ve8LqOajLtvvAIGc',
                 'https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU',
                 'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIfe9jc3JEEEFSTMZvUIt5VWfKS_5LJH6XBVoWpI',
                 'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmVokM2LTMF4Z9aPpwkFDqO1ovQPNKh9dNuLaFSg',
