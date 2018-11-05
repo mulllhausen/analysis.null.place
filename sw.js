@@ -1,4 +1,4 @@
-var latestCache = '2018-11-05_09:01:35';
+var latestCache = '2018-11-05_23:25:55';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -14,7 +14,7 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32yXmjycEE9rDnCbWjONBdx1mb_Gt3abPjrs5XU',
                 'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJH4DFIzn_ryh1LR6mf155XVVVCACXLvK89Oqik',
                 'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrAGvhl48cMU0RQhmSkjlm5FVJd1K9c7WVXlbkSE',
-                'https://analysis.null.place/theme/js/base.js?hash=VFoQeD-rvFKwuCsRx4u7oXbXIdddPS7yBgjwbIuEdq4',
+                'https://analysis.null.place/theme/js/base.js?hash=r-q4JY9mE0pD9TG-zTyAyKqBfXD8ks3ViQloaw9B9zI',
                 'https://analysis.null.place/theme/js/console-greeter.js?hash=zCriPqrRBv30DdSiS_oOtbB6-vSZ-V-0C9_PFVM4IHc',
                 'https://analysis.null.place/theme/js/manifest.json',
 
