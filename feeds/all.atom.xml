@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://analysis.null.place/" rel="alternate"></link><link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link><id>https://analysis.null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how does bitcoin mining work?</title><link href="https://analysis.null.place/cryptocurrencies/how-does-bitcoin-mining-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:analysis.null.place,2018-04-17:/cryptocurrencies/how-does-bitcoin-mining-work/</id><summary type="html">An interactive walkthrough of bitcoin mining. No prior knowledge is necessary.</summary><content type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://analysis.null.place/" rel="alternate"></link><link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link><id>https://analysis.null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how do the bitcoin mining algorithms work?</title><link href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</id><summary type="html">An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</summary><content type="html">
 &lt;blockquote&gt;&lt;p&gt;
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is verified by all participants. The
@@ -639,7 +639,7 @@ block header:&lt;/p&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
-    &lt;div id="codeblock3HashResults" class="codeblock"&gt;nonce: &lt;span class="aligner"&gt;     &lt;/span&gt;&lt;span id="nonce4Results"&gt;0&lt;/span&gt;
+    &lt;div id="codeblock4HashResults" class="codeblock"&gt;nonce: &lt;span class="aligner"&gt;     &lt;/span&gt;&lt;span id="nonce4Results"&gt;0&lt;/span&gt;
 target: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="target4" class="individual-digits"&gt;&lt;/span&gt;
 block hash: &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="blockhash4" class="individual-digits"&gt;&lt;/span&gt;
 status: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="mineStatus4"&gt;&lt;/span&gt;&lt;/div&gt;
