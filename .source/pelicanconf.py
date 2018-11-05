@@ -66,7 +66,7 @@ DEFAULT_PAGINATION = False
 DISPLAY_PAGES_ON_MENU = False
 DELETE_OUTPUT_DIRECTORY = False
 
-GITHUB_URL = 'https://github.com/mulllhausen/mulllhausen.github.io'
+GITHUB_URL = 'https://github.com/mulllhausen/analysis.null.place'
 
 STATIC_PATHS = ['img', 'js', 'css', 'json']
 # files that will be merged by the static-file-merge plugin
