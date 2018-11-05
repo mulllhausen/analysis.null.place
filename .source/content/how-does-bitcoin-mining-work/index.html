@@ -1,14 +1,14 @@
 <html>
 <head>
-    <title>how does bitcoin mining work?</title>
-    <meta name="slug" content="how-does-bitcoin-mining-work"/>
+    <title>how do the bitcoin mining algorithms work?</title>
+    <meta name="slug" content="how-do-the-bitcoin-mining-algorithms-work"/>
     <meta name="date" content="2018-04-17"/>
     <meta name="category" content="cryptocurrencies"/>
     <meta name="tags" content="bitcoin, mining, proof-of-work"/>
     <meta name="stylesheets" content="btc.css"/>
     <meta name="scripts" content="sjcl.min.js,btc-mining.js"/>
     <meta name="img_preloads" content="hashing-flowchart.svg,bitcoin-blockchain.svg"/>
-    <meta name="summary" content="An interactive walkthrough of bitcoin mining. No prior knowledge is necessary."/>
+    <meta name="summary" content="An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary."/>
     <meta name="console_explain_scripts" content="js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|js/btc-mining.js - code specifically for the \'how does bitcoin mining work?\' article."/>
 </head>
 <body>
@@ -536,7 +536,7 @@ block header:</p>
 </div></div>
 <ul class="error"></ul>
 <button id="btnRunHash4">Mine manually with SHA256</button>
-{{ codeblock('codeblock3HashResults', start = True) }}nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
+{{ codeblock('codeblock4HashResults', start = True) }}nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
 status: <span class="aligner">    </span><span id="mineStatus4"></span>{{ codeblock(end = True) }}
