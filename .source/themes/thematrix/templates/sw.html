@@ -24,7 +24,7 @@ self.addEventListener('install', function (event) {
                 '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
                 '{{ SITEURL }}/theme/js/manifest.json',
 
-                // articles pages
+                // common assets for all article pages
                 '{{ QS_LINK['/theme/js/comments-section.js'] }}',
 
                 // home page
@@ -38,29 +38,47 @@ self.addEventListener('install', function (event) {
                 // tags pages
                 '{{ SITEURL }}/tags/',
                 '{{ SITEURL }}/tags/index.html',
-                '{{ SITEURL }}/tag/bitcoin/',
-                '{{ SITEURL }}/tag/bitcoin/index.html',
-                '{{ SITEURL }}/tag/mining/',
-                '{{ SITEURL }}/tag/mining/index.html',
-                '{{ SITEURL }}/tag/proof-of-work/',
-                '{{ SITEURL }}/tag/proof-of-work/index.html',
+{% for (tag, articles) in tags %}
+                '{{ SITEURL }}/{{ tag.url }}',
+                '{{ SITEURL }}/{{ tag.url }}index.html',
+{% endfor %}
 
-                // cryptocurrencies folder
-                '{{ SITEURL }}/cryptocurrencies/',
-                '{{ SITEURL }}/cryptocurrencies/index.html',
+                // categories
+{% for (cat, articles) in categories %}
+                '{{ SITEURL }}/{{ cat.url }}',
+                '{{ SITEURL }}/{{ cat.url }}index.html',
+{% endfor %}
 
-                // 'how does bitcoin mining work' article page
-                '{{ SITEURL }}/cryptocurrencies/how-does-bitcoin-mining-work/',
-                '{{ SITEURL }}/cryptocurrencies/how-does-bitcoin-mining-work/index.html',
-                '{{ QS_LINK['/js/sjcl.min.js'] }}',
-                '{{ QS_LINK['/js/btc-mining.js'] }}',
-                '{{ QS_LINK['/img/hashing-flowchart.svg'] }}',
-                '{{ QS_LINK['/img/bitcoin-blockchain.svg'] }}',
-                '{{ QS_LINK['/css/btc.css'] }}',
-                '{{ SITEURL }}/json/btc_txs_per_block_0-999.json',
-                '{{ SITEURL }}/json/hex-trial-attempts.json',
-                '{{ QS_LINK['/json/unittest-bits.json'] }}',
+                // each article and its assets
+{% for article in articles %}
+                '{{ SITEURL }}/{{ article.url }}',
+                '{{ SITEURL }}/{{ article.url }}index.html',
+    {% if article.scripts %}
+        {% set scripts = article.scripts.split(',') %}
+        {% for script in scripts %}
+                '{{ QS_LINK['/js/' + script] }}',
+        {% endfor %}
+    {% endif %}
+    {% if article.stylesheets %}
+        {% set stylesheets = article.stylesheets.split(',') %}
+        {% for stylesheet in stylesheets %}
+                '{{ QS_LINK['/css/' + stylesheet] }}',
+        {% endfor %}
+    {% endif %}
+    {% if article.img_preloads %}
+        {% set imgs = article.img_preloads.split(',') %}
+        {% for img in imgs %}
+                '{{ QS_LINK['/img/' + img] }}',
+        {% endfor %}
+    {% endif %}
+    {% if article.jsons %}
+        {% set jsons = article.jsons.split(',') %}
+        {% for json in jsons %}
+                '{{ QS_LINK['/json/' + json] }}',
+        {% endfor %}
+    {% endif %}
 
+{% endfor %}
                 // cookie warning notice
                 '{{ SITEURL }}/cookie-notice/',
                 '{{ SITEURL }}/cookie-notice/index.html'
