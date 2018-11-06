@@ -1,4 +1,4 @@
-var latestCache = '2018-11-06_09:20:01';
+var latestCache = '2018-11-06_22:14:17';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -18,7 +18,7 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/theme/js/console-greeter.js?hash=zCriPqrRBv30DdSiS_oOtbB6-vSZ-V-0C9_PFVM4IHc',
                 'https://analysis.null.place/theme/js/manifest.json',
 
-                // articles pages
+                // common assets for all article pages
                 'https://analysis.null.place/theme/js/comments-section.js?hash=wki7QgoBJ_2OPWmX8GayY4Id_wIWZ550s44vGCKK1uk',
 
                 // home page
@@ -32,27 +32,27 @@ self.addEventListener('install', function (event) {
                 // tags pages
                 'https://analysis.null.place/tags/',
                 'https://analysis.null.place/tags/index.html',
-                'https://analysis.null.place/tag/bitcoin/',
-                'https://analysis.null.place/tag/bitcoin/index.html',
                 'https://analysis.null.place/tag/mining/',
                 'https://analysis.null.place/tag/mining/index.html',
+                'https://analysis.null.place/tag/bitcoin/',
+                'https://analysis.null.place/tag/bitcoin/index.html',
                 'https://analysis.null.place/tag/proof-of-work/',
                 'https://analysis.null.place/tag/proof-of-work/index.html',
 
-                // cryptocurrencies folder
+                // categories
                 'https://analysis.null.place/cryptocurrencies/',
                 'https://analysis.null.place/cryptocurrencies/index.html',
 
-                // 'how does bitcoin mining work' article page
-                'https://analysis.null.place/cryptocurrencies/how-does-bitcoin-mining-work/',
-                'https://analysis.null.place/cryptocurrencies/how-does-bitcoin-mining-work/index.html',
+                // each article and its assets
+                'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
+                'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/index.html',
                 'https://analysis.null.place/js/sjcl.min.js?hash=0JqGiPN8dEK7HmaZtG77GR2Sge8FpJJYb6D1TcTlEQo',
                 'https://analysis.null.place/js/btc-mining.js?hash=D15PC7nixy_T1CSLeuDPZJAa2d_c-EG8DLIySC3Sm7I',
+                'https://analysis.null.place/css/btc.css?hash=93IOhmfRq0qX0W72ZlJvdTQzTFBQX65ycirSVRrrnIQ',
                 'https://analysis.null.place/img/hashing-flowchart.svg?hash=NX7qzYIvGazeEX9jo6LBtyf-UTfHvFA3kZxGSCZM8B4',
                 'https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4',
-                'https://analysis.null.place/css/btc.css?hash=93IOhmfRq0qX0W72ZlJvdTQzTFBQX65ycirSVRrrnIQ',
-                'https://analysis.null.place/json/btc_txs_per_block_0-999.json',
-                'https://analysis.null.place/json/hex-trial-attempts.json',
+                'https://analysis.null.place/json/btc_txs_per_block_0-999.json?hash=i24DRR6IJWVysMZCgnkhgnuE1eaf0USISmaR8FHibaQ',
+                'https://analysis.null.place/json/hex-trial-attempts.json?hash=sjiIF4E12zun8jX-pysCj8nTbWw0rVU7e4b6Z-D-Qw4',
                 'https://analysis.null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4',
 
                 // cookie warning notice
