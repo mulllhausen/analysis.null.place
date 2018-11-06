@@ -22,7 +22,7 @@ function loadAdsenseScript() {
     document.body.appendChild(s);
 }
 // todo: only load ads as they come into view
-addEvent(window, 'load', function () {
+if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     loadAdsenseScript();
     fillSkyscraperAds();
     var numInFeedAds = document.querySelectorAll('.adsbygoogle.in-feed').length;

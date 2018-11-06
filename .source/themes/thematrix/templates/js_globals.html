@@ -9,6 +9,7 @@ var siteGlobals = {
     facebookAppID: '{{ FACEBOOK_APP_ID }}',
     disqusSiteName: '{{ DISQUS_SITENAME }}',
     googleAdClient: '{{ GOOGLE_AD_CLIENT }}',
+    enableAds: {% if (page and page.no_ads) %}false{% else %}true{% endif %},
     commentsPlatforms: [
         {%- if FACEBOOK_APP_ID %}'FB'{% endif -%}
         {%- if DISQUS_SITENAME %},'Disqus'{% endif -%}
