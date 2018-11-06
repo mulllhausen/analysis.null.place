@@ -24,6 +24,14 @@ this is background material needed to understand Bitcoin mining&lt;/li&gt;
 not discussed earlier&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;ins
+    class="adsbygoogle in-feed hidden-pc"
+    data-ad-format="fluid"
+    data-ad-layout-key="-gw-3+1f-3d+2z"
+    data-ad-client="ca-pub-0118741364962624"
+    data-ad-slot="7540285424"
+&gt;&lt;/ins&gt;
+&lt;br&gt;
 &lt;h2 class="heading-with-link" id="heading_cryptographic_hashing"&gt;
     &lt;a href="#heading_cryptographic_hashing" title="link to this heading"&gt;
         cryptographic hashing
@@ -443,6 +451,14 @@ lower than the target&lt;/li&gt;
 &lt;p&gt;That last type of proof-of-work test is the one used in Bitcoin mining and is
 explained in detail in the following section.&lt;/p&gt;
 
+&lt;ins
+    class="adsbygoogle in-feed hidden-pc"
+    data-ad-format="fluid"
+    data-ad-layout-key="-gw-3+1f-3d+2z"
+    data-ad-client="ca-pub-0118741364962624"
+    data-ad-slot="7540285424"
+&gt;&lt;/ins&gt;
+&lt;br&gt;
 &lt;h2 class="heading-with-link" id="heading_bitcoin_mining"&gt;
     &lt;a href="#heading_bitcoin_mining" title="link to this heading"&gt;
         bitcoin mining
@@ -753,6 +769,14 @@ can see that the correct nonce is 2,083,236,893. &lt;a id="makeBlockPass4"&gt;Cl
 here&lt;/a&gt; to copy the nonce back into the previous mining simulation and then
 click the &lt;i&gt;Mine manually with SHA256&lt;/i&gt; button to see what happens.&lt;/p&gt;
 
+&lt;ins
+    class="adsbygoogle in-feed hidden-pc"
+    data-ad-format="fluid"
+    data-ad-layout-key="-gw-3+1f-3d+2z"
+    data-ad-client="ca-pub-0118741364962624"
+    data-ad-slot="7540285424"
+&gt;&lt;/ins&gt;
+&lt;br&gt;
 &lt;h2 class="heading-with-link" id="heading_annex"&gt;
     &lt;a href="#heading_annex" title="link to this heading"&gt;
         annex
