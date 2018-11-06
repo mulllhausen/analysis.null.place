@@ -1,3 +1,4 @@
+{% if ((not page) or (not page.no_ads)) %}
 <ins
     class="adsbygoogle in-feed"
     data-ad-format="fluid"
@@ -6,3 +7,4 @@
     data-ad-slot="{{ GOOGLE_AD_CLIENT_IN_FEED_ID }}"
     {% if TEST_ADSENSE %}data-adtest="on"{% endif %}
 ></ins>
+{% endif %}
