@@ -16,6 +16,12 @@ function fillSkyscraperAds() {
         (adsbygoogle = window.adsbygoogle || []).push({});
     }
 }
+function loadInFeedAds() {
+    var numInFeedAds = document.querySelectorAll('.adsbygoogle.in-feed').length;
+    for (var i = 0; i < numInFeedAds; i++) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+}
 function loadAdsenseScript() {
     var s = document.createElement('script');
     s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
@@ -25,8 +31,5 @@ function loadAdsenseScript() {
 if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     loadAdsenseScript();
     fillSkyscraperAds();
-    var numInFeedAds = document.querySelectorAll('.adsbygoogle.in-feed').length;
-    for (var i = 0; i < numInFeedAds; i++) {
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    }
+    loadInFeedAds();
 });

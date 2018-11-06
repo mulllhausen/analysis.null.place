@@ -2,7 +2,7 @@
 {% block content %}
 <h1>all tags</h1>
 <ul class="taglist">
-{% for tag, articles in tags|sort %}
+{% for (tag, articles) in tags|sort %}
     <li>
         <a href="{{ SITEURL }}/{{ tag.url }}"><svg class="icon icon-hashtag">
             <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use>
@@ -11,4 +11,5 @@
     </li>
 {% endfor %}
 <ul>
+{% include 'ads_in_feed.html' %}
 {% endblock %}

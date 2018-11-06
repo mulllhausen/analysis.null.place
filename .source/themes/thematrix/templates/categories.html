@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <ul>
-{% for category, articles in categories %}
+{% for (category, articles) in categories %}
 	<li><a href="{{ category.url }}">{{ category }}</a></li>
 {% endfor %}
 </ul>
