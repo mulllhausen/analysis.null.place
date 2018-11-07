@@ -1,4 +1,4 @@
-var latestCache = '2018-11-08_09:20:08';
+var latestCache = '2018-11-08_09:32:22';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
