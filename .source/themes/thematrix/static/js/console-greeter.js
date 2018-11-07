@@ -70,6 +70,9 @@
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/polyfills.js - polyfills to get this site working on older browsers');
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/utils.js - common functions used on many pages');
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/matrix-animation.js - code to animate the matrix logo');
+    log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/autofooter.js - code to position the footer');
+    log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/cookie-warning-notice.js - code to show/hide the cookie warning banner at the bottom of the page');
+    log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/ads.js - code to lazy-load the pc or mobile adverts');
     log(siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/static/js/register-service-worker.js');
     groupEnd();
     log('The service worker Javascript file is ' + siteGlobalsCopy.githubURL + '/tree/master/.source/themes/thematrix/templates/sw.html');
