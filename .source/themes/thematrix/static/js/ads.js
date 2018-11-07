@@ -30,6 +30,13 @@ function loadAdsenseScript() {
 // todo: only load ads as they come into view
 if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     loadAdsenseScript();
-    fillSkyscraperAds();
-    loadInFeedAds();
+    switch (getDeviceType()) {
+        case 'phone':
+            loadInFeedAds();
+            break;
+        case 'pc':
+        case 'tablet':
+            fillSkyscraperAds();
+            break;
+    }
 });
