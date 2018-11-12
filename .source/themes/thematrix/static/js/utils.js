@@ -1,5 +1,15 @@
 // common functions used on many pages
 
+// thanks to stackoverflow.com/a/1147768
+function getEntireHeight() {
+    return Math.max(
+        document.body.scrollHeight, document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+    );
+}
+
 function getDeviceType() {
     return window.getComputedStyle(
         document.getElementsByTagName('body')[0], ':before'
