@@ -18,8 +18,8 @@
 {% from 'codeblock.html' import codeblock with context %}
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
-puzzle. The answer found by the winner is verified by all participants. The
-winner receives bitcoins as a reward.
+puzzle. The answer found by the winner is shared and verified by all
+participants. The winner receives bitcoins as a reward.
 </p></blockquote>
 
 <p>In this article I will delve into what exactly this <i>random puzzle</i> is,
@@ -44,12 +44,13 @@ not discussed earlier</li>
 <br>
 {{ h(2, 'cryptographic hashing') }}
 
-<p>To understand Bitcoin mining, it is first necessary to understand what
-cryptographic hashing is and how it works. Rather than bore you with definitions
-at the start, let's just dive in and give it a go. Click the <i>SHA256</i>
-button a few times and look carefully at what this does each time, then try
-typing different things in the <i>pre-image</i> field and clicking the
-<i>SHA256</i> button to see what that does:</p>
+<p>Bitcoin mining uses cryptographic hashing, so to understand Bitcoin mining
+it is first necessary to understand what cryptographic hashing is and how it
+works. Rather than bore you with definitions at the start, let's just dive in
+and give it a go. Click the <i>SHA256</i> button a few times and look carefully
+at what this does each time, then try typing different things in the
+<i>pre-image</i> field and clicking the <i>SHA256</i> button to see what that
+does:</p>
 
 {{ form_container('form0', 'start') }}
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
@@ -129,9 +130,9 @@ this article. All you need to remember here is that hexadecimal digits go from
 <code>0</code> to <code>9</code> to <code>a</code> to <code>f</code>.</p>
 
 <p>OK, so now that you have tried cryptographic hashing, and you know about
-hexadecimal format, let's have a look at the formal definition of cryptographic
-hashing. Some parts of the definition may not make sense at first, but I will
-be explaining them in detail in the paragraphs that follow.</p>
+hexadecimal format, let's have a look at a more formal definition of
+cryptographic hashing. Some parts of the definition may not make sense at first,
+but I will be explaining them in detail in the paragraphs that follow.</p>
 
 <blockquote><p>
 A cryptographic hashing algorithm has the following properties relevant to
@@ -356,13 +357,13 @@ nonce for every test, even if the difficulty does not change.</p>
 
 <p>The final thing to understand from this section, before we move on to Bitcoin
 mining, is that the test we have done here - matching a specified number of
-characters at the left-hand-side of the target - is just one of many possible
+characters at the left-hand side of the target - is just one of many possible
 types of proof-of-work test. The only criteria for a good proof-of-work test is
 that the examiner must be able to fine-tune the number of attempts it takes the
 miner to pass. Here are some examples of other proof-of-work tests:</p>
 
 <ul>
-    <li>matching a specified number of characters at the right-hand-side of the
+    <li>matching a specified number of characters at the right-hand side of the
 target</li>
     <li>matching a specified number of characters anywhere within the
 target</li>
@@ -549,7 +550,7 @@ status: <span class="aligner">    </span><span id="mineStatus4"></span>{{ codebl
 
 <p>The data in the simulation block header is actually that of the very first
 bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
-on 3rd January 2009.</p>
+on 3 January 2009.</p>
 
 <p>As you can see, each mining attempt increments the nonce by 1. To find the
 block hash, all of the data in the block header shown here is hashed with
@@ -564,7 +565,7 @@ works.</p>
 the <a href="#heading_cryptographic_hashing">previous section on hashing</a> is
 that the test here involves comparing two hexadecimal numbers, whereas
 previously the test involved matching a certain number of digits from the
-left-hand-side. However, there is actually a lot of similarity between these two
+left-hand side. However, there is actually a lot of similarity between these two
 types of test. Let's forget about hexadecimal numbers for a moment and just look
 at some unrelated decimal numbers:</p>
 
@@ -582,14 +583,14 @@ length? They are still the same numbers, but now they are the same length:</p>
 </div>
 
 <p>How can we tell which is bigger? The easiest way is to begin at the
-left-hand-side of the number and compare each digit:</p>
+left-hand side of the number and compare each digit:</p>
 
 <div class="codeblock"><span class="individual-digit">1</span>000000000000
 <span class="individual-digit">0</span>000001000000
 </div>
 
-<p>Because <code>1</code> is greater than <code>0</code> then we know that the
-first number must be a bigger number.</p>
+<p>Because <code>1</code> is greater than <code>0</code>, we know that the first
+number must be a bigger number.</p>
 
 <p>OK, now what if we zero-pad them both to 64 digits? Again they are exactly
 the same numbers as before, and they are the same length, but now they have lots
@@ -598,9 +599,9 @@ of leading zeros:</p>
 {{ codeblock(start = True) }}0000000000000000000000000000000000000000000000000001000000000000
 0000000000000000000000000000000000000000000000000000000001000000{{ codeblock(end = True) }}
 
-<p>The way to tell which is larger is again to begin at the left-hand-side and
-keep moving to the right until we find a digit that is different. Then the digit
-that is higher belongs to the bigger number:</p>
+<p>The way to tell which is larger is again to begin at the left-hand side and
+keep moving to the right until we find a digit that is different. The digit that
+is higher belongs to the bigger number:</p>
 
 {{ codeblock(start = True) }}<span class="individual-digits">0000000000000000000000000000000000000000000000000001</span>000000000000
 <span class="individual-digits">0000000000000000000000000000000000000000000000000000</span>000001000000{{ codeblock(end = True) }}
@@ -609,8 +610,8 @@ that is higher belongs to the bigger number:</p>
 hexadecimal numbers. The only difference is that decimal numbers go from
 <code>0</code> to <code>9</code> whereas hexadecimal numbers go from
 <code>0</code> to <code>f</code>, as you will recall from the start of this
-article. If you now go back and mine a few more times in the previous simulation
-then the results should make a lot more sense.</p>
+article. If you now go back and mine a few more times in <a href="#form4">the
+previous simulation</a> then the results should make a lot more sense.</p>
 
 <p>So finally we arrive at the end of this article on Bitcoin mining. You now
 know all about hashing and how hashing is used in Bitcoin mining. There is a bit
@@ -634,10 +635,10 @@ click the <i>Mine manually with SHA256</i> button to see what happens.</p>
 intended for those (such as myself) who like to leave no stone unturned. One
 thing that was not previously explained in detail was how the Bitcoin block
 hashes are derived from the block header. The block header is stored as bytes in
-the Bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
-field in the block header were shown in formats which are easy for humans to
-understand; however, conversions must be done to arrive at the storage method
-used by Bitcoin.</p>
+the Bitcoin blockchain (1 byte is 2 hexadecimal digits). Previously the values
+for each field in the block header were shown in formats which are easy for
+humans to understand; however, conversions must be done to arrive at the storage
+method used by Bitcoin.</p>
 
 {{ h(3, 'version') }}
 
@@ -649,7 +650,7 @@ the blockchain:</p>
     <label for="version5" class="for-textbox">version</label><br>
     <input id="version5" type="text" class="data-value" size="10" value="1">
     <ul class="error"></ul>
-{{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="version5Hex"></span>
+{{ codeblock(start = True) }}convert to hexadecimal: <span class="aligner">         </span><span id="version5Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5Bytes"></span>
 convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span>{{ codeblock(end = True) }}
 {{ form_container('form5', 'end') }}
@@ -671,7 +672,7 @@ stored in the blockchain:</p>
     <ul class="error"></ul>
 {{ codeblock(start = True) }}timestamp: <span class="aligner">                                   </span><span id="timestamp6GMT"></span>
 convert to unixtime (integer): <span class="aligner">               </span><span id="timestamp6Unixtime"></span>
-convert to hex (always 4 bytes - big endian): <span class="aligner"></span><span id="timestamp6Bytes"></span>
+convert to hexadecimal (always 4 bytes - big endian): <span class="aligner"></span><span id="timestamp6Bytes"></span>
 convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span>{{ codeblock(end = True) }}
 {{ form_container('form6', 'end') }}
 
@@ -740,7 +741,7 @@ the conversions.</p>
         <label for="bits7" class="for-textbox">bits
         <span id="bitsAreHex7Container">
             (<input type="checkbox" id="bitsAreHex7" checked>
-            <label for="bitsAreHex7">hex</label>)</label>
+            <label for="bitsAreHex7">hexadecimal</label>)</label>
         </span>
         <br>
         <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
@@ -788,7 +789,7 @@ endian bytes:</p>
     <label for="nonce8" class="for-textbox">nonce</label><br>
     <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
     <ul class="error"></ul>
-{{ codeblock(start = True) }}convert to hex: <span class="aligner">                 </span><span id="nonce8Hex"></span>
+{{ codeblock(start = True) }}convert to hexadecimal: <span class="aligner">         </span><span id="nonce8Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8Bytes"></span>
 convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span>{{ codeblock(end = True) }}
 {{ form_container('form8', 'end') }}
@@ -831,14 +832,14 @@ blockchain, and how these are concatenated together. The block header is always
     <div class="media-caption">human-readable Bitcoin block header</div>
 </div></div>
 <ul  class="error"></ul>
-{{ codeblock(start = True) }}block header (hex): <span class="aligner">                </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
+{{ codeblock(start = True) }}block header (hexadecimal): <span class="aligner">        </span><span id="block9Bytes"><span id="version9Output" class="outputField"></span><span id="prevHash9Output" class="outputField"></span><span id="merkleRoot9Output" class="outputField"></span><span id="timestamp9Output" class="outputField"></span><span id="bits9Output" class="outputField"></span><span id="nonce9Output" class="outputField"></span></span>
 block header -> SHA256 -> <span class="aligner">          </span><span id="firstSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="firstSHA256OutputLE9"></span>
 block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secondSHA256Output9"></span>
 convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span>{{ codeblock(end = True) }}
 {{ form_container('form9', 'end') }}
 
-{{ h(3, 'hashing hex vs ascii') }}
+{{ h(3, 'hashing hexadecimal vs ascii') }}
 
 <p>If you are very astute, you would have noticed that copying and pasting this
 block header into the <i>SHA256</i> hash forms at the start of this article
@@ -846,12 +847,12 @@ gives a different result to the <i>SHA256</i> hashes here. This is because these
 hashes are implemented upon the pre-image as a hexadecimal number, whereas the
 hashes in the <a href="#heading_cryptographic_hashing">first section</a> were
 implemented for a pre-image expressed in bytes. You can see the difference in
-the following form by ticking and unticking the <i>pre-image is hex</i> checkbox
-and observing how the resulting hash changes:</p>
+the following form by ticking and unticking the <i>pre-image is hexadecimal</i>
+checkbox and observing how the resulting hash changes:</p>
 
 {{ form_container('form10', 'start', 'annex') }}
     <input type="checkbox" id="inputCheckbox10" checked>
-    <label for="inputCheckbox10">pre-image is hex</label>
+    <label for="inputCheckbox10">pre-image is hexadecimal</label>
     <br><br>
     <label for="inputMessage10" class="for-textbox">pre-image</label><br>
     <textarea id="inputMessage10">0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c</textarea>
@@ -870,13 +871,13 @@ have come before it. No other block will have the same transactions, the same
 timestamp, the same previous block hash, etc, as the current block. This means
 that miners will need to try lots of nonce values in order to mine a block -
 i.e. they cannot simply guess the nonce value straight away. The more digits
-that must be matched, the more hashing attempts that must be made on average. In
-fact the average number of hashing attempts needed to match a hex digit with a
-hash can be calculated using the following expression:</p>
+that must be matched, the more hashing attempts must be made on average. In fact
+the average number of hashing attempts needed to match a hexadecimal digit with
+a hash can be calculated using the following expression:</p>
 
 <div class="horizontal-center">
 <pre>
-average attempts = (16<sup>number of hex digits</sup>) / 2
+average attempts = (16<sup>number of hexadecimal digits</sup>) / 2
 </pre>
 </div>
 
