@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>analysis</title><link href="https://analysis.null.place/" rel="alternate"></link><link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link><id>https://analysis.null.place/</id><updated>2018-04-17T00:00:00+09:30</updated><entry><title>how do the bitcoin mining algorithms work?</title><link href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/" rel="alternate"></link><published>2018-04-17T00:00:00+09:30</published><updated>2018-04-17T00:00:00+09:30</updated><author><name>Peter Miller</name></author><id>tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</id><summary type="html">An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</summary><content type="html">
 &lt;blockquote&gt;&lt;p&gt;
 Bitcoin mining involves computers competing with each other to solve a random
-puzzle. The answer found by the winner is verified by all participants. The
-winner receives bitcoins as a reward.
+puzzle. The answer found by the winner is shared and verified by all
+participants. The winner receives bitcoins as a reward.
 &lt;/p&gt;&lt;/blockquote&gt;
 
 &lt;p&gt;In this article I will delve into what exactly this &lt;i&gt;random puzzle&lt;/i&gt; is,
@@ -41,12 +41,13 @@ not discussed earlier&lt;/li&gt;
     &lt;/a&gt;
 &lt;/h2&gt;
 
-&lt;p&gt;To understand Bitcoin mining, it is first necessary to understand what
-cryptographic hashing is and how it works. Rather than bore you with definitions
-at the start, let's just dive in and give it a go. Click the &lt;i&gt;SHA256&lt;/i&gt;
-button a few times and look carefully at what this does each time, then try
-typing different things in the &lt;i&gt;pre-image&lt;/i&gt; field and clicking the
-&lt;i&gt;SHA256&lt;/i&gt; button to see what that does:&lt;/p&gt;
+&lt;p&gt;Bitcoin mining uses cryptographic hashing, so to understand Bitcoin mining
+it is first necessary to understand what cryptographic hashing is and how it
+works. Rather than bore you with definitions at the start, let's just dive in
+and give it a go. Click the &lt;i&gt;SHA256&lt;/i&gt; button a few times and look carefully
+at what this does each time, then try typing different things in the
+&lt;i&gt;pre-image&lt;/i&gt; field and clicking the &lt;i&gt;SHA256&lt;/i&gt; button to see what that
+does:&lt;/p&gt;
 
 &lt;div class="form-container" id="form0"&gt;
     &lt;a href="#form0"&gt;
@@ -146,9 +147,9 @@ this article. All you need to remember here is that hexadecimal digits go from
 &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;9&lt;/code&gt; to &lt;code&gt;a&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;OK, so now that you have tried cryptographic hashing, and you know about
-hexadecimal format, let's have a look at the formal definition of cryptographic
-hashing. Some parts of the definition may not make sense at first, but I will
-be explaining them in detail in the paragraphs that follow.&lt;/p&gt;
+hexadecimal format, let's have a look at a more formal definition of
+cryptographic hashing. Some parts of the definition may not make sense at first,
+but I will be explaining them in detail in the paragraphs that follow.&lt;/p&gt;
 
 &lt;blockquote&gt;&lt;p&gt;
 A cryptographic hashing algorithm has the following properties relevant to
@@ -433,13 +434,13 @@ nonce for every test, even if the difficulty does not change.&lt;/p&gt;
 
 &lt;p&gt;The final thing to understand from this section, before we move on to Bitcoin
 mining, is that the test we have done here - matching a specified number of
-characters at the left-hand-side of the target - is just one of many possible
+characters at the left-hand side of the target - is just one of many possible
 types of proof-of-work test. The only criteria for a good proof-of-work test is
 that the examiner must be able to fine-tune the number of attempts it takes the
 miner to pass. Here are some examples of other proof-of-work tests:&lt;/p&gt;
 
 &lt;ul&gt;
-    &lt;li&gt;matching a specified number of characters at the right-hand-side of the
+    &lt;li&gt;matching a specified number of characters at the right-hand side of the
 target&lt;/li&gt;
     &lt;li&gt;matching a specified number of characters anywhere within the
 target&lt;/li&gt;
@@ -666,7 +667,7 @@ status: &lt;span class="aligner"&gt;    &lt;/span&gt;&lt;span id="mineStatus4"&g
 
 &lt;p&gt;The data in the simulation block header is actually that of the very first
 bitcoin block ever. It was mined by Satoshi Nakamoto, the creator(s) of Bitcoin,
-on 3rd January 2009.&lt;/p&gt;
+on 3 January 2009.&lt;/p&gt;
 
 &lt;p&gt;As you can see, each mining attempt increments the nonce by 1. To find the
 block hash, all of the data in the block header shown here is hashed with
@@ -681,7 +682,7 @@ works.&lt;/p&gt;
 the &lt;a href="#heading_cryptographic_hashing"&gt;previous section on hashing&lt;/a&gt; is
 that the test here involves comparing two hexadecimal numbers, whereas
 previously the test involved matching a certain number of digits from the
-left-hand-side. However, there is actually a lot of similarity between these two
+left-hand side. However, there is actually a lot of similarity between these two
 types of test. Let's forget about hexadecimal numbers for a moment and just look
 at some unrelated decimal numbers:&lt;/p&gt;
 
@@ -699,14 +700,14 @@ length? They are still the same numbers, but now they are the same length:&lt;/p
 &lt;/div&gt;
 
 &lt;p&gt;How can we tell which is bigger? The easiest way is to begin at the
-left-hand-side of the number and compare each digit:&lt;/p&gt;
+left-hand side of the number and compare each digit:&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;&lt;span class="individual-digit"&gt;1&lt;/span&gt;000000000000
 &lt;span class="individual-digit"&gt;0&lt;/span&gt;000001000000
 &lt;/div&gt;
 
-&lt;p&gt;Because &lt;code&gt;1&lt;/code&gt; is greater than &lt;code&gt;0&lt;/code&gt; then we know that the
-first number must be a bigger number.&lt;/p&gt;
+&lt;p&gt;Because &lt;code&gt;1&lt;/code&gt; is greater than &lt;code&gt;0&lt;/code&gt;, we know that the first
+number must be a bigger number.&lt;/p&gt;
 
 &lt;p&gt;OK, now what if we zero-pad them both to 64 digits? Again they are exactly
 the same numbers as before, and they are the same length, but now they have lots
@@ -728,9 +729,9 @@ of leading zeros:&lt;/p&gt;
 &lt;/div&gt;
 
 
-&lt;p&gt;The way to tell which is larger is again to begin at the left-hand-side and
-keep moving to the right until we find a digit that is different. Then the digit
-that is higher belongs to the bigger number:&lt;/p&gt;
+&lt;p&gt;The way to tell which is larger is again to begin at the left-hand side and
+keep moving to the right until we find a digit that is different. The digit that
+is higher belongs to the bigger number:&lt;/p&gt;
 
 &lt;div class="codeblock-container auto-wrap-on-mobile"&gt;
     &lt;div class="button-background"&gt;
@@ -752,8 +753,8 @@ that is higher belongs to the bigger number:&lt;/p&gt;
 hexadecimal numbers. The only difference is that decimal numbers go from
 &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;9&lt;/code&gt; whereas hexadecimal numbers go from
 &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;f&lt;/code&gt;, as you will recall from the start of this
-article. If you now go back and mine a few more times in the previous simulation
-then the results should make a lot more sense.&lt;/p&gt;
+article. If you now go back and mine a few more times in &lt;a href="#form4"&gt;the
+previous simulation&lt;/a&gt; then the results should make a lot more sense.&lt;/p&gt;
 
 &lt;p&gt;So finally we arrive at the end of this article on Bitcoin mining. You now
 know all about hashing and how hashing is used in Bitcoin mining. There is a bit
@@ -790,10 +791,10 @@ click the &lt;i&gt;Mine manually with SHA256&lt;/i&gt; button to see what happen
 intended for those (such as myself) who like to leave no stone unturned. One
 thing that was not previously explained in detail was how the Bitcoin block
 hashes are derived from the block header. The block header is stored as bytes in
-the Bitcoin blockchain (1 byte is 2 hex digits). Previously the values for each
-field in the block header were shown in formats which are easy for humans to
-understand; however, conversions must be done to arrive at the storage method
-used by Bitcoin.&lt;/p&gt;
+the Bitcoin blockchain (1 byte is 2 hexadecimal digits). Previously the values
+for each field in the block header were shown in formats which are easy for
+humans to understand; however, conversions must be done to arrive at the storage
+method used by Bitcoin.&lt;/p&gt;
 
 &lt;h3 class="heading-with-link" id="heading_version"&gt;
     &lt;a href="#heading_version" title="link to this heading"&gt;
@@ -829,7 +830,7 @@ the blockchain:&lt;/p&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
-    &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="version5Hex"&gt;&lt;/span&gt;
+    &lt;div class="codeblock"&gt;convert to hexadecimal: &lt;span class="aligner"&gt;         &lt;/span&gt;&lt;span id="version5Hex"&gt;&lt;/span&gt;
 convert to 4 bytes (big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="version5Bytes"&gt;&lt;/span&gt;
 convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;span id="version5BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -878,7 +879,7 @@ stored in the blockchain:&lt;/p&gt;
     &lt;/div&gt;&lt;br&gt;
     &lt;div class="codeblock"&gt;timestamp: &lt;span class="aligner"&gt;                                   &lt;/span&gt;&lt;span id="timestamp6GMT"&gt;&lt;/span&gt;
 convert to unixtime (integer): &lt;span class="aligner"&gt;               &lt;/span&gt;&lt;span id="timestamp6Unixtime"&gt;&lt;/span&gt;
-convert to hex (always 4 bytes - big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="timestamp6Bytes"&gt;&lt;/span&gt;
+convert to hexadecimal (always 4 bytes - big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="timestamp6Bytes"&gt;&lt;/span&gt;
 convert to little endian: &lt;span class="aligner"&gt;                    &lt;/span&gt;&lt;span id="timestamp6BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 
@@ -963,7 +964,7 @@ the conversions.&lt;/p&gt;
         &lt;label for="bits7" class="for-textbox"&gt;bits
         &lt;span id="bitsAreHex7Container"&gt;
             (&lt;input type="checkbox" id="bitsAreHex7" checked&gt;
-            &lt;label for="bitsAreHex7"&gt;hex&lt;/label&gt;)&lt;/label&gt;
+            &lt;label for="bitsAreHex7"&gt;hexadecimal&lt;/label&gt;)&lt;/label&gt;
         &lt;/span&gt;
         &lt;br&gt;
         &lt;input id="bits7" type="text" class="data-value" size="8" value="1d00ffff"&gt;
@@ -1062,7 +1063,7 @@ endian bytes:&lt;/p&gt;
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
-    &lt;div class="codeblock"&gt;convert to hex: &lt;span class="aligner"&gt;                 &lt;/span&gt;&lt;span id="nonce8Hex"&gt;&lt;/span&gt;
+    &lt;div class="codeblock"&gt;convert to hexadecimal: &lt;span class="aligner"&gt;         &lt;/span&gt;&lt;span id="nonce8Hex"&gt;&lt;/span&gt;
 convert to 4 bytes (big endian): &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="nonce8Bytes"&gt;&lt;/span&gt;
 convert to little endian: &lt;span class="aligner"&gt;       &lt;/span&gt;&lt;span id="nonce8BytesLE"&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -1132,7 +1133,7 @@ blockchain, and how these are concatenated together. The block header is always
             &lt;/svg&gt;
         &lt;/button&gt;
     &lt;/div&gt;&lt;br&gt;
-    &lt;div class="codeblock"&gt;block header (hex): &lt;span class="aligner"&gt;                &lt;/span&gt;&lt;span id="block9Bytes"&gt;&lt;span id="version9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="prevHash9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="merkleRoot9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="timestamp9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="bits9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="nonce9Output" class="outputField"&gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;div class="codeblock"&gt;block header (hexadecimal): &lt;span class="aligner"&gt;        &lt;/span&gt;&lt;span id="block9Bytes"&gt;&lt;span id="version9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="prevHash9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="merkleRoot9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="timestamp9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="bits9Output" class="outputField"&gt;&lt;/span&gt;&lt;span id="nonce9Output" class="outputField"&gt;&lt;/span&gt;&lt;/span&gt;
 block header -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;          &lt;/span&gt;&lt;span id="firstSHA256Output9"&gt;&lt;/span&gt;
 convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt;span id="firstSHA256OutputLE9"&gt;&lt;/span&gt;
 block header -&gt; SHA256 -&gt; SHA256 -&gt; &lt;span class="aligner"&gt;&lt;/span&gt;&lt;span id="secondSHA256Output9"&gt;&lt;/span&gt;
@@ -1142,9 +1143,9 @@ convert to little endian: &lt;span class="aligner"&gt;          &lt;/span&gt;&lt
 &lt;/div&gt;
 
 
-&lt;h3 class="heading-with-link" id="heading_hashing_hex_vs_ascii"&gt;
-    &lt;a href="#heading_hashing_hex_vs_ascii" title="link to this heading"&gt;
-        hashing hex vs ascii
+&lt;h3 class="heading-with-link" id="heading_hashing_hexadecimal_vs_ascii"&gt;
+    &lt;a href="#heading_hashing_hexadecimal_vs_ascii" title="link to this heading"&gt;
+        hashing hexadecimal vs ascii
         &lt;svg class="icon icon-chain-90"&gt;
             &lt;use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=2G-EGE64Yri80GmCFDWH7UHNpZrhCdjdRDcsTpmjgVU#icon-chain-90"&gt;&lt;/use&gt;
         &lt;/svg&gt;
@@ -1157,8 +1158,8 @@ gives a different result to the &lt;i&gt;SHA256&lt;/i&gt; hashes here. This is b
 hashes are implemented upon the pre-image as a hexadecimal number, whereas the
 hashes in the &lt;a href="#heading_cryptographic_hashing"&gt;first section&lt;/a&gt; were
 implemented for a pre-image expressed in bytes. You can see the difference in
-the following form by ticking and unticking the &lt;i&gt;pre-image is hex&lt;/i&gt; checkbox
-and observing how the resulting hash changes:&lt;/p&gt;
+the following form by ticking and unticking the &lt;i&gt;pre-image is hexadecimal&lt;/i&gt;
+checkbox and observing how the resulting hash changes:&lt;/p&gt;
 
 &lt;div class="form-container annex" id="form10"&gt;
     &lt;a href="#form10"&gt;
@@ -1168,7 +1169,7 @@ and observing how the resulting hash changes:&lt;/p&gt;
     &lt;/a&gt;
 
     &lt;input type="checkbox" id="inputCheckbox10" checked&gt;
-    &lt;label for="inputCheckbox10"&gt;pre-image is hex&lt;/label&gt;
+    &lt;label for="inputCheckbox10"&gt;pre-image is hexadecimal&lt;/label&gt;
     &lt;br&gt;&lt;br&gt;
     &lt;label for="inputMessage10" class="for-textbox"&gt;pre-image&lt;/label&gt;&lt;br&gt;
     &lt;textarea id="inputMessage10"&gt;0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c&lt;/textarea&gt;
@@ -1208,13 +1209,13 @@ have come before it. No other block will have the same transactions, the same
 timestamp, the same previous block hash, etc, as the current block. This means
 that miners will need to try lots of nonce values in order to mine a block -
 i.e. they cannot simply guess the nonce value straight away. The more digits
-that must be matched, the more hashing attempts that must be made on average. In
-fact the average number of hashing attempts needed to match a hex digit with a
-hash can be calculated using the following expression:&lt;/p&gt;
+that must be matched, the more hashing attempts must be made on average. In fact
+the average number of hashing attempts needed to match a hexadecimal digit with
+a hash can be calculated using the following expression:&lt;/p&gt;
 
 &lt;div class="horizontal-center"&gt;
 &lt;pre&gt;
-average attempts = (16&lt;sup&gt;number of hex digits&lt;/sup&gt;) / 2
+average attempts = (16&lt;sup&gt;number of hexadecimal digits&lt;/sup&gt;) / 2
 &lt;/pre&gt;
 &lt;/div&gt;
 
