@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>{{ SITENAME }}</title>
+        <link>{{ SITEURL }}/</link>
+        <description></description>
+        <lastBuildDate>{{ (dates | sort(reverse=True))[0].date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+        {% for article in dates %}
+        <item>
+            <title>{{ article.title }}</title>
+            <link>{{ SITEURL }}/{{ article.url }}</link>
+            <description>{{ article.summary }}</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
+            <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+            <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }},/{{ article.url }}</guid>
+            {% if article.tags %}
+            {% for tag in article.tags %}
+            <category>{{ tag }}</category>
+            {% endfor %}
+            {% endif %}
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

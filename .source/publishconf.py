@@ -14,9 +14,6 @@ SITE_HOSTNAME = 'analysis.null.place'
 SITEURL = 'https://' + SITE_HOSTNAME
 RELATIVE_URLS = False
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-FEED_ALL_RSS = 'feeds/all.rss.xml'
-
 DELETE_OUTPUT_DIRECTORY = False
 
 TEST_ADSENSE = False
