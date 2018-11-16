@@ -1,5 +1,5 @@
 {
-    "description": "unit tests for the bits / difficulty / target conversions in js/btc-mining.js. data for the bits->target->bits conversions comes from bitcoin/src/test/arith_uint256_tests.cpp plus some extra tests verified from the bitcoin source. data for the bits->difficulty conversions comes from bitcoin/src/test/blockchain_tests.cpp.",
+    "description": "Unit tests for the bits/difficulty/target conversions in js/btc-mining.js. Data for the bits->target->bits conversions comes from bitcoin/src/test/arith_uint256_tests.cpp plus some extra tests verified from the bitcoin source. Data for the bits->difficulty conversions comes from bitcoin/src/test/blockchain_tests.cpp. The difficulty_threshold_high values given in this json file were calculated in c++ using double nextDifficulty = boost::math::nextafter(difficulty, DBL_MAX); and the difficulty_threshold_low values given in this json file were calculated using double prevDifficulty = boost::math::nextafter(nextDifficulty, -1); within function TestDifficulty() in the bitcoin/src/test/blockchain_tests.cpp file.",
     "tests": [
         {
             "original_bits": "00000000",
