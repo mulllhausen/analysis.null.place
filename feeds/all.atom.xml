@@ -1266,5 +1266,5 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.&lt;/p&gt;
 &lt;script&gt;
-    siteGlobals.unittestBitsJSON = 'https://analysis.null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4';
+    siteGlobals.unittestBitsJSON = 'https://analysis.null.place/json/unittest-bits.json?hash=m8SQwF3rDhBpBV_lXcVebOMLg2aWUgL4SGIWtwfRorg';
 &lt;/script&gt;</content><category term="bitcoin"></category><category term="mining"></category><category term="proof-of-work"></category></entry></feed>

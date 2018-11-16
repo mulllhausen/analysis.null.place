@@ -1,4 +1,4 @@
-var latestCache = '2018-11-13_20:35:40';
+var latestCache = '2018-11-17_09:04:13';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -53,7 +53,7 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdlb00mmP5-7WS0vqNHTEB5Ap8G1XH-ZP-OpW_-4',
                 'https://analysis.null.place/json/btc_txs_per_block_0-999.json?hash=i24DRR6IJWVysMZCgnkhgnuE1eaf0USISmaR8FHibaQ',
                 'https://analysis.null.place/json/hex-trial-attempts.json?hash=sjiIF4E12zun8jX-pysCj8nTbWw0rVU7e4b6Z-D-Qw4',
-                'https://analysis.null.place/json/unittest-bits.json?hash=p7UQo2SFlPohlPTr77BzMrKWCwIejGOFliA5uLTC6h4',
+                'https://analysis.null.place/json/unittest-bits.json?hash=m8SQwF3rDhBpBV_lXcVebOMLg2aWUgL4SGIWtwfRorg',
 
                 // cookie warning notice
                 'https://analysis.null.place/cookie-notice/',
