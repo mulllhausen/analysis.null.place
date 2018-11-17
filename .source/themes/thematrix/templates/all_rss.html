@@ -4,7 +4,7 @@
         <title>{{ SITENAME }}</title>
         <link>{{ SITEURL }}/</link>
         <description></description>
-        <lastBuildDate>{{ (dates | sort(reverse=True))[0].date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+        <lastBuildDate>{{ articles[0].date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
         {% for article in dates %}
         <item>
             <title>{{ article.title }}</title>

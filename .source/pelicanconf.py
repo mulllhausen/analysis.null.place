@@ -30,12 +30,18 @@ DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 THEME = './themes/thematrix'
 
 # disable the default pelican rss and atom feeds (use direct templates instead)
+FEED_ATOM = None
+FEED_RSS = None
 FEED_ALL_ATOM = None
+FEED_ALL_RSS = None
 CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
+CATEGORY_FEED_RSS = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
-FEED_ALL_RSS = None
+TAG_FEED_ATOM = None
+TAG_FEED_RSS = None
+TRANSLATION_FEED_ATOM = None
+TRANSLATION_FEED_RSS = None
 
 # currently no author page
 AUTHOR_URL = ''
@@ -43,7 +49,7 @@ AUTHOR_SAVE_AS = ''
 
 DIRECT_TEMPLATES = [
     'index', 'tags', 'archives', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest',
-    'rss', 'atom'
+    'all_rss', 'all_atom'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
@@ -53,8 +59,8 @@ ROBOTS_SAVE_AS = 'robots.txt'
 CNAME_SAVE_AS = 'CNAME'
 SW_SAVE_AS = 'sw.js'
 MANIFEST_SAVE_AS = 'theme/js/manifest.json'
-RSS_SAVE_AS = 'feeds/all.rss.xml'
-ATOM_SAVE_AS = 'feeds/all.atom.xml'
+ALL_RSS_SAVE_AS = 'feeds/all.rss.xml'
+ALL_ATOM_SAVE_AS = 'feeds/all.atom.xml'
 
 ARTICLE_URL = '{slug}/'
 ARTICLE_SAVE_AS = '{slug}/index.html'
