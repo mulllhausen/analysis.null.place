@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ SITENAME }}</title>
+    <link href="{{ SITEURL }}/" rel="alternate"></link>
+    <link href="{{ SITEURL }}/{{ ATOM_SAVE_AS}}" rel="self"></link>
+    <id>{{ SITEURL }}/</id>
+    <updated>{{ articles[0].date.isoformat() }}</updated>
+    {% for article in dates %}
+    <entry>
+        <title>{{ article.title }}</title>
+        <link href="{{ SITEURL }}/{{ article.url }}" rel="alternate"></link>
+        <published>{{ article.date.isoformat() }}</published>
+        <updated>
+            {%- if article.modified -%}
+                {{ article.modified.isoformat() }}
+            {%- else -%}
+                {{ article.date.isoformat() }}
+            {%- endif -%}
+        </updated>
+        <author>
+            <name>{{ AUTHOR }}</name>
+        </author>
+        <id>tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</id>
+        <summary type="html">{{ article.summary }}</summary>
+        {#<content type="html">{{ article.content }}</content>#}
+        {% if article.tags %}
+        {% for tag in article.tags %}
+        <category term="{{ tag }}"></category>
+        {% endfor %}
+        {% endif %}
+    </entry>
+    {% endfor %}
+</feed>
