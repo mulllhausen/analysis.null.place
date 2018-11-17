@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>analysis</title><link>https://analysis.null.place/</link><description></description><lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0930</lastBuildDate><item><title>how do the bitcoin mining algorithms work?</title><link>https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/</link><description>An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator><pubDate>Tue, 17 Apr 2018 00:00:00 +0930</pubDate><guid isPermaLink="false">tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</guid><category>bitcoin</category><category>mining</category><category>proof-of-work</category></item></channel></rss>
+<rss version="2.0">
+    <channel>
+        <title>analysis</title>
+        <link>https://analysis.null.place/</link>
+        <description></description>
+        <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0930</lastBuildDate>
+        <item>
+            <title>how do the bitcoin mining algorithms work?</title>
+            <link>https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/</link>
+            <description>An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Tue, 17 Apr 2018 00:00:00 +0930</pubDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2018-04-17,/how-do-the-bitcoin-mining-algorithms-work/</guid>
+            <category>bitcoin</category>
+            <category>mining</category>
+            <category>proof-of-work</category>
+        </item>
+    </channel>
+</rss>
