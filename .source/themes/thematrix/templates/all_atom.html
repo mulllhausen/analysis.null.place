@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ SITENAME }}</title>
     <link href="{{ SITEURL }}/" rel="alternate"></link>
-    <link href="{{ SITEURL }}/{{ ATOM_SAVE_AS}}" rel="self"></link>
+    <link href="{{ SITEURL }}/{{ ALL_ATOM_SAVE_AS}}" rel="self"></link>
     <id>{{ SITEURL }}/</id>
     <updated>{{ articles[0].date.isoformat() }}</updated>
     {% for article in dates %}
