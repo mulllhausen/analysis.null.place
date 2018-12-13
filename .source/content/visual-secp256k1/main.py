@@ -23,6 +23,7 @@ import operations
 import graphics
 import writer
 import sys
+import sympy
 
 writer.to_file = "index2.html"
 graphics.img_dir = "../img"
@@ -30,7 +31,7 @@ graphics.img_dir = "../img"
 if "--html" in sys.argv:
     writer.output_html = True
     graphics.output_html = True
-else if "--stdout" in sys.argv:
+elif "--stdout" in sys.argv:
     writer.output_html = False
     graphics.output_html = False
 else:
@@ -39,28 +40,28 @@ else:
     )
 
 if writer.output_html:
-	# a notice when running in html output mode. not printed to html file
-	print "writing output to %s. graphs and equations stored in %s\n" \
-	% (html_file, img_dir)
+    # a notice when running in html output mode. not printed to html file
+    print "writing output to %s. graphs and equations stored in %s\n" \
+    % (html_file, img_dir)
 
 #init_grunt_globals(markdown, html_file)
 
 if writer.output_html:
-	import os, errno
-	# create the img directory to store the graph and equation images in
-	try:
-		os.makedirs(img_dir)
-	except OSError as exception:
-		if exception.errno != errno.EEXIST:
-			raise
+    import os, errno
+    # create the img directory to store the graph and equation images in
+    try:
+        os.makedirs(img_dir)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
 
-	# clear the html_file, ready for writing again
-	try:
-		os.remove(html_file)
-	except OSError as exception:
-		# errno.ENOENT = no such file or directory
-		if exception.errno != errno.ENOENT:
-			raise
+    # clear the html_file, ready for writing again
+    try:
+        os.remove(html_file)
+    except OSError as exception:
+        # errno.ENOENT = no such file or directory
+        if exception.errno != errno.ENOENT:
+            raise
 
     # init html
     writer.html_title = "<title>visual secp256k1</title>"
@@ -92,7 +93,7 @@ writer.acc("""<ol>
 <li>cracking a private key</li>""")
 
 writer.acc("the equation of the bitcoin elliptic curve is as follows:")
-writer.acc(writer.make_img(**graphics.equation(latex = secp256k1_eq)))
+writer.acc(writer.make_img(**graphics.equation(latex = operations.secp256k1_eq)))
 writer.acc("this equation is called <i>secp256k1</i> and looks like this:")
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
@@ -203,23 +204,23 @@ curve?</p>
 <p>To answer that, lets check with <code>p</code> at <code>x = %s</code> in the
 %s half of the curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
 def plot_4p(xp, yp_pos, labels_on = True):
-	global plt
-	# first calculate the rightmost x coordinate for the plot area
-	yp = operations.y_secp256k1(xp, yp_pos)
-	p = (xp, yp)
-	two_p = operations.add_points(p, p)
-	three_p = operations.add_points(p, two_p)
-	four_p = operations.add_points(p, three_p)
-	(x2p, y2p) = two_p
-	(x3p, y3p) = three_p
-	(x4p, y4p) = four_p
-	rightmost_x = max(xp, x2p, x3p, x4p)
+    global plt
+    # first calculate the rightmost x coordinate for the plot area
+    yp = operations.y_secp256k1(xp, yp_pos)
+    p = (xp, yp)
+    two_p = operations.add_points(p, p)
+    three_p = operations.add_points(p, two_p)
+    four_p = operations.add_points(p, three_p)
+    (x2p, y2p) = two_p
+    (x3p, y3p) = three_p
+    (x4p, y4p) = four_p
+    rightmost_x = max(xp, x2p, x3p, x4p)
 
-	init_plot_ec(rightmost_x + 2, color = "y")
-	graphics.plot_add_inf_field(p, p, "p", "p", "2p", color = "r", labels_on = labels_on)
-	graphics.plot_add_inf_field(p, two_p, "p", "2p", "3p", color = "c", labels_on = labels_on)
-	graphics.plot_add_inf_field(p, three_p, "p", "3p", "4p", color = "g", labels_on = labels_on)
-	graphics.plot_add_inf_field(two_p, two_p, "2p", "2p", "4p", color = "b", labels_on = labels_on)
+    graphics.init_secp256k1_plot(rightmost_x + 2, color = "y")
+    graphics.plot_add_inf_field(p, p, "p", "p", "2p", color = "r", labels_on = labels_on)
+    graphics.plot_add_inf_field(p, two_p, "p", "2p", "3p", color = "c", labels_on = labels_on)
+    graphics.plot_add_inf_field(p, three_p, "p", "3p", "4p", color = "g", labels_on = labels_on)
+    graphics.plot_add_inf_field(two_p, two_p, "2p", "2p", "4p", color = "b", labels_on = labels_on)
 
 plot_4p(xp, yp_pos)
 writer.acc(writer.make_img(**graphics.finalize_plot("4p1")))
@@ -296,26 +297,26 @@ four_p = operations.add_points(p, three_p)
 (x4p, y4p) = four_p
 writer.acc("<p>at <code>p + p + p + p</code>, <code>x</code> is computed as:</p>")
 quick_equation(
-	eq = x4p.simplify(),
-	latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify())
+    eq = x4p.simplify(),
+    latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify())
 )
 writer.acc("<p>and <code>y</code> is computed as:</p>")
 quick_equation(
-	eq = y4p.simplify(),
-	latex = "y_{(p+p+p+p)} = %s" % sympy.latex(y4p.simplify())
+    eq = y4p.simplify(),
+    latex = "y_{(p+p+p+p)} = %s" % sympy.latex(y4p.simplify())
 )
 
 two_p_plus_2p = operations.add_points(two_p, two_p)
 (x2p_plus_2p, y2p_plus_2p) = two_p_plus_2p 
 writer.acc("<p>at <code>2p + 2p</code>, <code>x</code> is computed as:</p>")
 quick_equation(
-	eq = x2p_plus_2p.simplify(),
-	latex = "x_{(2p+2p)} = %s" % sympy.latex(x2p_plus_2p.simplify())
+    eq = x2p_plus_2p.simplify(),
+    latex = "x_{(2p+2p)} = %s" % sympy.latex(x2p_plus_2p.simplify())
 )
 writer.acc("<p>and <code>y</code> is computed as:</p>")
 quick_equation(
-	eq = y2p_plus_2p.simplify(),
-	latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify())
+    eq = y2p_plus_2p.simplify(),
+    latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify())
 )
 writer.acc("""<p>compare these results and you will see that that they are
 identical. this means that addition and multiplication of points on the bitcoin
@@ -333,7 +334,7 @@ point <code>r</code> we should arrive back at <code>p</code>:
 <code>p = r - q</code>. another way of writing this is <code>r + (-q) = p</code>.
 but what is <code>-q</code>? it is simply the mirroring of point <code>q</code>
 about the <code>x</code>-axis:</p>""")
-init_plot_ec(x_max = 7)
+graphics.init_secp256k1_plot(x_max = 7)
 
 xp = 5
 yp_pos = False
@@ -380,7 +381,7 @@ half_p2 = half_point(two_p, y2q2_pos)
 
 x_max = max(x2p, half_p1_x, half_p2_x)
 
-init_plot_ec(x_max = x_max + 2, color = "m")
+graphics.init_secp256k1_plot(x_max = x_max + 2, color = "m")
 graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "g")
 graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "b")
 

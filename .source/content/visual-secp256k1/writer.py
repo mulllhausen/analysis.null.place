@@ -1,5 +1,7 @@
 """file that writes text (only text, not images) to stdout or file"""
 
+import re
+
 to_file = '/dev/null' # init default
 output_html = None # default
 
@@ -11,13 +13,22 @@ def acc(text):
     if output_html is None:
         raise ValueError("unknown output type")
 
+    if text is None:
+        text = ""
+
     text += "\n"
     print replace_tags(text)
 
     if output_html:
         html_body += text
 
-def make_img(filename, name, css_class)
+def make_img(filename = None, name = None, css_class = None):
+    if not output_html:
+        return
+
+    if (filename is None) or (name is None) or (css_class is None):
+        raise ValueError("missing arguments")
+
     img_src = "{{ QS_LINK[IMG_PATH + '/%s'] }}" % filename
     html_metatags["img_preloads"].append(filename)
     return "<img src=\"%s\" alt=\"%s\" class=\"%s\">" % \

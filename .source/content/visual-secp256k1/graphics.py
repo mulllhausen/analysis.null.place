@@ -150,6 +150,7 @@ def finalize_plot(img_filename = None):
 
     else:
         plt.show(block = True)
+        return {}
 
 def equation(eq = None, latex = None):
     """
@@ -163,7 +164,7 @@ def equation(eq = None, latex = None):
     # print an empty line
     print
     if not output_html:
-        return
+        return {}
 
     global plt
     if latex is None:
