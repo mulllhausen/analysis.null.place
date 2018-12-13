@@ -144,7 +144,8 @@ def finalize_plot(img_filename = None):
         plt.savefig("%s/%s.png" % (img_dir, img_filename), bbox_inches = "tight")
         return {
             "filename": img_filename,
-            "file": "%s.png" % img_filename
+            "file": "%s.png" % img_filename,
+            "css_class": "secp256k1-plot"
         }
 
     else:
@@ -180,8 +181,11 @@ def equation(eq = None, latex = None):
     fig.axes.get_yaxis().set_visible(False)
     plt.text(0, 0, r"$%s$" % latex, fontsize = 25)
     plt.savefig("%s/%s.png" % (img_dir, img_filename), bbox_inches = "tight")
-    # don't use the entire latex string for the alt text as it could be long
     return {
         "filename": "%s.png" % img_filename,
-        "name": latex[: 20]
+
+        # don't use the entire latex string for the alt text as it could be long
+        "name": latex[: 20],
+
+        "css_class": "equation"
     }
