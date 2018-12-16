@@ -17,7 +17,6 @@ SITENAME_ASCIIART = r"""
 BLOG_DESCRIPTION = 'Blog by ' + AUTHOR
 
 PATH = 'content'
-IMG_PATH = 'img' # relative (SITEURL will be prepended where necessary)
 
 TIMEZONE = 'Australia/Adelaide'
 UNIXTIME = int(time.time())

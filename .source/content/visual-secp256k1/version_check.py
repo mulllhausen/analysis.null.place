@@ -4,7 +4,6 @@ be used for performing live crypto operations.
 """
 from distutils.version import LooseVersion
 import sympy, mpmath, numpy, matplotlib, hashlib
-import matplotlib.pyplot as plt
 
 if LooseVersion(mpmath.__version__) < LooseVersion("0.19"):
 	raise ImportError(

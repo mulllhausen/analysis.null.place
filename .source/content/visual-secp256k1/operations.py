@@ -42,7 +42,7 @@ def square_root(num, modular = False):
     if modular:
         return modular_sqrt(num)
     else:
-	    return sympy.sqrt(num)
+        return sympy.sqrt(num)
 
 def invert(num, modular = False):
     if modular:
@@ -50,7 +50,10 @@ def invert(num, modular = False):
         # https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python
         return pow(num, prime - 2, prime)
     else:
-        return 1 / num
+        if isinstance(num, sympy.Expr):
+            return 1 / num
+        else:
+            return 1.0 / num
 
 def modular_sqrt(a):
     """
@@ -280,13 +283,13 @@ def tangent_intersection(p, yq_pos):
     if float(xp) < -7**(1 / 3.0):
         raise ValueError("xp must be greater than cuberoot(-7)")
     xq = sympy.symbols("xq")
-    yq = y_ec(xq, yq_pos)
+    yq = y_secp256k1(xq, yq_pos)
     q = (xq, yq)
     m1 = tan_slope(q)
     m2 = non_tan_slope(p, q)
     # solve numerically, and start looking for solutions at xq = 0
     xq = float(sympy.nsolve(m1 - m2, xq, 0))
-    return (xq, y_ec(xq, yq_pos))
+    return (xq, y_secp256k1(xq, yq_pos))
 
 def add_points(p, q, modular = False):
     """

@@ -581,6 +581,9 @@ ul.taglist li {
     position: absolute;
     right: 10px;/*match the padding of .form-container*/
 }
+.equation {
+    max-width: 100%;
+}
 .popup-fullpage {
     position: fixed;
     top: 0;

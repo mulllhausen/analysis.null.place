@@ -25,8 +25,9 @@ import writer
 import sys
 import sympy
 
-writer.to_file = "index2.html"
-graphics.img_dir = "../img"
+writer.to_file = "index.html"
+writer.img_path = "/img" # url
+graphics.img_dir = "../img" # disk
 
 if "--html" in sys.argv:
     writer.output_html = True
@@ -42,22 +43,20 @@ else:
 if writer.output_html:
     # a notice when running in html output mode. not printed to html file
     print "writing output to %s. graphs and equations stored in %s\n" \
-    % (html_file, img_dir)
-
-#init_grunt_globals(markdown, html_file)
+    % (writer.to_file, graphics.img_dir)
 
 if writer.output_html:
     import os, errno
     # create the img directory to store the graph and equation images in
     try:
-        os.makedirs(img_dir)
+        os.makedirs(graphics.img_dir)
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             raise
 
-    # clear the html_file, ready for writing again
+    # clear the writer.to_file, ready for writing again
     try:
-        os.remove(html_file)
+        os.remove(writer.to_file)
     except OSError as exception:
         # errno.ENOENT = no such file or directory
         if exception.errno != errno.ENOENT:
@@ -71,7 +70,7 @@ if writer.output_html:
         "category": "cryptography",
         "tags": "bitcoin, cryptography",
         "stylesheets": "btc.css",
-        "img_preloads": "", # init
+        "img_preloads": [], # init
         "summary": "A walkthrough of secp256k1 - Bitcoin's elliptic curve."
     }
     writer.acc("{% from 'h.html' import h with context %}")
@@ -90,11 +89,12 @@ writer.acc("""<ol>
 <li>signing a message</li>
 <li>verifying a message signature</li>
 <li>recovering a public key from a signature</li>
-<li>cracking a private key</li>""")
+<li>cracking a private key</li>
+</ol>""")
 
-writer.acc("the equation of the bitcoin elliptic curve is as follows:")
+writer.acc("<p>the equation of the bitcoin elliptic curve is as follows:</p>")
 writer.acc(writer.make_img(**graphics.equation(latex = operations.secp256k1_eq)))
-writer.acc("this equation is called <i>secp256k1</i> and looks like this:")
+writer.acc("<p>this equation is called <i>secp256k1</i> and looks like this:</p>")
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
 
@@ -102,7 +102,7 @@ writer.acc("""{{ h(2, 'point addition (infinite field)') }}
 
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
-the <code>x</code>-axis. for example, adding point <code>p</code> to point
+the <code>x</code> axis. for example, adding point <code>p</code> to point
 <code>q</code>:</p>""")
 graphics.init_secp256k1_plot(x_max = 7)
 
@@ -204,7 +204,6 @@ curve?</p>
 <p>To answer that, lets check with <code>p</code> at <code>x = %s</code> in the
 %s half of the curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
 def plot_4p(xp, yp_pos, labels_on = True):
-    global plt
     # first calculate the rightmost x coordinate for the plot area
     yp = operations.y_secp256k1(xp, yp_pos)
     p = (xp, yp)
@@ -230,7 +229,7 @@ writer.acc("""<p>notice how the tangent to <code>2p</code> and the line through
 curve. lets zoom in to check:</p>""")
 
 plot_4p(xp, yp_pos, labels_on = False)
-plt.axis([-2, 0, -3, 3]) # xmin, xmax, ymin, ymax
+graphics.plt.axis([-2, 0, -3, 3]) # xmin, xmax, ymin, ymax
 writer.acc(writer.make_img(**graphics.finalize_plot("4p1_zoom")))
 
 xp = 4
@@ -246,7 +245,7 @@ writer.acc(writer.make_img(**graphics.finalize_plot("4p2")))
 
 writer.acc("<p>so far so good. zooming in:</p>")
 plot_4p(xp, yp_pos, labels_on = False)
-plt.axis([-0.6, 0.3, -3.5, -1.5]) # xmin, xmax, ymin, ymax
+graphics.plt.axis([-0.6, 0.3, -3.5, -1.5]) # xmin, xmax, ymin, ymax
 writer.acc(writer.make_img(**graphics.finalize_plot("4p2_zoom")))
 
 xp = 3
@@ -296,28 +295,28 @@ three_p = operations.add_points(p, two_p)
 four_p = operations.add_points(p, three_p)
 (x4p, y4p) = four_p
 writer.acc("<p>at <code>p + p + p + p</code>, <code>x</code> is computed as:</p>")
-quick_equation(
+writer.acc(writer.make_img(**graphics.equation(
     eq = x4p.simplify(),
     latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify())
-)
+)))
 writer.acc("<p>and <code>y</code> is computed as:</p>")
-quick_equation(
+writer.acc(writer.make_img(**graphics.equation(
     eq = y4p.simplify(),
     latex = "y_{(p+p+p+p)} = %s" % sympy.latex(y4p.simplify())
-)
+)))
 
 two_p_plus_2p = operations.add_points(two_p, two_p)
 (x2p_plus_2p, y2p_plus_2p) = two_p_plus_2p 
 writer.acc("<p>at <code>2p + 2p</code>, <code>x</code> is computed as:</p>")
-quick_equation(
+writer.acc(writer.make_img(**graphics.equation(
     eq = x2p_plus_2p.simplify(),
     latex = "x_{(2p+2p)} = %s" % sympy.latex(x2p_plus_2p.simplify())
-)
+)))
 writer.acc("<p>and <code>y</code> is computed as:</p>")
-quick_equation(
+writer.acc(writer.make_img(**graphics.equation(
     eq = y2p_plus_2p.simplify(),
     latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify())
-)
+)))
 writer.acc("""<p>compare these results and you will see that that they are
 identical. this means that addition and multiplication of points on the bitcoin
 elliptic curve really does work the same way as regular addition and
@@ -333,7 +332,7 @@ point <code>r</code> we should arrive back at <code>p</code>:
 <code>p + q = r</code>, therefore (subtracting <code>q</code> from both sides):
 <code>p = r - q</code>. another way of writing this is <code>r + (-q) = p</code>.
 but what is <code>-q</code>? it is simply the mirroring of point <code>q</code>
-about the <code>x</code>-axis:</p>""")
+about the <code>x</code> axis:</p>""")
 graphics.init_secp256k1_plot(x_max = 7)
 
 xp = 5
@@ -349,7 +348,7 @@ q = (xq, yq)
 r = operations.add_points(p, q)
 graphics.plot_add_inf_field(p, q, "p", "q", "r", color = "r")
 
-plot_subtract(r, q, "", "-q", "", color = "g")
+graphics.plot_subtract_inf_field(r, q, "", "-q", "", color = "g")
 writer.acc(writer.make_img(**graphics.finalize_plot("point_subtraction1")))
 
 writer.acc("""<p>clearly, subtracting point <code>q</code> from point
@@ -372,11 +371,11 @@ y2p = operations.y_secp256k1(x2p, y2p_pos)
 two_p = (x2p, y2p)
 
 y2q1_pos = False
-half_p1 = half_point(two_p, y2q1_pos)
+half_p1 = operations.half_point(two_p, y2q1_pos)
 (half_p1_x, half_p1_y) = half_p1
 
 y2q2_pos = True
-half_p2 = half_point(two_p, y2q2_pos)
+half_p2 = operations.half_point(two_p, y2q2_pos)
 (half_p2_x, half_p2_y) = half_p2
 
 x_max = max(x2p, half_p1_x, half_p2_x)
@@ -400,4 +399,4 @@ writer.acc("{{ h(2, 'recovering a public key from a signature') }}")
 writer.acc("{{ h(2, 'cracking a private key') }}")
 
 if writer.output_html:
-    save_all_html()
+    writer.save_all_html()

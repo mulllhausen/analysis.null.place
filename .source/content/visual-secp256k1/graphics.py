@@ -124,7 +124,7 @@ def plot_subtract_inf_field(
     p, q, p_name, q_name, p_minus_q_name, color = "r", labels_on = True
 ):
     "p - q == p + (-q)"
-    plot_add(
+    plot_add_inf_field(
         p, operations.negative(q), p_name, q_name, p_minus_q_name, color,
         labels_on
     )
@@ -134,7 +134,6 @@ def finalize_plot(img_filename = None):
     either display the graph as a new window or save the graph as an image and
     write a link to the image in the img dir
     """
-    ##########global plt, markdown
     try:
         save = output_html
     except:
@@ -143,8 +142,8 @@ def finalize_plot(img_filename = None):
     if save:
         plt.savefig("%s/%s.png" % (img_dir, img_filename), bbox_inches = "tight")
         return {
-            "filename": img_filename,
-            "file": "%s.png" % img_filename,
+            "filename": "%s.png" % img_filename,
+            "name": img_filename,
             "css_class": "secp256k1-plot"
         }
 
