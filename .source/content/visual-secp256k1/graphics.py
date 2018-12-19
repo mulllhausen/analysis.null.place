@@ -17,6 +17,16 @@ output_html = None # init
 # note that this does not affect lines (which only require 2 points).
 curve_steps = 10000
 
+# define matplotlib styles (matplotlib.org/users/customizing.html)
+green = "#7db904"
+grey = "#2b2b2b"
+matplotlib.rc("axes", grid = True, edgecolor = green, facecolor = grey)
+matplotlib.rc("xtick", color = green)
+matplotlib.rc("ytick", color = green)
+matplotlib.rc("figure", facecolor = grey) # for --stdout
+matplotlib.rc("savefig", facecolor = grey, bbox = "tight") # for --html
+matplotlib.rc("grid", color = green)
+
 def init_secp256k1_plot(x_max = 4, color = "b"):
     """
     initialize the elliptic curve plot - create the figure and plot the curve
@@ -39,14 +49,13 @@ def init_secp256k1_plot(x_max = 4, color = "b"):
     x = sympy.symbols("x")
     y = sympy.lambdify(x, operations.y_secp256k1(x, yp_pos = True), "numpy")
     plt.figure() # init
-    plt.grid(True)
     x_array = numpy.linspace(x_min, x_max, curve_steps)
     # the top half of the elliptic curve
     plt.plot(x_array, y(x_array), color)
     plt.plot(x_array, -y(x_array), color)
-    plt.ylabel("$y$")
-    plt.xlabel("$x$")
-    plt.title("secp256k1: $%s$" % operations.secp256k1_eq)
+    plt.ylabel("$y$", color = green)
+    plt.xlabel("$x$", color = green)
+    plt.title("secp256k1: $%s$" % operations.secp256k1_eq, color = green)
 
 def plot_add_inf_field(
     p, q, p_name, q_name, p_plus_q_name, color = "r", labels_on = True
@@ -140,7 +149,7 @@ def finalize_plot(img_filename = None):
         save = False
 
     if save:
-        plt.savefig("%s/%s.png" % (img_dir, img_filename), bbox_inches = "tight")
+        plt.savefig("%s/%s.png" % (img_dir, img_filename))
         return {
             "filename": "%s.png" % img_filename,
             "name": img_filename,
@@ -150,42 +159,3 @@ def finalize_plot(img_filename = None):
     else:
         plt.show(block = True)
         return {}
-
-def equation(eq = None, latex = None):
-    """
-    first print the given equation. optionally, in markdown mode, generate an
-    image from an equation and write a link to it.
-    """
-    if eq is not None:
-        sympy.pprint(eq)
-    else:
-        print latex
-    # print an empty line
-    print
-    if not output_html:
-        return {}
-
-    global plt
-    if latex is None:
-        latex = sympy.latex(eq)
-    img_filename = hashlib.sha1(latex).hexdigest()[: 10]
-
-    # create the figure and hide the border. set the height and width to
-    # something far smaller than the resulting image - bbox_inches will
-    # expand this later
-    fig = plt.figure(figsize = (0.1, 0.1), frameon = False)
-    ax = fig.add_axes([0, 0, 1, 1])
-    ax.axis("off")
-    fig = plt.gca()
-    fig.axes.get_xaxis().set_visible(False)
-    fig.axes.get_yaxis().set_visible(False)
-    plt.text(0, 0, r"$%s$" % latex, fontsize = 25)
-    plt.savefig("%s/%s.png" % (img_dir, img_filename), bbox_inches = "tight")
-    return {
-        "filename": "%s.png" % img_filename,
-
-        # don't use the entire latex string for the alt text as it could be long
-        "name": latex[: 20],
-
-        "css_class": "equation"
-    }

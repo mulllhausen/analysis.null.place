@@ -69,7 +69,8 @@ if writer.output_html:
         "date": "2018-12-10",
         "category": "cryptography",
         "tags": "bitcoin, cryptography",
-        "stylesheets": "btc.css",
+        "stylesheets": "visual-secp256k1.css",
+        "scripts": "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML",
         "img_preloads": [], # init
         "summary": "A walkthrough of secp256k1 - Bitcoin's elliptic curve."
     }
@@ -93,7 +94,7 @@ writer.acc("""<ol>
 </ol>""")
 
 writer.acc("<p>the equation of the bitcoin elliptic curve is as follows:</p>")
-writer.acc(writer.make_img(**graphics.equation(latex = operations.secp256k1_eq)))
+writer.acc(latex = operations.secp256k1_eq)
 writer.acc("<p>this equation is called <i>secp256k1</i> and looks like this:</p>")
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
@@ -295,10 +296,13 @@ three_p = operations.add_points(p, two_p)
 four_p = operations.add_points(p, three_p)
 (x4p, y4p) = four_p
 writer.acc("<p>at <code>p + p + p + p</code>, <code>x</code> is computed as:</p>")
-writer.acc(writer.make_img(**graphics.equation(
-    eq = x4p.simplify(),
-    latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify())
-)))
+writer.acc(latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify()))
+
+if writer.output_html:
+    writer.save_all_html()
+
+sys.exit()
+
 writer.acc("<p>and <code>y</code> is computed as:</p>")
 writer.acc(writer.make_img(**graphics.equation(
     eq = y4p.simplify(),

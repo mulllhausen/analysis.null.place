@@ -10,14 +10,17 @@ html_title = "" # init
 html_metatags = {} # init
 html_body = "" # init
 
-def acc(text):
+def acc(text = None, latex = None):
     global html_body
 
     if output_html is None:
         raise ValueError("unknown output type")
 
     if text is None:
-        text = ""
+        if latex is None:
+            text = ""
+        else:
+            text = r"$$%s$$" % latex
 
     text += "\n\n"
     print replace_tags(text)

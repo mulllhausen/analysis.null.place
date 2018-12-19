@@ -140,7 +140,11 @@
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
                 {% for script in scripts %}
+                    {% if script[:4] == "http" %}
+        <script src="{{ script }}"></script>
+                    {% else%}
         <script src="{{ QS_LINK['/js/' + script] }}"></script>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
             {% if COMMENTS_SCRIPTS %}
