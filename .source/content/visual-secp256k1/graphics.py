@@ -16,6 +16,7 @@ output_html = None # init
 # increase this to plot a finer-grained curve - good for zooming in.
 # note that this does not affect lines (which only require 2 points).
 curve_steps = 10000
+done_labels = [] # list of labels already done per graph - to avoid duplication
 
 # define matplotlib styles (matplotlib.org/users/customizing.html)
 green = "#7db904"
@@ -27,7 +28,7 @@ matplotlib.rc("figure", facecolor = grey) # for --stdout
 matplotlib.rc("savefig", facecolor = grey, bbox = "tight") # for --html
 matplotlib.rc("grid", color = green)
 
-def init_secp256k1_plot(x_max = 4, color = "b"):
+def init_secp256k1_plot(x_max = 4):
     """
     initialize the elliptic curve plot - create the figure and plot the curve
     but do not put any multiplication (doubling) lines on it yet and don't show
@@ -38,7 +39,8 @@ def init_secp256k1_plot(x_max = 4, color = "b"):
     which is not a real number. so x^3 = -7, ie x = -cuberoot(7) is the minimum
     real value of x.
     """
-    global plt, x_text_offset, y_text_offset
+    global plt, x_text_offset, y_text_offset, done_labels
+    done_labels = [] # clear
     x_min = -(7**(1 / 3.0))
 
     x_text_offset = (x_max - x_min) / 20
@@ -51,15 +53,13 @@ def init_secp256k1_plot(x_max = 4, color = "b"):
     plt.figure() # init
     x_array = numpy.linspace(x_min, x_max, curve_steps)
     # the top half of the elliptic curve
-    plt.plot(x_array, y(x_array), color)
-    plt.plot(x_array, -y(x_array), color)
-    plt.ylabel("$y$", color = green)
+    plt.plot(x_array, y(x_array), color = green)
+    plt.plot(x_array, -y(x_array), color = green)
+    plt.ylabel("$y$", rotation = 0, color = green)
     plt.xlabel("$x$", color = green)
     plt.title("secp256k1: $%s$" % operations.secp256k1_eq, color = green)
 
-def plot_add_inf_field(
-    p, q, p_name, q_name, p_plus_q_name, color = "r", labels_on = True
-):
+def plot_add_inf_field(p, q, p_name, q_name, p_plus_q_name, color = "r"):
     """
     add-up two points on the curve (p & q). this involves plotting a line
     through both points and finding the third intersection with the curve (r),
@@ -105,37 +105,24 @@ def plot_add_inf_field(
 
     # plot a point at p
     plt.plot(xp, yp, "%so" % color)
-
-    if labels_on:
-        # name the point at p
-        p_name = ("$%s$" % p_name) if len(p_name) else ""
-        plt.text(xp - x_text_offset, yp + y_text_offset, p_name)
+    plot_label(p_name, xp - x_text_offset, yp + y_text_offset, color)
 
     if p is not q:
         # plot a point at q
         plt.plot(xq, yq, "%so" % color)
-
-        if labels_on:
-            # name the point at q
-            q_name = ("$%s$" % q_name) if len(q_name) else ""
-            plt.text(xq - x_text_offset, yq + y_text_offset, q_name)
+        plot_label(q_name, xq - x_text_offset, yq + y_text_offset, color)
 
     # second, plot the vertical line to the other half of the curve...
     y_array = numpy.linspace(yr, -yr, 2)
     x_array = numpy.linspace(xr, xr, 2)
     plt.plot(x_array, y_array, "%s" % color)
     plt.plot(xr, -yr, "%so" % color)
-    if labels_on:
-        p_plus_q_name = ("$%s$" % p_plus_q_name) if len(p_plus_q_name) else ""
-        plt.text(xr - x_text_offset, -yr + y_text_offset, p_plus_q_name)
+    plot_label(p_plus_q_name, xr - x_text_offset, -yr + y_text_offset, color)
 
-def plot_subtract_inf_field(
-    p, q, p_name, q_name, p_minus_q_name, color = "r", labels_on = True
-):
+def plot_subtract_inf_field(p, q, p_name, q_name, p_minus_q_name, color = "r"):
     "p - q == p + (-q)"
     plot_add_inf_field(
-        p, operations.negative(q), p_name, q_name, p_minus_q_name, color,
-        labels_on
+        p, operations.negative(q), p_name, q_name, p_minus_q_name, color
     )
 
 def finalize_plot(img_filename = None):
@@ -159,3 +146,15 @@ def finalize_plot(img_filename = None):
     else:
         plt.show(block = True)
         return {}
+
+def plot_label(name, x_pos, y_pos, color):
+    global plt, done_labels
+    if (name is None) or not len(name):
+        return
+
+    label_record = (name, x_pos, y_pos)
+    if label_record in done_labels:
+        return
+
+    plt.text(x_pos, y_pos, "$%s$" % name, color = color)
+    done_labels.append(label_record)
