@@ -99,7 +99,7 @@ writer.acc("<p>This equation is called <i>secp256k1</i> and looks like this:</p>
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
 
-writer.acc("""<br>{{ h(2, 'point addition (infinite field)') }}
+writer.acc("""<br><br><br>{{ h(2, 'point addition (infinite field)') }}
 
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
@@ -223,7 +223,7 @@ def plot_4p(xp, yp_pos, labels_on = True):
     graphics.plot_add_inf_field(p, p, p_label, p_label, p2_label, color = "r")
     graphics.plot_add_inf_field(p, two_p, p_label, p2_label, p3_label, color = "c")
     graphics.plot_add_inf_field(p, three_p, p_label, p3_label, p4_label, color = "w")
-    graphics.plot_add_inf_field(two_p, two_p, p2_label, p2_label, p4_label, color = "#FF69B4")
+    graphics.plot_add_inf_field(two_p, two_p, p2_label, p2_label, p4_label, color = "#ff69b4")
 
 plot_4p(xp, yp_pos)
 writer.acc(writer.make_img(**graphics.finalize_plot("4p1")))
@@ -299,35 +299,21 @@ four_p = operations.add_points(p, three_p)
 writer.acc("<p>at \(p + p + p + p\), \(x\) is computed as:</p>")
 writer.acc(latex = "x_{(p+p+p+p)} = %s" % sympy.latex(x4p.simplify()))
 
-if writer.output_html:
-    writer.save_all_html()
-
-sys.exit()
-
 writer.acc("<p>and \(y\) is computed as:</p>")
-writer.acc(writer.make_img(**graphics.equation(
-    eq = y4p.simplify(),
-    latex = "y_{(p+p+p+p)} = %s" % sympy.latex(y4p.simplify())
-)))
+writer.acc(latex = "y_{(p+p+p+p)} = %s" % sympy.latex(y4p.simplify()))
 
 two_p_plus_2p = operations.add_points(two_p, two_p)
 (x2p_plus_2p, y2p_plus_2p) = two_p_plus_2p 
 writer.acc("<p>at \(2p + 2p\), \(x\) is computed as:</p>")
-writer.acc(writer.make_img(**graphics.equation(
-    eq = x2p_plus_2p.simplify(),
-    latex = "x_{(2p+2p)} = %s" % sympy.latex(x2p_plus_2p.simplify())
-)))
+writer.acc(latex = "x_{(2p+2p)} = %s" % sympy.latex(x2p_plus_2p.simplify()))
 writer.acc("<p>and \(y\) is computed as:</p>")
-writer.acc(writer.make_img(**graphics.equation(
-    eq = y2p_plus_2p.simplify(),
-    latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify())
-)))
+writer.acc(latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify()))
 writer.acc("""<p>Compare these results and you will see that that they are
 identical. This means that addition and multiplication of points on the bitcoin
 elliptic curve really does work the same way as regular addition and
 multiplication!</p>
-<br>
-{{ h(2, 'subtraction and halving (infinite field)') }}
+
+<br><br><br>{{ h(2, 'subtraction and halving (infinite field)') }}
 
 <p>Just as points can be added together and doubled and on the bitcoin elliptic,
 so they can also be subtracted and halved. Subtraction is simply the reverse of
@@ -382,8 +368,8 @@ half_p2 = operations.half_point(two_p, y2q2_pos)
 x_max = max(x2p, half_p1_x, half_p2_x)
 
 graphics.init_secp256k1_plot(x_max = x_max + 2)
-graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "w")
-graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "#FF69B4")
+graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "r")
+graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "w")
 
 writer.acc(writer.make_img(**graphics.finalize_plot("point_halving1")))
 
@@ -391,13 +377,13 @@ writer.acc("""<p>This means that it is not possible to conduct a point division
 and arrive at a single solution on the bitcoin elliptic curve. Note that this
 conclusion does not apply to elliptic curves over a finite field, as we will see
 later on.</p>""")
-writer.acc("<br>{{ h(2, 'point addition (finite field)') }}")
-writer.acc("<br>{{ h(2, 'subtraction and halving (finite field)') }}")
-writer.acc("<br>{{ h(2, 'bitcoin master public keys') }}")
-writer.acc("<br>{{ h(2, 'signing a message') }}")
-writer.acc("<br>{{ h(2, 'verifying a message signature') }}")
-writer.acc("<br>{{ h(2, 'recovering a public key from a signature') }}")
-writer.acc("<br>{{ h(2, 'cracking a private key') }}")
+writer.acc("<br><br><br>{{ h(2, 'point addition (finite field)') }}")
+writer.acc("<br><br><br>{{ h(2, 'subtraction and halving (finite field)') }}")
+writer.acc("<br><br><br>{{ h(2, 'bitcoin master public keys') }}")
+writer.acc("<br><br><br>{{ h(2, 'signing a message') }}")
+writer.acc("<br><br><br>{{ h(2, 'verifying a message signature') }}")
+writer.acc("<br><br><br>{{ h(2, 'recovering a public key from a signature') }}")
+writer.acc("<br><br><br>{{ h(2, 'cracking a private key') }}")
 
 if writer.output_html:
     writer.save_all_html()
