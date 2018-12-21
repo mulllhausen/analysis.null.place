@@ -17,6 +17,7 @@ output_html = None # init
 # note that this does not affect lines (which only require 2 points).
 curve_steps = 10000
 done_labels = [] # list of labels already done per graph - to avoid duplication
+done_dots = [] # list of dot points already done per graph - to avoid duplication
 
 # define matplotlib styles (matplotlib.org/users/customizing.html)
 green = "#7db904"
@@ -39,11 +40,12 @@ def init_secp256k1_plot(x_max = 4):
     which is not a real number. so x^3 = -7, ie x = -cuberoot(7) is the minimum
     real value of x.
     """
-    global plt, x_text_offset, y_text_offset, done_labels
+    global plt, x_text_offset, y_text_offset, done_labels, done_dots
     done_labels = [] # clear
+    done_dots = [] # clear
     x_min = -(7**(1 / 3.0))
 
-    x_text_offset = (x_max - x_min) / 20
+    x_text_offset = 0 # (x_max - x_min) / 30
     y_max = operations.y_secp256k1(x_max, yp_pos = True)
     y_min = operations.y_secp256k1(x_max, yp_pos = False)
     y_text_offset = (y_max - y_min) / 20
@@ -104,20 +106,23 @@ def plot_add_inf_field(p, q, p_name, q_name, p_plus_q_name, color = "r"):
     plt.plot(x_array, y_array, color)
 
     # plot a point at p
-    plt.plot(xp, yp, "%so" % color)
-    plot_label(p_name, xp - x_text_offset, yp + y_text_offset, color)
+    plot_dot_point(xp, yp, color)
+    y_label_pos = yp + (1 if yp > 0 else -1) * y_text_offset 
+    plot_label(p_name, xp - x_text_offset, y_label_pos, color)
 
     if p is not q:
         # plot a point at q
-        plt.plot(xq, yq, "%so" % color)
-        plot_label(q_name, xq - x_text_offset, yq + y_text_offset, color)
+        plot_dot_point(xq, yq, color)
+        y_label_pos = yq + (1 if yq > 0 else -1) * y_text_offset 
+        plot_label(q_name, xq - x_text_offset, y_label_pos, color)
 
     # second, plot the vertical line to the other half of the curve...
     y_array = numpy.linspace(yr, -yr, 2)
     x_array = numpy.linspace(xr, xr, 2)
     plt.plot(x_array, y_array, "%s" % color)
-    plt.plot(xr, -yr, "%so" % color)
-    plot_label(p_plus_q_name, xr - x_text_offset, -yr + y_text_offset, color)
+    plot_dot_point(xr, -yr, color)
+    y_label_pos = -yr + (1 if -yr > 0 else -1) * y_text_offset 
+    plot_label(p_plus_q_name, xr - x_text_offset, y_label_pos, color)
 
 def plot_subtract_inf_field(p, q, p_name, q_name, p_minus_q_name, color = "r"):
     "p - q == p + (-q)"
@@ -156,5 +161,14 @@ def plot_label(name, x_pos, y_pos, color):
     if label_record in done_labels:
         return
 
-    plt.text(x_pos, y_pos, "$%s$" % name, color = color)
+    plt.text(x_pos, y_pos, "$%s$" % name, color = color, ha = "center", va = "center")
     done_labels.append(label_record)
+
+def plot_dot_point(x, y, color):
+    global plt, done_dots
+    dot_record = (x, y)
+    if dot_record in done_dots:
+        return
+
+    plt.plot(x, y, "%so" % color)
+    done_dots.append(dot_record)

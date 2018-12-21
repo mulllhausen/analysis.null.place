@@ -99,7 +99,7 @@ writer.acc("<p>This equation is called <i>secp256k1</i> and looks like this:</p>
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
 
-writer.acc("""{{ h(2, 'point addition (infinite field)') }}
+writer.acc("""<br>{{ h(2, 'point addition (infinite field)') }}
 
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
@@ -141,8 +141,8 @@ q = (xq, yq)
 graphics.plot_add_inf_field(p, q, "p", "q", "p + q", color = "r")
 writer.acc(writer.make_img(**graphics.finalize_plot("point_addition2")))
 
-writer.acc("""<p>Try moving point \(q\) towards point \(p\)
-along the curve:</p>""")
+writer.acc("""<p>Try moving point \(q\) towards point \(p\) along the
+curve:</p>""")
 
 graphics.init_secp256k1_plot(x_max = 7)
 
@@ -157,30 +157,29 @@ xq1 = 0
 yq1_pos = False
 yq1 = operations.y_secp256k1(xq1, yq1_pos)
 q1 = (xq1, yq1)
-graphics.plot_add_inf_field(p, q1, "p", "", "", color = "r")
+graphics.plot_add_inf_field(p, q1, "p", "q_1", "p+q_1", color = "r")
 
 # redefine point q
 xq2 = 1
 yq2_pos = False
 yq2 = operations.y_secp256k1(xq2, yq2_pos)
 q2 = (xq2, yq2)
-graphics.plot_add_inf_field(p, q2, "", "", "", color = "m")
+graphics.plot_add_inf_field(p, q2, "", "q_2", "p+q_2", color = "c")
 
 # redefine point q
 xq3 = 4
 yq3_pos = False
 yq3 = operations.y_secp256k1(xq3, yq3_pos)
 q3 = (xq3, yq3)
-graphics.plot_add_inf_field(p, q3, "", "", "", color = "g")
+graphics.plot_add_inf_field(p, q3, "", "q_3", "p+q_3", color = "w")
 
 writer.acc(writer.make_img(**graphics.finalize_plot("point_addition3")))
 
-writer.acc("""<p>Clearly as \(q\) approaches \(p\), the line
-between \(q\) and \(p\) approaches the tangent at
-\(p\). And at \(q = p\) this line <i>is</i> the tangent. So
-a point can be added to itself (\(p + p\), ie \(2p\)) by
-finding the tangent to the curve at that point and the third intersection with
-the curve:</p>""")
+writer.acc("""<p>Clearly as \(q\) approaches \(p\), the line between \(q\) and
+\(p\) approaches the tangent at \(p\). And at \(q = p\) this line <i>is</i> the
+tangent. So a point can be added to itself (\(p + p\), i.e. \(2p\)) by finding
+the tangent to the curve at that point and the third intersection with the
+curve:</p>""")
 graphics.init_secp256k1_plot(x_max = 5)
 
 # redefine point p
@@ -201,8 +200,8 @@ this just fancy mathematical lingo, or does this form of addition work like
 regular addition? For example does \(p + p + p + p = 2p + 2p\) on the
 curve?</p>
 
-<p>To answer that, lets check with \(p\) at \(x = %s\) in the
-%s half of the curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
+<p>To answer that, lets check with \(p\) at \(x = %s\) in the %s half of the
+curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
 def plot_4p(xp, yp_pos, labels_on = True):
     """note: turn labels off when zooming, else they are positioned wrong"""
     # first calculate the rightmost x coordinate for the plot area
@@ -223,15 +222,15 @@ def plot_4p(xp, yp_pos, labels_on = True):
     p4_label = "4p" if labels_on else ""
     graphics.plot_add_inf_field(p, p, p_label, p_label, p2_label, color = "r")
     graphics.plot_add_inf_field(p, two_p, p_label, p2_label, p3_label, color = "c")
-    graphics.plot_add_inf_field(p, three_p, p_label, p3_label, p4_label, color = "g")
-    graphics.plot_add_inf_field(two_p, two_p, p2_label, p2_label, p4_label, color = "b")
+    graphics.plot_add_inf_field(p, three_p, p_label, p3_label, p4_label, color = "w")
+    graphics.plot_add_inf_field(two_p, two_p, p2_label, p2_label, p4_label, color = "#FF69B4")
 
 plot_4p(xp, yp_pos)
 writer.acc(writer.make_img(**graphics.finalize_plot("4p1")))
 
-writer.acc("""<p>notice how the tangent to \(2p\) and the line through
-\(p\) and \(3p\) both result in the same intersection with the
-curve. lets zoom in to check:</p>""")
+writer.acc("""<p>Notice how the tangent to \(2p\) and the line through \(p\) and
+\(3p\) both result in the same intersection with the curve. Lets zoom in to
+check:</p>""")
 
 plot_4p(xp, yp_pos, labels_on = False)
 graphics.plt.axis([-2, 0, -3, 3]) # xmin, xmax, ymin, ymax
@@ -240,23 +239,23 @@ writer.acc(writer.make_img(**graphics.finalize_plot("4p1_zoom")))
 xp = 4
 yp_pos = False
 writer.acc("""<p>They sure seem to converge on the same point, but maybe
-\(x = 10\) is just a special case? Does point addition work for other
-values of \(x\)?</p>
+\(x = 10\) is just a special case? Does point addition work for other values of
+\(x\)?</p>
 
-<p>lets try \(x = %s\) in the %s half of the curve:</p>"""
+<p>Lets try \(x = %s\) in the %s half of the curve:</p>"""
 % (xp, "top" if yp_pos else "bottom"))
 plot_4p(xp, yp_pos)
 writer.acc(writer.make_img(**graphics.finalize_plot("4p2")))
 
-writer.acc("<p>so far so good. zooming in:</p>")
+writer.acc("<p>So far so good. Zooming in:</p>")
 plot_4p(xp, yp_pos, labels_on = False)
 graphics.plt.axis([-0.6, 0.3, -3.5, -1.5]) # xmin, xmax, ymin, ymax
 writer.acc(writer.make_img(**graphics.finalize_plot("4p2_zoom")))
 
 xp = 3
 yp_pos = True
-writer.acc("""<p>Cool. Lets do one last check using point \(x = %s\) in
-the %s half of the curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
+writer.acc("""<p>Cool. Lets do one last check using point \(x = %s\) in the %s
+half of the curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
 plot_4p(xp, yp_pos)
 writer.acc(writer.make_img(**graphics.finalize_plot("4p3")))
 
@@ -264,16 +263,14 @@ xp = 10
 yp_pos = True
 
 writer.acc("""<p>Well, this point addition on the bitcoin elliptic curve
-certainly works in the graphs. But what if the graphs are innaccurate? Maybe
-the point addition is only approximate and the graphs do not display the
-inaccuracy...
+certainly works in the graphs. But what if the graphs are innaccurate? Maybe the
+point addition is only approximate and the graphs do not display the inaccuracy...
 
 A more accurate way of testing whether point addition really does work would be
-to compute the \(x\) and \(y\) coordinates at point
-\(p + p + p + p\) and also compute the \(x\) and
-\(y\) coordinates at point \(2p + 2p\) and see if they are
-identical. lets check for \(x = %s\) with y in the %s half of the
-curve:</p>""" % (xp, "top" if yp_pos else "bottom"))
+to compute the \(x\) and \(y\) coordinates at point \(p + p + p + p\) and also
+compute the \(x\) and \(y\) coordinates at point \(2p + 2p\) and see if they are
+identical. Lets check for \(x = %s\) with y in the %s half of the curve:</p>"""
+% (xp, "top" if yp_pos else "bottom"))
 
 # p + p + p + p
 yp = operations.y_secp256k1(xp, yp_pos)
@@ -289,8 +286,8 @@ writer.acc("$$2p + 2p = %s$$" % (two_p_plus_2p, ))
 
 yp_pos = False
 writer.acc("""<p>Cool! clearly they are identical :) However lets check the more
-general case where \(x\) at point \(p\) is a variable in the
-%s half of the curve:</p>""" % ("top" if yp_pos else "bottom"))
+general case where \(x\) at point \(p\) is a variable in the %s half of the
+curve:</p>""" % ("top" if yp_pos else "bottom"))
 xp = sympy.symbols("x_p")
 
 yp = operations.y_secp256k1(xp, yp_pos)
@@ -325,22 +322,20 @@ writer.acc(writer.make_img(**graphics.equation(
     eq = y2p_plus_2p.simplify(),
     latex = "y_{(2p+2p)} = %s" % sympy.latex(y2p_plus_2p.simplify())
 )))
-writer.acc("""<p>compare these results and you will see that that they are
-identical. this means that addition and multiplication of points on the bitcoin
+writer.acc("""<p>Compare these results and you will see that that they are
+identical. This means that addition and multiplication of points on the bitcoin
 elliptic curve really does work the same way as regular addition and
 multiplication!</p>
-
+<br>
 {{ h(2, 'subtraction and halving (infinite field)') }}
 
-<p>just as points can be added together and doubled and on the bitcoin elliptic,
-so they can also be subtracted and halved. subtraction is simply the reverse of
-addition - ie if we add point \(q\) to point \(p\) and arrive
-at point \(r\) then logically if we subtract point \(q\) from
-point \(r\) we should arrive back at \(p\):
-\(p + q = r\), therefore (subtracting \(q\) from both sides):
-\(p = r - q\). another way of writing this is \(r + (-q) = p\).
-but what is \(-q\)? it is simply the mirroring of point \(q\)
-about the \(x\) axis:</p>""")
+<p>Just as points can be added together and doubled and on the bitcoin elliptic,
+so they can also be subtracted and halved. Subtraction is simply the reverse of
+addition - i.e. if we add point \(q\) to point \(p\) and arrive at point \(r\)
+then logically if we subtract point \(q\) from point \(r\) we should arrive back
+at \(p\): \(p + q = r\), therefore (subtracting \(q\) from both sides):
+\(p = r - q\). Another way of writing this is \(r + (-q) = p\). But what is
+\(-q\)? It is simply the mirroring of point \(q\) about the \(x\) axis:</p>""")
 graphics.init_secp256k1_plot(x_max = 7)
 
 xp = 5
@@ -356,21 +351,19 @@ q = (xq, yq)
 r = operations.add_points(p, q)
 graphics.plot_add_inf_field(p, q, "p", "q", "r", color = "r")
 
-graphics.plot_subtract_inf_field(r, q, "", "-q", "", color = "g")
+graphics.plot_subtract_inf_field(r, q, "", "-q", "", color = "w")
 writer.acc(writer.make_img(**graphics.finalize_plot("point_subtraction1")))
 
-writer.acc("""<p>clearly, subtracting point \(q\) from point
-\(r\) does indeed result in point \(p\) - back where we
-started.</p>
+writer.acc("""<p>Clearly, subtracting point \(q\) from point \(r\) does indeed
+result in point \(p\) - back where we started.</p>
 
-<p>so if subtraction is possible on the bitcoin elliptic curve, then how about
-division? well we have already seen how a point can be added to itself - ie a
-doubling (\(p + p = 2p\)), so the converse must also hold true. to get
-from point \(2p\) back to point \(p\) constitutes a halving
-operation. but is it possible? while it is certainly possible to find the
-tangent to the curve which passes through a given point, it must be noted that
-there exist 2 such tangents - one in the top half of the curve and one in the
-bottom:</p>""")
+<p>So if subtraction is possible on the bitcoin elliptic curve, then how about
+division? Well we have already seen how a point can be added to itself - i.e. a
+doubling (\(p + p = 2p\)), so the converse must also hold true. To get from
+point \(2p\) back to point \(p\) constitutes a halving operation. But is it
+possible? While it is certainly possible to find the tangent to the curve which
+passes through a given point, it must be noted that there exist 2 such tangents
+- one in the top half of the curve and one in the bottom:</p>""")
 
 # works best if you pick a value between cuberoot(-7) and -0.5
 x2p = -1.7
@@ -389,22 +382,22 @@ half_p2 = operations.half_point(two_p, y2q2_pos)
 x_max = max(x2p, half_p1_x, half_p2_x)
 
 graphics.init_secp256k1_plot(x_max = x_max + 2)
-graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "g")
-graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "b")
+graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "w")
+graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "#FF69B4")
 
 writer.acc(writer.make_img(**graphics.finalize_plot("point_halving1")))
 
-writer.acc("""<p>this means that it is not possible to conduct a point division
-and arrive at a single solution on the bitcoin elliptic curve. note that this
+writer.acc("""<p>This means that it is not possible to conduct a point division
+and arrive at a single solution on the bitcoin elliptic curve. Note that this
 conclusion does not apply to elliptic curves over a finite field, as we will see
 later on.</p>""")
-writer.acc("{{ h(2, 'point addition (finite field)') }}")
-writer.acc("{{ h(2, 'subtraction and halving (finite field)') }}")
-writer.acc("{{ h(2, 'bitcoin master public keys') }}")
-writer.acc("{{ h(2, 'signing a message') }}")
-writer.acc("{{ h(2, 'verifying a message signature') }}")
-writer.acc("{{ h(2, 'recovering a public key from a signature') }}")
-writer.acc("{{ h(2, 'cracking a private key') }}")
+writer.acc("<br>{{ h(2, 'point addition (finite field)') }}")
+writer.acc("<br>{{ h(2, 'subtraction and halving (finite field)') }}")
+writer.acc("<br>{{ h(2, 'bitcoin master public keys') }}")
+writer.acc("<br>{{ h(2, 'signing a message') }}")
+writer.acc("<br>{{ h(2, 'verifying a message signature') }}")
+writer.acc("<br>{{ h(2, 'recovering a public key from a signature') }}")
+writer.acc("<br>{{ h(2, 'cracking a private key') }}")
 
 if writer.output_html:
     writer.save_all_html()
