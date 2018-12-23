@@ -74,33 +74,43 @@ if writer.output_html:
         "img_preloads": [], # init
         "summary": "A walkthrough of secp256k1 - Bitcoin's elliptic curve."
     }
+    # add the headings macro
     writer.acc("{% from 'h.html' import h with context %}")
 
-##########decimal_places = 30
 if not writer.output_html:
     # detect the best form of pretty printing available in this terminal
     sympy.init_printing()
 
-writer.acc("""<ol>
-<li>point addition (infinite field)</li>
-<li>subtraction and halving (infinite field)</li>
-<li>point addition (finite field)</li>
-<li>subtraction and halving (finite field)</li>
-<li>bitcoin deterministic keys</li>
-<li>signing a message</li>
-<li>verifying a message signature</li>
-<li>recovering a public key from a signature</li>
-<li>cracking a private key</li>
-</ol>""")
-
-writer.acc("<p>The equation of the bitcoin elliptic curve is as follows:</p>")
+writer.acc("""<p>In this article I will explore secp256k1 - the elliptic curve
+used by bitcoin for securely signing transactions. While this may sound daunting,
+the maths in this article requires no more than grade 11 level algebra.</p>
+<p>The sections covered are:</p>
+<ul>
+<li><a href="#heading_secp256k1_finite_field">secp256k1 (finite field)</a></li>
+<li><a href="#heading_point_addition_infinite_field">point addition (infinite field)</a></li>
+<li><a href="#heading_subtraction_and_halving_infinite_field">subtraction and halving (infinite field)</a></li>
+<li><a href="#heading_point_addition_finite_field">point addition (finite field)</a></li>
+<li><a href="#heading_subtraction_and_halving_finite_field">subtraction and halving (finite field)</a></li>
+<li><a href="#heading_bitcoin_deterministic_keys">bitcoin deterministic keys</a></li>
+<li><a href="#heading_signing_a_message">signing a message</a></li>
+<li><a href="#heading_verifying_a_message_signature">verifying a message signature</a></li>
+<li><a href="#heading_recovering_a_public_key_from_a_signature">recovering a public key from a signature</a></li>
+<li><a href="#heading_cracking_a_private_key">cracking a private key</a></li>
+</ul>
+<br>
+{{ h(2, 'secp256k1 (finite field)') }}
+<p>The equation of the bitcoin elliptic curve is as follows:</p>""")
 writer.acc(latex = operations.secp256k1_eq)
-writer.acc("<p>This equation is called <i>secp256k1</i> and looks like this:</p>")
+writer.acc("""<p>This equation is called <i>secp256k1</i> and looks like this on
+an infinite field:</p>""")
 graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
-
-writer.acc("""<br><br><br>{{ h(2, 'point addition (infinite field)') }}
-
+writer.acc("""<p>Note that I have arbitrarily graphed \(x <= 7\) here, but in
+reality \(x\) continues on forever</p>
+<br>
+<br>
+<br>
+{{ h(2, 'point addition (infinite field)') }}
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
 the \(x\) axis. For example, adding point \(p\) to point \(q\):</p>""")
