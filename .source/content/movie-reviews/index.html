@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>movie reviews</title>
+    <meta name="slug" content="movie-reviews"/>
+    <meta name="date" content="2019-01-23"/>
+    <meta name="category" content="reviews"/>
+    <meta name="tags" content="movie, reviews"/>
+    <meta name="stylesheets" content="reviews.css"/>
+    <meta name="scripts" content="reviews.js"/>
+    <meta name="console_explain_scripts" content="js/reviews.js - generic script to search and render reviews for movies or books."/>
+    <meta name="jsons" content="movies-list-short.json,movies-list-all.json"/>
+</head>
+<body>
+<div class="search-area">
+    <div class="left">
+        <input id="search" type="text" placeholder="search titles">
+    </div>
+    <div class="left">
+        <label for="sortBy" class="for-sort-dropdown">sort by</label>
+        <br>
+        <select id="sortBy">
+            <option value="highest-rating">highest rating</option>
+            <option value="lowest-rating">lowest rating</option>
+            <option value="title-ascending">title ascending</option>
+            <option value="title-descending">title descending</option>
+        </select>
+    </div>
+</div>
+<div class="reviews-area">
+</div>
+</body>
+</html>
