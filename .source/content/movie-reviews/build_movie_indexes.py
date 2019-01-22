@@ -20,13 +20,13 @@ with open(pwd + "/../json/movies-list-all.json") as f:
 # title, with no review text. this json is used to populate the page initially
 init_movie_list = sorted(
     [movie for movie in all_movies],
-    key = lambda x: (-x["rating"], x["title"][0])
+    key = lambda movie: (-movie["rating"], movie["title"][0])
 )[:10]
 with open(pwd + "/../json/movies-init-list.json", "w") as f:
     json.dump(init_movie_list, f)
 
 # generate json/movies-search-index.json
-# this is just a list of movie titles - used for searching
-movie_titles = [movie["title"] for movie in all_movies]
+# this is just a list of movie titles and years - used for searching
+movie_titles = [movie["title"] + movie["year"] for movie in all_movies]
 with open(pwd + "/../json/movies-search-index.json", "w") as f:
     json.dump(movie_titles, f)
