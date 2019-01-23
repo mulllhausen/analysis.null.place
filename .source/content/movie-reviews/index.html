@@ -5,15 +5,17 @@
     <meta name="date" content="2019-01-23"/>
     <meta name="category" content="reviews"/>
     <meta name="tags" content="movie, reviews"/>
-    <meta name="stylesheets" content="reviews.css"/>
+    <meta name="stylesheets" content="movie-reviews.css"/>
     <meta name="scripts" content="movie-reviews.js"/>
     <meta name="console_explain_scripts" content="js/movie-reviews.js - search and render reviews for movies."/>
     <meta name="jsons" content="movies-init-list.json,movies-search-index.json,movies-list-all.json"/>
 </head>
 <body>
-<div class="search-area">
+<div class="form-container">
     <div class="left">
-        <input id="search" type="text" placeholder="search titles">
+        <label for="search" class="for-search-box">search</label>
+        <br>
+        <input id="search" type="text" placeholder="movie title or date">
     </div>
     <div class="left">
         <label for="sortBy" class="for-sort-dropdown">sort by</label>

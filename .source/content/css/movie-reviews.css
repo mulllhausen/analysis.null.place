@@ -1,0 +1,34 @@
+.movie {
+    position: relative;
+    border: 1px solid #1a1a1a;/*dark-grey*/
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0 20px 0;
+    overflow: hidden;/*border outside floats*/
+    background-color: #0b0b0b;
+}
+
+.movie img {
+    display: block;
+    position: static;
+    float: left;
+    border: 1px solid #6a6a6a;/*light-grey*/
+    border-radius: 4px;
+    padding: 5px;
+    background-color: black;
+    width: 100px;
+}
+
+.movie .review {
+    margin-left: 130px;
+    width: auto;
+}
+
+@media (max-width: 800px) {/*when x <= 800px (phones)*/
+}
+
+@media (min-width: 801px) {/*when x >= 801px (tablets)*/
+}
+
+@media (min-width: 1201px) {/*when x >= 1201px (pc, large tablets, etc)*/
+}

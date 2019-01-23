@@ -10,7 +10,7 @@ addEvent(window, 'load', function () {
 
 function initMovieList() {
     ajax(
-        'json/movies-init-list.json',
+        '/json/movies-init-list.json',
         function (json) {
         try {
             initialMovieList = JSON.parse(json);
@@ -21,15 +21,19 @@ function initMovieList() {
             document.getElementById('reviewsArea').innerHTML =
             initialMovieListHTML;
         }
-        catch (err) {}
+        catch (err) {
+            console.log('error in initialMovieList function: ' + err);
+        }
     });
 }
 
 function getMovieHTML(movieData) {
     return '<div class="movie">' +
         '<img src="' + movieData.thumbnail + '">' +
-        '<h3>' + movieData.title + '(' + year + ')</h3>' +
-        '<span>' + movieData.review + '</span>'
+        '<div class="review">' +
+            '<h3>' + movieData.title + ' (' + movieData.year + ')</h3>' +
+            '<span>' + movieData.review + '</span>' +
+        '</div>' +
     '</div>';
 }
 
