@@ -9,13 +9,16 @@
 }
 
 .movie img {
-    display: block;
     position: static;
-    float: left;
     border: 1px solid #6a6a6a;/*light-grey*/
     border-radius: 4px;
     padding: 5px;
     background-color: black;
+    width: 100px;
+}
+
+.movie .thumbnail-and-stars {
+    float: left;
     width: 100px;
 }
 
