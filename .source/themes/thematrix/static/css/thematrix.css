@@ -54,7 +54,7 @@ label {
     font-style: italic;
 }
 label.for-textbox:after, label.for-select:after {
-    content: ": "
+    content: ": ";
 }
 textarea, input[type="text"], select {/*made to look like it is a small hole in the page*/
     box-sizing: border-box;/*keep the input from overflowing its parent*/
@@ -324,6 +324,9 @@ article {
 }
 .icon-hashtag {
     margin-bottom: -2px;
+}
+.icon-star, .icon-star-o, .icon-star-half-empty {
+    margin-bottom: -1px;
 }
 h1 .icon-file-text-o {
     font-size: 85%;

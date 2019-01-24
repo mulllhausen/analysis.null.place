@@ -15,16 +15,31 @@
     padding: 5px;
     background-color: black;
     width: 100px;
+    margin-bottom: 5px;
+}
+
+.movie img:after {
+    content: " ";
 }
 
 .movie .thumbnail-and-stars {
     float: left;
     width: 100px;
+    text-align: center;
+    display: table;/*expand to width of child while floated*/
 }
 
 .movie .review {
     margin-left: 130px;
     width: auto;
+}
+
+.some-star {
+    color: #7db904;/*green*/
+}
+
+.some-star:not(:last-child) {
+    margin-right: 3px;
 }
 
 @media (max-width: 800px) {/*when x <= 800px (phones)*/

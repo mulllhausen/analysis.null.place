@@ -38,22 +38,30 @@ function initMovieList() {
 }
 
 function getMovieHTML(movieData) {
-    var starRating = '';
-    for (var i = 0; i < 5; i++) {
-        if (movieData.rating > i) starRating += sampleFullStar;
-        else starRating += sampleEmptyStar;
-    }
     return '<div class="movie">' +
         '<div class="thumbnail-and-stars">' +
             '<img src="' + movieData.thumbnail + '">' +
-            '<br>' +
-            starRating +
+            '<div class="stars">' +
+                getMovieStarsHTML(movieData.rating) +
+            '</div>' +
         '</div>' +
         '<div class="review">' +
             '<h3>' + movieData.title + ' (' + movieData.year + ')</h3>' +
             '<span>' + movieData.review + '</span>' +
         '</div>' +
     '</div>';
+}
+
+function getMovieStarsHTML(movieDataRating) {
+    var starRating = '';
+    for (var i = 1; i <= 5; i++) {
+        if (i <= movieDataRating) starRating += sampleFullStar;
+        else {
+            if ((i - 1) < movieDataRating) starRating += sampleHalfStar;
+            else starRating += sampleEmptyStar;
+        }
+    }
+    return starRating;
 }
 
 function searchMovieTitles() {

@@ -27,6 +27,6 @@ with open(pwd + "/../json/movies-init-list.json", "w") as f:
 
 # generate json/movies-search-index.json
 # this is just a list of movie titles and years - used for searching
-movie_titles = [movie["title"] + movie["year"] for movie in all_movies]
+movie_titles = ["%s%s" % (movie["title"], movie["year"]) for movie in all_movies]
 with open(pwd + "/../json/movies-search-index.json", "w") as f:
     json.dump(movie_titles, f)
