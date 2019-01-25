@@ -3,6 +3,7 @@ initialMovieData = []; // 10 movies populated on the page initially
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // index of movie searches
 completeMovieData = [];
+movieSearchResults = [];
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
@@ -87,15 +88,21 @@ function initMovieSearchList() {
 function movieSearchChanged() {
     var searchText = trim(document.getElementById('search').value);
     var searchResultIndexes = searchMovieTitles(searchText);
-    var searchResults = [];
-    if (completeMovieData.length == 0) initCompleteMovieData();
+    var finalizeSearch = function() {
+        movieSearchChangedFinalize(searchResultIndexes);
+    };
+    if (completeMovieData.length == 0) initCompleteMovieData(finalizeSearch);
+    else finalizeSearch();
+}
+
+function movieSearchChangedFinalize(searchResultIndexes) {
     // use the list of indexes to get the list of complete movies for rendering
-    foreach(searchResultIndexes, function (_, movieI) {
-        searchResults.push(completeMovieData[movieI]);
+    foreach(movieSearchResultIndexes, function (_, movieI) {
+        movieSearchResults.push(completeMovieData[movieI]);
     });
-    searchResults = sortMovies(searchResults);
+    movieSearchResults = sortMovies(movieSearchResults);
     var moviesHTML = '';
-    foreach(searchResultIndexes, function (_, movieData) {
+    foreach(movieSearchResults, function (_, movieData) {
         moviesHTML += getMovieHTML(movieData);
     });
     document.getElementById('reviewsArea').innerHTML = moviesHTML;
@@ -115,12 +122,13 @@ function searchMovieTitles(searchText) {
     return searchResultIndexes;
 }
 
-function initCompleteMovieData() {
+function initCompleteMovieData(callback) {
     ajax(
         '/json/movies-list-all.json',
         function (json) {
         try {
             completeMovieData = JSON.parse(json).data;
+            if (typeof callback == 'function') callback();
         }
         catch (err) {
             console.log('error in initCompleteMovieData function: ' + err);
@@ -129,5 +137,26 @@ function initCompleteMovieData() {
 }
 
 function sortMovies(movieList) {
+    if (movieList.length == 0) return [];
+    var sortBy = document.getElementById('sortBy').value;
+    movieList.sort(function(a, b) {
+        var diff = 0;       
+        switch (sortBy) {
+            case 'highest-rating':
+            case 'lowest-rating':
+                if (a.rating < b.rating) diff = -1;
+                else if (a.rating > b.rating) diff = 1;
+                if (sortBy == 'lowest-rating') diff *= -1;
+                break;
+            case 'title-ascending':
+            case 'title-descending':
+                var titleA = a.title.toLowerCase();
+                var titleB = b.title.toLowerCase();
+                if (titleA < titleB) diff = -1;
+                else if (titleA > titleB) diff = 1;
+                if (sortBy == 'title-descending') diff *= -1;
+                break;
+        }
+    });
     return movieList;
 }
