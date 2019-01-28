@@ -17,7 +17,7 @@ with open(pwd + "/../json/movies-list-all.json") as f:
 
 # generate json/movies-init-list.json
 # this is just the first 10 movies, sorted by max rating, then alphabetically by
-# title, with no review text. this json is used to populate the page initially
+# title. this json is used to populate the page initially
 init_movie_list = sorted(
     [movie for movie in all_movies],
     key = lambda movie: (-movie["rating"], movie["title"][0])

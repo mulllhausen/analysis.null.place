@@ -26,6 +26,7 @@ DEFAULT_LANG = u'en'
 # fs = filesystem
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+SUMMARY_MAX_LENGTH = 0
 
 THEME = './themes/thematrix'
 

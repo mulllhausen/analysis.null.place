@@ -46,7 +46,9 @@ function initInitialMovieData() {
 function getMovieHTML(movieData) {
     return '<div class="movie">' +
         '<div class="thumbnail-and-stars">' +
-            '<img src="' + movieData.thumbnail + '">' +
+            '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
+                '<img src="' + movieData.thumbnail + '">' +
+            '</a>' +
             '<div class="stars">' +
                 getMovieStarsHTML(movieData.rating) +
             '</div>' +

@@ -2,24 +2,20 @@
     "notes": "put all movie data here, in any order, then run build_movie_indexes.py",
     "data": [
         {
-            "title": "movie with rating 0",
-            "year": 1998,
-            "rating": 0
+            "title": "A Month of Sundays",
+            "year": 2015,
+            "rating": 0,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU0MTMzNDY1OV5BMl5BanBnXkFtZTgwNTc5NTYyODE@._V1_UY209_CR3,0,140,209_AL_.jpg",
+            "IMDBID": "tt4338434",
+            "review": "",
+            "genres": ["Comedy", "Drama"]
         },
         {
-            "title": "movie with rating 0.5",
-            "year": 1998,
-            "rating": 0.5
-        },
-        {
-            "title": "movie with rating 1",
-            "year": 1998,
-            "rating": 1
-        },
-        {
-            "title": "dark city",
+            "title": "Dark City",
             "year": 1998,
             "rating": 5,
+            "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMGExOGExM2UtNWM5ZS00OWEzLTllNzYtM2NlMTJlYjBlZTJkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg",
             "reviewTitle": "excellent",
             "review": "excellent",
@@ -30,11 +26,67 @@
             "title": "Upgrade",
             "year": 2018,
             "rating": 4.5,
+            "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMjI0NzcyMjM5Ml5BMl5BanBnXkFtZTgwMzk2NzAyNTM@._V1_SY209_CR0,0,140,209_.jpg",
             "reviewTitle": "A great movie but it babies the viewer at the end",
             "review": "I loved the whole premise of this movie - I would not have changed a thing about the plot. However there were some flashbacks at the end that took it from a 10/10 down to a 9/10 for me. I won't be specific since this review does not contain spoilers, but suffice to say that if there had been a little more mystery at the end the it would have made the movie probably on par with the matrix 1 for me. This could pretty much have been done by simply removing all the flashback cuts - they were corny and they made me feel disrespected as a viewer. The explanations spoken at the end would already have been enough to piece together what was happening, and if not then the mystery would have made this movie amazing!",
             "IMDBID": "tt6499752",
             "genres": ["Action", "Sci-Fi", "Thriller"]
+        },
+        {
+            "title": "Self/less",
+            "year": 2015,
+            "rating": 4,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU0MTQzNzAxMl5BMl5BanBnXkFtZTgwNjg4MjcxNjE@._V1_UY209_CR1,0,140,209_AL_.jpg",
+            "reviewTitle": "",
+            "review": "",
+            "IMDBID": "tt2140379",
+            "genres": ["Action", "Mystery", "Sci-Fi"]
+        },
+        {
+            "title": "Field of Dreams",
+            "year": 1989,
+            "rating": 3,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BNzk5OWY0YjAtYWU3ZS00Y2Q4LWFlNjItMzgwMTQ2MjIyMDFmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX140_CR0,0,140,209_AL_.jpg",
+            "reviewTitle": "",
+            "review": "",
+            "IMDBID": "tt0097351",
+            "genres": ["Drama", "Family", "Fantasy"]
+        },
+        {
+            "title": "Lock, Stock and Two Smoking Barrels",
+            "year": 1998,
+            "rating": 5,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTAyN2JmZmEtNjAyMy00NzYwLThmY2MtYWQ3OGNhNjExMmM4XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_UX140_CR0,0,140,209_AL_.jpg",
+            "reviewTitle": "",
+            "review": "",
+            "IMDBID": "tt0120735",
+            "genres": ["Comedy", "Crime"]
+        },
+        {
+            "title": "In Order of Disappearance",
+            "year": 2014,
+            "rating": 4.5,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTUzNTA0NTY0Nl5BMl5BanBnXkFtZTgwNTI1NDgzOTE@._V1_UY209_CR0,0,140,209_AL_.jpg",
+            "reviewTitle": "",
+            "review": "",
+            "IMDBID": "tt2675914",
+            "genres": ["Comedy", "Crime"]
+        },
+        {
+            "title": "Pan's Labyrinth",
+            "year": 2006,
+            "rating": 4.5,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU3ODg2NjQ5NF5BMl5BanBnXkFtZTcwMDEwODgzMQ@@._V1_UY209_CR1,0,140,209_AL_.jpg",
+            "reviewTitle": "",
+            "review": "",
+            "IMDBID": "tt0457430",
+            "genres": ["Drama", "Fantasy", "War"]
         }
     ]
 }
