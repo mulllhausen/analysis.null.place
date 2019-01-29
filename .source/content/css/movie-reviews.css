@@ -35,6 +35,13 @@
     width: auto;
 }
 
+.movie .review-title {
+    color: #bbbbbb;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: normal;
+}
+
 .some-star {
     color: #7db904;/*green*/
 }

@@ -30,7 +30,7 @@ for movie in all_movies:
         with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
             json.dump({ "reviewFull": movie["review"] }, f)
 
-        movie["reviewPreview"] = re.search(r".{,100}\b", movie["review"]).group(0)
+        #movie["reviewPreview"] = re.search(r".{,100}\b", movie["review"]).group(0)
         del movie["review"]
 
 with open("%s/../json/movies-list.json" % pwd, "w") as f:
@@ -48,6 +48,8 @@ with open("%s/../json/movies-init-list.json" % pwd, "w") as f:
 
 # generate json/movies-search-index.json
 # this is just a list of movie titles and years - used for searching
-movie_titles = ["%s%s" % (movie["title"], movie["year"]) for movie in all_movies]
+movie_titles = [
+    "%s %s" % (movie["title"].lower(), movie["year"]) for movie in all_movies
+]
 with open("%s/../json/movies-search-index.json" % pwd, "w") as f:
     json.dump(movie_titles, f)
