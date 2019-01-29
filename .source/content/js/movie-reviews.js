@@ -1,9 +1,8 @@
 // init globals
 initialMovieData = []; // 10 movies populated on the page initially
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
-completeMovieSearch = []; // index of movie searches
-completeMovieData = [];
-movieSearchResults = [];
+completeMovieSearch = []; // static index of movie searches
+completeMovieData = []; // static list of all movie data
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
@@ -122,6 +121,7 @@ function movieSearchChanged() {
 }
 
 function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
+    var movieSearchResults = [];
     // use the list of indexes to get the list of complete movies for rendering
     foreach(searchResultIndexes, function (_, movieI) {
         movieSearchResults.push(completeMovieData[movieI]);
@@ -129,22 +129,26 @@ function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
     movieSearchResults = sortMovies(movieSearchResults);
     var moviesHTML = '';
     foreach(movieSearchResults, function (_, movieData) {
-        movieData.title = highlightSearch(searchTerms, movieData.title);
-        moviesHTML += getMovieHTML(movieData);
+        var movieDataCopy = jsonCopyObject(movieData);
+        movieDataCopy.title = highlightSearch(searchTerms, movieDataCopy.title);
+        moviesHTML += getMovieHTML(movieDataCopy);
     });
     document.getElementById('reviewsArea').innerHTML = moviesHTML;
 }
 
 function extractSearchTerms(searchText) {
-    // todo
-    var searchTerms = [searchText];
-    return searchTerms;
+    return searchText.split(/[^a-z0-9]/gi).map(function(v) {
+        return v.toLowerCase();
+    }).filter(function(item, i, list) {
+        if (item == '') return false;
+        return list.indexOf(item) === i;
+    });
 }
 
 function highlightSearch(searchTerms, movieTitle) {
     foreach(searchTerms, function(_, searchTerm) {
-        var regexPattern = new RegExp(searchTerm, 'gi');
-        movieTitle = movieTitle.replace(regexPattern, '<u>' + searchTerm + '</u>');
+        var regexPattern = new RegExp('(' + searchTerm + ')', 'gi');
+        movieTitle = movieTitle.replace(regexPattern, '<u>$1</u>');
     });
     return movieTitle;
 }

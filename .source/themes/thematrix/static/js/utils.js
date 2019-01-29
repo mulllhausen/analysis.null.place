@@ -168,6 +168,10 @@ function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
     return retObj;// eg {a:1, b:2, c:3}
 }
 
+function jsonCopyObject(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 // 1000 -> 1,000
 function addThousandCommas(number) {
     number += ''; // convert to string
