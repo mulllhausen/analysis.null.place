@@ -46,6 +46,10 @@ function initInitialMovieData() {
 
 function getMovieHTML(movieData) {
     var movieID = (movieData.title + movieData.year).toLowerCase().replace(/[^a-z0-9]*/g, '');
+    var titleAndYear = (
+        movieData.hasOwnProperty('titleAndYear') ?
+        movieData.titleAndYear : movieData.title + ' (' + movieData.year + ')'
+    );
     return '<div class="movie">' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
@@ -56,7 +60,7 @@ function getMovieHTML(movieData) {
             '</div>' +
         '</div>' +
         '<div class="review">' +
-            '<h3>' + movieData.title + ' (' + movieData.year + ')</h3>' +
+            '<h3>' + titleAndYear + '</h3>' +
             '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
             '<div class="review-text">' +
                 '<button class="load-review" id="' + movieID + '">' +
@@ -129,9 +133,10 @@ function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
     movieSearchResults = sortMovies(movieSearchResults);
     var moviesHTML = '';
     foreach(movieSearchResults, function (_, movieData) {
-        var movieDataCopy = jsonCopyObject(movieData);
-        movieDataCopy.title = highlightSearch(searchTerms, movieDataCopy.title);
-        moviesHTML += getMovieHTML(movieDataCopy);
+        movieData.titleAndYear = highlightSearch(
+            searchTerms, movieData.title + ' (' + movieData.year + ')'
+        );
+        moviesHTML += getMovieHTML(movieData);
     });
     document.getElementById('reviewsArea').innerHTML = moviesHTML;
 }
@@ -145,22 +150,28 @@ function extractSearchTerms(searchText) {
     });
 }
 
-function highlightSearch(searchTerms, movieTitle) {
+function highlightSearch(searchTerms, movieTitleAndYear) {
     foreach(searchTerms, function(_, searchTerm) {
-        var regexPattern = new RegExp('(' + searchTerm + ')', 'gi');
-        movieTitle = movieTitle.replace(regexPattern, '<u>$1</u>');
+        var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
+        movieTitleAndYear = movieTitleAndYear.replace(regexPattern, '<u>$1</u>');
     });
-    return movieTitle;
+    return movieTitleAndYear;
 }
 
 function searchMovieTitles(searchTerms) {
     var searchResultIndexes = []; // a list of movie list ids
-    foreach(searchTerms, function (_, searchWord) {
-        foreach(completeMovieSearch, function (i, movieWords) {
-            if (inArray(searchWord, movieWords) && !inArray(i, searchResultIndexes)) {
-                searchResultIndexes.push(i);
+    foreach(completeMovieSearch, function (i, movieWords) {
+        var searchFail = false;
+        foreach(searchTerms, function (_, searchWord) {
+            // all search terms are mandatory
+            if (!inArray(searchWord, movieWords)) {
+                searchFail = true;
+                return false; // break
             }
         });
+        if (!searchFail && !inArray(i, searchResultIndexes)) {
+            searchResultIndexes.push(i);
+        }
     });
     return searchResultIndexes;
 }
