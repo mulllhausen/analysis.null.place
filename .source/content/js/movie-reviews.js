@@ -3,12 +3,13 @@ initialMovieData = []; // 10 movies populated on the page initially
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // static index of movie searches
 completeMovieData = []; // static list of all movie data
+sampleChain = '';
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
 
 addEvent(window, 'load', function () {
-    initSampleStarHTML();
+    initSVGIconsHTML();
     initInitialMovieData();
     initMovieSearchList();
     initCompleteMovieData();
@@ -19,10 +20,11 @@ addEvent(window, 'load', function () {
 
 // rendering
 
-function initSampleStarHTML() {
-    sampleEmptyStar = document.getElementsByClassName('icon-star-o')[0].outerHTML;
-    sampleFullStar = document.getElementsByClassName('icon-star')[0].outerHTML;
-    sampleHalfStar = document.getElementsByClassName('icon-star-half-empty')[0].outerHTML;
+function initSVGIconsHTML() {
+    sampleChain = document.querySelector('.sample .icon-chain').outerHTML;
+    sampleEmptyStar = document.querySelector('.sample .icon-star-o').outerHTML;
+    sampleFullStar = document.querySelector('.sample .icon-star').outerHTML;
+    sampleHalfStar = document.querySelector('.sample .icon-star-half-empty').outerHTML;
 }
 
 function initInitialMovieData() {
@@ -50,7 +52,8 @@ function getMovieHTML(movieData) {
         movieData.hasOwnProperty('titleAndYear') ?
         movieData.titleAndYear : movieData.title + ' (' + movieData.year + ')'
     );
-    return '<div class="movie">' +
+    return '<div class="movie" id="' + movieID + '">' +
+        '<a href="#' + movieID + '">' + sampleChain + '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
                 '<img src="' + movieData.thumbnail + '">' +
@@ -63,7 +66,7 @@ function getMovieHTML(movieData) {
             '<h3>' + titleAndYear + '</h3>' +
             '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
             '<div class="review-text">' +
-                '<button class="load-review" id="' + movieID + '">' +
+                '<button class="load-review" id="load-' + movieID + '">' +
                     'load review (' + (movieData.spoilers? '' : 'no') + ' spoilers)' +
                 '</button>' +
             '</div>' +
@@ -73,8 +76,9 @@ function getMovieHTML(movieData) {
 
 function loadFullReview(e) {
     if (!inArray('load-review', e.target.className)) return;
+    var movieID = e.target.id.replace('load-', '');
     ajax(
-        '/json/movie-review-' + e.target.id + '.json',
+        '/json/movie-review-' + movieID + '.json',
         function (json) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
