@@ -130,7 +130,7 @@ function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
     foreach(searchResultIndexes, function (_, movieI) {
         movieSearchResults.push(completeMovieData[movieI]);
     });
-    movieSearchResults = sortMovies(movieSearchResults);
+    movieSearchResults = sortMovies(movieSearchResults); // todo: move up above?
     var moviesHTML = '';
     foreach(movieSearchResults, function (_, movieData) {
         movieData.titleAndYear = highlightSearch(
@@ -142,6 +142,7 @@ function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
 }
 
 function extractSearchTerms(searchText) {
+    if (searchText == '') return []; // quick
     return searchText.split(/[^a-z0-9]/gi).map(function(v) {
         return v.toLowerCase();
     }).filter(function(item, i, list) {
@@ -159,6 +160,14 @@ function highlightSearch(searchTerms, movieTitleAndYear) {
 }
 
 function searchMovieTitles(searchTerms) {
+    if (searchTerms.length == 0) {
+        // add all movies
+        searchResultIndexes = new Array(completeMovieSearch.length);
+        for (var i = 0; i < completeMovieSearch.length; i++) {
+            searchResultIndexes[i] = i;
+        }
+        return searchResultIndexes;
+    }
     var searchResultIndexes = []; // a list of movie list ids
     foreach(completeMovieSearch, function (i, movieWords) {
         var searchFail = false;
@@ -200,24 +209,37 @@ function initCompleteMovieData(callback) {
 function sortMovies(movieList) {
     if (movieList.length == 0) return [];
     var sortBy = document.getElementById('sortBy').value;
+    switch (sortBy) {
+        case 'newest-reviews':
+            return movieList.reverse();
+        case 'oldest-reviews':
+            return movieList;
+    }
     movieList.sort(function(a, b) {
-        var diff = 0;       
+        var diff = 0;
+        var titleA = a.title.toLowerCase();
+        var titleB = b.title.toLowerCase();
         switch (sortBy) {
             case 'highest-rating':
             case 'lowest-rating':
-                if (a.rating < b.rating) diff = -1;
-                else if (a.rating > b.rating) diff = 1;
-                if (sortBy == 'lowest-rating') diff *= -1;
+                if (a.rating == b.rating) {
+                    // sort alphabetically for same rating movies
+                    if (titleA > titleB) diff = 1;
+                    else if (titleA < titleB) diff = -1;
+                } else {
+                    if (a.rating > b.rating) diff = 1;
+                    else if (a.rating < b.rating) diff = -1;
+                    if (sortBy == 'highest-rating') diff *= -1;
+                }
                 break;
             case 'title-ascending':
             case 'title-descending':
-                var titleA = a.title.toLowerCase();
-                var titleB = b.title.toLowerCase();
-                if (titleA < titleB) diff = -1;
-                else if (titleA > titleB) diff = 1;
+                if (titleA > titleB) diff = 1;
+                else if (titleA < titleB) diff = -1;
                 if (sortBy == 'title-descending') diff *= -1;
                 break;
         }
+        return diff;
     });
     return movieList;
 }
