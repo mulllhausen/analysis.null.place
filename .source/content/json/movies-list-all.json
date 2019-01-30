@@ -18,8 +18,8 @@
             "rating": 5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTAyN2JmZmEtNjAyMy00NzYwLThmY2MtYWQ3OGNhNjExMmM4XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_UX140_CR0,0,140,209_AL_.jpg",
-            "reviewTitle": "",
-            "review": "",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt0120735",
             "genres": ["Comedy", "Crime"]
         },
@@ -29,8 +29,8 @@
             "rating": 4.5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU3ODg2NjQ5NF5BMl5BanBnXkFtZTcwMDEwODgzMQ@@._V1_UY209_CR1,0,140,209_AL_.jpg",
-            "reviewTitle": "",
-            "review": "",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt0457430",
             "genres": ["Drama", "Fantasy", "War"]
         },
@@ -40,8 +40,9 @@
             "rating": 0,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU0MTMzNDY1OV5BMl5BanBnXkFtZTgwNTc5NTYyODE@._V1_UY209_CR3,0,140,209_AL_.jpg",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt4338434",
-            "review": "",
             "genres": ["Comedy", "Drama"]
         },
         {
@@ -50,8 +51,8 @@
             "rating": 3,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BNzk5OWY0YjAtYWU3ZS00Y2Q4LWFlNjItMzgwMTQ2MjIyMDFmL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX140_CR0,0,140,209_AL_.jpg",
-            "reviewTitle": "",
-            "review": "",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt0097351",
             "genres": ["Drama", "Family", "Fantasy"]
         },
@@ -72,8 +73,8 @@
             "rating": 4,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTU0MTQzNzAxMl5BMl5BanBnXkFtZTgwNjg4MjcxNjE@._V1_UY209_CR1,0,140,209_AL_.jpg",
-            "reviewTitle": "",
-            "review": "",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt2140379",
             "genres": ["Action", "Mystery", "Sci-Fi"]
         },
@@ -83,8 +84,8 @@
             "rating": 4.5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTUzNTA0NTY0Nl5BMl5BanBnXkFtZTgwNTI1NDgzOTE@._V1_UY209_CR0,0,140,209_AL_.jpg",
-            "reviewTitle": "",
-            "review": "",
+            "reviewTitle": "todo",
+            "review": "todo",
             "IMDBID": "tt2675914",
             "genres": ["Comedy", "Crime"]
         }
