@@ -10,6 +10,7 @@ following files:
 import os
 import json
 import re
+import hashlib
 import numbers
 
 pwd = os.path.dirname(os.path.realpath(__file__))
@@ -59,6 +60,7 @@ for movie in all_movies:
     movie["id"] = re.sub(
         r"[^a-z0-9]*", "", ("%s%s" % (movie["title"], movie["year"])).lower()
     )
+    movie["reviewHash"] = hashlib.sha256(movie["review"].encode()).hexdigest()[:6]
     with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
         json.dump({ "reviewFull": movie["review"] }, f)
 

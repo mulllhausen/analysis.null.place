@@ -2,6 +2,7 @@
 initialMovieData = []; // 10 movies populated on the page initially
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // static index of movie searches
+completeMovieSearchIDs = []; // same as completeMovieSearch but with IDs not names and years
 completeMovieData = []; // static list of all movie data
 sampleChain = '';
 sampleEmptyStar = '';
@@ -29,7 +30,7 @@ function initSVGIconsHTML() {
 
 function initInitialMovieData() {
     ajax(
-        '/json/movies-init-list.json',
+        siteGlobals.moviesInitListJSON,
         function (json) {
         try {
             initialMovieData = JSON.parse(json);
@@ -47,11 +48,19 @@ function initInitialMovieData() {
 }
 
 function getMovieHTML(movieData) {
-    var movieID = (movieData.title + movieData.year).toLowerCase().replace(/[^a-z0-9]*/g, '');
+    var movieID = (movieData.title + movieData.year).toLowerCase().
+    replace(/[^a-z0-9]*/g, '');
+
     var titleAndYear = (
         movieData.hasOwnProperty('titleAndYear') ?
         movieData.titleAndYear : movieData.title + ' (' + movieData.year + ')'
     );
+    var loadReviewButton = '<button class="load-review" id="load-' + movieID + '">' +
+        'load review (' + (movieData.spoilers? '' : 'no') + ' spoilers)' +
+    '</button>';
+    var review = movieData.hasOwnProperty('review') ?
+    movieData.review : loadReviewButton;
+
     return '<div class="movie" id="' + movieID + '">' +
         '<a href="#' + movieID + '">' + sampleChain + '</a>' +
         '<div class="thumbnail-and-stars">' +
@@ -65,24 +74,30 @@ function getMovieHTML(movieData) {
         '<div class="review">' +
             '<h3>' + titleAndYear + '</h3>' +
             '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
-            '<div class="review-text">' +
-                '<button class="load-review" id="load-' + movieID + '">' +
-                    'load review (' + (movieData.spoilers? '' : 'no') + ' spoilers)' +
-                '</button>' +
-            '</div>' +
+            '<div class="review-text">' + review + '</div>' +
         '</div>' +
     '</div>';
 }
 
 function loadFullReview(e) {
+    // if the review has already been loaded then exit
     if (!inArray('load-review', e.target.className)) return;
+
     var movieID = e.target.id.replace('load-', '');
+    var movieIndex = movieID2Index(movieID);
+    if (completeMovieData[movieIndex].hasOwnProperty('review')) {
+        e.target.parentNode.innerHTML = completeMovieData[movieIndex].review;
+        return;
+    }
     ajax(
-        '/json/movie-review-' + movieID + '.json',
+        '/json/movie-review-' + movieID + '.json?h=' +
+        completeMovieData[movieIndex].reviewHash,
+
         function (json) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
             e.target.parentNode.innerHTML = fullReviewText;
+            completeMovieData[movieIndex].review = fullReviewText;
         }
         catch (err) {
             console.log('error in loadFullReview function: ' + err);
@@ -102,19 +117,36 @@ function getMovieStarsHTML(movieDataRating) {
     return starRating;
 }
 
+function highlightSearch(searchTerms, movieTitleAndYear) {
+    foreach(searchTerms, function(_, searchTerm) {
+        var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
+        movieTitleAndYear = movieTitleAndYear.replace(regexPattern, '<u>$1</u>');
+    });
+    return movieTitleAndYear;
+}
+
 // searching
 
 function initMovieSearchList() {
     ajax(
-        '/json/movies-search-index.json',
+        siteGlobals.moviesSearchIndexJSON,
         function (json) {
         try {
             completeMovieSearch = JSON.parse(json);
+            completeMovieSearchIDs = new Array(completeMovieSearch.length);
+            for (var i = 0; i < completeMovieSearch.length; i++) {
+                completeMovieSearchIDs[i] = completeMovieSearch[i].
+                replace(/[^a-z0-9]*/g, '');
+            }
         }
         catch (err) {
             console.log('error in initMovieSearchList function: ' + err);
         }
     });
+}
+
+function movieID2Index(id) {
+    return completeMovieSearchIDs.indexOf(id)
 }
 
 function movieSearchChanged() {
@@ -155,14 +187,6 @@ function extractSearchTerms(searchText) {
     });
 }
 
-function highlightSearch(searchTerms, movieTitleAndYear) {
-    foreach(searchTerms, function(_, searchTerm) {
-        var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
-        movieTitleAndYear = movieTitleAndYear.replace(regexPattern, '<u>$1</u>');
-    });
-    return movieTitleAndYear;
-}
-
 function searchMovieTitles(searchTerms) {
     if (searchTerms.length == 0) {
         // add all movies
@@ -197,10 +221,10 @@ function initCompleteMovieData(callback) {
     }
     gettingCompleteMovieData = true; // lock
     ajax(
-        '/json/movies-list-all.json',
+        siteGlobals.moviesListJSON,
         function (json) {
         try {
-            completeMovieData = JSON.parse(json).data;
+            completeMovieData = JSON.parse(json);
             if (typeof callback == 'function') callback();
         }
         catch (err) {
