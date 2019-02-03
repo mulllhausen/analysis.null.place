@@ -1,3 +1,7 @@
+#showAllMovies {
+    display: none;
+}
+
 .movie {
     position: relative;
     border: 1px solid #1a1a1a;/*dark-grey*/

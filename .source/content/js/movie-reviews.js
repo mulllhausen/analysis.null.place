@@ -1,5 +1,5 @@
+// todo: show loader during ajax
 // init globals
-initialMovieData = []; // 10 movies populated on the page initially
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // static index of movie searches
 completeMovieSearchIDs = []; // same as completeMovieSearch but with IDs not names and years
@@ -10,16 +10,58 @@ sampleFullStar = '';
 sampleHalfStar = '';
 
 addEvent(window, 'load', function () {
+    /* ajax logic:
+    - if there is a hash (specific movie) then render it like so:
+        - first fetch completeMovieSearchIDs to match hash id to position in completeMovieData
+        - then use that to fetch completeMovieData and render movie data
+    - else if there is no hash then just render the initial movies like so:
+        - fetch initialMovieData only
+    - fetch completeMovieSearch, completeMovieSearchIDs and completeMovieData if necessary
+    */
     initSVGIconsHTML();
-    initInitialMovieData();
+    initSearchBox();
+    initMovieRendering();
     initMovieSearchList();
     initCompleteMovieData();
     addEvent(document.getElementById('search'), 'keyup', movieSearchChanged);
     addEvent(document.getElementById('sortBy'), 'change', movieSearchChanged);
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
+    addEvent(document.getElementById('showAllMovies'), 'click', showAllMovies);
 });
 
 // rendering
+
+function initSearchBox() {
+    if (window.location.hash.length > 0) { // show only the movie with id in #
+        searchBoxMode('show-all-button');
+    } else { // show initial list
+        searchBoxMode('search-fields');
+    }
+}
+
+function initMovieRendering() {
+    if (window.location.hash.length > 0) { // show only the movie with id in #
+        var movieID = window.location.hash.replace('#!', '');
+        var afterAllMovieDataDownloaded = function () {
+            // wait for both lists to be downloaded before proceeding
+            if (
+                completeMovieSearch.length == 0 ||
+                completeMovieData.length == 0
+            ) return;
+            var movieIndex = movieID2Index(movieID);
+            var movieData = completeMovieData[movieIndex];
+            document.getElementById('reviewsArea').innerHTML = getMovieHTML(
+                movieData
+            );
+        };
+        // we need the search-index and the movie-data lists before we can
+        // complete this operation. get both lists in parallel for speed.
+        initCompleteMovieData(afterAllMovieDataDownloaded);
+        initMovieSearchList(afterAllMovieDataDownloaded);
+    } else { // show initial list
+        renderInitialMovieData();
+    }
+}
 
 function initSVGIconsHTML() {
     sampleChain = document.querySelector('.sample .icon-chain').outerHTML;
@@ -28,12 +70,12 @@ function initSVGIconsHTML() {
     sampleHalfStar = document.querySelector('.sample .icon-star-half-empty').outerHTML;
 }
 
-function initInitialMovieData() {
+function renderInitialMovieData() {
     ajax(
         siteGlobals.moviesInitListJSON,
         function (json) {
         try {
-            initialMovieData = JSON.parse(json);
+            var initialMovieData = JSON.parse(json);
             var initialMovieDataHTML = '';
             for (var i = 0; i < initialMovieData.length; i++) {
                 initialMovieDataHTML += getMovieHTML(initialMovieData[i]);
@@ -45,6 +87,15 @@ function initInitialMovieData() {
             console.log('error in initInitialMovieData function: ' + err);
         }
     });
+}
+
+function showAllMovies() {
+    window.location.hash = '';
+    searchBoxMode('search-fields');
+    var searchInput = document.getElementById('search');
+    searchInput.value = ''; // reset
+    document.getElementById('sortBy').value = 'highest-rating'; // reset
+    triggerEvent(searchInput, 'keyup'); // calls movieSearchChanged()
 }
 
 function getMovieHTML(movieData) {
@@ -61,8 +112,10 @@ function getMovieHTML(movieData) {
     var review = movieData.hasOwnProperty('review') ?
     movieData.review : loadReviewButton;
 
-    return '<div class="movie" id="' + movieID + '">' +
-        '<a href="#' + movieID + '">' + sampleChain + '</a>' +
+    return '<div class="movie" id="!' + movieID + '">' +
+        '<a href="' + siteGlobals.siteURL + '/movie-reviews/#!' + movieID + '">' +
+            sampleChain +
+        '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
                 '<img src="' + movieData.thumbnail + '">' +
@@ -125,9 +178,34 @@ function highlightSearch(searchTerms, movieTitleAndYear) {
     return movieTitleAndYear;
 }
 
+function searchBoxMode(mode) {
+    var searchBox = document.getElementById('searchBox');
+    var showAllMoviesButton = document.getElementById('showAllMovies');
+    var searchBoxParent = searchBox.parentNode;
+    switch (mode) {
+        case 'show-all-button':
+            searchBox.style.display = 'none';
+            showAllMoviesButton.style.display = 'inline-block';
+            searchBoxParent.style.textAlign = 'center';
+            break;
+        case 'search-fields':
+            showAllMoviesButton.style.display = 'none';
+            searchBox.style.display = 'block';
+            searchBoxParent.style.textAlign = 'start';
+            break;
+    }
+}
+
 // searching
 
-function initMovieSearchList() {
+var gettingMovieSearchList = false; // init (unlocked)
+function initMovieSearchList(callback) {
+    if (completeMovieSearch.length > 0) return callback(); // exit function here
+
+    addEvent(document, 'got-movie-search-list', callback);
+
+    if (gettingMovieSearchList) return; // 1 attempt at a time
+    gettingMovieSearchList = true; // lock
     ajax(
         siteGlobals.moviesSearchIndexJSON,
         function (json) {
@@ -138,9 +216,11 @@ function initMovieSearchList() {
                 completeMovieSearchIDs[i] = completeMovieSearch[i].
                 replace(/[^a-z0-9]*/g, '');
             }
+            triggerEvent(document, 'got-movie-search-list');
         }
         catch (err) {
             console.log('error in initMovieSearchList function: ' + err);
+            gettingMovieSearchList = false; // unlock again
         }
     });
 }
@@ -152,29 +232,32 @@ function movieID2Index(id) {
 function movieSearchChanged() {
     var searchText = trim(document.getElementById('search').value).toLowerCase();
     var searchTerms = extractSearchTerms(searchText);
-    var searchResultIndexes = searchMovieTitles(searchTerms);
-    var finalizeSearch = function() {
-        movieSearchChangedFinalize(searchTerms, searchResultIndexes);
+    var finalizeSearch = function () {
+        // wait for both lists to be downloaded before proceeding
+        if (
+            completeMovieSearch.length == 0 ||
+            completeMovieData.length == 0
+        ) return;
+        var searchResultIndexes = searchMovieTitles(searchTerms);
+        var movieSearchResults = [];
+        // use the list of indexes to get the list of complete movies for rendering
+        foreach(searchResultIndexes, function (_, movieI) {
+            movieSearchResults.push(completeMovieData[movieI]);
+        });
+        movieSearchResults = sortMovies(movieSearchResults); // todo: move up above?
+        var moviesHTML = '';
+        foreach(movieSearchResults, function (_, movieData) {
+            movieData.titleAndYear = highlightSearch(
+                searchTerms, movieData.title + ' (' + movieData.year + ')'
+            );
+            moviesHTML += getMovieHTML(movieData);
+        });
+        document.getElementById('reviewsArea').innerHTML = moviesHTML;
     };
-    if (completeMovieData.length == 0) initCompleteMovieData(finalizeSearch);
-    else finalizeSearch();
-}
-
-function movieSearchChangedFinalize(searchTerms, searchResultIndexes) {
-    var movieSearchResults = [];
-    // use the list of indexes to get the list of complete movies for rendering
-    foreach(searchResultIndexes, function (_, movieI) {
-        movieSearchResults.push(completeMovieData[movieI]);
-    });
-    movieSearchResults = sortMovies(movieSearchResults); // todo: move up above?
-    var moviesHTML = '';
-    foreach(movieSearchResults, function (_, movieData) {
-        movieData.titleAndYear = highlightSearch(
-            searchTerms, movieData.title + ' (' + movieData.year + ')'
-        );
-        moviesHTML += getMovieHTML(movieData);
-    });
-    document.getElementById('reviewsArea').innerHTML = moviesHTML;
+    // we need the search-index and the movie-data lists before we can complete
+    // this operation. get both lists in parallel for speed.
+    initMovieSearchList(finalizeSearch);
+    initCompleteMovieData(finalizeSearch);
 }
 
 function extractSearchTerms(searchText) {
@@ -196,7 +279,7 @@ function searchMovieTitles(searchTerms) {
         }
         return searchResultIndexes;
     }
-    var searchResultIndexes = []; // a list of movie list ids
+    var searchResultIndexes = []; // a list of movie ids
     foreach(completeMovieSearch, function (i, movieWords) {
         var searchFail = false;
         foreach(searchTerms, function (_, searchWord) {
@@ -215,17 +298,18 @@ function searchMovieTitles(searchTerms) {
 
 var gettingCompleteMovieData = false; // init (unlocked)
 function initCompleteMovieData(callback) {
-    if (gettingCompleteMovieData) { // 1 attempt at a time
-        if (typeof callback == 'function') callback();
-        return;
-    }
+    if (completeMovieData.length > 0) return callback(); // exit function here
+
+    addEvent(document, 'got-complete-movie-data', callback);
+
+    if (gettingCompleteMovieData) return; // 1 attempt at a time
     gettingCompleteMovieData = true; // lock
     ajax(
         siteGlobals.moviesListJSON,
         function (json) {
         try {
             completeMovieData = JSON.parse(json);
-            if (typeof callback == 'function') callback();
+            triggerEvent(document, 'got-complete-movie-data');
         }
         catch (err) {
             console.log('error in initCompleteMovieData function: ' + err);
