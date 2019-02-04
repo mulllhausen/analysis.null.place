@@ -1,3 +1,40 @@
+/* begin movie loader section */
+.movie-loader-area {
+    position: relative;
+    width: 100%;
+    height: 96px;
+    text-align: center;
+    font-size: 200%;
+    /*display: none;/ *initially hidden*/
+}
+.movie-loader-inner {
+    position: relative;
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    vertical-align: middle;
+}
+.movie-loader-area .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+}
+.movie-loader-area .icon-circle-o-notch {
+    color: #7db904;/*green*/
+    font-size: 96px;
+}
+.loading-text {
+    display: table-cell;
+    font-size: 16px;
+    vertical-align: middle;
+    height: 96px;
+    width: 96px;
+}
+/* end movie loader section */
+
 #showAllMovies {
     display: none;
 }

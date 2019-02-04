@@ -53,6 +53,25 @@ you have similar tastes to me.</p>
     </div>
     <button id="showAllMovies">show all movies</button>
 </div>
+<div id="movieLoaderArea" class="movie-loader-area">
+    <div class="movie-loader-inner">
+        <svg class="icon icon-circle-o-notch">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
+                <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="-360 48 48"
+                    to="0 48 48"
+                    dur="2s"
+                    additive="sum"
+                    repeatCount="indefinite"
+                />
+            </use>
+        </svg>
+        <div class="loading-text">loading<br>movies</div>
+    </div>
+</div>
 <div id="reviewsArea" class="reviews-area">
 </div>
 <script>

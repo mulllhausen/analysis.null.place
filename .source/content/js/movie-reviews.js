@@ -50,6 +50,7 @@ function initMovieRendering() {
             ) return;
             var movieIndex = movieID2Index(movieID);
             var movieData = completeMovieData[movieIndex];
+            loading('off');
             document.getElementById('reviewsArea').innerHTML = getMovieHTML(
                 movieData
             );
@@ -80,6 +81,7 @@ function renderInitialMovieData() {
             for (var i = 0; i < initialMovieData.length; i++) {
                 initialMovieDataHTML += getMovieHTML(initialMovieData[i]);
             }
+            loading('off');
             document.getElementById('reviewsArea').innerHTML =
             initialMovieDataHTML;
         }
@@ -96,6 +98,17 @@ function showAllMovies() {
     searchInput.value = ''; // reset
     document.getElementById('sortBy').value = 'highest-rating'; // reset
     triggerEvent(searchInput, 'keyup'); // calls movieSearchChanged()
+}
+
+function loading(status) {
+    switch (status) {
+        case 'on':
+            document.getElementById('movieLoaderArea').style.display = 'block';
+            break;
+        case 'off':
+            document.getElementById('movieLoaderArea').style.display = 'none';
+            break;
+    }
 }
 
 function getMovieHTML(movieData) {
@@ -118,7 +131,7 @@ function getMovieHTML(movieData) {
         '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
-                '<img src="' + movieData.thumbnail + '">' +
+                '<img src="' + movieData.thumbnail + '" alt="movie graphic">' +
             '</a>' +
             '<div class="stars">' +
                 getMovieStarsHTML(movieData.rating) +
@@ -230,6 +243,7 @@ function movieID2Index(id) {
 }
 
 function movieSearchChanged() {
+    loading('on');
     var searchText = trim(document.getElementById('search').value).toLowerCase();
     var searchTerms = extractSearchTerms(searchText);
     var finalizeSearch = function () {
@@ -252,6 +266,7 @@ function movieSearchChanged() {
             );
             moviesHTML += getMovieHTML(movieData);
         });
+        loading('off');
         document.getElementById('reviewsArea').innerHTML = moviesHTML;
     };
     // we need the search-index and the movie-data lists before we can complete
