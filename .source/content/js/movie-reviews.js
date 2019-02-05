@@ -1,9 +1,10 @@
-// todo: show loader during ajax
 // init globals
 movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // static index of movie searches
 completeMovieSearchIDs = []; // same as completeMovieSearch but with IDs not names and years
 completeMovieData = []; // static list of all movie data
+numTotalMovies = 0; // total that match the search criteria
+numMoviesShowing = 0;
 sampleChain = '';
 sampleEmptyStar = '';
 sampleFullStar = '';
@@ -51,6 +52,8 @@ function initMovieRendering() {
             var movieIndex = movieID2Index(movieID);
             var movieData = completeMovieData[movieIndex];
             loading('off');
+            numMoviesShowing = 1, numTotalMovies = completeMovieSearch.length;
+            renderMovieCount(true);
             document.getElementById('reviewsArea').innerHTML = getMovieHTML(
                 movieData
             );
@@ -61,6 +64,11 @@ function initMovieRendering() {
         initMovieSearchList(afterAllMovieDataDownloaded);
     } else { // show initial list
         renderInitialMovieData();
+        initMovieSearchList(function () {
+            // we already know numMoviesShowing from renderInitialMovieData()
+            numTotalMovies = completeMovieSearch.length;
+            renderMovieCount(false);
+        });
     }
 }
 
@@ -82,6 +90,8 @@ function renderInitialMovieData() {
                 initialMovieDataHTML += getMovieHTML(initialMovieData[i]);
             }
             loading('off');
+            numMoviesShowing = initialMovieData.length;
+            // do not run renderMovieCount() yet since we do not know numTotalMovies
             document.getElementById('reviewsArea').innerHTML =
             initialMovieDataHTML;
         }
@@ -209,6 +219,21 @@ function searchBoxMode(mode) {
     }
 }
 
+function renderMovieCount(searching) {
+    if (numTotalMovies == 0) {
+        document.getElementById('xOfYMoviesCount').style.display = 'none';
+        document.getElementById('noMoviesCount').style.display = 'inline';
+    } else {
+        document.getElementById('noMoviesCount').style.display = 'none';
+        document.getElementById('xOfYMoviesCount').style.display = 'inline';
+        document.getElementById('numMoviesShowing').innerHTML = numMoviesShowing;
+        document.getElementById('totalMoviesFound').innerHTML = numTotalMovies;
+        document.getElementById('searchTypeDescription').innerHTML = (
+            searching ? 'search results' : 'total movies'
+        );
+    }
+}
+
 // searching
 
 var gettingMovieSearchList = false; // init (unlocked)
@@ -243,6 +268,7 @@ function movieID2Index(id) {
 }
 
 function movieSearchChanged() {
+    document.getElementById('reviewsArea').innerHTML = '';
     loading('on');
     var searchText = trim(document.getElementById('search').value).toLowerCase();
     var searchTerms = extractSearchTerms(searchText);
@@ -253,6 +279,15 @@ function movieSearchChanged() {
             completeMovieData.length == 0
         ) return;
         var searchResultIndexes = searchMovieTitles(searchTerms);
+        if (searchText == '') {
+            numMoviesShowing = completeMovieSearch.length; // todo - do not show all
+            numTotalMovies = completeMovieSearch.length;
+            renderMovieCount(false);
+        } else {
+            numMoviesShowing = searchResultIndexes.length; // todo - do not show all
+            numTotalMovies = searchResultIndexes.length;
+            renderMovieCount(true);
+        }
         var movieSearchResults = [];
         // use the list of indexes to get the list of complete movies for rendering
         foreach(searchResultIndexes, function (_, movieI) {

@@ -1,3 +1,11 @@
+/* begin initially hidden section */
+#xOfYMoviesCount,
+#noMoviesCount,
+#showAllMovies {/*button*/
+    display: none;
+}
+/* end initially hidden section */
+
 /* begin movie loader section */
 .movie-loader-area {
     position: relative;
@@ -5,7 +13,6 @@
     height: 96px;
     text-align: center;
     font-size: 200%;
-    /*display: none;/ *initially hidden*/
 }
 .movie-loader-inner {
     position: relative;
@@ -35,10 +42,13 @@
 }
 /* end movie loader section */
 
-#showAllMovies {
-    display: none;
+/* begin movie count area */
+.movieCountArea {
+    text-align: center;
 }
+/* end movie count area */
 
+/* begin each movie box section */
 .movie {
     position: relative;
     border: 1px solid #1a1a1a;/*dark-grey*/
@@ -87,6 +97,7 @@
     position: absolute;
     right: 10px;/*match the padding of .movie*/
 }
+/* end each movie box section */
 
 .some-star {
     color: #7db904;/*green*/
