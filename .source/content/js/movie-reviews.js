@@ -136,7 +136,8 @@ function getMovieHTML(movieData) {
     movieData.review : loadReviewButton;
 
     return '<div class="movie" id="!' + movieID + '">' +
-        '<a href="' + siteGlobals.siteURL + '/movie-reviews/#!' + movieID + '">' +
+        '<a href="' + siteGlobals.siteURL + '/movie-reviews/#!' + movieID + '"' +
+            ' title="right click and copy link for the URL of this movie review">' +
             sampleChain +
         '</a>' +
         '<div class="thumbnail-and-stars">' +

@@ -5,8 +5,8 @@ this script reads one file - json/movies-list-all.json - and outputs the
 following files:
 - json/movies-init-list.json
 - json/movies-search-index.json
-"""
 
+"""
 import os
 import json
 import re
