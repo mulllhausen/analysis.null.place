@@ -41,7 +41,7 @@ addEvent(window, 'load', function () {
             positionMoviesCounter();
             infiniteLoader();
             ticking = false;
-        }, 500);
+        }, 500); // check every half-second
         ticking = true;
     });
 });
@@ -133,13 +133,16 @@ function showAllMovies() {
     triggerEvent(searchInput, 'keyup'); // calls movieSearchChanged()
 }
 
+var loadingStatus = 'on';
 function loading(status) {
     switch (status) {
         case 'on':
             document.getElementById('movieLoaderArea').style.display = 'block';
+            loadingStatus = 'on';
             break;
         case 'off':
             document.getElementById('movieLoaderArea').style.display = 'none';
+            loadingStatus = 'off';
             break;
     }
 }
@@ -288,13 +291,14 @@ function positionMovieCountPanel(mode) {
 function positionMoviesCounter() {
     var countAreaEl = document.getElementsByClassName('movie-count-area')[0];
     positionMovieCountPanel(
-        isScrolledIntoView(countAreaEl, 'entirely') ? 'inline' : 'fixed'
+        isScrolledTo(countAreaEl, 'above') ? 'fixed' : 'inline'
     );
 }
 
 function infiniteLoader() {
+    if (loadingStatus == 'on') return;
     var footerEl = document.getElementsByTagName('footer')[0];
-    if (!isScrolledIntoView(footerEl, 'partially')) return;
+    if (!isScrolledTo(footerEl, 'view', 'partially')) return;
     renderMoreMovies();
 }
 

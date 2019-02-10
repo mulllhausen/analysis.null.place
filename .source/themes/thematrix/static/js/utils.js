@@ -10,21 +10,43 @@ function getEntireHeight() {
     );
 }
 
-// thanks to stackoverflow.com/a/22480938
-function isScrolledIntoView(el, mode) {
+function isScrolledTo(el, position, amount) {
+    // note: amount is optional. when omitted it defaults to 'either'
     if (el == null) return false;
 
     var rect = el.getBoundingClientRect();
-    var elemTop = rect.top;
-    var elemBottom = rect.bottom;
-
-    switch (mode) {
-        case 'entirely': // the element is completely visible (top and bottom)
-            return ((elemTop >= 0) && (elemBottom <= window.innerHeight));
-        case 'partially': // the element is partially visible
-            return ((elemTop < window.innerHeight) && (elemBottom >= 0));
+    var elTop = rect.top; // distance down from the top of the window
+    var elBottom = rect.bottom; // distance down from the top of the window
+    switch (position) {
+        case 'view': // the element is visible
+            switch (amount) {
+                case 'entirely': // the element is completely visible (top and bottom)
+                    return ((elTop >= 0) && (elBottom <= window.innerHeight));
+                default:
+                case 'partially': // the element is partially visible
+                    return ((elTop < window.innerHeight) && (elBottom >= 0));
+            }
+        case 'above': // the element is above the window of view
+            switch (amount) {
+                case 'entirely':
+                    return (elBottom < 0);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < 0) && (elBottom > 0));
+                default: // either partially or entirely
+                    return (elTop < 0);
+            }
+        case 'below': // the element is below the window
+            switch (amount) {
+                case 'entirely':
+                    return (elTop > window.innerHeight);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < window.innerHeight) && (elBottom > window.innerHeight));
+                default: // either partially or entirely
+                    return (elBottom > window.innerHeight);
+            }
         default:
-            return false;
+            throw 'error in isScrolledTo function: unknown position' +
+            ((position == null) ? '' : position);
     }
 }
 
