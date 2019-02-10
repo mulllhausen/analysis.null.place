@@ -1,14 +1,16 @@
 // init globals
-movieList = []; // all movies known to this page (may not be in sync with movies-list-all.json)
 completeMovieSearch = []; // static index of movie searches
 completeMovieSearchIDs = []; // same as completeMovieSearch but with IDs not names and years
 completeMovieData = []; // static list of all movie data
-numTotalMovies = 0; // total that match the search criteria
+searchResultIndexes = []; // all movie indexes that match the search. in order. used for paging.
+numTotalMovies = 0; // total count that match the search criteria
 numMoviesShowing = 0;
 sampleChain = '';
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
+pageSize = 10; // load this many movies at once in the infinite scroll page
+currentlySearching = false;
 
 addEvent(window, 'load', function () {
     /* ajax logic:
@@ -28,6 +30,19 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('sortBy'), 'change', movieSearchChanged);
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
     addEvent(document.getElementById('showAllMovies'), 'click', showAllMovies);
+
+    // scroll with debounce
+    var lastKnownScrollPosition = 0;
+    var ticking = false;
+    addEvent(window, 'scroll', function(e) {
+        lastKnownScrollPosition = window.scrollY;
+        if (ticking) return;
+        setTimeout(function() {
+            infiniteLoader();
+            ticking = false;
+        }, 1000);
+        ticking = true;
+    });
 });
 
 // rendering
@@ -50,10 +65,12 @@ function initMovieRendering() {
                 completeMovieData.length == 0
             ) return;
             var movieIndex = movieID2Index(movieID);
+            searchResultIndexes = [movieIndex]; // asap
             var movieData = completeMovieData[movieIndex];
             loading('off');
             numMoviesShowing = 1, numTotalMovies = completeMovieSearch.length;
-            renderMovieCount(true);
+            currentlySearching = true;
+            renderMovieCount();
             document.getElementById('reviewsArea').innerHTML = getMovieHTML(
                 movieData
             );
@@ -64,10 +81,16 @@ function initMovieRendering() {
         initMovieSearchList(afterAllMovieDataDownloaded);
     } else { // show initial list
         renderInitialMovieData();
+        // note: at this point, searchResultIndexes is not populated, so
+        // scrolling to the bottom will not yet load any more movies
         initMovieSearchList(function () {
-            // we already know numMoviesShowing from renderInitialMovieData()
+            // no need to populate numMoviesShowing since that was already
+            // populated in renderInitialMovieData()
             numTotalMovies = completeMovieSearch.length;
-            renderMovieCount(false);
+            searchResultIndexes = new Array(numTotalMovies); // init
+            for (var i = 0; i < numTotalMovies; i++) searchResultIndexes[i] = i;
+            currentlySearching = false;
+            renderMovieCount();
         });
     }
 }
@@ -92,8 +115,7 @@ function renderInitialMovieData() {
             loading('off');
             numMoviesShowing = initialMovieData.length;
             // do not run renderMovieCount() yet since we do not know numTotalMovies
-            document.getElementById('reviewsArea').innerHTML =
-            initialMovieDataHTML;
+            document.getElementById('reviewsArea').innerHTML = initialMovieDataHTML;
         }
         catch (err) {
             console.log('error in initInitialMovieData function: ' + err);
@@ -220,7 +242,7 @@ function searchBoxMode(mode) {
     }
 }
 
-function renderMovieCount(searching) {
+function renderMovieCount() {
     if (numTotalMovies == 0) {
         document.getElementById('xOfYMoviesCount').style.display = 'none';
         document.getElementById('noMoviesCount').style.display = 'inline';
@@ -230,9 +252,45 @@ function renderMovieCount(searching) {
         document.getElementById('numMoviesShowing').innerHTML = numMoviesShowing;
         document.getElementById('totalMoviesFound').innerHTML = numTotalMovies;
         document.getElementById('searchTypeDescription').innerHTML = (
-            searching ? 'search results' : 'total movies'
+            currentlySearching ? 'search results' : 'total movies'
         );
     }
+}
+
+// infinite scroll functionality
+
+function infiniteLoader() {
+    if (!isScrolledIntoView(document.getElementsByTagName('footer'))) return;
+    if (scrollPos < (windowHeight - infLoadThreshold)) return; // not there yet
+    renderMoreMovies();
+}
+
+function renderMoreMovies() {
+    if (numMoviesShowing >= searchResultIndexes.length) return; // no more movies to show
+    loading('on');
+
+    // add a container where all the new movies will be placed. it is quicker
+    // for the browser to add them all at once like this since it takes fewer
+    // dom manipilations.
+    var moreMoviesEl = document.createElement('div');
+    moreMoviesEl.className = 'moreMovieReviews';
+
+    var pointer = numMoviesShowing; // init
+    var moreMoviesHTML = ''; // init
+
+    // get the next pageSize movies to show
+    for (var i = 0; i < pageSize; i++) {
+        if (!inArray(pointer, searchResultIndexes)) break; // we have run out of movies to show
+        var movieIndex = searchResultIndexes[pointer];
+        var movieData = completeMovieData[movieIndex];
+        moreMoviesHTML += getMovieHTML(movieData);
+        pointer++;
+    }
+    moreMoviesEl.innerHTML = moreMoviesHTML;
+    document.getElementById('reviewsArea').appendChild(moreMoviesEl);
+    numMoviesShowing += i;
+    renderMovieCount();
+    loading('off');
 }
 
 // searching
@@ -265,7 +323,7 @@ function initMovieSearchList(callback) {
 }
 
 function movieID2Index(id) {
-    return completeMovieSearchIDs.indexOf(id)
+    return completeMovieSearchIDs.indexOf(id);
 }
 
 function movieSearchChanged() {
@@ -279,29 +337,48 @@ function movieSearchChanged() {
             completeMovieSearch.length == 0 ||
             completeMovieData.length == 0
         ) return;
-        var searchResultIndexes = searchMovieTitles(searchTerms);
+
+        searchResultIndexes = searchMovieTitles(searchTerms); // global
+
         if (searchText == '') {
-            numMoviesShowing = completeMovieSearch.length; // todo - do not show all
+            numMoviesShowing = completeMovieSearch.length;
+            if (numMoviesShowing > pageSize) numMoviesShowing = pageSize; // max
             numTotalMovies = completeMovieSearch.length;
-            renderMovieCount(false);
+            currentlySearching = false;
+            renderMovieCount();
         } else {
-            numMoviesShowing = searchResultIndexes.length; // todo - do not show all
+            numMoviesShowing = searchResultIndexes.length;
+            if (numMoviesShowing > pageSize) numMoviesShowing = pageSize; // max
             numTotalMovies = searchResultIndexes.length;
-            renderMovieCount(true);
+            currentlySearching = true;
+            renderMovieCount();
         }
+        // get all the movie data into a tmp list. necessary for sorting.
         var movieSearchResults = [];
-        // use the list of indexes to get the list of complete movies for rendering
-        foreach(searchResultIndexes, function (_, movieI) {
-            movieSearchResults.push(completeMovieData[movieI]);
-        });
-        movieSearchResults = sortMovies(movieSearchResults); // todo: move up above?
+        for (var i = 0; i < searchResultIndexes.length; i++) {
+            var movieIndex = searchResultIndexes[i];
+            var movieData = completeMovieData[movieIndex];
+            movieData['index'] = movieIndex;
+            movieSearchResults.push(movieData);
+        }
+
+        // sort it
+        movieSearchResults = sortMovies(movieSearchResults);
+
+        // sort the global search results
+        for (var i = 0; i < searchResultIndexes.length; i++) {
+            searchResultIndexes[i] = movieSearchResults[i]['index'];
+        }
+
+        // render the first page of the search results
         var moviesHTML = '';
-        foreach(movieSearchResults, function (_, movieData) {
+        for (var i = 0; i < numMoviesShowing; i++) {
+            var movieData = movieSearchResults[i];
             movieData.titleAndYear = highlightSearch(
                 searchTerms, movieData.title + ' (' + movieData.year + ')'
             );
             moviesHTML += getMovieHTML(movieData);
-        });
+        }
         loading('off');
         document.getElementById('reviewsArea').innerHTML = moviesHTML;
     };

@@ -13,6 +13,7 @@
     height: 96px;
     text-align: center;
     font-size: 200%;
+    color: #7db904;/*green*/
 }
 .movie-loader-inner {
     position: relative;
@@ -30,7 +31,6 @@
     text-align: center;
 }
 .movie-loader-area .icon-circle-o-notch {
-    color: #7db904;/*green*/
     font-size: 96px;
 }
 .loading-text {

@@ -52,12 +52,11 @@ def getThumbURL(movieTitle, imdbID):
         thumbURL = m2.group(1)
 
         # now change the image to choose one with the correct dimensions
-        # change this: @._V1_UX182_CR0,0,182,268_AL_.jpg
-        # to this:     @._V1_UY209_CR1,0,140,209_AL_.jpg
-        thumbURL = thumbURL.replace(
-            "@._V1_UX182_CR0,0,182,268_AL_.jpg", "@._V1_UY209_CR1,0,140,209_AL_.jpg"
-        )
-        return thumbURL
+        # change this: ._V1_UX182_CR0,0,182,268_AL_.jpg
+        # to this:     ._V1_UY209_CR1,0,140,209_AL_.jpg
+        URL_parts = thumbURL.split(".")
+        URL_parts[-2] = "_V1_UY209_CR1,0,140,209_AL_"
+        return ".".join(URL_parts)
     except:
         print "failed to get thumbnail for \"%s\"" % movieTitle
         return ""
