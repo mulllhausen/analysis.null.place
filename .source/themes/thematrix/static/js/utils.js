@@ -11,17 +11,21 @@ function getEntireHeight() {
 }
 
 // thanks to stackoverflow.com/a/22480938
-function isScrolledIntoView(el) {
+function isScrolledIntoView(el, mode) {
+    if (el == null) return false;
+
     var rect = el.getBoundingClientRect();
     var elemTop = rect.top;
     var elemBottom = rect.bottom;
 
-    // Only completely visible elements return true:
-    //var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
-
-    // Partially visible elements return true:
-    var isVisible = ((elemTop < window.innerHeight) && (elemBottom >= 0));
-    return isVisible;
+    switch (mode) {
+        case 'entirely': // the element is completely visible (top and bottom)
+            return ((elemTop >= 0) && (elemBottom <= window.innerHeight));
+        case 'partially': // the element is partially visible
+            return ((elemTop < window.innerHeight) && (elemBottom >= 0));
+        default:
+            return false;
+    }
 }
 
 function getDeviceType() {

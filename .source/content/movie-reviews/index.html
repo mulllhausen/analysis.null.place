@@ -31,7 +31,7 @@ about, whether I liked it or not, and even whether I have already watched it. So
 I have made this page to keep track of movies I watch - good and bad. Maybe you
 will also discover some good movies here too, or learn what to avoid, assuming
 you have similar tastes to me.</p>
-<div class="form-container">
+<div class="form-container search-box-container">
     <div id="searchBox">
         <div class="left">
             <label for="search" class="for-search-box">search</label>
@@ -54,13 +54,15 @@ you have similar tastes to me.</p>
     <button id="showAllMovies">show all movies</button>
 </div>
 
-<div class="movieCountArea">
-    <span id="xOfYMoviesCount">
-        showing <span id="numMoviesShowing">10</span> of
-        <span id="totalMoviesFound"></span>
-        <span id="searchTypeDescription">total movies</span>
-    </span>
-    <span id="noMoviesCount">no movies found</span>
+<div class="movie-count-area">
+    <div id="movieCountPanel">
+        <span id="xOfYMoviesCount">
+            showing <span id="numMoviesShowing">10</span> of
+            <span id="totalMoviesFound"></span>
+            <span id="searchTypeDescription">total movies</span>
+        </span>
+        <span id="noMoviesCount">no movies found</span>
+    </div>
 </div>
 
 <div id="reviewsArea" class="reviews-area"></div>

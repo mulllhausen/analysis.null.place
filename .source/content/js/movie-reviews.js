@@ -9,7 +9,7 @@ sampleChain = '';
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
-pageSize = 10; // load this many movies at once in the infinite scroll page
+pageSize = 5; // load this many movies at once in the infinite scroll page
 currentlySearching = false;
 
 addEvent(window, 'load', function () {
@@ -38,9 +38,10 @@ addEvent(window, 'load', function () {
         lastKnownScrollPosition = window.scrollY;
         if (ticking) return;
         setTimeout(function() {
+            positionMoviesCounter();
             infiniteLoader();
             ticking = false;
-        }, 1000);
+        }, 500);
         ticking = true;
     });
 });
@@ -257,11 +258,43 @@ function renderMovieCount() {
     }
 }
 
+var currentMovieCountPanelPosition = 'inline'; // init
+function positionMovieCountPanel(mode) {
+    if (mode == currentMovieCountPanelPosition) return; // already done!
+    switch (mode) { // first, validate the mode
+        case 'fixed':
+        case 'inline':
+            break; // ok
+        default:
+            return;
+    }
+    var el = document.getElementById('movieCountPanel');
+    switch (mode) {
+        case 'fixed': // move the panel from inline to fixed
+            el.style.width = el.offsetWidth + 'px';
+            el.style.top = 0;
+            el.style.position = 'fixed';
+            break;
+        case 'inline': // mode the panel from fixed to inline
+            el.style.position = 'static';
+            el.style.width = '100%';
+            break;
+    }
+    currentMovieCountPanelPosition = mode; // update global
+}
+
 // infinite scroll functionality
 
+function positionMoviesCounter() {
+    var countAreaEl = document.getElementsByClassName('movie-count-area')[0];
+    positionMovieCountPanel(
+        isScrolledIntoView(countAreaEl, 'entirely') ? 'inline' : 'fixed'
+    );
+}
+
 function infiniteLoader() {
-    if (!isScrolledIntoView(document.getElementsByTagName('footer'))) return;
-    if (scrollPos < (windowHeight - infLoadThreshold)) return; // not there yet
+    var footerEl = document.getElementsByTagName('footer')[0];
+    if (!isScrolledIntoView(footerEl, 'partially')) return;
     renderMoreMovies();
 }
 
@@ -287,10 +320,12 @@ function renderMoreMovies() {
         pointer++;
     }
     moreMoviesEl.innerHTML = moreMoviesHTML;
-    document.getElementById('reviewsArea').appendChild(moreMoviesEl);
     numMoviesShowing += i;
-    renderMovieCount();
-    loading('off');
+    setTimeout(function () {
+        document.getElementById('reviewsArea').appendChild(moreMoviesEl);
+        renderMovieCount();
+        loading('off');
+    }, 1000);
 }
 
 // searching

@@ -6,6 +6,12 @@
 }
 /* end initially hidden section */
 
+/* begin search box section*/
+.search-box-container {
+    margin-bottom: 0;
+}
+/* end search box section*/
+
 /* begin movie loader section */
 .movie-loader-area {
     position: relative;
@@ -43,10 +49,21 @@
 /* end movie loader section */
 
 /* begin movie count area */
-.movieCountArea {
+#movieCountPanel {
+    z-index: 3;
+    padding: 20px 0 20px 0;
+    background-color: black;
+}
+.movie-count-area {
+    margin: 0;
+    height: 60px;
     text-align: center;
 }
 /* end movie count area */
+
+.reviews-area {
+    margin-top: -20px;/*necessary to eliminate a mysterious 20px margin. no idea where that comes from!?*/
+}
 
 /* begin each movie box section */
 .movie {
