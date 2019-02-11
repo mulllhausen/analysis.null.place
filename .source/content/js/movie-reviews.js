@@ -9,7 +9,7 @@ sampleChain = '';
 sampleEmptyStar = '';
 sampleFullStar = '';
 sampleHalfStar = '';
-pageSize = 5; // load this many movies at once in the infinite scroll page
+pageSize = 10; // load this many movies at once in the infinite scroll page
 currentlySearching = false;
 
 addEvent(window, 'load', function () {
@@ -41,7 +41,7 @@ addEvent(window, 'load', function () {
             positionMoviesCounter();
             infiniteLoader();
             ticking = false;
-        }, 500); // check every half-second
+        }, 200); // check 5 times per second
         ticking = true;
     });
 });
@@ -114,7 +114,7 @@ function renderInitialMovieData() {
                 initialMovieDataHTML += getMovieHTML(initialMovieData[i]);
             }
             loading('off');
-            numMoviesShowing = initialMovieData.length;
+            numMoviesShowing = initialMovieData.length; // global
             // do not run renderMovieCount() yet since we do not know numTotalMovies
             document.getElementById('reviewsArea').innerHTML = initialMovieDataHTML;
         }
@@ -156,8 +156,11 @@ function getMovieHTML(movieData) {
         movieData.titleAndYear : movieData.title + ' (' + movieData.year + ')'
     );
     var loadReviewButton = '<button class="load-review" id="load-' + movieID + '">' +
-        'load review (' + (movieData.spoilers? '' : 'no') + ' spoilers)' +
-    '</button>';
+        'load review' +
+    '</button><br>' +
+    '<span class="review-explanation">' +
+        '(this review ' + (movieData.spoilers? 'contains' : 'has no') + ' spoilers)' +
+    '</span>';
     var review = movieData.hasOwnProperty('review') ?
     movieData.review : loadReviewButton;
 
@@ -175,7 +178,7 @@ function getMovieHTML(movieData) {
             '</div>' +
         '</div>' +
         '<div class="review">' +
-            '<h3>' + titleAndYear + '</h3>' +
+            '<h3 class="movie-title">' + titleAndYear + '</h3>' +
             '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
             '<div class="review-text">' + review + '</div>' +
         '</div>' +
@@ -183,6 +186,8 @@ function getMovieHTML(movieData) {
 }
 
 function loadFullReview(e) {
+    if (typeof e.target.className != 'string') return; // ignore svg classes
+
     // if the review has already been loaded then exit
     if (!inArray('load-review', e.target.className)) return;
 
@@ -317,14 +322,14 @@ function renderMoreMovies() {
 
     // get the next pageSize movies to show
     for (var i = 0; i < pageSize; i++) {
-        if (!inArray(pointer, searchResultIndexes)) break; // we have run out of movies to show
+        if (pointer >= searchResultIndexes.length) break; // we have run out of movies to show
         var movieIndex = searchResultIndexes[pointer];
         var movieData = completeMovieData[movieIndex];
         moreMoviesHTML += getMovieHTML(movieData);
         pointer++;
     }
     moreMoviesEl.innerHTML = moreMoviesHTML;
-    numMoviesShowing += i;
+    numMoviesShowing += i; // global
     setTimeout(function () {
         document.getElementById('reviewsArea').appendChild(moreMoviesEl);
         renderMovieCount();
@@ -380,15 +385,15 @@ function movieSearchChanged() {
         searchResultIndexes = searchMovieTitles(searchTerms); // global
 
         if (searchText == '') {
-            numMoviesShowing = completeMovieSearch.length;
+            numMoviesShowing = completeMovieSearch.length; // global
             if (numMoviesShowing > pageSize) numMoviesShowing = pageSize; // max
-            numTotalMovies = completeMovieSearch.length;
+            numTotalMovies = completeMovieSearch.length; // global
             currentlySearching = false;
             renderMovieCount();
         } else {
-            numMoviesShowing = searchResultIndexes.length;
+            numMoviesShowing = searchResultIndexes.length; // global
             if (numMoviesShowing > pageSize) numMoviesShowing = pageSize; // max
-            numTotalMovies = searchResultIndexes.length;
+            numTotalMovies = searchResultIndexes.length; // global
             currentlySearching = true;
             renderMovieCount();
         }

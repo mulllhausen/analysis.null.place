@@ -205,7 +205,7 @@ code {
 .col-1 {
     /*margin-left: 130px;
     margin-right: 200px;*/
-    overflow-x: hidden;
+    overflow: hidden;
     padding: 20px;
 }
 .col-2 {
@@ -268,7 +268,7 @@ td {
     background-color: #2b2b2b;/*dark-grey*/
 }
 article {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .bottom_spacer {
     width: 100%;

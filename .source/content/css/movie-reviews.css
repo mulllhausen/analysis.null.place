@@ -103,11 +103,19 @@
     width: auto;
 }
 
+.movie .movie-title {
+    margin-right: 20px;
+}
+
 .movie .review-title {
     color: #bbbbbb;
     font-size: 16px;
     font-style: italic;
     font-weight: normal;
+}
+
+.movie .review-explanation {
+    font-size: 12px;
 }
 
 .movie > a > .icon-chain {
