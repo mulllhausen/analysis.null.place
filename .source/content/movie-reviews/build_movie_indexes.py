@@ -5,6 +5,7 @@ this script reads one file - json/movies-list-all.json - and outputs the
 following files:
 - json/movies-init-list.json
 - json/movies-search-index.json
+- json/movies-list.json
 
 """
 import os
@@ -24,7 +25,6 @@ required_fields = {
     "year": int,
     "rating": numbers.Number,
     "spoilers": bool,
-    "thumbnail": basestring,
     "reviewTitle": basestring,
     "review": basestring,
     "IMDBID": basestring,
@@ -64,7 +64,9 @@ for movie in all_movies:
     with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
         json.dump({ "reviewFull": movie["review"] }, f)
 
+    del movie["id"]
     del movie["review"]
+    del movie["thumbnail"]
 
 with open("%s/../json/movies-list.json" % pwd, "w") as f:
     json.dump(all_movies, f)

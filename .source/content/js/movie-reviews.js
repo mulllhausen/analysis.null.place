@@ -181,6 +181,7 @@ function getMovieHTML(movieData) {
     '</span>';
     var review = movieData.hasOwnProperty('review') ?
     movieData.review : loadReviewButton;
+    var imgSrc = siteGlobals.siteURL + '/img/movie-thumbnail-' + movieID + '.jpg';
 
     return '<div class="movie" id="!' + movieID + '">' +
         '<a class="link"' +
@@ -191,7 +192,7 @@ function getMovieHTML(movieData) {
         '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
-                '<img src="' + movieData.thumbnail + '" alt="movie graphic">' +
+                '<img src="' + imgSrc + '" alt="movie graphic">' +
             '</a>' +
             '<div class="stars">' +
                 getMovieStarsHTML(movieData.rating) +
