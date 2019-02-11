@@ -30,6 +30,7 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('sortBy'), 'change', movieSearchChanged);
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
     addEvent(document.getElementById('showAllMovies'), 'click', showAllMovies);
+    addEvent(document.getElementById('reviewsArea'), 'click', linkTo1Movie);
 
     // scroll with debounce
     var lastKnownScrollPosition = 0;
@@ -70,7 +71,7 @@ function initMovieRendering() {
             var movieData = completeMovieData[movieIndex];
             loading('off');
             numMoviesShowing = 1, numTotalMovies = completeMovieSearch.length;
-            currentlySearching = true;
+            currentlySearching = false;
             renderMovieCount();
             document.getElementById('reviewsArea').innerHTML = getMovieHTML(
                 movieData
@@ -124,6 +125,23 @@ function renderInitialMovieData() {
     });
 }
 
+function linkTo1Movie(e) {
+    var el = e.target;
+    if ((el.tagName == 'a') && inArray('link', el.className)) {
+        var movieEl = el.parentNode;
+    } else if ((el.tagName == 'svg') && inArray('icon-chain', el.outerHTML)) {
+        var movieEl = el.parentNode.parentNode;
+    } else if ((el.tagName == 'use') && inArray('icon-chain', el.outerHTML)) {
+        var movieEl = el.parentNode.parentNode.parentNode;
+    } else return;
+    currentlySearching = false;
+    numMoviesShowing = 1;
+    renderMovieCount();
+    document.getElementById('reviewsArea').innerHTML = movieEl.outerHTML;
+    searchBoxMode('show-all-button');
+    document.getElementById('search').value = ''; // reset
+}
+
 function showAllMovies() {
     window.location.hash = '';
     searchBoxMode('search-fields');
@@ -165,8 +183,10 @@ function getMovieHTML(movieData) {
     movieData.review : loadReviewButton;
 
     return '<div class="movie" id="!' + movieID + '">' +
-        '<a href="' + siteGlobals.siteURL + '/movie-reviews/#!' + movieID + '"' +
-            ' title="right click and copy link for the URL of this movie review">' +
+        '<a class="link"' +
+            ' href="' + siteGlobals.siteURL + '/movie-reviews/#!' + movieID + '"' +
+            ' title="right click and copy link for the URL of this movie review"' +
+        '>' +
             sampleChain +
         '</a>' +
         '<div class="thumbnail-and-stars">' +
@@ -302,6 +322,10 @@ function positionMoviesCounter() {
 
 function infiniteLoader() {
     if (loadingStatus == 'on') return;
+
+    // when 1 movie is loaded via the url hash, do not load more below
+    if (window.location.hash.length > 0) return;
+
     var footerEl = document.getElementsByTagName('footer')[0];
     if (!isScrolledTo(footerEl, 'view', 'partially')) return;
     renderMoreMovies();
