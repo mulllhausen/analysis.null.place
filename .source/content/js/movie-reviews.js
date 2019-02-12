@@ -180,7 +180,7 @@ function getMovieHTML(movieData) {
         '(this review ' + (movieData.spoilers? 'contains' : 'has no') + ' spoilers)' +
     '</span>';
     var review = movieData.hasOwnProperty('review') ?
-    movieData.review : loadReviewButton;
+    '<p>' + movieData.review.replace(/\n/g, '<br><br>') + '</p>' : loadReviewButton;
     var imgSrc = siteGlobals.siteURL + '/img/movie-thumbnail-' + movieID + '.jpg';
 
     return '<div class="movie" id="!' + movieID + '">' +
@@ -213,7 +213,9 @@ function loadFullReview(e) {
     var movieID = e.target.id.replace('load-', '');
     var movieIndex = movieID2Index(movieID);
     if (completeMovieData[movieIndex].hasOwnProperty('review')) {
-        e.target.parentNode.innerHTML = completeMovieData[movieIndex].review;
+        e.target.parentNode.innerHTML = '<p>' +
+            completeMovieData[movieIndex].review.replace(/\n/g, '<br><br>') +
+        '</p>';
         return;
     }
     ajax(
@@ -223,7 +225,8 @@ function loadFullReview(e) {
         function (json) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
-            e.target.parentNode.innerHTML = fullReviewText;
+            e.target.parentNode.innerHTML = '<p>' +
+                fullReviewText.replace(/\n/g, '<br><br>') + '</p>';
             completeMovieData[movieIndex].review = fullReviewText;
         }
         catch (err) {
@@ -424,7 +427,7 @@ function movieSearchChanged() {
         var movieSearchResults = [];
         for (var i = 0; i < searchResultIndexes.length; i++) {
             var movieIndex = searchResultIndexes[i];
-            var movieData = completeMovieData[movieIndex];
+            var movieData = jsonCopyObject(completeMovieData[movieIndex]);
             movieData['index'] = movieIndex;
             movieSearchResults.push(movieData);
         }

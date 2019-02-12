@@ -67,6 +67,7 @@ for movie in all_movies:
     del movie["id"]
     del movie["review"]
     del movie["thumbnail"]
+    del movie["genres"]
 
 with open("%s/../json/movies-list.json" % pwd, "w") as f:
     json.dump(all_movies, f)
