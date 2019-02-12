@@ -134,12 +134,3 @@
 .some-star:not(:last-child) {
     margin-right: 3px;
 }
-
-@media (max-width: 800px) {/*when x <= 800px (phones)*/
-}
-
-@media (min-width: 801px) {/*when x >= 801px (tablets)*/
-}
-
-@media (min-width: 1201px) {/*when x >= 1201px (pc, large tablets, etc)*/
-}

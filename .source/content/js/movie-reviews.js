@@ -192,7 +192,7 @@ function getMovieHTML(movieData) {
         '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="https://www.imdb.com/title/' + movieData.IMDBID + '/">' +
-                '<img src="' + imgSrc + '" alt="movie graphic">' +
+                '<img src="' + imgSrc + '" alt="movie thumbnail">' +
             '</a>' +
             '<div class="stars">' +
                 getMovieStarsHTML(movieData.rating) +
