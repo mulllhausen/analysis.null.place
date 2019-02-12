@@ -84,11 +84,14 @@
     background-color: black;
     width: 100px;
     height: 147.25px;
-    margin-bottom: 5px;
 }
 
 .movie img:after {
     content: " ";
+}
+
+.movie .stars {
+    margin: 5px 0;
 }
 
 .movie .thumbnail-and-stars {
@@ -96,6 +99,7 @@
     width: 100px;
     text-align: center;
     display: table;/*expand to width of child while floated*/
+    margin-right: 15px;
 }
 
 .movie .review {
@@ -118,9 +122,8 @@
     font-size: 12px;
 }
 
-.movie > a > .icon-chain {
-    position: absolute;
-    right: 10px;/*match the padding of .movie*/
+.movie .link {
+    float: right;
 }
 /* end each movie box section */
 

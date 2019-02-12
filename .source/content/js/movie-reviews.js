@@ -198,11 +198,9 @@ function getMovieHTML(movieData) {
                 getMovieStarsHTML(movieData.rating) +
             '</div>' +
         '</div>' +
-        '<div class="review">' +
-            '<h3 class="movie-title">' + titleAndYear + '</h3>' +
-            '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
-            '<div class="review-text">' + review + '</div>' +
-        '</div>' +
+        '<h3 class="movie-title">' + titleAndYear + '</h3>' +
+        '<h4 class="review-title">' + movieData.reviewTitle + '</h4>' +
+        '<div class="review-text">' + review + '</div>' +
     '</div>';
 }
 
