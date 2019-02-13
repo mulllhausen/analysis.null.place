@@ -10,6 +10,46 @@ function getEntireHeight() {
     );
 }
 
+function isScrolledTo(el, position, amount) {
+    // note: amount is optional. when omitted it defaults to 'either'
+    if (el == null) return false;
+
+    var rect = el.getBoundingClientRect();
+    var elTop = rect.top; // distance down from the top of the window
+    var elBottom = rect.bottom; // distance down from the top of the window
+    switch (position) {
+        case 'view': // the element is visible
+            switch (amount) {
+                case 'entirely': // the element is completely visible (top and bottom)
+                    return ((elTop >= 0) && (elBottom <= window.innerHeight));
+                default:
+                case 'partially': // the element is partially visible
+                    return ((elTop < window.innerHeight) && (elBottom >= 0));
+            }
+        case 'above': // the element is above the window of view
+            switch (amount) {
+                case 'entirely':
+                    return (elBottom < 0);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < 0) && (elBottom > 0));
+                default: // either partially or entirely
+                    return (elTop < 0);
+            }
+        case 'below': // the element is below the window
+            switch (amount) {
+                case 'entirely':
+                    return (elTop > window.innerHeight);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < window.innerHeight) && (elBottom > window.innerHeight));
+                default: // either partially or entirely
+                    return (elBottom > window.innerHeight);
+            }
+        default:
+            throw 'error in isScrolledTo function: unknown position' +
+            ((position == null) ? '' : position);
+    }
+}
+
 function getDeviceType() {
     return window.getComputedStyle(
         document.getElementsByTagName('body')[0], ':before'
@@ -166,6 +206,10 @@ function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
         });
     });
     return retObj;// eg {a:1, b:2, c:3}
+}
+
+function jsonCopyObject(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
 // 1000 -> 1,000

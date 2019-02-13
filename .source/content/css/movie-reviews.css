@@ -1,0 +1,139 @@
+/* begin initially hidden section */
+#xOfYMoviesCount,
+#noMoviesCount,
+#showAllMovies {/*button*/
+    display: none;
+}
+/* end initially hidden section */
+
+/* begin search box section*/
+.search-box-container {
+    margin-bottom: 0;
+}
+/* end search box section*/
+
+/* begin movie loader section */
+.movie-loader-area {
+    position: relative;
+    width: 100%;
+    height: 96px;
+    text-align: center;
+    font-size: 200%;
+    color: #7db904;/*green*/
+}
+.movie-loader-inner {
+    position: relative;
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    vertical-align: middle;
+}
+.movie-loader-area .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+}
+.movie-loader-area .icon-circle-o-notch {
+    font-size: 96px;
+}
+.loading-text {
+    display: table-cell;
+    font-size: 16px;
+    vertical-align: middle;
+    height: 96px;
+    width: 96px;
+}
+/* end movie loader section */
+
+/* begin movie count area */
+#movieCountPanel {
+    z-index: 3;
+    padding: 20px 0 20px 0;
+    background-color: black;
+}
+.movie-count-area {
+    margin: 0;
+    height: 60px;
+    text-align: center;
+}
+/* end movie count area */
+
+.reviews-area {
+    margin-top: -20px;/*necessary to eliminate a mysterious 20px margin. no idea where that comes from!?*/
+}
+
+/* begin each movie box section */
+.movie {
+    position: relative;
+    border: 1px solid #1a1a1a;/*dark-grey*/
+    border-radius: 4px;
+    padding: 10px;
+    margin: 20px 0 20px 0;
+    overflow: hidden;/*border outside floats*/
+    background-color: #0b0b0b;
+}
+
+.movie img {
+    position: static;
+    border: 1px solid #6a6a6a;/*light-grey*/
+    border-radius: 4px;
+    padding: 5px;
+    background-color: black;
+    width: 100px;
+    height: 147.25px;
+}
+
+.movie img:after {
+    content: " ";
+}
+
+.movie .stars {
+    margin: 5px 0;
+}
+
+.movie .thumbnail-and-stars {
+    float: left;
+    width: 100px;
+    text-align: center;
+    display: table;/*expand to width of child while floated*/
+    margin-right: 15px;
+}
+
+.movie .review {
+    margin-left: 130px;
+    width: auto;
+}
+
+.movie .movie-title {
+    margin-right: 20px;
+}
+
+.movie .review-title {
+    color: #bbbbbb;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.movie .review-explanation {
+    font-size: 12px;
+}
+
+.movie .link {
+    float: right;
+}
+.movie p {
+    margin-bottom: 0;
+}
+/* end each movie box section */
+
+.some-star {
+    color: #7db904;/*green*/
+}
+
+.some-star:not(:last-child) {
+    margin-right: 3px;
+}
