@@ -7,6 +7,10 @@ following files:
 - json/movies-search-index.json
 - json/movies-list.json
 
+this script also outputs the complete jsons and img_preloads meta tags to stdout.
+these can be copied into the movies article. they ensure that the service worker
+caches all movie data.
+
 """
 import os
 import json
@@ -55,12 +59,16 @@ if len(errors) > 0:
 # generate json/movies-list.json and json/movie-review-xyz.json
 # put reviews in their own file, so as to keep movies-list.json from being too
 # large
+meta_img_preloads = []
+meta_jsons = ["movies-init-list.json", "movies-list.json", "movies-search-index.json"]
 for movie in all_movies:
     # the movie id is the alphanumeric title and year chars without spaces
     movie["id"] = re.sub(
         r"[^a-z0-9]*", "", ("%s%s" % (movie["title"], movie["year"])).lower()
     )
     movie["reviewHash"] = hashlib.sha256(movie["review"].encode()).hexdigest()[:6]
+    meta_jsons.append("movie-review-%s.json?hash=%s" % (movie["id"], movie["reviewHash"]))
+    meta_img_preloads.append("movie-thumbnail-%s.json" % movie["id"])
     with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
         json.dump({ "reviewFull": movie["review"] }, f)
 
@@ -89,3 +97,10 @@ movie_titles = [
 ]
 with open("%s/../json/movies-search-index.json" % pwd, "w") as f:
     json.dump(movie_titles, f)
+
+print """place these meta tags in your movies article:
+
+<meta name="img_preloads" content="%s"/>
+
+<meta name="jsons" content="%s"/>
+""" % (",".join(meta_img_preloads), ",".join(meta_jsons))
