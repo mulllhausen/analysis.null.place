@@ -67,8 +67,8 @@ for movie in all_movies:
         r"[^a-z0-9]*", "", ("%s%s" % (movie["title"], movie["year"])).lower()
     )
     movie["reviewHash"] = hashlib.sha256(movie["review"].encode()).hexdigest()[:6]
-    meta_jsons.append("movie-review-%s.json?hash=%s" % (movie["id"], movie["reviewHash"]))
-    meta_img_preloads.append("movie-thumbnail-%s.json" % movie["id"])
+    meta_jsons.append("movie-review-%s.json" % movie["id"])
+    meta_img_preloads.append("movie-thumbnail-%s.jpg" % movie["id"])
     with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
         json.dump({ "reviewFull": movie["review"] }, f)
 
