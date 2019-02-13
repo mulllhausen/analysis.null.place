@@ -181,7 +181,8 @@ function getMovieHTML(movieData) {
     '</span>';
     var review = movieData.hasOwnProperty('review') ?
     '<p>' + movieData.review.replace(/\n/g, '<br><br>') + '</p>' : loadReviewButton;
-    var imgSrc = siteGlobals.siteURL + '/img/movie-thumbnail-' + movieID + '.jpg';
+    var imgSrc = siteGlobals.siteURL + '/img/movie-thumbnail-' + movieID +
+    '.jpg?hash=' + movieData['thumbnailHash'];
 
     return '<div class="movie" id="!' + movieID + '">' +
         '<a class="link"' +

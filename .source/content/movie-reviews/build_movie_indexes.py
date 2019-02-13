@@ -16,6 +16,7 @@ import os
 import json
 import re
 import hashlib
+import base64
 import numbers
 
 pwd = os.path.dirname(os.path.realpath(__file__))
@@ -56,6 +57,19 @@ for (i, movie) in enumerate(all_movies):
 if len(errors) > 0:
     exit("\n".join(errors))
 
+buffer_size = 5 * 1024 * 1024 # read files in chunks of 5MB each
+def get_file_hash(basename):
+    """get the file hash in a memory-efficient manner"""
+    sha256 = hashlib.sha256()
+    with open(basename, 'rb') as f:
+        while True:
+            data = f.read(buffer_size)
+            if not data:
+                break
+            sha256.update(data)
+
+    return base64.urlsafe_b64encode(sha256.digest()).replace('=', '')[:6]
+
 # generate json/movies-list.json and json/movie-review-xyz.json
 # put reviews in their own file, so as to keep movies-list.json from being too
 # large
@@ -66,11 +80,17 @@ for movie in all_movies:
     movie["id"] = re.sub(
         r"[^a-z0-9]*", "", ("%s%s" % (movie["title"], movie["year"])).lower()
     )
-    movie["reviewHash"] = hashlib.sha256(movie["review"].encode()).hexdigest()[:6]
-    meta_jsons.append("movie-review-%s.json" % movie["id"])
-    meta_img_preloads.append("movie-thumbnail-%s.jpg" % movie["id"])
-    with open("%s/../json/movie-review-%s.json" % (pwd, movie["id"]), "w") as f:
+    thumbnail_basename = "movie-thumbnail-%s.jpg" % movie["id"]
+    movie["thumbnailHash"] = get_file_hash("%s/../img/%s" % (pwd, thumbnail_basename))
+    meta_img_preloads.append(thumbnail_basename)
+
+    review_file_basename = "movie-review-%s.json" % movie["id"]
+    meta_jsons.append(review_file_basename)
+    review_file = "%s/../json/%s" % (pwd, review_file_basename)
+    with open(review_file, "w") as f:
         json.dump({ "reviewFull": movie["review"] }, f)
+
+    movie["reviewHash"] = get_file_hash(review_file)
 
     del movie["id"]
     del movie["review"]
