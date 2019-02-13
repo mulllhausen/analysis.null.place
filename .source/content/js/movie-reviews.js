@@ -220,7 +220,7 @@ function loadFullReview(e) {
         return;
     }
     ajax(
-        '/json/movie-review-' + movieID + '.json?h=' +
+        '/json/movie-review-' + movieID + '.json?hash=' +
         completeMovieData[movieIndex].reviewHash,
 
         function (json) {
