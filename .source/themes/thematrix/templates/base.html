@@ -87,13 +87,18 @@
             }
         </script>
         <div class="top-bar hidden-pc">
-            <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-            {% with position="top" %}
-                {% include 'logo.html' %}
-            {% endwith %}
-            <button id="btnNavbar" menu-is-collapsed="true">
-                <svg class="icon icon-bars"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-bars"></use></svg>
-            </button>
+            <table>
+                <tr>
+                    <td class="brand-positioner">
+                        <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
+                    </td>
+                    <td class="menu-button-positioner">
+                        <button id="btnNavbar" menu-is-collapsed="true">
+                            <svg class="icon icon-bars"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-bars"></use></svg>
+                        </button>
+                    </td>
+                </tr>
+            </table>
             <div id="navMenu" class="nav-menu-phone">
                 {% include 'menu.html' %}
             </div>
