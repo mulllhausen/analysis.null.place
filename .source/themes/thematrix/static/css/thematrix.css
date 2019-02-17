@@ -358,7 +358,6 @@ a.brand, a.brand:hover {
 
 /* begin side bar */
 .side-bar {
-    margin-top: 10px;
     padding: 10px 0 3px 0;
     background-color: #0b0b0b;/*very-dark-grey*/
     border: 1px solid #1a1a1a;/*light-grey*/
@@ -375,17 +374,26 @@ a.brand, a.brand:hover {
 
 /* begin top bar */
 .top-bar {
-    padding: 10px 20px 4px 20px;
+    padding: 10px 20px 2px 20px;
     left: 0;
     right: 0;
     z-index: 2;
     background-color: #0b0b0b;/*very-dark-grey*/
     border: 1px solid #1a1a1a;/*light-grey*/
 }
-.top-bar .logo-container {
-    padding-left: 10px;
-    display: inline-block;
-    width: 42px;
+.top-bar table {
+    width: 100%;
+    margin-bottom: 8px;/*2+8=10, same as the padding-top on .top-bar, for vertical centre effect*/
+}
+.top-bar .brand-positioner {
+    vertical-align: middle;
+}
+.top-bar .menu-button-positioner {
+    vertical-align: text-top;
+}
+.top-bar td {
+    background-color: inherit;
+    border: none;
 }
 .top-bar button {
     float: right;
@@ -396,9 +404,6 @@ a.brand, a.brand:hover {
 }
 .nav-menu-phone {/*initially hidden*/
     display: none;
-}
-.top-bar a.brand {
-    float: left;
 }
 .nav-menu {
     list-style: none;
