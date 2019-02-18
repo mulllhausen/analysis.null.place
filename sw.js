@@ -1,10 +1,10 @@
-var latestCache = '2019-02-18_08:55:08';
+var latestCache = '2019-02-18_23:46:34';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
-                'https://analysis.null.place/theme/css/thematrix.css?hash=0miiAX',
+                'https://analysis.null.place/theme/css/thematrix.css?hash=EFfiVN',
                 'https://analysis.null.place/theme/img/icons.svg?hash=z5B6Me',
                 'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
                 'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
