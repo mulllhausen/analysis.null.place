@@ -359,7 +359,7 @@ a.brand, a.brand:hover {
 /* begin side bar */
 .side-bar {
     padding: 10px 0 3px 0;
-    background-color: #0b0b0b;/*very-dark-grey*/
+    background-color: #151515;/*very-dark-grey*/
     border: 1px solid #1a1a1a;/*light-grey*/
     border-radius: 4px;
 }
@@ -378,8 +378,8 @@ a.brand, a.brand:hover {
     left: 0;
     right: 0;
     z-index: 2;
-    background-color: #0b0b0b;/*very-dark-grey*/
-    border: 1px solid #1a1a1a;/*light-grey*/
+    background-color: #151515;/*very-dark-grey*/
+    border-bottom: 1px solid #1a1a1a;/*light-grey*/
 }
 .top-bar table {
     width: 100%;
@@ -508,7 +508,7 @@ h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
 .info-box {
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #0b0b0b;/*very-dark-grey*/
+    background-color: #151515;/*very-dark-grey*/
     border: 1px solid #1a1a1a;/*light-grey*/
     border-radius: 4px;
     line-height: 24px;
@@ -622,7 +622,7 @@ ul.taglist li {
 }
 
 blockquote {
-    background-color: #0b0b0b;/*very-dark-grey*/
+    background-color: #151515;/*very-dark-grey*/
     display: inline-block;
     margin: 0;
     padding: 0 30px 0 30px;
