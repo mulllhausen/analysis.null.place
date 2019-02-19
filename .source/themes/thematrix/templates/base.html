@@ -142,6 +142,7 @@
         </script>
 
         {% if article %}
+            {% include 'comments_opener.html' %}
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
                 {% for script in scripts %}

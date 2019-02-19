@@ -8,7 +8,7 @@ addEvent(window, 'load', function () {
         );
         addEvent( // 'button-count' event
             document.querySelector(
-                '.comment-with.' + platformI.toLowerCase() + '+span'
+                '.comment-with.' + platformI.toLowerCase() + ' span'
             ),
             'click',
             function (e) { renderComments(platformI); }
@@ -16,8 +16,14 @@ addEvent(window, 'load', function () {
     });
 });
 
+function positionCommentsContainer(topPos) {
+    var commentsContainer = document.querySelector('.comments');
+    commentsContainer.style.display = 'block';
+    commentsContainer.style.top = topPos + 'px';
+}
+
 function renderComments(platformI) {
-    document.querySelector('.choose-comments-platform').style.marginBottom = '30px';
+    positionCommentsContainer(this.pageYOffset + 30);
     if (siteGlobals.events.loadingCommentsPlatform != null) return;
     siteGlobals.events.loadingCommentsPlatform = platformI;
     foreach(siteGlobals.commentsPlatforms, function (j, platformJ) {
