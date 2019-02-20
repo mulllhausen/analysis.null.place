@@ -1,10 +1,10 @@
 {% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
 <div class="comments info-box">
-    <div id="exitComments">
-    <svg class="icon icon-cancel">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-cancel"></use>
-    </svg>
-    </div>
+    <button id="exitComments">
+        <svg class="icon icon-cancel-x">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-cancel-x"></use>
+        </svg>
+    </button>
     {% if DISQUS_SITENAME %}
     <div id="disqus_thread" class="disqus-comments platform-comments">
         {# disqus deletes things here once it loads #}

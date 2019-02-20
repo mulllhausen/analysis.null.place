@@ -689,21 +689,20 @@ blockquote {
     margin: 0 20px;/*match the padding of col-1*/
     overflow: hidden;
     position: absolute;
+    padding-top: 60px;
     left: 0;
     right: 0;
-    box-shadow: 0 0 30px #7db904;/*green*/
+    box-shadow: 0 0 30px #7db904, 0 0 30px #7db904;/*green*/
 }
 #exitComments {
-    color: #7db904;/*green*/
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    background-color: black;
-    padding: 4px;
-    border-radius: 100px;/*something massive will do*/
-    line-height: 0;
-    border: 1px solid #bbbbbb;/*off-white*/
-    cursor: pointer;
+    position: absolute;/*use this so that the button is always in front even when platforms fail to load*/
+    right: 15px;
+    top: 10px;
+    padding: 7px;
+    font-size: 10px;
+    color: #bbbbbb;/*off-white*/
+    border-radius: 100px;/*anything massive will do*/
+    border: 2px solid #bbbbbb;
 }
 .comment-with {
     display: block;

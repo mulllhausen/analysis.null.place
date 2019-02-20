@@ -13,6 +13,7 @@ addEvent(window, 'load', function () {
             'click',
             function (e) { renderComments(platformI); }
         );
+        addEvent(document.getElementById('exitComments'), 'click', exitComments);
     });
 });
 
@@ -54,6 +55,14 @@ function renderComments(platformI) {
         return commentsLoaded();
     }
     window['load' + platformI + 'Platform']();
+}
+
+function exitComments() {
+    document.querySelector('.comments').style.display = 'none';
+    foreach(document.querySelectorAll('.comment-with'), function(i, el) {
+        el.classList.remove('disallow-selection');
+        el.classList.remove('selected');
+    });
 }
 
 // comments were successfully loaded (any platform)
