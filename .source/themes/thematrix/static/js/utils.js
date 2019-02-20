@@ -50,6 +50,25 @@ function isScrolledTo(el, position, amount) {
     }
 }
 
+// thanks to stackoverflow.com/a/26230989
+function getCoordinates(el) {
+    var box = el.getBoundingClientRect();
+
+    var body = document.body;
+    var docEl = document.documentElement;
+
+    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    var clientTop = docEl.clientTop || body.clientTop || 0;
+    var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+    return {
+        top: Math.round(box.top + scrollTop - clientTop),
+        left: Math.round(box.left + scrollLeft - clientLeft)
+    };
+}
+
 function getDeviceType() {
     return window.getComputedStyle(
         document.getElementsByTagName('body')[0], ':before'

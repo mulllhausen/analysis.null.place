@@ -17,10 +17,12 @@ addEvent(window, 'load', function () {
     });
 });
 
+var commentsTopPos = 0; // global
 function positionCommentsContainer(topPos) {
     var commentsContainer = document.querySelector('.comments');
     commentsContainer.style.display = 'block';
     commentsContainer.style.top = topPos + 'px';
+    commentsTopPos = topPos; // save for use in adjustBottomSpacerHeight() later
 }
 
 function renderComments(platformI) {
@@ -63,6 +65,18 @@ function exitComments() {
         el.classList.remove('disallow-selection');
         el.classList.remove('selected');
     });
+    document.querySelector('article .bottom-spacer').style.height = '0px';
+}
+
+// make any comments that are hidden below the end of the article visible
+function adjustBottomSpacerHeight() {
+    var commentsDivEl = document.querySelector('.comments');
+    var commentsBottom = commentsTopPos + commentsDivEl.offsetHeight;
+    var footerTop = getCoordinates(document.querySelector('footer')).top;
+    var extraPadding = 50; // px
+    var error = footerTop - extraPadding - commentsBottom;
+    if (Math.abs(error) < 0) return;
+    document.querySelector('article .bottom-spacer').style.height = -error + 'px';
 }
 
 // comments were successfully loaded (any platform)
