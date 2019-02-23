@@ -17,17 +17,27 @@ addEvent(window, 'load', function () {
     });
 });
 
+var spacerTopPos = 0; // global
 var commentsTopPos = 0; // global
-function positionCommentsContainer(topPos) {
+var timeoutIDResizeBottomSpacer; // global
+function repositionCommentsContainer(platformI) {
+    spacerTopPos = getCoordinates(document.querySelector('article .bottom-spacer')).top;
+    document.querySelector('article .bottom-spacer').style.height = '0px';
     var commentsContainer = document.querySelector('.comments');
     commentsContainer.style.display = 'block';
+    var topPos = window.pageYOffset + 60;
     commentsContainer.style.top = topPos + 'px';
-    commentsTopPos = topPos; // save for use in adjustBottomSpacerHeight() later
+    commentsTopPos = topPos; // save for use in resizeBottomSpacerHeight() later
+    timeoutIDResizeBottomSpacer = setInterval(function () {
+        resizeBottomSpacerHeight(platformI);
+    }, 200);
 }
 
 function renderComments(platformI) {
-    positionCommentsContainer(this.pageYOffset + 30);
+    // allow repositioning any time
+    repositionCommentsContainer(platformI);
     if (siteGlobals.events.loadingCommentsPlatform != null) return;
+
     siteGlobals.events.loadingCommentsPlatform = platformI;
     foreach(siteGlobals.commentsPlatforms, function (j, platformJ) {
         var button = document.querySelector(
@@ -60,6 +70,9 @@ function renderComments(platformI) {
 }
 
 function exitComments() {
+    // do not enable the exit button until the comments have loaded
+    if (siteGlobals.events.loadingCommentsPlatform != null) return;
+    clearInterval(timeoutIDResizeBottomSpacer);
     document.querySelector('.comments').style.display = 'none';
     foreach(document.querySelectorAll('.comment-with'), function(i, el) {
         el.classList.remove('disallow-selection');
@@ -69,14 +82,21 @@ function exitComments() {
 }
 
 // make any comments that are hidden below the end of the article visible
-function adjustBottomSpacerHeight() {
+function resizeBottomSpacerHeight(platformI) {
     var commentsDivEl = document.querySelector('.comments');
     var commentsBottom = commentsTopPos + commentsDivEl.offsetHeight;
     var footerTop = getCoordinates(document.querySelector('footer')).top;
-    var extraPadding = 50; // px
+    var extraPadding = 30; // px. the bottom box-shadow of .comments
     var error = footerTop - extraPadding - commentsBottom;
-    if (Math.abs(error) < 0) return;
-    document.querySelector('article .bottom-spacer').style.height = -error + 'px';
+    if (inArray(platformI, siteGlobals.loadedCommentsPlatforms)) {
+        // the platform has already been loaded, so this is the last time we
+        // need to run this function for now
+        clearInterval(timeoutIDResizeBottomSpacer);
+    }
+    if (Math.abs(error) <= 0) return;
+    var spacerEl = document.querySelector('article .bottom-spacer');
+    if (spacerTopPos > commentsBottom) spacerEl.style.height = '0px';
+    else spacerEl.style.height = (spacerEl.offsetHeight - error) + 'px';
 }
 
 // comments were successfully loaded (any platform)

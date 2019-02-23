@@ -703,6 +703,7 @@ blockquote {
     color: #bbbbbb;/*off-white*/
     border-radius: 100px;/*anything massive will do*/
     border: 2px solid #bbbbbb;
+    line-height: 0;
 }
 .comment-with {
     display: block;
