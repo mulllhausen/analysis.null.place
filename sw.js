@@ -1,11 +1,11 @@
-var latestCache = '2019-02-18_23:46:34';
+var latestCache = '2019-02-25_08:54:05';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
                 // common assets for all pages
-                'https://analysis.null.place/theme/css/thematrix.css?hash=EFfiVN',
-                'https://analysis.null.place/theme/img/icons.svg?hash=z5B6Me',
+                'https://analysis.null.place/theme/css/thematrix.css?hash=iaDEIn',
+                'https://analysis.null.place/theme/img/icons.svg?hash=DlWPXe',
                 'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
                 'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
                 'https://analysis.null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBI',
@@ -14,12 +14,12 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
                 'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
                 'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-                'https://analysis.null.place/theme/js/base.js?hash=60H47e',
+                'https://analysis.null.place/theme/js/base.js?hash=PjeCdb',
                 'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
                 'https://analysis.null.place/theme/js/manifest.json',
 
                 // common assets for all article pages
-                'https://analysis.null.place/theme/js/comments-section.js?hash=wki7Qg',
+                'https://analysis.null.place/theme/js/comments-section.js?hash=AQBZc6',
 
                 // home page
                 'https://analysis.null.place/',
