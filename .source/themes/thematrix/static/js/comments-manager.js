@@ -21,6 +21,7 @@ var spacerTopPos = 0; // global
 var commentsTopPos = 0; // global
 var timeoutIDResizeBottomSpacer; // global
 function repositionCommentsContainer(platformI) {
+    closeMenu();
     spacerTopPos = getCoordinates(document.querySelector('article .bottom-spacer')).top;
     document.querySelector('article .bottom-spacer').style.height = '0px';
     var commentsContainer = document.querySelector('.comments');

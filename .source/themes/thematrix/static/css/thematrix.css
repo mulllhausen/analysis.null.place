@@ -405,7 +405,10 @@ a.brand, a.brand:hover {
 .nav-menu-phone {/*initially hidden*/
     display: none;
 }
-.nav-menu {
+/* end top bar */
+
+/* begin navigation menu */
+ul.nav-menu {
     list-style: none;
     margin: 0;
     padding-bottom: 10px;
@@ -413,9 +416,13 @@ a.brand, a.brand:hover {
 .top-bar ul.nav-menu {
     margin: 4px -10px -4px -10px;
 }
-/* end top bar */
-
-/* begin navigation menu */
+ul.nav-menu > div {
+    color: #7db904;/*green*/
+    display: list-item;
+    padding: 0 10px;
+    border-radius: 10px;
+    min-height: 1.4em;
+}
 ul.nav-menu a {
     display: list-item;
     padding: 4px 10px 7px 10px;
@@ -666,7 +673,20 @@ blockquote {
 /* end codeblock */
 
 /* begin comments section */
-.comments-opener {
+.top-bar .nav-menu .comments-opener {
+    display: inline;
+}
+.top-bar .nav-menu .comments-opener .comment-with {
+    display: inline-block;
+    font-size: 14px;
+    padding: 3px 5px 5px 5px;
+    margin: 0 0 0 5px;
+}
+.top-bar .nav-menu .comments-opener .comments-count {
+    font-size: 8px;
+    top: 0;
+}
+.col-2 .comments-opener {
     position: fixed;
     right: 0;
     bottom: 50px;
@@ -721,7 +741,7 @@ blockquote {
 .comment-with:last-child {
     margin-bottom: 4px;
 }
-.comment-with .icon{
+.comment-with .icon {
     vertical-align: middle;
     padding-bottom: 1px;
 }

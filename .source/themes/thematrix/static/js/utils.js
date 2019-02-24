@@ -480,15 +480,19 @@ if (!inArray(siteGlobals.siteURL, window.location.origin)) {
 // nav-menu open/close (mobile only)
 addEvent(document.getElementById('btnNavbar'), 'click', function (e) {
     var btn = e.currentTarget;
-    var menu = document.getElementById('navMenu');
-    if (btn.getAttribute('menu-is-collapsed') == 'true') {
-        btn.setAttribute('menu-is-collapsed', 'false');
-        menu.style.display = 'block';
-    } else {
-        btn.setAttribute('menu-is-collapsed', 'true');
-        menu.style.display = 'none';
-    }
+    if (btn.getAttribute('menu-is-collapsed') == 'true') openMenu();
+    else closeMenu();
 });
+
+function closeMenu() {
+    document.getElementById('btnNavbar').setAttribute('menu-is-collapsed', 'true');
+    document.getElementById('navMenu').style.display = 'none';
+}
+
+function openMenu() {
+    document.getElementById('btnNavbar').setAttribute('menu-is-collapsed', 'false');
+    document.getElementById('navMenu').style.display = 'block';
+}
 
 // prevent css :focus from persisting after a click, but allow it to remain
 // after focus via keyboard tabbing

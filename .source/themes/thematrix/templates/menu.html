@@ -1,4 +1,3 @@
-{# modified from sidebar.html #}
 <ul class="nav-menu">
     {% for cat, articles in categories %}
     <a href="{{ SITEURL }}/{{ cat.url }}" {% if cat == category %}class="active"{% endif %}>
@@ -14,4 +13,7 @@
         <svg class="icon icon-hashtag"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use></svg>
         all<sup>&nbsp;</sup>
     </a>
+    {% if article %}
+        {% include 'comments_opener.html' %}
+    {% endif %}
 </ul>

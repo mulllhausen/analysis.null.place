@@ -1,6 +1,12 @@
 {% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
+    {% if position == "top" %}
+<div>
+    <svg class="icon icon-commenting-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-commenting-o"></use>
+    </svg>
+    {% endif %}
 <div class="comments-opener">
-    comment<br>
+    comment
     {% if FACEBOOK_APP_ID %}
     <div class="comment-with fb">
         <svg class="icon icon-facebook-square">
@@ -19,6 +25,9 @@
         </svg>
         <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
     </div>
+    {% endif %}
+    {% if position == "top" %}
+</div>
     {% endif %}
 </div>
 {% endif %}
