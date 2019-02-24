@@ -13,7 +13,7 @@
         <svg class="icon icon-hashtag"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use></svg>
         all<sup>&nbsp;</sup>
     </a>
-    {% if article %}
+    {% if article and position == "top" %}
         {% include 'comments_opener.html' %}
     {% endif %}
 </ul>

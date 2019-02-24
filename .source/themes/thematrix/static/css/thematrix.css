@@ -340,6 +340,9 @@ ul.nav-menu .icon-file-text-o {
 ul.nav-menu .icon-hashtag {
     margin: 0 -1px -3px 0;
 }
+ul.nav-menu .icon-commenting-o {
+    margin-bottom: -3px;
+}
 .info-box .icon-hashtag {
     font-size: 90%;
 }

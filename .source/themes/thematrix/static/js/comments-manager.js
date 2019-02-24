@@ -1,20 +1,17 @@
 siteGlobals.loadedCommentsPlatforms = [];
 addEvent(window, 'load', function () {
     foreach(siteGlobals.commentsPlatforms, function (i, platformI) {
-        addEvent( // 'button' event
-            document.querySelector('.comment-with.' + platformI.toLowerCase()),
-            'click',
-            function (e) { renderComments(platformI); }
-        );
-        addEvent( // 'button-count' event
-            document.querySelector(
-                '.comment-with.' + platformI.toLowerCase() + ' span'
-            ),
-            'click',
-            function (e) { renderComments(platformI); }
-        );
-        addEvent(document.getElementById('exitComments'), 'click', exitComments);
+        var buttonI = '.comment-with.' + platformI.toLowerCase();
+        foreach(document.querySelectorAll(buttonI), function (i, el) {
+            // 'button' event
+            addEvent(el, 'click', function (e) { renderComments(platformI); });
+        });
+        foreach(document.querySelectorAll(buttonI + ' span'), function (i, el) {
+            // 'button-count' event
+            addEvent(el, 'click', function (e) { renderComments(platformI); });
+        });
     });
+    addEvent(document.getElementById('exitComments'), 'click', exitComments);
 });
 
 var spacerTopPos = 0; // global
