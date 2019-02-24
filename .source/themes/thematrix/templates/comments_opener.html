@@ -1,0 +1,41 @@
+{% if (DISQUS_SITENAME or FACEBOOK_APP_ID) %}
+    {% if position == "top" %}
+        {# the comments-opener becomes a list item in the nav-menu (mobile only) #}
+<div>
+    <svg class="icon icon-commenting-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-commenting-o"></use>
+    </svg>
+    {% endif %}
+<div class="comments-opener">
+    comment
+    {% if FACEBOOK_APP_ID %}
+    <div class="comment-with fb">
+        <svg class="icon icon-facebook-square">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-facebook-square"></use>
+        </svg>
+        {% if position != "top" %}
+            {# there is no counter for comments on mobile - it would be too small to see and get in the way #}
+        {# this functionality is deprecated by the facebook api:
+        <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/{{ article.url }}">0</span>
+        previously it would automatically populate the span with a comment count #}
+        <span class="comments-count fb-comment-count">0</span>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% if DISQUS_SITENAME %}
+    <div class="comment-with disqus">
+        <svg class="icon icon-disqus">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-disqus"></use>
+        </svg>
+        {% if position != "top" %}
+            {# there is no counter for comments on mobile - it would be too small to see and get in the way #}
+        <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% if position == "top" %}
+        {# close off the list item in the nav-menu (mobile only) #}
+</div>
+    {% endif %}
+</div>
+{% endif %}

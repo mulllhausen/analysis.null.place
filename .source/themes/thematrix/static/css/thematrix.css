@@ -270,7 +270,7 @@ td {
 article {
     overflow: hidden;
 }
-.bottom_spacer {
+.bottom-spacer {
     width: 100%;
 }
 /* end page layout */
@@ -340,6 +340,9 @@ ul.nav-menu .icon-file-text-o {
 ul.nav-menu .icon-hashtag {
     margin: 0 -1px -3px 0;
 }
+ul.nav-menu .icon-commenting-o {
+    margin-bottom: -3px;
+}
 .info-box .icon-hashtag {
     font-size: 90%;
 }
@@ -405,7 +408,10 @@ a.brand, a.brand:hover {
 .nav-menu-phone {/*initially hidden*/
     display: none;
 }
-.nav-menu {
+/* end top bar */
+
+/* begin navigation menu */
+ul.nav-menu {
     list-style: none;
     margin: 0;
     padding-bottom: 10px;
@@ -413,9 +419,13 @@ a.brand, a.brand:hover {
 .top-bar ul.nav-menu {
     margin: 4px -10px -4px -10px;
 }
-/* end top bar */
-
-/* begin navigation menu */
+ul.nav-menu > div {
+    color: #7db904;/*green*/
+    display: list-item;
+    padding: 0 10px;
+    border-radius: 10px;
+    min-height: 1.4em;
+}
 ul.nav-menu a {
     display: list-item;
     padding: 4px 10px 7px 10px;
@@ -666,19 +676,75 @@ blockquote {
 /* end codeblock */
 
 /* begin comments section */
+.top-bar .nav-menu .comments-opener {
+    display: inline;
+}
+.top-bar .nav-menu .comments-opener .comment-with {
+    display: inline-block;
+    font-size: 14px;
+    padding: 3px 5px 5px 5px;
+    margin: 0 0 0 5px;
+}
+.top-bar .nav-menu .comments-opener .comments-count {
+    font-size: 8px;
+    top: 0;
+}
+.col-2 .comments-opener {
+    position: fixed;
+    right: 0;
+    bottom: 50px;
+    background-color: #151515;/*very-dark-grey*/
+    border: 1px solid #1a1a1a;/*light-grey*/
+    padding: 5px;
+    border-radius: 4px 0px 0px 4px;
+    z-index: 4;
+    font-size: 12px;
+    color: #7db904;/*green*/
+    text-align: center;
+}
+.comments-opener .comment-with {
+    color: #bbbbbb;/*off-white*/
+    font-size: 20px;
+    margin: 0 6px;
+}
 .comments {
-    margin-top: 100px;
+    display: none;/*initially-hidden*/
+    margin: 0 20px;/*match the padding of col-1*/
     overflow: hidden;
+    position: absolute;
+    padding-top: 60px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 30px #7db904, 0 0 30px #7db904;/*green*/
+}
+#exitComments {
+    position: absolute;/*use this so that the button is always in front even when platforms fail to load*/
+    right: 15px;
+    top: 10px;
+    padding: 7px;
+    font-size: 10px;
+    color: #bbbbbb;/*off-white*/
+    border-radius: 100px;/*anything massive will do*/
+    border: 2px solid #bbbbbb;
+    line-height: 0;
 }
 .comment-with {
-    display: inline-block;
+    display: block;
+    position: relative;
     text-align: center;
-    padding: 5px 8px;
+    padding: 10px;
     background-color: #000000;/*black*/
     border: 1px solid #000000;
     border-radius: 4px;
 }
-.comment-with .icon{
+.comment-with:not(:last-child) {
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+.comment-with:last-child {
+    margin-bottom: 4px;
+}
+.comment-with .icon {
     vertical-align: middle;
     padding-bottom: 1px;
 }
@@ -687,14 +753,15 @@ blockquote {
     border: 1px solid #6a6a6a;
 }
 .comments-count {
-    vertical-align: super;
-    font-size: smaller;
+    position: absolute;
+    font-size: 11px;
     cursor: pointer;
     color: #000000;/*black*/
-    margin-left: -12px;
     background-color: #7db904;/*green*/
     padding: 0 3px;
     border-radius: 20px;
+    top: 4px;
+    right: 0;
 }
 .platform-offline {
     color: #7db904;/*green*/

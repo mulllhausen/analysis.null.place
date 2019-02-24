@@ -100,7 +100,9 @@
                 </tr>
             </table>
             <div id="navMenu" class="nav-menu-phone">
-                {% include 'menu.html' %}
+                {% with position = "top" %}
+                    {% include 'menu.html' %}
+                {% endwith %}
             </div>
         </div>
 
@@ -109,12 +111,15 @@
                 {% include 'ads_left_col.html' %}
             </div>
             <div class="col-2">{# must come before col-1! stackoverflow.com/a/5195902 #}
+                {% with position = "side" %}
                 <div class="side-bar">
                     <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
                     {% include 'menu.html' %}
                 </div>
-                {% with position="side" %}
                     {% include 'logo.html' %}
+                    {% if article %}
+                        {% include 'comments_opener.html' %}
+                    {% endif %}
                 {% endwith %}
             </div>
             <div class="col-1">
