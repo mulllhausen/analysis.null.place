@@ -6,6 +6,7 @@ the site at build-time, and also so that it can use pelican variables.
 #}
 var latestCache = '{{ NOWYMD }}';
 self.addEventListener('install', function (event) {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
             return cache.addAll([
