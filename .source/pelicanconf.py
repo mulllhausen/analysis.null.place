@@ -113,9 +113,9 @@ TEST_ADSENSE = True
 
 # debug settings:
 
-# add 127.0.0.1 null.place to /etc/hosts for this (it is necessary if you want
+# add 127.0.0.1 analysis.null.place to /etc/hosts for this (it is necessary if you want
 # to debug the fb comments section on localhost)
-#SITE_HOSTNAME = 'null.place'
+#SITE_HOSTNAME = 'analysis.null.place'
 #SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
 
 # Uncomment following line if you want document-relative URLs when developing
