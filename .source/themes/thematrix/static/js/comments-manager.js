@@ -38,7 +38,7 @@ function renderComments(platformI) {
 
     siteGlobals.events.loadingCommentsPlatform = platformI;
     foreach(siteGlobals.commentsPlatforms, function (j, platformJ) {
-        var button = document.querySelector(
+        var buttons = document.querySelectorAll(
             '.comment-with.' + platformJ.toLowerCase()
         );
         var commentsArea = document.querySelector(
@@ -46,12 +46,17 @@ function renderComments(platformI) {
         );
         if (platformI == platformJ) { // show this comments platform
             commentsArea.style.display = 'block';
-            button.classList.add('selected');
         } else { // hide all other comments platforms and disallow selection
             commentsArea.style.display = 'none';
-            button.classList.remove('selected');
-            button.classList.add('disallow-selection');
         }
+        foreach(buttons, function (i, button) {
+            if (platformI == platformJ) {
+                button.classList.add('selected');
+            } else {
+                button.classList.remove('selected');
+                button.classList.add('disallow-selection');
+            }
+        })
     });
 
     // hide offline warnings from all platforms
