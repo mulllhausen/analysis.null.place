@@ -1,4 +1,4 @@
-var latestCache = '2019-02-25_08:54:05';
+var latestCache = '2019-02-28_08:11:15';
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(latestCache).then(function (cache) {
@@ -19,7 +19,7 @@ self.addEventListener('install', function (event) {
                 'https://analysis.null.place/theme/js/manifest.json',
 
                 // common assets for all article pages
-                'https://analysis.null.place/theme/js/comments-section.js?hash=AQBZc6',
+                'https://analysis.null.place/theme/js/comments-section.js?hash=eby9QW',
 
                 // home page
                 'https://analysis.null.place/',
