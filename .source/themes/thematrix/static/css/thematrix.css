@@ -806,19 +806,31 @@ blockquote {
 }
 /* end comments section */
 
-/* begin cookie warnings */
-.cookie-warning-notice {
-    display: none;/*initially hidden. shown with javascript.*/
+/* begin bottom notice bars area */
+.bottom-notice-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40px;
     line-height: 40px;/*vertical centre*/
     background-color: #7db904;/*green*/
     color: #000000;/*black*/
     text-align: center;
     z-index: 4;
+}
+/* end bottom notice bars area */
+
+/* begin new-version warnings */
+.new-version-info-notice {
+    display: none;/*initially hidden. shown with javascript.*/
+    height: 40px;
+}
+/* end new-version warnings */
+
+/* begin cookie warnings */
+.cookie-warning-notice {
+    display: none;/*initially hidden. shown with javascript.*/
+    height: 40px;
 }
 .cookie-warning-notice button, .cookie-warning-notice span {
     margin: 0 2px;
