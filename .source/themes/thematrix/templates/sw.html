@@ -5,91 +5,92 @@ is located in the templates dir so that it can be saved to the root directory of
 the site at build-time, and also so that it can use pelican variables.
 #}
 var latestCache = '{{ NOWYMD }}';
-self.addEventListener('install', function (event) {
-    self.skipWaiting();
-    event.waitUntil(
-        caches.open(latestCache).then(function (cache) {
-            return cache.addAll([
-                // common assets for all pages
-                '{{ QS_LINK['/theme/css/thematrix.css'] }}',
-                '{{ QS_LINK['/theme/img/icons.svg'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-matrix-512x512.png'] }}',
-                '{{ QS_LINK['/theme/img/favicon.ico'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}',
-                '{{ QS_LINK['/theme/js/base.js'] }}',
-                '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
-                '{{ SITEURL }}/theme/js/manifest.json',
+var mandatoryAssets = [
+    // common assets for all pages
+    '{{ QS_LINK['/theme/css/thematrix.css'] }}',
+    '{{ QS_LINK['/theme/img/icons.svg'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-matrix-512x512.png'] }}',
+    '{{ QS_LINK['/theme/img/favicon.ico'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}',
+    '{{ QS_LINK['/theme/js/base.js'] }}',
+    '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
+    '{{ SITEURL }}/theme/js/manifest.json',
 
-                // common assets for all article pages
-                '{{ QS_LINK['/theme/js/comments-section.js'] }}',
+    // common assets for all article pages
+    '{{ QS_LINK['/theme/js/comments-section.js'] }}',
 
-                // home page
-                '{{ SITEURL }}/',
-                '{{ SITEURL }}/index.html',
+    // home page
+    '{{ SITEURL }}/',
+    '{{ SITEURL }}/index.html',
 
-                // archives page
-                '{{ SITEURL }}/archives/',
-                '{{ SITEURL }}/archives/index.html',
+    // archives page
+    '{{ SITEURL }}/archives/',
+    '{{ SITEURL }}/archives/index.html',
 
-                // tags pages
-                '{{ SITEURL }}/tags/',
-                '{{ SITEURL }}/tags/index.html',
+    // tags pages
+    '{{ SITEURL }}/tags/',
+    '{{ SITEURL }}/tags/index.html',
 {% for (tag, articles) in tags %}
-                '{{ SITEURL }}/{{ tag.url }}',
-                '{{ SITEURL }}/{{ tag.url }}index.html',
+    '{{ SITEURL }}/{{ tag.url }}',
+    '{{ SITEURL }}/{{ tag.url }}index.html',
 {% endfor %}
 
-                // categories
+    // categories
 {% for (cat, articles) in categories %}
-                '{{ SITEURL }}/{{ cat.url }}',
-                '{{ SITEURL }}/{{ cat.url }}index.html',
+    '{{ SITEURL }}/{{ cat.url }}',
+    '{{ SITEURL }}/{{ cat.url }}index.html',
 {% endfor %}
 
-                // each article and its assets
 {% for article in articles %}
-                '{{ SITEURL }}/{{ article.url }}',
-                '{{ SITEURL }}/{{ article.url }}index.html',
+    // assets for the "{{ article.title }}" article
+    '{{ SITEURL }}/{{ article.url }}',
+    '{{ SITEURL }}/{{ article.url }}index.html',
     {% if article.scripts %}
         {% set scripts = article.scripts.split(',') %}
         {% for script in scripts %}
-                '{{ QS_LINK['/js/' + script] }}',
+    '{{ QS_LINK['/js/' + script] }}',
         {% endfor %}
     {% endif %}
     {% if article.stylesheets %}
         {% set stylesheets = article.stylesheets.split(',') %}
         {% for stylesheet in stylesheets %}
-                '{{ QS_LINK['/css/' + stylesheet] }}',
+    '{{ QS_LINK['/css/' + stylesheet] }}',
         {% endfor %}
     {% endif %}
     {% if article.img_preloads %}
         {% set imgs = article.img_preloads.split(',') %}
         {% for img in imgs %}
-                '{{ QS_LINK['/img/' + img] }}',
+    '{{ QS_LINK['/img/' + img] }}',
         {% endfor %}
     {% endif %}
     {% if article.jsons %}
         {% set jsons = article.jsons.split(',') %}
         {% for json in jsons %}
-                '{{ QS_LINK['/json/' + json] }}',
+    '{{ QS_LINK['/json/' + json] }}',
         {% endfor %}
     {% endif %}
-
 {% endfor %}
-                // cookie warning notice
-                '{{ SITEURL }}/cookie-notice/',
-                '{{ SITEURL }}/cookie-notice/index.html'
-            ]);
+
+    // cookie warning notice
+    '{{ SITEURL }}/cookie-notice/',
+    '{{ SITEURL }}/cookie-notice/index.html'
+];
+self.addEventListener('install', function (event) {
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(latestCache).then(function (cache) {
+            return cache.addAll(mandatoryAssets);
         })
     );
 });
 
 self.addEventListener('activate', function (event) {
-    // delete all caches except latestCache
+    // delete all caches except latestCache (saves disk space)
     caches.keys().then(function (names) {
         for (let name of names) {
             if (name == latestCache) continue;
@@ -100,8 +101,8 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-        caches.match(event.request).then(function (response) {
-            return (response || fetch(event.request));
+        caches.match(event.request).then(function (swResponse) {
+            return (swResponse || fetch(event.request));
         })
     );
 });
