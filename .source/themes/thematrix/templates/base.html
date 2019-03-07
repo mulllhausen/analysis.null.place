@@ -130,6 +130,7 @@
 
         {% include 'footer.html' %}
         {% include 'cookie_usage_banner.html' %}
+        {% include 'new_version_available_banner.html' %}
 
         {# le javascript - at the end of the document so the pages load faster #}
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
@@ -157,6 +158,7 @@
         <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
             {% endif %}
         {% endif %}
+
         {% include 'google_analytics.html' %}
         {# load the console greeter later since it does not need to be available so quick #}
         <script src="{{ QS_LINK['/theme/js/console-greeter.js'] }}"></script>

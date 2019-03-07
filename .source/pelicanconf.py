@@ -21,6 +21,7 @@ PATH = 'content'
 TIMEZONE = 'Australia/Adelaide'
 UNIXTIME = int(time.time())
 NOWYMD = time.strftime('%Y-%m-%d_%H:%M:%S')
+# note: timestamps do not change per pelican session unless this file changes
 
 DEFAULT_LANG = u'en'
 # fs = filesystem
