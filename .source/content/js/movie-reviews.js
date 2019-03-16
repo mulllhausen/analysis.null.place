@@ -1,4 +1,5 @@
 // init globals
+initialMovieData = []; // static list of initial movie data
 completeMovieSearch = []; // static index of movie searches
 completeMovieSearchIDs = []; // same as completeMovieSearch but with IDs not names and years
 completeMovieData = []; // static list of all movie data
@@ -67,6 +68,14 @@ function initMovieRendering() {
                 completeMovieData.length == 0
             ) return;
             var movieIndex = movieID2Index(movieID);
+
+            if (movieIndex < 0) {
+                location.href = location.protocol + '//' +
+                location.hostname + (location.port ? ':' + location.port : '') +
+                location.pathname;
+                return;
+            }
+
             searchResultIndexes = [movieIndex]; // asap
             var movieData = completeMovieData[movieIndex];
             loading('off');
@@ -82,10 +91,12 @@ function initMovieRendering() {
         initCompleteMovieData(afterAllMovieDataDownloaded);
         initMovieSearchList(afterAllMovieDataDownloaded);
     } else { // show initial list
-        renderInitialMovieData();
-        // note: at this point, searchResultIndexes is not populated, so
-        // scrolling to the bottom will not yet load any more movies
-        initMovieSearchList(function () {
+        var afterInitialMovieDataDownloaded = function () {
+            // wait for both lists to be downloaded before proceeding
+            if (
+                completeMovieSearch.length == 0 ||
+                initialMovieData.length == 0
+            ) return;
             // no need to populate numMoviesShowing since that was already
             // populated in renderInitialMovieData()
             numTotalMovies = completeMovieSearch.length;
@@ -93,7 +104,11 @@ function initMovieRendering() {
             for (var i = 0; i < numTotalMovies; i++) searchResultIndexes[i] = i;
             currentlySearching = false;
             renderMovieCount();
-        });
+        };
+        initMovieSearchList(afterInitialMovieDataDownloaded);
+        renderInitialMovieData(afterInitialMovieDataDownloaded);
+        // note: at this point, searchResultIndexes is not populated, so
+        // scrolling to the bottom will not yet load any more movies
     }
 }
 
@@ -104,12 +119,19 @@ function initSVGIconsHTML() {
     sampleHalfStar = document.querySelector('.sample .icon-star-half-empty').outerHTML;
 }
 
-function renderInitialMovieData() {
+var gettingInitialMovieData = false; // init (unlocked)
+function renderInitialMovieData(callback) {
+    if (initialMovieData.length > 0) return callback(); // exit function here
+
+    addEvent(document, 'got-initial-movie-data', callback);
+
+    if (gettingInitialMovieData) return; // 1 attempt at a time
+    gettingInitialMovieData = true; // lock
     ajax(
         siteGlobals.moviesInitListJSON,
         function (json) {
         try {
-            var initialMovieData = JSON.parse(json);
+            initialMovieData = JSON.parse(json);
             var initialMovieDataHTML = '';
             for (var i = 0; i < initialMovieData.length; i++) {
                 initialMovieDataHTML += getMovieHTML(initialMovieData[i]);
@@ -118,9 +140,11 @@ function renderInitialMovieData() {
             numMoviesShowing = initialMovieData.length; // global
             // do not run renderMovieCount() yet since we do not know numTotalMovies
             document.getElementById('reviewsArea').innerHTML = initialMovieDataHTML;
+            triggerEvent(document, 'got-initial-movie-data');
         }
         catch (err) {
             console.log('error in initInitialMovieData function: ' + err);
+            gettingInitialMovieData = false; // unlock again
         }
     });
 }
