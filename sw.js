@@ -1,4 +1,4 @@
-var latestCache = '2019-03-07_19:14:30';
+var latestCache = '2019-03-16_22:24:32';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -49,7 +49,7 @@ var mandatoryAssets = [
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',
     'https://analysis.null.place/movie-reviews/index.html',
-    'https://analysis.null.place/js/movie-reviews.js?hash=ZrahOg',
+    'https://analysis.null.place/js/movie-reviews.js?hash=YqWXrx',
     'https://analysis.null.place/css/movie-reviews.css?hash=G-3hnG',
     'https://analysis.null.place/img/movie-thumbnail-district92009.jpg?hash=T9jPbU',
     'https://analysis.null.place/img/movie-thumbnail-minorityreport2002.jpg?hash=C5jov_',
