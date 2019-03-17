@@ -105,7 +105,7 @@ with open("%s/../json/movies-list.json" % pwd, "w") as f:
 # title. this json is used to populate the page initially
 init_movie_list = sorted(
     [movie for movie in all_movies],
-    key = lambda movie: (-movie["rating"], movie["title"][0])
+    key = lambda movie: (-movie["rating"], movie["title"])
 )[:10]
 with open("%s/../json/movies-init-list.json" % pwd, "w") as f:
     json.dump(init_movie_list, f)
