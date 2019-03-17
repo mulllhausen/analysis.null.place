@@ -1,4 +1,4 @@
-var latestCache = '2019-03-16_22:24:32';
+var latestCache = '2019-03-17_08:34:49';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -49,7 +49,7 @@ var mandatoryAssets = [
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',
     'https://analysis.null.place/movie-reviews/index.html',
-    'https://analysis.null.place/js/movie-reviews.js?hash=YqWXrx',
+    'https://analysis.null.place/js/movie-reviews.js?hash=aiyOFt',
     'https://analysis.null.place/css/movie-reviews.css?hash=G-3hnG',
     'https://analysis.null.place/img/movie-thumbnail-district92009.jpg?hash=T9jPbU',
     'https://analysis.null.place/img/movie-thumbnail-minorityreport2002.jpg?hash=C5jov_',
@@ -74,8 +74,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-lockstockandtwosmokingbarrels1998.jpg?hash=qULdq8',
     'https://analysis.null.place/img/movie-thumbnail-inglouriousbasterds2009.jpg?hash=UgqI7P',
     'https://analysis.null.place/img/movie-thumbnail-upgrade2018.jpg?hash=HoZlKD',
-    'https://analysis.null.place/json/movies-init-list.json?hash=0rDhKW',
-    'https://analysis.null.place/json/movies-list.json?hash=q8v1PL',
+    'https://analysis.null.place/json/movies-init-list.json?hash=uqIWtF',
+    'https://analysis.null.place/json/movies-list.json?hash=Zo8t54',
     'https://analysis.null.place/json/movies-search-index.json?hash=PnxZ1w',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=nHVYBt',
     'https://analysis.null.place/json/movie-review-minorityreport2002.json?hash=S3GRds',
