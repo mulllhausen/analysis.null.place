@@ -25,8 +25,8 @@ addEvent(window, 'load', function () {
     initSVGIconsHTML();
     initSearchBox();
     initMovieRendering();
-    initMovieSearchList();
-    initCompleteMovieData();
+    initMovieSearchList(initSearchResultIndexes);
+    initCompleteMovieData(initSearchResultIndexes);
     addEvent(document.getElementById('search'), 'keyup', movieSearchChanged);
     addEvent(document.getElementById('sortBy'), 'change', movieSearchChanged);
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
@@ -100,8 +100,6 @@ function initMovieRendering() {
             // no need to populate numMoviesShowing since that was already
             // populated in renderInitialMovieData()
             numTotalMovies = completeMovieSearch.length;
-            searchResultIndexes = new Array(numTotalMovies); // init
-            for (var i = 0; i < numTotalMovies; i++) searchResultIndexes[i] = i;
             currentlySearching = false;
             renderMovieCount();
         };
@@ -123,6 +121,7 @@ var gettingInitialMovieData = false; // init (unlocked)
 function renderInitialMovieData(callback) {
     if (initialMovieData.length > 0) return callback(); // exit function here
 
+    // run multiple different callbacks when the data finally arrives
     addEvent(document, 'got-initial-movie-data', callback);
 
     if (gettingInitialMovieData) return; // 1 attempt at a time
@@ -138,7 +137,7 @@ function renderInitialMovieData(callback) {
             }
             loading('off');
             numMoviesShowing = initialMovieData.length; // global
-            // do not run renderMovieCount() yet since we do not know numTotalMovies
+            // do not run renderMovieCount() here since we may not know numTotalMovies
             document.getElementById('reviewsArea').innerHTML = initialMovieDataHTML;
             triggerEvent(document, 'got-initial-movie-data');
         }
@@ -394,6 +393,7 @@ var gettingMovieSearchList = false; // init (unlocked)
 function initMovieSearchList(callback) {
     if (completeMovieSearch.length > 0) return callback(); // exit function here
 
+    // run multiple different callbacks when the data finally arrives
     addEvent(document, 'got-movie-search-list', callback);
 
     if (gettingMovieSearchList) return; // 1 attempt at a time
@@ -421,6 +421,38 @@ function movieID2Index(id) {
     return completeMovieSearchIDs.indexOf(id);
 }
 
+function initSearchResultIndexes() {
+    // wait for both lists to be downloaded before proceeding
+    if (
+        completeMovieSearch.length == 0 ||
+        completeMovieData.length == 0
+    ) return;
+    generateSortedData(''); // init the searchResultIndexes list
+}
+
+// update searchResultIndexes (global) and return movieSearchResults
+function generateSortedData(searchTerms) {
+    searchResultIndexes = searchMovieTitles(searchTerms);
+
+    // get some of the movie data into a tmp list. necessary for sorting.
+    var movieSearchResults = [];
+    for (var i = 0; i < searchResultIndexes.length; i++) {
+        var movieIndex = searchResultIndexes[i];
+        var movieData = jsonCopyObject(completeMovieData[movieIndex]);
+        movieData['index'] = movieIndex;
+        movieSearchResults.push(movieData);
+    }
+
+    // sort it
+    movieSearchResults = sortMovies(movieSearchResults);
+
+    // sort the global search results
+    for (var i = 0; i < searchResultIndexes.length; i++) {
+        searchResultIndexes[i] = movieSearchResults[i]['index'];
+    }
+    return movieSearchResults;
+}
+
 function movieSearchChanged() {
     document.getElementById('reviewsArea').innerHTML = '';
     loading('on');
@@ -433,7 +465,7 @@ function movieSearchChanged() {
             completeMovieData.length == 0
         ) return;
 
-        searchResultIndexes = searchMovieTitles(searchTerms); // global
+        var movieSearchResults = generateSortedData(searchTerms);
 
         if (searchText == '') {
             numMoviesShowing = completeMovieSearch.length; // global
@@ -447,22 +479,6 @@ function movieSearchChanged() {
             numTotalMovies = searchResultIndexes.length; // global
             currentlySearching = true;
             renderMovieCount();
-        }
-        // get all the movie data into a tmp list. necessary for sorting.
-        var movieSearchResults = [];
-        for (var i = 0; i < searchResultIndexes.length; i++) {
-            var movieIndex = searchResultIndexes[i];
-            var movieData = jsonCopyObject(completeMovieData[movieIndex]);
-            movieData['index'] = movieIndex;
-            movieSearchResults.push(movieData);
-        }
-
-        // sort it
-        movieSearchResults = sortMovies(movieSearchResults);
-
-        // sort the global search results
-        for (var i = 0; i < searchResultIndexes.length; i++) {
-            searchResultIndexes[i] = movieSearchResults[i]['index'];
         }
 
         // render the first page of the search results
@@ -523,6 +539,7 @@ var gettingCompleteMovieData = false; // init (unlocked)
 function initCompleteMovieData(callback) {
     if (completeMovieData.length > 0) return callback(); // exit function here
 
+    // run multiple different callbacks when the data finally arrives
     addEvent(document, 'got-complete-movie-data', callback);
 
     if (gettingCompleteMovieData) return; // 1 attempt at a time
@@ -531,6 +548,7 @@ function initCompleteMovieData(callback) {
         siteGlobals.moviesListJSON,
         function (json) {
         try {
+            // get the list of all movies in order of last-reviewed
             completeMovieData = JSON.parse(json);
             triggerEvent(document, 'got-complete-movie-data');
         }
