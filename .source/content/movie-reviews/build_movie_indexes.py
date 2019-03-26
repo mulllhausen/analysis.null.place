@@ -14,12 +14,13 @@ caches all movie data.
 """
 import build_indexes_grunt
 import os
+import json
+import numbers
 
 build_indexes_grunt.media_type = "movie"
 pwd = os.path.dirname(os.path.realpath(__file__))
 
-with open("%s/../json/movies-list-all.json" % pwd) as f:
-    all_movies = json.load(f)["data"]
+all_movies = build_indexes_grunt.load_list_all()
 
 # validation
 build_indexes_grunt.check_media_type()
