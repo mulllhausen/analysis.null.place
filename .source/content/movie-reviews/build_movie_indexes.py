@@ -18,7 +18,6 @@ import json
 import numbers
 
 build_indexes_grunt.media_type = "movie"
-pwd = os.path.dirname(os.path.realpath(__file__))
 
 all_movies = build_indexes_grunt.load_list_all()
 
@@ -27,6 +26,7 @@ build_indexes_grunt.check_media_type()
 required_fields = {
     "title": basestring,
     "year": int,
+    "thumbnail": basestring,
     "rating": numbers.Number,
     "spoilers": bool,
     "reviewTitle": basestring,

@@ -1,8 +1,7 @@
 #!/usr/bin/env python2.7
 
 """
-this script handles the shared functionality to build indexes for all the review
-pages
+shared functionality to build indexes for all types of review pages
 
 """
 import os
@@ -35,31 +34,36 @@ def check_media_type():
 
 def validate(all_data, required_fields):
     errors = [] # init
-    for (i, media) in enumerate(all_data):
-        title = media["title"] if "title" in media else "%s%s" % (media_type, i)
+    for (i, a_media) in enumerate(all_data):
+        title = a_media["title"] if "title" in a_media else "%s%s" % (media_type, i)
         for (k, t) in required_fields.iteritems():
-            if k not in media:
+            if k not in a_media:
                 errors.append("'%s' does not have element '%s'" % (title, k))
-            elif not isinstance(media[k], t):
+            elif not isinstance(a_media[k], t):
                 errors.append("'%s': element '%s' has the wrong type" % (title, k))
-            elif isinstance(media[k], basestring) and (media[k].strip() == ""):
+            elif isinstance(a_media[k], basestring) and (a_media[k].strip() == ""):
                 errors.append("'%s': element '%s' cannot be an empty string" % (title, k))
+            elif isinstance(a_media[k], list) and not len(a_media[k]):
+                errors.append("'%s': element '%s' cannot be an empty list" % (title, k))
             elif (
                 (k == "rating")
-                and ((media[k] < 0) or (media[k] > 5))
-                and ((media[k] * 2) % 1 != 0)
+                and ((a_media[k] < 0) or (a_media[k] > 5))
+                and ((a_media[k] * 2) % 1 != 0)
             ):
                 errors.append("'%s': element '%s' must be a half-int in 0 - 5 (inclusive)" % (title, k))
-            elif isinstance(media[k], list) and not len(media[k]):
-                errors.append("'%s': element '%s' cannot be an empty list" % (title, k))
+            elif (
+                (k == "thumbnail")
+                and (a_media[k][:4] != "http")
+            ):
+                errors.append("'%s': element '%s' must be a url" % (title, k))
 
     return errors
 
 buffer_size = 5 * 1024 * 1024 # read files in chunks of 5MB each
-def get_file_hash(basename):
+def get_file_hash(filename):
     """get the file hash in a memory-efficient manner"""
     sha256 = hashlib.sha256()
-    with open(basename, "rb") as f:
+    with open(filename, "rb") as f:
         while True:
             data = f.read(buffer_size)
             if not data:
@@ -80,32 +84,46 @@ def update_meta_jsons():
         ["init-list", "list", "search-index"]
     ]
 
+def generate_unique_id(a_media):
+    if (media_type == "movie"):
+        # a movie's id is the alphanumeric title and year chars without
+        # spaces
+        return re.sub(
+            r"[^a-z0-9]*", "", (
+                "%s%s" % (a_media["title"], a_media["year"])
+            ).lower()
+        )
+    elif (media_type == "tv-series"):
+        # a tv series' id is the alphanumeric title, year and season without
+        # spaces
+        return re.sub(
+            r"[^a-z0-9]*", "", (
+                "%s%02d%s" % (
+                    a_media["title"], a_media["season"], a_media["year"]
+                )
+            ).lower()
+        )
+    elif (media_type == "book"):
+        # a book's id is the alphanumeric author, title and year chars
+        # without spaces
+        return re.sub(
+            r"[^a-z0-9]*", "", (
+                "%s%s%s" % (a_media["author"], a_media["title"], a_media["year"])
+            ).lower()
+        )
+
+def generate_thumbnail_basename(a_media, original_size):
+    return "%s-thumbnail-%s%s.jpg" % (
+        media_type, a_media["id"], "-originalsize" if original_size else ""
+    )
+
 def save_list_and_individual_review_files(all_data):
     global meta_img_preloads, meta_jsons
+    original_size = False
     for a_media in all_data:
-        # get a unique id for the media
-        if (media_type == "movie"):
-            # a movie's id is the alphanumeric title and year chars without
-            # spaces
-            a_media["id"] = re.sub(
-                r"[^a-z0-9]*", "", (
-                    "%s%s" % (a_media["title"], a_media["year"])
-                ).lower()
-            )
-        elif (media_type == "tv-series"):
-            # a tv series' id is the alphanumeric title, year and season without
-            # spaces
-            a_media["id"] = re.sub(
-                r"[^a-z0-9]*", "", (
-                    "%s%02d%s" % (
-                        a_media["title"], a_media["season"], a_media["year"]
-                    )
-                ).lower()
-            )
-        elif (media_type == "book"):
-            a_media["id"] = a_media["isbn"]
+        a_media["id"] = generate_unique_id(a_media)
 
-        thumbnail_basename = "%s-thumbnail-%s.jpg" % (media_type, a_media["id"])
+        thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
         a_media["thumbnailHash"] = get_file_hash(
             "%s/../img/%s" % (pwd, thumbnail_basename)
         )
@@ -149,7 +167,8 @@ def save_init_list(all_data):
 def save_search_index(all_data):
     media_titles = [
         (
-            "%s %s%s" % (
+            "%s%s %s%s" % (
+                "%s " % a_media["author"] if (media_type == "book") else "",
                 a_media["title"],
                 "%s " % a_media["season"] if (media_type == "tv-series") else "",
                 a_media["year"]
