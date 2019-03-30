@@ -4,7 +4,33 @@
     <link href="https://analysis.null.place/" rel="alternate"></link>
     <link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link>
     <id>https://analysis.null.place/</id>
-    <updated>2019-01-23T00:00:00+10:30</updated>
+    <updated>2019-03-29T00:00:00+10:30</updated>
+    <entry>
+        <title>book reviews</title>
+        <link href="https://analysis.null.place/book-reviews/" rel="alternate"></link>
+        <published>2019-03-29T00:00:00+10:30</published>
+        <updated>2019-03-29T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-03-29:/book-reviews/</id>
+        <summary type="html">My book reviews. A big work in progress!</summary>
+        <category term="book"></category>
+        <category term="reviews"></category>
+    </entry>
+    <entry>
+        <title>tv-series reviews</title>
+        <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
+        <published>2019-03-29T00:00:00+10:30</published>
+        <updated>2019-03-29T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-03-29:/tv-series-reviews/</id>
+        <summary type="html">My tv-series reviews. A big work in progress!</summary>
+        <category term="tv-series"></category>
+        <category term="reviews"></category>
+    </entry>
     <entry>
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
@@ -14,7 +40,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-01-23:/movie-reviews/</id>
-        <summary type="html">I watch so many movies that I find myself forgetting what a given movie was about, whether I liked it or not, and even whether I have already watched it. So I have made this page to keep track of movies I watch - good and bad. Maybe you will also discover some good movies here too, or learn what to avoid, assuming you have similar tastes to me.</summary>
+        <summary type="html">My movie reviews. A big work in progress!</summary>
         <category term="movie"></category>
         <category term="reviews"></category>
     </entry>

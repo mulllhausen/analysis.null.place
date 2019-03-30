@@ -4,11 +4,31 @@
         <title>analysis</title>
         <link>https://analysis.null.place/</link>
         <description></description>
-        <lastBuildDate>Wed, 23 Jan 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Fri, 29 Mar 2019 00:00:00 +1030</lastBuildDate>
+        <item>
+            <title>book reviews</title>
+            <link>https://analysis.null.place/book-reviews/</link>
+            <description>My book reviews. A big work in progress!</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-reviews/</guid>
+            <category>book</category>
+            <category>reviews</category>
+        </item>
+        <item>
+            <title>tv-series reviews</title>
+            <link>https://analysis.null.place/tv-series-reviews/</link>
+            <description>My tv-series reviews. A big work in progress!</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
+            <category>tv-series</category>
+            <category>reviews</category>
+        </item>
         <item>
             <title>movie reviews</title>
             <link>https://analysis.null.place/movie-reviews/</link>
-            <description>I watch so many movies that I find myself forgetting what a given movie was about, whether I liked it or not, and even whether I have already watched it. So I have made this page to keep track of movies I watch - good and bad. Maybe you will also discover some good movies here too, or learn what to avoid, assuming you have similar tastes to me.</description>
+            <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
