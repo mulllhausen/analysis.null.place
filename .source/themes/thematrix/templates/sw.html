@@ -46,6 +46,7 @@ var mandatoryAssets = [
     '{{ SITEURL }}/{{ cat.url }}index.html',
 {% endfor %}
 
+{% set all_assets = [] %}
 {% for article in articles %}
     // assets for the "{{ article.title }}" article
     '{{ SITEURL }}/{{ article.url }}',
@@ -53,29 +54,41 @@ var mandatoryAssets = [
     {% if article.scripts %}
         {% set scripts = article.scripts.split(',') %}
         {% for script in scripts %}
+            {% if ("/js/" + script) not in all_assets %}
     '{{ QS_LINK['/js/' + script] }}',
+                {% set all_assets = all_assets.append("/js/" + script) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.stylesheets %}
         {% set stylesheets = article.stylesheets.split(',') %}
         {% for stylesheet in stylesheets %}
+            {% if ("/css/" + stylesheet) not in all_assets %}
     '{{ QS_LINK['/css/' + stylesheet] }}',
+                {% set all_assets = all_assets.append("/css/" + stylesheet) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.img_preloads %}
         {% set imgs = article.img_preloads.split(',') %}
         {% for img in imgs %}
+            {% if ("/img/" + img) not in all_assets %}
     '{{ QS_LINK['/img/' + img] }}',
+                {% set all_assets = all_assets.append("/img/" + img) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.jsons %}
         {% set jsons = article.jsons.split(',') %}
         {% for json in jsons %}
+            {% if ("/json/" + json) not in all_assets %}
     '{{ QS_LINK['/json/' + json] }}',
+                {% set all_assets = all_assets.append("/json/" + json) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
-{% endfor %}
 
+{% endfor %}
     // cookie warning notice
     '{{ SITEURL }}/cookie-notice/',
     '{{ SITEURL }}/cookie-notice/index.html'

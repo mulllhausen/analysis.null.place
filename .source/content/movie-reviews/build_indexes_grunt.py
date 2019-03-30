@@ -98,7 +98,7 @@ def generate_unique_id(a_media):
         # spaces
         return re.sub(
             r"[^a-z0-9]*", "", (
-                "%s%02d%s" % (
+                "%s%s%s" % (
                     a_media["title"], a_media["season"], a_media["year"]
                 )
             ).lower()
