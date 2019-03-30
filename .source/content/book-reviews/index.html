@@ -1,0 +1,97 @@
+<html>
+<head>
+    <title>book reviews</title>
+    <meta name="slug" content="book-reviews"/>
+    <meta name="date" content="2019-03-29"/>
+    <meta name="category" content="reviews"/>
+    <meta name="tags" content="book, reviews"/>
+    <meta name="stylesheets" content="media-reviews.css"/>
+    <meta name="scripts" content="media-reviews.js"/>
+    <meta name="img_preloads" content="book-thumbnail-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.jpg,book-thumbnail-robertharrisimperium2006.jpg"/>
+    <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for books."/>
+    <meta name="summary" content="My book reviews. A big work in progress!"/>
+    <meta name="jsons" content="books-init-list.json,books-list.json,books-search-index.json,book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json,book-review-robertharrisimperium2006.json"/>
+</head>
+<body>
+<div class="sample hidden">
+    <svg class="icon icon-chain">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
+    </svg>
+    <svg class="icon some-star icon-star-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-o"></use>
+    </svg>
+    <svg class="icon some-star icon-star-half-empty">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-half-empty"></use>
+    </svg>
+    <svg class="icon some-star icon-star">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star"></use>
+    </svg>
+</div>
+<p>As with movies and tv-series, I read so many books that I find myself
+forgetting what a given book was about, whether I liked it or not, and even
+whether I have already read it. So I have made this page to keep track of the
+books I read - good and bad. Maybe you will also discover some good books here
+too, or learn what to avoid, assuming you have similar tastes to me.</p>
+<div class="form-container search-box-container">
+    <div id="searchBox">
+        <div class="left">
+            <label for="search" class="for-search-box">search</label>
+            <br>
+            <input id="search" type="text" placeholder="book title, author or year">
+        </div>
+        <div class="left">
+            <label for="sortBy" class="for-sort-dropdown">sort by</label>
+            <br>
+            <select id="sortBy">
+                <option value="highest-rating">highest rating</option>
+                <option value="lowest-rating">lowest rating</option>
+                <option value="newest-reviews">newest reviews</option>
+                <option value="oldest-reviews">oldest reviews</option>
+                <option value="title-ascending">title ascending</option>
+                <option value="title-descending">title descending</option>
+            </select>
+        </div>
+    </div>
+    <button id="showAllMedia">show all books</button>
+</div>
+
+<div class="media-count-area">
+    <div id="mediaCountPanel">
+        <span id="xOfYMediaCount">
+            showing <span id="numMediaShowing">10</span> of
+            <span id="totalMediaFound"></span>
+            <span id="searchTypeDescription">total books</span>
+        </span>
+        <span id="noMediaCount">no books found</span>
+    </div>
+</div>
+
+<div id="reviewsArea" class="reviews-area"></div>
+
+<div id="mediaLoaderArea" class="media-loader-area">
+    <div class="media-loader-inner">
+        <svg class="icon icon-circle-o-notch">
+            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-circle-o-notch">
+                <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="-360 48 48"
+                    to="0 48 48"
+                    dur="2s"
+                    additive="sum"
+                    repeatCount="indefinite"
+                />
+            </use>
+        </svg>
+        <div class="loading-text">loading<br>books</div>
+    </div>
+</div>
+<script>
+    siteGlobals.mediaType = 'book';
+    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/books-search-index.json'] }}';
+    siteGlobals.mediaListJSON = '{{ QS_LINK['/json/books-list.json'] }}';
+    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/books-init-list.json'] }}';
+</script>
+</body>
+</html>

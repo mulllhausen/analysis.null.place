@@ -1,0 +1,1 @@
+../movie-reviews/download_thumbnails_grunt.py

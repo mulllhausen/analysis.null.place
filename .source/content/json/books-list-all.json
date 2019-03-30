@@ -1,0 +1,31 @@
+{
+    "notes": "put all book data here, new reviews at the bottom, then run build_book_indexes.py",
+    "data": [
+        {
+            "author": "Theodore Schick and Lewis Vaughn",
+            "title": "How to think about weird things",
+            "year": 2011,
+            "rating": 5,
+            "spoilers": true,
+            "thumbnail": "https://images.gr-assets.com/books/1169751462l/41756.jpg",
+            "reviewTitle": "Critical-thinking clarity",
+            "review": "N/A",
+            "goodreadsID": "41756",
+            "genres": ["Logic", "Philosophy", "Psychology"],
+            "isbn": "007287953X"
+        },
+        {
+            "author": "Robert Harris",
+            "title": "Imperium",
+            "year": 2006,
+            "rating": 5,
+            "spoilers": true,
+            "thumbnail": "https://images.gr-assets.com/books/1442657816l/243601.jpg",
+            "reviewTitle": "Ancient Roman political intruige",
+            "review": "This was the first Robert Harris novel I read. Growing up I had always thought of Ancient Rome as boring - memorizing a bunch of emperors names and dates and locations where battles took place. However this book was anything but boring.",
+            "goodreadsID": "243601",
+            "genres": ["Fiction", "Historical"],
+            "isbn": "074326603X"
+        }
+    ]
+}

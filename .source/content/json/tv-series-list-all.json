@@ -1,0 +1,29 @@
+{
+    "notes": "put all tv series data here, new reviews at the bottom, then run build_tv_indexes.py",
+    "data": [
+        {
+            "title": "The Walking Dead",
+            "year": 2010,
+            "season": 1,
+            "rating": 5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BNDM2OTA1NzIzMV5BMl5BanBnXkFtZTgwOTkxMTk5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Learning the new landscape",
+            "review": "N/A",
+            "IMDBID": "tt1520211",
+            "genres": ["Drama", "Horror", "Sci-Fi"]
+        },
+        {
+            "title": "Black Mirror",
+            "year": 2011,
+            "season": 1,
+            "rating": 5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BNTEwYzNiMGUtNzRlYS00MTMzLTliNzgtOGUxZGZiNThlNWYwXkEyXkFqcGdeQXVyMjYwNDA2MDE@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Technology as a force for bad",
+            "review": "N/A",
+            "IMDBID": "tt0181689",
+            "genres": ["Drama", "Sci-Fi", "Thriller"]
+        }
+    ]
+}
