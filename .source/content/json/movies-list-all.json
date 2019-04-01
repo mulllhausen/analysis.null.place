@@ -29,8 +29,8 @@
             "rating": 5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMGExOGExM2UtNWM5ZS00OWEzLTllNzYtM2NlMTJlYjBlZTJkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg",
-            "reviewTitle": "N/A",
-            "review": "N/A",
+            "reviewTitle": "Sci-fi meets detective noir",
+            "review": "This is one of my all time favourite movies. It's a lesser known sci-fi/detective noir type film, so if you haven't seen it and you like those genres then I would definitely recommend it.\nI remember the movie perfectly as I have seen it so many times, so I don't need to include any spoilers to remind myself about it. But suffice to say that this is a film that keeps the viewer guessing what is going on right until the end. The music is great, the settings are excellent - murky and dark - right up my alley. And there really isn't anything else quite like the plot, that I have come across.",
             "IMDBID": "tt0118929",
             "genres": ["Mystery", "Sci-Fi", "Thriller"]
         },
@@ -51,8 +51,8 @@
             "rating": 5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMjJmYTNkNmItYjYyZC00MGUxLWJhNWMtZDY4Nzc1MDAwMzU5XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UX182_CR0,0,182,268_AL_.jpg",
-            "reviewTitle": "N/A",
-            "review": "N/A",
+            "reviewTitle": "Instant classic",
+            "review": "In 50 years time I'm sure that high school students will still be writing essays analysing this movie. And they will have plenty of themes to explore - consumer culture, anarcho primitivism, capitalism, psychosis. Wisecrack have done a great analysis of this movie. <a href=\"https://www.youtube.com/watch?v=7cGrg2Gh4gg\">Check it out</a>.",
             "IMDBID": "tt0137523",
             "genres": ["Drama"]
         },
@@ -62,8 +62,8 @@
             "rating": 5,
             "spoilers": false,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMTY4NzcwODg3Nl5BMl5BanBnXkFtZTcwNTEwOTMyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg",
-            "reviewTitle": "N/A",
-            "review": "N/A",
+            "reviewTitle": "Another all-time favourite",
+            "review": "Jim Carey is a great actor and if you like his comedy but have never seen him act in a drama then you're in for a treat. The plot is fairly complicated and I won't give spoilers here, but suffice to say that you'll probably want to watch this movie twice as it will make a lot more sense the second time around. The backwards music is one of the things that makes this movie so good IMO - it is playful yet somber and fits well with the theme (which I will not give away).",
             "IMDBID": "tt0338013",
             "genres": ["Drama", "Romance", "Sci-Fi"]
         },
@@ -253,6 +253,83 @@
             "review": "I loved the whole premise of this movie - I would not have changed a thing about the plot. However there were some flashbacks at the end that took it from a 10/10 down to a 9/10 for me. I won't be specific since this review does not contain spoilers, but suffice to say that if there had been a little more mystery at the end the it would have made the movie probably on par with the matrix 1 for me. This could pretty much have been done by simply removing all the flashback cuts - they were corny and they made me feel disrespected as a viewer. The explanations spoken at the end would already have been enough to piece together what was happening, and if not then the mystery would have made this movie amazing!",
             "IMDBID": "tt6499752",
             "genres": ["Action", "Sci-Fi", "Thriller"]
+        },
+        {
+            "title": "10,000BC",
+            "year": 2008,
+            "rating": 4.5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMzc2NDMzNDY4Ml5BMl5BanBnXkFtZTYwNzM2Njk3._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Surprisingly entertaining",
+            "review": "i was pretty impressed. i loved the ancient egyptians and the way that any minor improvement in weaponry/transport (arrows and boats) had such a huge survival advantage. i also thought that the massive reliance on religion to explain a largely unknown world was very well done.",
+            "IMDBID": "tt0443649",
+            "genres": ["Action", "Adventure", "Drama"]
+        },
+        {
+            "title": "Mission: Impossible 6 - Fallout",
+            "year": 2018,
+            "rating": 4.5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMzc2NDMzNDY4Ml5BMl5BanBnXkFtZTYwNzM2Njk3._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Great action flick",
+            "review": "An anarchist wants to contaminate the Siashen Glacier at the base of the Nubra River valley in Kashmir with plutonium in order to \"end the old order\" by starving 1/3 of the world's population, because, as his manifesto goes, \"the greater the suffering, the greater the peace\". Not a well thought out thesis really, but Ethan and the IMF team's attempts to thwart it makes for a good action movie.\nThere are some excellent car/motorbike chase scenes around some famous places in Paris - the arc de triumph roundabout, etc. And some decent free-running in London. I guess they used CG to do the car/motorbike chase scenes in Paris, since I doubt they could have closed off such busy places in the middle of the day to film the movie. But it was very well done - certainly fooled me.",
+            "IMDBID": "tt0443649",
+            "genres": ["Action", "Adventure", "Thriller"]
+        },
+        {
+            "title": "Status Update",
+            "year": 2018,
+            "rating": 2.5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BM2NmOTExNzQtOTZhYi00MzZjLWE5M2EtYTllNDM2OWMzZWVkXkEyXkFqcGdeQXVyMjg1ODA0ODA@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Childish and lacking imagination",
+            "review": "This is a movie aimed at children. I watched it on the plane and I should have paid more attention to the genre because I was expecting a movie for a slightly more mature audience. It was not a bad premise - whatever Kyle posts in his magic app on his phone comes true. However the things Kyle posts are so unimaginative. If you could post anything at all and it would come true then surely you would post something more interesting than, \"I have amazing dancing skills\". Post something like \"I live on top of a 300 floor skyscraper and get to school via waterslide\", or \"I can talk to animals\".",
+            "IMDBID": "tt5692390",
+            "genres": ["Comedy", "Fantasy", "Romance"]
+        },
+        {
+            "title": "The Founder",
+            "year": 2016,
+            "rating": 4,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMzExNDg0MDk1M15BMl5BanBnXkFtZTgwNzE1Mjg0MDI@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Morbidly fascinating",
+            "review": "The story of how the McDonald brothers get screwed out of a fortune by the ambitious milkshake-maker salesman Ray Kroc. I watched this movie without even reading the blurb and I initially thought it was a remake of <i>Death of a Salesman</i>, since Ray starts off barely scraping by selling milkshake makers. Then for the following first half of the movie it appeared to be a glowing appraisal of the McDonald's brand and system of producing hamburgers. Only in the final half did it get into the dirty business dealings of Ray Kroc. I have no idea how true the story is, but it comes across as believable.\nThe movie was fascinating, despite the fact that the main character is fairly unlikeable. His drive was admirable, but the ease with which he lied to his business partners, and used the inefficiency of the USA legal system to his advantage was not.",
+            "IMDBID": "tt4276820",
+            "genres": ["Biography", "Drama", "History"]
+        },
+        {
+            "title": "Green Book",
+            "year": 2019,
+            "rating": 4.5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BYzIzYmJlYTYtNGNiYy00N2EwLTk4ZjItMGYyZTJiOTVkM2RlXkEyXkFqcGdeQXVyODY1NDk1NjE@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Eye opening",
+            "review": "Don Shirly, a virtuoso pianist (previously known to me as Remy from <i>House of Cards</i>) tours the deep south during the Jim crow era with Tony Lip, a hard-bitten Italian bouncer turned valet (Aragorn from <i>Lord of the Rings</i>). The main theme is racism and we see dozens of examples ranging from police enforcing curfew laws to a concert hall proprietor who refuses to let the star of the performance eat in his white-only restaurant. These scenes obviously make for a movie which is very uncomfortable in parts, however this is contrasted with Tony's gradual shedding of his racism as they progress on the road. I found it quite a thought provoking movie - shining light on an era with which I am only vaguely familiar.",
+            "IMDBID": "tt6966692",
+            "genres": ["Biography", "Comedy", "Drama"]
+        },
+        {
+            "title": "Molly's Game",
+            "year": 2017,
+            "rating": 4,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BNTkzMzRlYjEtMTQ5Yi00OWY3LWI0NzYtNGQ4ZDkzZTU0M2IwXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "A highly driven protagonist continually gets screwed over",
+            "review": "Very entertaining movie about a fiercely competitive professional skier turned high stakes poker game operator. Fairly closely based on reality too, according to Wikipedia. A bit of an oceans 11 vibe in the first half where she is living the high life. Ultimately she gets screwed by civil asset forfeiture, and laws against taking a percentage of the pot. Tips are legal but a percentage is not? Good to know I guess. She decides not to plea bargain with the FBI (wise) and avoids jail (lucky). Though the state still takes a large chunk of her money. Her getting screwed over by various powerful people - her father, her first boss, her clients, the NY mob, the FBI - is a big theme, and it's frustrating to watch. Cinematically excellent though and excellent acting too.",
+            "IMDBID": "tt4209788",
+            "genres": ["Biography", "Crime", "Drama"]
+        },
+        {
+            "title": "Loro",
+            "year": 2018,
+            "rating": 3.5,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BYTAxNzU4ZjUtMTFkNy00MzM0LWExNmQtN2RjYTM0ZTExMGYzXkEyXkFqcGdeQXVyMzIwNDY4NDI@._V1_UY268_CR3,0,182,268_AL_.jpg",
+            "reviewTitle": "Damage control for Berlusconi?",
+            "review": "The best thing about this movie was the soundtrack, which was somewhat dated house/disco.\nThe movie is split into two fairly disjointed halves. The first half follows the aspirations of the pimp Sergio Morra as he attempts to secure himself a role in the EU parliament. He rents a mansion across the bay from president Silvio Berlusconi and throws a lot of parties with beautiful women in the hope of enticing the president. The first half is basically softcore porn. The music is great and the timeline jumps around, which kept me entertained wondering where it was currently at.\nThe second half follows Berlusconi as he re-enters politics by bribing 6 senators to sway the vote his way. Sergio's attempts to woo the president are unsuccessful - he does catch the president's eye with his parties, and ends up throwing Berlusconi a party, but the president wants nothing to do with him personally.\nThis movie would probably make more sense to me if I knew more about Italian politics. I watched it with my girlfriend, mum and grandma and we were wondering afterwards whether it portrayed Berlusconi in a bad enough light or not. To those in the know, maybe the movie even comes across as damage control? He is unashamedly corrupt, but gives the justification that all men in his position are. The movie only alluded to his dealings with the Mafia - it never gave details. And not knowing much about Berlusconi, I can't say if it downplayed his character there. Overall the movie portrayed him as a fairly likeable character - he never loses his temper, smiles quite a lot and is generally good humoured. But of course that is not enough to redeem his criminal acts.",
+            "IMDBID": "tt6748466",
+            "genres": ["Biography", "Drama"]
         }
     ]
 }

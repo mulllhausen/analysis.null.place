@@ -165,20 +165,24 @@ def save_init_list(all_data):
 # generate json/<media_type>-search-index.json
 # this is just a list of media titles and years - used for searching
 def save_search_index(all_data):
-    media_titles = [
-        (
-            "%s%s %s%s" % (
-                "%s " % a_media["author"] if (media_type == "book") else "",
-                a_media["title"],
-                "%s " % a_media["season"] if (media_type == "tv-series") else "",
-                a_media["year"]
-            )
-        ).lower() for a_media in all_data
-    ]
+    media_titles = [generate_search_item(a_media) for a_media in all_data]
     with open(
         "%s/../json/%s-search-index.json" % (pwd, plural(media_type)), "w"
     ) as f:
         json.dump(media_titles, f)
+
+def generate_search_item(a_media):
+    search_item = "%s%s %s%s" % (
+        "%s " % a_media["author"] if (media_type == "book") else "",
+        a_media["title"],
+        "%s " % a_media["season"] if (media_type == "tv-series") else "",
+        a_media["year"]
+    )
+    # remove symbols - we do not want to search on these
+    search_item = re.sub(r"[^A-Za-z0-9 ]*", "", search_item).lower()
+
+    # remove double spaces, for efficiency
+    return re.sub(r" +", " ", search_item)
 
 def print_metatags():
     print """place these meta tags in your %s reviews article:
