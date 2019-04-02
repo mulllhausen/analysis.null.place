@@ -201,7 +201,16 @@ function getMediaHTML(mediaData) {
     '<p>' + mediaData.review.replace(/\n/g, '<br><br>') + '</p>' : loadReviewButton;
     var imgSrc = siteGlobals.siteURL + '/img/' + siteGlobals.mediaType +
     '-thumbnail-' + mediaID + '.jpg?hash=' + mediaData['thumbnailHash'];
-
+    var imgLink = 'https://';
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            imgLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
+            break;
+        case 'movie':
+        case 'tv-series':
+            imgLink += 'www.imdb.com/title/' + mediaData.IMDBID;
+            break;
+    }
     return '<div class="media" id="!' + mediaID + '">' +
         '<a' +
             ' class="link"' +
@@ -213,7 +222,7 @@ function getMediaHTML(mediaData) {
             sampleChain +
         '</a>' +
         '<div class="thumbnail-and-stars">' +
-            '<a href="https://www.imdb.com/title/' + mediaData.IMDBID + '/">' +
+            '<a href="' + imgLink + '">' +
                 '<img src="' + imgSrc + '" alt="' + siteGlobals.mediaType +
                 ' thumbnail">' +
             '</a>' +
