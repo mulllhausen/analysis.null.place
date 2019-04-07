@@ -315,6 +315,11 @@ function unalignText(codeblock) {
     });
 }
 
+function easyPlural(word, ending) {
+    if (word.substr(-ending.length) == ending) return word;
+    return word + ending;
+}
+
 function plural(wordEnding, plural) {
     switch (wordEnding) {
         case 's':
