@@ -1,4 +1,4 @@
-var latestCache = '2019-04-04_09:31:44';
+var latestCache = '2019-04-08_00:45:50';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -11,7 +11,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=BGC2-m',
+    'https://analysis.null.place/theme/js/base.js?hash=CVbSdv',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -53,7 +53,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=0l_zKi',
+    'https://analysis.null.place/js/media-reviews.js?hash=06keok',
     'https://analysis.null.place/css/media-reviews.css?hash=2579An',
     'https://analysis.null.place/img/book-thumbnail-stanislawlemsolaris1961.jpg?hash=55BY16',
     'https://analysis.null.place/img/book-thumbnail-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
@@ -70,17 +70,17 @@ var mandatoryAssets = [
     // assets for the "tv-series reviews" article
     'https://analysis.null.place/tv-series-reviews/',
     'https://analysis.null.place/tv-series-reviews/index.html',
-    'https://analysis.null.place/img/tv-series-thumbnail-thewalkingdead12010.jpg?hash=OfCIwI',
-    'https://analysis.null.place/img/tv-series-thumbnail-blackmirror12011.jpg?hash=PVbx5g',
+    'https://analysis.null.place/img/tv-series-thumbnail-thewalkingdead12010.jpg?hash=KBZUww',
+    'https://analysis.null.place/img/tv-series-thumbnail-blackmirror12011.jpg?hash=EDPW69',
     'https://analysis.null.place/img/tv-series-thumbnail-nightflyers12018.jpg?hash=mSCzFO',
     'https://analysis.null.place/img/tv-series-thumbnail-maniac12018.jpg?hash=0nxg5W',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=v_9e1Z',
-    'https://analysis.null.place/json/tv-series-list.json?hash=-lL1gr',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=sf9AHo',
+    'https://analysis.null.place/json/tv-series-list.json?hash=f8Jers',
     'https://analysis.null.place/json/tv-series-search-index.json?hash=Re-LiQ',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=vyp9LW',
-    'https://analysis.null.place/json/tv-series-review-maniac12018.json?hash=zJ-aCx',
+    'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=iSpT3g',
+    'https://analysis.null.place/json/tv-series-review-maniac12018.json?hash=SjiWtk',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',
@@ -115,9 +115,11 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-greenbook2019.jpg?hash=DmMVJv',
     'https://analysis.null.place/img/movie-thumbnail-mollysgame2017.jpg?hash=eskUG_',
     'https://analysis.null.place/img/movie-thumbnail-loro2018.jpg?hash=1yE1FU',
-    'https://analysis.null.place/json/movies-init-list.json?hash=HLWjhN',
-    'https://analysis.null.place/json/movies-list.json?hash=JbIKZF',
-    'https://analysis.null.place/json/movies-search-index.json?hash=YF5iE_',
+    'https://analysis.null.place/img/movie-thumbnail-birdbox2018.jpg?hash=DHP9G3',
+    'https://analysis.null.place/img/movie-thumbnail-adrift2018.jpg?hash=3tna7v',
+    'https://analysis.null.place/json/movies-init-list.json?hash=CFZ1A9',
+    'https://analysis.null.place/json/movies-list.json?hash=J7Zrsc',
+    'https://analysis.null.place/json/movies-search-index.json?hash=kCH3ZL',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=nHVYBt',
     'https://analysis.null.place/json/movie-review-minorityreport2002.json?hash=S3GRds',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
@@ -148,6 +150,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-mollysgame2017.json?hash=5CmqSw',
     'https://analysis.null.place/json/movie-review-loro2018.json?hash=JxIsbO',
+    'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=ViCgKm',
+    'https://analysis.null.place/json/movie-review-adrift2018.json?hash=qRem2E',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
