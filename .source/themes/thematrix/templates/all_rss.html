@@ -12,11 +12,14 @@
             <description>{{ article.summary }}</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+            {%- if article.modified -%}
+            <lastBuildDate>{{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+            {%- endif -%}
             <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</guid>
             {% if article.tags %}
-            {% for tag in article.tags %}
+                {% for tag in article.tags %}
             <category>{{ tag }}</category>
-            {% endfor %}
+                {% endfor %}
             {% endif %}
         </item>
         {% endfor %}
