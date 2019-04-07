@@ -191,11 +191,13 @@ function loading(status) {
 function getMediaHTML(mediaData) {
     var mediaID = getMediaID(mediaData);
     var renderedTitle = getRenderedTitle(mediaData);
+    var style = '';
+    if (mediaData.spoilers) style = ' style="color:red;"';
     var loadReviewButton = '<button class="load-review" id="load-' + mediaID + '">' +
         'load review' +
     '</button><br>' +
-    '<span class="review-explanation">' +
-        '(this review ' + (mediaData.spoilers? 'contains' : 'has no') + ' spoilers)' +
+    '<span class="review-explanation"' + style + '>' +
+        '(this review ' + (mediaData.spoilers ? 'contains' : 'has no') + ' spoilers)' +
     '</span>';
     var review = mediaData.hasOwnProperty('review') ?
     '<p>' + mediaData.review.replace(/\n/g, '<br><br>') + '</p>' : loadReviewButton;
@@ -315,7 +317,9 @@ function renderMediaCount() {
         document.getElementById('numMediaShowing').innerHTML = numMediaShowing;
         document.getElementById('totalMediaFound').innerHTML = numTotalMedia;
         document.getElementById('searchTypeDescription').innerHTML = (
-            currentlySearching ? 'search results' : 'total media'
+            currentlySearching ?
+            'search results' :
+            'total ' + easyPlural(siteGlobals.mediaType, 's')
         );
     }
 }
