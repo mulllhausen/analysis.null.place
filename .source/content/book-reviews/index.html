@@ -13,20 +13,6 @@
     <meta name="jsons" content="books-init-list.json,books-list.json,books-search-index.json,book-review-stanislawlemsolaris1961.json,book-review-barbaraklipskatheneuroscientistwholosthermind2018.json,book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json,book-review-robertharrisimperium2006.json"/>
 </head>
 <body>
-<div class="sample hidden">
-    <svg class="icon icon-chain">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
-    </svg>
-    <svg class="icon some-star icon-star-o">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-o"></use>
-    </svg>
-    <svg class="icon some-star icon-star-half-empty">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-half-empty"></use>
-    </svg>
-    <svg class="icon some-star icon-star">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star"></use>
-    </svg>
-</div>
 <p>As with movies and tv-series, I read so many books that I find myself
 forgetting what a given book was about, whether I liked it or not, and even
 whether I have already read it. So I have made this page to keep track of the
@@ -89,6 +75,7 @@ too, or learn what to avoid, assuming you have similar tastes to me.</p>
 </div>
 <script>
     siteGlobals.mediaType = 'book';
+    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/books-search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/json/books-list.json'] }}';
     siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/books-init-list.json'] }}';

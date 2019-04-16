@@ -6,23 +6,10 @@ completeMediaData = []; // static list of all media data
 searchResultIndexes = []; // all media indexes that match the search. in order. used for paging.
 numTotalMedia = 0; // total count that match the search criteria
 numMediaShowing = 0;
-sampleChain = '';
-sampleEmptyStar = '';
-sampleFullStar = '';
-sampleHalfStar = '';
 pageSize = 10; // load this many media at once in the infinite scroll page
 currentlySearching = false;
 
 addEvent(window, 'load', function () {
-    /* ajax logic:
-    - if there is a hash (specific media) then render it like so:
-        - first fetch completeMediaSearchIDs to match hash id to position in completeMediaData
-        - then use that to fetch completeMediaData and render media data
-    - else if there is no hash then just render the initial media like so:
-        - fetch initialMediaData only
-    - fetch completeMediaSearch, completeMediaSearchIDs and completeMediaData if necessary
-    */
-    initSVGIconsHTML();
     initSearchBox();
     initMediaRendering();
     initMediaSearchList(initSearchResultIndexes);
@@ -108,13 +95,6 @@ function initMediaRendering() {
         // note: at this point, searchResultIndexes is not populated, so
         // scrolling to the bottom will not yet load any more media
     }
-}
-
-function initSVGIconsHTML() {
-    sampleChain = document.querySelector('.sample .icon-chain').outerHTML;
-    sampleEmptyStar = document.querySelector('.sample .icon-star-o').outerHTML;
-    sampleFullStar = document.querySelector('.sample .icon-star').outerHTML;
-    sampleHalfStar = document.querySelector('.sample .icon-star-half-empty').outerHTML;
 }
 
 var gettingInitialMediaData = false; // init (unlocked)
@@ -221,7 +201,9 @@ function getMediaHTML(mediaData) {
             ' title="right click and copy link for the URL of this ' +
             siteGlobals.mediaType + ' review"' +
         '>' +
-            sampleChain +
+            '<svg class="icon icon-chain">' +
+                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-chain"></use>' +
+            '</svg>' +
         '</a>' +
         '<div class="thumbnail-and-stars">' +
             '<a href="' + imgLink + '">' +
@@ -272,10 +254,18 @@ function loadFullReview(e) {
 function getMediaStarsHTML(mediaDataRating) {
     var starRating = '';
     for (var i = 1; i <= 5; i++) {
-        if (i <= mediaDataRating) starRating += sampleFullStar;
+        if (i <= mediaDataRating) starRating +=
+        '<svg class="icon some-star icon-star">' +
+            '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-star"></use>' +
+        '</svg>';
         else {
-            if ((i - 1) < mediaDataRating) starRating += sampleHalfStar;
-            else starRating += sampleEmptyStar;
+            if ((i - 1) < mediaDataRating) starRating +=
+            '<svg class="icon some-star icon-star-half-empty">' +
+                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-star-half-empty"></use>' +
+            '</svg>';
+            else starRating += '<svg class="icon some-star icon-star-o">' +
+                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-star-o"></use>' +
+            '</svg>';
         }
     }
     return starRating;

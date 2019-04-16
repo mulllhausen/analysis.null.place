@@ -14,20 +14,6 @@
     <meta name="jsons" content="movies-init-list.json,movies-list.json,movies-search-index.json,movie-review-district92009.json,movie-review-minorityreport2002.json,movie-review-darkcity1998.json,movie-review-thematrix1999.json,movie-review-fightclub1999.json,movie-review-eternalsunshineofthespotlessmind2004.json,movie-review-rebelwithoutacause1955.json,movie-review-themartian2015.json,movie-review-thedressmaker2015.json,movie-review-requiemforadream2000.json,movie-review-themask1994.json,movie-review-thebeach2000.json,movie-review-thematinghabitsoftheearthboundhuman1999.json,movie-review-themazerunner2014.json,movie-review-thebutterflyeffect2004.json,movie-review-transcendence2014.json,movie-review-aclockworkorange1971.json,movie-review-montypythonandtheholygrail1975.json,movie-review-bladerunner1982.json,movie-review-freddygotfingered2001.json,movie-review-lockstockandtwosmokingbarrels1998.json,movie-review-inglouriousbasterds2009.json,movie-review-upgrade2018.json,movie-review-10000bc2008.json,movie-review-missionimpossible6fallout2018.json,movie-review-statusupdate2018.json,movie-review-thefounder2016.json,movie-review-greenbook2019.json,movie-review-mollysgame2017.json,movie-review-loro2018.json,movie-review-birdbox2018.json,movie-review-adrift2018.json"/>
 </head>
 <body>
-<div class="sample hidden">
-    <svg class="icon icon-chain">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
-    </svg>
-    <svg class="icon some-star icon-star-o">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-o"></use>
-    </svg>
-    <svg class="icon some-star icon-star-half-empty">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-half-empty"></use>
-    </svg>
-    <svg class="icon some-star icon-star">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star"></use>
-    </svg>
-</div>
 <p>As with tv-series and books, I watch so many movies that I find myself
 forgetting what a given movie was about, whether I liked it or not, and even
 whether I have already watched it. So I have made this page to keep track of the
@@ -90,6 +76,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 </div>
 <script>
     siteGlobals.mediaType = 'movie';
+    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/movies-search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/json/movies-list.json'] }}';
     siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/movies-init-list.json'] }}';
