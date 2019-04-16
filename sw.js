@@ -1,4 +1,4 @@
-var latestCache = '2019-04-08_01:02:28';
+var latestCache = '2019-04-16_23:15:52';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -53,7 +53,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=06keok',
+    'https://analysis.null.place/js/media-reviews.js?hash=hwWzfG',
     'https://analysis.null.place/css/media-reviews.css?hash=2579An',
     'https://analysis.null.place/img/book-thumbnail-stanislawlemsolaris1961.jpg?hash=55BY16',
     'https://analysis.null.place/img/book-thumbnail-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
