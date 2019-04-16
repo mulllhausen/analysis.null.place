@@ -8,7 +8,13 @@
     {% for article in articles %}
     <url>
         <loc>{{ SITEURL }}/{{ article.url }}</loc>
-        <lastmod>{{ article.date | strftime('%Y-%m-%d') }}</lastmod>
+        <lastmod>
+        {%- if article.modified -%}
+            {{ article.modified | strftime('%Y-%m-%d') }}
+        {%- else -%}
+            {{ article.date | strftime('%Y-%m-%d') }}
+        {%- endif -%}
+        </lastmod>
         <priority>0.8</priority>
     </url>
         {% for translation in article.translations %}
