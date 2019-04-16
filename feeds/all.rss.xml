@@ -11,6 +11,7 @@
             <description>My book reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Fri, 29 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-reviews/</guid>
             <category>book</category>
             <category>reviews</category>
@@ -43,6 +44,7 @@
             <description>An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Tue, 17 Apr 2018 00:00:00 +0930</pubDate>
+            <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</guid>
             <category>bitcoin</category>
             <category>mining</category>
