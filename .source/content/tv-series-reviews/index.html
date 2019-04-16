@@ -13,20 +13,6 @@
     <meta name="jsons" content="tv-series-init-list.json,tv-series-list.json,tv-series-search-index.json,tv-series-review-thewalkingdead12010.json,tv-series-review-blackmirror12011.json,tv-series-review-nightflyers12018.json,tv-series-review-maniac12018.json"/>
 </head>
 <body>
-<div class="sample hidden">
-    <svg class="icon icon-chain">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
-    </svg>
-    <svg class="icon some-star icon-star-o">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-o"></use>
-    </svg>
-    <svg class="icon some-star icon-star-half-empty">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-half-empty"></use>
-    </svg>
-    <svg class="icon some-star icon-star">
-        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star"></use>
-    </svg>
-</div>
 <p>As with movies and books, I watch so many tv-series that I find myself
 forgetting what a given show was about, whether I liked it or not, and even
 whether I have already watched it. So I have made this page to keep track of the
@@ -89,6 +75,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 </div>
 <script>
     siteGlobals.mediaType = 'tv-series';
+    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/tv-series-search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/json/tv-series-list.json'] }}';
     siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/tv-series-init-list.json'] }}';
