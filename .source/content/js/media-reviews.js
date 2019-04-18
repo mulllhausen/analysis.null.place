@@ -130,11 +130,36 @@ function renderInitialMediaData(callback) {
 
 function linkTo1Media(e) {
     var el = e.target;
-    if ((el.tagName == 'a') && inArray('link', el.className)) {
+    if (
+        (
+            (el.tagName.toLowerCase() == 'i') &&
+            (el.parentNode.tagName.toLowerCase() == 'a') &&
+            inArray('link-to-other-media', el.parentNode.className)
+        ) || (
+            (el.tagName.toLowerCase() == 'a') &&
+            inArray('link-to-other-media', el.className)
+        )
+    ) {
+        // the link looks like <a><i>blah</i></a>
+        location.href = el.parentNode.href;
+        initSearchBox();
+        initMediaRendering(); // show only the media in the hash
+        return;
+    }
+    if ((el.tagName.toLowerCase() == 'a') && inArray('link-to-self', el.className)) {
+        // the link looks like <a class="link-to-self">blah</a>
         var mediaEl = el.parentNode;
-    } else if ((el.tagName == 'svg') && inArray('icon-chain', el.outerHTML)) {
+    } else if (
+        (el.tagName.toLowerCase() == 'svg') &&
+        inArray('icon-chain', el.outerHTML)
+    ) {
+        // the link looks like <svg class="icon-chain">blah</svg>
         var mediaEl = el.parentNode.parentNode;
-    } else if ((el.tagName == 'use') && inArray('icon-chain', el.outerHTML)) {
+    } else if (
+        (el.tagName.toLowerCase() == 'use') &&
+        inArray('icon-chain', el.outerHTML)
+    ) {
+        // the link looks like <use xlink:href="...#icon-chain">blah</use>
         var mediaEl = el.parentNode.parentNode.parentNode;
     } else return;
     currentlySearching = false;
@@ -201,7 +226,7 @@ function getMediaHTML(mediaData) {
     }
     return '<div class="media" id="!' + mediaID + '">' +
         '<a' +
-            ' class="link"' +
+            ' class="link-to-self chain-link"' +
             ' href="' + siteGlobals.siteURL + '/' + siteGlobals.mediaType +
             '-reviews/#!' + mediaID + '"' +
             ' title="right click and copy link for the URL of this ' +
