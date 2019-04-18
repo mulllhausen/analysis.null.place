@@ -179,8 +179,14 @@ function getMediaHTML(mediaData) {
     '<span class="review-explanation"' + style + '>' +
         '(this review ' + (mediaData.spoilers ? 'contains' : 'has no') + ' spoilers)' +
     '</span>';
-    var review = mediaData.hasOwnProperty('review') ?
-    '<p>' + mediaData.review.replace(/\n/g, '<br><br>') + '</p>' : loadReviewButton;
+    var review = '';
+    if (mediaData.hasOwnProperty('review')) {
+        review = '<p>' + mediaData.review.replace(
+            /\n/g, '<br><br>'
+        ).replace(
+            /##siteGlobals.siteURL##/g, siteGlobals.siteURL
+        ) + '</p>';
+    } else review = loadReviewButton;
     var imgSrc = siteGlobals.siteURL + '/img/' + siteGlobals.mediaType +
     '-thumbnail-' + mediaID + '.jpg?hash=' + mediaData['thumbnailHash'];
     var imgLink = 'https://';
@@ -230,7 +236,11 @@ function loadFullReview(e) {
     var mediaIndex = mediaID2Index(mediaID);
     if (completeMediaData[mediaIndex].hasOwnProperty('review')) {
         e.target.parentNode.innerHTML = '<p>' +
-            completeMediaData[mediaIndex].review.replace(/\n/g, '<br><br>') +
+            completeMediaData[mediaIndex].review.replace(
+                /\n/g, '<br><br>'
+            ).replace(
+                /##siteGlobals.siteURL##/g, siteGlobals.siteURL
+            ) +
         '</p>';
         return;
     }
@@ -242,7 +252,12 @@ function loadFullReview(e) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
             e.target.parentNode.innerHTML = '<p>' +
-                fullReviewText.replace(/\n/g, '<br><br>') + '</p>';
+                fullReviewText.replace(
+                    /\n/g, '<br><br>'
+                ).replace(
+                    /##siteGlobals.siteURL##/g, siteGlobals.siteURL
+                ) +
+            '</p>';
             completeMediaData[mediaIndex].review = fullReviewText;
         }
         catch (err) {
