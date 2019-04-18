@@ -1,4 +1,4 @@
-var latestCache = '2019-04-18_09:36:46';
+var latestCache = '2019-04-19_00:38:52';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -53,8 +53,8 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=pnyGYA',
-    'https://analysis.null.place/css/media-reviews.css?hash=2579An',
+    'https://analysis.null.place/js/media-reviews.js?hash=bxRko5',
+    'https://analysis.null.place/css/media-reviews.css?hash=ReNVj2',
     'https://analysis.null.place/img/book-thumbnail-stanislawlemsolaris1961.jpg?hash=55BY16',
     'https://analysis.null.place/img/book-thumbnail-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumbnail-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.jpg?hash=TN51ee',
@@ -88,7 +88,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-district92009.jpg?hash=ECE1bB',
     'https://analysis.null.place/img/movie-thumbnail-minorityreport2002.jpg?hash=3YUvAQ',
     'https://analysis.null.place/img/movie-thumbnail-darkcity1998.jpg?hash=AYP1o9',
-    'https://analysis.null.place/img/movie-thumbnail-thematrix1999.jpg?hash=hHD_Ow',
+    'https://analysis.null.place/img/movie-thumbnail-thematrix11999.jpg?hash=hHD_Ow',
     'https://analysis.null.place/img/movie-thumbnail-fightclub1999.jpg?hash=oHJ5p0',
     'https://analysis.null.place/img/movie-thumbnail-eternalsunshineofthespotlessmind2004.jpg?hash=6TFVrs',
     'https://analysis.null.place/img/movie-thumbnail-rebelwithoutacause1955.jpg?hash=vaTsOr',
@@ -105,7 +105,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-montypythonandtheholygrail1975.jpg?hash=6decj9',
     'https://analysis.null.place/img/movie-thumbnail-bladerunner1982.jpg?hash=zwuI15',
     'https://analysis.null.place/img/movie-thumbnail-freddygotfingered2001.jpg?hash=eyUXJK',
-    'https://analysis.null.place/img/movie-thumbnail-lockstockandtwosmokingbarrels1998.jpg?hash=wOqiGi',
+    'https://analysis.null.place/img/movie-thumbnail-lockstockandtwosmokingbarrels1998.jpg?hash=KQknbt',
     'https://analysis.null.place/img/movie-thumbnail-inglouriousbasterds2009.jpg?hash=J3Xhne',
     'https://analysis.null.place/img/movie-thumbnail-upgrade2018.jpg?hash=sqFors',
     'https://analysis.null.place/img/movie-thumbnail-10000bc2008.jpg?hash=bRSCLx',
@@ -116,17 +116,17 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-mollysgame2017.jpg?hash=Aiehy2',
     'https://analysis.null.place/img/movie-thumbnail-loro2018.jpg?hash=1yE1FU',
     'https://analysis.null.place/img/movie-thumbnail-birdbox2018.jpg?hash=DHP9G3',
-    'https://analysis.null.place/img/movie-thumbnail-adrift2018.jpg?hash=3tna7v',
+    'https://analysis.null.place/img/movie-thumbnail-adrift2018.jpg?hash=qqZaUh',
     'https://analysis.null.place/img/movie-thumbnail-themanfromnowhere2010.jpg?hash=j_Hbym',
     'https://analysis.null.place/img/movie-thumbnail-taken12008.jpg?hash=lnMaAg',
     'https://analysis.null.place/img/movie-thumbnail-shoplifters2018.jpg?hash=DJkkpD',
-    'https://analysis.null.place/json/movies-init-list.json?hash=u6hydm',
-    'https://analysis.null.place/json/movies-list.json?hash=4PafeA',
-    'https://analysis.null.place/json/movies-search-index.json?hash=D5lJp8',
+    'https://analysis.null.place/json/movies-init-list.json?hash=wIcFK5',
+    'https://analysis.null.place/json/movies-list.json?hash=c2b6mJ',
+    'https://analysis.null.place/json/movies-search-index.json?hash=ap9AUy',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=TFRbYk',
     'https://analysis.null.place/json/movie-review-minorityreport2002.json?hash=S3GRds',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
-    'https://analysis.null.place/json/movie-review-thematrix1999.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-thematrix11999.json?hash=60g6wj',
     'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=dmhcrB',
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
     'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=poY45m',
@@ -155,8 +155,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-loro2018.json?hash=JxIsbO',
     'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=ViCgKm',
     'https://analysis.null.place/json/movie-review-adrift2018.json?hash=qRem2E',
-    'https://analysis.null.place/json/movie-review-themanfromnowhere2010.json?hash=gIEt3Y',
-    'https://analysis.null.place/json/movie-review-taken12008.json?hash=0sRp8D',
+    'https://analysis.null.place/json/movie-review-themanfromnowhere2010.json?hash=9h-ZO4',
+    'https://analysis.null.place/json/movie-review-taken12008.json?hash=EK7Ggf',
     'https://analysis.null.place/json/movie-review-shoplifters2018.json?hash=ehpuIo',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
