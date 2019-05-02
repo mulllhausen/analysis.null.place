@@ -1,4 +1,4 @@
-var latestCache = '2019-04-19_00:38:52';
+var latestCache = '2019-05-03_00:34:57';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -120,9 +120,10 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumbnail-themanfromnowhere2010.jpg?hash=j_Hbym',
     'https://analysis.null.place/img/movie-thumbnail-taken12008.jpg?hash=lnMaAg',
     'https://analysis.null.place/img/movie-thumbnail-shoplifters2018.jpg?hash=DJkkpD',
-    'https://analysis.null.place/json/movies-init-list.json?hash=wIcFK5',
-    'https://analysis.null.place/json/movies-list.json?hash=c2b6mJ',
-    'https://analysis.null.place/json/movies-search-index.json?hash=ap9AUy',
+    'https://analysis.null.place/img/movie-thumbnail-limitless2011.jpg?hash=MLQnF3',
+    'https://analysis.null.place/json/movies-init-list.json?hash=x0tZqh',
+    'https://analysis.null.place/json/movies-list.json?hash=6Kp12l',
+    'https://analysis.null.place/json/movies-search-index.json?hash=zOhOZb',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=TFRbYk',
     'https://analysis.null.place/json/movie-review-minorityreport2002.json?hash=S3GRds',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
@@ -158,6 +159,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-themanfromnowhere2010.json?hash=9h-ZO4',
     'https://analysis.null.place/json/movie-review-taken12008.json?hash=EK7Ggf',
     'https://analysis.null.place/json/movie-review-shoplifters2018.json?hash=ehpuIo',
+    'https://analysis.null.place/json/movie-review-limitless2011.json?hash=jPLrQH',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
