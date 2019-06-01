@@ -167,6 +167,9 @@ def save_list_and_individual_review_files(all_media_x):
         review_file_basename = "%s-review-%s.json" % (media_type, a_media["id"])
         meta_jsons.append(review_file_basename)
         review_file = "%s/json/%s" % (content_path, review_file_basename)
+
+        # save the media list to the content (not output) dir so that QS_LINK
+        # can read it and get its hash
         with open(review_file, "w") as f:
             json.dump({ "reviewFull": a_media["review"] }, f)
 
@@ -176,10 +179,12 @@ def save_list_and_individual_review_files(all_media_x):
             k: v for (k, v) in a_media.iteritems() if (k in listfile_fields)
         })
 
+    # save the media list to the content (not output) dir so that QS_LINK can
+    # read it and get its hash
     with open(
         "%s/json/%s-list.json" % (content_path, plural(media_type)), "w"
     ) as f:
-        json.dump(all_media_listfile, f)
+        json.dump(all_media_listfile, f, sort_keys = True)
 
     return all_media_x
 
@@ -209,15 +214,21 @@ def save_init_list(all_media_x):
         [a_media for a_media in init_list1],
         key = lambda a_media: (-a_media["rating"], a_media["title"])
     )[:10]
+
+    # save the media init list to the content (not output) dir so that QS_LINK
+    # can read it and get its hash
     with open(
         "%s/json/%s-init-list.json" % (content_path, plural(media_type)), "w"
     ) as f:
-        json.dump(init_list2, f)
+        json.dump(init_list2, f, sort_keys = True)
 
 # generate json/<media_type>-search-index.json
 # this is just a list of media titles and years - used for searching
 def save_search_index(all_media_x):
     media_titles = [generate_search_item(a_media) for a_media in all_media_x]
+
+    # save the media search index to the content (not output) dir so that
+    # QS_LINK can read it and get its hash
     with open(
         "%s/json/%s-search-index.json" % (content_path, plural(media_type)), "w"
     ) as f:
@@ -282,6 +293,8 @@ def download_all(all_media_x):
                 )
             )
 
+        # save the media search index to the content (not output) dir so that
+        # QS_LINK can read it and get its hash
         with open("%s/img/%s" % (content_path, original_thumbnail), "wb") as f:
             for data in response.iter_content(1024):
                 if not data:
