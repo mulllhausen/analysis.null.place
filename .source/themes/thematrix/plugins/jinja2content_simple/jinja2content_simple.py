@@ -29,12 +29,30 @@ def process_content(data_from_pelican):
     jenv.filters['cleanstr'] = cleanstr
 
     # convert jinja values in article metadata settings variables
-    for prop in ('console_explain_scripts', '_content'):
-
+    for prop in (
+        'title',
+        'slug',
+        'date',
+        'modified',
+        'category',
+        'tags',
+        'stylesheets',
+        'scripts',
+        'img_preloads',
+        'summary',
+        'console_explain_scripts',
+        'jsons',
+        '_content'
+    ):
         if not hasattr(data_from_pelican, prop):
             continue
 
         val = getattr(data_from_pelican, prop)
+
+        # for simplicity, only strings are currently supported
+        if type(val) not in (str, unicode):
+            continue
+
         setattr(
             data_from_pelican,
             prop,
