@@ -95,9 +95,24 @@ STATIC_FILE_MERGES = {
 DELETE_PRE_MERGE_FILES = False
 
 MEDIA_REVIEWS = {
-    'book': 'json/books-list-all.json',
-    'movie': 'json/movies-list-all.json',
-    'tv-series': 'json/tv-series-list-all.json'
+    'book': {
+        'src-list': 'json/books-list-all.json',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    },
+    'movie': {
+        'src-list': 'json/movies-list-all.json',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    },
+    'tv-series': {
+        'src-list': 'json/tv-series-list-all.json',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    }
 }
 
 LOAD_CONTENT_CACHE = False

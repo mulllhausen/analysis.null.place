@@ -10,14 +10,15 @@ def media_reviews(pelican_obj):
     #pu.db
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
-    for (media_type, json_path) in pelican_obj.settings["MEDIA_REVIEWS"].\
+    for (media_type, media_data) in pelican_obj.settings["MEDIA_REVIEWS"].\
     iteritems():
-        with open(os.path.join(grunt.content_path, json_path)) as f:
+        with open(os.path.join(grunt.content_path, media_data['src-list'])) as f:
             all_media_x = json.load(f)["data"]
 
         grunt.media_type = media_type
         grunt.meta_img_preloads = [] # reset
         grunt.meta_jsons = [] # reset
+        grunt.meta_hashbang_URLs = [] # reset
         required_fields = grunt.get_validation_fields()
 
         # validation
@@ -55,11 +56,10 @@ def media_reviews(pelican_obj):
         # this is just a list of <media> titles and years - used for searching
         grunt.save_search_index(all_media_x)
 
-        pelican_obj.settings[
-            "%s_DATA" % re.sub("[^A-Z]", "", media_type.upper())
-        ] = {
-            "IMG_PRELOADS": ",".join(sorted(grunt.meta_img_preloads)),
-            "JSONS": ",".join(sorted(grunt.meta_jsons))
+        pelican_obj.settings["MEDIA_REVIEWS"][media_type] = {
+            "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
+            "jsons": ",".join(sorted(grunt.meta_jsons)),
+            "hash-bang-URLs": sorted(grunt.meta_hashbang_URLs)
         }
 
 def register():

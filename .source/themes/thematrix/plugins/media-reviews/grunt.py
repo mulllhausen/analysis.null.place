@@ -106,6 +106,7 @@ def get_file_hash(filename):
 # too large
 meta_img_preloads = []
 meta_jsons = []
+meta_hashbang_URLs = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
@@ -147,7 +148,7 @@ def generate_thumbnail_basename(a_media, original_size):
     )
 
 def save_list_and_individual_review_files(all_media_x):
-    global meta_img_preloads, meta_jsons
+    global meta_img_preloads, meta_jsons, meta_hashbang_URLs
     original_size = False
     all_media_listfile = [] # init
 
@@ -155,6 +156,7 @@ def save_list_and_individual_review_files(all_media_x):
     listfile_fields = get_listfile_fields()
 
     for a_media in all_media_x:
+        meta_hashbang_URLs.append(a_media["id"])
 
         thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
         a_media["thumbnailHash"] = get_file_hash(
