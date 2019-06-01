@@ -314,12 +314,17 @@ def resize_thumbnails(all_media_x):
         original_thumbnail = generate_thumbnail_basename(
             a_media, original_size = True
         )
-        img = Image.open("%s/img/%s" % (content_path, original_thumbnail))
+        try:
+            img = Image.open("%s/img/%s" % (content_path, original_thumbnail))
+        except:
+            # the original of this image is not present, to it must not need
+            # resizing
+            continue
         (original_width, original_height) = img.size
         width_percent = desired_width / float(original_width)
         desired_height = int(float(original_height) * float(width_percent))
         img = img.resize((desired_width, desired_height), Image.ANTIALIAS)
-        resized_thumbnail = build_indexes_grunt.generate_thumbnail_basename(
+        resized_thumbnail = generate_thumbnail_basename(
             a_media, original_size = False
         )
         img.save("%s/img/%s" % (content_path, resized_thumbnail))

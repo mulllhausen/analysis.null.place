@@ -1,5 +1,5 @@
 {
-    "notes": "put all tv series data here, new reviews at the bottom, then run build_tv_indexes.py",
+    "notes": "put all tv series data here, new reviews at the bottom",
     "data": [
         {
             "title": "The Walking Dead",
@@ -48,6 +48,18 @@
             "review": "There's no way I can review this show without giving spoilers. Owen (Jonah Hill) is the schizophrenic son of a wealthy family who has to lie for his brother in court. This puts him under considerable stress. Annie (Emma Stone) has borderline personality disorder and is hooked on pills that enable her to vividly relive the final day she spent with her dead sister. Owen needs money so he joins a dodgy clinical trial overseen by a sentient computer named GRTA. Annie is running out of her pills and the only way to get more is to join the trial. The two become friends during the course of the clinical trial as they assist each other in a series of induced lucid dreams.\nThis show is billed as a comedy but I would not describe it as such. It had some funny moments, and both the setting and the plot were bizarre and surreal, but that didn't make me laugh out loud.\nThe best thing about this show was the 80s alternate reality. The computer interfaces are all command-lines, with the occasional green-on-black graph. Apparently they never invented windowing in this universe. It's a very interesting premise. Could such a world exist? Was the invention of windowing inevitable?\nThe fusion of Japanese culture into everyday American life was also well done and believable. For example, to induce the participants not to drop out of the clinical trial, the overseers threaten them with bringing dishonour and shame upon themselves. There are a few Japanese style mascots and I think I even heard a station-jingle as they are being given the certificates at the end of the trial.",
             "IMDBID": "tt5580146",
             "genres": ["Comedy", "Drama", "Sci-Fi"]
+        },
+        {
+            "title": "Dead Pixels",
+            "year": 2019,
+            "season": 1,
+            "rating": 4,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BNDMwZWViNTMtNTI2Ny00MjYxLWJkNGItNGZkNmM5Mzc1N2MzXkEyXkFqcGdeQXVyMjYwNDA2MDE@._V1_UX182_CR0,0,182,268_AL_.jpg",
+            "reviewTitle": "Gaming obssession",
+            "review": "You know how when you get obsessed with something and spend all your time doing it, then you start to see the whole world through that lens? Skateboarders do it when they look around an urban landscape and only see obstacles to be used for kickflips, grinds and slides; Marxists do it when they go to the supermarket and can only think of all the hours of exploitation that have gone into producing the shelves full of goods; and hardcore gamers do it when they spend 16 hours a day in an adult diaper, living off baked beans, shitting in a bucket ... Well according to this hillarious TV show anyway.\nMeg, Nicky and Usman spend all their time playing, talking and thinking about Kingdom Scrolls - an MMORPG. It's a British show, so the comedy is pretty bleak, but I still lol'd a lot. I was a member of the gaming subculture then I probably would have given this show a higher score.",
+            "IMDBID": "tt7559438",
+            "genres": ["Comedy", "Fantasy"]
         }
     ]
 }
