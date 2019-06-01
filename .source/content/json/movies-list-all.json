@@ -1,5 +1,5 @@
 {
-    "notes": "put all movie data here, new reviews at the bottom, then run build_movie_indexes.py",
+    "notes": "put all movie data here, new reviews at the bottom",
     "data": [
         {
             "title": "District 9",

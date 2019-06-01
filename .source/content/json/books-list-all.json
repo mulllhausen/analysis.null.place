@@ -1,5 +1,5 @@
 {
-    "notes": "put all book data here, new reviews at the bottom, then run build_book_indexes.py",
+    "notes": "put all book data here, new reviews at the bottom",
     "data": [
         {
             "author": "Stanislaw Lem",
