@@ -1,4 +1,4 @@
-var latestCache = '2019-06-02_00:20:26';
+var latestCache = '2019-06-02_00:48:53';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
@@ -75,10 +75,10 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/tv-series-thumbnail-maniac12018.jpg?hash=0nxg5W',
     'https://analysis.null.place/img/tv-series-thumbnail-nightflyers12018.jpg?hash=mSCzFO',
     'https://analysis.null.place/img/tv-series-thumbnail-thewalkingdead12010.jpg?hash=KBZUww',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=smTLSj',
-    'https://analysis.null.place/json/tv-series-list.json?hash=ZLDd0I',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=Gr2fm5',
+    'https://analysis.null.place/json/tv-series-list.json?hash=FXGhAM',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=HIaCeP',
+    'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=l-lzV-',
     'https://analysis.null.place/json/tv-series-review-maniac12018.json?hash=SjiWtk',
     'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=iSpT3g',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
