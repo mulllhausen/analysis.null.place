@@ -1,1 +1,0 @@
-../movie-reviews/imdb_export2json.py

@@ -1,1 +1,0 @@
-../movie-reviews/build_indexes_grunt.py

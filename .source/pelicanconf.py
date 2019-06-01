@@ -94,12 +94,19 @@ STATIC_FILE_MERGES = {
 }
 DELETE_PRE_MERGE_FILES = False
 
+MEDIA_REVIEWS = {
+    'book': 'json/books-list-all.json',
+    'movie': 'json/movies-list-all.json',
+    'tv-series': 'json/tv-series-list-all.json'
+}
+
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']
 PLUGINS = [
     'static-file-merge',
     'jinja2content_simple',
-    'querystring-cache'
+    'querystring-cache',
+    'media-reviews'
 ]
 
 # file paths relative to the output dir
