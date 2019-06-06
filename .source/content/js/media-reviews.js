@@ -205,13 +205,8 @@ function getMediaHTML(mediaData) {
         '(this review ' + (mediaData.spoilers ? 'contains' : 'has no') + ' spoilers)' +
     '</span>';
     var review = '';
-    if (mediaData.hasOwnProperty('review')) {
-        review = '<p>' + mediaData.review.replace(
-            /\n/g, '<br><br>'
-        ).replace(
-            /##siteGlobals.siteURL##/g, siteGlobals.siteURL
-        ) + '</p>';
-    } else review = loadReviewButton;
+    if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
+    else review = loadReviewButton;
     var imgSrc = siteGlobals.siteURL + '/img/' + siteGlobals.mediaType +
     '-thumbnail-' + mediaID + '.jpg?hash=' + mediaData['thumbnailHash'];
     var imgLink = 'https://';
@@ -260,13 +255,9 @@ function loadFullReview(e) {
     var mediaID = e.target.id.replace('load-', '');
     var mediaIndex = mediaID2Index(mediaID);
     if (completeMediaData[mediaIndex].hasOwnProperty('review')) {
-        e.target.parentNode.innerHTML = '<p>' +
-            completeMediaData[mediaIndex].review.replace(
-                /\n/g, '<br><br>'
-            ).replace(
-                /##siteGlobals.siteURL##/g, siteGlobals.siteURL
-            ) +
-        '</p>';
+        e.target.parentNode.innerHTML = formatReview(
+            completeMediaData[mediaIndex].review
+        );
         return;
     }
     ajax(
@@ -276,19 +267,22 @@ function loadFullReview(e) {
         function (json) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
-            e.target.parentNode.innerHTML = '<p>' +
-                fullReviewText.replace(
-                    /\n/g, '<br><br>'
-                ).replace(
-                    /##siteGlobals.siteURL##/g, siteGlobals.siteURL
-                ) +
-            '</p>';
+            e.target.parentNode.innerHTML = formatReview(fullReviewText);
             completeMediaData[mediaIndex].review = fullReviewText;
         }
         catch (err) {
             console.log('error in loadFullReview function: ' + err);
         }
     });
+}
+
+function formatReview(review) {
+    review = review.replace(/##siteGlobals.siteURL##/g, siteGlobals.siteURL);
+
+    // if the review uses paragraph tags then do not modify it
+    if (inArray('<p>', review)) return review;
+
+    return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
 }
 
 function getMediaStarsHTML(mediaDataRating) {
