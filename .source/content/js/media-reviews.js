@@ -228,19 +228,20 @@ function getMediaHTML(mediaData) {
             siteGlobals.mediaType + ' review"' +
         '>' +
             '<svg class="icon icon-chain">' +
-                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-chain"></use>' +
+                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-chain">' +
+                '</use>' +
             '</svg>' +
         '</a>' +
         '<div class="thumbnail-and-stars">' +
-            '<a href="' + imgLink + '">' +
-                '<img src="' + imgSrc + '" alt="' + siteGlobals.mediaType +
-                ' thumbnail">' +
-            '</a>' +
+            '<img src="' + imgSrc + '" alt="' + siteGlobals.mediaType +
+            ' thumbnail">' +
             '<div class="stars">' +
                 getMediaStarsHTML(mediaData.rating) +
             '</div>' +
         '</div>' +
-        '<h3 class="media-title">' + renderedTitle + '</h3>' +
+        '<a href="' + imgLink + '">' +
+            '<h3 class="media-title">' + renderedTitle + '</h3>' +
+        '</a>' +
         '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +
         '<div class="review-text">' + review + '</div>' +
     '</div>';
