@@ -28,9 +28,10 @@
         {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
 
     <!-- begin hash bang URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
-            {% for hash_bang_url in media_data['hash-bang-URLs'] %}
+            {% for hashbang_URL in media_data['hashbang_URLs'] %}
     <url>
-        <loc>{{ SITEURL }}/{{ media_type }}-reviews/#!{{ hash_bang_url }}</loc>
+        <loc>{{ SITEURL }}/{{ media_type }}-reviews/#!{{ hashbang_URL['hashbangURL'] }}</loc>
+        <lastmod>{{ hashbang_URL['date'] | strftime('%Y-%m-%d') }}</lastmod>
         <priority>0.8</priority>
     </url>
             {% endfor %}

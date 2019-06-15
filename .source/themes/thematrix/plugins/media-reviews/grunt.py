@@ -11,6 +11,8 @@ import re
 import hashlib
 import base64
 import numbers
+import datetime
+import pytz
 import requests
 import copy
 from PIL import Image
@@ -24,7 +26,20 @@ def plural(x):
         return x
     return "%ss" % x
 
+def convert_types(all_media_x, field_formats, timezone_name):
+    # note: only call this function if validate() passes
+    localtz = pytz.timezone(timezone_name)
+    for a_media in all_media_x:
+        for (k, t) in field_formats.iteritems():
+            if (isinstance(t, basestring) and "datetime" in t):
+                date_format = re.sub(r"datetime\:[\s]*", "", t)
+                a_media[k] = localtz.localize(
+                    datetime.datetime.strptime(a_media[k], date_format)
+                )
+    return all_media_x
+
 # validation
+
 def get_validation_fields():
     required_fields = { # fields common to all types
         "title": basestring,
@@ -34,7 +49,8 @@ def get_validation_fields():
         "spoilers": bool,
         "reviewTitle": basestring,
         "review": basestring,
-        "genres": list
+        "genres": list,
+        "reviewDate": "datetime: %Y-%m-%d"
     }
     if (media_type == "movie"):
         required_fields.update({
@@ -68,18 +84,36 @@ def validate(all_media_x, required_fields):
         for (k, t) in required_fields.iteritems():
             if k not in a_media:
                 errors.append("'%s' does not have element '%s'" % (title, k))
+            elif (isinstance(t, basestring) and "datetime" in t):
+                try:
+                    date_format = re.sub(r"datetime\:[\s]*", "", t)
+                    datetime.datetime.strptime(a_media[k], date_format)
+                except:
+                    errors.append(
+                        "'%s': element '%s' is not a datetime of type '%s'" %
+                        (title, k, date_format)
+                    )
             elif not isinstance(a_media[k], t):
-                errors.append("'%s': element '%s' has the wrong type" % (title, k))
+                errors.append(
+                    "'%s': element '%s' has the wrong type" % (title, k)
+                )
             elif isinstance(a_media[k], basestring) and (a_media[k].strip() == ""):
-                errors.append("'%s': element '%s' cannot be an empty string" % (title, k))
+                errors.append(
+                    "'%s': element '%s' cannot be an empty string" % (title, k)
+                )
             elif isinstance(a_media[k], list) and not len(a_media[k]):
-                errors.append("'%s': element '%s' cannot be an empty list" % (title, k))
+                errors.append(
+                    "'%s': element '%s' cannot be an empty list" % (title, k)
+                )
             elif (
                 (k == "rating")
                 and ((a_media[k] < 0) or (a_media[k] > 5))
                 and ((a_media[k] * 2) % 1 != 0)
             ):
-                errors.append("'%s': element '%s' must be a half-int in 0 - 5 (inclusive)" % (title, k))
+                errors.append(
+                    "'%s': element '%s' must be a half-int in 0 - 5 (inclusive)"
+                    % (title, k)
+                )
             elif (
                 (k == "thumbnail")
                 and (a_media[k][:4] != "http")
@@ -155,9 +189,15 @@ def save_list_and_individual_review_files(all_media_x):
     # fields for the list json files
     listfile_fields = get_listfile_fields()
 
+    all_media_x = sorted(
+        [a_media for a_media in all_media_x],
+        key = lambda a_media: (a_media["reviewDate"], a_media["title"])
+    )
     for a_media in all_media_x:
-        meta_hashbang_URLs.append(a_media["id"])
-
+        meta_hashbang_URLs.append({
+            "hashbangURL": a_media["id"],
+            "date": a_media["reviewDate"]
+        })
         thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
         a_media["thumbnailHash"] = get_file_hash(
             "%s/img/%s" % (content_path, thumbnail_basename)
@@ -185,7 +225,6 @@ def save_list_and_individual_review_files(all_media_x):
         "%s/json/%s-list.json" % (content_path, plural(media_type)), "w"
     ) as f:
         json.dump(all_media_listfile, f, sort_keys = True)
-
     return all_media_x
 
 def get_listfile_fields():
@@ -246,14 +285,6 @@ def generate_search_item(a_media):
 
     # remove double spaces, for efficiency
     return re.sub(r" +", " ", search_item)
-
-def print_metatags():
-    print """place these meta tags in your %s reviews article:
-
-<meta name="img_preloads" content="%s"/>
-
-<meta name="jsons" content="%s"/>
-""" % (media_type, ",".join(meta_img_preloads), ",".join(meta_jsons))
 
 # downloading thumbnails
 

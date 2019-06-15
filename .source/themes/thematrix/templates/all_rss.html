@@ -4,7 +4,7 @@
         <title>{{ SITENAME }}</title>
         <link>{{ SITEURL }}/</link>
         <description></description>
-        <lastBuildDate>{{ articles[0].date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+        {% set channel = namespace(max_date = dates[0].date) %}{# init #}
         {% for article in dates %}
         <item>
             <title>{{ article.title }}</title>
@@ -14,8 +14,10 @@
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
             <lastBuildDate>
             {%- if article.modified -%}
+                {%- set channel.max_date = article.modified if article.modified > channel.max_date else channel.max_date -%}
                 {{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- else -%}
+                {%- set channel.max_date = article.date if article.date > channel.max_date else channel.max_date -%}
                 {{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- endif -%}
             </lastBuildDate>
@@ -27,5 +29,6 @@
             {% endif %}
         </item>
         {% endfor %}
+        <lastBuildDate>{{ channel.max_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
     </channel>
 </rss>

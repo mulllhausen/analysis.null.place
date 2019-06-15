@@ -1,4 +1,4 @@
-from pelican import signals
+import pelican
 import grunt
 import os
 import json
@@ -28,6 +28,9 @@ def media_reviews(pelican_obj):
         if len(errors) > 0:
             exit("\n".join(errors))
 
+        all_media_x = grunt.convert_types(
+            all_media_x, required_fields, pelican_obj.settings["TIMEZONE"]
+        )
         all_media_x = grunt.add_missing_data(all_media_x)
 
         # download thumbnails
@@ -59,8 +62,13 @@ def media_reviews(pelican_obj):
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = {
             "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
             "jsons": ",".join(sorted(grunt.meta_jsons)),
-            "hash-bang-URLs": sorted(grunt.meta_hashbang_URLs)
+            "hashbang_URLs": sorted(
+                [a_media for a_media in grunt.meta_hashbang_URLs],
+                key = lambda a_media: (a_media["hashbangURL"])
+            ),
+            "latest_review": max(all_media_x, key = lambda x: x["reviewDate"])\
+            ["reviewDate"].strftime("%Y-%m-%d %H:%M:%S %z")
         }
 
 def register():
-    signals.initialized.connect(media_reviews)
+    pelican.signals.initialized.connect(media_reviews)

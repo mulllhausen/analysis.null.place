@@ -4,7 +4,7 @@
     <link href="{{ SITEURL }}/" rel="alternate"></link>
     <link href="{{ SITEURL }}/{{ ALL_ATOM_SAVE_AS}}" rel="self"></link>
     <id>{{ SITEURL }}/</id>
-    <updated>{{ articles[0].date.isoformat() }}</updated>
+    {% set feed = namespace(max_date = dates[0].date) %}{# init #}
     {% for article in dates %}
     <entry>
         <title>{{ article.title }}</title>
@@ -12,8 +12,10 @@
         <published>{{ article.date.isoformat() }}</published>
         <updated>
             {%- if article.modified -%}
+                {%- set feed.max_date = article.modified if article.modified > feed.max_date else feed.max_date -%}
                 {{ article.modified.isoformat() }}
             {%- else -%}
+                {%- set feed.max_date = article.date if article.date > feed.max_date else feed.max_date -%}
                 {{ article.date.isoformat() }}
             {%- endif -%}
         </updated>
@@ -30,4 +32,5 @@
         {% endif %}
     </entry>
     {% endfor %}
+    <updated>{{ feed.max_date.isoformat() }}</updated>
 </feed>
