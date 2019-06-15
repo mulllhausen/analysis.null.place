@@ -7,17 +7,17 @@
     </url>
     <url>
         <loc>https://analysis.null.place/book-reviews/</loc>
-        <lastmod>2019-03-29</lastmod>
+        <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/</loc>
-        <lastmod>2019-04-08</lastmod>
+        <lastmod>2019-06-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/</loc>
-        <lastmod>2019-04-08</lastmod>
+        <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -29,150 +29,187 @@
     <!-- begin hash bang URLs for https://analysis.null.place/movie-reviews/ -->
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!10000bc2008</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!aclockworkorange1971</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!adrift2018</loc>
+        <lastmod>2019-04-08</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!birdbox2018</loc>
+        <lastmod>2019-04-08</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!bladerunner1982</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!darkcity1998</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!district92009</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!eternalsunshineofthespotlessmind2004</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!fightclub1999</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!freddygotfingered2001</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!greenbook2019</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!inglouriousbasterds2009</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!limitless2011</loc>
+        <lastmod>2019-05-03</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!lockstockandtwosmokingbarrels1998</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!loro2018</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!minorityreport2002</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!missionimpossible6fallout2018</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!mollysgame2017</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!montypythonandtheholygrail1975</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!rebelwithoutacause1955</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!requiemforadream2000</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!shoplifters2018</loc>
+        <lastmod>2019-04-18</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!statusupdate2018</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!taken12008</loc>
+        <lastmod>2019-04-18</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thebeach2000</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thebutterflyeffect2004</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thecurseoflallorona2019</loc>
+        <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thedressmaker2015</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thefounder2016</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!themanfromnowhere2010</loc>
+        <lastmod>2019-04-18</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!themartian2015</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!themask1994</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thematinghabitsoftheearthboundhuman1999</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!thematrix11999</loc>
+        <lastmod>2019-04-19</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!themazerunner2014</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!transcendence2014</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/#!upgrade2018</loc>
+        <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
     <!-- end hash bang URLs for https://analysis.null.place/movie-reviews/ -->
@@ -180,18 +217,22 @@
     <!-- begin hash bang URLs for https://analysis.null.place/book-reviews/ -->
     <url>
         <loc>https://analysis.null.place/book-reviews/#!barbaraklipskatheneuroscientistwholosthermind2018</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/book-reviews/#!robertharrisimperium2006</loc>
+        <lastmod>2019-03-29</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/book-reviews/#!stanislawlemsolaris1961</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/book-reviews/#!theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011</loc>
+        <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
     <!-- end hash bang URLs for https://analysis.null.place/book-reviews/ -->
@@ -199,22 +240,27 @@
     <!-- begin hash bang URLs for https://analysis.null.place/tv-series-reviews/ -->
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/#!blackmirror12011</loc>
+        <lastmod>2019-03-26</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/#!deadpixels12019</loc>
+        <lastmod>2019-06-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/#!maniac12018</loc>
+        <lastmod>2019-04-04</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/#!nightflyers12018</loc>
+        <lastmod>2019-04-04</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/#!thewalkingdead12010</loc>
+        <lastmod>2019-03-26</lastmod>
         <priority>0.8</priority>
     </url>
     <!-- end hash bang URLs for https://analysis.null.place/tv-series-reviews/ -->
