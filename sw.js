@@ -1,7 +1,7 @@
-var latestCache = '2019-06-15_12:24:11';
+var latestCache = '2019-06-15_19:43:31';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=4uNcYG',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=7ay5zw',
     'https://analysis.null.place/theme/img/icons.svg?hash=DlWPXe',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
@@ -53,7 +53,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=TGdg3j',
+    'https://analysis.null.place/js/media-reviews.js?hash=Ht_hJy',
     'https://analysis.null.place/css/media-reviews.css?hash=ReNVj2',
     'https://analysis.null.place/img/book-thumbnail-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumbnail-robertharrisimperium2006.jpg?hash=I6ji6V',
