@@ -165,6 +165,7 @@ function linkTo1Media(e) {
     currentlySearching = false;
     numMediaShowing = 1;
     renderMediaCount();
+    hideAllSkyscraperAds();
     document.getElementById('reviewsArea').innerHTML = mediaEl.outerHTML;
     searchBoxMode('show-all-button');
     document.getElementById('search').value = ''; // reset
@@ -209,14 +210,14 @@ function getMediaHTML(mediaData) {
     else review = loadReviewButton;
     var imgSrc = siteGlobals.siteURL + '/img/' + siteGlobals.mediaType +
     '-thumbnail-' + mediaID + '.jpg?hash=' + mediaData['thumbnailHash'];
-    var imgLink = 'https://';
+    var titleLink = 'https://';
     switch (siteGlobals.mediaType) {
         case 'book':
-            imgLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
+            titleLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
             break;
         case 'movie':
         case 'tv-series':
-            imgLink += 'www.imdb.com/title/' + mediaData.IMDBID;
+            titleLink += 'www.imdb.com/title/' + mediaData.IMDBID;
             break;
     }
     return '<div class="media" id="!' + mediaID + '">' +
@@ -239,7 +240,7 @@ function getMediaHTML(mediaData) {
                 getMediaStarsHTML(mediaData.rating) +
             '</div>' +
         '</div>' +
-        '<a href="' + imgLink + '">' +
+        '<a href="' + titleLink + '">' +
             '<h3 class="media-title">' + renderedTitle + '</h3>' +
         '</a>' +
         '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +

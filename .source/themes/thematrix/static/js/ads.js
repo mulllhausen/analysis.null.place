@@ -4,23 +4,76 @@ function deleteInFeedAds() {
 function deleteSkyscraperAds() {
     deleteElements(document.querySelectorAll('.col-0 .adsbygoogle'));
 }
+var sampleSkyscraperAd = null; // init
+var numSkyscraperAds = 1; // init
+var numHiddenSkyscraperAds = 0; // init
 function fillSkyscraperAds() {
     var topMargin = 30; // px (.col-0 margin-top)
     var adHeight = 630; // px (including margin)
-    var contentHeight = document.querySelector('.col-1').offsetHeight;
-    var adParent = document.querySelector('.col-0');
-    var heightSoFar = topMargin + adHeight;
+    var spaceStatus = {
+        heightSoFar: topMargin + adHeight,
+        limitReached: false
+    };
+    // the first skyscraper ad already exists. save a copy before converting it
+    if (sampleSkyscraperAd == null) {
+        sampleSkyscraperAd = document.querySelector('.col-0 .adsbygoogle').cloneNode();
 
-    // the first skyscraper ad already exists
-    (adsbygoogle = window.adsbygoogle || []).push({});
-
-    while (true) {
-        var adEl = document.querySelector('.col-0 .adsbygoogle').cloneNode();
-        heightSoFar += adHeight; // look-ahead
-        if (heightSoFar > contentHeight) break;
-        adParent.appendChild(adEl);
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        // convert it to an ad
+        (spaceStatus.adsbygoogle = window.adsbygoogle || []).push({});
     }
+
+    // set up a timer to keep adding/removing more skyscraper ads as the page
+    // height changes due to dynamic content
+    setInterval(function() {
+        while (true) {
+            spaceStatus = add1MoreSkyscraperAd(
+                sampleSkyscraperAd, topMargin, adHeight, spaceStatus
+            );
+            if (spaceStatus.limitReached) break;
+        }
+    }, 1000);
+}
+function add1MoreSkyscraperAd(adEl, topMargin, adHeight, spaceStatus) {
+    var contentHeight = document.querySelector('.col-1').offsetHeight;
+    if (numHiddenSkyscraperAds == numSkyscraperAds) { // all hidden
+        // always show the first skyscraper ad
+        unhide1SkyscraperAd();
+        spaceStatus.heightSoFar = topMargin + adHeight;
+    }
+    if ((spaceStatus.heightSoFar + adHeight) > contentHeight) {
+        spaceStatus.limitReached = true;
+        return spaceStatus;
+    }
+    if (numHiddenSkyscraperAds > 0) {
+        unhide1SkyscraperAd();
+    } else {
+        document.querySelector('.col-0').appendChild(adEl.cloneNode());
+        (spaceStatus.adsbygoogle = window.adsbygoogle || []).push({});
+        numSkyscraperAds++;
+    }
+    spaceStatus.heightSoFar += adHeight;
+    spaceStatus.limitReached = false;
+    return spaceStatus;
+}
+function hideAllSkyscraperAds() {
+    foreach(document.querySelectorAll('.adsbygoogle.skyscraper'), function (i, el) {
+        addCSSClass(el, 'important-hidden');
+        numHiddenSkyscraperAds++;
+    });
+}
+function unhide1SkyscraperAd() {
+    var el = document.querySelector('.adsbygoogle.skyscraper.important-hidden');
+    removeCSSClass(el, 'important-hidden');
+    numHiddenSkyscraperAds--;
+}
+function anyVisibleSkyscraperAds() {
+    var anyVisible = false;
+    foreach(document.querySelectorAll('.adsbygoogle.skyscraper'), function (i, el) {
+        if (el.style.display == 'none') return;
+        anyVisible = true;
+        return false;
+    });
+    return anyVisible;
 }
 function loadInFeedAds() {
     var numInFeedAds = document.querySelectorAll('.col-1 .adsbygoogle').length;

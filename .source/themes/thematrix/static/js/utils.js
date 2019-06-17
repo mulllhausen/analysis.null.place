@@ -191,6 +191,20 @@ function deleteElements(element) {
     });
 }
 
+function addCSSClass(el, newClass) {
+    var classList = el.className.split(/\s+/);
+    classList.push(newClass);
+    el.className = classList.join(' ');
+}
+
+function removeCSSClass(el, removeClass) {
+    var classList = el.className.split(/\s+/);
+    var i = classList.indexOf(removeClass);
+    if (i == -1) return; // not found
+    classList.splice(i, 1); // remove 1 list item
+    el.className = classList.join(' ');
+}
+
 function isHex(val) {
     var regex = /^-?[0-9a-f]+$/gi;
     return regex.test(val);
