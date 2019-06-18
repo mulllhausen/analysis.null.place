@@ -30,7 +30,7 @@ FACEBOOK_APP_ID = '2040066019560327'
 DISQUS_SITENAME = 'analysis-null-place'
 
 # add the plugins only used when publishing
-PLUGINS += ['yuicompressor']
+#PLUGINS += ['yuicompressor']
 
 if (('FACEBOOK_APP_ID' in vars()) or ('DISQUS_SITENAME' in vars())):
     COMMENTS_SCRIPTS = ['js/comments-manager.js'] # init

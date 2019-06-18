@@ -1,1 +1,2456 @@
-var passColor="#7db904";var failColor="red";var stopHashingForm={};var difficultyChars={};var difficultyAttempts={};var txsPerBlock=[];var miningData={versionRaw:null,versionInt:null,version:null,prevHashRaw:null,prevHash:null,merkleRootRaw:null,merkleRoot:null,timestampRaw:null,timestampUnixtime:null,timestamp:null,bitsRaw:null,bits:null,nonceRaw:null,nonceInt:null,nonce:null,target:null};addEvent(window,"load",function(){initBorderTheDigits();addEvent(document.querySelectorAll("button.wrap-nowrap"),"click",runHashWrapClicked);addEvent(document.getElementById("btnRunHash0"),"click",runHash0Clicked);addEvent(document.getElementById("inputMessage0"),"keyup",function(d){if(d.keyCode!=13){return}runHash0Clicked()});addEvent(document.querySelector("#dec2hexTable .instructions"),"click",showMoreDec2Hex);var a={firstTime:true,hashMatch:document.getElementById("match1").textContent,matchFound:false,previousNonce:"",formNum:1,hashRateData:[],checkboxPurpose:"increment preimage",prefix:""};stopHashingForm[1]=false;difficultyChars[1]=64;addEvent(document.getElementById("btnRunHash1"),"click",function(){runHash1Or2Or3Clicked(a)});addEvent(document.getElementById("inputMessage1"),"keyup",function(d){if(d.keyCode!=13){return}runHash1Or2Or3Clicked(a)});var b={firstTime:true,hashMatch:document.getElementById("match2").textContent,matchFound:false,previousNonce:"",formNum:2,state:"stopped",hashRateData:[],checkboxPurpose:"increment preimage",prefix:""};stopHashingForm[2]=false;difficultyChars[2]=64;addEvent(document.getElementById("btnRunHash2"),"click",function(d){runHash2Clicked(d,b)});var c={firstTime:true,hashMatch:document.getElementById("match3").textContent,matchFound:false,previousNonce:"",formNum:3,state:"stopped",hashRateData:[],checkboxPurpose:"mine automatically",attempts:{},prefix:initProofOfWorkForm()};initDifficultyLevelDropdown(3);addEvent(document.getElementById("btnRunHash3"),"click",function(d){runHash3Clicked(d,c)});difficultyChars[3]=1;addEvent(document.getElementById("difficulty3"),"change",difficulty3Changed);addEvent(document.getElementById("inputCheckbox3"),"click",checkbox3Changed);initBlockchainSVG();addEvent(document.getElementById("version4"),"keyup, change",version4Changed);triggerEvent(document.getElementById("version4"),"change");addEvent(document.getElementById("prevHash4"),"keyup, change",prevHash4Changed);triggerEvent(document.getElementById("prevHash4"),"change");addEvent(document.getElementById("merkleRoot4"),"keyup, change",merkleRoot4Changed);triggerEvent(document.getElementById("merkleRoot4"),"change");addEvent(document.getElementById("timestamp4"),"keyup, change",timestamp4Changed);triggerEvent(document.getElementById("timestamp4"),"change");addEvent(document.getElementById("bits4"),"keyup, change",bits4Changed);triggerEvent(document.getElementById("bits4"),"change");addEvent(document.getElementById("nonce4"),"keyup, change",nonce4Changed);triggerEvent(document.getElementById("nonce4"),"change");addEvent(document.getElementById("btnRunHash4"),"click",mine4AndRenderResults);addEvent(document.getElementById("makeBlockPass4"),"click",function(){scrollToElement(document.getElementById("form4"));resetBlock4(true)});addEvent(document.getElementById("version5"),"keyup, change",version5Changed);triggerEvent(document.getElementById("version5"),"change");addEvent(document.getElementById("timestamp6"),"keyup, change",timestamp6Changed);triggerEvent(document.getElementById("timestamp6"),"change");addEvent(document.getElementById("difficulty7"),"keyup, change",difficulty7Changed);addEvent(document.getElementById("bits7"),"keyup, change",bits7Changed);addEvent(document.getElementById("bitsAreHex7"),"click",bitsAreHex7Changed);addEvent(document.getElementById("target7"),"keyup, change",target7Changed);triggerEvent(document.getElementById("bits7"),"change");addEvent(document.getElementById("runDifficultyUnitTests"),"click",runDifficultyUnitTests);addEvent(document.getElementById("nonce8"),"keyup, change",nonce8Changed);triggerEvent(document.getElementById("nonce8"),"change");addEvent(document.getElementById("version9"),"keyup, change",version9Changed);triggerEvent(document.getElementById("version9"),"change");addEvent(document.getElementById("prevHash9"),"keyup, change",prevHash9Changed);triggerEvent(document.getElementById("prevHash9"),"change");addEvent(document.getElementById("merkleRoot9"),"keyup, change",merkleRoot9Changed);triggerEvent(document.getElementById("merkleRoot9"),"change");addEvent(document.getElementById("timestamp9"),"keyup, change",timestamp9Changed);triggerEvent(document.getElementById("timestamp9"),"change");addEvent(document.getElementById("bits9"),"keyup, change",bits9Changed);triggerEvent(document.getElementById("bits9"),"change");addEvent(document.getElementById("nonce9"),"keyup, change",nonce9Changed);triggerEvent(document.getElementById("nonce9"),"change");addEvent(document.getElementById("inputMessage10"),"keyup, change",runHash10Changed);triggerEvent(document.getElementById("inputMessage10"),"change");addEvent(document.getElementById("inputCheckbox10"),"click",runHash10Changed);initDifficultyLevelDropdown(11);initDifficultyAttempts();addEvent(document.getElementById("difficulty11"),"change",difficulty11Changed);switch(getDeviceType()){case"phone":toggleAllCodeblockWrapsMobile();break;case"tablet":case"pc":break}});function initBorderTheDigits(){var a=document.querySelectorAll(".individual-digits");foreach(a,function(b,c){borderTheDigits(c,new Array(c.textContent.length))})}function runHashWrapClicked(d){var b=d.currentTarget;var c=b.closest(".codeblock-container").querySelector(".codeblock");var a=(b.getAttribute("wrapped")=="true");fixCodeblockNewlines(c,a)}function fixCodeblockNewlines(b,a){if(a){b.innerHTML=b.innerHTML.replace(/\n\n/g,"\n").replace(/\n/g,"\n\n");foreach(b.querySelectorAll(".preserve-newline"),function(c,d){d.innerHTML=""})}else{b.innerHTML=b.innerHTML.replace(/\n\n/g,"\n");foreach(b.querySelectorAll(".preserve-newline"),function(c,d){d.innerHTML="\n"})}foreach(b.querySelectorAll(".always-one-newline"),function(c,d){if(a&&getDeviceType()=="phone"){d.style.display="none"}else{d.innerHTML="\n";d.style.display="inline"}})}function runHash0Clicked(){var j=document.getElementById("form0");var k=document.getElementById("inputMessage0").value;var a=new Date();var d=sjcl.hash.sha256.hash(k);var c=sjcl.codec.hex.fromBits(d);var h=new Date();var e=h-a;var g="(hashing took ";var b="(took ";if(e<1){g+="less than 1";b+="<1"}else{g+=e;b+=e}g+=" millisecond"+(e<=1?"":"s")+")";b+="ms)";document.getElementById("hash0Duration").innerHTML=g;var i=(j.querySelector("button.wrap-nowrap").getAttribute("wrapped")=="true");var f=document.getElementById("hash0Results");f.innerHTML=(k+' <span class="aligner"></span>-> SHA256 -> '+c+" "+b+"\n"+(i?"\n":"")+f.innerHTML).trim();if(!i){alignText(f)}f.closest(".codeblock-container").style.display="block"}var latestDec=19;function showMoreDec2Hex(){var c=document.getElementById("dec2hexData");var a=c.innerHTML;var b=latestDec+15;for(;latestDec<=b;latestDec++){a+="<tr><td>"+latestDec+"</td><td>"+int2hex(latestDec)+"</td></tr>"}try{c.innerHTML=a}catch(d){c.outerHTML='<table id="dec2hexData">'+a+"</table>"}var f=document.querySelector("#dec2hexTable .vertical-scroll");f.scrollTop=f.scrollHeight}function runHash2Clicked(b,c){switch(c.state){case"running":stopHashingForm[2]=true;c.state="stopped";b.currentTarget.innerHTML="Run SHA256 Automatically";renderHashing2Duration(c.hashRateData);break;case"stopped":stopHashingForm[2]=false;c.state="running";b.currentTarget.innerHTML="Stop";(function a(d){if(stopHashingForm[2]){return}runHash1Or2Or3Clicked(d);setTimeout(function(){a(d)},0)})(c);break}}function renderHashing2Duration(c){var b=getAverageHashRate(c,true);if(b<1){return}document.querySelectorAll(".hash2Rate")[0].innerHTML=b;document.querySelectorAll(".hash2Rate")[1].innerHTML=b;document.getElementById("showHowLongForThisDevice").style.display="inline";var a=addThousandCommas(Math.round(3671743063/b));document.getElementById("howLongForThisDeviceWords").innerHTML=a+" million".repeat(10)+" years";document.getElementById("howLongForThisDeviceNumber").innerHTML=a+",000".repeat(20)+" years"}function initDifficultyLevelDropdown(b){var c='<option value="1">match first character only</option>\n';for(var a=2;a<64;a++){c+='<option value="'+a+'">match first '+a+" characters only</option>\n"}c+='<option value="64">match all 64 characters</option>\n';document.getElementById("difficulty"+b).outerHTML='<select id="difficulty'+b+'">'+c+"</select>"}function initProofOfWorkForm(){var a=getRandomAlpha(10);document.getElementById("inputMessage3Prefix").value=a;return a}function difficulty3Changed(a){difficultyChars[3]=parseInt(a.currentTarget.value);document.getElementById("btnRunHash3").disabled=false}function checkbox3Changed(a){document.getElementById("btnRunHash3").innerHTML="Mine "+(a.currentTarget.checked?"automatically":"manually")+" with SHA256"}function runHash3Clicked(d,f){var c=document.getElementById("inputCheckbox3").checked;var b="Mine "+(c?"automatically":"manually")+" with SHA256";switch(f.state){case"running":stopHashingForm[3]=true;f.state="stopped";d.currentTarget.innerHTML=b;document.getElementById("difficulty3").disabled=false;document.getElementById("inputCheckbox3").disabled=false;break;case"stopped":stopHashingForm[3]=false;f.state="running";if(c){d.currentTarget.innerHTML="Stop";document.getElementById("difficulty3").disabled=true;document.getElementById("inputCheckbox3").disabled=true}if(!f.attempts.hasOwnProperty(difficultyChars[3])){f.attempts[difficultyChars[3]]=0;f.attempts["matchFound"+difficultyChars[3]]=false}(function a(i){if(stopHashingForm[3]){return}runHash1Or2Or3Clicked(i);i.attempts[difficultyChars[3]]++;if(i.matchFound){stopHashingForm[3]=true;i.state="stopped";i.attempts["matchFound"+difficultyChars[3]]=true;var h=document.getElementById("btnRunHash3");h.disabled=true;h.innerHTML=b;document.getElementById("difficulty3").getElementsByTagName("option")[difficultyChars[3]-1].disabled=true;document.getElementById("difficulty3").disabled=false;document.getElementById("inputCheckbox3").disabled=false}else{if(!c){i.state="stopped"}}var g='\n<span class="preserve-newline">\n</span>';for(var k=1;k<=64;k++){if(!i.attempts.hasOwnProperty(k)){continue}var m=i.attempts[k];var n=" not yet mined after ";if(i.attempts["matchFound"+k]){n=" mined in "}if(!i.attempts.hasOwnProperty("luck"+k)){i.attempts["luck"+k]=""}if(i.attempts["matchFound"+k]&&(i.attempts["luck"+k]=="")){var j=Math.floor(Math.pow(16,k)/4);var l=3*j;var e=" (";if(m<j){e+="very lucky"}else{if(m>l){e+="very unlucky"}else{if(m<(j*2)){e+="a bit lucky"}else{if(m>(j*2)){e+="a bit unlucky"}else{e+="pretty standard"}}}}e+=" - the average is "+(j*2)+" attempts)";i.attempts["luck"+k]=e}g+=k+" digit"+plural("s",k>1)+n+m+" attempt"+plural("s",m>1)+i.attempts["luck"+k]+(getDeviceType()=="phone"?"\n\n":"\n")}document.getElementById("mining3Statistics").innerHTML=trimRight(g);if(c){setTimeout(function(){a(i)},0)}})(f);break}}function runHashWrap3Clicked(a){runHashWrapClicked(a);var b=document.getElementById("mining3Statistics");b.innerHTML="\n\n"+b.textContent.trim()}function runHash1Or2Or3Clicked(a){if(stopHashingForm[a.formNum]){return false}if(a.firstTime){document.getElementById("info"+a.formNum).style.display="inline-block";document.getElementById("showResults"+a.formNum).style.display="inline";a.firstTime=false}var h=document.getElementById("inputMessage"+a.formNum).value;var k=false;var l=document.getElementById("inputCheckbox"+a.formNum);if(a.matchFound&&(a.previousNonce==h)){if(a.checkboxPurpose=="increment preimage"&&l.checked){k=true}else{return}}document.getElementById("preImage"+a.formNum).innerHTML=a.prefix+h;var c=sjcl.hash.sha256.hash(a.prefix+h);var b=sjcl.codec.hex.fromBits(c);a.hashRateData.push((new Date()).getTime());while(a.hashRateData.length>10){a.hashRateData.shift()}document.getElementById("info"+a.formNum).getElementsByTagName("span")[0].innerHTML=getAverageHashRate(a.hashRateData);a.matchFound=(a.hashMatch.substr(0,difficultyChars[a.formNum])==b.substr(0,difficultyChars[a.formNum]));if(a.matchFound&&!k&&a.checkboxPurpose=="increment preimage"){l.checked=false}document.getElementById("hash"+a.formNum+"Result").innerHTML=b;var j=(document.getElementById("form"+a.formNum).querySelector("button.wrap-nowrap").getAttribute("wrapped")=="true");var f=(a.checkboxPurpose=="mine automatically"||l.checked);var i=h;if(f){h=incrementAlpha(h)}document.getElementById("inputMessage"+a.formNum).value=h;if(!j&&(a.previousNonce.length!=h.length)){alignText(document.getElementById("codeblock"+a.formNum+"HashResults"))}var g=alphaInCommon(a.hashMatch,b);g=matchResolution(g,difficultyChars[a.formNum]);borderTheDigits("#codeblock"+a.formNum+"HashResults .individual-digits",g);var e=countMatches(g);var d=(a.matchFound?"pass":"fail")+" (because ";if(a.matchFound){d+="the required digits"}else{if(e==0){d+="0"}else{if(e>0){d+="only "+e}}d+=" of "+difficultyChars[a.formNum]+" digits"}d+=" match)";document.getElementById("matchStatus"+a.formNum).innerHTML=d;document.getElementById("matchStatus"+a.formNum).style.color=(a.matchFound?passColor:failColor);a.previousNonce=i;return true}function getAverageHashRate(e,c){var b=0;for(var a=1;a<e.length;a++){b+=(e[a]-e[a-1])}var d=0;if(b==0){d=0}else{d=Math.round((1000*(e.length-1))/b)}if(d<1&&(c!=true)){d="less than 1"}return d}function matchResolution(b,a){foreach(b,function(c){if(c<a){return}b[c]=null});return b}var alphabet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=.'";var lastAlphabetChar=alphabet.substr(-1);function incrementAlpha(b){if(b.length==0){return alphabet[0]}var a=b.substr(-1);if(a==lastAlphabetChar){return incrementAlpha(b.substr(0,b.length-1))+alphabet[0]}else{return b.substr(0,b.length-1)+alphabet[alphabet.indexOf(a)+1]}}function getRandomAlpha(c){var b="";for(var a=0;a<c;a++){b+=alphabet[Math.round((alphabet.length-1)*Math.random())]}return b}function alphaInCommon(c,b){var d=[];for(var a=0;a<c.length;a++){d[a]=((c[a]===b[a])&&(c[a]!=null))}return d}function countMatches(b){var a=0;foreach(b,function(c,d){if(d===true){a++}});return a}function borderTheDigits(d,c,b){b=(b==true);var a=!b;if(typeof d=="string"){d=document.querySelectorAll(d)}else{if(d.length==null){d=[d]}}foreach(d,function(e,f){var g=f.textContent;var h="";foreach(c,function(k){var i="";var j="";switch(c[k]){case true:i="border:1px solid "+passColor+";";break;case false:i="border:1px solid "+failColor+";";break}switch(c[k-1]){case true:if((c[k]!=null)&&b){break}j="border-left:1px solid "+passColor+";";break;case false:if((c[k]!=null)&&a){break}j="border-left:1px solid "+failColor+";";break}h+='<span class="individual-digit" style="'+i+j+'">'+g[k]+"</span>"});f.innerHTML=h})}function borderTheChars(a,d){var c=new RegExp(".{"+d+"}","g");var f=a.match(c);var b='<span class="individual-digit">';var e="</span>";return b+f.join(e+b)+e}function addError(c,b,a){addLi2Ul("#form"+c+" .error",null,a,b+"Error")}function noOtherErrors4(){return(document.querySelectorAll("#form4 ul.error li").length==0)}function versionChanged(e,c){var b={status:true,versionInt:null,version:null};deleteElements(document.querySelectorAll("#form"+c+" .versionError"));function d(f){addError(c,"version",f)}if(!stringIsInt(e)){d("the version must be an integer");b.status=false;return b}var a=parseInt(e);if(a<0){d("the version must be greater than 0");b.status=false;return b}if(a>4294967295){d("the version must be lower than "+4294967295);b.status=false;return b}b.versionInt=a;b.version=toLittleEndian(int2hex(a,8));return b}function version4Changed(c){var b=trimInputValue(c.currentTarget);if(b==miningData.versionRaw){return}var a=versionChanged(b,4);resetMiningStatus();if(!a.status){setButtons(false,"RunHash4");miningData.versionRaw=b;return}miningData.version=a.version;if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.versionRaw=b}function prevHashChanged(a,c){var b={status:true,prevHash:null};deleteElements(document.querySelectorAll("#form"+c+" .prevHashError"));function d(e){addError(c,"prevHash",e)}if(!isHex(a)){d("the previous block hash must only contain hexadecimal digits");b.status=false;return b}if(a.length!=64){d("the previous block hash must be 32 bytes long");b.status=false;return b}b.prevHash=toLittleEndian(a);return b}function prevHash4Changed(c){var b=trimInputValue(c.currentTarget);if(b==miningData.prevHashRaw){return}var a=prevHashChanged(b,4);resetMiningStatus();if(!a.status){setButtons(false,"RunHash4");miningData.prevHashRaw=b;return}miningData.prevHash=a.prevHash;if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.prevHashRaw=b}function merkleRootChanged(a,c){var b={status:true,merkleRoot:null};deleteElements(document.querySelectorAll("#form"+c+" .merkleRootError"));function d(e){addError(c,"merkleRoot",e)}if(!isHex(a)){d("the merkle root must only contain hexadecimal digits");b.status=false;return b}if(a.length!=64){d("the merkle root must be 32 bytes long");b.status=false;return b}b.merkleRoot=toLittleEndian(a);return b}function merkleRoot4Changed(c){var a=trimInputValue(c.currentTarget);if(a==miningData.merkleRootRaw){return}var b=merkleRootChanged(a,4);resetMiningStatus();if(!b.status){setButtons(false,"RunHash4");miningData.merkleRootRaw=a;return}miningData.merkleRoot=b.merkleRoot;if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.merkleRootRaw=a}function timestampChanged(e,c){var b={status:true,timestampUnixtime:null,timestamp:null};deleteElements(document.querySelectorAll("#form"+c+" .timestampError"));function d(f){addError(c,"timestamp",f)}var a;if(stringIsInt(Date.parse(e))){var a=unixtime(e);document.getElementById("timestamp"+c+"Explanation").innerHTML=""}else{if(stringIsInt(e)){var a=parseInt(e);document.getElementById("timestamp"+c+"Explanation").innerHTML=" (unixtime)"}else{d("the timestamp must either be a valid date-time, or be an integer (unixtime)");b.status=false;return b}}if(a<1231006505){d("the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)");b.status=false;return b}if(a>4294967295){d("the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)");b.status=false;return b}b.timestampUnixtime=a;b.timestamp=toLittleEndian(int2hex(b.timestampUnixtime,8));return b}function timestamp4Changed(c){var a=c.currentTarget.value;if(a==miningData.timestampRaw){return}var b=timestampChanged(a,4);resetMiningStatus();if(!b.status){setButtons(false,"RunHash4");miningData.timestampRaw=a;return}miningData.timestamp=b.timestamp;if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.timestampRaw=a}function bitsChanged(a,c,f){var e={status:true,bits:null,bitsDec:null,bitsBE:null,target:null};deleteElements(document.querySelectorAll("#form"+f+" .bitsError"));function g(h){addError(f,"bits",h)}var b="bits";if(!c){a=a.toString();if(inArray(".",a)){g("when bits is base 10 it cannot contain decimal places");e.status=false;return e}a=a.replace(/,/g,"");if(!stringIsInt(a)){g("when bits is not hex, it can only contain numbers 0 to 9");e.status=false;return e}e.bitsDec=parseInt(a);a=int2hex(e.bitsDec);b="hex bits (derived from base 10 bits)"}var d=bits2target(a);if(d.status==false){g(d.statusMessage.replace("bits",b));e.status=false;return e}e.target=d.target;e.bitsBE=a;e.bits=toLittleEndian(a);if(e.bitsDec==null){e.bitsDec=hex2int(a)}return e}function bits4Changed(d){var b=trimInputValue(d.currentTarget);if(b==miningData.bitsRaw){return}var a=true;var c=bitsChanged(b,a,4);resetMiningStatus();if(!c.status){setButtons(false,"RunHash4");miningData.bitsRaw=b;return}miningData.bits=c.bits;miningData.target=c.target;document.getElementById("target4").innerHTML=miningData.target;borderTheDigits("#target4",new Array(64));if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.bitsRaw=b}function targetChanged(d,c){var b={status:true,target:null};deleteElements(document.querySelectorAll("#form"+c+" .targetError"));function e(f){addError(c,"target",f)}if(!isHex(d)){e("the target must only contain hexadecimal digits");b.status=false;return b}var a=target2bits(d);if(a.status==false){e(a.statusMessage);b.status=false;return b}b.target=d;return b}function difficultyChanged(a,d){var c={status:true,difficulty:null};deleteElements(document.querySelectorAll("#form"+d+" .difficultyError"));function e(g){addError(d,"difficulty",g)}a=a.replace(/,/g,"");var b=difficulty2bits(a);if(b.status==false){e(b.statusMessage);c.status=false;return c}var f=parseFloat(a);c.difficulty=f;return c}function nonceChanged(a,d){var c={status:true,nonce:null,nonceInt:null};deleteElements(document.querySelectorAll("#form"+d+" .nonceError"));function e(f){addError(d,"nonce",f)}if(!stringIsInt(a)){e("the nonce must be an integer");c.status=false;return c}var b=parseInt(a);if(b<0){e("the nonce must be greater than 0");c.status=false;return c}if(b>4294967295){e("the nonce must be lower than "+4294967295);c.status=false;return c}c.nonceInt=b;c.nonce=toLittleEndian(int2hex(b,8));return c}function nonce4Changed(c){var a=trimInputValue(c.currentTarget);if(a==miningData.nonceRaw){return}var b=nonceChanged(a,4);resetMiningStatus();if(!b.status){setButtons(false,"RunHash4");miningData.nonceRaw=a;return}miningData.nonceInt=b.nonceInt;miningData.nonce=b.nonce;if(noOtherErrors4()){setButtons(true,"RunHash4")}miningData.nonceRaw=a}function resetBlock4(a){document.getElementById("version4").value=1;triggerEvent(document.getElementById("version4"),"change");document.getElementById("prevHash4").value="0000000000000000000000000000000000000000000000000000000000000000";triggerEvent(document.getElementById("prevHash4"),"change");document.getElementById("merkleRoot4").value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b";triggerEvent(document.getElementById("merkleRoot4"),"change");document.getElementById("timestamp4").value="03 Jan 2009 18:15:05 GMT";triggerEvent(document.getElementById("timestamp4"),"change");document.getElementById("bits4").value="1d00ffff";triggerEvent(document.getElementById("bits4"),"change");document.getElementById("nonce4").value=a?2083236893:0;triggerEvent(document.getElementById("nonce4"),"change")}function resetMiningStatus(){document.getElementById("blockhash4").innerHTML="";document.getElementById("mineStatus4").innerHTML="";borderTheDigits("#target4",new Array(64))}function mine4AndRenderResults(){document.getElementById("nonce4Results").innerHTML=miningData.nonceInt;var a=mine();document.getElementById("blockhash4").innerHTML=a.blockhash;borderTheDigits("#form4 .codeblock .individual-digits",a.matches,true);if(a.status){popup("success!","you mined a block",3000);setButtons(false,"RunHash4");document.getElementById("mineStatus4").innerHTML="pass (because "+a.blockhash[a.resolution]+" is less than "+miningData.target[a.resolution]+")";document.getElementById("mineStatus4").style.color=passColor}else{document.getElementById("mineStatus4").innerHTML="fail (because "+a.blockhash[a.resolution]+" is greater than "+miningData.target[a.resolution]+")";document.getElementById("mineStatus4").style.color=failColor}miningData.nonceInt+=1;if(miningData.nonceInt>4294967295){miningData.nonceInt=0}document.getElementById("nonce4").value=miningData.nonceInt;miningData.nonceRaw=miningData.nonceInt;miningData.nonce=toLittleEndian(int2hex(miningData.nonceInt,8))}function mine(){var d=sjcl.codec.hex.toBits(miningData.version+miningData.prevHash+miningData.merkleRoot+miningData.timestamp+miningData.bits+miningData.nonce);var b=sjcl.hash.sha256.hash(sjcl.hash.sha256.hash(d));var e=toLittleEndian(sjcl.codec.hex.fromBits(b));var f=hexCompare(e,miningData.target,true);var c=[];for(var a=0;a<64;a++){if(a<f.resolution){c.push(true)}else{if(a==f.resolution){if(f.status){c.push(true)}else{c.push(false)}}else{c.push(null)}}}return{blockhash:e,status:f.status,resolution:f.resolution,matches:c}}function setCompact(i,d){var g={status:false,target:null,isNegative:null,isOverflow:null,statusMessage:"",steps:[]};if(i.length!=8){g.statusMessage="bits must be 4 bytes long";return g}if(!isHex(i)){g.statusMessage="bits must only contain hexadecimal digits";return g}if(d>=1){g.steps.push({left:"in the Bitcoin source code this conversion uses function setCompact(). 'bits' here is made up of 1 'size' byte followed by 3 'compact' bytes",right:null})}g.target="";var a=i;i=hex2int(i);if(d>=2){g.steps.push({left:"bits",right:"0x"+borderTheChars(a,2)+" = "+i})}var n=i>>>24;var j=int2hex(n,2);if(d>=2){g.steps.push({left:"extract the 'size' byte",right:"0x"+a+" >> 24 = 0x"+j+" = "+n})}var b=i&8388607;var k=int2hex(b,8);if(d>=2){g.steps.push({left:"extract the 3 'word' bytes",right:"0x"+a+" & 0x007fffff = 0x"+k+" = "+b})}if(n<=3){var m=8*(3-n);b>>=m;if(d>=2){g.steps.push({left:"the size is <= 3, so shift the mantissa right by  8 * (3 - size) = "+m+" bits to get",right:b})}g.target=int2hex(b,64);if(d>=2){g.steps.push({left:"convert the mantissa to 32 bytes to get the target value",right:"0x"+g.target})}}else{g.target=leftPad(int2hex(b)+"00".repeat(n-3),64).substr(-64);if(d>=2){g.steps.push({left:"the 'size' is > 3 so shift the 'word' left by 8 * (size - 3) = "+(8*(n-3))+" bits and convert to 32 bytes to get the target value",right:"0x"+g.target})}}g.isNegative=(b!=0)&&((i&8388608)!=0);if(d>=2){var c=g.isNegative?"":" not";var l=g.isNegative?"negative":"positive";g.steps.push({left:"the target is "+l+" because the 0x00800000 bit is"+c+" set in the original bits value",right:null});g.steps.push({left:"negative status",right:l})}var h=(n>34);var f=(b>255)&&(n>33);var e=(b>65535)&&(n>32);if(b==0){g.isOverflow=false;if(d>=2){g.steps.push({left:"the target is zero. overflow status",right:"false"})}}else{if(h){g.isOverflow=true;if(d>=2){g.steps.push({left:"the 'size' is greater than 34. overflow status",right:"true"})}}else{if(f){g.isOverflow=true;if(d>=2){g.steps.push({left:"the 'size' is greater than 33 and the mantissa ("+b+") is greater than 0xff. overflow status",right:"true"})}}else{if(e){g.isOverflow=true;if(d>=2){g.steps.push({left:"the 'size' is greater than 32 and the mantissa ("+b+") is greater than 0xffff. overflow status",right:"true"})}}else{g.isOverflow=false;if(d>=2){g.steps.push({left:"overflow status",right:"false"})}}}}}g.status=true;return g}function bits2target(c,a){if(a==null){a=0}var b=setCompact(c,a);if(a>=1){b.steps.unshift({left:"<u>bits -> target</u>",right:null})}if(b.isNegative){b.target="-"+b.target}return b}var diffCalcMaxBody=Math.log(65535);var diffCalcScaland=Math.log(256);function bits2difficultyWiki(b){var a=(typeof b=="number")?b:hex2int(b);return Math.exp(diffCalcMaxBody-Math.log(a&16777215)+(diffCalcScaland*(29-((a&4278190080)>>>24))))}function bits2difficulty(g,b){if(b==null){b=0}var d={status:false,statusMessage:"",difficulty:null,steps:[]};if(b>=1){d.steps.push({left:"<u>bits -> difficulty</u>",right:null});d.steps.push({left:"in the Bitcoin source code this conversion uses function getDifficulty()",right:null})}if(typeof g=="number"){var e=g;if(e>4294967295){d.statusMessage="bits value must be 4 bytes";return d}}else{if(g.length!=8){d.statusMessage="bits value must be 4 bytes";return d}var e=hex2int(g);if(b>=2){d.steps.push({left:"bits",right:"0x"+borderTheChars(g,2)+" = "+e})}}var a=(e>>>24)&255;var f=int2hex(a,2);if(b>=2){d.steps.push({left:"extract the first byte (called the 'shift' value here)",right:"(0x"+g+" >> 24) & 0xff = 0x"+f+" = "+a})}d.difficulty=parseFloat(65535)/parseFloat(e&16777215);if(b>=2){d.steps.push({left:"initialise the difficulty to 0x0000ffff / (bits & 0x00ffffff)",right:"0x0000ffff / (0x"+g+" & 0x00ffffff) = "+d.difficulty})}if((a<29)&&(b>=2)){d.steps.push({left:"begin looping until 'shift' ("+a+") increases to 29",right:null})}while(a<29){var c=d.difficulty;d.difficulty*=256;a++;if(b>=2){d.steps.push({left:"multiply difficulty by 256 to get",right:c+" * 256 = "+d.difficulty});d.steps.push({left:"increment the 'shift' value to",right:a});if(a<29){d.steps.push({left:"continue looping until 'shift' value increases to 29",right:null})}}}if((a>29)&&(b>=2)){d.steps.push({left:"begin looping until 'shift' ("+a+") decreases to 29",right:null})}while(a>29){d.difficulty/=256;a--;if(b>=2){d.steps.push({left:"divide difficulty by 256 to get",right:d.difficulty});d.steps.push({left:"decrement the 'shift' value to",right:a});if(a>29){d.steps.push({left:"continue looping until 'shift' value decreases to 29",right:null})}}}if(b>=1){d.steps.push({left:"the 'shift' value is equal to 29 so we're finished. the final difficulty is",right:d.difficulty})}d.status=true;return d}function bits(g,b){var d={size:null,steps:[]};if(b>=1){d.steps.push({left:"begin finding the target's 'size'",right:null})}var a=8;if(b>=2){d.steps.push({left:"split the target into 8 chunks of 4 bytes",right:"0x"+borderTheChars(g,8)})}if(b>=2){d.steps.push({left:"begin looping through the chunks, starting from chunk 7 - the leftmost chunk",right:null})}for(var h=a-1,e=0;h>=0;h--,e++){var j=g.substr(e*a,a);var f=hex2int(j);if(b>=2){d.steps.push({left:"chunk "+h,right:"0x"+j+" = "+f})}if(f==0){if(b>=2){d.steps.push({left:"the chunk value is 0. "+((h==0)?"exit the loop here.":"skip to next chunk."),right:null})}continue}if(b>=2){d.steps.push({left:"the chunk value is not 0. begin looping through each bit of the chunk, starting from the most significant bit.",right:null})}for(var c=31;c>0;c--){if(f&Math.pow(2,c)){var k=(32*h)+c+1;if(b>=2){d.steps.push({left:"bit "+c+" in chunk "+h+" is set. so the 'size' is the number of bits in the "+h+" chunks to the right (32 bits per chunk), plus the number of bits in this chunk ("+c+") plus 1. size",right:"(32 * "+h+") + "+c+" + 1 = "+k+" bits = 0x"+int2hex(k,2)+" bits"})}else{if(b==1){d.steps.push({left:"calculated the 'size' to be",right:k+" bits = 0x"+int2hex(k,2)+" bits"})}}d.size=k;return d}if(b>=2){d.steps.push({left:"bit "+c+" is not set. skip to the next bit",right:null})}}var k=(32*h)+1;if(b>=2){d.steps.push({left:"just return the number of bits in the chunks",right:"(32 * "+h+") + 1 = "+k+" bits = 0x"+int2hex(k,2)+" bits"})}else{if(b==1){d.steps.push({left:"calculated the 'size' to be",right:k+" bits = 0x"+int2hex(k,2)+" bits"})}}d.size=k;return d}if(b>=1){d.steps.push({left:"calculated the 'size' to be",right:"0 bits = 0x00 bits"})}d.size=0;return d}function getLow64(a){return a.substr(-16)}function getCompact(h,d,c){var e={status:false,finalBitsInt:null,finalBitsHex:null,statusMessage:"",sizeInt:null,steps:[]};if(h.length!=64){e.statusMessage="the target must be 32 bytes";return e}var f=bits(h,c);e.steps=e.steps.concat(f.steps);e.size=Math.floor((f.size+7)/8);if(c>=2){e.steps.push({left:"convert the 'size' from bits to bytes - add 7 and divide by 8",right:"("+f.size+" + 7) / 8 = "+e.size+" = 0x"+int2hex(e.size,2)})}var j=0;h=h.replace(/^0+/,"");if(e.size<=3){var g=leftPad(getLow64(h),8);if(c>=2){e.steps.push({left:"'size' ("+e.size+") is <= 3. initialize 'compact' to the lowest 64 bits of the target",right:"0x"+g+" = "+hex2int(g)})}var a=g+"00".repeat(3-e.size);a=leftPad(a.substr(-8),8);j=hex2int(a);if(c>=2){e.steps.push({left:"'compact' <<= 8 * (3 - size)",right:"0x"+g+" << 8 * (3 - "+e.size+") = 0x"+a+" = "+j})}}else{var i=leftPad(h.substring(0,h.length-(2*(e.size-3))),6);var a=leftPad(getLow64(i),8);j=hex2int(a);if(c>=2){e.steps.push({left:"'size' ("+e.size+") is > 3. initialize 'compact' by extracting 3 bytes from the target - from 3 bytes below 'size' ("+(e.size-3)+") to the 'size' byte ("+e.size+")",right:"0x"+i});e.steps.push({left:"keep only the lowest 64 bits in 'compact'",right:"0x"+a+" = "+j})}}if(j&8388608){var b=j;j>>=8;if(c>=2){e.steps.push({left:"'compact' bit 0x00800000 is set which would make 'bits' negative. so shift 'compact' right by 8 bits",right:"0x"+int2hex(b,8)+" >> 8 = 0x"+int2hex(j,8)})}e.size++;if(c>=2){e.steps.push({left:"and increment the 'size' to",right:e.size+" = 0x"+int2hex(e.size,2)})}}if((j&~8388607)!==0){e.statusMessage="(compact & ~0x007fffff) !== 0, where compact = 0x"+int2hex(j,8);return e}if(e.size>=256){e.statusMessage="size >= 256, where size = "+e.size;return e}j|=(e.size*Math.pow(2,24));if(c>=2){e.steps.push({left:"combine the 'size' and 'compact' to get 'bits'",right:"0x"+int2hex(j,8)+" = "+j})}if((d===true)&&(j&8388607)){j|=8388608;if(c>=2){e.steps.push({left:"the target is negative but the 'bits' did not have the bit at 0x00800000 set, so set it",right:"0x"+int2hex(j,8)+" = "+j})}}e.status=true;e.finalBitsInt=j;e.finalBitsHex=int2hex(j,8);return e}function target2bits(d,b){if(b==null){b=0}var a=false;if(d[0]=="-"){a=true;d=d.substr(1)}var c=getCompact(d,a,b);if(b>=1){c.steps=[{left:"<u>target -> bits</u>",right:null},{left:"in the Bitcoin source code this conversion uses function getCompact(). 'bits' here is made up of 1 'size' byte followed by 3 'compact' bytes",right:null}].concat(c.steps)}return c}function target2difficulty(d,a){if(a==null){a=0}var c=target2bits(d,a);if(!c.status){return c}var b=bits2difficulty(c.finalBitsInt,a);b.steps=c.steps.concat(b.steps);return b}function difficulty2target(a,b){if(b==null){b=0}var c=difficulty2bits(a);if(!c.status){return c}var d=bits2target(c.finalBitsHex,b);d.steps=c.steps.concat(d.steps);return d}function difficulty2bits(e,d){if(d==null){d=0}var f={status:false,finalBitsInt:null,finalBitsHex:null,statusMessage:"",sizeInt:null,steps:[]};if(d>=1){f.steps.push({left:"<u>difficulty -> bits</u>",right:null});f.steps.push({left:"the Bitcoin source code never has a need to do this calculation so the results here may vary from other implementations. 'bits' here is made up of 1 'size' byte followed by 3 'word' bytes.",right:null})}var b=false;if(typeof e=="string"){if(!stringIsFloat(e)){f.statusMessage="the difficulty must be a number in base 10";return f}e=parseFloat(e)}if(e<0){f.statusMessage="difficulty cannot be negative";return f;b=true;e*=-1}if(!isFinite(e)){f.statusMessage="difficulty cannot be infinite";return f}if(d>=2){f.steps.push({left:"begin looping and checking the 'word' value for each incremented 'shift' value. word = (0x00ffff * (0x100 ^ shift)) /  difficulty, where 'difficulty'",right:e})}for(var i=1;true;i++){var a=(65535*Math.pow(256,i))/e;var g=a<1?"":"0x"+int2hex(a,6)+" = ";if(d>=2){f.steps.push({left:"when 'shift' = "+i+", 'word'",right:"(0x00ffff * (0x100 ^ "+i+")) / "+e+" = "+g+a})}if(a>=65535){if(d>=2){f.steps.push({left:"'word' >= 0xffff so exit the loop here. 'shift'",right:i})}break}if(d>=2){f.steps.push({left:"'word' < 0xffff so continue looping",right:null})}}a&=16777215;if(d>=2){f.steps.push({left:"cap 'word' to a maximum of 0xffffff",right:"0x"+int2hex(a,6)+" = "+a})}var j=29-i;if(d>=2){f.steps.push({left:"calculate size = 0x1d - shift",right:"0x1d - "+i+" = 0x"+int2hex(j,2)+" = "+j})}if(a&8388608){var c=a;a>>=8;j++;if(d>=2){f.steps.push({left:"the sign bit (0x800000) is set so shift 'word' right by 8 bits and increase the 'size' by a byte",right:"0x"+int2hex(c,6)+" >> 8 = 0x"+int2hex(a,6)+" = "+a});f.steps.push({left:"new 'size'",right:"0x"+int2hex(j,2)+" = "+j})}}if((a&~8388607)!=0){f.statusMessage="the 'bits' 'word' is out of bounds";return f}if(j>255){f.statusMessage="the 'bits' 'size' is out of bounds";return f}var h=(j<<24)|a;if(d>=2){f.steps.push({left:"combine the 'size' and the 'word' to get 'bits'. bits = (size << 24) | word",right:"(0x"+int2hex(j,2)+" << 24) | 0x"+int2hex(a,6)+" = 0x"+int2hex(h,8)+" = "+h})}if(b&&(h&8388607)){h|=8388608;if(d>=2){f.steps.push({left:"the difficulty is negative but the bits did not have the bit at 0x00800000 set, so set it",right:"0x"+int2hex(h,8)+" = "+h})}}f.sizeInt=j;f.finalBitsInt=h;f.finalBitsHex=int2hex(h,8);f.status=true;return f}function hexCompare(i,h,e){var b=i;var g=h;var c=null;i=i.replace(/^0*/,"");h=h.replace(/^0*/,"");if(e){c=Math.min(b.length-i.length,g.length-h.length)}if(i.length!=h.length){return{status:i.length<h.length,resolution:c}}for(var f=0;f<i.length;f++){var a=i[f];var d=h[f];if(a==d){continue}if(e){c+=f}return{status:hex2int(a)<hex2int(d),resolution:c}}return{status:false,resolution:c}}function hex2int(a){return parseInt(a,16)}function int2hex(b,a){b=Math.trunc(b);var c=b.toString(16);if(a==null){return c}return leftPad(c,a)}function leftPad(b,a,c){if(b.length>=a){return b}if(c==null){c="0"}return c.repeat(a-b.length)+b}function toLittleEndian(a){if(a.length<=2){return a}if(a.length%2==1){a="0"+a}return a.match(/.{2}/g).reverse().join("")}function to15SigDigits(a){return a.toPrecision(15)}function version5Changed(d){var a=trimInputValue(d.currentTarget);var c=versionChanged(a,5);var b=document.querySelector("#form5 .codeblock-container");if(!c.status){b.style.display="none";return}b.style.display="block";document.getElementById("version5Hex").innerHTML=int2hex(c.versionInt);document.getElementById("version5Bytes").innerHTML=borderTheChars(int2hex(c.versionInt,8),2);document.getElementById("version5BytesLE").innerHTML=borderTheChars(c.version,2)}function timestamp6Changed(d){var c=timestampChanged(d.currentTarget.value,6);var b=document.querySelector("#form6 .codeblock-container");if(!c.status){b.style.display="none";return}b.style.display="block";var a=(new Date((c.timestampUnixtime*1000))).toGMTString();document.getElementById("timestamp6GMT").innerHTML=a;document.getElementById("timestamp6Unixtime").innerHTML=c.timestampUnixtime;document.getElementById("timestamp6Bytes").innerHTML=borderTheChars(int2hex(c.timestampUnixtime,8),2);document.getElementById("timestamp6BytesLE").innerHTML=borderTheChars(c.timestamp,2)}function difficulty7Changed(g){var a=trimInputValue(g.currentTarget);var d=difficultyChanged(a,7);var c=null;var b=null;var f=null;renderForm7Codeblock(d.status,d.difficulty,c,b,f)}function target7Changed(g){var f=trimInputValue(g.currentTarget);var d=targetChanged(f,7);var a=null;var c=null;var b=null;renderForm7Codeblock(d.status,a,c,b,d.target)}function bitsAreHex7Changed(d){var a=d.currentTarget.checked;var c=trimInputValue(document.getElementById("bits7"));var b=bitsChanged(c,!a,7);document.getElementById("bits7").value=a?b.bitsBE:b.bitsDec}function bits7Changed(){var d=trimInputValue(document.getElementById("bits7"));var b=document.getElementById("bitsAreHex7").checked;var c=bitsChanged(d,b,7);var a=null;var e=null;renderForm7Codeblock(c.status,a,c.bitsBE,c.bitsDec,e)}var alignedOnce=false;function renderForm7Codeblock(p,h,r,j,k){var f=2;var d='<span class="always-one-newline">\n</span>';var l=document.querySelector("#form7 .codeblock-container");var i=l.querySelector(".codeblock");i.innerHTML="";var a=document.querySelector("#form7 .warnings");a.style.display="none";if(!p){l.style.display="none";return}deleteElements(document.querySelectorAll("#form7 .bitsError"));deleteElements(document.querySelectorAll("#form7 .difficultyError"));deleteElements(document.querySelectorAll("#form7 .targetError"));l.style.display="block";var e=false;var c=document.getElementById("bitsAreHex7").checked;var o=[];if(h!==null){e=true;if(r===null){var b=difficulty2bits(h,f);r=b.finalBitsHex;document.getElementById("bits7").value=c?r:b.finalBitsInt;o=o.concat(b.steps)}if(k===null){var g=difficulty2target(h,f);k=g.target;document.getElementById("target7").value=k;o=o.concat(g.steps)}}else{if(r!==null){if(h===null){var m=bits2difficulty(r,f);h=m.difficulty;document.getElementById("difficulty7").value=h;o=o.concat(m.steps)}if(k===null){var g=bits2target(r,f);k=g.target;document.getElementById("target7").value=k;o=o.concat(g.steps)}}else{if(k!==null){if(r===null){var b=target2bits(k,f);j=b.finalBitsInt;r=int2hex(j,8);document.getElementById("bits7").value=c?r:j;o=o.concat(b.steps)}if(h===null){var m=bits2difficulty(r,f);h=m.difficulty;document.getElementById("difficulty7").value=h;o=o.concat(m.steps)}}}}i.innerHTML=formatCodeblockSteps(o,50);var q=(l.querySelector("button.wrap-nowrap").getAttribute("wrapped")=="true");fixCodeblockNewlines(i,q);if(q){unalignText(i)}else{alignText(i)}}var aligner='<span class="aligner"> </span>';function formatCodeblockSteps(b,a){var c='<span class="preserve-newline">\n</span>\n';var d="";foreach(b,function(e,f){if(f.left=="\n"){d+=(c+c);return}f.left=wrapCodeblockLeft(f.left,a).trim();if(f.right==null){f.right=""}else{f.left+=": "}if(b.length==(e+1)){c=""}d+=f.left+aligner+f.right+c});return d}function wrapCodeblockLeft(d,b){if(d.length<=b){return d}var f='<span class="always-one-newline">\n</span>';var e=d.split(" ");var a=0;var c="";foreach(e,function(g,h){a+=h.length+1;if(a>b){c+=aligner+f+h+" ";a=h.length+1}else{c+=h+" "}});return c}function runDifficultyUnitTests(){document.getElementById("unitTests7").style.display="block";var a=document.querySelector("#unitTests7 .codeblock");ajax(siteGlobals.unittestBitsJSON,function(c){try{var e=JSON.parse(c).tests}catch(d){a.innerHTML="failed to fetch unit-test data"}b(e)});function b(g){a.innerHTML="";var f='<span style="color:'+passColor+'">pass</span>';var c='<span style="color:'+failColor+'">fail</span>';var d='<span class="aligner">';var h="</span>";var k='\n<span class="preserve-newline">\n</span>\n';var j=[];foreach(g,function(y,n){var B=bits2target(n.original_bits);var D=target2bits(B.target);var p=D.finalBitsHex;var v=(n.target==B.target);var s=v?f:c;var z=(n.reconverted_bits==p);var C=z?f:c;var o=(B.isNegative==n.negative);var r=o?f:c;var u=(B.isOverflow==n.overflow);var x=u?f:c;var l=bits2difficulty(n.original_bits);var A=l.difficulty;var m=n.difficulty_threshold_low;var e=n.difficulty_threshold_high;var w=true;if((m=="Infinity"&&A!=Infinity)||(e=="Infinity"&&A!=Infinity)||(A<m)||(A>e)){w=false}var q=w?f:c;var t=(v&&z&&o&&u&&w);if(!t){j.push(y)}var E=((y==0)?"":k)+"<u>test "+y+"</u>: "+(t?f:c)+"\nbits: "+d+"                         "+h+n.original_bits+"\ntarget (expected): "+d+"            "+h+n.target+"\ntarget (derived): "+d+"             "+h+B.target+"\ntarget check: "+d+"                 "+h+s+"\nreconverted bits (expected): "+d+"  "+h+n.reconverted_bits+"\nreconverted bits (derived): "+d+"   "+h+p+"\nreconverted bits check: "+d+"       "+h+C+"\ntarget is negative (expected): "+d+h+(n.negative?"yes":"no")+"\ntarget is negative (derived): "+d+" "+h+(B.isNegative?"yes":"no")+"\ntarget is negative check: "+d+"     "+h+r+"\ntarget overflowed (expected): "+d+" "+h+(B.isOverflow?"yes":"no")+"\ntarget overflowed (derived): "+d+"  "+h+(n.overflow?"yes":"no")+"\ntarget overflow check: "+d+"        "+h+x+"\ndifficulty lower threshold: "+d+"   "+h+m+"\ndifficulty upper threshold: "+d+"   "+h+e+"\ndifficulty (derived): "+d+"         "+h+A+"\ndifficulty check: "+d+"             "+h+q;a.innerHTML=(a.innerHTML+E).trim()});document.getElementById("overallStatus7").style.display="block";document.getElementById("overallStatusPass7").innerHTML=(j.length==0)?f:c+" (due to test"+(j.length>1?"s":"")+" "+englishList(j,", "," and ")+")";var i=(document.querySelector("#unitTests7 button.wrap-nowrap").getAttribute("wrapped")=="true");fixCodeblockNewlines(a,i);if(i){unalignText(a)}else{alignText(a)}}}function nonce8Changed(d){var b=trimInputValue(d.currentTarget);var c=nonceChanged(b,8);var a=document.querySelector("#form8 .codeblock-container");if(!c.status){a.style.display="none";return}a.style.display="block";document.getElementById("nonce8Hex").innerHTML=int2hex(c.nonceInt);document.getElementById("nonce8Bytes").innerHTML=borderTheChars(int2hex(c.nonceInt,8),2);document.getElementById("nonce8BytesLE").innerHTML=borderTheChars(c.nonce,2)}function version9Changed(d){var a=trimInputValue(d.currentTarget);var c=versionChanged(a,9);var b=document.querySelector("#form9 .codeblock-container");if(!c.status){b.style.display="none";return}b.style.display="block";document.querySelector("#version9Output").innerHTML=borderTheChars(c.version,2);renderHashes9()}function prevHash9Changed(d){var b=trimInputValue(d.currentTarget);var c=prevHashChanged(b,9);var a=document.querySelector("#form9 .codeblock-container");if(!c.status){a.style.display="none";return}a.style.display="block";document.querySelector("#prevHash9Output").innerHTML=borderTheChars(c.prevHash,2);renderHashes9()}function merkleRoot9Changed(d){var c=trimInputValue(d.currentTarget);var b=merkleRootChanged(c,9);var a=document.querySelector("#form9 .codeblock-container");if(!b.status){a.style.display="none";return}a.style.display="block";document.querySelector("#merkleRoot9Output").innerHTML=borderTheChars(b.merkleRoot,2);renderHashes9()}function timestamp9Changed(c){var b=timestampChanged(c.currentTarget.value,9);var a=document.querySelector("#form9 .codeblock-container");if(!b.status){a.style.display="none";return}a.style.display="block";document.querySelector("#timestamp9Output").innerHTML=borderTheChars(b.timestamp,2);renderHashes9()}function bits9Changed(f){var d=trimInputValue(f.currentTarget);var b=true;var c=bitsChanged(d,b,9);var a=document.querySelector("#form9 .codeblock-container");if(!c.status){a.style.display="none";return}a.style.display="block";document.querySelector("#bits9Output").innerHTML=borderTheChars(c.bits,2);renderHashes9()}function nonce9Changed(d){var b=trimInputValue(d.currentTarget);var c=nonceChanged(b,9);var a=document.querySelector("#form9 .codeblock-container");if(!c.status){a.style.display="none";return}a.style.display="block";document.querySelector("#nonce9Output").innerHTML=borderTheChars(c.nonce,2);renderHashes9()}function renderHashes9(){var f=document.getElementById("block9Bytes").textContent;if(f.length!=160){return}var d=sjcl.codec.hex.toBits(f);var b=sjcl.hash.sha256.hash(d);var a=sjcl.hash.sha256.hash(b);var e=sjcl.codec.hex.fromBits(b);var c=sjcl.codec.hex.fromBits(a);document.getElementById("firstSHA256Output9").innerHTML=borderTheChars(e,2);document.getElementById("firstSHA256OutputLE9").innerHTML=borderTheChars(toLittleEndian(e),2);document.getElementById("secondSHA256Output9").innerHTML=borderTheChars(c,2);document.getElementById("secondSHA256OutputLE9").innerHTML=borderTheChars(toLittleEndian(c),2)}function runHash10Changed(){var c=document.getElementById("inputCheckbox10");var a=document.getElementById("inputMessage10").value;if(c.checked&&isHex(a)){a=sjcl.codec.hex.toBits(a)}else{c.checked=false}var b=sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(a));document.getElementById("sha256Output10").innerHTML=borderTheChars(b,2);document.getElementById("sha256OutputLE10").innerHTML=borderTheChars(toLittleEndian(b),2)}function initDifficultyAttempts(){ajax("/json/hex-trial-attempts.json",function(a){try{difficultyAttempts=JSON.parse(a).attemptsForHexCharacters;triggerEvent(document.getElementById("difficulty11"),"change")}catch(b){}})}function difficulty11Changed(b){var a=parseInt(b.currentTarget.value);document.getElementById("difficulty11Calculation").innerHTML="(16<sup>"+a+"</sup>)/2 = "+addThousandCommas(difficultyAttempts[a])+" hashes on average"}function initBlockchainSVG(){var s=document.getElementById("blockchainSVG").contentDocument.getElementsByTagName("svg")[0];var y=s.getElementsByTagName("defs")[0];var l=s.getElementById("view");var r=1;var b=1;var a=function(E){if(E<txsPerBlock.length){return}var F=(Math.ceil(E/1000)*1000)-1;if(txsPerBlock.length>F){return}var G=Math.floor(E/1000)*1000;ajax("/json/btc_txs_per_block_"+G+"-"+F+".json",function(I){try{var H=JSON.parse(I).txsPerBlock;txsPerBlock=txsPerBlock.concat(H)}catch(J){}})};a(1);var g=y.querySelectorAll(".btc-tx")[0].getBoundingClientRect().height;if(g==0){g=30}var B=function(J,G){var F=J.querySelectorAll(".btc-txs")[0];F.parentNode.replaceChild(F.cloneNode(false),F);var I=J.querySelectorAll(".btc-txs")[0];for(var H=0;H<txsPerBlock[G];H++){var E=y.querySelectorAll(".btc-tx")[0].cloneNode(true);E.setAttribute("transform","translate(0,"+(g*H)+")");E.getElementsByTagName("text")[0].textContent="transaction "+(H+1);I.appendChild(E)}};var w=s.getBoundingClientRect().width;var x=b;var c=s.getElementById("block").getBoundingClientRect().width;var e=s.getElementById("braces").getBoundingClientRect().width;var u=0;var v=7;for(var j=0;u<=(w*v);j++){var m=s.getElementById("block").cloneNode(true);m.getElementsByTagName("text")[0].textContent="block "+j;m.id="block"+j;m.setAttribute("transform","translate("+(u+x)+")");l.appendChild(m);if(c==0){c=l.querySelector(".btc-block").getBoundingClientRect().width}u+=x+c;x=15;var n=s.getElementById("braces").cloneNode(true);n.setAttribute("transform","translate("+(u+x)+",20)");l.appendChild(n);if(e==0){e=l.querySelector(".braces").getBoundingClientRect().width}u+=x+e}s.appendChild(y.querySelectorAll(".big-instructions")[0]);var f=c+e+(2*x);var k=Math.floor(w/f);var A=w*Math.floor(v/2);var q=function(){var N=l.getBoundingClientRect().left;var I=l.querySelectorAll(".btc-block");var L=parseInt(I[0].id.replace(/[a-z]/g,""));if((N>-A)&&(L==0)){return null}var J=Math.trunc((A+N)/f);if(J==0){return null}if(L<J){J=L}var G=N-b-(J*f);var H=l.getBoundingClientRect().top+r;l.setAttribute("transform","translate("+G+","+H+")");var F=(I[0].id.replace(/[0-9]/g,"")=="block")?"bloc":"block";var M=L;for(var K=0;K<I.length;K++){var E=M-J;I[K].id=F+E;I[K].getElementsByTagName("text")[0].textContent="block "+E;B(I[K],E);a(E+(v*k));M++}return{dx:G,dy:H}};var i=0,h=0;var D=0,C=0;var p=0,o=0;var t=false;var d=s.getBoundingClientRect().height;addEvent(s,"mousedown, touchstart",function(E){switch(E.type){case"touchstart":E.cancelBubble=true;i=E.touches[0].clientX;h=E.touches[0].clientY;break;case"mousedown":E.stopPropagation();i=E.clientX;h=E.clientY;break}t=true});var z=false;addEvent(s,"mousemove, touchmove",function(H){switch(H.type){case"touchmove":H.cancelBubble=true;break;case"mousemove":H.stopPropagation();break}if(!t){return}if(!z){s.removeChild(s.querySelectorAll(".big-instructions")[0]);z=true}switch(H.type){case"touchmove":var G=H.touches[0].clientX;var F=H.touches[0].clientY;break;case"mousemove":var G=H.clientX;var F=H.clientY;break}p=D+G-i;if(p>0){p=0}o=C+F-h;var E=l.getBoundingClientRect().height;if(o<(d-E-r)){o=d-E-r}if(o>0){o=0}l.setAttribute("transform","translate("+p+","+o+")")});addEvent(s,"mouseup, mouseleave, touchend",function(E){switch(E.type){case"touchmove":E.cancelBubble=true;break;case"mousemove":E.stopPropagation();break}if(!t){return}t=false;var F=q();D=(F==null)?p:F.dx;C=(F==null)?o:F.dy})};
+// init globals
+var passColor = '#7db904'; // green
+var failColor = 'red';
+var stopHashingForm = {}; // eg {2: false}
+var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
+var difficultyAttempts = {}; // ie {1:8, 2: 128, etc}
+var txsPerBlock = [];
+var miningData = { // note: raw values are taken directly from the input field
+    versionRaw: null,
+    versionInt : null,
+    version: null,
+
+    prevHashRaw: null,
+    prevHash: null,
+
+    merkleRootRaw: null,
+    merkleRoot: null,
+
+    timestampRaw: null,
+    timestampUnixtime: null,
+    timestamp: null,
+
+    bitsRaw: null,
+    bits: null,
+
+    nonceRaw: null,
+    nonceInt: null,
+    nonce: null,
+
+    target: null
+};
+addEvent(window, 'load', function () {
+    // border the digits anywhere on the page initially (grey only)
+    initBorderTheDigits();
+
+    // put newlines in codeblocks when wrap button is clicked
+    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
+
+    // form 0 - hashing demo
+    addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
+    addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
+        if (e.keyCode != 13) return; // only allow the enter key
+        runHash0Clicked();
+    });
+
+    // dec to hex table
+    addEvent(
+        document.querySelector('#dec2hexTable .instructions'),
+        'click',
+        showMoreDec2Hex
+    );
+
+    // form 1 - hashing manually to match hash
+    var hash1Params = { // use an object for pass-by-reference
+        firstTime: true,
+        hashMatch: document.getElementById('match1').textContent,
+        matchFound: false,
+        previousNonce: '',
+        formNum: 1,
+        hashRateData: [],
+        checkboxPurpose: 'increment preimage',
+        prefix: '' // no prefix
+    };
+    stopHashingForm[1] = false;
+    difficultyChars[1] = 64; // match all characters
+    addEvent(document.getElementById('btnRunHash1'), 'click', function () {
+        runHash1Or2Or3Clicked(hash1Params);
+    });
+    addEvent(document.getElementById('inputMessage1'), 'keyup', function (e) {
+        if (e.keyCode != 13) return; // only allow the enter key
+        runHash1Or2Or3Clicked(hash1Params);
+    });
+
+    // form 2 - hashing automatically to match hash
+    var hash2Params = { // use an object for pass-by-reference
+        firstTime: true,
+        hashMatch: document.getElementById('match2').textContent,
+        matchFound: false,
+        previousNonce: '',
+        formNum: 2,
+        state: 'stopped',
+        hashRateData: [],
+        checkboxPurpose: 'increment preimage',
+        prefix: '' // no prefix
+    };
+    stopHashingForm[2] = false;
+    difficultyChars[2] = 64; // match all characters
+    addEvent(document.getElementById('btnRunHash2'), 'click', function (e) {
+        runHash2Clicked(e, hash2Params);
+    });
+
+    // form 3 - proof of work
+    var hash3Params = {
+        firstTime: true,
+        hashMatch: document.getElementById('match3').textContent,
+        matchFound: false,
+        previousNonce: '',
+        formNum: 3,
+        state: 'stopped',
+        hashRateData: [],
+        checkboxPurpose: 'mine automatically',
+        attempts: {}, // eg 5 chars: 10 attempts
+        prefix: initProofOfWorkForm()
+    };
+    initDifficultyLevelDropdown(3);
+    addEvent(document.getElementById('btnRunHash3'), 'click', function (e) {
+        runHash3Clicked(e, hash3Params);
+    });
+    difficultyChars[3] = 1; // init: match first character only
+    addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
+    addEvent(document.getElementById('inputCheckbox3'), 'click', checkbox3Changed);
+
+    // dragable blockchain svg
+    initBlockchainSVG();
+
+    // form 4 - bitcoin mining
+    addEvent(document.getElementById('version4'), 'keyup, change', version4Changed);
+    triggerEvent(document.getElementById('version4'), 'change');
+
+    addEvent(document.getElementById('prevHash4'), 'keyup, change', prevHash4Changed);
+    triggerEvent(document.getElementById('prevHash4'), 'change');
+
+    addEvent(document.getElementById('merkleRoot4'), 'keyup, change', merkleRoot4Changed);
+    triggerEvent(document.getElementById('merkleRoot4'), 'change');
+
+    addEvent(document.getElementById('timestamp4'), 'keyup, change', timestamp4Changed);
+    triggerEvent(document.getElementById('timestamp4'), 'change');
+
+    addEvent(document.getElementById('bits4'), 'keyup, change', bits4Changed);
+    triggerEvent(document.getElementById('bits4'), 'change');
+
+    addEvent(document.getElementById('nonce4'), 'keyup, change', nonce4Changed);
+    triggerEvent(document.getElementById('nonce4'), 'change');
+
+    addEvent(document.getElementById('btnRunHash4'), 'click', mine4AndRenderResults);
+
+    addEvent(document.getElementById('makeBlockPass4'), 'click', function () {
+        scrollToElement(document.getElementById('form4'));
+        resetBlock4(true);
+    });
+
+    // annex - form 5
+    addEvent(document.getElementById('version5'), 'keyup, change', version5Changed);
+    triggerEvent(document.getElementById('version5'), 'change');
+
+    // annex - form 6
+    addEvent(document.getElementById('timestamp6'), 'keyup, change', timestamp6Changed);
+    triggerEvent(document.getElementById('timestamp6'), 'change');
+
+    // annex - form 7
+    addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
+    addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
+    addEvent(document.getElementById('bitsAreHex7'), 'click', bitsAreHex7Changed);
+    addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
+    triggerEvent(document.getElementById('bits7'), 'change');
+    addEvent(document.getElementById('runDifficultyUnitTests'), 'click', runDifficultyUnitTests);
+
+    // annex - form 8
+    addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
+    triggerEvent(document.getElementById('nonce8'), 'change');
+
+    // annex - form 9
+    addEvent(document.getElementById('version9'), 'keyup, change', version9Changed);
+    triggerEvent(document.getElementById('version9'), 'change');
+
+    addEvent(document.getElementById('prevHash9'), 'keyup, change', prevHash9Changed);
+    triggerEvent(document.getElementById('prevHash9'), 'change');
+
+    addEvent(document.getElementById('merkleRoot9'), 'keyup, change', merkleRoot9Changed);
+    triggerEvent(document.getElementById('merkleRoot9'), 'change');
+
+    addEvent(document.getElementById('timestamp9'), 'keyup, change', timestamp9Changed);
+    triggerEvent(document.getElementById('timestamp9'), 'change');
+
+    addEvent(document.getElementById('bits9'), 'keyup, change', bits9Changed);
+    triggerEvent(document.getElementById('bits9'), 'change');
+
+    addEvent(document.getElementById('nonce9'), 'keyup, change', nonce9Changed);
+    triggerEvent(document.getElementById('nonce9'), 'change');
+
+    // form 10 - hashing hex and ascii
+    addEvent(document.getElementById('inputMessage10'), 'keyup, change', runHash10Changed);
+    triggerEvent(document.getElementById('inputMessage10'), 'change');
+    addEvent(document.getElementById('inputCheckbox10'), 'click', runHash10Changed);
+
+    // form 11 - luck calculator
+    initDifficultyLevelDropdown(11);
+    initDifficultyAttempts();
+    addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
+
+    switch (getDeviceType()) {
+        case 'phone':
+            toggleAllCodeblockWrapsMobile();
+            break;
+        case 'tablet':
+        case 'pc':
+            break;
+    }
+});
+
+function initBorderTheDigits() {
+    var elementsToBorder = document.querySelectorAll('.individual-digits');
+    foreach(elementsToBorder, function (i, el) {
+        borderTheDigits(el, new Array(el.textContent.length));
+    });
+}
+
+function runHashWrapClicked(e) {
+    var btn = e.currentTarget;
+    var codeblock = btn.closest('.codeblock-container').querySelector('.codeblock');
+    var makeWrapped = (btn.getAttribute('wrapped') == 'true');
+    fixCodeblockNewlines(codeblock, makeWrapped);
+}
+
+function fixCodeblockNewlines(codeblock, makeWrapped) {
+    if (makeWrapped) {
+        codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n').
+        replace(/\n/g, '\n\n');
+        foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
+            el.innerHTML = '';
+        });
+    } else {
+        codeblock.innerHTML = codeblock.innerHTML.replace(/\n\n/g, '\n');
+        foreach(codeblock.querySelectorAll('.preserve-newline'), function (i, el) {
+            el.innerHTML = '\n';
+        });
+    }
+    // always one newline except when wrapped on phone
+    foreach(codeblock.querySelectorAll('.always-one-newline'), function (i, el) {
+        if (makeWrapped && getDeviceType() == 'phone') {
+            el.style.display = 'none';
+        } else {
+            el.innerHTML = '\n';
+            el.style.display = 'inline';
+        }
+    });
+}
+
+// form 0
+function runHash0Clicked() {
+    var form0 = document.getElementById('form0');
+    var message = document.getElementById('inputMessage0').value;
+    var startTime = new Date();
+    var bitArray = sjcl.hash.sha256.hash(message);
+    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
+    var endTime = new Date();
+    var duration = endTime - startTime;
+    var durationExplanationLong = '(hashing took ';
+    var durationExplanationShort = '(took ';
+    if (duration < 1) {
+        durationExplanationLong += 'less than 1';
+        durationExplanationShort += '<1';
+    } else {
+        durationExplanationLong += duration;
+        durationExplanationShort += duration;
+    }
+    durationExplanationLong += ' millisecond' + (duration <= 1 ? '' : 's') + ')';
+    durationExplanationShort += 'ms)';
+    document.getElementById('hash0Duration').innerHTML = durationExplanationLong;
+    var wrapButtonIsOn = (
+        form0.querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+    );
+    var hash0Results = document.getElementById('hash0Results');
+    hash0Results.innerHTML = (
+        message + ' <span class="aligner"></span>-> SHA256 -> ' + sha256Hash +
+        ' ' + durationExplanationShort + '\n' + (wrapButtonIsOn ? '\n' : '') +
+        hash0Results.innerHTML
+    ).trim();
+    if (!wrapButtonIsOn) alignText(hash0Results);
+    hash0Results.closest('.codeblock-container').style.display = 'block';
+}
+
+var latestDec = 19;
+function showMoreDec2Hex() {
+    var table = document.getElementById('dec2hexData');
+    var chunkOfRows = table.innerHTML; // init
+    var stopAt = latestDec + 15;
+    for (; latestDec <= stopAt; latestDec++) {
+        chunkOfRows += '<tr>' +
+            '<td>' + latestDec + '</td><td>' + int2hex(latestDec) + '</td>' +
+        '</tr>';
+    }
+    try {
+        table.innerHTML = chunkOfRows;
+    } catch(e) {
+        // fucking internet explorer!
+        // http://webbugtrack.blogspot.com.au/2007/12/bug-210-no-innerhtml-support-on-tables.html
+        table.outerHTML = '<table id="dec2hexData">' + chunkOfRows + '</table>';
+    }
+
+    var scrollDiv = document.querySelector('#dec2hexTable .vertical-scroll');
+    scrollDiv.scrollTop = scrollDiv.scrollHeight;
+}
+
+// form 2
+function runHash2Clicked(e, params) {
+    switch (params.state) {
+        case 'running':
+            stopHashingForm[2] = true;
+            params.state = 'stopped';
+            e.currentTarget.innerHTML = 'Run SHA256 Automatically';
+            renderHashing2Duration(params.hashRateData); // update the paragraph
+            break;
+        case 'stopped':
+            stopHashingForm[2] = false;
+            params.state = 'running';
+            e.currentTarget.innerHTML = 'Stop';
+            (function loop(params) {
+                if (stopHashingForm[2]) return;
+                runHash1Or2Or3Clicked(params);
+                setTimeout(function () { loop(params); }, 0);
+            })(params);
+            break;
+    }
+}
+
+// update the paragraph text with stats
+function renderHashing2Duration(hashRateData) {
+    var hashRate = getAverageHashRate(hashRateData, true);
+    if (hashRate < 1) return;
+    document.querySelectorAll('.hash2Rate')[0].innerHTML = hashRate;
+    document.querySelectorAll('.hash2Rate')[1].innerHTML = hashRate;
+    document.getElementById('showHowLongForThisDevice').style.display = 'inline';
+    // x hashes per second takes ((2^256) / x) seconds =
+    // = ((2^256) / (x * 60 * 60 *  24 * 365)) years
+    // = ((2^256) / (x * 60 * 60 *  24 * 365 * 1000000)) million years
+    // = ((2^256) / (x * 60 * 60 *  24 * 365 * (1000000^10))) million^10 years
+    // = (3671743063 / x) million^10 years
+    var durationInMillionPow10Years = addThousandCommas(Math.round(3671743063 / hashRate));
+    document.getElementById('howLongForThisDeviceWords').innerHTML =
+    durationInMillionPow10Years + ' million'.repeat(10) + ' years';
+
+    document.getElementById('howLongForThisDeviceNumber').innerHTML =
+    durationInMillionPow10Years + ',000'.repeat(20) + ' years';
+}
+
+// form 3 and form 11
+function initDifficultyLevelDropdown(formNum) {
+    // init the dropdown list for the number of characters to match
+    var dropdownNumChars = '<option value="1">match first character only</option>\n';
+    for (var i = 2; i < 64; i++) {
+        dropdownNumChars += '<option value="' + i + '">match first ' + i +
+        ' characters only</option>\n';
+    }
+    dropdownNumChars += '<option value="64">match all 64 characters</option>\n';
+    // use outerhtml because ie cannot handle innerhtml for select elements
+    // stackoverflow.com/a/8557846
+    document.getElementById('difficulty' + formNum).outerHTML =
+    '<select id="difficulty' + formNum + '">' + dropdownNumChars + '</select>';
+}
+
+// form 3
+function initProofOfWorkForm() {
+    // init the mining prefix
+    var prefix = getRandomAlpha(10);
+    document.getElementById('inputMessage3Prefix').value = prefix;
+    return prefix;
+}
+
+function difficulty3Changed(e) {
+    difficultyChars[3] = parseInt(e.currentTarget.value);
+    // enable mining again after a difficulty change
+    document.getElementById('btnRunHash3').disabled = false;
+}
+
+function checkbox3Changed(e) {
+    document.getElementById('btnRunHash3').innerHTML = 'Mine ' + (
+        e.currentTarget.checked ? 'automatically' : 'manually'
+    ) + ' with SHA256';
+}
+
+function runHash3Clicked(e, params) {
+    var mineAutomatically = document.getElementById('inputCheckbox3').checked;
+    var btnText = 'Mine ' + (mineAutomatically ? 'automatically' : 'manually') +
+    ' with SHA256';
+
+    switch (params.state) {
+        case 'running':
+            stopHashingForm[3] = true;
+            params.state = 'stopped';
+            e.currentTarget.innerHTML = btnText;
+            // allow the inputs to be changed now we have stopped
+            document.getElementById('difficulty3').disabled = false;
+            document.getElementById('inputCheckbox3').disabled = false;
+            break;
+        case 'stopped':
+            stopHashingForm[3] = false;
+            params.state = 'running';
+            if (mineAutomatically) {
+                e.currentTarget.innerHTML = 'Stop';
+                document.getElementById('difficulty3').disabled = true;
+                document.getElementById('inputCheckbox3').disabled = true;
+            }
+            if (!params.attempts.hasOwnProperty(difficultyChars[3])) {
+                params.attempts[difficultyChars[3]] = 0;
+                params.attempts['matchFound' + difficultyChars[3]] = false;
+            }
+            (function loop(params) {
+
+                if (stopHashingForm[3]) return;
+                runHash1Or2Or3Clicked(params);
+                params.attempts[difficultyChars[3]]++;
+                if (params.matchFound) {
+                    stopHashingForm[3] = true;
+                    params.state = 'stopped';
+                    params.attempts['matchFound' + difficultyChars[3]] = true;
+                    var btn = document.getElementById('btnRunHash3');
+                    btn.disabled = true; // disabled until difficulty is changed
+                    btn.innerHTML = btnText;
+                    document.getElementById('difficulty3').
+                    getElementsByTagName('option')[difficultyChars[3] - 1].
+                    disabled = true;
+                    // allow the inputs to be changed now we have stopped
+                    document.getElementById('difficulty3').disabled = false;
+                    document.getElementById('inputCheckbox3').disabled = false;
+                } else if (!mineAutomatically) params.state = 'stopped';
+                var statistics = '\n<span class="preserve-newline">\n</span>'; // init
+                for (var numChars = 1; numChars <= 64; numChars++) {
+                    if (!params.attempts.hasOwnProperty(numChars)) continue;
+                    var attempts = params.attempts[numChars];
+                    var minedStatus = ' not yet mined after '; // init
+                    if (params.attempts['matchFound' + numChars]) minedStatus =
+                    ' mined in ';
+                    if (!params.attempts.hasOwnProperty('luck' + numChars)) {
+                        params.attempts['luck' + numChars] = ''; // init
+                    }
+                    if (
+                        params.attempts['matchFound' + numChars] &&
+                        (params.attempts['luck' + numChars] == '')
+                    ) {
+                        // the average number of attempts is (16^numChars) / 2
+                        // very lucky is less than half of that
+                        var luckyThreshold = Math.floor(Math.pow(16, numChars) / 4);
+                        var unluckyThreshold = 3 * luckyThreshold;
+                        var lucky = ' (';
+                        if (attempts < luckyThreshold) {
+                            lucky += 'very lucky';
+                        } else if (attempts > unluckyThreshold) {
+                            lucky += 'very unlucky';
+                        } else if (attempts < (luckyThreshold * 2)) {
+                            lucky += 'a bit lucky';
+                        } else if (attempts > (luckyThreshold * 2)) {
+                            lucky += 'a bit unlucky';
+                        } else lucky += 'pretty standard';
+                        lucky += ' - the average is ' + (luckyThreshold * 2) +
+                        ' attempts)';
+                        params.attempts['luck' + numChars] = lucky;
+                    }
+                    statistics += numChars + ' digit' + plural('s', numChars > 1) +
+                    minedStatus + attempts + ' attempt' +
+                    plural('s', attempts > 1) +
+                    params.attempts['luck' + numChars] +
+                    (getDeviceType() == 'phone' ? '\n\n' : '\n');
+                }
+                document.getElementById('mining3Statistics').innerHTML =
+                trimRight(statistics);
+
+                if (mineAutomatically) setTimeout(function () { loop(params); }, 0);
+            })(params);
+            break;
+    }
+}
+
+function runHashWrap3Clicked(e) {
+    runHashWrapClicked(e);
+    var mining3Statistics = document.getElementById('mining3Statistics');
+    mining3Statistics.innerHTML = '\n\n' + mining3Statistics.textContent.trim();
+}
+
+// forms 1, 2 and 3
+function runHash1Or2Or3Clicked(params) {
+    // stop running if in a loop
+    if (stopHashingForm[params.formNum]) return false;
+
+    if (params.firstTime) {
+        document.getElementById('info' + params.formNum).style.display =
+        'inline-block';
+        document.getElementById('showResults' + params.formNum).style.display =
+        'inline';
+        params.firstTime = false;
+    }
+    var nonce = document.getElementById('inputMessage' + params.formNum).value;
+    var overridePass = false; // keep going after a match is found?
+    var inputCheckbox = document.getElementById('inputCheckbox' + params.formNum);
+    if (params.matchFound && (params.previousNonce == nonce)) {
+        // not able to mine again after success for 'mine automatically'
+        if (params.checkboxPurpose == 'increment preimage' && inputCheckbox.checked) {
+            overridePass = true;
+        }
+        else return;
+    }
+
+    document.getElementById('preImage' + params.formNum).innerHTML =
+    params.prefix + nonce;
+    var bitArray = sjcl.hash.sha256.hash(params.prefix + nonce);
+    var sha256Hash = sjcl.codec.hex.fromBits(bitArray);
+
+    // update the latest hash times and render the average rate
+    params.hashRateData.push((new Date()).getTime()); // push on the end
+    while (params.hashRateData.length > 10) {
+        params.hashRateData.shift(); // pop from the start
+    }
+    document.getElementById('info' + params.formNum).getElementsByTagName('span')[0].
+    innerHTML = getAverageHashRate(params.hashRateData);
+
+    params.matchFound = (
+        params.hashMatch.substr(0, difficultyChars[params.formNum]) ==
+        sha256Hash.substr(0, difficultyChars[params.formNum])
+    );
+    if (
+        params.matchFound &&
+        !overridePass &&
+        params.checkboxPurpose == 'increment preimage'
+    ) {
+        inputCheckbox.checked = false;
+    }
+    document.getElementById('hash' + params.formNum + 'Result').innerHTML = sha256Hash;
+    var wrapButtonIsOn = (
+        document.getElementById('form' + params.formNum).
+        querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
+    );
+    var incrementPreImage = (
+        params.checkboxPurpose == 'mine automatically' || inputCheckbox.checked
+    );
+    var currentNonce = nonce; // save before modification
+    if (incrementPreImage) nonce = incrementAlpha(nonce);
+    document.getElementById('inputMessage' + params.formNum).value = nonce;
+
+    // fix up the alignment if the pre-image length hash changed
+    if (
+        !wrapButtonIsOn
+        && (params.previousNonce.length != nonce.length)
+    ) alignText(document.getElementById('codeblock' + params.formNum + 'HashResults'));
+
+    var matches = alphaInCommon(params.hashMatch, sha256Hash);
+    // only show matches upto the difficulty
+    matches = matchResolution(matches, difficultyChars[params.formNum]);
+    borderTheDigits(
+        '#codeblock' + params.formNum + 'HashResults .individual-digits', matches
+    );
+
+    var numMatches = countMatches(matches);
+    var status = (params.matchFound ? 'pass' : 'fail') + ' (because ';
+    if (params.matchFound) status += 'the required digits';
+    else {
+        if (numMatches == 0) status += '0';
+        else if (numMatches > 0) status += 'only ' + numMatches;
+        status += ' of ' + difficultyChars[params.formNum] + ' digits';
+    }
+    status += ' match)';
+    document.getElementById('matchStatus' + params.formNum).innerHTML = status;
+    document.getElementById('matchStatus' + params.formNum).style.color =
+    (params.matchFound ? passColor : failColor);
+
+    // prepare for next round
+    params.previousNonce = currentNonce;
+    return true; // keep running if in a loop
+}
+
+function getAverageHashRate(hashRateData, numberOnly) {
+    // add up the diffs between each item in the list
+    var sum = 0;
+    for (var i = 1; i < hashRateData.length; i++) {
+        sum += (hashRateData[i] - hashRateData[i - 1]);
+    }
+    var average = 0;
+    if (sum == 0) average = 0; // avoid div by 0
+    else average = Math.round((1000 * (hashRateData.length - 1)) / sum);
+    if (average < 1 && (numberOnly != true)) average = 'less than 1';
+    return average;
+}
+
+function matchResolution(matches, resolution) {
+    foreach (matches, function (i) {
+        if (i < resolution) return; // continue
+        matches[i] = null;
+    });
+    return matches;
+}
+
+// iterate the given text through the alphabet, such that:
+// a -> b
+// z -> aa
+// az -> ba
+// ba -> bb
+// zz -> aaa
+// zaz -> zba
+// @ -> a (@ is anything not in the alphabet)
+// @z -> aa
+var alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=.\'';
+var lastAlphabetChar = alphabet.substr(-1);
+function incrementAlpha(text) {
+    if (text.length == 0) return alphabet[0];
+    var lastTextChar = text.substr(-1);
+    if (lastTextChar == lastAlphabetChar) {
+        // put all but the last char through this function recursively
+        // set last char to first letter of alphabet
+        return incrementAlpha(text.substr(0, text.length - 1)) + alphabet[0];
+    } else {
+        // we get here both when:
+        // - the last char does not exist in the alphabet and
+        // - the last char is not the last char of the alphabet
+        // just increment the last char
+        return text.substr(0, text.length - 1) + alphabet[alphabet.indexOf(lastTextChar) + 1];
+    }
+}
+
+function getRandomAlpha(length) {
+    var randomAlpha = ''; // init
+    for (var i = 0; i < length; i++) {
+        randomAlpha += alphabet[Math.round((alphabet.length - 1) * Math.random())];
+    }
+    return randomAlpha;
+}
+
+function alphaInCommon(text1, text2) {
+    var inCommon = [];
+    for (var i = 0; i < text1.length; i++) { // undefined when dne
+        inCommon[i] = ((text1[i] === text2[i]) && (text1[i] != null));
+    }
+    return inCommon;
+}
+
+function countMatches(matchArray) {
+    var matches = 0; // init
+    foreach (matchArray, function (i, el) {
+        if (el === true) matches++;
+    });
+    return matches;
+}
+
+function borderTheDigits(elements, matchArray, failPrecedence) {
+    failPrecedence = (failPrecedence == true); // off by default
+    var passPrecedence = !failPrecedence; // on by default
+    if (typeof elements == 'string') elements = document.querySelectorAll(elements);
+    else if (elements.length == null) elements = [elements];
+
+    foreach (elements, function (i, el) {
+        var text = el.textContent; // get
+        var newHTML = '';
+        foreach (matchArray, function (letterI) {
+            var border = '';
+            var borderLeft = '';
+            switch (matchArray[letterI]) {
+                case true:
+                    border = 'border:1px solid ' + passColor + ';';
+                    break;
+                case false:
+                    border = 'border:1px solid ' + failColor + ';';
+                    break;
+            }
+            switch (matchArray[letterI - 1]) {
+                case true:
+                    if ((matchArray[letterI] != null) && failPrecedence) break;
+                    borderLeft = 'border-left:1px solid ' + passColor + ';';
+                    break;
+                case false:
+                    if ((matchArray[letterI] != null) && passPrecedence) break;
+                    borderLeft = 'border-left:1px solid ' + failColor + ';';
+                    break;
+            }
+            newHTML += '<span class="individual-digit" style="' + border +
+            borderLeft + '">' + text[letterI] + '</span>';
+        });
+        el.innerHTML = newHTML; // set
+    });
+}
+
+function borderTheChars(bytes, numChars) {
+    var re = new RegExp('.{' + numChars + '}', 'g');
+    var bytesArray = bytes.match(re);
+    var open = '<span class="individual-digit">';
+    var close = '</span>';
+    return open + bytesArray.join(close + open) + close;
+}
+
+function addError(formNum, errorType, errorText) {
+    addLi2Ul('#form' + formNum + ' .error', null, errorText, errorType + 'Error');
+}
+
+function noOtherErrors4() {
+    return (document.querySelectorAll('#form4 ul.error li').length == 0);
+}
+
+function versionChanged(versionFromInput, formNum) {
+    var data = { // init
+        status: true,
+        versionInt: null,
+        version: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .versionError'));
+    function addError2(errorText) { addError(formNum, 'version', errorText); }
+    if (!stringIsInt(versionFromInput)) {
+        addError2('the version must be an integer');
+        data.status = false;
+        return data;
+    }
+    var versionInt = parseInt(versionFromInput);
+    if (versionInt < 0) {
+        addError2('the version must be greater than 0');
+        data.status = false;
+        return data;
+    }
+    if (versionInt > 0xffffffff) {
+        addError2('the version must be lower than ' + 0xffffffff);
+        data.status = false;
+        return data;
+    }
+    data.versionInt = versionInt;
+    data.version = toLittleEndian(int2hex(versionInt, 8));
+    return data;
+}
+
+function version4Changed(e) {
+    var newVersion = trimInputValue(e.currentTarget);
+    if (newVersion == miningData.versionRaw) return; // exit if no change
+
+    var data = versionChanged(newVersion, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.versionRaw = newVersion; // last
+        return;
+    }
+    miningData.version = data.version;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.versionRaw = newVersion; // last
+}
+
+function prevHashChanged(prevHashFromInput, formNum) {
+    var data = { // init
+        status: true,
+        prevHash: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .prevHashError'));
+    function addError2(errorText) { addError(formNum, 'prevHash', errorText); }
+    if (!isHex(prevHashFromInput)) {
+        addError2('the previous block hash must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    if (prevHashFromInput.length != 64) {
+        addError2('the previous block hash must be 32 bytes long');
+        data.status = false;
+        return data;
+    }
+    data.prevHash = toLittleEndian(prevHashFromInput);
+    return data;
+}
+
+function prevHash4Changed(e) {
+    var newPrevHash = trimInputValue(e.currentTarget);
+    if (newPrevHash == miningData.prevHashRaw) return; // exit if no change
+    var data = prevHashChanged(newPrevHash, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.prevHashRaw = newPrevHash; // last
+        return;
+    }
+    miningData.prevHash = data.prevHash;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.prevHashRaw = newPrevHash; // last
+}
+
+function merkleRootChanged(merkleRootFromInput, formNum) {
+    var data = { // init
+        status: true,
+        merkleRoot: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .merkleRootError'));
+    function addError2(errorText) { addError(formNum, 'merkleRoot', errorText); }
+    if (!isHex(merkleRootFromInput)) {
+        addError2('the merkle root must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    if (merkleRootFromInput.length != 64) {
+        addError2('the merkle root must be 32 bytes long');
+        data.status = false;
+        return data;
+    }
+    data.merkleRoot = toLittleEndian(merkleRootFromInput);
+    return data;
+}
+
+function merkleRoot4Changed(e) {
+    var newMerkleRoot = trimInputValue(e.currentTarget);
+    if (newMerkleRoot == miningData.merkleRootRaw) return; // exit if no change
+
+    var data = merkleRootChanged(newMerkleRoot, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.merkleRootRaw = newMerkleRoot; // last
+        return;
+    }
+    miningData.merkleRoot = data.merkleRoot;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.merkleRootRaw = newMerkleRoot; // last
+}
+
+// the timetstamp can be either an integer (unixtime) or a date string
+function timestampChanged(timestampFromInput, formNum) {
+    var data = { // init
+        status: true,
+        timestampUnixtime: null,
+        timestamp: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .timestampError'));
+    function addError2(errorText) { addError(formNum, 'timestamp', errorText); }
+    var timestampUnixtime;
+    if (stringIsInt(Date.parse(timestampFromInput))) {
+        var timestampUnixtime = unixtime(timestampFromInput);
+        document.getElementById('timestamp' + formNum + 'Explanation').innerHTML = '';
+    } else if (stringIsInt(timestampFromInput)) {
+        var timestampUnixtime = parseInt(timestampFromInput);
+        document.getElementById('timestamp' + formNum + 'Explanation').innerHTML =
+        ' (unixtime)';
+    } else {
+        addError2(
+            'the timestamp must either be a valid date-time, or be an integer' +
+            ' (unixtime)'
+        );
+        data.status = false;
+        return data;
+    }
+    if (timestampUnixtime < 1231006505) {
+        addError2('the timestamp cannot come before 03 Jan 2009, 18:15:05 (GMT)');
+        data.status = false;
+        return data;
+    }
+    if (timestampUnixtime > 0xffffffff) {
+        addError2('the timestamp cannot come after 07 Feb 2106, 06:28:15 (GMT)');
+        data.status = false;
+        return data;
+    }
+    data.timestampUnixtime = timestampUnixtime;
+    data.timestamp = toLittleEndian(int2hex(data.timestampUnixtime, 8));
+    return data;
+}
+
+function timestamp4Changed(e) {
+    // do not trim, or the user will not be able to put spaces between words
+    var newTimestamp = e.currentTarget.value;
+    if (newTimestamp == miningData.timestampRaw) return; // exit if no change
+    var data = timestampChanged(newTimestamp, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.timestampRaw = newTimestamp; // last
+        return;
+    }
+    miningData.timestamp = data.timestamp;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.timestampRaw = newTimestamp; // last
+}
+
+function bitsChanged(bitsFromInput, inHex, formNum) {
+    var data = { // init
+        status: true,
+        bits: null, // in little endian hex
+        bitsDec: null,
+        bitsBE: null, // in big endian hex
+        target: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .bitsError'));
+    function addError2(errorText) { addError(formNum, 'bits', errorText); }
+
+    var h = 'bits'; // init
+    if (!inHex) { // is base 10
+        bitsFromInput = bitsFromInput.toString();
+        if (inArray('.', bitsFromInput)) { // just 1 check for base 10 bits
+            addError2('when bits is base 10 it cannot contain decimal places');
+            data.status = false;
+            return data;
+        }
+        bitsFromInput = bitsFromInput.replace(/,/g, '');
+        if (!stringIsInt(bitsFromInput)) {
+            addError2('when bits is not hex, it can only contain numbers 0 to 9');
+            data.status = false;
+            return data;
+        }
+        data.bitsDec = parseInt(bitsFromInput);
+        bitsFromInput = int2hex(data.bitsDec);
+        h = 'hex bits (derived from base 10 bits)';
+    }
+    var targetx = bits2target(bitsFromInput);
+    if (targetx.status == false) {
+        addError2(targetx.statusMessage.replace('bits', h));
+        data.status = false;
+        return data;
+    }
+    data.target = targetx.target;
+    data.bitsBE = bitsFromInput;
+    data.bits = toLittleEndian(bitsFromInput);
+    if (data.bitsDec == null) data.bitsDec = hex2int(bitsFromInput);
+    return data;
+}
+
+function bits4Changed(e) {
+    var newBits = trimInputValue(e.currentTarget);
+    if (newBits == miningData.bitsRaw) return; // exit if no change
+
+    var inHex = true;
+    var data = bitsChanged(newBits, inHex, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.bitsRaw = newBits; // last
+        return;
+    }
+    miningData.bits = data.bits;
+    miningData.target = data.target;
+    document.getElementById('target4').innerHTML = miningData.target;
+    borderTheDigits('#target4', new Array(64)); // erase colors
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.bitsRaw = newBits; // last
+}
+
+function targetChanged(targetFromInput, formNum) {
+    var data = { // init
+        status: true,
+        target: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .targetError'));
+    function addError2(errorText) { addError(formNum, 'target', errorText); }
+    if (!isHex(targetFromInput)) {
+        addError2('the target must only contain hexadecimal digits');
+        data.status = false;
+        return data;
+    }
+    var bitsx = target2bits(targetFromInput); // [status, bits (int), error message]
+    if (bitsx.status == false) {
+        addError2(bitsx.statusMessage);
+        data.status = false;
+        return data;
+    }
+    data.target = targetFromInput;
+    return data;
+}
+
+function difficultyChanged(difficultyFromInput, formNum) {
+    var data = { // init
+        status: true,
+        difficulty: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .difficultyError'));
+    function addError2(errorText) { addError(formNum, 'difficulty', errorText); }
+    difficultyFromInput = difficultyFromInput.replace(/,/g, '');
+
+    var bitsx = difficulty2bits(difficultyFromInput);
+    if (bitsx.status == false) {
+        addError2(bitsx.statusMessage);
+        data.status = false;
+        return data;
+    }
+    var difficultyFloat = parseFloat(difficultyFromInput);
+    data.difficulty = difficultyFloat;
+    return data;
+}
+
+function nonceChanged(nonceFromInput, formNum) {
+    var data = { // init
+        status: true,
+        nonce: null,
+        nonceInt: null
+    };
+    deleteElements(document.querySelectorAll('#form' + formNum + ' .nonceError'));
+    function addError2(errorText) { addError(formNum, 'nonce', errorText); }
+    if (!stringIsInt(nonceFromInput)) {
+        addError2('the nonce must be an integer');
+        data.status = false;
+        return data;
+    }
+    var nonceInt = parseInt(nonceFromInput);
+    if (nonceInt < 0) {
+        addError2('the nonce must be greater than 0');
+        data.status = false;
+        return data;
+    }
+    if (nonceInt > 0xffffffff) {
+        addError2('the nonce must be lower than ' + 0xffffffff);
+        data.status = false;
+        return data;
+    }
+    data.nonceInt = nonceInt;
+    data.nonce = toLittleEndian(int2hex(nonceInt, 8));
+    return data;
+}
+
+function nonce4Changed(e) {
+    var newNonce = trimInputValue(e.currentTarget);
+    if (newNonce == miningData.nonceRaw) return; // exit if no change
+
+    var data = nonceChanged(newNonce, 4);
+    resetMiningStatus();
+    if (!data.status) {
+        setButtons(false, 'RunHash4');
+        miningData.nonceRaw = newNonce; // last
+        return;
+    }
+    miningData.nonceInt = data.nonceInt;
+    miningData.nonce = data.nonce;
+    if (noOtherErrors4()) setButtons(true, 'RunHash4');
+    miningData.nonceRaw = newNonce; // last
+}
+
+// reset the block and clear any errors
+function resetBlock4(pass) {
+    document.getElementById('version4').value = 1;
+    triggerEvent(document.getElementById('version4'), 'change');
+
+    document.getElementById('prevHash4').value =
+    '0000000000000000000000000000000000000000000000000000000000000000';
+    triggerEvent(document.getElementById('prevHash4'), 'change');
+
+    document.getElementById('merkleRoot4').value =
+    '4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b';
+    triggerEvent(document.getElementById('merkleRoot4'), 'change');
+
+    document.getElementById('timestamp4').value = '03 Jan 2009 18:15:05 GMT';
+    triggerEvent(document.getElementById('timestamp4'), 'change');
+
+    document.getElementById('bits4').value = '1d00ffff';
+    triggerEvent(document.getElementById('bits4'), 'change');
+
+    document.getElementById('nonce4').value = pass ? 2083236893 : 0;
+    triggerEvent(document.getElementById('nonce4'), 'change');
+}
+
+function resetMiningStatus() {
+    document.getElementById('blockhash4').innerHTML = '';
+    document.getElementById('mineStatus4').innerHTML = '';
+    borderTheDigits('#target4', new Array(64)); // erase colors
+}
+
+function mine4AndRenderResults() {
+    document.getElementById('nonce4Results').innerHTML = miningData.nonceInt;
+    var minedResult = mine(); // using global var miningData
+    document.getElementById('blockhash4').innerHTML = minedResult.blockhash;
+    borderTheDigits(
+        '#form4 .codeblock .individual-digits',
+        minedResult.matches,
+        true // fail precedence
+    );
+
+    if (minedResult.status) {
+        popup('success!', 'you mined a block', 3000);
+        setButtons(false, 'RunHash4');
+        document.getElementById('mineStatus4').innerHTML = 'pass (because ' +
+        minedResult.blockhash[minedResult.resolution] + ' is less than ' +
+        miningData.target[minedResult.resolution] + ')';
+        document.getElementById('mineStatus4').style.color = passColor;
+    } else {
+        document.getElementById('mineStatus4').innerHTML = 'fail (because ' +
+        minedResult.blockhash[minedResult.resolution] + ' is greater than ' +
+        miningData.target[minedResult.resolution] + ')';
+        document.getElementById('mineStatus4').style.color = failColor;
+    }
+
+    // increment the nonce
+    miningData.nonceInt += 1;
+    if (miningData.nonceInt > 0xffffffff) miningData.nonceInt = 0;
+    document.getElementById('nonce4').value = miningData.nonceInt;
+    miningData.nonceRaw = miningData.nonceInt;
+    miningData.nonce = toLittleEndian(int2hex(miningData.nonceInt, 8));
+}
+
+function mine() {
+    var bitArray = sjcl.codec.hex.toBits(
+        miningData.version +
+        miningData.prevHash +
+        miningData.merkleRoot +
+        miningData.timestamp +
+        miningData.bits +
+        miningData.nonce
+    );
+    var sha256BitArray = sjcl.hash.sha256.hash(sjcl.hash.sha256.hash(bitArray));
+    var sha256Hash = toLittleEndian(sjcl.codec.hex.fromBits(sha256BitArray));
+    var miningStatus = hexCompare(sha256Hash, miningData.target, true); // sha256 <= target ?
+    var matches = [];
+    for (var i = 0; i < 64; i++) {
+        if (i < miningStatus.resolution) matches.push(true);
+        else if (i == miningStatus.resolution) {
+            if (miningStatus.status) matches.push(true);
+            else matches.push(false);
+        } else matches.push(null);
+    }
+    return {
+        blockhash: sha256Hash,
+        status: miningStatus.status,
+        resolution: miningStatus.resolution,
+        matches: matches
+    };
+}
+
+// same logic as arith_uint256::SetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the bits value: 4 byte hex string
+function setCompact(compact, levelOfDetail) {
+    var results = {
+        status: false, // init
+        target: null,
+        isNegative: null,
+        isOverflow: null,
+        statusMessage: '',
+        steps: []
+    };
+    // in the bitcoin src, typeof compact = uint32_t. enforce the same here.
+    if (compact.length != 8) {
+        results.statusMessage = 'bits must be 4 bytes long';
+        return results;
+    }
+    if (!isHex(compact)) {
+        results.statusMessage = 'bits must only contain hexadecimal digits';
+        return results;
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'in the Bitcoin source code this conversion uses function' +
+        ' setCompact(). \'bits\' here is made up of 1 \'size\' byte followed' +
+        ' by 3 \'compact\' bytes',
+        right: null
+    });
+    results.target = ''; // init
+    var compactHex = compact;
+    compact = hex2int(compact);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'bits',
+        right: '0x' + borderTheChars(compactHex, 2) + ' = ' + compact
+    });
+    // javascript's zero-fill right shift is equivalent to c++'s >> on a uint32_t
+    var size = compact >>> 24;
+    var sizeHex = int2hex(size, 2);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the \'size\' byte',
+        right: '0x' + compactHex + ' >> 24 = 0x' + sizeHex + ' = ' + size
+    });
+    var word = compact & 0x007fffff;
+    var wordHex = int2hex(word, 8);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the 3 \'word\' bytes',
+        right: '0x' + compactHex + ' & 0x007fffff = 0x' + wordHex + ' = ' + word
+    });
+    if (size <= 3) {
+        var rightShiftBy = 8 * (3 - size);
+        word >>= rightShiftBy;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the size is <= 3, so shift the mantissa right by ' +
+            ' 8 * (3 - size) = ' + rightShiftBy + ' bits to get',
+            right: word
+        });
+        results.target = int2hex(word, 64);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'convert the mantissa to 32 bytes to get the target value',
+            right: '0x' + results.target
+        });
+    } else {
+        // bitcoin src uses:
+        // uint256 target = word << 8 * (size - 3);
+        // use a string instead since javascript cannot handle 256bit integers
+        results.target = leftPad(int2hex(word) + '00'.repeat(size - 3), 64).substr(-64);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the \'size\' is > 3 so shift the \'word\' left by' +
+            ' 8 * (size - 3) = ' + (8 * (size - 3)) + ' bits and convert to' +
+            ' 32 bytes to get the target value',
+            right: '0x' + results.target
+        });
+    }
+    results.isNegative = (word != 0) && ((compact & 0x00800000) != 0);
+    if (levelOfDetail >= 2) {
+        var not = results.isNegative ? '' : ' not';
+        var posneg = results.isNegative ? 'negative' : 'positive';
+        results.steps.push({
+            left: 'the target is ' + posneg + ' because the 0x00800000 bit is' +
+            not + ' set in the original bits value',
+            right: null
+        });
+        results.steps.push({
+            left: 'negative status',
+            right: posneg
+        });
+    }
+
+    var overflowReason1 = (size > 34);
+    var overflowReason2 = (word > 0xff) && (size > 33);
+    var overflowReason3 = (word > 0xffff) && (size > 32);
+    if (word == 0) {
+        results.isOverflow = false;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the target is zero. overflow status',
+            right: 'false'
+        });
+    } else {
+        if (overflowReason1) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 34. overflow status',
+                right: 'true'
+            });
+        } else if (overflowReason2) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 33 and the mantissa (' +
+                word + ') is greater than 0xff. overflow status',
+                right: 'true'
+            });
+        } else if (overflowReason3) {
+            results.isOverflow = true;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the \'size\' is greater than 32 and the mantissa (' +
+                word + ') is greater than 0xffff. overflow status',
+                right: 'true'
+            });
+        } else {
+            results.isOverflow = false;
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'overflow status',
+                right: 'false'
+            });
+        }
+    }
+    results.status = true;
+    return results;
+}
+
+function bits2target(bits, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var targetx = setCompact(bits, levelOfDetail);
+    if (levelOfDetail >= 1) targetx.steps.unshift({ // prepend
+        left: '<u>bits -> target</u>',
+        right: null
+    });
+    if (targetx.isNegative) targetx.target = '-' + targetx.target;
+    return targetx;
+}
+
+// the bitcoin wiki gives this method of converting from bits to difficulty. the
+// logic is different to the bitcoin src code.
+// https://en.bitcoin.it/wiki/Difficulty#How_is_difficulty_calculated.3F_What_is_the_difference_between_bdiff_and_pdiff.3F
+var diffCalcMaxBody = Math.log(0x00ffff);
+var diffCalcScaland = Math.log(256);
+function bits2difficultyWiki(bits) {
+    var bitsInt = (typeof bits == 'number') ? bits : hex2int(bits);
+    return Math.exp(
+        diffCalcMaxBody - Math.log(bitsInt & 0x00ffffff) +
+        (diffCalcScaland * (0x1d - ((bitsInt & 0xff000000) >>> 24)))
+    );
+}
+
+// same logic as double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
+// in src/rpc/blockchain.cpp
+// input is the bits value (a 4 byte hex string, or equivalent int)
+function bits2difficulty(bits, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var results = {
+        status: false, // init
+        statusMessage: '',
+        difficulty: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) {
+        results.steps.push({
+            left: '<u>bits -> difficulty</u>',
+            right: null
+        });
+        results.steps.push({
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getDifficulty()',
+            right: null
+        });
+    }
+    if (typeof bits == 'number') {
+        var bitsInt = bits;
+        if (bitsInt > 0xffffffff) {
+            results.statusMessage = 'bits value must be 4 bytes';
+            return results;
+        }
+    } else {
+        if (bits.length != 8) {
+            results.statusMessage = 'bits value must be 4 bytes';
+            return results;
+        }
+        var bitsInt = hex2int(bits);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'bits',
+            right: '0x' + borderTheChars(bits, 2) + ' = ' + bitsInt
+        });
+    }
+    var shift = (bitsInt >>> 24) & 0xff;
+    var shiftHex = int2hex(shift, 2);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'extract the first byte (called the \'shift\' value here)',
+        right: '(0x' + bits + ' >> 24) & 0xff = 0x' + shiftHex + ' = ' + shift
+    });
+    results.difficulty = parseFloat(0x0000ffff) / parseFloat(bitsInt & 0x00ffffff);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'initialise the difficulty to 0x0000ffff / (bits & 0x00ffffff)',
+        right: '0x0000ffff / (0x' + bits + ' & 0x00ffffff) = ' + results.difficulty
+    });
+    if ((shift < 29) && (levelOfDetail >= 2)) results.steps.push({
+        left: 'begin looping until \'shift\' (' + shift + ') increases to 29',
+        right: null
+    });
+    while (shift < 29) {
+        var prevDifficulty = results.difficulty;
+        results.difficulty *= 256.0;
+        shift++;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'multiply difficulty by 256 to get',
+                right: prevDifficulty + ' * 256 = ' + results.difficulty
+            });
+            results.steps.push({
+                left: 'increment the \'shift\' value to',
+                right: shift
+            });
+            if (shift < 29) results.steps.push({
+                left: 'continue looping until \'shift\' value increases to 29',
+                right: null
+            });
+        }
+    }
+    if ((shift > 29) && (levelOfDetail >= 2)) results.steps.push({
+        left: 'begin looping until \'shift\' (' + shift + ') decreases to 29',
+        right: null
+    });
+    while (shift > 29) {
+        results.difficulty /= 256.0;
+        shift--;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'divide difficulty by 256 to get',
+                right: results.difficulty
+            });
+            results.steps.push({
+                left: 'decrement the \'shift\' value to',
+                right: shift
+            });
+            if (shift > 29) results.steps.push({
+                left: 'continue looping until \'shift\' value decreases to 29',
+                right: null
+            });
+        }
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'the \'shift\' value is equal to 29 so we\'re finished. the' +
+        ' final difficulty is',
+        right: results.difficulty
+    });
+    results.status = true;
+    return results;
+}
+
+// returns the position of the highest bit set plus one, or 0 if the value is 0
+// same logic as base_uint<BITS>::bits() const in bitcoin/src/arith_uint256.cpp
+// input 1 is the target value: 32 byte hex string
+// input 2 is the levelOfDetail: [null|0], 1, 2
+// returns an object containing the unsigned int result between 0 and 288
+function bits(target, levelOfDetail) {
+    var results = {
+        size: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'begin finding the target\'s \'size\'',
+        right: null
+    });
+    var width = 8; // = 256 bits / int32
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'split the target into 8 chunks of 4 bytes',
+        right: '0x' + borderTheChars(target, 8)
+    });
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'begin looping through the chunks, starting from chunk 7 - the' +
+        ' leftmost chunk',
+        right: null
+    });
+    for (var pos = width - 1, i = 0; pos >= 0; pos--, i++) {
+        var chunk = target.substr(i * width, width);
+        var int32 = hex2int(chunk);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'chunk ' + pos,
+            right: '0x' + chunk + ' = ' + int32
+        });
+        if (int32 == 0) {
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'the chunk value is 0. ' +
+                ((pos == 0) ? 'exit the loop here.' : 'skip to next chunk.'),
+                right: null
+            });
+            continue;
+        }
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the chunk value is not 0. begin looping through each bit' +
+            ' of the chunk, starting from the most significant bit.',
+            right: null
+        });
+        for (var nbits = 31; nbits > 0; nbits--) {
+            if (int32 & Math.pow(2, nbits)) {
+                var size = (32 * pos) + nbits + 1;
+                if (levelOfDetail >= 2) {
+                    results.steps.push({
+                        left: 'bit ' + nbits + ' in chunk ' + pos + ' is set.' +
+                        ' so the \'size\' is the number of bits in the ' + pos +
+                        ' chunks to the right (32 bits per chunk), plus the' +
+                        ' number of bits in this chunk (' + nbits + ') plus 1.' +
+                        ' size',
+                        right: '(32 * ' + pos + ') + ' + nbits + ' + 1 = ' +
+                        size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+                    });
+                } else if (levelOfDetail == 1) results.steps.push({
+                    left: 'calculated the \'size\' to be',
+                    right: size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+                });
+                results.size = size;
+                return results;
+            }
+            if (levelOfDetail >= 2) results.steps.push({
+                left: 'bit ' + nbits + ' is not set. skip to the next bit',
+                right: null
+            });
+        }
+        var size = (32 * pos) + 1;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'just return the number of bits in the chunks',
+                right: '(32 * ' + pos + ') + 1 = ' + size + ' bits = 0x' +
+                int2hex(size, 2) + ' bits'
+            });
+        } else if (levelOfDetail == 1) results.steps.push({
+            left: 'calculated the \'size\' to be',
+            right: size + ' bits = 0x' + int2hex(size, 2) + ' bits'
+        });
+        results.size = size;
+        return results;
+    }
+    if (levelOfDetail >= 1) results.steps.push({
+        left: 'calculated the \'size\' to be',
+        right: '0 bits = 0x00 bits'
+    });
+    results.size = 0;
+    return results;
+}
+
+// same logic as uint64_t GetLow64() in bitcoin/src/arith_uint256.h
+// input is the target value: 32 byte hex string
+// returns the last 64 bits (8 bytes)
+function getLow64(target) {
+    // bitcoin src uses:
+    // return pn[0] | (uint64_t)pn[1] << 32;
+    return target.substr(-16);
+}
+
+// same logic as arith_uint256::GetCompact() in bitcoin/src/arith_uint256.cpp
+// input is the target value: 32 byte hex string
+function getCompact(target, negative, levelOfDetail) {
+    var results = {
+        status: false, // init
+        finalBitsInt: null,
+        finalBitsHex: null,
+        statusMessage: '',
+        sizeInt: null,
+        steps: []
+    };
+    if (target.length != 64) {
+        results.statusMessage = 'the target must be 32 bytes';
+        return results;
+    }
+    var bitsResult = bits(target, levelOfDetail);
+    results.steps = results.steps.concat(bitsResult.steps);
+
+    results.size = Math.floor((bitsResult.size + 7) / 8);
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'convert the \'size\' from bits to bytes - add 7 and divide by 8',
+        right: '(' + bitsResult.size + ' + 7) / 8 = ' + results.size + ' = 0x' +
+        int2hex(results.size, 2)
+    });
+
+    // in bitcoin src this is a uint32_t, which javascript can handle
+    var compact = 0; // init
+
+    target = target.replace(/^0+/, ''); // strip leading zeros
+    if (results.size <= 3) {
+        // bitcoin src uses:
+        // nCompact = GetLow64() << 8 * (3 - nSize);
+        // use a hex string since javascript cannot handle 64 bit ints
+        var low64 = leftPad(getLow64(target), 8);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'size\' (' + results.size + ') is <= 3. initialize' +
+            ' \'compact\' to the lowest 64 bits of the target',
+            right: '0x' + low64 + ' = ' + hex2int(low64)
+        });
+        var compactHex = low64 + '00'.repeat(3 - results.size);
+        compactHex = leftPad(compactHex.substr(-8), 8);
+        compact = hex2int(compactHex);
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'compact\' <<= 8 * (3 - size)',
+            right: '0x' + low64 + ' << 8 * (3 - ' + results.size + ') = 0x' +
+            compactHex + ' = ' + compact
+        });
+    } else {
+        // bitcoin src uses:
+        // arith_uint256 bn = *this >> 8 * (nSize - 3);
+        // compact = bn.GetLow64();
+        // ie chop off (size - 3) bytes from the right to always keep 3 bytes
+        var chopped = leftPad(target.substring(
+            0, target.length - (2 * (results.size - 3))
+        ), 6);
+        var compactHex = leftPad(getLow64(chopped), 8);
+        compact = hex2int(compactHex);
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: '\'size\' (' + results.size + ') is > 3. initialize' +
+                ' \'compact\' by extracting 3 bytes from the target - from' +
+                ' 3 bytes below \'size\' (' + (results.size - 3) + ') to the' +
+                ' \'size\' byte (' + results.size + ')',
+                right: '0x' + chopped
+            });
+            results.steps.push({
+                left: 'keep only the lowest 64 bits in \'compact\'',
+                right: '0x' + compactHex + ' = ' + compact
+            });
+        }
+    }
+    // the 0x00800000 bit denotes the sign. thus, if it is already set, divide
+    // the mantissa by 256 and increase the exponent.
+    if (compact & 0x00800000) {
+        var prevCompact = compact;
+        compact >>= 8;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'compact\' bit 0x00800000 is set which would make \'bits\'' +
+            ' negative. so shift \'compact\' right by 8 bits',
+            right: '0x' + int2hex(prevCompact, 8) + ' >> 8 = 0x' +
+            int2hex(compact, 8)
+        });
+        results.size++;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'and increment the \'size\' to',
+            right: results.size + ' = 0x' + int2hex(results.size, 2)
+        });
+    }
+    if ((compact & ~0x007fffff) !== 0) {
+        results.statusMessage = '(compact & ~0x007fffff) !== 0, where compact' +
+        ' = 0x' + int2hex(compact, 8);
+        return results;
+    }
+    if (results.size >= 256) {
+        results.statusMessage = 'size >= 256, where size = ' +
+        results.size;
+        return results;
+    }
+    // bitcoin src uses:
+    // nCompact |= nSize << 24;
+    compact |= (results.size * Math.pow(2, 24)); // splice size into bits value
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'combine the \'size\' and \'compact\' to get \'bits\'',
+        right: '0x' + int2hex(compact, 8) + ' = ' + compact
+    });
+
+    if ((negative === true) && (compact & 0x007fffff)) {
+        compact |= 0x00800000;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the target is negative but the \'bits\' did not have the' +
+            ' bit at 0x00800000 set, so set it',
+            right: '0x' + int2hex(compact, 8) + ' = ' + compact
+        });
+    }
+    results.status = true;
+    results.finalBitsInt = compact;
+    results.finalBitsHex = int2hex(compact, 8);
+    return results;
+}
+
+// target is a hex string
+function target2bits(target, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var isNegative = false;
+    if (target[0] == '-') {
+        isNegative = true;
+        target = target.substr(1);
+    }
+    var bitsx = getCompact(target, isNegative, levelOfDetail);
+    if (levelOfDetail >= 1) { // prepend
+        bitsx.steps = [{
+            left: '<u>target -> bits</u>',
+            right: null
+        }, {
+            left: 'in the Bitcoin source code this conversion uses function' +
+            ' getCompact(). \'bits\' here is made up of 1 \'size\' byte' +
+            ' followed by 3 \'compact\' bytes',
+            right: null
+        }].concat(bitsx.steps);
+    }
+    return bitsx;
+}
+
+function target2difficulty(target, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var bitsx = target2bits(target, levelOfDetail);
+    if (!bitsx.status) return bitsx;
+    var difficultyx = bits2difficulty(bitsx.finalBitsInt, levelOfDetail);
+    difficultyx.steps = bitsx.steps.concat(difficultyx.steps);
+    return difficultyx;
+}
+
+function difficulty2target(difficulty, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var bitsx = difficulty2bits(difficulty);
+    if (!bitsx.status) return bitsx;
+    var targetx = bits2target(bitsx.finalBitsHex, levelOfDetail);
+    targetx.steps = bitsx.steps.concat(targetx.steps);
+    return targetx;
+}
+
+// the initial bits are 0x1d00ffff
+// ie 0xffff << (0x1d * 2)
+// current_target = difficulty_1_target / difficulty
+// note that the bitcoin src does not do this conversion
+function difficulty2bits(difficulty, levelOfDetail) {
+    if (levelOfDetail == null) levelOfDetail = 0;
+    var results = {
+        status: false, // init
+        finalBitsInt: null,
+        finalBitsHex: null,
+        statusMessage: '',
+        sizeInt: null,
+        steps: []
+    };
+    if (levelOfDetail >= 1) {
+        results.steps.push({
+            left: '<u>difficulty -> bits</u>',
+            right: null
+        });
+        results.steps.push({
+            left: 'the Bitcoin source code never has a need to do this' +
+            ' calculation so the results here may vary from other' +
+            ' implementations. \'bits\' here is made up of 1 \'size\' byte' +
+            ' followed by 3 \'word\' bytes.',
+            right: null
+        });
+    }
+    var isNegative = false;
+    if (typeof difficulty == 'string') {
+        if (!stringIsFloat(difficulty)) {
+            results.statusMessage = 'the difficulty must be a number in base 10';
+            return results;
+        }
+        difficulty = parseFloat(difficulty);
+    }
+    if (difficulty < 0) {
+        results.statusMessage = 'difficulty cannot be negative';
+        // unlike target, which can be
+        return results;
+        isNegative = true;
+        difficulty *= -1;
+    }
+    if (!isFinite(difficulty)) {
+        results.statusMessage = 'difficulty cannot be infinite';
+        return results;
+    }
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'begin looping and checking the \'word\' value for each' +
+        ' incremented \'shift\' value. word = (0x00ffff * (0x100 ^ shift)) / ' +
+        ' difficulty, where \'difficulty\'',
+        right: difficulty
+    });
+    for (var shiftBytes = 1; true; shiftBytes++) {
+        var word = (0x00ffff * Math.pow(0x100, shiftBytes)) / difficulty;
+        var wordHex = word < 1 ? '' : '0x' + int2hex(word, 6) + ' = ';
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'when \'shift\' = ' + shiftBytes + ', \'word\'',
+            right: '(0x00ffff * (0x100 ^ ' + shiftBytes + ')) / ' + difficulty
+            + ' = ' + wordHex + word
+        });
+        if (word >= 0xffff) {
+            if (levelOfDetail >= 2) results.steps.push({
+                left: '\'word\' >= 0xffff so exit the loop here. \'shift\'',
+                right: shiftBytes
+            });
+            break;
+        }
+        if (levelOfDetail >= 2) results.steps.push({
+            left: '\'word\' < 0xffff so continue looping',
+            right: null
+        });
+    }
+    word &= 0xffffff; // convert to int < 0xffffff
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'cap \'word\' to a maximum of 0xffffff',
+        right: '0x' + int2hex(word, 6) + ' = ' + word
+    });
+    var size = 0x1d - shiftBytes;
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'calculate size = 0x1d - shift',
+        right: '0x1d - ' + shiftBytes + ' = 0x' + int2hex(size, 2) + ' = ' + size
+    });
+
+    // the 0x00800000 bit denotes the sign, so if it is already set, divide the
+    // mantissa by 0x100 and increase the size by a byte
+    if (word & 0x800000) {
+        var oldWord = word;
+        word >>= 8;
+        size++;
+        if (levelOfDetail >= 2) {
+            results.steps.push({
+                left: 'the sign bit (0x800000) is set so shift \'word\' right' +
+                ' by 8 bits and increase the \'size\' by a byte',
+                right: '0x' + int2hex(oldWord, 6) + ' >> 8 = 0x' +
+                int2hex(word, 6) + ' = ' + word
+            });
+            results.steps.push({
+                left: 'new \'size\'',
+                right: '0x' + int2hex(size, 2) + ' = ' + size
+            });
+        }
+    }
+    if ((word & ~0x007fffff) != 0) {
+        results.statusMessage = 'the \'bits\' \'word\' is out of bounds';
+        return results;
+    }
+    if (size > 0xff) {
+        results.statusMessage = 'the \'bits\' \'size\' is out of bounds';
+        return results;
+    }
+    var bits = (size << 24) | word;
+    if (levelOfDetail >= 2) results.steps.push({
+        left: 'combine the \'size\' and the \'word\' to get \'bits\'. bits' +
+        ' = (size << 24) | word',
+        right: '(0x' + int2hex(size, 2) + ' << 24) | 0x' + int2hex(word, 6) +
+        ' = 0x' + int2hex(bits, 8) + ' = ' + bits
+    });
+
+    // this never happens because the difficulty is not permitted to be negative
+    if (isNegative && (bits & 0x007fffff)) {
+        bits |= 0x00800000;
+        if (levelOfDetail >= 2) results.steps.push({
+            left: 'the difficulty is negative but the bits did not have the' +
+            ' bit at 0x00800000 set, so set it',
+            right: '0x' + int2hex(bits, 8) + ' = ' + bits
+        });
+    }
+    results.sizeInt = size;
+    results.finalBitsInt = bits;
+    results.finalBitsHex = int2hex(bits, 8);
+    results.status = true;
+    return results;
+}
+
+// true if hex1 <= hex2
+function hexCompare(hex1, hex2, getResolution) {
+    var hex1bak = hex1;
+    var hex2bak = hex2;
+    var resolution = null; // init
+
+    // first, chop off leading zeros
+    hex1 = hex1.replace(/^0*/, '');
+    hex2 = hex2.replace(/^0*/, '');
+
+    if (getResolution) resolution = Math.min(
+        hex1bak.length - hex1.length,
+        hex2bak.length - hex2.length
+    );
+
+    // if hex1 is shorter than hex2 then it is smaller
+    if (hex1.length != hex2.length) return {
+        status: hex1.length < hex2.length,
+        resolution: resolution
+    }
+
+    // loop through from msb to lsb until there is a difference
+    for (var nibbleI = 0; nibbleI < hex1.length; nibbleI++) {
+        var hex1Nibble = hex1[nibbleI];
+        var hex2Nibble = hex2[nibbleI];
+        if (hex1Nibble == hex2Nibble) continue;
+        if (getResolution) resolution += nibbleI;
+        return {
+            status: hex2int(hex1Nibble) < hex2int(hex2Nibble),
+            resolution: resolution
+        };
+    }
+    return {
+        status: false,
+        resolution: resolution
+    };
+}
+
+function hex2int(hexStr) {
+    return parseInt(hexStr, 16);
+}
+
+function int2hex(intiger, leftPadLen) {
+    intiger = Math.trunc(intiger); // zero the decimal places
+    var hex = intiger.toString(16);
+    if (leftPadLen == null) return hex;
+    return leftPad(hex, leftPadLen);
+}
+
+function leftPad(strToPad, padToLen, padChar) {
+    if (strToPad.length >= padToLen) return strToPad;
+    if (padChar == null) padChar = '0';
+    return padChar.repeat(padToLen - strToPad.length) + strToPad;
+}
+
+function toLittleEndian(hexStr) {
+    if (hexStr.length <= 2) return hexStr;
+    if (hexStr.length % 2 == 1) hexStr = '0' + hexStr;
+    return hexStr.match(/.{2}/g).reverse().join('');
+}
+
+// javascript is accurate to 15 sig digits (ieee754 double precision)
+// number arg could be: -123,456,798.123456 or 1.2e+10 or -3.33333e-10 or 0.001
+function to15SigDigits(number) {
+    return number.toPrecision(15);
+}
+
+// form 5 (understanding 'version')
+function version5Changed(e) {
+    var version = trimInputValue(e.currentTarget);
+    var data = versionChanged(version, 5);
+    var codeblockContainer = document.querySelector('#form5 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.getElementById('version5Hex').innerHTML = int2hex(data.versionInt);
+    document.getElementById('version5Bytes').innerHTML =
+    borderTheChars(int2hex(data.versionInt, 8), 2);
+
+    document.getElementById('version5BytesLE').innerHTML =
+    borderTheChars(data.version, 2);
+}
+
+// form 6 (understanding 'timestamp')
+function timestamp6Changed(e) {
+    var data = timestampChanged(e.currentTarget.value, 6);
+    var codeblockContainer = document.querySelector('#form6 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+
+    // for visually checking bad inputs
+    var dateGMT = (new Date((data.timestampUnixtime * 1000))).toGMTString();
+
+    document.getElementById('timestamp6GMT').innerHTML = dateGMT;
+    document.getElementById('timestamp6Unixtime').innerHTML = data.timestampUnixtime;
+    document.getElementById('timestamp6Bytes').innerHTML =
+    borderTheChars(int2hex(data.timestampUnixtime, 8), 2);
+
+    document.getElementById('timestamp6BytesLE').innerHTML =
+    borderTheChars(data.timestamp, 2);
+}
+
+// form 7 (understanding bits/difficulty/target)
+function difficulty7Changed(e) {
+    var difficulty = trimInputValue(e.currentTarget);
+    var data = difficultyChanged(difficulty, 7);
+    var bits = null; // not yet known
+    var bitsDec = null; // not yet known
+    var target = null; // not yet known
+    renderForm7Codeblock(data.status, data.difficulty, bits, bitsDec, target);
+}
+
+function target7Changed(e) {
+    var target = trimInputValue(e.currentTarget);
+    var data = targetChanged(target, 7);
+    var difficulty = null; // not yet known
+    var bits = null; // not yet known
+    var bitsDec = null; // not yet known
+    renderForm7Codeblock(data.status, difficulty, bits, bitsDec, data.target);
+}
+
+function bitsAreHex7Changed(e) {
+    var inHex = e.currentTarget.checked;
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var data = bitsChanged(bits, !inHex, 7);
+    document.getElementById('bits7').value = inHex ? data.bitsBE : data.bitsDec;
+}
+
+function bits7Changed() {
+    var bits = trimInputValue(document.getElementById('bits7'));
+    var inHex = document.getElementById('bitsAreHex7').checked;
+    var data = bitsChanged(bits, inHex, 7);
+    var difficulty = null; // not yet known
+    var target = null; // not yet known
+    renderForm7Codeblock(data.status, difficulty, data.bitsBE, data.bitsDec, target);
+}
+
+var alignedOnce = false;
+function renderForm7Codeblock(ok, difficulty, bits, bitsDec, target) {
+    var levelOfDetail = 2;
+    var n = '<span class="always-one-newline">\n</span>';
+    var codeblockContainer = document.querySelector('#form7 .codeblock-container');
+    var codeblock = codeblockContainer.querySelector('.codeblock');
+    codeblock.innerHTML = '';
+    var warningsEl = document.querySelector('#form7 .warnings');
+    warningsEl.style.display = 'none';
+    if (!ok) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    deleteElements(document.querySelectorAll('#form7 .bitsError'));
+    deleteElements(document.querySelectorAll('#form7 .difficultyError'));
+    deleteElements(document.querySelectorAll('#form7 .targetError'));
+    codeblockContainer.style.display = 'block';
+    var showDifficultyErrors = false;
+    var bitsInHex = document.getElementById('bitsAreHex7').checked;
+    var steps = [];
+    if (difficulty !== null) {
+        showDifficultyErrors = true;
+        if (bits === null) {
+            var bitsx = difficulty2bits(difficulty, levelOfDetail);
+            bits = bitsx.finalBitsHex;
+            document.getElementById('bits7').value = bitsInHex ?
+            bits : bitsx.finalBitsInt;
+            steps = steps.concat(bitsx.steps);
+        }
+        if (target === null) {
+            var targetx = difficulty2target(difficulty, levelOfDetail);
+            target = targetx.target;
+            document.getElementById('target7').value = target;
+            steps = steps.concat(targetx.steps);
+        }
+    } else if (bits !== null) {
+        if (difficulty === null) {
+            var difficultyx = bits2difficulty(bits, levelOfDetail);
+            difficulty = difficultyx.difficulty;
+            document.getElementById('difficulty7').value = difficulty;
+            steps = steps.concat(difficultyx.steps);
+        }
+        if (target === null) {
+            var targetx = bits2target(bits, levelOfDetail);
+            target = targetx.target;
+            document.getElementById('target7').value = target;
+            steps = steps.concat(targetx.steps);
+        }
+    } else if (target !== null) {
+        if (bits === null) {
+            var bitsx = target2bits(target, levelOfDetail);
+            bitsDec = bitsx.finalBitsInt;
+            bits = int2hex(bitsDec, 8);
+            document.getElementById('bits7').value = bitsInHex ? bits : bitsDec;
+            steps = steps.concat(bitsx.steps);
+        }
+        if (difficulty === null) {
+            var difficultyx = bits2difficulty(bits, levelOfDetail);
+            difficulty = difficultyx.difficulty;
+            document.getElementById('difficulty7').value = difficulty;
+            steps = steps.concat(difficultyx.steps);
+        }
+    }
+    codeblock.innerHTML = formatCodeblockSteps(steps, 50);
+    var wrapButtonIsOn = (
+        codeblockContainer.querySelector('button.wrap-nowrap').
+        getAttribute('wrapped') == 'true'
+    );
+    fixCodeblockNewlines(codeblock, wrapButtonIsOn);
+    if (wrapButtonIsOn) unalignText(codeblock);
+    else alignText(codeblock);
+}
+
+var aligner = '<span class="aligner"> </span>';
+function formatCodeblockSteps(steps, leftMaxChars) {
+    var p = '<span class="preserve-newline">\n</span>\n';
+    var codeblockHTML = '';
+    foreach(steps, function (i, step) {
+        if (step.left == '\n') {
+            codeblockHTML += (p + p);
+            return;
+        }
+        step.left = wrapCodeblockLeft(step.left, leftMaxChars).trim();
+        if (step.right == null) step.right = '';
+        else step.left += ': ';
+        if (steps.length == (i + 1)) p = ''; // no newline on the end
+        codeblockHTML += step.left + aligner + step.right + p;
+    });
+    return codeblockHTML;
+}
+
+function wrapCodeblockLeft(leftCol, leftMaxChars) {
+    if (leftCol.length <= leftMaxChars) return leftCol;
+    var n = '<span class="always-one-newline">\n</span>';
+    var words = leftCol.split(' ');
+    var charCount = 0; // init
+    var newLeftCol = ''; // init
+    foreach(words, function (i, word) {
+        charCount += word.length + 1;
+        if (charCount > leftMaxChars) { // too long
+            newLeftCol += aligner + n + word + ' ';
+            charCount = word.length + 1;
+        } else {
+            newLeftCol += word + ' ';
+        }
+    });
+    return newLeftCol;
+}
+
+function runDifficultyUnitTests() {
+    document.getElementById('unitTests7').style.display = 'block';
+    var codeblockEl = document.querySelector('#unitTests7 .codeblock');
+    ajax(siteGlobals.unittestBitsJSON, function (json) {
+        try {
+            var testsData = JSON.parse(json).tests;
+        } catch (err) {
+            codeblockEl.innerHTML = 'failed to fetch unit-test data';
+        }
+        renderTestResults(testsData);
+    });
+    function renderTestResults(testsData) {
+        codeblockEl.innerHTML = ''; // init
+        var pass = '<span style="color:' + passColor + '">pass</span>';
+        var fail = '<span style="color:' + failColor + '">fail</span>';
+        var s = '<span class="aligner">'; // start aligner
+        var e = '</span>'; // end aligner
+        var n = '\n<span class="preserve-newline">\n</span>\n';
+        var failedTests = [];
+        foreach(testsData, function (testNum, testData) {
+            var targetx = bits2target(testData['original_bits']);
+            var bitsx = target2bits(targetx.target);
+            var reconvertedBits = bitsx.finalBitsHex;
+            var targetPass = (testData['target'] == targetx.target);
+            var targetPassText = targetPass ? pass : fail;
+            var reconvertedBitsPass =
+            (testData['reconverted_bits'] == reconvertedBits);
+            var reconvertedBitsPassText = reconvertedBitsPass ? pass : fail;
+            var negativePass = (targetx.isNegative == testData['negative']);
+            var negativePassText = negativePass ? pass : fail;
+            var overflowPass = (targetx.isOverflow == testData['overflow']);
+            var overflowPassText = overflowPass ? pass : fail;
+            var difficultyx = bits2difficulty(testData['original_bits']);
+            var difficulty = difficultyx.difficulty;
+            var difficultyLower = testData['difficulty_threshold_low'];
+            var difficultyUpper = testData['difficulty_threshold_high'];
+            var difficultyPass = true; // init
+            if (
+                (difficultyLower == 'Infinity' && difficulty != Infinity) ||
+                (difficultyUpper == 'Infinity' && difficulty != Infinity) ||
+                (difficulty < difficultyLower) ||
+                (difficulty > difficultyUpper)
+            ) difficultyPass = false;
+            var difficultyPassText = difficultyPass ? pass : fail;
+            var thisTestPass = (
+                targetPass && reconvertedBitsPass && negativePass &&
+                overflowPass && difficultyPass
+            );
+            if (!thisTestPass) failedTests.push(testNum);
+
+            var tmp = ((testNum == 0) ? '' : n) + '<u>test ' + testNum +
+            '</u>: ' + (thisTestPass ? pass : fail) + '\n' +
+            'bits: ' + s + '                         ' + e +
+            testData['original_bits'] + '\n' +
+
+            'target (expected): ' + s + '            ' + e +
+            testData['target'] + '\n' +
+
+            'target (derived): ' + s + '             ' + e + targetx.target +
+            '\n' +
+            'target check: ' + s + '                 ' + e + targetPassText +
+            '\n' +
+            'reconverted bits (expected): ' + s + '  ' + e +
+            testData['reconverted_bits'] + '\n' +
+
+            'reconverted bits (derived): ' + s + '   ' + e + reconvertedBits +
+            '\n' +
+            'reconverted bits check: ' + s + '       ' + e +
+            reconvertedBitsPassText + '\n' +
+
+            'target is negative (expected): ' + s + e +
+            (testData['negative'] ? 'yes' : 'no') + '\n' +
+
+            'target is negative (derived): ' + s + ' ' + e +
+            (targetx.isNegative ? 'yes' : 'no') + '\n' +
+
+            'target is negative check: ' + s + '     ' + e + negativePassText +
+            '\n' +
+            'target overflowed (expected): ' + s + ' ' + e +
+            (targetx.isOverflow ? 'yes' : 'no') + '\n' +
+
+            'target overflowed (derived): ' + s + '  ' + e +
+            (testData['overflow'] ? 'yes' : 'no') + '\n' +
+
+            'target overflow check: ' + s + '        ' + e + overflowPassText +
+            '\n' +
+            'difficulty lower threshold: ' + s + '   ' + e + difficultyLower +
+            '\n' +
+            'difficulty upper threshold: ' + s + '   ' + e + difficultyUpper +
+            '\n' +
+            'difficulty (derived): ' + s + '         ' + e + difficulty + '\n' +
+            'difficulty check: ' + s + '             ' + e + difficultyPassText;
+
+            codeblockEl.innerHTML = (codeblockEl.innerHTML + tmp).trim();
+        });
+        document.getElementById('overallStatus7').style.display = 'block';
+        document.getElementById('overallStatusPass7').innerHTML =
+        (failedTests.length == 0) ? pass : fail + ' (due to test' +
+        (failedTests.length > 1 ? 's' : '') + ' ' +
+        englishList(failedTests, ', ', ' and ') + ')';
+        var wrapButtonIsOn = (
+            document.querySelector('#unitTests7 button.wrap-nowrap').
+            getAttribute('wrapped') == 'true'
+        );
+        fixCodeblockNewlines(codeblockEl, wrapButtonIsOn);
+        if (wrapButtonIsOn) unalignText(codeblockEl);
+        else alignText(codeblockEl);
+    }
+}
+
+// form 8 (understanding 'nonce')
+function nonce8Changed(e) {
+    var nonce = trimInputValue(e.currentTarget);
+    var data = nonceChanged(nonce, 8);
+    var codeblockContainer = document.querySelector('#form8 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.getElementById('nonce8Hex').innerHTML = int2hex(data.nonceInt);
+    document.getElementById('nonce8Bytes').innerHTML =
+    borderTheChars(int2hex(data.nonceInt, 8), 2);
+    document.getElementById('nonce8BytesLE').innerHTML = borderTheChars(data.nonce, 2);
+}
+
+// form 9 - block header bytes from header fields
+function version9Changed(e) {
+    var version = trimInputValue(e.currentTarget);
+    var data = versionChanged(version, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#version9Output').innerHTML = borderTheChars(data.version, 2);
+    renderHashes9();
+}
+
+function prevHash9Changed(e) {
+    var prevHash = trimInputValue(e.currentTarget);
+    var data = prevHashChanged(prevHash, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#prevHash9Output').innerHTML = borderTheChars(data.prevHash, 2);
+    renderHashes9();
+}
+
+function merkleRoot9Changed(e) {
+    var merkleRoot = trimInputValue(e.currentTarget);
+    var data = merkleRootChanged(merkleRoot, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#merkleRoot9Output').innerHTML = borderTheChars(data.merkleRoot, 2);
+    renderHashes9();
+}
+
+function timestamp9Changed(e) {
+    var data = timestampChanged(e.currentTarget.value, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#timestamp9Output').innerHTML = borderTheChars(data.timestamp, 2);
+    renderHashes9();
+}
+
+function bits9Changed(e) {
+    var bits = trimInputValue(e.currentTarget);
+    var inHex = true;
+    var data = bitsChanged(bits, inHex, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#bits9Output').innerHTML = borderTheChars(data.bits, 2);
+    renderHashes9();
+}
+
+function nonce9Changed(e) {
+    var nonce = trimInputValue(e.currentTarget);
+    var data = nonceChanged(nonce, 9);
+    var codeblockContainer = document.querySelector('#form9 .codeblock-container');
+    if (!data.status) {
+        codeblockContainer.style.display = 'none';
+        return;
+    }
+    codeblockContainer.style.display = 'block';
+    document.querySelector('#nonce9Output').innerHTML = borderTheChars(data.nonce, 2);
+    renderHashes9();
+}
+
+function renderHashes9() {
+    var block9Hex = document.getElementById('block9Bytes').textContent;
+    if (block9Hex.length != 160) return;
+
+    var bitArray = sjcl.codec.hex.toBits(block9Hex);
+    var sha256BitArray1 = sjcl.hash.sha256.hash(bitArray);
+    var sha256BitArray2 = sjcl.hash.sha256.hash(sha256BitArray1);
+    var sha256Hash1 = sjcl.codec.hex.fromBits(sha256BitArray1);
+    var sha256Hash2 = sjcl.codec.hex.fromBits(sha256BitArray2);
+
+    document.getElementById('firstSHA256Output9').innerHTML =
+    borderTheChars(sha256Hash1, 2);
+
+    document.getElementById('firstSHA256OutputLE9').innerHTML =
+    borderTheChars(toLittleEndian(sha256Hash1), 2);
+
+    document.getElementById('secondSHA256Output9').innerHTML =
+    borderTheChars(sha256Hash2, 2);
+
+    document.getElementById('secondSHA256OutputLE9').innerHTML =
+    borderTheChars(toLittleEndian(sha256Hash2), 2);
+}
+
+function runHash10Changed() {
+    var isHexCheckbox = document.getElementById('inputCheckbox10');
+    var preImage = document.getElementById('inputMessage10').value;
+    if (isHexCheckbox.checked && isHex(preImage)) {
+        preImage = sjcl.codec.hex.toBits(preImage);
+    } else {
+        isHexCheckbox.checked = false;
+    }
+    var sha256Hash = sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(preImage));
+    document.getElementById('sha256Output10').innerHTML = borderTheChars(sha256Hash, 2);
+    document.getElementById('sha256OutputLE10').innerHTML = borderTheChars(
+        toLittleEndian(sha256Hash), 2
+    );
+}
+
+function initDifficultyAttempts() {
+    ajax(
+        '/json/hex-trial-attempts.json',
+        function (json) {
+        try {
+            difficultyAttempts = JSON.parse(json).attemptsForHexCharacters;
+            triggerEvent(document.getElementById('difficulty11'), 'change');
+        }
+        catch (err) {}
+    });
+}
+
+function difficulty11Changed(e) {
+    var numDifficultyChars = parseInt(e.currentTarget.value);
+    document.getElementById('difficulty11Calculation').innerHTML =
+    '(16<sup>' + numDifficultyChars + '</sup>)/2 = ' +
+    addThousandCommas(difficultyAttempts[numDifficultyChars]) +
+    ' hashes on average';
+}
+
+// dragable blockchain svg
+function initBlockchainSVG() {
+    var svg = document.getElementById('blockchainSVG').contentDocument.
+    getElementsByTagName('svg')[0];
+    var svgDefs = svg.getElementsByTagName('defs')[0];
+    var svgView = svg.getElementById('view');
+    var borderTop = 1; // border of the svg
+    var borderLeft = 1; // border of the block
+
+    // fetch the number of txs per block
+    var getNumBlockTxs = function (blockNum) {
+        if (blockNum < txsPerBlock.length) return;
+
+        var endRange = (Math.ceil(blockNum / 1000) * 1000) - 1;
+        if (txsPerBlock.length > endRange) return;
+
+        var startRange = Math.floor(blockNum / 1000) * 1000;
+        ajax(
+            '/json/btc_txs_per_block_' + startRange + '-' + endRange + '.json',
+            function (json) {
+            try {
+                var numTxsArray = JSON.parse(json).txsPerBlock;
+                txsPerBlock = txsPerBlock.concat(numTxsArray);
+                // this will create a huge array, but javascript can handle it :)
+            }
+            catch (err) {}
+        });
+    };
+    getNumBlockTxs(1); // fetch json via ajax to init the txsPerBlock array
+
+    // render the correct number of transactions for each block
+    var txHeight = svgDefs.querySelectorAll('.btc-tx')[0].getBoundingClientRect().
+    height;
+    if (txHeight == 0) txHeight = 30; // damn ff bug
+    var renderBlockTxs = function (blockEl, blockNum) {
+        // wipe all txs from the btc-txs group in this block
+        var txs = blockEl.querySelectorAll('.btc-txs')[0];
+        txs.parentNode.replaceChild(txs.cloneNode(false), txs);
+        var newTxs = blockEl.querySelectorAll('.btc-txs')[0];
+
+        for (var i = 0; i < txsPerBlock[blockNum]; i++) {
+            var tx = svgDefs.querySelectorAll('.btc-tx')[0].cloneNode(true);
+            tx.setAttribute('transform', 'translate(0,' + (txHeight * i) + ')');
+            tx.getElementsByTagName('text')[0].textContent = 'transaction ' + (i + 1);
+            newTxs.appendChild(tx);
+        }
+    };
+
+    // copy blocks and braces to render a blockchain that is viewWidthMultiple
+    // times as wide as the svg
+    var svgWidth = svg.getBoundingClientRect().width; // pre-compute
+    var horizontalPadding = borderLeft; // between blocks and braces (init)
+    var blockWidth = svg.getElementById('block').getBoundingClientRect().width;
+    var bracesWidth = svg.getElementById('braces').getBoundingClientRect().width;
+    var viewWidth = 0; // init
+    var viewWidthMultiple = 7; // view width = viewWidthMultiple x svg width
+    for (var blockNum = 0; viewWidth <= (svgWidth * viewWidthMultiple); blockNum++) {
+        var block = svg.getElementById('block').cloneNode(true);
+        block.getElementsByTagName('text')[0].textContent = 'block ' + blockNum;
+        block.id = 'block' + blockNum;
+        block.setAttribute(
+            'transform',
+            'translate(' + (viewWidth + horizontalPadding) + ')'
+        );
+        svgView.appendChild(block);
+        if (blockWidth == 0) blockWidth = svgView.querySelector('.btc-block').
+        getBoundingClientRect().width; // damn ff bug
+
+        viewWidth += horizontalPadding + blockWidth;
+        horizontalPadding = 15; // always 15 after the first block
+
+        var braces = svg.getElementById('braces').cloneNode(true);
+        braces.setAttribute(
+            'transform',
+            'translate(' + (viewWidth + horizontalPadding) + ',20)'
+        );
+        svgView.appendChild(braces);
+        if (bracesWidth == 0) bracesWidth = svgView.querySelector('.braces').
+        getBoundingClientRect().width; // damn ff bug
+        viewWidth += horizontalPadding + bracesWidth;
+    }
+
+    // append the instructions
+    svg.appendChild(svgDefs.querySelectorAll('.big-instructions')[0]);
+
+    // roughly center the view in the x direction and offset to give the illiusion
+    // that the blocks are positioned the same as they currently are
+    var blockAndBracesWidth = blockWidth + bracesWidth + (2 * horizontalPadding);
+    var numVisibleBlocks = Math.floor(svgWidth / blockAndBracesWidth);
+    var leftThreshold = svgWidth * Math.floor(viewWidthMultiple / 2);
+    var resetView = function () {
+        var viewLeft = svgView.getBoundingClientRect().left;
+        var allBlocks = svgView.querySelectorAll('.btc-block');
+        var leftmostBlock = parseInt(allBlocks[0].id.replace(/[a-z]/g, ''));
+        if ((viewLeft > -leftThreshold) && (leftmostBlock == 0)) return null;
+
+        // put viewLeft somewhere back between -leftThreshold and actionZone
+        var blocksPastActionZone = Math.trunc(
+            (leftThreshold + viewLeft) / blockAndBracesWidth
+        );
+        if (blocksPastActionZone == 0) return null;
+        // never let the leftmost block index be less than 0
+        if (leftmostBlock < blocksPastActionZone) blocksPastActionZone = leftmostBlock;
+        var translateX = viewLeft - borderLeft -
+        (blocksPastActionZone * blockAndBracesWidth);
+        var viewTop = svgView.getBoundingClientRect().top + borderTop;
+        svgView.setAttribute(
+            'transform', 'translate(' + translateX + ',' + viewTop + ')'
+        );
+        // alternate between 'block' and 'bloc' otherwise ids may not be
+        // overwritten in some browsers?
+        var newIdPrefix = (allBlocks[0].id.replace(/[0-9]/g, '') == 'block') ?
+        'bloc' : 'block';
+        var currentBlockNum = leftmostBlock;
+        for (var i = 0; i < allBlocks.length; i++) {
+            var newBlockNum = currentBlockNum - blocksPastActionZone;
+            allBlocks[i].id = newIdPrefix + newBlockNum;
+            allBlocks[i].getElementsByTagName('text')[0].textContent = 'block ' +
+            newBlockNum;
+            renderBlockTxs(allBlocks[i], newBlockNum);
+            getNumBlockTxs(newBlockNum + (viewWidthMultiple * numVisibleBlocks)); // fetch ahead
+            currentBlockNum++
+        }
+        return {dx: translateX, dy: viewTop};
+    }
+
+    // drag-events
+    var mouseStartX = 0, mouseStartY = 0; // init scope
+    var prevDx = 0, prevDy = 0; // init scope
+    var dx = 0, dy = 0; // init scope
+    var dragging = false; // init scope
+    var svgHeight = svg.getBoundingClientRect().height; // pre-compute
+    addEvent(svg, 'mousedown, touchstart', function (e) {
+        switch (e.type) {
+            case 'touchstart':
+                e.cancelBubble = true;
+                mouseStartX = e.touches[0].clientX;
+                mouseStartY = e.touches[0].clientY;
+                break;
+            case 'mousedown':
+                e.stopPropagation();
+                mouseStartX = e.clientX;
+                mouseStartY = e.clientY;
+                break;
+        }
+        dragging = true;
+    });
+    var instructionsHidden = false; // init
+    addEvent(svg, 'mousemove, touchmove', function (e) {
+        switch (e.type) {
+            case 'touchmove': e.cancelBubble = true; break;
+            case 'mousemove': e.stopPropagation(); break;
+        }
+        if (!dragging) return;
+
+        if (!instructionsHidden) {
+            svg.removeChild(svg.querySelectorAll('.big-instructions')[0]);
+            instructionsHidden = true;
+        }
+        switch (e.type) {
+            case 'touchmove':
+                var clientX = e.touches[0].clientX;
+                var clientY = e.touches[0].clientY;
+                break;
+            case 'mousemove':
+                var clientX = e.clientX;
+                var clientY = e.clientY;
+                break;
+        }
+        dx = prevDx + clientX - mouseStartX;
+        if (dx > 0) dx = 0; // only allow dragging to the left
+
+        dy = prevDy + clientY - mouseStartY;
+
+        // don't allow dragging up past the view height
+        var viewHeight = svgView.getBoundingClientRect().height; // pre-compute
+        if (dy < (svgHeight - viewHeight - borderTop)) {
+            dy = svgHeight - viewHeight - borderTop;
+        }
+        if (dy > 0) dy = 0; // only allow dragging up
+        svgView.setAttribute('transform', 'translate(' + dx + ',' + dy + ')');
+    });
+    addEvent(svg, 'mouseup, mouseleave, touchend', function (e) {
+        switch (e.type) {
+            case 'touchmove': e.cancelBubble = true; break;
+            case 'mousemove': e.stopPropagation(); break;
+        }
+        if (!dragging) return;
+        dragging = false;
+        var translation = resetView();
+        prevDx = (translation == null) ? dx : translation.dx;
+        prevDy = (translation == null) ? dy : translation.dy;
+    });
+}

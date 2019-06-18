@@ -1,3 +1,4 @@
+// todo: move all global variables into their own namespace
 function deleteInFeedAds() {
     deleteElements(document.querySelectorAll('.col-1 .adsbygoogle'));
 }

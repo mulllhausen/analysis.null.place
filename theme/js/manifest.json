@@ -1,1 +1,21 @@
-{"theme_color":"#000000","name":"Analysis","short_name":"Analysis","icons":[{"src":"https://analysis.null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBI","type":"image/png","sizes":"192x192"},{"src":"https://analysis.null.place/theme/img/shattered-glass-matrix-512x512.png?hash=9R0TcV","type":"image/png","sizes":"512x512"}],"start_url":"/","scope":"/","background_color":"#000000","display":"standalone"}
+{
+    "short_name": "Analysis",
+    "name": "Analysis",
+    "icons": [
+        {
+            "src": "https://analysis.null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBI",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://analysis.null.place/theme/img/shattered-glass-matrix-512x512.png?hash=9R0TcV",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
+}
