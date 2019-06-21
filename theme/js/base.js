@@ -874,7 +874,7 @@ function deleteSkyscraperAds() {
 }
 var sampleSkyscraperAd = null; // init
 var numSkyscraperAds = 1; // init
-var numHiddenSkyscraperAds = 1; // init
+var numHiddenSkyscraperAds = 0; // init
 function fillSkyscraperAds() {
     var topMargin = 30; // px (.col-0 margin-top)
     var adHeight = 630; // px (including margin)
@@ -949,25 +949,28 @@ function loadInFeedAds() {
         (adsbygoogle = window.adsbygoogle || []).push({});
     }
 }
-function loadAdsenseScript() {
+function loadAdsenseScript(callback) {
     var s = document.createElement('script');
+    s.async = true;
+    addEvent(s, 'load', callback);
     s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
     document.body.appendChild(s);
 }
 // todo: only load ads as they come into view
 if (siteGlobals.enableAds) addEvent(window, 'load', function () {
-    loadAdsenseScript();
-    switch (getDeviceType()) {
-        case 'phone':
-            deleteSkyscraperAds();
-            loadInFeedAds();
-            break;
-        case 'pc':
-        case 'tablet':
-            deleteInFeedAds();
-            fillSkyscraperAds();
-            break;
-    }
+    loadAdsenseScript(function () {
+        switch (getDeviceType()) {
+            case 'phone':
+                deleteSkyscraperAds();
+                loadInFeedAds();
+                break;
+            case 'pc':
+            case 'tablet':
+                deleteInFeedAds();
+                fillSkyscraperAds();
+                break;
+        }
+    });
 });
 // end original file: ads.js
 
