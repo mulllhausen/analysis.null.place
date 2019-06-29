@@ -8,6 +8,8 @@ numTotalMedia = 0; // total count that match the search criteria
 numMediaShowing = 0;
 pageSize = 10; // load this many media at once in the infinite scroll page
 currentlySearching = false;
+reviewsPerAd = 3; // this many reviews before each in-feed ad
+inFeedAdContainer = '<div class="in-feed-ad-container"></div>';
 
 addEvent(window, 'load', function () {
     initSearchBox();
@@ -46,6 +48,7 @@ function initSearchBox() {
 }
 
 function initMediaRendering() {
+    var initialMediaDataHTML = '';
     if (window.location.hash.length > 0) { // show only the media with id in #
         var mediaID = window.location.hash.replace('#!', '');
         var afterAllMediaDataDownloaded = function () {
@@ -69,23 +72,44 @@ function initMediaRendering() {
             numMediaShowing = 1, numTotalMedia = completeMediaSearch.length;
             currentlySearching = false;
             renderMediaCount();
+            archiveInFeedAds();
             document.getElementById('reviewsArea').innerHTML = getMediaHTML(
                 mediaData
-            );
+            ) + inFeedAdContainer;
+            populateInFeedAds();
         };
-        // we need the search-index and the media-data lists before we can
-        // complete this operation. get both lists in parallel for speed.
+        // we need the search-index and the complete media-data lists before we
+        // can finish this operation. the complete list is needed, rather than
+        // the initial list, because the requested media item may not be in the
+        // initial list. get both lists in parallel for speed.
         initCompleteMediaData(afterAllMediaDataDownloaded);
         initMediaSearchList(afterAllMediaDataDownloaded);
     } else { // show initial list
         var afterInitialMediaDataDownloaded = function () {
+            if (initialMediaData.length != 0 && initialMediaDataHTML == '') {
+                // render the initial media data and ads on the page
+                for (var i = 0; i < initialMediaData.length; i++) {
+                    if ((i != 0) && ((i % reviewsPerAd) == 0)) {
+                        // put an in-feed ad after every reviewsPerAd media items
+                        initialMediaDataHTML += inFeedAdContainer;
+                    }
+                    initialMediaDataHTML += getMediaHTML(initialMediaData[i]);
+                }
+                loading('off');
+                numMediaShowing = initialMediaData.length; // global
+                // do not run renderMediaCount() yet since we may not know numTotalMedia
+                archiveInFeedAds();
+                document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
+                populateInFeedAds();
+            }
+
             // wait for both lists to be downloaded before proceeding
             if (
                 completeMediaSearch.length == 0 ||
                 initialMediaData.length == 0
             ) return;
             // no need to populate numMediaShowing since that was already
-            // populated in renderInitialMediaData()
+            // populated just above here
             numTotalMedia = completeMediaSearch.length;
             currentlySearching = false;
             renderMediaCount();
@@ -111,14 +135,6 @@ function renderInitialMediaData(callback) {
         function (json) {
         try {
             initialMediaData = JSON.parse(json);
-            var initialMediaDataHTML = '';
-            for (var i = 0; i < initialMediaData.length; i++) {
-                initialMediaDataHTML += getMediaHTML(initialMediaData[i]);
-            }
-            loading('off');
-            numMediaShowing = initialMediaData.length; // global
-            // do not run renderMediaCount() here since we may not know numTotalMedia
-            document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
             triggerEvent(document, 'got-initial-media-data');
         }
         catch (err) {
@@ -166,9 +182,12 @@ function linkTo1Media(e) {
     numMediaShowing = 1;
     renderMediaCount();
     hideAllSkyscraperAds();
-    document.getElementById('reviewsArea').innerHTML = mediaEl.outerHTML;
+    archiveInFeedAds();
+    document.getElementById('reviewsArea').innerHTML = mediaEl.outerHTML +
+    inFeedAdContainer;
     searchBoxMode('show-all-button');
     document.getElementById('search').value = ''; // reset
+    populateInFeedAds();
 }
 
 function showAllMedia() {
@@ -411,6 +430,9 @@ function renderMoreMedia() {
     // get the next pageSize media to show
     for (var i = 0; i < pageSize; i++) {
         if (pointer >= searchResultIndexes.length) break; // we have run out of media to show
+        if ((pointer != 0) && ((pointer % reviewsPerAd) == 0)) {
+            moreMediaHTML += inFeedAdContainer;
+        }
         var mediaIndex = searchResultIndexes[pointer];
         var mediaData = completeMediaData[mediaIndex];
         moreMediaHTML += getMediaHTML(mediaData);
@@ -420,6 +442,7 @@ function renderMoreMedia() {
     numMediaShowing += i; // global
     setTimeout(function () {
         document.getElementById('reviewsArea').appendChild(moreMediaEl);
+        populateInFeedAds();
         renderMediaCount();
         loading('off');
     }, 1000);
@@ -523,6 +546,8 @@ function generateSortedData(searchTerms) {
 }
 
 function mediaSearchChanged() {
+    hideAllSkyscraperAds();
+    archiveInFeedAds();
     document.getElementById('reviewsArea').innerHTML = '';
     loading('on');
     var searchText = trim(document.getElementById('search').value).toLowerCase();
@@ -553,14 +578,24 @@ function mediaSearchChanged() {
         // render the first page of the search results
         var mediaHTML = '';
         for (var i = 0; i < numMediaShowing; i++) {
+            if ((i != 0) && ((i % reviewsPerAd) == 0)) {
+                mediaHTML += inFeedAdContainer;
+            }
             var mediaData = mediaSearchResults[i];
             mediaData.renderedTitle = highlightSearch(
                 searchTerms, getRenderedTitle(mediaData)
             );
             mediaHTML += getMediaHTML(mediaData);
+
+            // if there are less search results than reviewsPerAd then stick an
+            // ad on the end anyway
+            if ((numMediaShowing < reviewsPerAd) && (i + 1) == numMediaShowing) {
+                mediaHTML += inFeedAdContainer;
+            }
         }
         loading('off');
         document.getElementById('reviewsArea').innerHTML = mediaHTML;
+        populateInFeedAds();
     };
     // we need the search-index and the media-data lists before we can complete
     // this operation. get both lists in parallel for speed.
