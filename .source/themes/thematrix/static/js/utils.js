@@ -496,6 +496,8 @@ if (!inArray(siteGlobals.siteURL, window.location.origin)) {
     window.location.href = siteGlobals.siteURL + window.location.pathname;
 }
 
+initialDeviceType = getDeviceType(); // init global
+
 // nav-menu open/close (mobile only)
 addEvent(document.getElementById('btnNavbar'), 'click', function (e) {
     var btn = e.currentTarget;
