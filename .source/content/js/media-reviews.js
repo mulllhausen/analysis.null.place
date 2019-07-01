@@ -89,15 +89,13 @@ function initMediaRendering() {
             if (initialMediaData.length != 0 && initialMediaDataHTML == '') {
                 // render the initial media data and ads on the page
                 for (var i = 0; i < initialMediaData.length; i++) {
-                    if ((i != 0) && ((i % reviewsPerAd) == 0)) {
+                    initialMediaDataHTML += getMediaHTML(initialMediaData[i]);
+                    if (((i + 1) % reviewsPerAd) == 0) {
                         // put an in-feed ad after every reviewsPerAd media items
                         initialMediaDataHTML += inFeedAdContainer;
                     }
-                    initialMediaDataHTML += getMediaHTML(initialMediaData[i]);
                 }
                 loading('off');
-                numMediaShowing = initialMediaData.length; // global
-                // do not run renderMediaCount() yet since we may not know numTotalMedia
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 populateInFeedAds();
@@ -108,9 +106,8 @@ function initMediaRendering() {
                 completeMediaSearch.length == 0 ||
                 initialMediaData.length == 0
             ) return;
-            // no need to populate numMediaShowing since that was already
-            // populated just above here
-            numTotalMedia = completeMediaSearch.length;
+            numMediaShowing = initialMediaData.length; // global
+            numTotalMedia = completeMediaSearch.length; // global
             currentlySearching = false;
             renderMediaCount();
         };
@@ -430,12 +427,12 @@ function renderMoreMedia() {
     // get the next pageSize media to show
     for (var i = 0; i < pageSize; i++) {
         if (pointer >= searchResultIndexes.length) break; // we have run out of media to show
-        if ((pointer != 0) && ((pointer % reviewsPerAd) == 0)) {
-            moreMediaHTML += inFeedAdContainer;
-        }
         var mediaIndex = searchResultIndexes[pointer];
         var mediaData = completeMediaData[mediaIndex];
         moreMediaHTML += getMediaHTML(mediaData);
+        if (((pointer + 1) % reviewsPerAd) == 0) {
+            moreMediaHTML += inFeedAdContainer;
+        }
         pointer++;
     }
     moreMediaEl.innerHTML = moreMediaHTML;
@@ -578,14 +575,14 @@ function mediaSearchChanged() {
         // render the first page of the search results
         var mediaHTML = '';
         for (var i = 0; i < numMediaShowing; i++) {
-            if ((i != 0) && ((i % reviewsPerAd) == 0)) {
-                mediaHTML += inFeedAdContainer;
-            }
             var mediaData = mediaSearchResults[i];
             mediaData.renderedTitle = highlightSearch(
                 searchTerms, getRenderedTitle(mediaData)
             );
             mediaHTML += getMediaHTML(mediaData);
+            if (((i + 1) % reviewsPerAd) == 0) {
+                mediaHTML += inFeedAdContainer;
+            }
 
             // if there are less search results than reviewsPerAd then stick an
             // ad on the end anyway

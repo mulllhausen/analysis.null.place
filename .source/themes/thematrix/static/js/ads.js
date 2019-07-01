@@ -1,3 +1,6 @@
+var skyscraperAdTopMargin = 30; // px (.col-0 margin-top)
+var skyscraperAdHeight = 630; // px (including margin)
+
 // todo: move all global variables into their own namespace
 function deleteInFeedAds() {
     deleteElements(document.querySelectorAll('.col-1 .adsbygoogle'));
@@ -7,57 +10,48 @@ function deleteSkyscraperAds() {
 }
 var sampleSkyscraperAd = null; // init
 function fillSkyscraperAds() {
-    var topMargin = 30; // px (.col-0 margin-top)
-    var adHeight = 630; // px (including margin)
-    var spaceStatus = {
-        heightSoFar: topMargin + adHeight,
-        limitReached: false
-    };
     // the first skyscraper ad already exists. save a copy before converting it
     if (sampleSkyscraperAd == null) {
         sampleSkyscraperAd = document.querySelector('.col-0 .adsbygoogle').cloneNode();
 
         // convert it to an ad
         loadAdsenseScript(function () {
-            (spaceStatus.adsbygoogle = window.adsbygoogle || []).push({})
+            (adsbygoogle = window.adsbygoogle || []).push({})
         });
     }
 
     // set up a timer to keep adding/removing more skyscraper ads as the page
-    // height changes due to dynamic content
+    // height changes due to dynamic content. keep the timer interval fairly
+    // long since it does a lot of slow dom calls
     setInterval(function() {
         while (true) {
-            spaceStatus = add1MoreSkyscraperAd(
-                sampleSkyscraperAd, topMargin, adHeight, spaceStatus
-            );
-            if (spaceStatus.limitReached) break;
+            var limitReached = add1MoreSkyscraperAd(sampleSkyscraperAd);
+            if (limitReached) break;
         }
     }, 500);
 }
-function add1MoreSkyscraperAd(adEl, topMargin, adHeight, spaceStatus) {
+function add1MoreSkyscraperAd(adEl) {
     var contentHeight = document.querySelector('.col-1').offsetHeight;
-    if (!anyVisibleSkyscraperAds()) { // all hidden
-        // always show the first skyscraper ad
-        unhide1SkyscraperAd();
-        spaceStatus.heightSoFar = topMargin + adHeight;
+
+    // always show the first skyscraper ad
+    if (!anyVisibleSkyscraperAds()) unhide1SkyscraperAd();
+
+    if ((getSkyscraperAdsTotalHeight() + skyscraperAdHeight) > contentHeight) {
+        return true; // limit reached
     }
-    if ((spaceStatus.heightSoFar + adHeight) > contentHeight) {
-        spaceStatus.limitReached = true;
-        return spaceStatus;
-    }
-    if (document.querySelectorAll('.adsbygoogle.skyscraper.important-hidden').length > 0) {
-        unhide1SkyscraperAd();
-    } else {
+    // from here on we know there is space for at least 1 more ad
+
+    if (anyHiddenSkyscraperAds()) unhide1SkyscraperAd();
+    else {
         document.querySelector('.col-0').appendChild(adEl.cloneNode());
         loadAdsenseScript(function () {
-            (spaceStatus.adsbygoogle = window.adsbygoogle || []).push({})
+            (adsbygoogle = window.adsbygoogle || []).push({})
         });
     }
-    spaceStatus.heightSoFar += adHeight;
-    spaceStatus.limitReached = false;
-    return spaceStatus;
+    return false; // limit not reached
 }
 function hideAllSkyscraperAds() {
+    if (initialDeviceType != 'pc' && initialDeviceType != 'tablet') return;
     foreach(document.querySelectorAll('.adsbygoogle.skyscraper'), function (i, el) {
         addCSSClass(el, 'important-hidden');
     });
@@ -66,6 +60,11 @@ function unhide1SkyscraperAd() {
     var el = document.querySelector('.adsbygoogle.skyscraper.important-hidden');
     removeCSSClass(el, 'important-hidden');
 }
+function anyHiddenSkyscraperAds() {
+    return document.querySelectorAll(
+        '.adsbygoogle.skyscraper.important-hidden'
+    ).length > 0;
+}
 function anyVisibleSkyscraperAds() {
     return (
         document.querySelectorAll(
@@ -73,8 +72,13 @@ function anyVisibleSkyscraperAds() {
         ).length > 0
     );
 }
+function getSkyscraperAdsTotalHeight() {
+    return document.querySelectorAll(
+        '.adsbygoogle.skyscraper:not(.important-hidden)'
+    ).length * (skyscraperAdHeight + skyscraperAdTopMargin);
+}
 function loadInFeedAds() {
-    if (getDeviceType() != 'phone') return;
+    if (initialDeviceType != 'phone') return;
     foreach(
         document.querySelectorAll('.col-1 .adsbygoogle:not(.load)'),
         function (i, el) {
@@ -100,7 +104,7 @@ function archiveInFeedAds() {
     );
 }
 function populateInFeedAds() {
-    if (getDeviceType() != 'phone') return;
+    if (initialDeviceType != 'phone') return;
 
     // get the archived ads in a list. note: use .children and not .childNodes
     // to avoid text nodes due to newlines
@@ -152,7 +156,7 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     // delete the sample ad
     document.getElementById('adsArchiveArea').innerHTML = '';
 
-    switch (getDeviceType()) {
+    switch (initialDeviceType) {
         case 'phone':
             deleteSkyscraperAds();
             loadInFeedAds();
