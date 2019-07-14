@@ -579,10 +579,18 @@ function debounceMediaSearch(state) {
         case 'atStart':
             hideAllSkyscraperAds();
             document.getElementById('reviewsArea').style.display = 'none';
+
+            // hide the number of search results, but do not collapse the element
+            document.querySelector('.media-count-area').style.visibility = 'hidden';
+
             loading('on');
             break;
         case 'atEnd':
             document.getElementById('reviewsArea').style.display = 'block';
+
+            // show the number of search results
+            document.querySelector('.media-count-area').style.visibility = 'visible';
+
             mediaSearchChanged();
             loading('off');
             break;
