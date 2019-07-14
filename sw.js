@@ -1,4 +1,4 @@
-var latestCache = '2019-07-14_22:14:46';
+var latestCache = '2019-07-14_23:41:44';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -11,7 +11,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=-c8YGg',
+    'https://analysis.null.place/theme/js/base.js?hash=5B1fBa',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -53,8 +53,8 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=0Hqrxa',
-    'https://analysis.null.place/css/media-reviews.css?hash=ReNVj2',
+    'https://analysis.null.place/js/media-reviews.js?hash=BvVCi1',
+    'https://analysis.null.place/css/media-reviews.css?hash=ksCGQ_',
     'https://analysis.null.place/img/book-thumbnail-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumbnail-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumbnail-stanislawlemsolaris1961.jpg?hash=55BY16',
