@@ -146,39 +146,59 @@ function renderInitialMediaData(callback) {
 }
 
 function linkTo1Media(e) {
+    // a link within a media item was clicked. figure out which one, and action
+    // it
+    stopBubble(e);
     var el = e.target;
+
+    // the link looks like <a class="link-to-other-media"><i>blah</i></a> and
+    // the <i> element was clicked
     if (
-        (
-            (el.tagName.toLowerCase() == 'i') &&
-            (el.parentNode.tagName.toLowerCase() == 'a') &&
-            inArray('link-to-other-media', el.parentNode.className)
-        ) || (
-            (el.tagName.toLowerCase() == 'a') &&
-            inArray('link-to-other-media', el.className)
-        )
-    ) {
-        // the link looks like <a><i>blah</i></a>
-        location.href = el.parentNode.href;
-        initSearchBox();
-        initMediaRendering(); // show only the media in the hash
-        return;
-    }
-    if ((el.tagName.toLowerCase() == 'a') && inArray('link-to-self', el.className)) {
-        // the link looks like <a class="link-to-self">blah</a>
-        var mediaEl = el.parentNode;
-    } else if (
+        (el.tagName.toLowerCase() == 'i') &&
+        (el.parentNode.tagName.toLowerCase() == 'a') &&
+        inArray('link-to-other-media', el.parentNode.className)
+    ) return goToOtherMedia(el.parentNode.href);
+
+    // the link looks like <a class="link-to-other-media"><i>blah</i></a> and
+    // the <a> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'a') &&
+        inArray('link-to-other-media', el.className)
+    ) return goToOtherMedia(el.href);
+
+    // the link looks like <a class="link-to-self"><svg class="icon-chain">
+    // <use xlink:href="...#icon-chain"></use></svg></a> and the <a> element was
+    // clicked
+    if (
+        (el.tagName.toLowerCase() == 'a') &&
+        inArray('link-to-self', el.className)
+    ) return linkToSelf(el.parentNode);
+
+    // the link looks like <a class="link-to-self"><svg class="icon-chain">
+    // <use xlink:href="...#icon-chain"></use></svg></a> and the <svg> element
+    // was clicked
+    if (
         (el.tagName.toLowerCase() == 'svg') &&
         inArray('icon-chain', el.outerHTML)
-    ) {
-        // the link looks like <svg class="icon-chain">blah</svg>
-        var mediaEl = el.up(2);
-    } else if (
+    ) return linkToSelf(el.up(2));
+
+    // the link looks like <a class="link-to-self"><svg class="icon-chain">
+    // <use xlink:href="...#icon-chain"></use></svg></a> and the <use> element
+    // was clicked
+    if (
         (el.tagName.toLowerCase() == 'use') &&
         inArray('icon-chain', el.outerHTML)
-    ) {
-        // the link looks like <use xlink:href="...#icon-chain">blah</use>
-        var mediaEl = el.up(3);
-    } else return;
+    ) return linkToSelf(el.up(3));
+}
+
+function goToOtherMedia(url) {
+    location.href = url;
+    initSearchBox();
+    initMediaRendering(); // show only the media in the hash
+    return false; // prevent bubble up
+}
+
+function linkToSelf(mediaEl) {
     currentlySearching = false;
     numMediaShowing = 1;
     renderMediaCount();
@@ -189,6 +209,7 @@ function linkTo1Media(e) {
     searchBoxMode('show-all-button');
     document.getElementById('search').value = ''; // reset
     populateInFeedAds();
+    return false; // prevent bubble up
 }
 
 function showAllMedia() {

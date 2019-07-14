@@ -1,5 +1,11 @@
 // common functions used on many pages
 
+// thanks to stackoverflow.com/a/13900163
+function stopBubble(e) {
+    if (e.stopPropagation) e.stopPropagation();
+    else e.cancelBubble = true; // IE6-9
+}
+
 // thanks to stackoverflow.com/a/1147768
 function getEntireHeight() {
     return Math.max(
