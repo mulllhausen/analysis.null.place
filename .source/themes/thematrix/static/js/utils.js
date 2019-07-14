@@ -490,6 +490,42 @@ function Retrieve(k) {
     }
 }
 
+// when debounceType = 'start' - trigger once on the first event and only allow again after the wait period ends
+// when debounceType = 'end' - trigger after the wait period
+// when debounceType = 'both' - trigger on the first event and at the end of the wait period
+function debounce(func, wait, debounceType) {
+    // this function is called immediately from within the event handler to
+    // initialise a debounce event function
+    var timeout;
+    return function() { // called every time the event fires
+        //var context = this, args = arguments; // note: event = args[0]
+        var later = function() {
+            timeout = null;
+            switch (debounceType) {
+                case 'start':
+                    break;
+                case 'end':
+                case 'both':
+                    func('atEnd');//func.apply(context, args);
+                    break;
+            }
+        };
+        var callNow;
+        switch (debounceType) {
+            case 'start':
+            case 'both':
+                callNow = !timeout;
+                break;
+            case 'end':
+                callNow = false;
+                break;
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func('atStart');//func.apply(context, args);
+    };
+}
+
 // events for all pages
 
 if (!inArray(siteGlobals.siteURL, window.location.origin)) {

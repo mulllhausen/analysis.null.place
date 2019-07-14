@@ -16,8 +16,12 @@ addEvent(window, 'load', function () {
     initMediaRendering();
     initMediaSearchList(initSearchResultIndexes);
     initCompleteMediaData(initSearchResultIndexes);
-    addEvent(document.getElementById('search'), 'keyup', mediaSearchChanged);
-    addEvent(document.getElementById('sortBy'), 'change', mediaSearchChanged);
+    addEvent(
+        document.getElementById('search'),
+        'keyup',
+        debounce(debounceMediaSearch, 2000, 'both')
+    );
+    addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
     addEvent(document.getElementById('showAllMedia'), 'click', showAllMedia);
     addEvent(document.getElementById('reviewsArea'), 'click', linkTo1Media);
@@ -167,13 +171,13 @@ function linkTo1Media(e) {
         inArray('icon-chain', el.outerHTML)
     ) {
         // the link looks like <svg class="icon-chain">blah</svg>
-        var mediaEl = el.parentNode.parentNode;
+        var mediaEl = el.up(2);
     } else if (
         (el.tagName.toLowerCase() == 'use') &&
         inArray('icon-chain', el.outerHTML)
     ) {
         // the link looks like <use xlink:href="...#icon-chain">blah</use>
-        var mediaEl = el.parentNode.parentNode.parentNode;
+        var mediaEl = el.up(3);
     } else return;
     currentlySearching = false;
     numMediaShowing = 1;
@@ -542,11 +546,31 @@ function generateSortedData(searchTerms) {
     return mediaSearchResults;
 }
 
+function mediaSortChanged() {
+    debounceMediaSearch('atStart');
+    debounceMediaSearch('atEnd');
+}
+
+function debounceMediaSearch(state) {
+    // archiving the in-feed ads takes ages for browsers, so only do this and
+    // update the search-results after the user has stopped typing
+    switch (state) {
+        case 'atStart':
+            hideAllSkyscraperAds();
+            document.getElementById('reviewsArea').style.display = 'none';
+            loading('on');
+            break;
+        case 'atEnd':
+            document.getElementById('reviewsArea').style.display = 'block';
+            mediaSearchChanged();
+            loading('off');
+            break;
+    }
+}
+
 function mediaSearchChanged() {
-    hideAllSkyscraperAds();
     archiveInFeedAds();
     document.getElementById('reviewsArea').innerHTML = '';
-    loading('on');
     var searchText = trim(document.getElementById('search').value).toLowerCase();
     var searchTerms = extractSearchTerms(searchText);
     var finalizeSearch = function () {
@@ -590,7 +614,6 @@ function mediaSearchChanged() {
                 mediaHTML += inFeedAdContainer;
             }
         }
-        loading('off');
         document.getElementById('reviewsArea').innerHTML = mediaHTML;
         populateInFeedAds();
     };
