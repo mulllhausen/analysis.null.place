@@ -21,7 +21,7 @@
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-06-02T00:00:00+09:30</updated>
+        <updated>2019-07-22T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -57,5 +57,5 @@
         <category term="mining"></category>
         <category term="proof-of-work"></category>
     </entry>
-    <updated>2019-06-07T00:00:00+09:30</updated>
+    <updated>2019-07-22T00:00:00+09:30</updated>
 </feed>

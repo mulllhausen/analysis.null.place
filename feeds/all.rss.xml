@@ -21,7 +21,7 @@
             <description>My tv-series reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
             <category>tv-series</category>
             <category>reviews</category>
@@ -49,6 +49,6 @@
             <category>mining</category>
             <category>proof-of-work</category>
         </item>
-        <lastBuildDate>Fri, 07 Jun 2019 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

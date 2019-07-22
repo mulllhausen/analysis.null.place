@@ -1,4 +1,4 @@
-var latestCache = '2019-07-15_00:36:33';
+var latestCache = '2019-07-22_22:25:45';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -71,18 +71,20 @@ var mandatoryAssets = [
     'https://analysis.null.place/tv-series-reviews/',
     'https://analysis.null.place/tv-series-reviews/index.html',
     'https://analysis.null.place/img/tv-series-thumbnail-blackmirror12011.jpg?hash=EDPW69',
+    'https://analysis.null.place/img/tv-series-thumbnail-blackmirror52019.jpg?hash=Jsu8GJ',
     'https://analysis.null.place/img/tv-series-thumbnail-deadpixels12019.jpg?hash=hlvMUx',
     'https://analysis.null.place/img/tv-series-thumbnail-maniac12018.jpg?hash=0nxg5W',
     'https://analysis.null.place/img/tv-series-thumbnail-nightflyers12018.jpg?hash=mSCzFO',
     'https://analysis.null.place/img/tv-series-thumbnail-thewalkingdead12010.jpg?hash=KBZUww',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=Gr2fm5',
-    'https://analysis.null.place/json/tv-series-list.json?hash=e-KMQM',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=_1CQNf',
+    'https://analysis.null.place/json/tv-series-list.json?hash=i9hLfD',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
+    'https://analysis.null.place/json/tv-series-review-blackmirror52019.json?hash=RNRZhV',
     'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=l-lzV-',
     'https://analysis.null.place/json/tv-series-review-maniac12018.json?hash=SjiWtk',
     'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=iSpT3g',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-search-index.json?hash=HH0Gp9',
+    'https://analysis.null.place/json/tv-series-search-index.json?hash=sVmtnF',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',
