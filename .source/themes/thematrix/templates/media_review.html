@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block og_type -%}
+    {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
+        video.movie
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
+        video.tv_show
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
+        book
+    {%- endif -%}
+{%- endblock %}
+{% block og_title %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}{% endblock %}
+{% block og_description %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] }}/5 &#9733; {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"] }}{% endblock %}
+{% block og_image %}{{ QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]] }}{% endblock %}
+
+{% block og_image_width %}100{% endblock %}
+{% block og_image_height %}147{% endblock %}
+{% block og_custom %}
+    {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
+        <meta property="book:author" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["author"] }}"/>
+        <meta property="book:isbn" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["isbn"] }}"/>
+    {%- endif -%}
+{% endblock %}
+
+{% set _ = LINKED_DATA.__setitem__("image", QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]]) %}
+
+{% block content %}
+<section id="content">
+    <article>
+        <header>
+            <h1>
+                <svg class="icon icon-file-text-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-file-text-o"></use></svg>
+                {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }} reviews
+            </h1>
+        </header>
+        <div class="entry-content">
+            <div class="info-box">
+                <a href="{{ SITEURL }}/reviews/"><svg class="icon icon-folder-open-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use></svg> reviews</a>
+                (<abbr class="published" title="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewDate"].isoformat() }}">{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewDate"].strftime('%Y-%m-%d') }}</abbr>)
+                <span class="keep-together">
+                    <a href="{{ SITEURL }}/tag/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}/">
+                        <svg class="icon icon-hashtag">
+                            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use>
+                        </svg>{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}
+                    </a>
+                </span>
+                <span class="keep-together">
+                    <a href="{{ SITEURL }}/tag/reviews/">
+                        <svg class="icon icon-hashtag">
+                            <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use>
+                        </svg>reviews
+                    </a>
+                </span>
+            </div>
+            
+            <p>As with {{ MEDIA_REVIEWS["NOT_MEDIA_TYPES"][0] }} and {{ MEDIA_REVIEWS["NOT_MEDIA_TYPES"][1] }}, I read so many {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }} that I find myself forgetting what a given {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }} was about, whether I liked it or not, and even whether I have already {{ MEDIA_REVIEWS["VERB_PAST"] }} it. So I have made these reviews to keep track of the {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }} I {{ MEDIA_REVIEWS["VERB_PRESENT"] }} - good and bad. Maybe you will also discover some good {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }} here too, or learn what to avoid, assuming you have similar tastes to me.</p>
+            <div class="form-container search-box-container" style="text-align: center;">
+                <button id="showAllMedia" style="display: inline-block;">show all {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }}</button>
+            </div>
+
+            <div class="media-count-area">
+                <div id="mediaCountPanel" style="width: 100%; top: 0px; position: static;">
+                    <span id="xOfYMediaCount" style="display: inline;">
+                        showing <span id="numMediaShowing">1</span> of
+                        <span id="totalMediaFound"></span>
+                        <span id="searchTypeDescription">total {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }}</span>
+                    </span>
+                    <span id="noMediaCount" style="display: none;">no {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_PLURAL"] }} found</span>
+                </div>
+            </div>
+
+            <div id="reviewsArea" class="reviews-area">
+                <div class="media" id="!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}">
+                    <a class="link-to-self chain-link" href="{{ SITEURL }}/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}-reviews/#!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}" title="right click and copy link for the URL of this {{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }} review">
+                        <svg class="icon icon-chain">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
+                        </svg>
+                    </a>
+                    <div class="thumbnail-and-stars">
+                        <img src="{{ QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]] }}" alt="{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }} thumbnail">
+                        <div class="stars">
+                            {% for i in range(1,6) %}
+                                {% if i <= MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] %}
+                            <svg class="icon some-star icon-star">
+                                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star"></use>
+                            </svg>
+                                {% else %}
+                                    {% if (i - 1) <= MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] %}
+                            <svg class="icon some-star icon-star-half-empty">
+                                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-half-empty"></use>
+                            </svg>
+                                    {% else %}
+                            <svg class="icon some-star icon-star-o">
+                                <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-star-o"></use>
+                            </svg>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["external_link_url"] }}">
+                        <h3 class="media-title">
+                        {% if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" %}
+                            {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}
+                        {% elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" %}
+                            {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }} Season {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["season"] }}
+                        {% elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" %}
+                            <i>{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}</i> by {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["author"] }}
+                        {% endif %}
+                        ({{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["year"] }})
+                        </h3>
+                    </a>
+                    <h4 class="review-title">{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"] }}</h4>
+                    <div class="review-text"><p>{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["review"] }}</p></div>
+                </div>
+                <div class="in-feed-ad-container"></div>
+            </div>
+{#<script>
+    siteGlobals.mediaType = '{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}';
+    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
+    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/movies-search-index.json'] }}';
+    siteGlobals.mediaListJSON = '{{ QS_LINK['/json/movies-list.json'] }}';
+    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/movies-init-list.json'] }}';
+</script>#}
+        </div>
+        <div class="bottom-spacer"></div>
+        {% include 'comments.html' %}
+    </article>
+</section>
+{% endblock %}

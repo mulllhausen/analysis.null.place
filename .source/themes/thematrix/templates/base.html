@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="utf-8"/>
         <title>{{ SITENAME }}</title>
@@ -22,21 +22,17 @@
 
         {# le open graph data #}
         <meta property="og:site_name" content="{{ SITENAME }}"/>
-        <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
-        <meta property="og:type" content="article"/>
         <meta property="og:url" content="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}"/>
-        <meta property="og:image" content="{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}"/>
-        <meta property="og:image:width" content="266"/>
-        <meta property="og:image:height" content="266"/>
+        <meta property="og:type" content="{% block og_type %}article{% endblock %}"/>
+        <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}"/>
         <meta property="og:description" content="{% block og_description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
+        <meta property="og:image" content="{% block og_image %}{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}{% endblock %}"/>
+        <meta property="og:image:width" content="{% block og_image_width %}266{% endblock %}"/>
+        <meta property="og:image:height" content="{% block og_image_height %}266{% endblock %}"/>
         {% if FACEBOOK_APP_ID %}
         <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}"/>
         {% endif %}
-
-        {# le schema.org markup for Google+ #}
-        <meta itemprop="name" content="{{ SITENAME }}"/>
-        <meta itemprop="description" content="{% block google_title %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
-        <meta itemprop="image" content="{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}"/>
+        {% block og_custom %}{% endblock %}
 
         {# le twitter card data # }
         <meta name="twitter:card" content="summary_large_image"/>
@@ -67,6 +63,10 @@
 
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" title="{{ SITENAME }} ATOM Feed"/>
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" title="{{ SITENAME }} RSS Feed"/>
+
+        {# le linked data (used by search engines for previews) #}
+        {% set _ = LINKED_DATA.__setitem__("url", SITEURL + "/" + output_file | replace("index.html", "")) %}
+        <script type="application/ld+json">{{ LINKED_DATA | tojson }}</script>
         {% include 'js_globals.html' %}
         <link rel="manifest" href="{{ SITEURL }}/theme/js/manifest.json"/>
     </head>

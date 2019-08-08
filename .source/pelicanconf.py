@@ -120,9 +120,21 @@ PLUGIN_PATHS = [THEME + '/plugins']
 PLUGINS = [
     'static-file-merge',
     'jinja2content_simple',
-    'querystring-cache',
+    'querystring-cache', # must come before 'media-reviews'
     'media-reviews'
 ]
+
+# these properties can be overwridden in each template
+LINKED_DATA = {
+    '@context': 'http://schema.org',
+    '@type': '',
+    'url': '',
+    'name': '',
+    'image': '',
+    'description': '',
+#    'datePublished': ' ',
+    'inLanguage': 'English'
+}
 
 # file paths relative to the output dir
 YUICOMPRESSOR_SKIP = [

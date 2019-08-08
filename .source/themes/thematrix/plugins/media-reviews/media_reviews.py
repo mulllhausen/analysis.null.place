@@ -4,15 +4,17 @@ import os
 import json
 import numbers
 import re
-#import pudb
+import pudb
 
 def media_reviews(pelican_obj):
-    #pu.db
+    pu.db
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
+    grunt.init_jinja_environment(pelican_obj)
+
     for (media_type, media_data) in pelican_obj.settings["MEDIA_REVIEWS"].\
     iteritems():
-        with open(os.path.join(grunt.content_path, media_data['src-list'])) as f:
+        with open(os.path.join(grunt.content_path, media_data["src-list"])) as f:
             all_media_x = json.load(f)["data"]
 
         grunt.media_type = media_type
@@ -47,7 +49,7 @@ def media_reviews(pelican_obj):
         # put reviews in their own file, so as to keep <media>-list.json from
         # being too large
         grunt.update_meta_jsons()
-        all_media_x = grunt.save_list_and_individual_review_files(all_media_x)
+        all_media_x = grunt.save_list_and_individual_review_jsons(all_media_x)
 
         # generate json/<media>-init-list.json
         # this is just the first 10 <media>, sorted by max rating, then
@@ -70,5 +72,9 @@ def media_reviews(pelican_obj):
             ["reviewDate"].strftime("%Y-%m-%d %H:%M:%S %z")
         }
 
+        # create all html review pages using the media_review.html template
+        grunt.save_review_htmls(all_media_x)
+
 def register():
     pelican.signals.initialized.connect(media_reviews)
+    # once QS_LINK exists:
