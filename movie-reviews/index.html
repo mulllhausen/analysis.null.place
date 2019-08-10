@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
         <meta charset="utf-8"/>
         <title>analysis</title>
+
         <link rel="stylesheet" href="https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU"/>
         <link rel="stylesheet" href="https://analysis.null.place/css/media-reviews.css?hash=ksCGQ_"/>
 
@@ -60,18 +61,14 @@
         <meta name="author" content="Peter Miller"/>
 
         <meta property="og:site_name" content="analysis"/>
-        <meta property="og:title" content="movie reviews"/>
-        <meta property="og:type" content="article"/>
         <meta property="og:url" content="https://analysis.null.place/movie-reviews/"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="movie reviews"/>
+        <meta property="og:description" content="My movie reviews. A big work in progress!"/>
         <meta property="og:image" content="https://analysis.null.place/theme/img/shattered-glass-matrix.png?hash=gk0yg8"/>
         <meta property="og:image:width" content="266"/>
         <meta property="og:image:height" content="266"/>
-        <meta property="og:description" content="My movie reviews. A big work in progress!"/>
         <meta property="fb:app_id" content="2040066019560327"/>
-
-        <meta itemprop="name" content="analysis"/>
-        <meta itemprop="description" content="My movie reviews. A big work in progress!"/>
-        <meta itemprop="image" content="https://analysis.null.place/theme/img/shattered-glass-matrix.png?hash=gk0yg8"/>
 
 
         <meta name="theme-color" content="#000000"/>
@@ -91,6 +88,9 @@
 
         <link rel="self" href="https://analysis.null.place/movie-reviews/" type="application/atom+xml" title="analysis ATOM Feed"/>
         <link rel="self" href="https://analysis.null.place/movie-reviews/" type="application/rss+xml" title="analysis RSS Feed"/>
+
+        <script type="application/ld+json">{"@context": "http://schema.org", "@type": "Article", "datePublished": "2019-01-23", "description": "My movie reviews. A big work in progress!", "image": "https://analysis.null.place/theme/img/shattered-glass-matrix.png?hash=gk0yg8", "inLanguage": "English", "name": "movie reviews", "url": "https://analysis.null.place/movie-reviews/"}</script>
+
 <script>
 var siteGlobals = {
     events: {},
@@ -113,16 +113,17 @@ var siteGlobals = {
     commentsPlatforms: ['FB','Disqus'],
     article: {title: 'movie reviews',url: 'movie-reviews/',consoleExplainScripts: 'js/movie-reviews.js - search and render reviews for movies.'}
 };
-</script>        <link rel="manifest" href="https://analysis.null.place/theme/js/manifest.json"/>
+</script>
+        <link rel="manifest" href="https://analysis.null.place/theme/js/manifest.json"/>
     </head>
-
     <body>
-        <div id="fullpagePopupNotification" class="popup-fullpage" style="display:none;">
-            <span class="popup-centerer">
-                <h1><span id="fullpagePopupHeading"></span></h1><br>
-                <span id="fullpagePopupDetail"></span>
-            </span>
-        </div>
+<div id="fullpagePopupNotification" class="popup-fullpage" style="display:none;">
+    <span class="popup-centerer">
+        <h1><span id="fullpagePopupHeading"></span></h1><br>
+        <span id="fullpagePopupDetail"></span>
+    </span>
+</div>
+
         <script>
             if (window.hasOwnProperty == null) {
                 document.getElementById('fullpagePopupHeading').innerHTML = 'your browser is too old';
