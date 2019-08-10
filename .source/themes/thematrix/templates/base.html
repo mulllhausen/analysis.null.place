@@ -94,7 +94,7 @@
     <body>
     {% block non_standard_body %}{% endblock %}
     {% if include_standard_body %}
-        {% from 'full_page_popup.html' import full_page_popup with context %}
+        {% from 'full_page_popup.html' import full_page_popup with context -%}
         {{ full_page_popup('', '', initially_hidden = True) }}
         <script>
             if (window.hasOwnProperty == null) {

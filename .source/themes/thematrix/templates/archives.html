@@ -1,3 +1,15 @@
+{% set include_stylesheets = True %}
+{% set include_preloads = True %}
+{% set include_ie_shim = True %}
+{% set include_favicons = True %}
+{% set include_js_globals = True %}
+{% set include_manifest = True %}
+{% set include_standard_body = True %}
+{% set include_linked_data = True %}
+{% set _ = LINKED_DATA.__setitem__("@type", "WebPage") %}
+{% set _ = LINKED_DATA.__setitem__("name", "all articles") %}
+{% set _ = LINKED_DATA.__setitem__("description", "a list of all articles in this blog") %}
+{% set _ = LINKED_DATA.__setitem__("image", QS_LINK["/theme/img/shattered-glass-matrix.png"]) %}
 {% extends "base.html" %}
 {% block content %}
 <section id="content">

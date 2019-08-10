@@ -49,6 +49,8 @@ TRANSLATION_FEED_RSS = None
 AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
+# note that only templates have access to common variables such as dates and
+# articles, so index.html must be a direct template - not a page.
 DIRECT_TEMPLATES = [
     'index', 'tags', 'archives', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest',
     'all_rss', 'all_atom'

@@ -16,6 +16,7 @@
 {% set _ = LINKED_DATA.__setitem__("@type", "Article") %}
 {% set _ = LINKED_DATA.__setitem__("name", article.title) %}
 {% set _ = LINKED_DATA.__setitem__("description", article.summary) %}
+{% set _ = LINKED_DATA.__setitem__("datePublished", article.date.strftime("%Y-%m-%d")) %}
 {% block content %}
 <section id="content">
     <article>

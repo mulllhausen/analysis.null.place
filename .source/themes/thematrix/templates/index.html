@@ -7,9 +7,11 @@
 {% set include_manifest = True %}
 {% set include_standard_body = True %}
 {% set include_linked_data = True %}
+{% set _ = LINKED_DATA.__setitem__("@type", "WebSite") %}
+{% set _ = LINKED_DATA.__setitem__("name", SITENAME) %}
+{% set _ = LINKED_DATA.__setitem__("description", BLOG_DESCRIPTION) %}
 {% set _ = LINKED_DATA.__setitem__("image", QS_LINK["/theme/img/shattered-glass-matrix.png"]) %}
 {% extends "base.html" %}
-{% block content_title %}{% endblock %}
 {% block content %}
 {% if articles %}
         {% for article in (articles_page.object_list if articles_page else articles) %}
