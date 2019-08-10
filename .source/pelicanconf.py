@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import time
 
 AUTHOR = u'Peter Miller'
+BLOG_FIRST_PUBLISHED_DATE = '2018-04-17'
 SITENAME = u'analysis'
 SITENAME_ASCIIART = r"""
 !                    _           _      

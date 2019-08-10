@@ -11,6 +11,7 @@
 {% set _ = LINKED_DATA.__setitem__("name", SITENAME) %}
 {% set _ = LINKED_DATA.__setitem__("description", BLOG_DESCRIPTION) %}
 {% set _ = LINKED_DATA.__setitem__("image", QS_LINK["/theme/img/shattered-glass-matrix.png"]) %}
+{% set _ = LINKED_DATA.__setitem__("datePublished", BLOG_FIRST_PUBLISHED_DATE) %}
 {% extends "base.html" %}
 {% block content %}
 {% if articles %}
