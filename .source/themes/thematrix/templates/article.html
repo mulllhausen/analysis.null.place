@@ -13,7 +13,9 @@
 {% block description %}{{ article.summary | striptags }}{% endblock %}
 {% block og_description %}{{ article.summary | striptags }}{% endblock %}
 {% block google_title %}{{ article.summary | striptags }}{% endblock %}
-
+{% set _ = LINKED_DATA.__setitem__("@type", "Article") %}
+{% set _ = LINKED_DATA.__setitem__("name", article.title) %}
+{% set _ = LINKED_DATA.__setitem__("description", article.summary) %}
 {% block content %}
 <section id="content">
     <article>
