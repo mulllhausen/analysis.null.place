@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
         <meta charset="utf-8"/>
         <title>{{ SITENAME }}</title>
+
         {# le styles (must come before all scripts) #}
+        {% if include_stylesheets %}
         <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
-        {% if (article and article.stylesheets) %}
-            {% set stylesheets = article.stylesheets.split(',') %}
-            {% for stylesheet in stylesheets %}
+            {% if (article and article.stylesheets) %}
+                {% set stylesheets = article.stylesheets.split(',') %}
+                {% for stylesheet in stylesheets %}
         <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% include 'adsense_css.html' %}
         {% endif %}
-        {% include 'adsense_css.html' %}
+        {% block non_standard_css %}{% endblock %}
 
         {# le preloads #}
-        {% include 'preloads.html' %}
+        {% if include_preloads %}
+            {% include 'preloads.html' %}
+        {% endif %}
 
         <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, user-scalable=no"/>
         <meta name="description" content="{% block description %}{{ BLOG_DESCRIPTION }}{% endblock %}"/>
@@ -31,8 +37,8 @@
         <meta property="og:image:height" content="{% block og_image_height %}266{% endblock %}"/>
         {% if FACEBOOK_APP_ID %}
         <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}"/>
-        {% endif %}
         {% block og_custom %}{% endblock %}
+        {% endif %}
 
         {# le twitter card data # }
         <meta name="twitter:card" content="summary_large_image"/>
@@ -50,11 +56,14 @@
         <meta name="msapplication-navbutton-color" content="#000000"/>
 
         {# le HTML5 shim, for IE6-8 support of HTML5 elements #}
+        {% if include_ie_shim %}
         <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
         <![endif]-->
+        {% endif %}
 
         {# le fav and touch icons #}
+        {% if include_favicons %}
         <link rel="shortcut icon" href="{{ QS_LINK['/theme/img/favicon.ico'] }}" type="image/x-icon"/>
         <link rel="icon" href="{{ QS_LINK['/theme/img/favicon.ico'] }}" type="image/x-icon"/>
         <link rel="apple-touch-icon" href="{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}"/>
@@ -63,21 +72,25 @@
 
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/atom+xml" title="{{ SITENAME }} ATOM Feed"/>
         <link rel="self" href="{{ SITEURL }}/{{ output_file | replace("index.html", "") }}" type="application/rss+xml" title="{{ SITENAME }} RSS Feed"/>
+        {% endif %}
 
         {# le linked data (used by search engines for previews) #}
         {% set _ = LINKED_DATA.__setitem__("url", SITEURL + "/" + output_file | replace("index.html", "")) %}
         <script type="application/ld+json">{{ LINKED_DATA | tojson }}</script>
-        {% include 'js_globals.html' %}
-        <link rel="manifest" href="{{ SITEURL }}/theme/js/manifest.json"/>
-    </head>
 
+        {% if include_js_globals %}
+            {% include 'js_globals.html' %}
+        {% endif %}
+
+        {% if include_manifest %}
+        <link rel="manifest" href="{{ SITEURL }}/theme/js/manifest.json"/>
+        {% endif %}
+    </head>
     <body>
-        <div id="fullpagePopupNotification" class="popup-fullpage" style="display:none;">
-            <span class="popup-centerer">
-                <h1><span id="fullpagePopupHeading"></span></h1><br>
-                <span id="fullpagePopupDetail"></span>
-            </span>
-        </div>
+    {% block non_standard_body %}{% endblock %}
+    {% if include_standard_body %}
+        {% from 'full_page_popup.html' import full_page_popup with context %}
+        {{ full_page_popup('', '', initially_hidden = True) }}
         <script>
             if (window.hasOwnProperty == null) {
                 document.getElementById('fullpagePopupHeading').innerHTML = 'your browser is too old';
@@ -166,5 +179,6 @@
         {# load the console greeter later since it does not need to be available so quick #}
         <script src="{{ QS_LINK['/theme/js/console-greeter.js'] }}"></script>
         {% include 'piwik.html' %}
+    {% endif %}
     </body>
 </html>

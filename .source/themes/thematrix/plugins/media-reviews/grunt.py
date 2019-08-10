@@ -273,7 +273,7 @@ def save_review_htmls(all_media_x):
 
         jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_DATA"] = a_media
         review_file_dir = "%s/%s-reviews/%s" % (
-            jinja_default_settings["PATH"], media_type, a_media["id"]
+            output_path, media_type, a_media["id"]
         )
         # create the directory
         try:
@@ -311,6 +311,10 @@ def save_review_htmls(all_media_x):
         elif media_type == "book":
             jinja_default_settings["LINKED_DATA"]["isbn"] = a_media["isbn"]
             jinja_default_settings["LINKED_DATA"]["author"] = a_media["author"]
+
+        jinja_default_settings["output_file"] = "%s-reviews/%s/index.html" % (
+            media_type, a_media["id"]
+        )
 
         # create the html file
         review_file = "%s/index.html" % (review_file_dir)

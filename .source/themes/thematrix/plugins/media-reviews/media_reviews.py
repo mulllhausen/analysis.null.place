@@ -4,10 +4,10 @@ import os
 import json
 import numbers
 import re
-import pudb
+#import pudb
 
 def media_reviews(pelican_obj):
-    pu.db
+    #pu.db
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
     grunt.init_jinja_environment(pelican_obj)
@@ -76,5 +76,5 @@ def media_reviews(pelican_obj):
         grunt.save_review_htmls(all_media_x)
 
 def register():
-    pelican.signals.initialized.connect(media_reviews)
     # once QS_LINK exists:
+    pelican.signals.article_generator_init.connect(media_reviews)

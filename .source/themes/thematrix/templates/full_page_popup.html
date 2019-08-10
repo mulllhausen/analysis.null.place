@@ -1,0 +1,8 @@
+{% macro full_page_popup(heading, detail, initially_hidden) %}
+<div id="fullpagePopupNotification" class="popup-fullpage"{% if initially_hidden %} style="display:none;"{% endif %}>
+    <span class="popup-centerer">
+        <h1><span id="fullpagePopupHeading">{{ heading }}</span></h1><br>
+        <span id="fullpagePopupDetail">{{ detail }}</span>
+    </span>
+</div>
+{% endmacro %}
