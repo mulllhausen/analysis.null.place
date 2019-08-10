@@ -10,15 +10,17 @@ def media_reviews(pelican_obj):
     #pu.db
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
+    grunt.init_jinja_environment(pelican_obj)
+
     for (media_type, media_data) in pelican_obj.settings["MEDIA_REVIEWS"].\
     iteritems():
-        with open(os.path.join(grunt.content_path, media_data['src-list'])) as f:
+        with open(os.path.join(grunt.content_path, media_data["src-list"])) as f:
             all_media_x = json.load(f)["data"]
 
         grunt.media_type = media_type
         grunt.meta_img_preloads = [] # reset
         grunt.meta_jsons = [] # reset
-        grunt.meta_hashbang_URLs = [] # reset
+        grunt.all_data = [] # reset
         required_fields = grunt.get_validation_fields()
 
         # validation
@@ -47,7 +49,7 @@ def media_reviews(pelican_obj):
         # put reviews in their own file, so as to keep <media>-list.json from
         # being too large
         grunt.update_meta_jsons()
-        all_media_x = grunt.save_list_and_individual_review_files(all_media_x)
+        all_media_x = grunt.save_list_and_individual_review_jsons(all_media_x)
 
         # generate json/<media>-init-list.json
         # this is just the first 10 <media>, sorted by max rating, then
@@ -59,16 +61,20 @@ def media_reviews(pelican_obj):
         # this is just a list of <media> titles and years - used for searching
         grunt.save_search_index(all_media_x)
 
+        # create all html review pages using the media_review.html template
+        grunt.save_review_htmls(all_media_x)
+
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = {
             "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
             "jsons": ",".join(sorted(grunt.meta_jsons)),
-            "hashbang_URLs": sorted(
-                [a_media for a_media in grunt.meta_hashbang_URLs],
-                key = lambda a_media: (a_media["hashbangURL"])
+            "all_data": sorted(
+                [a_media for a_media in grunt.all_data],
+                key = lambda a_media: (a_media["id"])
             ),
             "latest_review": max(all_media_x, key = lambda x: x["reviewDate"])\
             ["reviewDate"].strftime("%Y-%m-%d %H:%M:%S %z")
         }
 
 def register():
-    pelican.signals.initialized.connect(media_reviews)
+    # once QS_LINK exists:
+    pelican.signals.article_generator_init.connect(media_reviews)

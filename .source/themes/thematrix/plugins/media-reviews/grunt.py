@@ -15,16 +15,32 @@ import datetime
 import pytz
 import requests
 import copy
-from PIL import Image
+import PIL
+import jinja2
+import errno
 
 media_type = "" # init
 output_path = "" # init
 content_path = "" # init
+jinja_environment = None # init
+jinja_default_settings = None # init
 
 def plural(x):
     if (x[-1] == "s"):
         return x
     return "%ss" % x
+
+def init_jinja_environment(pelican_obj):
+    global jinja_environment, jinja_default_settings
+
+    jinja_environment = jinja2.Environment(
+        loader = jinja2.FileSystemLoader(
+            os.path.join(pelican_obj.settings["THEME"], "templates")
+        ),
+        **pelican_obj.settings["JINJA_ENVIRONMENT"]
+    )
+    jinja_default_settings = copy.deepcopy(pelican_obj.settings)
+    jinja_default_settings["ARTICLE_TYPE"] = "media-review"
 
 def convert_types(all_media_x, field_formats, timezone_name):
     # note: only call this function if validate() passes
@@ -69,8 +85,9 @@ def get_validation_fields():
         })
     return required_fields
 
+allowed_media_types = ("movie", "tv-series", "book")
 def check_media_type():
-    allowed_media_types = ("movie", "tv-series", "book")
+    global allowed_media_types
     if (media_type not in allowed_media_types):
         raise ValueError(
             "media should be %s, however it is \"%s\""
@@ -140,7 +157,7 @@ def get_file_hash(filename):
 # too large
 meta_img_preloads = []
 meta_jsons = []
-meta_hashbang_URLs = []
+all_data = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
@@ -181,8 +198,8 @@ def generate_thumbnail_basename(a_media, original_size):
         media_type, a_media["id"], "-originalsize" if original_size else ""
     )
 
-def save_list_and_individual_review_files(all_media_x):
-    global meta_img_preloads, meta_jsons, meta_hashbang_URLs
+def save_list_and_individual_review_jsons(all_media_x):
+    global meta_img_preloads, meta_jsons, all_data
     original_size = False
     all_media_listfile = [] # init
 
@@ -194,26 +211,23 @@ def save_list_and_individual_review_files(all_media_x):
         key = lambda a_media: (a_media["reviewDate"], a_media["title"])
     )
     for a_media in all_media_x:
-        meta_hashbang_URLs.append({
-            "hashbangURL": a_media["id"],
-            "date": a_media["reviewDate"]
-        })
+        all_data.append(a_media)
         thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
         a_media["thumbnailHash"] = get_file_hash(
             "%s/img/%s" % (content_path, thumbnail_basename)
         )
         meta_img_preloads.append(thumbnail_basename)
 
-        review_file_basename = "%s-review-%s.json" % (media_type, a_media["id"])
-        meta_jsons.append(review_file_basename)
-        review_file = "%s/json/%s" % (content_path, review_file_basename)
+        json_review_file_basename = "%s-review-%s.json" % (media_type, a_media["id"])
+        meta_jsons.append(json_review_file_basename)
+        json_review_file = "%s/json/%s" % (content_path, json_review_file_basename)
 
-        # save the media list to the content (not output) dir so that QS_LINK
+        # save the json review to the content (not output) dir so that QS_LINK
         # can read it and get its hash
-        with open(review_file, "w") as f:
+        with open(json_review_file, "w") as f:
             json.dump({ "reviewFull": a_media["review"] }, f)
 
-        a_media["reviewHash"] = get_file_hash(review_file)
+        a_media["reviewHash"] = get_file_hash(json_review_file)
 
         all_media_listfile.append({
             k: v for (k, v) in a_media.iteritems() if (k in listfile_fields)
@@ -226,6 +240,86 @@ def save_list_and_individual_review_files(all_media_x):
     ) as f:
         json.dump(all_media_listfile, f, sort_keys = True)
     return all_media_x
+
+def save_review_htmls(all_media_x):
+    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE"] = media_type
+
+    jinja_default_settings["MEDIA_REVIEWS"]["NOT_MEDIA_TYPES"] = [
+        plural(t) for t in allowed_media_types if t != media_type
+    ]
+    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE_PLURAL"] = \
+    plural(media_type)
+
+    jinja_default_settings["MEDIA_REVIEWS"]["VERB_PRESENT"] = \
+    "read" if media_type == "book" else "watch"
+
+    jinja_default_settings["MEDIA_REVIEWS"]["VERB_PAST"] = \
+    "read" if media_type == "book" else "watched"
+
+    for a_media in all_media_x:
+        a_media["thumbnail_on_disk"] = "/img/%s" % (
+            generate_thumbnail_basename(a_media, original_size = False)
+        )
+        a_media["external_link_url"] = "https://"
+        if media_type == "book":
+            a_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
+            a_media["goodreadsID"]
+        else:
+            a_media["external_link_url"] += "www.imdb.com/title/%s" % \
+            a_media["IMDBID"]
+
+        jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_DATA"] = a_media
+        review_file_dir = "%s/%s-reviews/%s" % (
+            output_path, media_type, a_media["id"]
+        )
+        # create the directory
+        try:
+            os.makedirs(review_file_dir)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
+        # prepare the linked data for rendering
+        if media_type == "movie":
+            LINKED_DATA_type = "Movie"
+        elif media_type == "tv-series":
+            LINKED_DATA_type = "TVSeries"
+        elif media_type == "book":
+            LINKED_DATA_type = "Book"
+
+        jinja_default_settings["LINKED_DATA"].update({
+            "name": "%s Review: %s" % (media_type.capitalize(), a_media["title"]),
+            "@type": LINKED_DATA_type,
+            "description": a_media["reviewTitle"],
+            "date": a_media["reviewDate"].strftime("%Y-%m-%d"),
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "bestRating": "5",
+                "ratingValue": "%s" % a_media["rating"]
+            },
+            "reviewBody": a_media["review"],
+            "genre": a_media["genres"]
+        })
+        if media_type == "tv-series":
+            jinja_default_settings["LINKED_DATA"]["containsSeason"] = {
+                "@type": "TVSeason",
+                "name": "Season %s" % (a_media["season"])
+            }
+        elif media_type == "book":
+            jinja_default_settings["LINKED_DATA"]["isbn"] = a_media["isbn"]
+            jinja_default_settings["LINKED_DATA"]["author"] = a_media["author"]
+
+        jinja_default_settings["output_file"] = "%s-reviews/%s/index.html" % (
+            media_type, a_media["id"]
+        )
+
+        # create the html file
+        review_file = "%s/index.html" % (review_file_dir)
+        with open(review_file, "w") as f:
+            f.write(
+                jinja_environment.get_template("media_review.html").
+                render(jinja_default_settings)
+            )
 
 def get_listfile_fields():
     required_fields = [
@@ -298,7 +392,10 @@ def add_missing_data(all_media_x):
             a_media["thumbnailHash"] = get_file_hash(
                 "%s/img/%s" % (content_path, small_thumbnail)
             )
-        except:
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
             # img file does not exist. no worries - we will download it later
             pass
 
@@ -346,15 +443,16 @@ def resize_thumbnails(all_media_x):
             a_media, original_size = True
         )
         try:
-            img = Image.open("%s/img/%s" % (content_path, original_thumbnail))
-        except:
-            # the original of this image is not present, to it must not need
-            # resizing
-            continue
+            img = PIL.Image.open("%s/img/%s" % (content_path, original_thumbnail))
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                # the original of this image is not present, so it must not need
+                # resizing
+                continue
         (original_width, original_height) = img.size
         width_percent = desired_width / float(original_width)
         desired_height = int(float(original_height) * float(width_percent))
-        img = img.resize((desired_width, desired_height), Image.ANTIALIAS)
+        img = img.resize((desired_width, desired_height), PIL.Image.ANTIALIAS)
         resized_thumbnail = generate_thumbnail_basename(
             a_media, original_size = False
         )
@@ -367,5 +465,6 @@ def delete_original_size_thumbnails(all_media_x):
         )
         try:
             os.remove("%s/img/%s" % (content_path, original_thumbnail))
-        except:
-            pass
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise

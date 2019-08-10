@@ -1,0 +1,57 @@
+{% set include_stylesheets = False %}
+{% set include_preloads = False %}
+{% set include_ie_shim = False %}
+{% set include_favicons = False %}
+{% set include_js_globals = False %}
+{% set include_manifest = False %}
+{% set include_standard_body = False %}
+{% set include_linked_data = True %}
+{% extends 'base.html' %}
+
+{% block non_standard_css %}
+<style>
+    html, body{
+        margin: 0;
+        padding: 0;
+
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+
+        background-color: #000000;/*black*/
+        /*overflow: auto;/*do not show a scrollbar*/
+    }
+</style>
+{% endblock %}
+
+{% block og_type -%}
+    {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
+        video.movie
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
+        video.tv_show
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
+        book
+    {%- endif -%}
+{%- endblock %}
+{% block og_title %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] | capitalize }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}{% endblock %}
+{% block og_description %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] }}/5 &#9733; {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"] }}{% endblock %}
+{% block og_image %}{{ QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]] }}{% endblock %}
+
+{% block og_image_width %}100{% endblock %}
+{% block og_image_height %}147{% endblock %}
+{% block og_custom %}
+    {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
+    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
+        <meta property="book:author" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["author"] }}"/>
+        <meta property="book:isbn" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["isbn"] }}"/>
+    {%- endif -%}
+{% endblock %}
+
+{% set _ = LINKED_DATA.__setitem__("image", QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]]) %}
+
+{% block non_standard_body %}
+<script>
+window.location.replace('{{ SITEURL }}/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}-reviews/#!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}');
+</script>
+{% endblock %}
