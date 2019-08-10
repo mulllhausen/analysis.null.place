@@ -127,11 +127,11 @@ PLUGINS = [
 # these properties can be overwridden in each template
 LINKED_DATA = {
     '@context': 'http://schema.org',
-    '@type': '',
+    '@type': 'WebPage',
     'url': '',
-    'name': '',
+    'name': SITENAME,
     'image': '',
-    'description': '',
+    'description': BLOG_DESCRIPTION,
 #    'datePublished': ' ',
     'inLanguage': 'English'
 }
