@@ -1,4 +1,12 @@
 {# this is the home page (direct template) #}
+{% set include_stylesheets = True %}
+{% set include_preloads = True %}
+{% set include_ie_shim = True %}
+{% set include_favicons = True %}
+{% set include_js_globals = True %}
+{% set include_manifest = True %}
+{% set include_standard_body = True %}
+{% set include_linked_data = True %}
 {% extends "base.html" %}
 {% block content_title %}{% endblock %}
 {% block content %}
