@@ -157,7 +157,7 @@ def get_file_hash(filename):
 # too large
 meta_img_preloads = []
 meta_jsons = []
-meta_hashbang_URLs = []
+all_data = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
@@ -199,7 +199,7 @@ def generate_thumbnail_basename(a_media, original_size):
     )
 
 def save_list_and_individual_review_jsons(all_media_x):
-    global meta_img_preloads, meta_jsons, meta_hashbang_URLs
+    global meta_img_preloads, meta_jsons, all_data
     original_size = False
     all_media_listfile = [] # init
 
@@ -211,10 +211,7 @@ def save_list_and_individual_review_jsons(all_media_x):
         key = lambda a_media: (a_media["reviewDate"], a_media["title"])
     )
     for a_media in all_media_x:
-        meta_hashbang_URLs.append({
-            "hashbangURL": a_media["id"],
-            "date": a_media["reviewDate"]
-        })
+        all_data.append(a_media)
         thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
         a_media["thumbnailHash"] = get_file_hash(
             "%s/img/%s" % (content_path, thumbnail_basename)

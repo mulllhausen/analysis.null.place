@@ -89,6 +89,16 @@ var mandatoryAssets = [
     {% endif %}
 
 {% endfor %}
+{% if MEDIA_REVIEWS %}
+    {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+    // individual {{ media_type }} review pages
+        {% for a_media in media_data['all_data'] %}
+    '{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/',
+    '{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/index.html',
+        {% endfor %}
+
+    {% endfor %}
+{% endif %}
     // cookie warning notice
     '{{ SITEURL }}/cookie-notice/',
     '{{ SITEURL }}/cookie-notice/index.html'
