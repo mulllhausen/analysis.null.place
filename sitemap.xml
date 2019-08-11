@@ -26,7 +26,7 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- begin hash bang URLs for https://analysis.null.place/movie-reviews/ -->
+    <!-- begin URLs for https://analysis.null.place/movie-reviews/ -->
     <url>
         <loc>https://analysis.null.place/movie-reviews/10000bc2008/</loc>
         <lastmod>2019-04-02</lastmod>
@@ -212,9 +212,9 @@
         <lastmod>2019-01-23</lastmod>
         <priority>0.8</priority>
     </url>
-    <!-- end hash bang URLs for https://analysis.null.place/movie-reviews/ -->
+    <!-- end URLs for https://analysis.null.place/movie-reviews/ -->
 
-    <!-- begin hash bang URLs for https://analysis.null.place/book-reviews/ -->
+    <!-- begin URLs for https://analysis.null.place/book-reviews/ -->
     <url>
         <loc>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</loc>
         <lastmod>2019-04-02</lastmod>
@@ -235,9 +235,9 @@
         <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
-    <!-- end hash bang URLs for https://analysis.null.place/book-reviews/ -->
+    <!-- end URLs for https://analysis.null.place/book-reviews/ -->
 
-    <!-- begin hash bang URLs for https://analysis.null.place/tv-series-reviews/ -->
+    <!-- begin URLs for https://analysis.null.place/tv-series-reviews/ -->
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/blackmirror12011/</loc>
         <lastmod>2019-03-26</lastmod>
@@ -268,7 +268,7 @@
         <lastmod>2019-03-26</lastmod>
         <priority>0.8</priority>
     </url>
-    <!-- end hash bang URLs for https://analysis.null.place/tv-series-reviews/ -->
+    <!-- end URLs for https://analysis.null.place/tv-series-reviews/ -->
 
     <url>
         <loc>https://analysis.null.place/cookie-notice/</loc>
