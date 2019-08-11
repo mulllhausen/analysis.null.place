@@ -77,6 +77,7 @@
         {# le linked data (used by search engines for previews) #}
         {% if LINKED_DATA %}
             {% set _ = LINKED_DATA.__setitem__("url", SITEURL + "/" + output_file | replace("index.html", "")) %}
+            {% set _ = LINKED_DATA.__setitem__("inLanguage", "English") %}
         <script type="application/ld+json">{{ LINKED_DATA | tojson }}</script>
         {% endif %}
 
