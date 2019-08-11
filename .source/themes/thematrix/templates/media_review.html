@@ -5,7 +5,16 @@
 {% set include_js_globals = False %}
 {% set include_manifest = False %}
 {% set include_standard_body = False %}
+{% set _ = LINKED_DATA.__setitem__("image", QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]]) %}
 {% extends 'base.html' %}
+
+{%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
+    {% set og_type = 'video.movie' %}
+{%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
+    {% set og_type = 'video.tv_show' %}
+{%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
+    {% set og_type = 'book' %}
+{%- endif -%}
 
 {% block non_standard_css %}
 <style>
@@ -23,16 +32,8 @@
 </style>
 {% endblock %}
 
-{% block og_type -%}
-    {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
-        video.movie
-    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
-        video.tv_show
-    {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
-        book
-    {%- endif -%}
-{%- endblock %}
-{% block og_title %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] | capitalize }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}{% endblock %}
+{% block og_type %}{{ og_type }}{% endblock %}
+{% block og_title %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE_CAPS"] }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}{% endblock %}
 {% block og_description %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] }}/5 &#9733; {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"] }}{% endblock %}
 {% block og_image %}{{ QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]] }}{% endblock %}
 
@@ -47,7 +48,6 @@
     {%- endif -%}
 {% endblock %}
 
-{% set _ = LINKED_DATA.__setitem__("image", QS_LINK[MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["thumbnail_on_disk"]]) %}
 
 {% block non_standard_body %}
 <script>
