@@ -5,12 +5,14 @@
 {% set include_js_globals = True %}
 {% set include_manifest = True %}
 {% set include_standard_body = True %}
-{% set include_linked_data = True %}
-{% set _ = LINKED_DATA.__setitem__("@type", "WebPage") %}
-{% set _ = LINKED_DATA.__setitem__("name", page.title) %}
-{% set _ = LINKED_DATA.__setitem__("description", page.summary) %}
-{% set _ = LINKED_DATA.__setitem__("image", QS_LINK["/theme/img/shattered-glass-matrix.png"]) %}
-{% set _ = LINKED_DATA.__setitem__("datePublished", BLOG_FIRST_PUBLISHED_DATE) %}
+{% set LINKED_DATA = {
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "name": page.title,
+    "description": page.summary,
+    "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
+    "datePublished": BLOG_FIRST_PUBLISHED_DATE
+} %}
 {% extends "base.html" %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.summary }}{% endblock %}

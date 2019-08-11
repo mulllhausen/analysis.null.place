@@ -27,7 +27,7 @@
     {% if MEDIA_REVIEWS %}
         {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
 
-    <!-- begin hash bang URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
+    <!-- begin URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
             {% for a_media in media_data['all_data'] %}
     <url>
         <loc>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</loc>
@@ -35,7 +35,7 @@
         <priority>0.8</priority>
     </url>
             {% endfor %}
-    <!-- end hash bang URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
+    <!-- end URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
         {% endfor %}
 
     {% endif %}

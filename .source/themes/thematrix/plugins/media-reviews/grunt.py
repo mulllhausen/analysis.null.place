@@ -287,9 +287,10 @@ def save_review_htmls(all_media_x):
         elif media_type == "book":
             LINKED_DATA_type = "Book"
 
-        jinja_default_settings["LINKED_DATA"].update({
-            "name": "%s Review: %s" % (media_type.capitalize(), a_media["title"]),
+        jinja_default_settings["LINKED_DATA"] = {
+            "@context": "http://schema.org",
             "@type": LINKED_DATA_type,
+            "name": "%s Review: %s" % (media_type.capitalize(), a_media["title"]),
             "description": a_media["reviewTitle"],
             "date": a_media["reviewDate"].strftime("%Y-%m-%d"),
             "aggregateRating": {
@@ -299,7 +300,7 @@ def save_review_htmls(all_media_x):
             },
             "reviewBody": a_media["review"],
             "genre": a_media["genres"]
-        })
+        }
         if media_type == "tv-series":
             jinja_default_settings["LINKED_DATA"]["containsSeason"] = {
                 "@type": "TVSeason",

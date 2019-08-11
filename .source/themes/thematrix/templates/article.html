@@ -5,18 +5,20 @@
 {% set include_js_globals = True %}
 {% set include_manifest = True %}
 {% set include_standard_body = True %}
-{% set include_linked_data = True %}
-{% set _ = LINKED_DATA.__setitem__("image", QS_LINK["/theme/img/shattered-glass-matrix.png"]) %}
+{% set LINKED_DATA = {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "name": article.title,
+    "description": article.summary,
+    "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
+    "datePublished": article.date.strftime("%Y-%m-%d")
+} %}
 {% extends "base.html" %}
 
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block description %}{{ article.summary | striptags }}{% endblock %}
 {% block og_description %}{{ article.summary | striptags }}{% endblock %}
 {% block google_title %}{{ article.summary | striptags }}{% endblock %}
-{% set _ = LINKED_DATA.__setitem__("@type", "Article") %}
-{% set _ = LINKED_DATA.__setitem__("name", article.title) %}
-{% set _ = LINKED_DATA.__setitem__("description", article.summary) %}
-{% set _ = LINKED_DATA.__setitem__("datePublished", article.date.strftime("%Y-%m-%d")) %}
 {% block content %}
 <section id="content">
     <article>
