@@ -244,6 +244,15 @@ def save_list_and_individual_review_jsons(all_media_x):
 def save_review_htmls(all_media_x):
     jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE"] = media_type
 
+    if media_type == "movie":
+        media_type_caps = "Movie"
+    elif media_type == "tv-series":
+        media_type_caps = "TV-Series"
+    elif media_type == "book":
+        media_type_caps = "Book"
+    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE_CAPS"] = \
+    media_type_caps
+
     jinja_default_settings["MEDIA_REVIEWS"]["NOT_MEDIA_TYPES"] = [
         plural(t) for t in allowed_media_types if t != media_type
     ]
@@ -290,7 +299,7 @@ def save_review_htmls(all_media_x):
         jinja_default_settings["LINKED_DATA"] = {
             "@context": "http://schema.org",
             "@type": LINKED_DATA_type,
-            "name": "%s Review: %s" % (media_type.capitalize(), a_media["title"]),
+            "name": "%s Review: %s" % (media_type_caps, a_media["title"]),
             "description": a_media["reviewTitle"],
             "date": a_media["reviewDate"].strftime("%Y-%m-%d"),
             "aggregateRating": {
@@ -298,7 +307,7 @@ def save_review_htmls(all_media_x):
                 "bestRating": "5",
                 "ratingValue": "%s" % a_media["rating"]
             },
-            "reviewBody": a_media["review"],
+            "reviewBody": re.sub("<[^<]+?>", "", a_media["review"]),
             "genre": a_media["genres"]
         }
         if media_type == "tv-series":
