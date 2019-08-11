@@ -290,34 +290,37 @@ def save_review_htmls(all_media_x):
 
         # prepare the linked data for rendering
         if media_type == "movie":
-            LINKED_DATA_type = "Movie"
+            item_reviewed_type = "Movie"
         elif media_type == "tv-series":
-            LINKED_DATA_type = "TVSeries"
+            item_reviewed_type = "TVSeries"
         elif media_type == "book":
-            LINKED_DATA_type = "Book"
+            item_reviewed_type = "Book"
 
         jinja_default_settings["LINKED_DATA"] = {
             "@context": "http://schema.org",
-            "@type": LINKED_DATA_type,
-            "name": "%s Review: %s" % (media_type_caps, a_media["title"]),
-            "description": a_media["reviewTitle"],
-            "date": a_media["reviewDate"].strftime("%Y-%m-%d"),
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "bestRating": "5",
-                "ratingValue": "%s" % a_media["rating"]
+            "@type": "Review",
+            "itemReviewed": {
+                "@type": item_reviewed_type,
+                "name": a_media["title"],
+                "genre": a_media["genres"]
             },
-            "reviewBody": re.sub("<[^<]+?>", "", a_media["review"]),
-            "genre": a_media["genres"]
+            "description": a_media["reviewTitle"],
+            "datePublished": a_media["reviewDate"].strftime("%Y-%m-%d"),
+            "reviewRating": {
+                "@type": "Rating",
+                "bestRating": 5,
+                "ratingValue": a_media["rating"]
+            },
+            "reviewBody": re.sub("<[^<]+?>", "", a_media["review"])
         }
         if media_type == "tv-series":
-            jinja_default_settings["LINKED_DATA"]["containsSeason"] = {
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["containsSeason"] = {
                 "@type": "TVSeason",
                 "name": "Season %s" % (a_media["season"])
             }
         elif media_type == "book":
-            jinja_default_settings["LINKED_DATA"]["isbn"] = a_media["isbn"]
-            jinja_default_settings["LINKED_DATA"]["author"] = a_media["author"]
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["isbn"] = a_media["isbn"]
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["author"] = a_media["author"]
 
         jinja_default_settings["output_file"] = "%s-reviews/%s/index.html" % (
             media_type, a_media["id"]
