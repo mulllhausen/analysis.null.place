@@ -127,18 +127,6 @@ PLUGINS = [
     'media-reviews'
 ]
 
-# these properties can be overwridden in each template
-LINKED_DATA = {
-    '@context': 'http://schema.org',
-    '@type': 'WebPage',
-    'url': '',
-    'name': SITENAME,
-    'image': '',
-    'description': BLOG_DESCRIPTION,
-#    'datePublished': ' ',
-    'inLanguage': 'English'
-}
-
 # file paths relative to the output dir
 YUICOMPRESSOR_SKIP = [
     '/sw.js' # skip this file because yuicompressor cannot handle es6
