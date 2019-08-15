@@ -249,8 +249,9 @@ function getMediaHTML(mediaData) {
     var review = '';
     if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
     else review = loadReviewButton;
-    var imgSrc = siteGlobals.siteURL + '/img/' + siteGlobals.mediaType +
-    '-thumbnail-' + mediaID + '.jpg?hash=' + mediaData['thumbnailHash'];
+    var imgSrc = siteGlobals.siteURL + '/img/' + generateThumbnailBasename(
+        siteGlobals.mediaType, mediaID, 'thumb'
+    ) + '.jpg?hash=' + mediaData.thumbnailHash;
     var titleLink = 'https://';
     switch (siteGlobals.mediaType) {
         case 'book':
@@ -287,6 +288,19 @@ function getMediaHTML(mediaData) {
         '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +
         '<div class="review-text">' + review + '</div>' +
     '</div>';
+}
+
+function generateThumbnailBasename(mediaType, aMedia, state) {
+    // keep this function in sync with generate_thumbnail_basename in
+    // themes/thematrix/plugins/media-reviews/grunt.py
+    switch (state) {
+        case 'original':
+        case 'larger':
+        case 'thumb':
+            return mediaType + what + aMedia.id;
+        default:
+            throw 'bad state';
+    }
 }
 
 function loadFullReview(e) {

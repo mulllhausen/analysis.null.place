@@ -20,7 +20,6 @@ def media_reviews(pelican_obj):
         grunt.media_type = media_type
         grunt.meta_img_preloads = [] # reset
         grunt.meta_jsons = [] # reset
-        grunt.all_data = [] # reset
         required_fields = grunt.get_validation_fields()
 
         # validation
@@ -40,8 +39,9 @@ def media_reviews(pelican_obj):
 
         if any_downloads_done:
             # resize thumbnails
-            grunt.desired_width = 100 # px
-            grunt.resize_thumbnails(all_media_x) 
+            grunt.desired_width_thumbnail = 100 # px
+            grunt.desired_width_larger = 200 # px
+            all_media_x = grunt.resize_thumbnails(all_media_x)
 
             grunt.delete_original_size_thumbnails(all_media_x)
 
@@ -61,19 +61,20 @@ def media_reviews(pelican_obj):
         # this is just a list of <media> titles and years - used for searching
         grunt.save_search_index(all_media_x)
 
-        # create all html review pages using the media_review.html template
-        grunt.save_review_htmls(all_media_x)
-
+        # save data for use in all templates later
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = {
             "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
             "jsons": ",".join(sorted(grunt.meta_jsons)),
             "all_data": sorted(
-                [a_media for a_media in grunt.all_data],
+                [a_media for a_media in all_media_x],
                 key = lambda a_media: (a_media["id"])
             ),
             "latest_review": max(all_media_x, key = lambda x: x["reviewDate"])\
             ["reviewDate"].strftime("%Y-%m-%d %H:%M:%S %z")
         }
+
+        # create all html review pages using the media_review.html template
+        grunt.save_review_htmls(all_media_x)
 
 def register():
     # once QS_LINK exists:

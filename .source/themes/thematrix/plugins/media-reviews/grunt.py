@@ -157,7 +157,6 @@ def get_file_hash(filename):
 # too large
 meta_img_preloads = []
 meta_jsons = []
-all_data = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
@@ -189,18 +188,24 @@ def generate_unique_id(a_media):
         # without spaces
         return re.sub(
             r"[^a-z0-9]*", "", (
-                "%s%s%s" % (a_media["author"], a_media["title"], a_media["year"])
+                "%s%s%s" % (
+                    a_media["author"], a_media["title"], a_media["year"]
+                )
             ).lower()
         )
 
-def generate_thumbnail_basename(a_media, original_size):
-    return "%s-thumbnail-%s%s.jpg" % (
-        media_type, a_media["id"], "-originalsize" if original_size else ""
-    )
+allowed_states = ("original", "larger", "thumb")
+def generate_thumbnail_basename(a_media, state):
+    if state not in allowed_states:
+        raise ValueError(
+            "only the following states are allowed: %s" % (
+                ", ".join(allowed_states)
+            )
+        )
+    return "%s-%s-%s.jpg" % (media_type, state, a_media["id"])
 
 def save_list_and_individual_review_jsons(all_media_x):
-    global meta_img_preloads, meta_jsons, all_data
-    original_size = False
+    global meta_img_preloads, meta_jsons
     all_media_listfile = [] # init
 
     # fields for the list json files
@@ -211,17 +216,19 @@ def save_list_and_individual_review_jsons(all_media_x):
         key = lambda a_media: (a_media["reviewDate"], a_media["title"])
     )
     for a_media in all_media_x:
-        all_data.append(a_media)
-        thumbnail_basename = generate_thumbnail_basename(a_media, original_size)
+        thumbnail_basename = generate_thumbnail_basename(a_media, "thumb")
         a_media["thumbnailHash"] = get_file_hash(
             "%s/img/%s" % (content_path, thumbnail_basename)
         )
         meta_img_preloads.append(thumbnail_basename)
 
-        json_review_file_basename = "%s-review-%s.json" % (media_type, a_media["id"])
+        json_review_file_basename = "%s-review-%s.json" % (
+            media_type, a_media["id"]
+        )
         meta_jsons.append(json_review_file_basename)
-        json_review_file = "%s/json/%s" % (content_path, json_review_file_basename)
-
+        json_review_file = "%s/json/%s" % (
+            content_path, json_review_file_basename
+        )
         # save the json review to the content (not output) dir so that QS_LINK
         # can read it and get its hash
         with open(json_review_file, "w") as f:
@@ -266,8 +273,8 @@ def save_review_htmls(all_media_x):
     "read" if media_type == "book" else "watched"
 
     for a_media in all_media_x:
-        a_media["thumbnail_on_disk"] = "/img/%s" % (
-            generate_thumbnail_basename(a_media, original_size = False)
+        a_media["larger_image_on_disk"] = "/img/%s" % (
+            generate_thumbnail_basename(a_media, "larger")
         )
         a_media["external_link_url"] = "https://"
         if media_type == "book":
@@ -314,13 +321,17 @@ def save_review_htmls(all_media_x):
             "reviewBody": re.sub("<[^<]+?>", "", a_media["review"])
         }
         if media_type == "tv-series":
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["containsSeason"] = {
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
+            ["containsSeason"] = {
                 "@type": "TVSeason",
                 "name": "Season %s" % (a_media["season"])
             }
         elif media_type == "book":
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["isbn"] = a_media["isbn"]
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"]["author"] = a_media["author"]
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
+            ["isbn"] = a_media["isbn"]
+
+            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
+            ["author"] = a_media["author"]
 
         jinja_default_settings["output_file"] = "%s-reviews/%s/index.html" % (
             media_type, a_media["id"]
@@ -398,34 +409,44 @@ def generate_search_item(a_media):
 def add_missing_data(all_media_x):
     for a_media in all_media_x:
         a_media["id"] = generate_unique_id(a_media)
-        small_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = False
-        )
+        img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
         try:
             a_media["thumbnailHash"] = get_file_hash(
-                "%s/img/%s" % (content_path, small_thumbnail)
+                "%s/img/%s" % (content_path, img_thumbnail_name)
             )
-        except OSError as e:
-            if e.errno != errno.EEXIST:
+        except IOError as e:
+            if e.errno != errno.ENOENT:
                 raise
 
             # img file does not exist. no worries - we will download it later
             pass
+
+        for img_size in ["thumb", "larger"]:
+            if (
+                ("%s_width" % img_size) in a_media
+                and ("%s_height" % img_size) in a_media
+            ):
+                # we already have the dimensions for this size
+                continue
+
+            img_name = generate_thumbnail_basename(a_media, img_size)
+            img = PIL.Image.open("%s/img/%s" % (content_path, img_name))
+            (a_media["%s_width" % img_size], a_media["%s_height" % img_size]) = \
+            img.size
 
     return all_media_x
 
 def download_all(all_media_x):
     any_downloads_done = False
     for a_media in all_media_x:
-        small_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = False
-        )
-        if os.path.isfile("%s/img/%s" % (content_path, small_thumbnail)):
-            continue # we already have this file
+        img_larger_name = generate_thumbnail_basename(a_media, "larger")
+        img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
+        if (
+            os.path.isfile("%s/img/%s" % (content_path, img_larger_name))
+            and os.path.isfile("%s/img/%s" % (content_path, img_thumbnail_name))
+        ):
+            continue # we already have both sizes of this file
 
-        original_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = True
-        )
         response = requests.get(a_media["thumbnail"])
         if not response.ok:
             raise IOError(
@@ -434,9 +455,10 @@ def download_all(all_media_x):
                 )
             )
 
-        # save the media search index to the content (not output) dir so that
-        # QS_LINK can read it and get its hash
-        with open("%s/img/%s" % (content_path, original_thumbnail), "wb") as f:
+        # save the thumbnail to the content (not output) dir so that QS_LINK can
+        # read it and get its hash
+        img_original_name = generate_thumbnail_basename(a_media, "original")
+        with open("%s/img/%s" % (content_path, img_original_name), "wb") as f:
             for data in response.iter_content(1024):
                 if not data:
                     break
@@ -446,38 +468,74 @@ def download_all(all_media_x):
 
     return any_downloads_done
 
-desired_width = 0 # px
+desired_width_thumbnail = 0 # init (px)
+desired_width_larger = 0 # init (px)
 def resize_thumbnails(all_media_x):
-    if desired_width == 0:
-        raise ValueError("the desired image width cannot be 0px")
-    
+    if desired_width_thumbnail == 0:
+        raise ValueError("the desired thumbnail width cannot be 0px")
+
+    if desired_width_larger == 0:
+        raise ValueError("the desired larger image width cannot be 0px")
+
     for a_media in all_media_x:
-        original_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = True
-        )
+        img_original_name = generate_thumbnail_basename(a_media, "original")
         try:
-            img = PIL.Image.open("%s/img/%s" % (content_path, original_thumbnail))
-        except OSError as e:
-            if e.errno != errno.EEXIST:
+            img_original = PIL.Image.open(
+                "%s/img/%s" % (content_path, img_original_name)
+            )
+        except IOError as e:
+            if e.errno == errno.ENOENT:
                 # the original of this image is not present, so it must not need
                 # resizing
                 continue
-        (original_width, original_height) = img.size
-        width_percent = desired_width / float(original_width)
-        desired_height = int(float(original_height) * float(width_percent))
-        img = img.resize((desired_width, desired_height), PIL.Image.ANTIALIAS)
-        resized_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = False
+
+        (original_width, original_height) = img_original.size
+        print_img_size_warning_message(
+            original_width, original_height, a_media["title"]
         )
-        img.save("%s/img/%s" % (content_path, resized_thumbnail))
+        for img_size in ["thumb", "larger"]:
+            # resize down to create a thumbnail
+            a_media = calculate_new_img_sizes(
+                original_width, original_height, desired_width_thumbnail,
+                a_media, img_size
+            )
+            save_resized_image(img_original, a_media, img_size)
+
+    return all_media_x
+
+def calculate_new_img_sizes(
+    original_width, original_height, desired_width, a_media, what
+):
+    width_percent = desired_width / float(original_width)
+    desired_height = int(float(original_height) * float(width_percent))
+    a_media["%s_width" % what] = desired_width
+    a_media["%s_height" % what] = desired_height
+    return a_media
+
+def save_resized_image(img, a_media, what):
+    new_img = img.resize(
+        (a_media["%s_width" % what], a_media["%s_height" % what]),
+        PIL.Image.ANTIALIAS
+    )
+    img_name = generate_thumbnail_basename(a_media, what)
+    new_img.save("%s/img/%s" % (content_path, img_name))
+
+def print_img_size_warning_message(original_width, original_height, title):
+    if original_width >= desired_width_larger: # ok
+        return
+
+    print (
+        "WARNING: the original size image for %s \"%s\" has width %s"
+        " - i.e. it is smaller than %spx" % (
+            media_type, title, original_width, desired_width_larger
+        )
+    )
 
 def delete_original_size_thumbnails(all_media_x):
     for a_media in all_media_x:
-        original_thumbnail = generate_thumbnail_basename(
-            a_media, original_size = True
-        )
+        original_img = generate_thumbnail_basename(a_media, "original")
         try:
-            os.remove("%s/img/%s" % (content_path, original_thumbnail))
+            os.remove("%s/img/%s" % (content_path, original_img))
         except OSError as e:
-            if e.errno != errno.EEXIST:
+            if e.errno != errno.ENOENT:
                 raise
