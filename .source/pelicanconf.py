@@ -6,6 +6,8 @@ import time
 AUTHOR = u'Peter Miller'
 BLOG_FIRST_PUBLISHED_DATE = '2018-04-17'
 SITENAME = u'analysis'
+SITE_HOSTNAME = 'localhost'
+SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
 SITENAME_ASCIIART = r"""
 !                    _           _      
 !                   | |         (_)     

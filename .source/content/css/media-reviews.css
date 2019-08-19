@@ -1,7 +1,6 @@
 /* begin initially hidden section */
 #xOfYMediaCount,
-#noMediaCount,
-#showAllMedia {/*button*/
+#noMediaCount {/*button*/
     display: none;
 }
 /* end initially hidden section */
@@ -74,6 +73,10 @@
     margin: 20px 0 20px 0;
     overflow: hidden;/*border outside floats*/
     background-color: #0b0b0b;
+}
+
+.media.pinned {
+    border: 1px solid #7db904;/*green*/
 }
 
 .media img {
