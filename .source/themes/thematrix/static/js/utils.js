@@ -496,9 +496,11 @@ function Retrieve(k) {
     }
 }
 
-// when debounceType = 'start' - trigger once on the first event and only allow again after the wait period ends
-// when debounceType = 'end' - trigger after the wait period
-// when debounceType = 'both' - trigger on the first event and at the end of the wait period
+// - when debounceType = 'start' - trigger once on the first event and only
+// allow again after the wait period ends
+// - when debounceType = 'end' - trigger after the wait period
+// - when debounceType = 'both' - trigger on the first event and at the end of
+// the wait period
 function debounce(func, wait, debounceType) {
     // this function is called immediately from within the event handler to
     // initialise a debounce event function
@@ -532,10 +534,15 @@ function debounce(func, wait, debounceType) {
     };
 }
 
+function generateCleanURL(pathPlus) {
+    if (pathPlus[0] != '/') pathPlus = '/' + pathPlus;
+    return siteGlobals.siteURL + pathPlus;
+}
+
 // events for all pages
 
 if (!inArray(siteGlobals.siteURL, window.location.origin)) {
-    window.location.href = siteGlobals.siteURL + window.location.pathname;
+    window.location.href = generateCleanURL(window.location.pathname);
 }
 
 initialDeviceType = getDeviceType(); // init global
