@@ -251,15 +251,6 @@ def save_list_and_individual_review_jsons(all_media_x):
 def save_review_htmls(all_media_x):
     jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE"] = media_type
 
-    if media_type == "movie":
-        media_type_caps = "Movie"
-    elif media_type == "tv-series":
-        media_type_caps = "TV-Series"
-    elif media_type == "book":
-        media_type_caps = "Book"
-    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE_CAPS"] = \
-    media_type_caps
-
     jinja_default_settings["MEDIA_REVIEWS"]["NOT_MEDIA_TYPES"] = [
         plural(t) for t in allowed_media_types if t != media_type
     ]
