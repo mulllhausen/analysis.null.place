@@ -1,4 +1,4 @@
-var latestCache = '2019-08-19_09:49:48';
+var latestCache = '2019-08-22_22:12:36';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -100,6 +100,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-fightclub1999.jpg?hash=7ipBk9',
     'https://analysis.null.place/img/movie-thumb-freddygotfingered2001.jpg?hash=fdMrI6',
     'https://analysis.null.place/img/movie-thumb-greenbook2019.jpg?hash=F_qF0N',
+    'https://analysis.null.place/img/movie-thumb-hellolovegoodbye2019.jpg?hash=04Vy6e',
     'https://analysis.null.place/img/movie-thumb-inglouriousbasterds2009.jpg?hash=GD6oJ_',
     'https://analysis.null.place/img/movie-thumb-limitless2011.jpg?hash=y9QKXN',
     'https://analysis.null.place/img/movie-thumb-lockstockandtwosmokingbarrels1998.jpg?hash=YnLVat',
@@ -137,6 +138,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=dmhcrB',
     'https://analysis.null.place/json/movie-review-freddygotfingered2001.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
+    'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
     'https://analysis.null.place/json/movie-review-inglouriousbasterds2009.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-limitless2011.json?hash=jPLrQH',
     'https://analysis.null.place/json/movie-review-lockstockandtwosmokingbarrels1998.json?hash=poY45m',
@@ -164,8 +166,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movies-init-list.json?hash=7cqpjE',
-    'https://analysis.null.place/json/movies-list.json?hash=sd3_Jw',
-    'https://analysis.null.place/json/movies-search-index.json?hash=CPMpks',
+    'https://analysis.null.place/json/movies-list.json?hash=kbqAt4',
+    'https://analysis.null.place/json/movies-search-index.json?hash=iOSjhQ',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
@@ -202,6 +204,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/movie-reviews/freddygotfingered2001/index.html',
     'https://analysis.null.place/movie-reviews/greenbook2019/',
     'https://analysis.null.place/movie-reviews/greenbook2019/index.html',
+    'https://analysis.null.place/movie-reviews/hellolovegoodbye2019/',
+    'https://analysis.null.place/movie-reviews/hellolovegoodbye2019/index.html',
     'https://analysis.null.place/movie-reviews/inglouriousbasterds2009/',
     'https://analysis.null.place/movie-reviews/inglouriousbasterds2009/index.html',
     'https://analysis.null.place/movie-reviews/limitless2011/',

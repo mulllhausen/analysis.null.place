@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 07 Jun 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -147,6 +147,15 @@
             <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/movie-review/greenbook2019/</guid>
+        </item>
+        <item>
+            <title>movie review: Hello, Love, Goodbye</title>
+            <link>https://analysis.null.place/movie-reviews/hellolovegoodbye2019/</link>
+            <description>Romance on the go</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Thu, 22 Aug 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-08-22:/movie-review/hellolovegoodbye2019/</guid>
         </item>
         <item>
             <title>movie review: Inglourious Basterds</title>
@@ -472,6 +481,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

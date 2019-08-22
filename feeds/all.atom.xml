@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-06-07T00:00:00+09:30</updated>
+        <updated>2019-08-22T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -177,6 +177,17 @@
         </author>
         <id>tag:analysis.null.place,2019-04-02:/movie-review/greenbook2019</id>
         <summary type="html">Eye opening</summary>
+    </entry>
+    <entry>
+        <title>movie review: Hello, Love, Goodbye</title>
+        <link>https://analysis.null.place/movie-reviews/hellolovegoodbye2019/</link>
+        <published>2019-08-22T00:00:00+09:30</published>
+        <updated>2019-08-22T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-08-22:/movie-review/hellolovegoodbye2019</id>
+        <summary type="html">Romance on the go</summary>
     </entry>
     <entry>
         <title>movie review: Inglourious Basterds</title>
@@ -574,5 +585,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-07-22T00:00:00+09:30</updated>
+    <updated>2019-08-22T00:00:00+09:30</updated>
 </feed>
