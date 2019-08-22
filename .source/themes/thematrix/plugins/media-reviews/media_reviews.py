@@ -77,5 +77,5 @@ def media_reviews(pelican_obj):
         grunt.save_review_htmls(all_media_x)
 
 def register():
-    # once QS_LINK exists:
-    pelican.signals.article_generator_init.connect(media_reviews)
+    # before QS_LINK, so that QS_LINK can find all files this plugin generates
+    pelican.signals.initialized.connect(media_reviews)
