@@ -37,7 +37,7 @@
             {% for a_media in media_data['all_data'] %}
             {% set feed.max_date = a_media['reviewDate'] if a_media['reviewDate'] > feed.max_date else feed.max_date %}
     <entry>
-        <title>{{ media_data['caps_name'] }} Review: {{ a_media['title'] }}</title>
+        <title>{{ media_data['caps_name'] }} Review: {{ a_media['title'] }}{% if media_type == 'tv-series' %} Season {{ a_media['season'] }}{% endif %}</title>
         <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</link>
         <published>{{ a_media['reviewDate'].isoformat() }}</published>
         <updated>{{ a_media['reviewDate'].isoformat() }}</updated>
