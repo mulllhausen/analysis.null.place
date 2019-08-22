@@ -273,8 +273,12 @@ def save_review_htmls(all_media_x):
     "read" if media_type == "book" else "watched"
 
     for a_media in all_media_x:
-        a_media["larger_image_on_disk"] = "/img/%s" % (
-            generate_thumbnail_basename(a_media, "larger")
+        img_larger_name = generate_thumbnail_basename(a_media, "larger")
+        img_larger_hash = get_file_hash(
+            "%s/img/%s" % (content_path, img_larger_name)
+        )
+        a_media["larger_image_url"] = "%s/img/%s?hash=%s" % (
+            jinja_default_settings["SITEURL"], img_larger_name, img_larger_hash
         )
         a_media["external_link_url"] = "https://"
         if media_type == "book":
@@ -311,6 +315,7 @@ def save_review_htmls(all_media_x):
                 "name": a_media["title"],
                 "genre": a_media["genres"]
             },
+            "image": a_media["larger_image_url"],
             "description": a_media["reviewTitle"],
             "datePublished": a_media["reviewDate"].strftime("%Y-%m-%d"),
             "reviewRating": {
@@ -430,9 +435,18 @@ def add_missing_data(all_media_x):
                 continue
 
             img_name = generate_thumbnail_basename(a_media, img_size)
-            img = PIL.Image.open("%s/img/%s" % (content_path, img_name))
-            (a_media["%s_width" % img_size], a_media["%s_height" % img_size]) = \
-            img.size
+            try:
+                img = PIL.Image.open("%s/img/%s" % (content_path, img_name))
+                (
+                    a_media["%s_width" % img_size],
+                    a_media["%s_height" % img_size]
+                ) = img.size
+            except IOError as e:
+                if e.errno != errno.ENOENT:
+                    raise
+
+                # img file does not exist. no worries - we will download it later
+                pass
 
     return all_media_x
 
@@ -494,10 +508,16 @@ def resize_thumbnails(all_media_x):
             original_width, original_height, a_media["title"]
         )
         for img_size in ["thumb", "larger"]:
-            # resize down to create a thumbnail
+            # resize down to create a thumbnail or larger image
+            if img_size == "thumb":
+                desired_width = desired_width_thumbnail
+            elif img_size == "larger":
+                desired_width = desired_width_larger
+            else:
+                raise ValueError("unknown img_size")
+
             a_media = calculate_new_img_sizes(
-                original_width, original_height, desired_width_thumbnail,
-                a_media, img_size
+                original_width, original_height, desired_width, a_media, img_size
             )
             save_resized_image(img_original, a_media, img_size)
 

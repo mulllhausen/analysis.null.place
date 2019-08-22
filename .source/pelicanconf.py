@@ -125,8 +125,12 @@ PLUGIN_PATHS = [THEME + '/plugins']
 PLUGINS = [
     'static-file-merge',
     'jinja2content_simple',
-    'querystring-cache', # must come before 'media-reviews'
-    'media-reviews'
+
+    # must come before 'querystring-cache', so that 'querystring-cache' can find
+    # all files this plugin generates
+    'media-reviews',
+
+    'querystring-cache',
 ]
 
 # file paths relative to the output dir
