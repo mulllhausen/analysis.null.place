@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <title>{{ SITENAME }}</title>
+        {% block meta_custom %}{% endblock %}
 
         {# le styles (must come before all scripts) #}
         {% if include_stylesheets %}

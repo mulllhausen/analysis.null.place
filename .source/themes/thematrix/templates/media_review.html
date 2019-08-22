@@ -15,6 +15,15 @@
     {% set og_type = 'book' %}
 {% endif %}
 
+{% block meta_custom %}
+{#
+    we want the search engine to read the linked data on this page, but not to
+    execute the javascript redirect below because that page contains other
+    reivews in addition to this one
+#}
+<meta name="robots" content="index, nofollow"/>
+{% endblock %}
+
 {% block non_standard_css %}
 <style>
     html, body{
