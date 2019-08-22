@@ -34,7 +34,7 @@
                 {% for a_media in media_data['all_data'] %}
                 {% set channel.max_date = a_media['reviewDate'] if a_media['reviewDate'] > channel.max_date else channel.max_date %}
         <item>
-            <title>{{ media_data['src-list'] }} Review: {{ a_media['title'] }}</title>
+            <title>{{ media_data['caps_name'] }} Review: {{ a_media['title'] }}</title>
             <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</link>
             <description>{{ a_media['reviewTitle'] }}</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
