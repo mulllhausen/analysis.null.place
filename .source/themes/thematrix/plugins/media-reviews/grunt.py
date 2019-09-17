@@ -341,6 +341,15 @@ def save_review_htmls(all_media_x):
                 render(jinja_default_settings)
             )
 
+def save_iframe_htmls():
+    url = "%s/%s-reviews/" % (jinja_default_settings["SITEURL"], media_type)
+    script = "top.location.replace('%s' + window.location.hash);" % url
+    with open("%s/%s-reviews/redirect.html" % (output_path, media_type), "w") as f:
+        f.write(
+            jinja_environment.get_template("iframe_redirect.html").
+            render({'script': script})
+        )
+
 def get_listfile_fields():
     required_fields = [
         "rating", "title", "spoilers", "reviewTitle", "reviewHash", "year",

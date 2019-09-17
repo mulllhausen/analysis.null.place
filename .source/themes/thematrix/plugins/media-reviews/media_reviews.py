@@ -76,6 +76,9 @@ def media_reviews(pelican_obj):
         # create all html review pages using the media_review.html template
         grunt.save_review_htmls(all_media_x)
 
+        # create the iframe html pages that redirect back
+        grunt.save_iframe_htmls()
+
 def register():
     # before QS_LINK, so that QS_LINK can find all files this plugin generates
     pelican.signals.initialized.connect(media_reviews)

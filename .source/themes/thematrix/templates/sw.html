@@ -89,20 +89,20 @@ var mandatoryAssets = [
     {% endif %}
 
 {% endfor %}
-{% if MEDIA_REVIEWS %}
-    {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
-    // individual {{ media_type }} review pages
-        {% for a_media in media_data['all_data'] %}
-    '{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/',
-    '{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/index.html',
-        {% endfor %}
-
-    {% endfor %}
-{% endif %}
     // cookie warning notice
     '{{ SITEURL }}/cookie-notice/',
     '{{ SITEURL }}/cookie-notice/index.html'
 ];
+{% if MEDIA_REVIEWS %}
+var mediaReviewPages = [
+    {%- for (media_type, media_data) in MEDIA_REVIEWS.iteritems() -%}
+    '{{ media_type }}-reviews'
+        {%- if media_type != MEDIA_REVIEWS.keys()[-1] -%}
+        ,
+        {%- endif -%}
+    {%- endfor -%}
+];
+{% endif %}
 self.addEventListener('install', function (event) {
     self.skipWaiting();
     event.waitUntil(
@@ -123,6 +123,23 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+{% if MEDIA_REVIEWS %}
+    var urlObj = new URL(event.request.url);
+    var pathParts = urlObj.pathname.split('/');
+    if (
+        (pathParts.length > 2) &&
+        (pathParts[2] != '') &&
+        (mediaReviewPages.indexOf(pathParts[1]) != -1)
+    ) {
+        // a media review sub-page is being requested. redirect to the parent
+        urlObj.pathname = '/' + pathParts[1] + '/';
+        pathParts.shift(); // remove empty item
+        pathParts.shift(); // remove parent
+        if (pathParts[pathParts.length - 1] == '') pathParts.pop(); // remove empty item
+        urlObj.hash = '#!' + pathParts.join('/');
+        event.request.url = urlObj.toString();
+    }
+{% endif %}
     event.respondWith(
         caches.match(event.request).then(function (swResponse) {
             return (swResponse || fetch(event.request));
