@@ -55,7 +55,5 @@
 
 
 {% block non_standard_body %}
-<script>
-window.location.replace('{{ SITEURL }}/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}-reviews/#!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}');
-</script>
+<iframe src="{{ SITEURL }}/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}-reviews/redirect.html#!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}"></iframe>
 {% endblock %}
