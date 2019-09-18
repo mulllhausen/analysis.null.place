@@ -1,4 +1,4 @@
-var latestCache = '2019-08-23_00:16:00';
+var latestCache = '2019-09-18_09:50:52';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -181,112 +181,11 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/hex-trial-attempts.json?hash=sjiIF4',
     'https://analysis.null.place/json/unittest-bits.json?hash=m8SQwF',
 
-    // individual movie review pages
-    'https://analysis.null.place/movie-reviews/10000bc2008/',
-    'https://analysis.null.place/movie-reviews/10000bc2008/index.html',
-    'https://analysis.null.place/movie-reviews/aclockworkorange1971/',
-    'https://analysis.null.place/movie-reviews/aclockworkorange1971/index.html',
-    'https://analysis.null.place/movie-reviews/adrift2018/',
-    'https://analysis.null.place/movie-reviews/adrift2018/index.html',
-    'https://analysis.null.place/movie-reviews/birdbox2018/',
-    'https://analysis.null.place/movie-reviews/birdbox2018/index.html',
-    'https://analysis.null.place/movie-reviews/bladerunner1982/',
-    'https://analysis.null.place/movie-reviews/bladerunner1982/index.html',
-    'https://analysis.null.place/movie-reviews/darkcity1998/',
-    'https://analysis.null.place/movie-reviews/darkcity1998/index.html',
-    'https://analysis.null.place/movie-reviews/district92009/',
-    'https://analysis.null.place/movie-reviews/district92009/index.html',
-    'https://analysis.null.place/movie-reviews/eternalsunshineofthespotlessmind2004/',
-    'https://analysis.null.place/movie-reviews/eternalsunshineofthespotlessmind2004/index.html',
-    'https://analysis.null.place/movie-reviews/fightclub1999/',
-    'https://analysis.null.place/movie-reviews/fightclub1999/index.html',
-    'https://analysis.null.place/movie-reviews/freddygotfingered2001/',
-    'https://analysis.null.place/movie-reviews/freddygotfingered2001/index.html',
-    'https://analysis.null.place/movie-reviews/greenbook2019/',
-    'https://analysis.null.place/movie-reviews/greenbook2019/index.html',
-    'https://analysis.null.place/movie-reviews/hellolovegoodbye2019/',
-    'https://analysis.null.place/movie-reviews/hellolovegoodbye2019/index.html',
-    'https://analysis.null.place/movie-reviews/inglouriousbasterds2009/',
-    'https://analysis.null.place/movie-reviews/inglouriousbasterds2009/index.html',
-    'https://analysis.null.place/movie-reviews/limitless2011/',
-    'https://analysis.null.place/movie-reviews/limitless2011/index.html',
-    'https://analysis.null.place/movie-reviews/lockstockandtwosmokingbarrels1998/',
-    'https://analysis.null.place/movie-reviews/lockstockandtwosmokingbarrels1998/index.html',
-    'https://analysis.null.place/movie-reviews/loro2018/',
-    'https://analysis.null.place/movie-reviews/loro2018/index.html',
-    'https://analysis.null.place/movie-reviews/minorityreport2002/',
-    'https://analysis.null.place/movie-reviews/minorityreport2002/index.html',
-    'https://analysis.null.place/movie-reviews/missionimpossible6fallout2018/',
-    'https://analysis.null.place/movie-reviews/missionimpossible6fallout2018/index.html',
-    'https://analysis.null.place/movie-reviews/mollysgame2017/',
-    'https://analysis.null.place/movie-reviews/mollysgame2017/index.html',
-    'https://analysis.null.place/movie-reviews/montypythonandtheholygrail1975/',
-    'https://analysis.null.place/movie-reviews/montypythonandtheholygrail1975/index.html',
-    'https://analysis.null.place/movie-reviews/rebelwithoutacause1955/',
-    'https://analysis.null.place/movie-reviews/rebelwithoutacause1955/index.html',
-    'https://analysis.null.place/movie-reviews/requiemforadream2000/',
-    'https://analysis.null.place/movie-reviews/requiemforadream2000/index.html',
-    'https://analysis.null.place/movie-reviews/shoplifters2018/',
-    'https://analysis.null.place/movie-reviews/shoplifters2018/index.html',
-    'https://analysis.null.place/movie-reviews/statusupdate2018/',
-    'https://analysis.null.place/movie-reviews/statusupdate2018/index.html',
-    'https://analysis.null.place/movie-reviews/taken12008/',
-    'https://analysis.null.place/movie-reviews/taken12008/index.html',
-    'https://analysis.null.place/movie-reviews/thebeach2000/',
-    'https://analysis.null.place/movie-reviews/thebeach2000/index.html',
-    'https://analysis.null.place/movie-reviews/thebutterflyeffect2004/',
-    'https://analysis.null.place/movie-reviews/thebutterflyeffect2004/index.html',
-    'https://analysis.null.place/movie-reviews/thecurseoflallorona2019/',
-    'https://analysis.null.place/movie-reviews/thecurseoflallorona2019/index.html',
-    'https://analysis.null.place/movie-reviews/thedressmaker2015/',
-    'https://analysis.null.place/movie-reviews/thedressmaker2015/index.html',
-    'https://analysis.null.place/movie-reviews/thefounder2016/',
-    'https://analysis.null.place/movie-reviews/thefounder2016/index.html',
-    'https://analysis.null.place/movie-reviews/themanfromnowhere2010/',
-    'https://analysis.null.place/movie-reviews/themanfromnowhere2010/index.html',
-    'https://analysis.null.place/movie-reviews/themartian2015/',
-    'https://analysis.null.place/movie-reviews/themartian2015/index.html',
-    'https://analysis.null.place/movie-reviews/themask1994/',
-    'https://analysis.null.place/movie-reviews/themask1994/index.html',
-    'https://analysis.null.place/movie-reviews/thematinghabitsoftheearthboundhuman1999/',
-    'https://analysis.null.place/movie-reviews/thematinghabitsoftheearthboundhuman1999/index.html',
-    'https://analysis.null.place/movie-reviews/thematrix11999/',
-    'https://analysis.null.place/movie-reviews/thematrix11999/index.html',
-    'https://analysis.null.place/movie-reviews/themazerunner2014/',
-    'https://analysis.null.place/movie-reviews/themazerunner2014/index.html',
-    'https://analysis.null.place/movie-reviews/transcendence2014/',
-    'https://analysis.null.place/movie-reviews/transcendence2014/index.html',
-    'https://analysis.null.place/movie-reviews/upgrade2018/',
-    'https://analysis.null.place/movie-reviews/upgrade2018/index.html',
-
-    // individual book review pages
-    'https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/',
-    'https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/index.html',
-    'https://analysis.null.place/book-reviews/robertharrisimperium2006/',
-    'https://analysis.null.place/book-reviews/robertharrisimperium2006/index.html',
-    'https://analysis.null.place/book-reviews/stanislawlemsolaris1961/',
-    'https://analysis.null.place/book-reviews/stanislawlemsolaris1961/index.html',
-    'https://analysis.null.place/book-reviews/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011/',
-    'https://analysis.null.place/book-reviews/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011/index.html',
-
-    // individual tv-series review pages
-    'https://analysis.null.place/tv-series-reviews/blackmirror12011/',
-    'https://analysis.null.place/tv-series-reviews/blackmirror12011/index.html',
-    'https://analysis.null.place/tv-series-reviews/blackmirror52019/',
-    'https://analysis.null.place/tv-series-reviews/blackmirror52019/index.html',
-    'https://analysis.null.place/tv-series-reviews/deadpixels12019/',
-    'https://analysis.null.place/tv-series-reviews/deadpixels12019/index.html',
-    'https://analysis.null.place/tv-series-reviews/maniac12018/',
-    'https://analysis.null.place/tv-series-reviews/maniac12018/index.html',
-    'https://analysis.null.place/tv-series-reviews/nightflyers12018/',
-    'https://analysis.null.place/tv-series-reviews/nightflyers12018/index.html',
-    'https://analysis.null.place/tv-series-reviews/thewalkingdead12010/',
-    'https://analysis.null.place/tv-series-reviews/thewalkingdead12010/index.html',
-
     // cookie warning notice
     'https://analysis.null.place/cookie-notice/',
     'https://analysis.null.place/cookie-notice/index.html'
 ];
+var mediaReviewPages = ['movie-reviews','book-reviews','tv-series-reviews'];
 self.addEventListener('install', function (event) {
     self.skipWaiting();
     event.waitUntil(
@@ -307,6 +206,21 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    var urlObj = new URL(event.request.url);
+    var pathParts = urlObj.pathname.split('/');
+    if (
+        (pathParts.length > 2) &&
+        (pathParts[2] != '') &&
+        (mediaReviewPages.indexOf(pathParts[1]) != -1)
+    ) {
+        // a media review sub-page is being requested. redirect to the parent
+        urlObj.pathname = '/' + pathParts[1] + '/';
+        pathParts.shift(); // remove empty item
+        pathParts.shift(); // remove parent
+        if (pathParts[pathParts.length - 1] == '') pathParts.pop(); // remove empty item
+        urlObj.hash = '#!' + pathParts.join('/');
+        event.request.url = urlObj.toString();
+    }
     event.respondWith(
         caches.match(event.request).then(function (swResponse) {
             return (swResponse || fetch(event.request));
