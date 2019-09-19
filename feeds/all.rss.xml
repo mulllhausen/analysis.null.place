@@ -10,7 +10,7 @@
             <description>My book reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 07 Jun 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-reviews/</guid>
             <category>book</category>
             <category>reviews</category>
@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -374,6 +374,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-02-13:/movie-review/themazerunner2014/</guid>
         </item>
         <item>
+            <title>Movie Review: The Pianist</title>
+            <link>https://analysis.null.place/movie-reviews/thepianist2002/</link>
+            <description>Nazi brutality vs the perfection of Chopin</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/movie-review/thepianist2002/</guid>
+        </item>
+        <item>
             <title>Movie Review: Transcendence</title>
             <link>https://analysis.null.place/movie-reviews/transcendence2014/</link>
             <description>N/A</description>
@@ -392,6 +401,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-review/upgrade2018/</guid>
         </item>
         <item>
+            <title>Movie Review: What We Did on Our Holiday</title>
+            <link>https://analysis.null.place/movie-reviews/whatwedidonourholiday2014/</link>
+            <description>"Dysfunctional" family goes to visit granddad</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/movie-review/whatwedidonourholiday2014/</guid>
+        </item>
+        <item>
             <title>Book Review: The Neuroscientist Who Lost Her Mind</title>
             <link>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</link>
             <description>N/A</description>
@@ -405,9 +423,9 @@
             <link>https://analysis.null.place/book-reviews/robertharrisimperium2006/</link>
             <description>Ancient Roman political intruige</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 29 Mar 2019 00:00:00 +1030</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-review/robertharrisimperium2006/</guid>
+            <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/book-review/robertharrisimperium2006/</guid>
         </item>
         <item>
             <title>Book Review: Solaris</title>
@@ -481,6 +499,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

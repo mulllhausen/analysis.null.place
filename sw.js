@@ -1,4 +1,4 @@
-var latestCache = '2019-09-19_09:38:56';
+var latestCache = '2019-09-20_01:19:16';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -60,12 +60,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
     'https://analysis.null.place/img/book-thumb-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.jpg?hash=TN51ee',
     'https://analysis.null.place/json/book-review-barbaraklipskatheneuroscientistwholosthermind2018.json?hash=poY45m',
-    'https://analysis.null.place/json/book-review-robertharrisimperium2006.json?hash=tPAeC6',
+    'https://analysis.null.place/json/book-review-robertharrisimperium2006.json?hash=SKdAqQ',
     'https://analysis.null.place/json/book-review-stanislawlemsolaris1961.json?hash=R-Q9pX',
     'https://analysis.null.place/json/book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json?hash=eWODmr',
-    'https://analysis.null.place/json/books-init-list.json?hash=JFAvgg',
-    'https://analysis.null.place/json/books-list.json?hash=7REJDT',
-    'https://analysis.null.place/json/books-search-index.json?hash=F6OrU8',
+    'https://analysis.null.place/json/books-init-list.json?hash=aILK5I',
+    'https://analysis.null.place/json/books-list.json?hash=9NRvFx',
+    'https://analysis.null.place/json/books-search-index.json?hash=qEoiSs',
 
     // assets for the "tv-series reviews" article
     'https://analysis.null.place/tv-series-reviews/',
@@ -125,8 +125,10 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-thematinghabitsoftheearthboundhuman1999.jpg?hash=feI1my',
     'https://analysis.null.place/img/movie-thumb-thematrix11999.jpg?hash=pT6vFF',
     'https://analysis.null.place/img/movie-thumb-themazerunner2014.jpg?hash=n040c2',
+    'https://analysis.null.place/img/movie-thumb-thepianist2002.jpg?hash=YjLFUh',
     'https://analysis.null.place/img/movie-thumb-transcendence2014.jpg?hash=aF2iIv',
     'https://analysis.null.place/img/movie-thumb-upgrade2018.jpg?hash=L15BXr',
+    'https://analysis.null.place/img/movie-thumb-whatwedidonourholiday2014.jpg?hash=9RiAUQ',
     'https://analysis.null.place/json/movie-review-10000bc2008.json?hash=4ANHFg',
     'https://analysis.null.place/json/movie-review-aclockworkorange1971.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-adrift2018.json?hash=qRem2E',
@@ -163,11 +165,13 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-thematinghabitsoftheearthboundhuman1999.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-thematrix11999.json?hash=60g6wj',
     'https://analysis.null.place/json/movie-review-themazerunner2014.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-thepianist2002.json?hash=nNdEBS',
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
+    'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
     'https://analysis.null.place/json/movies-init-list.json?hash=7cqpjE',
-    'https://analysis.null.place/json/movies-list.json?hash=kbqAt4',
-    'https://analysis.null.place/json/movies-search-index.json?hash=iOSjhQ',
+    'https://analysis.null.place/json/movies-list.json?hash=PetDE5',
+    'https://analysis.null.place/json/movies-search-index.json?hash=4RUC6Y',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',

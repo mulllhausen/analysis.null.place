@@ -8,7 +8,7 @@
         <title>book reviews</title>
         <link href="https://analysis.null.place/book-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-06-07T00:00:00+09:30</updated>
+        <updated>2019-09-20T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-08-22T00:00:00+09:30</updated>
+        <updated>2019-09-20T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -454,6 +454,17 @@
         <summary type="html">N/A</summary>
     </entry>
     <entry>
+        <title>Movie Review: The Pianist</title>
+        <link>https://analysis.null.place/movie-reviews/thepianist2002/</link>
+        <published>2019-09-20T00:00:00+09:30</published>
+        <updated>2019-09-20T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-20:/movie-review/thepianist2002</id>
+        <summary type="html">Nazi brutality vs the perfection of Chopin</summary>
+    </entry>
+    <entry>
         <title>Movie Review: Transcendence</title>
         <link>https://analysis.null.place/movie-reviews/transcendence2014/</link>
         <published>2019-02-13T00:00:00+10:30</published>
@@ -476,6 +487,17 @@
         <summary type="html">A great movie but it babies the viewer at the end</summary>
     </entry>
     <entry>
+        <title>Movie Review: What We Did on Our Holiday</title>
+        <link>https://analysis.null.place/movie-reviews/whatwedidonourholiday2014/</link>
+        <published>2019-09-20T00:00:00+09:30</published>
+        <updated>2019-09-20T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-20:/movie-review/whatwedidonourholiday2014</id>
+        <summary type="html">"Dysfunctional" family goes to visit granddad</summary>
+    </entry>
+    <entry>
         <title>Book Review: The Neuroscientist Who Lost Her Mind</title>
         <link>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</link>
         <published>2019-04-02T00:00:00+10:30</published>
@@ -489,12 +511,12 @@
     <entry>
         <title>Book Review: Imperium</title>
         <link>https://analysis.null.place/book-reviews/robertharrisimperium2006/</link>
-        <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-03-29T00:00:00+10:30</updated>
+        <published>2019-09-20T00:00:00+09:30</published>
+        <updated>2019-09-20T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-03-29:/book-review/robertharrisimperium2006</id>
+        <id>tag:analysis.null.place,2019-09-20:/book-review/robertharrisimperium2006</id>
         <summary type="html">Ancient Roman political intruige</summary>
     </entry>
     <entry>
@@ -585,5 +607,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-08-22T00:00:00+09:30</updated>
+    <updated>2019-09-20T00:00:00+09:30</updated>
 </feed>
