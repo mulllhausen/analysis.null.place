@@ -41,8 +41,8 @@
 {% endblock %}
 
 {% block og_type %}{{ og_type }}{% endblock %}
-{% block og_title %}{{ MEDIA_REVIEWS[MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"]]["caps_name"] }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] }}{% if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" %} Season {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["season"] }}{% endif %}{% endblock %}
-{% block og_description %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] }}/5&#9733; {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"] }}{% endblock %}
+{% block og_title %}{{ MEDIA_REVIEWS[MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"]]["caps_name"] }} Review: {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["title"] | e }}{% if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" %} Season {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["season"] }}{% endif %}{% endblock %}
+{% block og_description %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["rating"] }}/5&#9733; {{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["reviewTitle"]| e }}{% endblock %}
 {% block og_image %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["larger_image_url"] }}{% endblock %}
 
 {% block og_image_width %}{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["larger_width"] }}{% endblock %}
@@ -51,7 +51,7 @@
     {%- if MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "movie" -%}
     {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "tv-series" -%}
     {%- elif MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] == "book" -%}
-        <meta property="book:author" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["author"] }}"/>
+        <meta property="book:author" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["author"] | e }}"/>
         <meta property="book:isbn" content="{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["isbn"] }}"/>
     {%- endif -%}
 {% endblock %}
