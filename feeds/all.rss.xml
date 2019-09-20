@@ -10,7 +10,7 @@
             <description>My book reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-reviews/</guid>
             <category>book</category>
             <category>reviews</category>
@@ -412,16 +412,16 @@
         <item>
             <title>Book Review: The Neuroscientist Who Lost Her Mind</title>
             <link>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</link>
-            <description>N/A</description>
+            <description>Medical memoir</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +1030</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-review/barbaraklipskatheneuroscientistwholosthermind2018/</guid>
+            <pubDate>Sat, 21 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbaraklipskatheneuroscientistwholosthermind2018/</guid>
         </item>
         <item>
             <title>Book Review: Imperium</title>
             <link>https://analysis.null.place/book-reviews/robertharrisimperium2006/</link>
-            <description>Ancient Roman political intruige</description>
+            <description>Ancient Roman political intrigue</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
             <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
@@ -499,6 +499,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

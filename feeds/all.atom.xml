@@ -8,7 +8,7 @@
         <title>book reviews</title>
         <link href="https://analysis.null.place/book-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-09-20T00:00:00+09:30</updated>
+        <updated>2019-09-21T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -500,13 +500,13 @@
     <entry>
         <title>Book Review: The Neuroscientist Who Lost Her Mind</title>
         <link>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</link>
-        <published>2019-04-02T00:00:00+10:30</published>
-        <updated>2019-04-02T00:00:00+10:30</updated>
+        <published>2019-09-21T00:00:00+09:30</published>
+        <updated>2019-09-21T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/book-review/barbaraklipskatheneuroscientistwholosthermind2018</id>
-        <summary type="html">N/A</summary>
+        <id>tag:analysis.null.place,2019-09-21:/book-review/barbaraklipskatheneuroscientistwholosthermind2018</id>
+        <summary type="html">Medical memoir</summary>
     </entry>
     <entry>
         <title>Book Review: Imperium</title>
@@ -517,7 +517,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-09-20:/book-review/robertharrisimperium2006</id>
-        <summary type="html">Ancient Roman political intruige</summary>
+        <summary type="html">Ancient Roman political intrigue</summary>
     </entry>
     <entry>
         <title>Book Review: Solaris</title>
@@ -607,5 +607,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-09-20T00:00:00+09:30</updated>
+    <updated>2019-09-21T00:00:00+09:30</updated>
 </feed>
