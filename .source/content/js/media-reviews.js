@@ -69,17 +69,17 @@ function initMediaRendering() {
             // exit if already finished
             if ((initialMediaDataHTML != '') && (numTotalMedia != 0)) return;
 
+            var idInInitialList = false; // init
             // check if mediaID is in initialMediaData
             if ((initialMediaData.length != 0) && !lookedInInitialMediaData) {
                 lookedInInitialMediaData = true;
-                var foundAtI = null;
                 var pinned = true;
                 for (var i = 0; i < initialMediaData.length; i++) {
                     if (mediaID != getMediaID(initialMediaData[i])) continue;
-                    foundAtI = i;
                     initialMediaDataHTML = generateMediaHTML(
                         initialMediaData[i], pinned
                     );
+                    idInInitialList = true;
                     break;
                 }
                 if (initialMediaDataHTML == '') {
@@ -87,7 +87,9 @@ function initMediaRendering() {
                     // get it from the complete list
                     return;
                 }
-                initialMediaDataHTML += generateInitialMediaHTML(mediaID);
+                initialMediaDataHTML += generateInitialMediaHTML(
+                    mediaID, idInInitialList
+                );
                 numMediaShowing = initialMediaData.length; // global
                 loading('off');
                 archiveInFeedAds();
@@ -129,7 +131,10 @@ function initMediaRendering() {
                 var mediaData = completeMediaData[mediaIndex];
                 var pinned = true;
                 initialMediaDataHTML = generateMediaHTML(mediaData, pinned);
-                initialMediaDataHTML += generateInitialMediaHTML(mediaID);
+                var idInInitialList = false;
+                initialMediaDataHTML += generateInitialMediaHTML(
+                    mediaID, idInInitialList
+                );
                 loading('off');
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
@@ -282,12 +287,14 @@ function loading(status) {
     }
 }
 
-function generateInitialMediaHTML(mediaID) {
+function generateInitialMediaHTML(mediaID, idInInitialList) {
     var adOffset = 0;
     var firstPageSize = initialMediaData.length;
     if (mediaID != null) {
         adOffset++; // start after the first media review item
-        firstPageSize--; // first item was prepopulated - page size is 1 smaller
+
+        // first item was prepopulated - page size is 1 smaller
+        if (!idInInitialList) firstPageSize--;
     }
     var initialMediaDataHTML = '';
     var foundMediaIDI = false; // speed up checks
