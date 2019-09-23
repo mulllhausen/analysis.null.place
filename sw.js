@@ -1,4 +1,4 @@
-var latestCache = '2019-09-23_22:55:27';
+var latestCache = '2019-09-23_23:04:53';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
