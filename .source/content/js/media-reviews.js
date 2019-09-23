@@ -387,7 +387,11 @@ function generateThumbnailBasename(mediaType, mediaID, state) {
 }
 
 function loadFullReview(e) {
-    if (typeof e.target.className != 'string') return; // ignore svg classes
+    if (
+        e.target.tagName.toLowerCase() != 'button'
+        || typeof e.target.className != 'string'
+        || !inArray('load-review', e.target.className)
+    ) return;
 
     var mediaID = e.target.id.replace('load-', '');
     foreach(document.querySelectorAll('.media.pinned'), function(_, otherMediaEl) {
@@ -399,9 +403,6 @@ function loadFullReview(e) {
         window.history.replaceState(null, '', generateCleanURL(url));
     }
     else window.location.hash = '';
-
-    // if the review has already been loaded then exit
-    if (!inArray('load-review', e.target.className)) return;
 
     var mediaIndex = mediaID2Index(mediaID);
     if (completeMediaData[mediaIndex].hasOwnProperty('review')) {
