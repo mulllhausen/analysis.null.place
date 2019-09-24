@@ -1,4 +1,4 @@
-var latestCache = '2019-09-23_23:04:53';
+var latestCache = '2019-09-25_00:38:39';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=3yhiMU',
@@ -59,12 +59,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
     'https://analysis.null.place/img/book-thumb-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.jpg?hash=TN51ee',
-    'https://analysis.null.place/json/book-review-barbaraklipskatheneuroscientistwholosthermind2018.json?hash=JUIMgD',
+    'https://analysis.null.place/json/book-review-barbaraklipskatheneuroscientistwholosthermind2018.json?hash=kk6_x-',
     'https://analysis.null.place/json/book-review-robertharrisimperium2006.json?hash=SKdAqQ',
     'https://analysis.null.place/json/book-review-stanislawlemsolaris1961.json?hash=R-Q9pX',
     'https://analysis.null.place/json/book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json?hash=eWODmr',
-    'https://analysis.null.place/json/books-init-list.json?hash=WuLLTc',
-    'https://analysis.null.place/json/books-list.json?hash=DWOSyH',
+    'https://analysis.null.place/json/books-init-list.json?hash=mVUw3w',
+    'https://analysis.null.place/json/books-list.json?hash=xHAv5y',
     'https://analysis.null.place/json/books-search-index.json?hash=PEQ6Y3',
 
     // assets for the "tv-series reviews" article
