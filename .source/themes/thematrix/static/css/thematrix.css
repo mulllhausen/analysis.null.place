@@ -888,7 +888,7 @@ blockquote {
         transition-timing-function: cubic-bezier(0, 0, 0, 1);/*aggressive ease-out*/
     }
     100% {
-        opacity: 0.5;
+        opacity: 0.1;
         left: 100%;
     }
 }
