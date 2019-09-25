@@ -92,6 +92,7 @@ function initMediaRendering() {
                 );
                 numMediaShowing = initialMediaData.length; // global
                 loading('off');
+                removeGlassCase();
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 populateInFeedAds();
@@ -136,6 +137,7 @@ function initMediaRendering() {
                     mediaID, idInInitialList
                 );
                 loading('off');
+                removeGlassCase();
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 numMediaShowing = initialMediaData.length; // global
@@ -157,6 +159,7 @@ function initMediaRendering() {
                 // render the initial media data and ads on the page
                 initialMediaDataHTML = generateInitialMediaHTML();
                 loading('off');
+                removeGlassCase();
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 populateInFeedAds();
@@ -285,6 +288,17 @@ function loading(status) {
             loadingStatus = 'off';
             break;
     }
+}
+
+var glassCaseVisible = true; // init
+function removeGlassCase() {
+    if (!glassCaseVisible) return;
+    removeCSSClass(
+        document.querySelector('.search-box-container.glass-case'), 'glass-case'
+    );
+    document.getElementById('search').disabled = false;
+    document.getElementById('sortBy').disabled = false;
+    glassCaseVisible = false;
 }
 
 function generateInitialMediaHTML(mediaID, idInInitialList) {

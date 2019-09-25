@@ -198,12 +198,14 @@ function deleteElements(element) {
 }
 
 function addCSSClass(el, newClass) {
+    if (el == null) return; // there is no element to add a class to
     var classList = el.className.split(/\s+/);
     classList.push(newClass);
     el.className = classList.join(' ');
 }
 
 function removeCSSClass(el, removeClass) {
+    if (el == null) return; // there is no element to remove a class from
     var classList = el.className.split(/\s+/);
     var i = classList.indexOf(removeClass);
     if (i == -1) return; // not found
@@ -272,7 +274,7 @@ function ajax(url, callback) {
         if (this.status != 200) return;
         callback(this.responseText);
     });
-    xhttp.open('GET', url);
+    xhttp.open('GET', url, true); // async
     xhttp.send();
 }
 

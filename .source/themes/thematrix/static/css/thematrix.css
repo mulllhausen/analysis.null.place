@@ -860,3 +860,35 @@ blockquote {
 .important-hidden {
     display: none !important;
 }
+.glass-case:after {
+    content: "";
+    position: absolute;
+    top: -110%;
+    left: -20%;
+    width: 70px;
+    height: 400%;
+    opacity: 0;/*initially invisible*/
+    transform: rotate(30deg);
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(/*reflection effect*/
+        to right,
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.13) 40%,
+        rgba(255, 255, 255, 0.5) 80%,
+        rgba(255, 255, 255, 0.0) 100%
+    );
+    animation-name: shine;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@keyframes shine {
+    0% {
+        opacity: 1;
+        left: -20%;
+        transition-timing-function: cubic-bezier(0, 0, 0, 1);/*aggressive ease-out*/
+    }
+    100% {
+        opacity: 0.5;
+        left: 100%;
+    }
+}
