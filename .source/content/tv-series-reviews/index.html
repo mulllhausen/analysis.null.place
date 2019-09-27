@@ -14,6 +14,7 @@
     <meta name="jsons" content="{{ MEDIA_REVIEWS['tv-series']['jsons'] }}"/>
 </head>
 <body>
+{% from 'form_container.html' import form_container with context %}
 <p>As with <a href="{{ SITEURL }}/movie-reviews/">movies</a> and
 <a href="{{ SITEURL }}/book-reviews/">books</a>, I watch so many tv-series that
 I find myself forgetting what a given show was about, whether I liked it or not,
@@ -21,7 +22,7 @@ and even whether I have already watched it. So I have made this page to keep
 track of the shows I watch - good and bad. Maybe you will also discover some
 good shows here too, or learn what to avoid, assuming you have similar tastes to
 me.</p>
-<div class="form-container search-box-container glass-case">
+{{ form_container('searchBox', 'start', None, False) }}
     <div class="left">
         <label for="search" class="for-search-box">search</label>
         <br>
@@ -39,7 +40,7 @@ me.</p>
             <option value="title-descending">title descending</option>
         </select>
     </div>
-</div>
+{{ form_container('searchBox', 'end') }}
 
 <div class="media-count-area">
     <div id="mediaCountPanel">

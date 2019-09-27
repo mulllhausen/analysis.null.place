@@ -55,10 +55,10 @@ does:</p>
 {{ form_container('form0', 'start') }}
     <label for="inputMessage0" class="for-textbox">pre-image</label><br>
     <div class="left">
-        <input id="inputMessage0" type="text" value="hello world!">
+        <input id="inputMessage0" type="text" value="hello world!" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHash0">SHA256</button>
+        <button id="btnRunHash0" disabled>SHA256</button>
     </div>
     <br>
     <div class="left">
@@ -181,15 +181,15 @@ then you will not be able to find the pre-image which results in this hash -
 i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 
 {{ form_container('form1', 'start') }}
-    <input type="checkbox" id="inputCheckbox1" checked>
+    <input type="checkbox" id="inputCheckbox1" checked disabled>
     <label for="inputCheckbox1">automatically increment pre-image after each hash</label>
     <br><br>
     <label for="inputMessage1" class="for-textbox">pre-image</label><br>
     <div class="left">
-        <input id="inputMessage1" type="text" value="a">
+        <input id="inputMessage1" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHash1">SHA256</button>
+        <button id="btnRunHash1" disabled>SHA256</button>
     </div>
     <br>
     <div class="left">
@@ -215,7 +215,7 @@ Automatically</i> button below then you can have your device cycle through
 pre-images and show you the results at its maximum possible speed:</p>
 
 {{ form_container('form2', 'start') }}
-    <input type="checkbox" id="inputCheckbox2" checked disabled>
+    <input type="checkbox" id="inputCheckbox2" class="keep-disabled" checked disabled>
     <label for="inputCheckbox2">automatically increment pre-image after each hash</label>
     <br><br>
     <label for="inputMessage2" class="for-textbox">pre-image</label><br>
@@ -223,7 +223,7 @@ pre-images and show you the results at its maximum possible speed:</p>
         <input id="inputMessage2" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHash2">Run SHA256 Automatically</button>
+        <button id="btnRunHash2" disabled>Run SHA256 Automatically</button>
     </div>
     <br>
     <div class="left">
@@ -296,23 +296,23 @@ carefully at what this does. Once you find the solution, try changing the
 difficulty:</p>
 
 {{ form_container('form3', 'start') }}
-    <input type="checkbox" id="inputCheckbox3">
+    <input type="checkbox" id="inputCheckbox3" disabled>
     <label for="inputCheckbox3">mine automatically</label>
     <br><br>
     <div class="left">
         <label for="difficulty3" class="for-select">difficulty</label><br>
-        <select id="difficulty3"></select>
+        <select id="difficulty3" disabled></select>
     </div>
     <div class="left">
         <label for="inputMessage3Prefix" class="for-textbox">pre-image prefix</label><br>
-        <input id="inputMessage3Prefix" type="text" value="" disabled>
+        <input id="inputMessage3Prefix" type="text" class="keep-disabled" value="" disabled>
     </div>
     <div class="left">
         <label for="inputMessage3" class="for-textbox">pre-image nonce</label><br>
-        <input id="inputMessage3" type="text" value="a">
+        <input id="inputMessage3" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHash3">Mine manually with SHA256</button>
+        <button id="btnRunHash3" disabled>Mine manually with SHA256</button>
     </div>
     <br>
     <div class="left">
@@ -515,33 +515,33 @@ block header:</p>
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version4" type="text" class="data-value" size="2" value="1">
+            <input id="version4" type="text" class="data-value" size="2" value="1" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash4" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash4" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             timestamp<span id="timestamp4Explanation"></span><br>
-            <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             bits<br>
-            <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce4" type="text" class="data-value" size="10" value="0">
+            <input id="nonce4" type="text" class="data-value" size="10" value="0" disabled>
         </td></tr>
     </table>
     <div class="media-caption">the Bitcoin block header</div>
 </div></div>
 <ul class="error"></ul>
-<button id="btnRunHash4">Mine manually with SHA256</button>
+<button id="btnRunHash4" disabled>Mine manually with SHA256</button>
 {{ codeblock('codeblock4HashResults', start = True) }}nonce: <span class="aligner">     </span><span id="nonce4Results">0</span>
 target: <span class="aligner">    </span><span id="target4" class="individual-digits"></span>
 block hash: <span class="aligner"></span><span id="blockhash4" class="individual-digits"></span>
@@ -648,7 +648,7 @@ the blockchain:</p>
 
 {{ form_container('form5', 'start', 'annex') }}
     <label for="version5" class="for-textbox">version</label><br>
-    <input id="version5" type="text" class="data-value" size="10" value="1">
+    <input id="version5" type="text" class="data-value" size="10" value="1" disabled>
     <ul class="error"></ul>
 {{ codeblock(start = True) }}convert to hexadecimal: <span class="aligner">         </span><span id="version5Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5Bytes"></span>
@@ -668,7 +668,7 @@ stored in the blockchain:</p>
 
 {{ form_container('form6', 'start', 'annex') }}
     <label for="timestamp6" class="for-textbox">timestamp<span id="timestamp6Explanation"></span></label><br>
-    <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+    <input id="timestamp6" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT" disabled>
     <ul class="error"></ul>
 {{ codeblock(start = True) }}timestamp: <span class="aligner">                                   </span><span id="timestamp6GMT"></span>
 convert to unixtime (integer): <span class="aligner">               </span><span id="timestamp6Unixtime"></span>
@@ -735,20 +735,20 @@ the conversions.</p>
 {{ form_container('form7', 'start', 'annex') }}
     <div class="left">
         <label for="difficulty7" class="for-textbox">difficulty</label><br>
-        <input id="difficulty7" type="text" class="data-value" size="20" value="1">
+        <input id="difficulty7" type="text" class="data-value" size="20" value="1" disabled>
     </div>
     <div class="left">
         <label for="bits7" class="for-textbox">bits
         <span id="bitsAreHex7Container">
-            (<input type="checkbox" id="bitsAreHex7" checked>
+            (<input type="checkbox" id="bitsAreHex7" checked disabled>
             <label for="bitsAreHex7">hexadecimal</label>)</label>
         </span>
         <br>
-        <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff">
+        <input id="bits7" type="text" class="data-value" size="8" value="1d00ffff" disabled>
     </div>
     <div class="left" id="targetParent">
         <label for="target7" class="for-textbox">target</label><br>
-        <input id="target7" type="text" class="data-value" size="64" value="00000000ffff0000000000000000000000000000000000000000000000000000">
+        <input id="target7" type="text" class="data-value" size="64" value="00000000ffff0000000000000000000000000000000000000000000000000000" disabled>
     </div>
     <ul class="error"></ul>
     <span class="warnings" style="display:none;">Warning: This difficulty does not convert exactly to a bits or target value. The closest bits and target conversions are shown.</span>
@@ -787,7 +787,7 @@ endian bytes:</p>
 
 {{ form_container('form8', 'start', 'annex') }}
     <label for="nonce8" class="for-textbox">nonce</label><br>
-    <input id="nonce8" type="text" class="data-value" size="10" value="2083236893">
+    <input id="nonce8" type="text" class="data-value" size="10" value="2083236893" disabled>
     <ul class="error"></ul>
 {{ codeblock(start = True) }}convert to hexadecimal: <span class="aligner">         </span><span id="nonce8Hex"></span>
 convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8Bytes"></span>
@@ -806,27 +806,27 @@ blockchain, and how these are concatenated together. The block header is always
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
             version<br>
-            <input id="version9" type="text" class="data-value" size="2" value="1">
+            <input id="version9" type="text" class="data-value" size="2" value="1" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             previous block hash<br>
-            <input id="prevHash9" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000">
+            <input id="prevHash9" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             merkle root<br>
-            <input id="merkleRoot9" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">
+            <input id="merkleRoot9" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             timestamp<span id="timestamp9Explanation"></span><br>
-            <input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT">
+            <input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             bits<br>
-            <input id="bits9" type="text" class="data-value" size="8" value="1d00ffff">
+            <input id="bits9" type="text" class="data-value" size="8" value="1d00ffff" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
             nonce<br>
-            <input id="nonce9" type="text" class="data-value" size="10" value="2083236893">
+            <input id="nonce9" type="text" class="data-value" size="10" value="2083236893" disabled>
         </td></tr>
     </table>
     <div class="media-caption">human-readable Bitcoin block header</div>
@@ -851,7 +851,7 @@ the following form by ticking and unticking the <i>pre-image is hexadecimal</i>
 checkbox and observing how the resulting hash changes:</p>
 
 {{ form_container('form10', 'start', 'annex') }}
-    <input type="checkbox" id="inputCheckbox10" checked>
+    <input type="checkbox" id="inputCheckbox10" checked disabled>
     <label for="inputCheckbox10">pre-image is hexadecimal</label>
     <br><br>
     <label for="inputMessage10" class="for-textbox">pre-image</label><br>
@@ -886,7 +886,7 @@ hashes that must be made for a given difficulty:</p>
 
 {{ form_container('form11', 'start', 'annex') }}
     <label for="difficulty11" class="for-select">difficulty</label><br>
-    <select id="difficulty11"></select>
+    <select id="difficulty11" disabled></select>
 {{ codeblock('difficulty11Calculation') }}
 {{ form_container('form11', 'end') }}
 

@@ -14,13 +14,14 @@
     <meta name="jsons" content="{{ MEDIA_REVIEWS['book']['jsons'] }}"/>
 </head>
 <body>
+{% from 'form_container.html' import form_container with context %}
 <p>As with <a href="{{ SITEURL }}/movie-reviews/">movies</a> and
 <a href="{{ SITEURL }}/tv-series-reviews/">tv-series</a>, I read so many books
 that I find myself forgetting what a given book was about, whether I liked it or
 not, and even whether I have already read it. So I have made this page to keep
 track of the books I read - good and bad. Maybe you will also discover some good
 books here too, or learn what to avoid, assuming you have similar tastes to me.</p>
-<div class="form-container search-box-container glass-case">
+{{ form_container('searchBox', 'start', None, False) }}
     <div class="left">
         <label for="search" class="for-search-box">search</label>
         <br>
@@ -38,7 +39,7 @@ books here too, or learn what to avoid, assuming you have similar tastes to me.<
             <option value="title-descending">title descending</option>
         </select>
     </div>
-</div>
+{{ form_container('searchBox', 'end') }}
 
 <div class="media-count-area">
     <div id="mediaCountPanel">

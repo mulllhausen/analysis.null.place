@@ -213,6 +213,25 @@ function removeCSSClass(el, removeClass) {
     el.className = classList.join(' ');
 }
 
+var permanentlyRemovedGlassCases = [];
+function removeGlassCase(formID, permanently) {
+    if (inArray(formID, permanentlyRemovedGlassCases)) return;
+
+    var formEl = document.getElementById(formID);
+    foreach(formEl.querySelectorAll('button:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    foreach(formEl.querySelectorAll('input:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    foreach(formEl.querySelectorAll('select:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    removeCSSClass(formEl, 'glass-case');
+    if (permanently) permanentlyRemovedGlassCases.push(formID);
+}
+
+
 function isHex(val) {
     var regex = /^-?[0-9a-f]+$/gi;
     return regex.test(val);

@@ -42,6 +42,7 @@ addEvent(window, 'load', function () {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash0Clicked();
     });
+    removeGlassCase('form0', true); // permanently = true
 
     // dec to hex table
     addEvent(
@@ -70,6 +71,7 @@ addEvent(window, 'load', function () {
         if (e.keyCode != 13) return; // only allow the enter key
         runHash1Or2Or3Clicked(hash1Params);
     });
+    removeGlassCase('form1', true); // permanently = true
 
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
@@ -88,6 +90,7 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('btnRunHash2'), 'click', function (e) {
         runHash2Clicked(e, hash2Params);
     });
+    removeGlassCase('form2', true); // permanently = true
 
     // form 3 - proof of work
     var hash3Params = {
@@ -109,6 +112,7 @@ addEvent(window, 'load', function () {
     difficultyChars[3] = 1; // init: match first character only
     addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
     addEvent(document.getElementById('inputCheckbox3'), 'click', checkbox3Changed);
+    removeGlassCase('form3', true); // permanently = true
 
     // dragable blockchain svg
     initBlockchainSVG();
@@ -138,14 +142,17 @@ addEvent(window, 'load', function () {
         scrollToElement(document.getElementById('form4'));
         resetBlock4(true);
     });
+    removeGlassCase('form4', true); // permanently = true
 
     // annex - form 5
     addEvent(document.getElementById('version5'), 'keyup, change', version5Changed);
     triggerEvent(document.getElementById('version5'), 'change');
+    removeGlassCase('form5', true); // permanently = true
 
     // annex - form 6
     addEvent(document.getElementById('timestamp6'), 'keyup, change', timestamp6Changed);
     triggerEvent(document.getElementById('timestamp6'), 'change');
+    removeGlassCase('form6', true); // permanently = true
 
     // annex - form 7
     addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
@@ -154,10 +161,12 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
     triggerEvent(document.getElementById('bits7'), 'change');
     addEvent(document.getElementById('runDifficultyUnitTests'), 'click', runDifficultyUnitTests);
+    removeGlassCase('form7', true); // permanently = true
 
     // annex - form 8
     addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
     triggerEvent(document.getElementById('nonce8'), 'change');
+    removeGlassCase('form8', true); // permanently = true
 
     // annex - form 9
     addEvent(document.getElementById('version9'), 'keyup, change', version9Changed);
@@ -177,16 +186,19 @@ addEvent(window, 'load', function () {
 
     addEvent(document.getElementById('nonce9'), 'keyup, change', nonce9Changed);
     triggerEvent(document.getElementById('nonce9'), 'change');
+    removeGlassCase('form9', true); // permanently = true
 
     // form 10 - hashing hex and ascii
     addEvent(document.getElementById('inputMessage10'), 'keyup, change', runHash10Changed);
     triggerEvent(document.getElementById('inputMessage10'), 'change');
     addEvent(document.getElementById('inputCheckbox10'), 'click', runHash10Changed);
+    removeGlassCase('form10', true); // permanently = true
 
     // form 11 - luck calculator
     initDifficultyLevelDropdown(11);
     initDifficultyAttempts();
     addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
+    removeGlassCase('form11', true); // permanently = true
 
     switch (getDeviceType()) {
         case 'phone':
@@ -2284,6 +2296,7 @@ function initBlockchainSVG() {
                 var numTxsArray = JSON.parse(json).txsPerBlock;
                 txsPerBlock = txsPerBlock.concat(numTxsArray);
                 // this will create a huge array, but javascript can handle it :)
+                removeGlassCase('dragableBlockchain', true); // permanently = true
             }
             catch (err) {}
         });
