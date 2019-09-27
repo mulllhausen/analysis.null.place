@@ -92,7 +92,7 @@ function initMediaRendering() {
                 );
                 numMediaShowing = initialMediaData.length; // global
                 loading('off');
-                removeGlassCase();
+                removeGlassCase('searchBox', true);
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 populateInFeedAds();
@@ -137,7 +137,7 @@ function initMediaRendering() {
                     mediaID, idInInitialList
                 );
                 loading('off');
-                removeGlassCase();
+                removeGlassCase('searchBox', true);
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 numMediaShowing = initialMediaData.length; // global
@@ -159,7 +159,7 @@ function initMediaRendering() {
                 // render the initial media data and ads on the page
                 initialMediaDataHTML = generateInitialMediaHTML();
                 loading('off');
-                removeGlassCase();
+                removeGlassCase('searchBox', true);
                 archiveInFeedAds();
                 document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
                 populateInFeedAds();
@@ -255,7 +255,7 @@ function linkTo1Media(e) {
 function goToOtherMedia(url) {
     if (typeof window.history.replaceState == 'function') {
         window.history.replaceState(null, '', generateCleanURL(url));
-        scrollToElement(document.querySelector('.search-box-container'));
+        scrollToElement(document.getElementById('searchBox'));
         initMediaRendering(); // show the media in the url pinned to the top
     }
     else location.href = generateCleanURL(url);
@@ -288,17 +288,6 @@ function loading(status) {
             loadingStatus = 'off';
             break;
     }
-}
-
-var glassCaseVisible = true; // init
-function removeGlassCase() {
-    if (!glassCaseVisible) return;
-    removeCSSClass(
-        document.querySelector('.search-box-container.glass-case'), 'glass-case'
-    );
-    document.getElementById('search').disabled = false;
-    document.getElementById('sortBy').disabled = false;
-    glassCaseVisible = false;
 }
 
 function generateInitialMediaHTML(mediaID, idInInitialList) {
@@ -697,7 +686,7 @@ function debounceMediaSearch(state) {
     // update the search-results after the user has stopped typing
     switch (state) {
         case 'atStart':
-            scrollToElement(document.querySelector('.search-box-container'));
+            scrollToElement(document.getElementById('searchBox'));
             if (typeof window.history.replaceState == 'function') {
                 var page = siteGlobals.mediaType + '-reviews/';
                 window.history.replaceState(null, '', generateCleanURL(page));

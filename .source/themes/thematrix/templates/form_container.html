@@ -1,11 +1,13 @@
-{%- macro form_container(id, piece, extra_classes = None) -%}
+{%- macro form_container(id, piece, extra_classes = None, linkable = True) -%}
 {% if piece == 'start' %}
-<div class="form-container{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
+<div class="form-container glass-case{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
+    {% if linkable %}
     <a href="#{{ id }}">
         <svg class="icon icon-chain">
             <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
         </svg>
     </a>
+    {% endif %}
 {% endif %}
 {% if piece == 'end' %}
 </div>

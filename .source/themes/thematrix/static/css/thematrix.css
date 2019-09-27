@@ -864,8 +864,8 @@ blockquote {
     content: "";
     position: absolute;
     top: -110%;
-    left: -20%;
-    width: 70px;
+    left: -60%;
+    width: 50px;
     height: 400%;
     opacity: 0;/*initially invisible*/
     transform: rotate(30deg);
@@ -880,15 +880,15 @@ blockquote {
     animation-name: shine;
     animation-duration: 2s;
     animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
 }
 @keyframes shine {
     0% {
         opacity: 1;
-        left: -20%;
-        transition-timing-function: cubic-bezier(0, 0, 0, 1);/*aggressive ease-out*/
+        left: -60%;
     }
     100% {
-        opacity: 0.1;
-        left: 100%;
+        opacity: 0.5;
+        left: 110%;
     }
 }
