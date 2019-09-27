@@ -1,7 +1,7 @@
-var latestCache = '2019-09-26_00:30:28';
+var latestCache = '2019-09-27_17:22:10';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=uN7FiP',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=dMw1uC',
     'https://analysis.null.place/theme/img/icons.svg?hash=DlWPXe',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
@@ -11,7 +11,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=S4jsCf',
+    'https://analysis.null.place/theme/js/base.js?hash=ULV7VY',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -53,8 +53,8 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=8360w3',
-    'https://analysis.null.place/css/media-reviews.css?hash=Z6TfUx',
+    'https://analysis.null.place/js/media-reviews.js?hash=CMmOd4',
+    'https://analysis.null.place/css/media-reviews.css?hash=kRCNcw',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
@@ -177,7 +177,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/index.html',
     'https://analysis.null.place/js/sjcl.min.js?hash=0JqGiP',
-    'https://analysis.null.place/js/btc-mining.js?hash=D15PC7',
+    'https://analysis.null.place/js/btc-mining.js?hash=Lu0w2L',
     'https://analysis.null.place/css/btc.css?hash=93IOhm',
     'https://analysis.null.place/img/hashing-flowchart.svg?hash=NX7qzY',
     'https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdl',
