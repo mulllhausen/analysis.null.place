@@ -196,9 +196,8 @@ addEvent(window, 'load', function () {
 
     // form 11 - luck calculator
     initDifficultyLevelDropdown(11);
-    initDifficultyAttempts();
     addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
-    removeGlassCase('form11', true); // permanently = true
+    initDifficultyAttempts();
 
     switch (getDeviceType()) {
         case 'phone':
@@ -2259,6 +2258,7 @@ function initDifficultyAttempts() {
         try {
             difficultyAttempts = JSON.parse(json).attemptsForHexCharacters;
             triggerEvent(document.getElementById('difficulty11'), 'change');
+            removeGlassCase('form11', true); // permanently = true
         }
         catch (err) {}
     });
