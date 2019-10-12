@@ -694,8 +694,8 @@ blockquote {
     right: 0;
     border: 2px solid #7db904;/*green*/
     border-radius: 1000px;/*anything huge will do*/
-    -webkit-animation: spin 2s linear infinite;
     -moz-animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }
 .loader:after {
@@ -931,13 +931,30 @@ blockquote {
         rgba(255, 255, 255, 0.5) 80%,
         rgba(255, 255, 255, 0.0) 100%
     );
-    animation-name: shine;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-out;
+    -moz-animation: shine 2s ease-out infinite;
+    -webkit-animation: shine 2s ease-out infinite;
+    animation: shine 2s ease-out infinite;
 }
-@-moz-keyframes shine,
-@-webkit-keyframes shine,
+@-moz-keyframes shine {
+    0% {
+        opacity: 1;
+        left: -60%;
+    }
+    100% {
+        opacity: 0.5;
+        left: 110%;
+    }
+}
+@-webkit-keyframes shine {
+    0% {
+        opacity: 1;
+        left: -60%;
+    }
+    100% {
+        opacity: 0.5;
+        left: 110%;
+    }
+}
 @keyframes shine {
     0% {
         opacity: 1;
