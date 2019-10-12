@@ -711,11 +711,18 @@ blockquote {
 .platform-comments-loader .loader:after {
     background-color: #151515;
 }
-@-moz-keyframes spin,
-@-webkit-keyframes spin,
-@keyframes spin {
+@-moz-keyframes spin {
     100% {
         -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
@@ -723,6 +730,9 @@ blockquote {
 /* end css-only loader */
 
 /* begin comments section */
+.comments.info-box {
+    background: rgba(21, 21, 21, 0.95);/*very-dark-grey*/
+}
 .top-bar .nav-menu .comments-opener {
     display: inline;
 }
