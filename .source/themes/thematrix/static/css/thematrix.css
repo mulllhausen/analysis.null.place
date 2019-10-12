@@ -679,6 +679,50 @@ blockquote {
 }
 /* end codeblock */
 
+/* begin css-only loader */
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 2px solid #7db904;/*green*/
+    border-radius: 1000px;/*anything huge will do*/
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+.loader:after {
+    content: " ";
+    background-color: #000000;/*black*/
+    position: absolute;
+    top: -2px;
+    width: 10%;
+    height: 3px;
+    left: 50%;
+    margin-left: -5%;
+}
+.platform-comments-loader .loader:after {
+    background-color: #151515;
+}
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+/* end css-only loader */
+
 /* begin comments section */
 .top-bar .nav-menu .comments-opener {
     display: inline;
@@ -801,7 +845,7 @@ blockquote {
     right: 0;
     text-align: center;
 }
-.platform-comments-loader .icon-circle-o-notch {
+.platform-comments-loader {
     font-size: 2em;
 }
 .platform-comments-loader .icon-platform {

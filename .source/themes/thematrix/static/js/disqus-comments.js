@@ -73,7 +73,7 @@ function cleanDisqusLoaders() {
     // loader - either the disqus native loader, or my loader. ordinarily disqus
     // will delete my loader for me, so this will not be necessary. however if
     // the network connection drops in and out then disqus can think that it has
-    // already deleted my loaders, when infact i have added the back in. to
+    // already deleted my loaders, when infact i have added them back in. to
     // simulate this:
     // - load the page with the network online and click the disqus icon (this
     // will cache the disqus script. if they allowed a querystring this whole
