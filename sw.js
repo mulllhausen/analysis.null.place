@@ -1,8 +1,8 @@
-var latestCache = '2019-10-09_00:58:40';
+var latestCache = '2019-10-12_13:08:44';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=dMw1uC',
-    'https://analysis.null.place/theme/img/icons.svg?hash=DlWPXe',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=nX5FRT',
+    'https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
     'https://analysis.null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBI',
@@ -16,7 +16,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/js/manifest.json',
 
     // common assets for all article pages
-    'https://analysis.null.place/theme/js/comments-section.js?hash=eby9QW',
+    'https://analysis.null.place/theme/js/comments-section.js?hash=H74GHt',
 
     // home page
     'https://analysis.null.place/',
@@ -54,7 +54,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
     'https://analysis.null.place/js/media-reviews.js?hash=CMmOd4',
-    'https://analysis.null.place/css/media-reviews.css?hash=kRCNcw',
+    'https://analysis.null.place/css/media-reviews.css?hash=_NHa44',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
