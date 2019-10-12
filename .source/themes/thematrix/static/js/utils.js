@@ -81,6 +81,10 @@ function getDeviceType() {
     ).getPropertyValue('content').replace(/"/g, '');
 }
 
+function isEven(i) {
+    return ((i % 2) == 0);
+}
+
 function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
