@@ -527,7 +527,7 @@ h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
 .info-box {
     padding: 15px;
     margin-bottom: 20px;
-    background: rgba(21, 21, 21, 0.7);/*very-dark-grey*/
+    background: rgba(31, 31, 31, 0.7);/*very-dark-grey*/
     border: 1px solid #1a1a1a;/*light-grey*/
     border-radius: 4px;
     line-height: 24px;
