@@ -1,17 +1,18 @@
-var latestCache = '2019-10-12_13:08:44';
+var latestCache = '2019-10-12_21:59:18';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=nX5FRT',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=spYznl',
     'https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
     'https://analysis.null.place/theme/img/shattered-glass-matrix-192x192.png?hash=HbWgBI',
     'https://analysis.null.place/theme/img/shattered-glass-matrix-512x512.png?hash=9R0TcV',
+    'https://analysis.null.place/theme/img/crack1.png?hash=jmQEKN',
     'https://analysis.null.place/theme/img/favicon.ico?hash=jRJksA',
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=ULV7VY',
+    'https://analysis.null.place/theme/js/base.js?hash=BdhbuQ',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -54,7 +55,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
     'https://analysis.null.place/js/media-reviews.js?hash=CMmOd4',
-    'https://analysis.null.place/css/media-reviews.css?hash=_NHa44',
+    'https://analysis.null.place/css/media-reviews.css?hash=7-vTee',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
