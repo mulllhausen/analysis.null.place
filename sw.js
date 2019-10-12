@@ -1,7 +1,7 @@
-var latestCache = '2019-10-12_21:59:18';
+var latestCache = '2019-10-12_22:22:14';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=spYznl',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=53le0U',
     'https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
