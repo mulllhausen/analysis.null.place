@@ -15,7 +15,6 @@
 .media-loader-area {
     position: relative;
     width: 100%;
-    height: 96px;
     text-align: center;
     font-size: 200%;
     color: #7db904;/*green*/
@@ -35,7 +34,7 @@
     right: 0;
     text-align: center;
 }
-.media-loader-area .icon-circle-o-notch {
+.media-loader-area {
     font-size: 96px;
 }
 .loading-text {
