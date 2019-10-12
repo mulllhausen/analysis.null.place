@@ -94,7 +94,8 @@ STATIC_FILE_MERGES = {
         'js/autofooter.js',
         'js/cookie-warning-notice.js',
         'js/ads.js',
-        'js/register-service-worker.js'
+        'js/register-service-worker.js',
+        'js/background-images.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False

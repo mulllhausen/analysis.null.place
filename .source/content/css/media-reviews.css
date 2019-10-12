@@ -50,7 +50,7 @@
 #mediaCountPanel {
     z-index: 3;
     padding: 20px 0 20px 0;
-    background-color: black;
+    background: rgba(0, 0, 0, 0.8);/*black*/
 }
 .media-count-area {
     margin: 0;
@@ -71,7 +71,7 @@
     padding: 10px;
     margin: 20px 0 20px 0;
     overflow: hidden;/*border outside floats*/
-    background-color: #0b0b0b;
+    background: rgba(21, 21, 21, 0.7);/*very-dark-grey*/
 }
 
 .media.pinned {
