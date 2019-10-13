@@ -8,7 +8,13 @@
     {% for article in articles %}
     <url>
         <loc>{{ SITEURL }}/{{ article.url }}</loc>
-        <lastmod>{{ article.date | strftime('%Y-%m-%d') }}</lastmod>
+        <lastmod>
+        {%- if article.modified -%}
+            {{ article.modified | strftime('%Y-%m-%d') }}
+        {%- else -%}
+            {{ article.date | strftime('%Y-%m-%d') }}
+        {%- endif -%}
+        </lastmod>
         <priority>0.8</priority>
     </url>
         {% for translation in article.translations %}
@@ -18,6 +24,21 @@
     </url>
         {% endfor %}
     {% endfor %}
+    {% if MEDIA_REVIEWS %}
+        {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+
+    <!-- begin URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
+            {% for a_media in media_data['all_data'] %}
+    <url>
+        <loc>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</loc>
+        <lastmod>{{ a_media['reviewDate'] | strftime('%Y-%m-%d') }}</lastmod>
+        <priority>0.8</priority>
+    </url>
+            {% endfor %}
+    <!-- end URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
+        {% endfor %}
+
+    {% endif %}
     {% for page in pages %}
     <url>
         <loc>{{ SITEURL }}/{{ page.url }}</loc>

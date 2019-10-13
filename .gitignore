@@ -4,6 +4,11 @@
 .source/themes/thematrix/static/js/base.js
 .source/themes/thematrix/static/js/comments-section.js
 
+# ignore builder files in the output dir
+json/movies-list-all.json
+json/tv-series-list-all.json
+json/books-list-all.json
+
 # ignore files that get merged into base.js:
 theme/js/polyfills.js
 theme/js/utils.js

@@ -1,5 +1,5 @@
 /* begin raw element styles */
-html, body{
+html, body {
     margin: 0;
     padding: 0;
 
@@ -12,11 +12,10 @@ html, body{
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-    color: #bbbbbb;/*off-white*/
+    color: #bbb;/*off-white*/
     text-decoration: none;
     text-shadow: none;
-
-    background-color: #000000;/*black*/
+    background-color: #000;/*black*/
     /*overflow: auto;/*do not show a scrollbar*/
 }
 p, li {
@@ -54,28 +53,28 @@ label {
     font-style: italic;
 }
 label.for-textbox:after, label.for-select:after {
-    content: ": "
+    content: ": ";
 }
 textarea, input[type="text"], select {/*made to look like it is a small hole in the page*/
     box-sizing: border-box;/*keep the input from overflowing its parent*/
     margin: 5px 0 5px 0;
     font-size: 14px;
-    color: #bbbbbb;/*off-white*/
+    color: #bbb;/*off-white*/
     vertical-align: middle;
-    border: 1px solid #bbbbbb;
+    border: 1px solid #bbb;
     border-radius: 4px;
-    border-color: #222222 #222222 #000000;
+    border-color: #222 #222 #000;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     padding: 7px 10px;
     background-color: #2c2c2c;
-    background-image: -moz-linear-gradient(top, #222222, #333333);
-    background-image: -ms-linear-gradient(top, #222222, #333333);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#333333));
-    background-image: -webkit-linear-gradient(top, #222222, #333333);
-    background-image: -o-linear-gradient(top, #222222, #333333);
-    background-image: linear-gradient(top, #222222, #333333);
+    background-image: -moz-linear-gradient(top, #222, #333);
+    background-image: -ms-linear-gradient(top, #222, #333);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222), to(#333));
+    background-image: -webkit-linear-gradient(top, #222, #333);
+    background-image: -o-linear-gradient(top, #222, #333);
+    background-image: linear-gradient(top, #222, #333);
     background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222222', endColorstr='#333333', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222', endColorstr='#333', GradientType=0);
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
     -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
     -moz-box-shadow:    inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(255, 255, 255, 0.075);
@@ -93,24 +92,24 @@ select option:disabled {
 }
 button, button:visited, button:hover {/*made to look like a small bump in the page*/
     font-size: 14px;
-    color: #ffffff;/*white*/
+    color: #fff;/*white*/
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     border: 1px solid;
     border-radius: 4px;
-    border-color: #222222 #222222 #000000;
+    border-color: #222 #222 #000;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     padding: 7px 10px;
     background-color: #2c2c2c;
-    background-image: -moz-linear-gradient(top, #333333, #222222);
-    background-image: -ms-linear-gradient(top, #333333, #222222);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
-    background-image: -webkit-linear-gradient(top, #333333, #222222);
-    background-image: -o-linear-gradient(top, #333333, #222222);
-    background-image: linear-gradient(top, #333333, #222222);
+    background-image: -moz-linear-gradient(top, #333, #222);
+    background-image: -ms-linear-gradient(top, #333, #222);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(#222));
+    background-image: -webkit-linear-gradient(top, #333, #222);
+    background-image: -o-linear-gradient(top, #333, #222);
+    background-image: linear-gradient(top, #333, #222);
     background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333', endColorstr='#222', GradientType=0);
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
     -moz-box-shadow:    inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
@@ -119,7 +118,7 @@ button, button:visited, button:hover {/*made to look like a small bump in the pa
 button:active, button:focus, button:disabled {/*appears flat while clicked*/
     box-shadow: none;
     background-image: none;
-    background-color: #222222;
+    background-color: #222;
     outline: none;
 }
 button:disabled {
@@ -172,13 +171,13 @@ code {
 /* end raw element styles */
 
 /* begin scrollbar styles - for browsers that support this */
-@media (min-width: 800px) {/*when x >= 800px*/
+@media (min-width: 800px) {/*when 800px <= x*/
     ::-webkit-scrollbar {
         width: 10px;
         height: 10px;
     }
     ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
-        background: #000000;
+        background: #000;
     }
     ::-webkit-scrollbar-thumb {
         background: #404040;
@@ -205,7 +204,7 @@ code {
 .col-1 {
     /*margin-left: 130px;
     margin-right: 200px;*/
-    overflow-x: hidden;
+    overflow: hidden;
     padding: 20px;
 }
 .col-2 {
@@ -223,7 +222,7 @@ body:before {
     body:before {
         content: "phone";/*never seen, but used by javascript*/
     }
-    .hidden-phone {
+    .hidden-on-phone {
         display: none !important;
     }
     .col-0, .col-2 {
@@ -239,20 +238,23 @@ body:before {
 .col-1 {
     position: relative;
 }
-@media (min-width: 801px) {/*when x >= 801px*/
+@media (min-width: 801px) and (max-width: 1200px) {/*when 801px <= x <= 1200px */
     body:before {
         content: "tablet";/*never seen, but used by javascript*/
     }
-    .hidden-pc {
+    .hidden-on-tablet {
         display: none !important;
     }
     .col-2 {
         width: 200px;
     }
 }
-@media (min-width: 1201px) {/*when x >= 1201px*/
+@media (min-width: 1201px) {/*when 1201px <= x*/
     body:before {
         content: "pc";/*never seen, but used by javascript*/
+    }
+    .hidden-on-pc {
+        display: none !important;
     }
     .col-2 {
         width: 300px;
@@ -268,9 +270,12 @@ td {
     background-color: #2b2b2b;/*dark-grey*/
 }
 article {
-    overflow-x: hidden;
+    overflow: hidden;
 }
-.bottom_spacer {
+#content {
+    background: rgba(0, 0, 0, 0.7);/*black*/
+}
+.bottom-spacer {
     width: 100%;
 }
 /* end page layout */
@@ -280,6 +285,7 @@ article {
     display: block;
     width: 100%;
     height: 128px;
+    margin-bottom: 20px;
 }
 .adsbygoogle.skyscraper {
     margin: 0 0 30px 0;
@@ -287,6 +293,9 @@ article {
     display: inline-block;
     width: 160px;
     height: 600px;
+}
+.in-feed-ad-container {
+    width: 100%;
 }
 /* end ads */
 
@@ -325,6 +334,9 @@ article {
 .icon-hashtag {
     margin-bottom: -2px;
 }
+.icon-star, .icon-star-o, .icon-star-half-empty {
+    margin-bottom: -1px;
+}
 h1 .icon-file-text-o {
     font-size: 85%;
 }
@@ -337,6 +349,9 @@ ul.nav-menu .icon-file-text-o {
 ul.nav-menu .icon-hashtag {
     margin: 0 -1px -3px 0;
 }
+ul.nav-menu .icon-commenting-o {
+    margin-bottom: -3px;
+}
 .info-box .icon-hashtag {
     font-size: 90%;
 }
@@ -348,16 +363,16 @@ a.brand, a.brand:hover {
     font-size: 22px;
     font-weight: bold;
     line-height: 1;
-    color: #ffffff;/*white*/
-    text-shadow: 0 0 5px #698b25, 0 0 10px #ffffff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
+    color: #fff;/*white*/
+    text-shadow: 0 0 5px #698b25, 0 0 10px #fff, 0 0 15px #b5dc66, 0 0 20px #b5dc66;
 }
 /* end branding */
 
 /* begin side bar */
 .side-bar {
-    margin-top: 10px;
     padding: 10px 0 3px 0;
-    background-color: #2b2b2b;/*dark-grey*/
+    background: rgba(31, 31, 31, 0.7);/*very-dark-grey*/
+    border: 1px solid #1a1a1a;/*light-grey*/
     border-radius: 4px;
 }
 .side-bar a.brand {
@@ -371,16 +386,26 @@ a.brand, a.brand:hover {
 
 /* begin top bar */
 .top-bar {
-    padding: 10px 20px 4px 20px;
+    padding: 10px 20px 2px 20px;
     left: 0;
     right: 0;
     z-index: 2;
-    background-color: #2b2b2b;/*dark-grey*/
+    background-color: #151515;/*very-dark-grey*/
+    border-bottom: 1px solid #1a1a1a;/*light-grey*/
 }
-.top-bar .logo-container {
-    padding-left: 10px;
-    display: inline-block;
-    width: 42px;
+.top-bar table {
+    width: 100%;
+    margin-bottom: 8px;/*2+8=10, same as the padding-top on .top-bar, for vertical centre effect*/
+}
+.top-bar .brand-positioner {
+    vertical-align: middle;
+}
+.top-bar .menu-button-positioner {
+    vertical-align: text-top;
+}
+.top-bar td {
+    background-color: inherit;
+    border: none;
 }
 .top-bar button {
     float: right;
@@ -392,10 +417,10 @@ a.brand, a.brand:hover {
 .nav-menu-phone {/*initially hidden*/
     display: none;
 }
-.top-bar a.brand {
-    float: left;
-}
-.nav-menu {
+/* end top bar */
+
+/* begin navigation menu */
+ul.nav-menu {
     list-style: none;
     margin: 0;
     padding-bottom: 10px;
@@ -403,9 +428,13 @@ a.brand, a.brand:hover {
 .top-bar ul.nav-menu {
     margin: 4px -10px -4px -10px;
 }
-/* end top bar */
-
-/* begin navigation menu */
+ul.nav-menu > div {
+    color: #7db904;/*green*/
+    display: list-item;
+    padding: 0 10px;
+    border-radius: 10px;
+    min-height: 1.4em;
+}
 ul.nav-menu a {
     display: list-item;
     padding: 4px 10px 7px 10px;
@@ -416,11 +445,11 @@ ul.nav-menu a:not(:last-child) {
     margin-bottom: 2px;
 }
 ul.nav-menu a.active {
-    background-color: #000000;/*black*/
-    color: #bbbbbb;/*off-white*/
+    background: rgba(0, 0, 0, 0.8);/*black*/
+    color: #bbb;/*off-white*/
 }
 ul.nav-menu a:hover:not(.active):not(:active) {
-    background-color: #333333;/*light-grey*/
+    background: rgba(65, 65, 65, 0.7);/*light-grey*/
 }
 /* end navigation menu */
 
@@ -498,7 +527,8 @@ h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
 .info-box {
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #2b2b2b;/*dark-grey*/
+    background: rgba(31, 31, 31, 0.7);/*very-dark-grey*/
+    border: 1px solid #1a1a1a;/*light-grey*/
     border-radius: 4px;
     line-height: 24px;
 }
@@ -608,13 +638,14 @@ ul.taglist li {
     padding: 10px;
     margin: 20px 0 20px 0;
     overflow: hidden;/*border outside floats*/
+    background-color: black;
 }
 .horizontal-center {
     text-align: center;
 }
 
 blockquote {
-    background-color: #101010;/*very-dark-grey*/
+    background-color: #151515;/*very-dark-grey*/
     display: inline-block;
     margin: 0;
     padding: 0 30px 0 30px;
@@ -657,20 +688,123 @@ blockquote {
 }
 /* end codeblock */
 
+/* begin css-only loader */
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 2px solid #7db904;/*green*/
+    border-radius: 1000px;/*anything huge will do*/
+    -moz-animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+.loader:after {
+    content: " ";
+    background-color: #000000;/*black*/
+    position: absolute;
+    top: -2px;
+    width: 10%;
+    height: 3px;
+    left: 50%;
+    margin-left: -5%;
+}
+.platform-comments-loader .loader:after {
+    background-color: #151515;
+}
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+/* end css-only loader */
+
 /* begin comments section */
+.comments.info-box {
+    background: rgba(21, 21, 21, 0.95);/*very-dark-grey*/
+}
+.top-bar .nav-menu .comments-opener {
+    display: inline;
+}
+.top-bar .nav-menu .comments-opener .comment-with {
+    display: inline-block;
+    font-size: 14px;
+    padding: 3px 5px 5px 5px;
+    margin: 0 0 0 5px;
+}
+.top-bar .nav-menu .comments-opener .comments-count {
+    font-size: 8px;
+    top: 0;
+}
+.col-2 .comments-opener {
+    position: fixed;
+    right: 0;
+    bottom: 50px;
+    background-color: #151515;/*very-dark-grey*/
+    border: 1px solid #1a1a1a;/*light-grey*/
+    padding: 5px;
+    border-radius: 4px 0px 0px 4px;
+    z-index: 4;
+    font-size: 12px;
+    color: #7db904;/*green*/
+    text-align: center;
+}
+.comments-opener .comment-with {
+    color: #bbb;/*off-white*/
+    font-size: 20px;
+    margin: 0 6px;
+}
 .comments {
-    margin-top: 100px;
+    display: none;/*initially-hidden*/
+    margin: 0 20px;/*match the padding of col-1*/
     overflow: hidden;
+    position: absolute;
+    padding-top: 60px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 30px #7db904, 0 0 30px #7db904;/*green*/
+}
+#exitComments {
+    position: absolute;/*use this so that the button is always in front even when platforms fail to load*/
+    right: 15px;
+    top: 10px;
+    padding: 7px;
+    font-size: 10px;
+    color: #bbb;/*off-white*/
+    border-radius: 100px;/*anything massive will do*/
+    border: 2px solid #bbb;
+    line-height: 0;
 }
 .comment-with {
-    display: inline-block;
+    display: block;
+    position: relative;
     text-align: center;
-    padding: 5px 8px;
-    background-color: #000000;/*black*/
-    border: 1px solid #000000;
+    padding: 10px;
+    background-color: #000;/*black*/
+    border: 1px solid #000;
     border-radius: 4px;
 }
-.comment-with .icon{
+.comment-with:not(:last-child) {
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+.comment-with:last-child {
+    margin-bottom: 4px;
+}
+.comment-with .icon {
     vertical-align: middle;
     padding-bottom: 1px;
 }
@@ -679,14 +813,15 @@ blockquote {
     border: 1px solid #6a6a6a;
 }
 .comments-count {
-    vertical-align: super;
-    font-size: smaller;
+    position: absolute;
+    font-size: 11px;
     cursor: pointer;
     color: #000000;/*black*/
-    margin-left: -12px;
     background-color: #7db904;/*green*/
     padding: 0 3px;
     border-radius: 20px;
+    top: 4px;
+    right: 0;
 }
 .platform-offline {
     color: #7db904;/*green*/
@@ -722,7 +857,7 @@ blockquote {
     right: 0;
     text-align: center;
 }
-.platform-comments-loader .icon-circle-o-notch {
+.platform-comments-loader {
     font-size: 2em;
 }
 .platform-comments-loader .icon-platform {
@@ -731,19 +866,31 @@ blockquote {
 }
 /* end comments section */
 
-/* begin cookie warnings */
-.cookie-warning-notice {
-    display: none;/*initially hidden. shown with javascript.*/
+/* begin bottom notice bars area */
+.bottom-notice-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40px;
     line-height: 40px;/*vertical centre*/
     background-color: #7db904;/*green*/
-    color: #000000;/*black*/
+    color: #000;/*black*/
     text-align: center;
     z-index: 4;
+}
+/* end bottom notice bars area */
+
+/* begin new-version warnings */
+.new-version-info-notice {
+    display: none;/*initially hidden. shown with javascript.*/
+    height: 40px;
+}
+/* end new-version warnings */
+
+/* begin cookie warnings */
+.cookie-warning-notice {
+    display: none;/*initially hidden. shown with javascript.*/
+    height: 40px;
 }
 .cookie-warning-notice button, .cookie-warning-notice span {
     margin: 0 2px;
@@ -766,3 +913,59 @@ blockquote {
 .hidden {
     display: none;
 }
+.important-hidden {
+    display: none !important;
+}
+/* begin glass case */
+.glass-case:after {
+    content: "";
+    position: absolute;
+    top: -110%;
+    left: -60%;
+    width: 50px;
+    height: 400%;
+    opacity: 0;/*initially invisible*/
+    transform: rotate(30deg);
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(/*reflection effect*/
+        to right,
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.13) 40%,
+        rgba(255, 255, 255, 0.5) 80%,
+        rgba(255, 255, 255, 0.0) 100%
+    );
+    -moz-animation: shine 2s ease-out infinite;
+    -webkit-animation: shine 2s ease-out infinite;
+    animation: shine 2s ease-out infinite;
+}
+@-moz-keyframes shine {
+    0% {
+        opacity: 1;
+        left: -60%;
+    }
+    100% {
+        opacity: 0.5;
+        left: 110%;
+    }
+}
+@-webkit-keyframes shine {
+    0% {
+        opacity: 1;
+        left: -60%;
+    }
+    100% {
+        opacity: 0.5;
+        left: 110%;
+    }
+}
+@keyframes shine {
+    0% {
+        opacity: 1;
+        left: -60%;
+    }
+    100% {
+        opacity: 0.5;
+        left: 110%;
+    }
+}
+/* end glass case */

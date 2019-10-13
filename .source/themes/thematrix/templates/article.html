@@ -1,18 +1,31 @@
+{% set include_stylesheets = True %}
+{% set include_preloads = True %}
+{% set include_ie_shim = True %}
+{% set include_favicons = True %}
+{% set include_js_globals = True %}
+{% set include_manifest = True %}
+{% set include_standard_body = True %}
+{% set LINKED_DATA = {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "name": article.title,
+    "description": article.summary,
+    "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
+    "datePublished": article.date.strftime("%Y-%m-%d")
+} %}
 {% extends "base.html" %}
 
-{% block title %}{{ article.title }}{% endblock %}
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block description %}{{ article.summary | striptags }}{% endblock %}
 {% block og_description %}{{ article.summary | striptags }}{% endblock %}
 {% block google_title %}{{ article.summary | striptags }}{% endblock %}
-
 {% block content %}
 <section id="content">
     <article>
         <header>
             <h1>
             <svg class="icon icon-file-text-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-file-text-o"></use></svg>
-            {{ article.title}}
+            {{ article.title }}
             {% include 'twitter.html' %}
             </h1>
         </header>
@@ -22,6 +35,7 @@
             </div>
             {{ article.content }}
         </div>
+        <div class="bottom-spacer"></div>
         {% include 'comments.html' %}
     </article>
 </section>

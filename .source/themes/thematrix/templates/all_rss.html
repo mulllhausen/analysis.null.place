@@ -4,7 +4,7 @@
         <title>{{ SITENAME }}</title>
         <link>{{ SITEURL }}/</link>
         <description></description>
-        <lastBuildDate>{{ articles[0].date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+        {% set channel = namespace(max_date = dates[0].date) %}{# init #}
         {% for article in dates %}
         <item>
             <title>{{ article.title }}</title>
@@ -12,13 +12,39 @@
             <description>{{ article.summary }}</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+            <lastBuildDate>
+            {%- if article.modified -%}
+                {%- set channel.max_date = article.modified if article.modified > channel.max_date else channel.max_date -%}
+                {{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}
+            {%- else -%}
+                {%- set channel.max_date = article.date if article.date > channel.max_date else channel.max_date -%}
+                {{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
+            {%- endif -%}
+            </lastBuildDate>
             <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</guid>
             {% if article.tags %}
-            {% for tag in article.tags %}
+                {% for tag in article.tags %}
             <category>{{ tag }}</category>
-            {% endfor %}
+                {% endfor %}
             {% endif %}
         </item>
         {% endfor %}
+        {% if MEDIA_REVIEWS %}
+            {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+                {% for a_media in media_data['all_data'] %}
+                {% set channel.max_date = a_media['reviewDate'] if a_media['reviewDate'] > channel.max_date else channel.max_date %}
+        <item>
+            <title>{{ media_data['caps_name'] }} Review: {{ a_media['title'] }}{% if media_type == 'tv-series' %} Season {{ a_media['season'] }}{% endif %}</title>
+            <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</link>
+            <description>{{ a_media['reviewTitle'] }}</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
+            <pubDate>{{ a_media['reviewDate'].strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+            <lastBuildDate>{{ a_media['reviewDate'].strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+            <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ a_media['reviewDate'].strftime('%Y-%m-%d') }}:/{{ media_type }}-review/{{ a_media['id'] }}/</guid>
+        </item>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <lastBuildDate>{{ channel.max_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
     </channel>
 </rss>

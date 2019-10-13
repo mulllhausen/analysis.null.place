@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>book reviews</title>
+    <meta name="slug" content="book-reviews"/>
+    <meta name="date" content="2019-03-29"/>
+    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS['book']['latest_review'] }}"/>
+    <meta name="category" content="reviews"/>
+    <meta name="tags" content="book, reviews"/>
+    <meta name="stylesheets" content="media-reviews.css"/>
+    <meta name="scripts" content="media-reviews.js"/>
+    <meta name="img_preloads" content="{{ MEDIA_REVIEWS['book']['img_preloads'] }}"/>
+    <meta name="summary" content="My book reviews. A big work in progress!"/>
+    <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for books."/>
+    <meta name="jsons" content="{{ MEDIA_REVIEWS['book']['jsons'] }}"/>
+</head>
+<body>
+{% from 'form_container.html' import form_container with context %}
+<p>As with <a href="{{ SITEURL }}/movie-reviews/">movies</a> and
+<a href="{{ SITEURL }}/tv-series-reviews/">tv-series</a>, I read so many books
+that I find myself forgetting what a given book was about, whether I liked it or
+not, and even whether I have already read it. So I have made this page to keep
+track of the books I read - good and bad. Maybe you will also discover some good
+books here too, or learn what to avoid, assuming you have similar tastes to me.</p>
+{{ form_container('searchBox', 'start', None, False) }}
+    <div class="left">
+        <label for="search" class="for-search-box">search</label>
+        <br>
+        <input id="search" type="text" placeholder="book title, author or year" disabled>
+    </div>
+    <div class="left">
+        <label for="sortBy" class="for-sort-dropdown">sort by</label>
+        <br>
+        <select id="sortBy" disabled>
+            <option value="highest-rating">highest rating</option>
+            <option value="lowest-rating">lowest rating</option>
+            <option value="newest-reviews">newest reviews</option>
+            <option value="oldest-reviews">oldest reviews</option>
+            <option value="title-ascending">title ascending</option>
+            <option value="title-descending">title descending</option>
+        </select>
+    </div>
+{{ form_container('searchBox', 'end') }}
+
+<div class="media-count-area">
+    <div id="mediaCountPanel">
+        <span id="xOfYMediaCount">
+            showing <span id="numMediaShowing">10</span> of
+            <span id="totalMediaFound"></span>
+            <span id="searchTypeDescription">total books</span>
+        </span>
+        <span id="noMediaCount">no books found</span>
+    </div>
+</div>
+
+<div id="reviewsArea" class="reviews-area"></div>
+
+<div id="mediaLoaderArea" class="media-loader-area">
+    <div class="media-loader-inner">
+        <div class="loader"></div>
+        <div class="loading-text">loading<br>books</div>
+    </div>
+</div>
+<script>
+    siteGlobals.mediaType = 'book';
+    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
+    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/json/books-search-index.json'] }}';
+    siteGlobals.mediaListJSON = '{{ QS_LINK['/json/books-list.json'] }}';
+    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/json/books-init-list.json'] }}';
+</script>
+</body>
+</html>

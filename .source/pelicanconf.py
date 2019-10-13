@@ -4,7 +4,10 @@ from __future__ import unicode_literals
 import time
 
 AUTHOR = u'Peter Miller'
+BLOG_FIRST_PUBLISHED_DATE = '2018-04-17'
 SITENAME = u'analysis'
+SITE_HOSTNAME = 'localhost'
+SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
 SITENAME_ASCIIART = r"""
 !                    _           _      
 !                   | |         (_)     
@@ -21,11 +24,13 @@ PATH = 'content'
 TIMEZONE = 'Australia/Adelaide'
 UNIXTIME = int(time.time())
 NOWYMD = time.strftime('%Y-%m-%d_%H:%M:%S')
+# note: timestamps do not change per pelican session unless this file changes
 
 DEFAULT_LANG = u'en'
 # fs = filesystem
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = '%Y-%m-%d'
+SUMMARY_MAX_LENGTH = 0
 
 THEME = './themes/thematrix'
 
@@ -47,6 +52,8 @@ TRANSLATION_FEED_RSS = None
 AUTHOR_URL = ''
 AUTHOR_SAVE_AS = ''
 
+# note that only templates have access to common variables such as dates and
+# articles, so index.html must be a direct template - not a page.
 DIRECT_TEMPLATES = [
     'index', 'tags', 'archives', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest',
     'all_rss', 'all_atom'
@@ -87,17 +94,47 @@ STATIC_FILE_MERGES = {
         'js/autofooter.js',
         'js/cookie-warning-notice.js',
         'js/ads.js',
-        'js/register-service-worker.js'
+        'js/register-service-worker.js',
+        'js/background-images.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False
+
+MEDIA_REVIEWS = {
+    'book': {
+        'src-list': 'json/books-list-all.json',
+        'caps_name': 'Book',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    },
+    'movie': {
+        'src-list': 'json/movies-list-all.json',
+        'caps_name': 'Movie',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    },
+    'tv-series': {
+        'src-list': 'json/tv-series-list-all.json',
+        'caps_name': 'TV-Series',
+        'img_preloads': None, # gets populated by the plugin
+        'jsons': None, # gets populated by the plugin
+        'hash-bang-URLs': None # gets populated by the plugin
+    }
+}
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']
 PLUGINS = [
     'static-file-merge',
     'jinja2content_simple',
-    'querystring-cache'
+
+    # must come before 'querystring-cache', so that 'querystring-cache' can find
+    # all files this plugin generates
+    'media-reviews',
+
+    'querystring-cache',
 ]
 
 # file paths relative to the output dir
@@ -112,9 +149,9 @@ TEST_ADSENSE = True
 
 # debug settings:
 
-# add 127.0.0.1 null.place to /etc/hosts for this (it is necessary if you want
+# add 127.0.0.1 analysis.null.place to /etc/hosts for this (it is necessary if you want
 # to debug the fb comments section on localhost)
-#SITE_HOSTNAME = 'null.place'
+#SITE_HOSTNAME = 'analysis.null.place'
 #SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
 
 # Uncomment following line if you want document-relative URLs when developing

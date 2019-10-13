@@ -1,13 +1,26 @@
-{# this is the home page  (direct template) #}
+{# this is the home page (direct template) #}
+{% set include_stylesheets = True %}
+{% set include_preloads = True %}
+{% set include_ie_shim = True %}
+{% set include_favicons = True %}
+{% set include_js_globals = True %}
+{% set include_manifest = True %}
+{% set include_standard_body = True %}
+{% set LINKED_DATA = {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": SITENAME,
+    "description": BLOG_DESCRIPTION,
+    "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
+    "datePublished": BLOG_FIRST_PUBLISHED_DATE
+} %}
 {% extends "base.html" %}
-{% block content_title %}{% endblock %}
 {% block content %}
 {% if articles %}
         {% for article in (articles_page.object_list if articles_page else articles) %}
         <div class="article">
                 <h1><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h1>
-                <div class="summary"><p>{{ article.summary }}</p>
-                </div>
+                {% if article.summary | length > 0 %}<div class="summary"><p>{{ article.summary }}</p></div>{% endif %}
                 <div class="info-box">{% include "article_infos.html" %}</div>
         </div>
 {% include 'ads_in_feed.html' %}

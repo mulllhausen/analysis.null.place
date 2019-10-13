@@ -1,5 +1,11 @@
 // common functions used on many pages
 
+// thanks to stackoverflow.com/a/13900163
+function stopBubble(e) {
+    if (e.stopPropagation) e.stopPropagation();
+    else e.cancelBubble = true; // IE6-9
+}
+
 // thanks to stackoverflow.com/a/1147768
 function getEntireHeight() {
     return Math.max(
@@ -10,10 +16,73 @@ function getEntireHeight() {
     );
 }
 
+function isScrolledTo(el, position, amount) {
+    // note: amount is optional. when omitted it defaults to 'either'
+    if (el == null) return false;
+
+    var rect = el.getBoundingClientRect();
+    var elTop = rect.top; // distance down from the top of the window
+    var elBottom = rect.bottom; // distance down from the top of the window
+    switch (position) {
+        case 'view': // the element is visible
+            switch (amount) {
+                case 'entirely': // the element is completely visible (top and bottom)
+                    return ((elTop >= 0) && (elBottom <= window.innerHeight));
+                default:
+                case 'partially': // the element is partially visible
+                    return ((elTop < window.innerHeight) && (elBottom >= 0));
+            }
+        case 'above': // the element is above the window of view
+            switch (amount) {
+                case 'entirely':
+                    return (elBottom < 0);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < 0) && (elBottom > 0));
+                default: // either partially or entirely
+                    return (elTop < 0);
+            }
+        case 'below': // the element is below the window
+            switch (amount) {
+                case 'entirely':
+                    return (elTop > window.innerHeight);
+                case 'partially': // only partially but not entirely
+                    return ((elTop < window.innerHeight) && (elBottom > window.innerHeight));
+                default: // either partially or entirely
+                    return (elBottom > window.innerHeight);
+            }
+        default:
+            throw 'error in isScrolledTo function: unknown position' +
+            ((position == null) ? '' : position);
+    }
+}
+
+// thanks to stackoverflow.com/a/26230989
+function getCoordinates(el) {
+    var box = el.getBoundingClientRect();
+
+    var body = document.body;
+    var docEl = document.documentElement;
+
+    var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+    var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+    var clientTop = docEl.clientTop || body.clientTop || 0;
+    var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+    return {
+        top: Math.round(box.top + scrollTop - clientTop),
+        left: Math.round(box.left + scrollLeft - clientLeft)
+    };
+}
+
 function getDeviceType() {
     return window.getComputedStyle(
         document.getElementsByTagName('body')[0], ':before'
     ).getPropertyValue('content').replace(/"/g, '');
+}
+
+function isEven(i) {
+    return ((i % 2) == 0);
 }
 
 function trim(str) {
@@ -132,6 +201,41 @@ function deleteElements(element) {
     });
 }
 
+function addCSSClass(el, newClass) {
+    if (el == null) return; // there is no element to add a class to
+    var classList = el.className.split(/\s+/);
+    classList.push(newClass);
+    el.className = classList.join(' ');
+}
+
+function removeCSSClass(el, removeClass) {
+    if (el == null) return; // there is no element to remove a class from
+    var classList = el.className.split(/\s+/);
+    var i = classList.indexOf(removeClass);
+    if (i == -1) return; // not found
+    classList.splice(i, 1); // remove 1 list item
+    el.className = classList.join(' ');
+}
+
+var permanentlyRemovedGlassCases = [];
+function removeGlassCase(formID, permanently) {
+    if (inArray(formID, permanentlyRemovedGlassCases)) return;
+
+    var formEl = document.getElementById(formID);
+    foreach(formEl.querySelectorAll('button:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    foreach(formEl.querySelectorAll('input:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    foreach(formEl.querySelectorAll('select:not(.keep-disabled)'), function(i, el) {
+        el.disabled = false;
+    });
+    removeCSSClass(formEl, 'glass-case');
+    if (permanently) permanentlyRemovedGlassCases.push(formID);
+}
+
+
 function isHex(val) {
     var regex = /^-?[0-9a-f]+$/gi;
     return regex.test(val);
@@ -168,6 +272,10 @@ function mergeObjects(/*eg {a:1}, {b:2}, {c:3}*/) {
     return retObj;// eg {a:1, b:2, c:3}
 }
 
+function jsonCopyObject(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 // 1000 -> 1,000
 function addThousandCommas(number) {
     number += ''; // convert to string
@@ -189,7 +297,7 @@ function ajax(url, callback) {
         if (this.status != 200) return;
         callback(this.responseText);
     });
-    xhttp.open('GET', url);
+    xhttp.open('GET', url, true); // async
     xhttp.send();
 }
 
@@ -250,6 +358,11 @@ function unalignText(codeblock) {
     foreach(codeblock.querySelectorAll('.aligner'), function (i, el) {
         el.innerHTML = '';
     });
+}
+
+function easyPlural(word, ending) {
+    if (word.substr(-ending.length) == ending) return word;
+    return word + ending;
 }
 
 function plural(wordEnding, plural) {
@@ -408,24 +521,73 @@ function Retrieve(k) {
     }
 }
 
+// - when debounceType = 'start' - trigger once on the first event and only
+// allow again after the wait period ends
+// - when debounceType = 'end' - trigger after the wait period
+// - when debounceType = 'both' - trigger on the first event and at the end of
+// the wait period
+function debounce(func, wait, debounceType) {
+    // this function is called immediately from within the event handler to
+    // initialise a debounce event function
+    var timeout;
+    return function() { // called every time the event fires
+        //var context = this, args = arguments; // note: event = args[0]
+        var later = function() {
+            timeout = null;
+            switch (debounceType) {
+                case 'start':
+                    break;
+                case 'end':
+                case 'both':
+                    func('atEnd');//func.apply(context, args);
+                    break;
+            }
+        };
+        var callNow;
+        switch (debounceType) {
+            case 'start':
+            case 'both':
+                callNow = !timeout;
+                break;
+            case 'end':
+                callNow = false;
+                break;
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func('atStart');//func.apply(context, args);
+    };
+}
+
+function generateCleanURL(pathPlus) {
+    if (pathPlus[0] != '/') pathPlus = '/' + pathPlus;
+    return siteGlobals.siteURL + pathPlus;
+}
+
 // events for all pages
 
 if (!inArray(siteGlobals.siteURL, window.location.origin)) {
-    window.location.href = siteGlobals.siteURL + window.location.pathname;
+    window.location.href = generateCleanURL(window.location.pathname);
 }
+
+initialDeviceType = getDeviceType(); // init global
 
 // nav-menu open/close (mobile only)
 addEvent(document.getElementById('btnNavbar'), 'click', function (e) {
     var btn = e.currentTarget;
-    var menu = document.getElementById('navMenu');
-    if (btn.getAttribute('menu-is-collapsed') == 'true') {
-        btn.setAttribute('menu-is-collapsed', 'false');
-        menu.style.display = 'block';
-    } else {
-        btn.setAttribute('menu-is-collapsed', 'true');
-        menu.style.display = 'none';
-    }
+    if (btn.getAttribute('menu-is-collapsed') == 'true') openMenu();
+    else closeMenu();
 });
+
+function closeMenu() {
+    document.getElementById('btnNavbar').setAttribute('menu-is-collapsed', 'true');
+    document.getElementById('navMenu').style.display = 'none';
+}
+
+function openMenu() {
+    document.getElementById('btnNavbar').setAttribute('menu-is-collapsed', 'false');
+    document.getElementById('navMenu').style.display = 'block';
+}
 
 // prevent css :focus from persisting after a click, but allow it to remain
 // after focus via keyboard tabbing

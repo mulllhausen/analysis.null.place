@@ -4,7 +4,7 @@
     <link href="{{ SITEURL }}/" rel="alternate"></link>
     <link href="{{ SITEURL }}/{{ ALL_ATOM_SAVE_AS}}" rel="self"></link>
     <id>{{ SITEURL }}/</id>
-    <updated>{{ articles[0].date.isoformat() }}</updated>
+    {% set feed = namespace(max_date = dates[0].date) %}{# init #}
     {% for article in dates %}
     <entry>
         <title>{{ article.title }}</title>
@@ -12,8 +12,10 @@
         <published>{{ article.date.isoformat() }}</published>
         <updated>
             {%- if article.modified -%}
+                {%- set feed.max_date = article.modified if article.modified > feed.max_date else feed.max_date -%}
                 {{ article.modified.isoformat() }}
             {%- else -%}
+                {%- set feed.max_date = article.date if article.date > feed.max_date else feed.max_date -%}
                 {{ article.date.isoformat() }}
             {%- endif -%}
         </updated>
@@ -30,4 +32,24 @@
         {% endif %}
     </entry>
     {% endfor %}
+    {% if MEDIA_REVIEWS %}
+        {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+            {% for a_media in media_data['all_data'] %}
+            {% set feed.max_date = a_media['reviewDate'] if a_media['reviewDate'] > feed.max_date else feed.max_date %}
+    <entry>
+        <title>{{ media_data['caps_name'] }} Review: {{ a_media['title'] }}{% if media_type == 'tv-series' %} Season {{ a_media['season'] }}{% endif %}</title>
+        <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</link>
+        <published>{{ a_media['reviewDate'].isoformat() }}</published>
+        <updated>{{ a_media['reviewDate'].isoformat() }}</updated>
+        <author>
+            <name>{{ AUTHOR }}</name>
+        </author>
+        <id>tag:{{ SITE_HOSTNAME }},{{ a_media['reviewDate'].strftime('%Y-%m-%d') }}:/{{ media_type }}-review/{{ a_media['id'] }}</id>
+        <summary type="html">{{ a_media['reviewTitle'] }}</summary>
+        {#<content type="html">{{ a_media['review'] }}</content>#}
+    </entry>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <updated>{{ feed.max_date.isoformat() }}</updated>
 </feed>

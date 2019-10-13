@@ -5,90 +5,116 @@ is located in the templates dir so that it can be saved to the root directory of
 the site at build-time, and also so that it can use pelican variables.
 #}
 var latestCache = '{{ NOWYMD }}';
-self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(latestCache).then(function (cache) {
-            return cache.addAll([
-                // common assets for all pages
-                '{{ QS_LINK['/theme/css/thematrix.css'] }}',
-                '{{ QS_LINK['/theme/img/icons.svg'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }}',
-                '{{ QS_LINK['/theme/img/shattered-glass-matrix-512x512.png'] }}',
-                '{{ QS_LINK['/theme/img/favicon.ico'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}',
-                '{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}',
-                '{{ QS_LINK['/theme/js/base.js'] }}',
-                '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
-                '{{ SITEURL }}/theme/js/manifest.json',
+var mandatoryAssets = [
+    // common assets for all pages
+    '{{ QS_LINK['/theme/css/thematrix.css'] }}',
+    '{{ QS_LINK['/theme/img/icons.svg'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-2b.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-black.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-matrix-192x192.png'] }}',
+    '{{ QS_LINK['/theme/img/shattered-glass-matrix-512x512.png'] }}',
+    '{{ QS_LINK['/theme/img/crack1.png'] }}',
+    '{{ QS_LINK['/theme/img/favicon.ico'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon.png'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon-72x72.png'] }}',
+    '{{ QS_LINK['/theme/img/apple-touch-icon-114x114.png'] }}',
+    '{{ QS_LINK['/theme/js/base.js'] }}',
+    '{{ QS_LINK['/theme/js/console-greeter.js'] }}',
+    '{{ SITEURL }}/theme/js/manifest.json',
 
-                // common assets for all article pages
-                '{{ QS_LINK['/theme/js/comments-section.js'] }}',
+    // common assets for all article pages
+    '{{ QS_LINK['/theme/js/comments-section.js'] }}',
 
-                // home page
-                '{{ SITEURL }}/',
-                '{{ SITEURL }}/index.html',
+    // home page
+    '{{ SITEURL }}/',
+    '{{ SITEURL }}/index.html',
 
-                // archives page
-                '{{ SITEURL }}/archives/',
-                '{{ SITEURL }}/archives/index.html',
+    // archives page
+    '{{ SITEURL }}/archives/',
+    '{{ SITEURL }}/archives/index.html',
 
-                // tags pages
-                '{{ SITEURL }}/tags/',
-                '{{ SITEURL }}/tags/index.html',
+    // tags pages
+    '{{ SITEURL }}/tags/',
+    '{{ SITEURL }}/tags/index.html',
 {% for (tag, articles) in tags %}
-                '{{ SITEURL }}/{{ tag.url }}',
-                '{{ SITEURL }}/{{ tag.url }}index.html',
+    '{{ SITEURL }}/{{ tag.url }}',
+    '{{ SITEURL }}/{{ tag.url }}index.html',
 {% endfor %}
 
-                // categories
+    // categories
 {% for (cat, articles) in categories %}
-                '{{ SITEURL }}/{{ cat.url }}',
-                '{{ SITEURL }}/{{ cat.url }}index.html',
+    '{{ SITEURL }}/{{ cat.url }}',
+    '{{ SITEURL }}/{{ cat.url }}index.html',
 {% endfor %}
 
-                // each article and its assets
+{% set all_assets = [] %}
 {% for article in articles %}
-                '{{ SITEURL }}/{{ article.url }}',
-                '{{ SITEURL }}/{{ article.url }}index.html',
+    // assets for the "{{ article.title }}" article
+    '{{ SITEURL }}/{{ article.url }}',
+    '{{ SITEURL }}/{{ article.url }}index.html',
     {% if article.scripts %}
         {% set scripts = article.scripts.split(',') %}
         {% for script in scripts %}
-                '{{ QS_LINK['/js/' + script] }}',
+            {% if ("/js/" + script) not in all_assets %}
+    '{{ QS_LINK['/js/' + script] }}',
+                {% set all_assets = all_assets.append("/js/" + script) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.stylesheets %}
         {% set stylesheets = article.stylesheets.split(',') %}
         {% for stylesheet in stylesheets %}
-                '{{ QS_LINK['/css/' + stylesheet] }}',
+            {% if ("/css/" + stylesheet) not in all_assets %}
+    '{{ QS_LINK['/css/' + stylesheet] }}',
+                {% set all_assets = all_assets.append("/css/" + stylesheet) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.img_preloads %}
         {% set imgs = article.img_preloads.split(',') %}
         {% for img in imgs %}
-                '{{ QS_LINK['/img/' + img] }}',
+            {% if ("/img/" + img) not in all_assets %}
+    '{{ QS_LINK['/img/' + img] }}',
+                {% set all_assets = all_assets.append("/img/" + img) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% if article.jsons %}
         {% set jsons = article.jsons.split(',') %}
         {% for json in jsons %}
-                '{{ QS_LINK['/json/' + json] }}',
+            {% if ("/json/" + json) not in all_assets %}
+    '{{ QS_LINK['/json/' + json] }}',
+                {% set all_assets = all_assets.append("/json/" + json) %}
+            {% endif %}
         {% endfor %}
     {% endif %}
 
 {% endfor %}
-                // cookie warning notice
-                '{{ SITEURL }}/cookie-notice/',
-                '{{ SITEURL }}/cookie-notice/index.html'
-            ]);
+    // cookie warning notice
+    '{{ SITEURL }}/cookie-notice/',
+    '{{ SITEURL }}/cookie-notice/index.html'
+];
+{% if MEDIA_REVIEWS %}
+var mediaReviewPages = [
+    {%- for (media_type, media_data) in MEDIA_REVIEWS.iteritems() -%}
+    '{{ media_type }}-reviews'
+        {%- if media_type != MEDIA_REVIEWS.keys()[-1] -%}
+        ,
+        {%- endif -%}
+    {%- endfor -%}
+];
+{% endif %}
+self.addEventListener('install', function (event) {
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(latestCache).then(function (cache) {
+            return cache.addAll(mandatoryAssets);
         })
     );
 });
 
 self.addEventListener('activate', function (event) {
-    // delete all caches except latestCache
+    // delete all caches except latestCache (saves disk space)
     caches.keys().then(function (names) {
         for (let name of names) {
             if (name == latestCache) continue;
@@ -98,9 +124,26 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+{% if MEDIA_REVIEWS %}
+    var urlObj = new URL(event.request.url);
+    var pathParts = urlObj.pathname.split('/');
+    if (
+        (pathParts.length > 2) &&
+        (pathParts[2] != '') &&
+        (mediaReviewPages.indexOf(pathParts[1]) != -1)
+    ) {
+        // a media review sub-page is being requested. redirect to the parent
+        urlObj.pathname = '/' + pathParts[1] + '/';
+        pathParts.shift(); // remove empty item
+        pathParts.shift(); // remove parent
+        if (pathParts[pathParts.length - 1] == '') pathParts.pop(); // remove empty item
+        urlObj.hash = '#!' + pathParts.join('/');
+        event.request.url = urlObj.toString();
+    }
+{% endif %}
     event.respondWith(
-        caches.match(event.request).then(function (response) {
-            return (response || fetch(event.request));
+        caches.match(event.request).then(function (swResponse) {
+            return (swResponse || fetch(event.request));
         })
     );
 });
