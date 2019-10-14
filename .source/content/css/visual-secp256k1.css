@@ -5,3 +5,6 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+.nope {
+    text-decoration: line-through red;
+}

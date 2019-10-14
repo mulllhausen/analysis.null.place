@@ -82,11 +82,11 @@ if not writer.output_html:
     sympy.init_printing()
 
 writer.acc("""<p>In this article I will explore secp256k1 - the elliptic curve
-used by bitcoin for securely signing transactions. While this may sound daunting,
+that bitcoin uses to securely sign transactions. While this may sound daunting,
 the maths in this article requires no more than grade 11 level algebra.</p>
 <p>The sections covered are:</p>
 <ul>
-<li><a href="#heading_secp256k1_finite_field">secp256k1 (finite field)</a></li>
+<li><a href="#heading_secp256k1_infinite_field">secp256k1 (infinite field)</a></li>
 <li><a href="#heading_point_addition_infinite_field">point addition (infinite field)</a></li>
 <li><a href="#heading_subtraction_and_halving_infinite_field">subtraction and halving (infinite field)</a></li>
 <li><a href="#heading_point_addition_finite_field">point addition (finite field)</a></li>
@@ -99,7 +99,7 @@ the maths in this article requires no more than grade 11 level algebra.</p>
 </ul>
 <br>
 {{ h(2, 'secp256k1 (finite field)') }}
-<p>The equation of the bitcoin elliptic curve is as follows:</p>""")
+<p>The equation of the bitcoin elliptic curve is:</p>""")
 writer.acc(latex = operations.secp256k1_eq)
 writer.acc("""<p>This equation is called <i>secp256k1</i> and looks like this on
 an infinite field:</p>""")
@@ -107,9 +107,6 @@ graphics.init_secp256k1_plot(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
 writer.acc("""<p>Note that I have arbitrarily graphed \(x <= 7\) here, but in
 reality \(x\) continues on forever</p>
-<br>
-<br>
-<br>
 {{ h(2, 'point addition (infinite field)') }}
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
@@ -205,8 +202,8 @@ writer.acc(writer.make_img(**graphics.finalize_plot("point_doubling1")))
 # and graph)
 xp = 10
 yp_pos = True
-writer.acc("""<p>OK, but so what? When you say <i>add points on the curve</i> is
-this just fancy mathematical lingo, or does this form of addition work like
+writer.acc("""<p>OK, but so what? When they say <i>add points on the curve</i>
+is this just fancy mathematical lingo, or does this form of addition work like
 regular addition? For example does \(p + p + p + p = 2p + 2p\) on the
 curve?</p>
 
@@ -323,15 +320,15 @@ identical. This means that addition and multiplication of points on the bitcoin
 elliptic curve really does work the same way as regular addition and
 multiplication!</p>
 
-<br><br><br>{{ h(2, 'subtraction and halving (infinite field)') }}
+{{ h(2, 'subtraction and halving (infinite field)') }}
 
-<p>Just as points can be added together and doubled and on the bitcoin elliptic,
-so they can also be subtracted and halved. Subtraction is simply the reverse of
-addition - i.e. if we add point \(q\) to point \(p\) and arrive at point \(r\)
-then logically if we subtract point \(q\) from point \(r\) we should arrive back
-at \(p\): \(p + q = r\), therefore (subtracting \(q\) from both sides):
-\(p = r - q\). Another way of writing this is \(r + (-q) = p\). But what is
-\(-q\)? It is simply the mirroring of point \(q\) about the \(x\) axis:</p>""")
+<p>Just as points can be added together and doubled and on the bitcoin elliptic
+curve, so they can also be subtracted and halved. Subtraction is simply the
+reverse of addition - i.e. if we add point \(q\) to point \(p\) and arrive at
+point \(r\) then logically if we subtract point \(q\) from point \(r\) we should
+arrive back at \(p\): \(p + q = r\), therefore (subtracting \(q\) from both
+sides): \(p = r - q\). Another way of writing this is \(r + (-q) = p\). But what
+is \(-q\)? It is simply the mirroring of point \(q\) about the \(x\) axis:</p>""")
 graphics.init_secp256k1_plot(x_max = 7)
 
 xp = 5
@@ -386,14 +383,102 @@ writer.acc(writer.make_img(**graphics.finalize_plot("point_halving1")))
 writer.acc("""<p>This means that it is not possible to conduct a point division
 and arrive at a single solution on the bitcoin elliptic curve. Note that this
 conclusion does not apply to elliptic curves over a finite field, as we will see
-later on.</p>""")
-writer.acc("<br><br><br>{{ h(2, 'point addition (finite field)') }}")
-writer.acc("<br><br><br>{{ h(2, 'subtraction and halving (finite field)') }}")
-writer.acc("<br><br><br>{{ h(2, 'bitcoin master public keys') }}")
-writer.acc("<br><br><br>{{ h(2, 'signing a message') }}")
-writer.acc("<br><br><br>{{ h(2, 'verifying a message signature') }}")
-writer.acc("<br><br><br>{{ h(2, 'recovering a public key from a signature') }}")
-writer.acc("<br><br><br>{{ h(2, 'cracking a private key') }}")
+later on.</p>
+{{ h(2, 'point addition (finite field)') }}
+<p>A finite field is a limited set of numbers where the operations of addition,
+subtraction, multiplication and division all function. Here we will look at a
+finite field made up of integers, modulo a prime integer. In cryptography it is
+vital that we be able to calculate results exactly without loss of precision, so
+a system of numbers that always yields integers is ideal.</p>
+<p>Before we start doing modulo operations on the secp256k1 elliptic curve, lets
+have a look at how modular arithmetic works. The set of integers mod 7 is:</p>
+
+<div class="horizontal-center" id="modTable">
+    <div class="constrainWidth">
+        <table class="header">
+            <tr> <td>integers</td> <td>integers \((mod \) <input id="modInput" type="text" value="7">\))\)</td> </tr>
+        </table>
+        <div class="instructions noselect" id="modLower">click for lower numbers</div>
+        <div class="vertical-scroll">
+            <table id="modData">
+                <tr> <td>0</td>  <td>0</td> </tr>
+                <tr> <td>1</td>  <td>1</td> </tr>
+                <tr> <td>2</td>  <td>2</td> </tr>
+                <tr> <td>3</td>  <td>3</td> </tr>
+                <tr> <td>4</td>  <td>4</td> </tr>
+                <tr> <td>5</td>  <td>5</td> </tr>
+                <tr> <td>6</td>  <td>6</td> </tr>
+                <tr> <td>7</td>  <td>0</td> </tr>
+                <tr> <td>8</td>  <td>1</td> </tr>
+                <tr> <td>9</td>  <td>2</td> </tr>
+                <tr> <td>10</td> <td>3</td> </tr>
+                <tr> <td>11</td> <td>4</td> </tr>
+                <tr> <td>12</td> <td>5</td> </tr>
+                <tr> <td>13</td> <td>6</td> </tr>
+                <tr> <td>14</td> <td>0</td> </tr>
+            </table>
+        </div>
+        <div class="instructions noselect" id="modHigher">click for higher numbers</div>
+    </div>
+</div>
+
+<p>Basically, numbers wrap around back to 0 every 7. And this applies both to
+positive and negative numbers. If you clicked on the top of the table then you
+would have seen that all negative numbers map to a positive number under modular
+arithmetic</p>
+
+In modular arithmetic, addition also works. Ie:</p>""")
+writer.acc(latex = "a + b (\\bmod z) = a (\\bmod z) + b (\\bmod z)")
+
+writer.acc("<p>Lets try with some random numbers: \(a = 42\), \(b = 18\), \(z = 7\):</p>")
+writer.acc(latex = "a + b \\mod z = 42 + 18 \\mod 7 = 60 \\mod 7 = 4 \\mod 7")
+writer.acc(latex = "a \\mod z + b \\mod z = 42 \\mod 7 + 18 \\mod 7 = 0 \\mod 7 + 4 \\mod 7 = 4 \\mod 7")
+writer.acc("""<p>Clearly the results are the same.</p>
+<p>Likewise multiplication also works in modular arithmetic. Ie:</p>""")
+writer.acc(latex = "a \\times b \\mod z = a \\mod z \\times b \\mod z")
+writer.acc("""<p>Trying with some numbers chosen at random again: \(a = 91\),
+\(b = 10\), \(z = 8\):</p>""")
+writer.acc(latex = "a \\times b \\mod z = 91 \\times 10 \\mod 8 = 910 \\mod 8 = 6 \\mod 8")
+writer.acc(latex = "a \\mod z \\times b \\mod z = 91 \\mod 8 \\times 10 \\mod 8 = 3 \\mod 8 \\times 2 \\mod 8 = 3 \\times 2 \\mod 8 = 6 \\mod 8")
+operations.prime = mod = 11
+writer.acc("""<p>Again the results are the same.</p>
+<p>Now we can start to plot points on the secp256k1 graph over a finite field.
+The smaller the modulo the fewer the number of points. Lets compute the points
+for \(\\mod """ + "%s" % mod + """\):
+<table>
+    <tr><td>\(x\)</td>""" + "".join(
+        "<td>%s</td>" % x for x in range(0, mod)
+    ) + """</tr>
+    <tr><td>\(x^2\)</td>""" + "".join(
+        "<td>%s</td>" % (x ** 2 % mod) for x in range(0, mod)
+    ) + """</tr>
+    <tr><td>\(x^3\)</td>""" + "".join(
+        "<td>%s</td>" % (x ** 3 % mod) for x in range(0, mod)
+    ) + """</tr>
+    <tr><td>\(x^3 + 7\)</td>""" + "".join(
+        "<td>%s</td>" % ((x ** 3 + 7) % mod) for x in range(0, mod)
+    ) + """</tr>
+    <tr><td>\(y^2\)</td>""" + "".join(
+        "<td%s>%s</td>" % (
+            "" if ((x ** 3 + 7) % mod) in ((y ** 2 % mod) for y in range(0, mod)) else " class=\"nope\"",
+            (x ** 3 + 7) % mod
+        )
+        for x in range(0, mod)
+    ) + """</tr>
+    <tr><td>\(y\)</td>""" + "".join(
+        "<td>%s</td>" % (
+            "%s,%s" % (operations.modular_sqrt((x ** 3 + 7) % mod), mod - operations.modular_sqrt((x ** 3 + 7) % mod)) if ((x ** 3 + 7) % mod) in ((y ** 2 % mod) for y in range(0, mod)) else "",
+        )
+        for x in range(0, mod)
+    ) + """</tr>
+</table>
+</p>""")
+writer.acc("{{ h(2, 'subtraction and halving (finite field)') }}")
+writer.acc("{{ h(2, 'bitcoin master public keys') }}")
+writer.acc("{{ h(2, 'signing a message') }}")
+writer.acc("{{ h(2, 'verifying a message signature') }}")
+writer.acc("{{ h(2, 'recovering a public key from a signature') }}")
+writer.acc("{{ h(2, 'cracking a private key') }}")
 
 if writer.output_html:
     writer.save_all_html()

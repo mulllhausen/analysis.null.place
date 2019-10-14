@@ -55,6 +55,16 @@ def invert(num, modular = False):
         else:
             return 1.0 / num
 
+# a slow modular square root. speed does not matter since i am only using small
+# primes
+def xxxmodular_sqrt(a):
+    global prime
+    for i in xrange(0, prime - 1):
+        if ((i**2) % prime) == a:
+            return i
+    return None
+
+# thanks to eli.thegreenplace.net/2009/03/07/computing-modular-square-roots-in-python
 def modular_sqrt(a):
     """
     Find a quadratic residue (mod prime) of 'a'. prime must be an odd prime.
