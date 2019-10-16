@@ -19,6 +19,8 @@ curve_steps = 10000
 done_labels = [] # list of labels already done per graph - to avoid duplication
 done_dots = [] # list of dot points already done per graph - to avoid duplication
 
+prime = None # init
+
 # define matplotlib styles (matplotlib.org/users/customizing.html)
 green = "#7db904"
 grey = "#2b2b2b"
@@ -60,6 +62,34 @@ def init_secp256k1_plot_inf(x_max = 4):
     plt.ylabel("$y$", rotation = 0, color = green)
     plt.xlabel("$x$", color = green)
     plt.title("secp256k1: $%s$" % operations.secp256k1_eq, color = green)
+
+def init_secp256k1_plot_finite(points):
+    """
+    initialize the elliptic curve plot on a finite field - create the figure
+    and plot the points but do not put any addition lines on it yet and don't
+    show it yet.
+    """
+    global plt, x_text_offset, y_text_offset, done_labels, done_dots, prime
+    done_labels = [] # clear
+    done_dots = [] # clear
+    (x_min, y_min) = (-1, -1) # -1 to give some space around the points
+    x_max = y_max = prime # points never get to the prime due to modding
+    x_array = [x for (x, y) in points]
+    y_array = [y for (x, y) in points]
+
+    x_text_offset = 0 # (x_max - x_min) / 30
+    y_text_offset = (y_max - y_min) / 20
+
+    plt.figure() # init
+    plt.ylabel("$y$", rotation = 0, color = green)
+    plt.xlabel("$x$", color = green)
+    plt.xlim(x_min, x_max)
+    plt.ylim(y_min, y_max)
+    plt.scatter(x_array, y_array, color = green)
+    plt.title(
+        "secp256k1: $%s\ \ \ (mod %s)$" % (operations.secp256k1_eq, prime),
+        color = green
+    )
 
 def plot_add_inf_field(p, q, p_name, q_name, p_plus_q_name, color = "r"):
     """

@@ -98,7 +98,7 @@ the maths in this article requires no more than grade 11 level algebra.</p>
 <li><a href="#heading_cracking_a_private_key">cracking a private key</a></li>
 </ul>
 <br>
-{{ h(2, 'secp256k1 (finite field)') }}
+{{ h(2, 'secp256k1 (infinite field)') }}
 <p>The equation of the bitcoin elliptic curve is:</p>""")
 writer.acc(latex = operations.secp256k1_eq)
 writer.acc("""<p>This equation is called <i>secp256k1</i> and looks like this on
@@ -440,13 +440,13 @@ writer.acc("""<p>Trying with some numbers chosen at random again: \(a = 91\),
 \(b = 10\), \(z = 8\):</p>""")
 writer.acc(latex = "a \\times b \\mod z = 91 \\times 10 \\mod 8 = 910 \\mod 8 = 6 \\mod 8")
 writer.acc(latex = "a \\mod z \\times b \\mod z = 91 \\mod 8 \\times 10 \\mod 8 = 3 \\mod 8 \\times 2 \\mod 8 = 3 \\times 2 \\mod 8 = 6 \\mod 8")
-operations.prime = mod = 11
+operations.prime = 11
 writer.acc("""<p>Again the results are the same.</p>
 <p>Now we can start to plot points on the secp256k1 graph over a finite field.
-Lets compute the points for \(\\bmod %s""" % mod + """\). We start by
+Lets compute the points for \(\\bmod %s""" % operations.prime + """\). We start by
 looking at all of the possible y-axis values and their corresponding \(y^2\)
 values. These derived \(y^2\) values are the only values that have a modular
-square root in \(\\\bmod %s""" % mod + """\):
+square root in \(\\\bmod %s""" % operations.prime + """\):
 <table>
     <tr><td>\(y\)</td>""" + "".join(
         "<td>%s</td>" % y for y in operations.get_modular_y_vals()
@@ -479,8 +479,14 @@ curve:</p>
 </table>
 
 <p>This gives us the following points:</p>""")
-writer.acc(latex = ",".join("(%s,%s)" % point for point in operations.get_all_modular_points()))
+points = operations.get_all_modular_points()
+writer.acc(latex = ",".join("(%s,%s)" % point for point in points))
 writer.acc("<p>Plotting them:</p>")
+graphics.prime = operations.prime
+graphics.init_secp256k1_plot_finite(points)
+writer.acc(writer.make_img(**graphics.finalize_plot(
+    "secp256k1_finite_mod%s" % operations.prime
+)))
 
 writer.acc("{{ h(2, 'subtraction and halving (finite field)') }}")
 writer.acc("{{ h(2, 'bitcoin master public keys') }}")
