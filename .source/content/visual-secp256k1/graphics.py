@@ -29,11 +29,11 @@ matplotlib.rc("figure", facecolor = grey) # for --stdout
 matplotlib.rc("savefig", facecolor = grey, bbox = "tight") # for --html
 matplotlib.rc("grid", color = green)
 
-def init_secp256k1_plot(x_max = 4):
+def init_secp256k1_plot_inf(x_max = 4):
     """
-    initialize the elliptic curve plot - create the figure and plot the curve
-    but do not put any multiplication (doubling) lines on it yet and don't show
-    it yet.
+    initialize the elliptic curve plot on an infinite field - create the figure
+    and plot the curve but do not put any addition lines on it yet and don't
+    show it yet.
 
     we need to determine the minimum x value on the curve. y = sqrt(x^3 + 7) has
     imaginary values when (x^3 + 7) < 0, eg x = -2 -> y = sqrt(-8 + 7) = i,

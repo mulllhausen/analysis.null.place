@@ -6,7 +6,7 @@ disclaimer: these scripts are just for understanding concepts. they should not
 be used for performing live crypto operations.
 """
 
-prime = (2 ** 256) - (2 ** 32) - 977
+secp256k1_prime = (2 ** 256) - (2 ** 32) - 977
 N = 115792089237316195423570985008687907852837564279074904382605163141518161494337
 secp256k1_eq = "y^2 = x^3 + 7"
 
@@ -23,7 +23,8 @@ def y_secp256k1(xp, yp_pos, modular = False):
     yp_pos == True means yp is a positive value: y = +sqrt(x^3 + 7)
     yp_pos == False means yp is a negative value: y = -sqrt(x^3 + 7)
     """
-    y = square_root(power(xp, 3, modular) + 7, modular)
+    global prime
+    y = square_root(y_squared_secp256k1(xp, modular), modular)
 
     if yp_pos == False:
         y = -y
@@ -32,7 +33,21 @@ def y_secp256k1(xp, yp_pos, modular = False):
 
     return y
 
+def y_squared_secp256k1(xp, modular = False):
+    """
+    return either the value of y^2 at point x = xp, or the equation for y^2 in
+    terms of xp
+    """
+    global prime
+    y = power(xp, 3, modular) + 7
+
+    if modular:
+        y = y % prime
+
+    return y
+
 def power(num, exp, modular):
+    global prime
     if modular:
         return pow(num, exp, prime)
     else:
@@ -45,6 +60,7 @@ def square_root(num, modular = False):
         return sympy.sqrt(num)
 
 def invert(num, modular = False):
+    global prime
     if modular:
         # only works if the modulus is prime.
         # https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python
@@ -64,7 +80,6 @@ def xxxmodular_sqrt(a):
             return i
     return None
 
-# thanks to eli.thegreenplace.net/2009/03/07/computing-modular-square-roots-in-python
 def modular_sqrt(a):
     """
     Find a quadratic residue (mod prime) of 'a'. prime must be an odd prime.
@@ -92,8 +107,8 @@ def modular_sqrt(a):
     elif prime % 4 == 3:
         return pow(a, (prime + 1) / 4, prime)
 
-    # partition prime - 1 to s * 2^e for an odd s (i.e. reduce all the powers of 2
-    # from prime - 1)
+    # partition prime - 1 to s * 2^e for an odd s (i.e. reduce all the powers of
+    # 2 from prime - 1)
     s = prime - 1
     e = 0
     while (s % 2) == 0:
@@ -157,6 +172,7 @@ def y_line(x, p, m, modular = False):
     ie y = mx + yp - m(xp)
     ie y = m(x - xp) + yp
     """
+    global prime
     (xp, yp) = p
     y = m * (x - xp) + yp
     if modular:
@@ -188,6 +204,7 @@ def tan_slope(p, modular = False):
     m = [+/-]3x^2 / (2sqrt(x^3 + 7))
     m = 3x^2 / 2y
     """
+    global prime
     (xp, yp) = p
     slope = (3 * power(xp, 2, modular)) * invert(2 * yp, modular)
     if modular:
@@ -202,6 +219,7 @@ def non_tan_slope(p, q, modular = False):
     expression for this slope. the slope is the y-step over the x-step, ie
     m = (yp - yq) / (xp - xq)
     """
+    global prime
     (xp, yp) = p
     (xq, yq) = q
     slope = (yp - yq) * invert(xp - xq)
@@ -252,6 +270,7 @@ def intersection(p, q, modular = False):
 
     this r3 is the x coordinate of the intersection of the line with the curve.
     """
+    global prime
     m = slope(p, q, modular)
     (xp, yp) = p
     (xq, yq) = q
@@ -313,6 +332,7 @@ def add_points(p, q, modular = False):
 
 def negative(p, modular = False):
     """return the negative of point p - ie mirror it about the x-axis"""
+    global prime
     (xp, yp) = p
     neg_yp = -yp
     if modular:
@@ -332,3 +352,99 @@ def half_point(p, yq_pos):
     passes through this point and locate the tangent point (half p)
     """
     return tangent_intersection(negative(p), yq_pos)
+
+def get_modular_x_vals():
+    """get a list of all possible x values (not necessarily on the curve)"""
+    global prime
+    x_vals = range(0, prime)
+    return x_vals
+
+def get_modular_y_vals():
+    """get a list of all possible y values (not necessarily on the curve)"""
+    global prime
+    y_vals = range(0, prime)
+    return y_vals
+
+def get_valid_modular_y_squared_vals():
+    """
+    get a list of all possible y^2 values (not necessarily on the curve). these
+    are the values that have a modular square root.
+    """
+    global prime
+    y_vals = get_modular_y_vals()
+    return [((y ** 2) % prime) for y in y_vals]
+
+def get_modular_y_squared_vals():
+    """
+    get a list of y^2 values derived from the x values via the elliptic curve
+    equation. note that not all of these y squared values are necessarily valid
+    for the given prime. only those values that have a modular square root will
+    exist on the curve.
+    """
+    global prime
+    x_vals = get_modular_x_vals()
+    # derive y^2 from x
+    return [y_squared_secp256k1(x, modular = True) for x in x_vals]
+
+def classify_modular_y_squared_vals():
+    """classify the y^2 values as being on the curve or not"""
+
+    # y^2 values - derived from x via the elliptic curve equation but not
+    # necessarily having a modular square root
+    y_squared_vals = get_modular_y_squared_vals()
+
+    # y^2 values that do have a modular square root
+    valid_modular_y_squared_vals = get_valid_modular_y_squared_vals()
+
+    classified_vals = []
+    for y_sq in y_squared_vals:
+        valid = y_sq in valid_modular_y_squared_vals
+        classified_vals.append((y_sq, valid))
+
+    return classified_vals
+
+def get_modular_ec_y_vals():
+    """
+    get a list of all valid y values (or None where invalid) for the elliptic
+    curve
+    """
+    global prime
+    classified_y_squared_vals = classify_modular_y_squared_vals()
+    x_vals = get_modular_x_vals()
+    y_vals = [] # init
+    for x in x_vals:
+        (y_squared_val, valid) = classified_y_squared_vals[x]
+        if not valid:
+            y_vals.append(None)
+            continue
+
+        # get the y value in the top half of the curve
+        y_pos = modular_sqrt(y_squared_val)
+
+        # get the y value in the bottom half of the curve
+        y_neg = (prime - y_pos) % prime
+
+        y_vals.append((y_pos, y_neg))
+
+    return y_vals
+
+def get_all_modular_points():
+    """
+    get a list of all valid points for the elliptic curve over the given prime
+    modulus
+    """
+    points = [] # init
+    modular_ec_y_vals = get_modular_ec_y_vals()
+    x_vals = get_modular_x_vals()
+    for x in x_vals:
+        modular_ec_y_val = modular_ec_y_vals[x]
+        if modular_ec_y_val is None:
+            continue
+
+        points.append((x, modular_ec_y_val[0])) # y - top half of the curve
+        points.append((x, modular_ec_y_val[1])) # y - bottom half of the curve
+
+    return sorted(
+        list(set(points)), # unique
+        key = lambda point: (point[0], point[1]) # sort by x then y
+    )

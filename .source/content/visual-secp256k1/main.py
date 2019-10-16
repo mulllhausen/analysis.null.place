@@ -103,7 +103,7 @@ the maths in this article requires no more than grade 11 level algebra.</p>
 writer.acc(latex = operations.secp256k1_eq)
 writer.acc("""<p>This equation is called <i>secp256k1</i> and looks like this on
 an infinite field:</p>""")
-graphics.init_secp256k1_plot(x_max = 7)
+graphics.init_secp256k1_plot_inf(x_max = 7)
 writer.acc(writer.make_img(**graphics.finalize_plot("secp256k1")))
 writer.acc("""<p>Note that I have arbitrarily graphed \(x <= 7\) here, but in
 reality \(x\) continues on forever</p>
@@ -111,7 +111,7 @@ reality \(x\) continues on forever</p>
 <p>To add two points on the elliptic curve, just draw a line through them and
 find the third intersection with the curve, then mirror this third point about
 the \(x\) axis. For example, adding point \(p\) to point \(q\):</p>""")
-graphics.init_secp256k1_plot(x_max = 7)
+graphics.init_secp256k1_plot_inf(x_max = 7)
 
 # define point p
 xp = 5
@@ -131,7 +131,7 @@ writer.acc(writer.make_img(**graphics.finalize_plot("point_addition1")))
 writer.acc("""<p>Note that the third intersection with the curve can also lie
 between the points being added:</p>""")
 
-graphics.init_secp256k1_plot(x_max = 7)
+graphics.init_secp256k1_plot_inf(x_max = 7)
 
 # redefine point p
 xp = 6
@@ -151,7 +151,7 @@ writer.acc(writer.make_img(**graphics.finalize_plot("point_addition2")))
 writer.acc("""<p>Try moving point \(q\) towards point \(p\) along the
 curve:</p>""")
 
-graphics.init_secp256k1_plot(x_max = 7)
+graphics.init_secp256k1_plot_inf(x_max = 7)
 
 # redefine point p
 xp = 5
@@ -187,7 +187,7 @@ writer.acc("""<p>Clearly as \(q\) approaches \(p\), the line between \(q\) and
 tangent. So a point can be added to itself (\(p + p\), i.e. \(2p\)) by finding
 the tangent to the curve at that point and the third intersection with the
 curve:</p>""")
-graphics.init_secp256k1_plot(x_max = 5)
+graphics.init_secp256k1_plot_inf(x_max = 5)
 
 # redefine point p
 xp = 2
@@ -222,7 +222,7 @@ def plot_4p(xp, yp_pos, labels_on = True):
     (x4p, y4p) = four_p
     rightmost_x = max(xp, x2p, x3p, x4p)
 
-    graphics.init_secp256k1_plot(rightmost_x + 2)
+    graphics.init_secp256k1_plot_inf(x_max = rightmost_x + 2)
     p_label = "p" if labels_on else ""
     p2_label = "2p" if labels_on else ""
     p3_label = "3p" if labels_on else ""
@@ -329,7 +329,7 @@ point \(r\) then logically if we subtract point \(q\) from point \(r\) we should
 arrive back at \(p\): \(p + q = r\), therefore (subtracting \(q\) from both
 sides): \(p = r - q\). Another way of writing this is \(r + (-q) = p\). But what
 is \(-q\)? It is simply the mirroring of point \(q\) about the \(x\) axis:</p>""")
-graphics.init_secp256k1_plot(x_max = 7)
+graphics.init_secp256k1_plot_inf(x_max = 7)
 
 xp = 5
 yp_pos = False
@@ -374,7 +374,7 @@ half_p2 = operations.half_point(two_p, y2q2_pos)
 
 x_max = max(x2p, half_p1_x, half_p2_x)
 
-graphics.init_secp256k1_plot(x_max = x_max + 2)
+graphics.init_secp256k1_plot_inf(x_max = x_max + 2)
 graphics.plot_add_inf_field(half_p1, half_p1, "p_1", "", "2p", color = "r")
 graphics.plot_add_inf_field(half_p2, half_p2, "p_2", "", "", color = "w")
 
@@ -443,36 +443,45 @@ writer.acc(latex = "a \\mod z \\times b \\mod z = 91 \\mod 8 \\times 10 \\mod 8 
 operations.prime = mod = 11
 writer.acc("""<p>Again the results are the same.</p>
 <p>Now we can start to plot points on the secp256k1 graph over a finite field.
-The smaller the modulo the fewer the number of points. Lets compute the points
-for \(\\mod """ + "%s" % mod + """\):
+Lets compute the points for \(\\bmod %s""" % mod + """\). We start by
+looking at all of the possible y-axis values and their corresponding \(y^2\)
+values. These derived \(y^2\) values are the only values that have a modular
+square root in \(\\\bmod %s""" % mod + """\):
 <table>
-    <tr><td>\(x\)</td>""" + "".join(
-        "<td>%s</td>" % x for x in range(0, mod)
-    ) + """</tr>
-    <tr><td>\(x^2\)</td>""" + "".join(
-        "<td>%s</td>" % (x ** 2 % mod) for x in range(0, mod)
-    ) + """</tr>
-    <tr><td>\(x^3\)</td>""" + "".join(
-        "<td>%s</td>" % (x ** 3 % mod) for x in range(0, mod)
-    ) + """</tr>
-    <tr><td>\(x^3 + 7\)</td>""" + "".join(
-        "<td>%s</td>" % ((x ** 3 + 7) % mod) for x in range(0, mod)
+    <tr><td>\(y\)</td>""" + "".join(
+        "<td>%s</td>" % y for y in operations.get_modular_y_vals()
     ) + """</tr>
     <tr><td>\(y^2\)</td>""" + "".join(
-        "<td%s>%s</td>" % (
-            "" if ((x ** 3 + 7) % mod) in ((y ** 2 % mod) for y in range(0, mod)) else " class=\"nope\"",
-            (x ** 3 + 7) % mod
-        )
-        for x in range(0, mod)
-    ) + """</tr>
-    <tr><td>\(y\)</td>""" + "".join(
-        "<td>%s</td>" % (
-            "%s,%s" % (operations.modular_sqrt((x ** 3 + 7) % mod), mod - operations.modular_sqrt((x ** 3 + 7) % mod)) if ((x ** 3 + 7) % mod) in ((y ** 2 % mod) for y in range(0, mod)) else "",
-        )
-        for x in range(0, mod)
+        "<td>%s</td>" % y_squared for y_squared in operations.get_valid_modular_y_squared_vals()
     ) + """</tr>
 </table>
-</p>""")
+
+<p>Next we compute the \(y^2\) values using the equation for the elliptic curve.
+We eliminate any values that do not have a modular square root, since we need to
+take the modular square root of \(y^2\) to arrive at the \(y\) coordinate of the
+curve:</p>
+
+<table>
+    <tr><td>\(x\)</td>""" + "".join(
+        "<td>%s</td>" % x for x in operations.get_modular_x_vals()
+    ) + """</tr>
+    <tr><td>\(x^3 + 7\)</td>""" + "".join(
+        "<td>%s</td>" % y_sq for y_sq in operations.get_modular_y_squared_vals()
+    ) + """</tr>
+    <tr><td>\(y^2\)</td>""" + "".join(
+        "<td%s>%s</td>" % ("" if valid else " class=\"nope\"", y_sq)
+        for (y_sq, valid) in operations.classify_modular_y_squared_vals()
+    ) + """</tr>
+    <tr><td>\(y\)</td>""" + "".join(
+        "<td>%s</td>" % ("" if y_vals is None else "%s,%s" % y_vals)
+        for y_vals in operations.get_modular_ec_y_vals()
+    ) + """</tr>
+</table>
+
+<p>This gives us the following points:</p>""")
+writer.acc(latex = ",".join("(%s,%s)" % point for point in operations.get_all_modular_points()))
+writer.acc("<p>Plotting them:</p>")
+
 writer.acc("{{ h(2, 'subtraction and halving (finite field)') }}")
 writer.acc("{{ h(2, 'bitcoin master public keys') }}")
 writer.acc("{{ h(2, 'signing a message') }}")
