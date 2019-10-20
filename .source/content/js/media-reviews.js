@@ -21,6 +21,7 @@ reviewsPerAd = 3; // this many reviews before each in-feed ad
 inFeedAdContainer = '<div class="in-feed-ad-container"></div>';
 
 addEvent(window, 'load', function () {
+    resetSearchBox();
     initMediaRendering();
     initMediaSearchList(initSearchResultIndexes);
     initCompleteMediaData(initSearchResultIndexes);
@@ -49,6 +50,11 @@ addEvent(window, 'load', function () {
 });
 
 // rendering
+
+function resetSearchBox() {
+    document.getElementById('search').value = '';
+    document.getElementById('sortBy').selectedIndex = 0; // highest rating
+}
 
 function initMediaRendering() {
     var initialMediaDataHTML = '';
