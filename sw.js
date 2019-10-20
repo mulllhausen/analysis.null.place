@@ -1,4 +1,4 @@
-var latestCache = '2019-10-12_22:51:01';
+var latestCache = '2019-10-20_23:37:02';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -54,7 +54,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=CMmOd4',
+    'https://analysis.null.place/js/media-reviews.js?hash=rkdX18',
     'https://analysis.null.place/css/media-reviews.css?hash=7-vTee',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
@@ -63,9 +63,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/book-review-barbaraklipskatheneuroscientistwholosthermind2018.json?hash=kk6_x-',
     'https://analysis.null.place/json/book-review-robertharrisimperium2006.json?hash=SKdAqQ',
     'https://analysis.null.place/json/book-review-stanislawlemsolaris1961.json?hash=R-Q9pX',
-    'https://analysis.null.place/json/book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json?hash=eWODmr',
-    'https://analysis.null.place/json/books-init-list.json?hash=mVUw3w',
-    'https://analysis.null.place/json/books-list.json?hash=xHAv5y',
+    'https://analysis.null.place/json/book-review-theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011.json?hash=S1ZGdc',
+    'https://analysis.null.place/json/books-init-list.json?hash=CXtjQH',
+    'https://analysis.null.place/json/books-list.json?hash=bj9D-3',
     'https://analysis.null.place/json/books-search-index.json?hash=PEQ6Y3',
 
     // assets for the "tv-series reviews" article
@@ -138,7 +138,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=TFRbYk',
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
-    'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=dmhcrB',
+    'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=R_kZ01',
     'https://analysis.null.place/json/movie-review-freddygotfingered2001.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
@@ -150,7 +150,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-missionimpossible6fallout2018.json?hash=X_VOTj',
     'https://analysis.null.place/json/movie-review-mollysgame2017.json?hash=5CmqSw',
     'https://analysis.null.place/json/movie-review-montypythonandtheholygrail1975.json?hash=poY45m',
-    'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=6VS6tx',
+    'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=AO5QGA',
     'https://analysis.null.place/json/movie-review-requiemforadream2000.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-shoplifters2018.json?hash=ehpuIo',
     'https://analysis.null.place/json/movie-review-statusupdate2018.json?hash=086QgC',
@@ -170,8 +170,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
-    'https://analysis.null.place/json/movies-init-list.json?hash=7cqpjE',
-    'https://analysis.null.place/json/movies-list.json?hash=RE-YZE',
+    'https://analysis.null.place/json/movies-init-list.json?hash=tpviBW',
+    'https://analysis.null.place/json/movies-list.json?hash=RNIO88',
     'https://analysis.null.place/json/movies-search-index.json?hash=wdtOzY',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
