@@ -1,4 +1,4 @@
-var latestCache = '2019-10-20_23:37:02';
+var latestCache = '2019-10-20_23:52:07';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -54,7 +54,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=rkdX18',
+    'https://analysis.null.place/js/media-reviews.js?hash=EzOUql',
     'https://analysis.null.place/css/media-reviews.css?hash=7-vTee',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
