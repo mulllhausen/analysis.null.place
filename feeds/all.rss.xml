@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 09 Oct 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Sun, 20 Oct 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -232,11 +232,11 @@
         <item>
             <title>Movie Review: Rebel Without a Cause</title>
             <link>https://analysis.null.place/movie-reviews/rebelwithoutacause1955/</link>
-            <description>A conservative "rebel"?</description>
+            <description>A conservative rebel?</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Wed, 09 Oct 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 09 Oct 2019 00:00:00 +1030</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-10-09:/movie-review/rebelwithoutacause1955/</guid>
+            <pubDate>Sun, 20 Oct 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Sun, 20 Oct 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-10-20:/movie-review/rebelwithoutacause1955/</guid>
         </item>
         <item>
             <title>Movie Review: Requiem for a Dream</title>
@@ -499,6 +499,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Wed, 09 Oct 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Sun, 20 Oct 2019 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

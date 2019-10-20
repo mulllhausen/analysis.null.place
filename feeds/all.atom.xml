@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-10-09T00:00:00+10:30</updated>
+        <updated>2019-10-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -280,13 +280,13 @@
     <entry>
         <title>Movie Review: Rebel Without a Cause</title>
         <link>https://analysis.null.place/movie-reviews/rebelwithoutacause1955/</link>
-        <published>2019-10-09T00:00:00+10:30</published>
-        <updated>2019-10-09T00:00:00+10:30</updated>
+        <published>2019-10-20T00:00:00+10:30</published>
+        <updated>2019-10-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-10-09:/movie-review/rebelwithoutacause1955</id>
-        <summary type="html">A conservative "rebel"?</summary>
+        <id>tag:analysis.null.place,2019-10-20:/movie-review/rebelwithoutacause1955</id>
+        <summary type="html">A conservative rebel?</summary>
     </entry>
     <entry>
         <title>Movie Review: Requiem for a Dream</title>
@@ -607,5 +607,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-10-09T00:00:00+10:30</updated>
+    <updated>2019-10-20T00:00:00+10:30</updated>
 </feed>

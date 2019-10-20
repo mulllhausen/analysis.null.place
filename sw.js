@@ -1,4 +1,4 @@
-var latestCache = '2019-10-12_22:51:01';
+var latestCache = '2019-10-20_22:42:40';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -150,7 +150,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-missionimpossible6fallout2018.json?hash=X_VOTj',
     'https://analysis.null.place/json/movie-review-mollysgame2017.json?hash=5CmqSw',
     'https://analysis.null.place/json/movie-review-montypythonandtheholygrail1975.json?hash=poY45m',
-    'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=6VS6tx',
+    'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=HoUOxI',
     'https://analysis.null.place/json/movie-review-requiemforadream2000.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-shoplifters2018.json?hash=ehpuIo',
     'https://analysis.null.place/json/movie-review-statusupdate2018.json?hash=086QgC',
@@ -171,7 +171,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
     'https://analysis.null.place/json/movies-init-list.json?hash=7cqpjE',
-    'https://analysis.null.place/json/movies-list.json?hash=RE-YZE',
+    'https://analysis.null.place/json/movies-list.json?hash=dtyIza',
     'https://analysis.null.place/json/movies-search-index.json?hash=wdtOzY',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
