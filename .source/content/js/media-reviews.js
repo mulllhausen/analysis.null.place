@@ -212,6 +212,15 @@ function linkTo1Media(e) {
     e.preventDefault();
     var el = e.target;
 
+    // the link looks like <a class="link-external" href="http...">blah</a>
+    if (
+        (el.tagName.toLowerCase() == 'a') &&
+        inArray('link-external', el.className)
+    ) {
+        location.href = el.href;
+        return false; // prevent bubble up
+    }
+
     // the link looks like <a class="link-to-other-media"><i>blah</i></a> and
     // the <i> element was clicked
     if (
