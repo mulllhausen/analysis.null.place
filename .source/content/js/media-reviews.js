@@ -411,17 +411,8 @@ function loadFullReview(e) {
         || !inArray('load-review', e.target.className)
     ) return;
 
+    linkToSelf(e.target.up(2));
     var mediaID = e.target.id.replace('load-', '');
-    foreach(document.querySelectorAll('.media.pinned'), function(_, otherMediaEl) {
-        if (otherMediaEl.id == mediaID) return; // do not unpin self
-        removeCSSClass(otherMediaEl, 'pinned');
-    });
-    if (typeof window.history.replaceState == 'function') {
-        var url = siteGlobals.mediaType + '-reviews/';
-        window.history.replaceState(null, '', generateCleanURL(url));
-    }
-    else window.location.hash = '';
-
     var mediaIndex = mediaID2Index(mediaID);
     if (completeMediaData[mediaIndex].hasOwnProperty('review')) {
         e.target.parentNode.innerHTML = formatReview(
