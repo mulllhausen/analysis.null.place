@@ -1,4 +1,4 @@
-var latestCache = '2019-10-26_21:22:34';
+var latestCache = '2019-11-20_09:07:47';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -93,6 +93,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-10000bc2008.jpg?hash=gB-GJa',
     'https://analysis.null.place/img/movie-thumb-aclockworkorange1971.jpg?hash=9W-iCc',
     'https://analysis.null.place/img/movie-thumb-adrift2018.jpg?hash=2U0oV3',
+    'https://analysis.null.place/img/movie-thumb-annabellecomeshome2019.jpg?hash=O4dANe',
     'https://analysis.null.place/img/movie-thumb-birdbox2018.jpg?hash=dhDclx',
     'https://analysis.null.place/img/movie-thumb-bladerunner1982.jpg?hash=EFay0z',
     'https://analysis.null.place/img/movie-thumb-darkcity1998.jpg?hash=KwU5zR',
@@ -100,6 +101,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-eternalsunshineofthespotlessmind2004.jpg?hash=JHOOvN',
     'https://analysis.null.place/img/movie-thumb-fightclub1999.jpg?hash=7ipBk9',
     'https://analysis.null.place/img/movie-thumb-freddygotfingered2001.jpg?hash=fdMrI6',
+    'https://analysis.null.place/img/movie-thumb-gifted2017.jpg?hash=Y8MRSd',
     'https://analysis.null.place/img/movie-thumb-greenbook2019.jpg?hash=F_qF0N',
     'https://analysis.null.place/img/movie-thumb-hellolovegoodbye2019.jpg?hash=04Vy6e',
     'https://analysis.null.place/img/movie-thumb-inglouriousbasterds2009.jpg?hash=GD6oJ_',
@@ -133,6 +135,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-10000bc2008.json?hash=4ANHFg',
     'https://analysis.null.place/json/movie-review-aclockworkorange1971.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-adrift2018.json?hash=qRem2E',
+    'https://analysis.null.place/json/movie-review-annabellecomeshome2019.json?hash=0TYWNJ',
     'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=ViCgKm',
     'https://analysis.null.place/json/movie-review-bladerunner1982.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
@@ -140,6 +143,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
     'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=R_kZ01',
     'https://analysis.null.place/json/movie-review-freddygotfingered2001.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-gifted2017.json?hash=6fe58o',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
     'https://analysis.null.place/json/movie-review-inglouriousbasterds2009.json?hash=poY45m',
@@ -171,8 +175,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
     'https://analysis.null.place/json/movies-init-list.json?hash=tpviBW',
-    'https://analysis.null.place/json/movies-list.json?hash=lN2rQF',
-    'https://analysis.null.place/json/movies-search-index.json?hash=wdtOzY',
+    'https://analysis.null.place/json/movies-list.json?hash=gMkxf7',
+    'https://analysis.null.place/json/movies-search-index.json?hash=vZpv8Q',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',

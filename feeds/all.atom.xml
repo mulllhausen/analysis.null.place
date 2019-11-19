@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-10-20T00:00:00+10:30</updated>
+        <updated>2019-11-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -89,6 +89,17 @@
         </author>
         <id>tag:analysis.null.place,2019-04-08:/movie-review/adrift2018</id>
         <summary type="html">Are we not ... land animals?</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Annabelle Comes Home</title>
+        <link>https://analysis.null.place/movie-reviews/annabellecomeshome2019/</link>
+        <published>2019-11-20T00:00:00+10:30</published>
+        <updated>2019-11-20T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-11-20:/movie-review/annabellecomeshome2019</id>
+        <summary type="html">The blunderbuss approach to fear</summary>
     </entry>
     <entry>
         <title>Movie Review: Bird Box</title>
@@ -166,6 +177,17 @@
         </author>
         <id>tag:analysis.null.place,2019-02-13:/movie-review/freddygotfingered2001</id>
         <summary type="html">N/A</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Gifted</title>
+        <link>https://analysis.null.place/movie-reviews/gifted2017/</link>
+        <published>2019-11-20T00:00:00+10:30</published>
+        <updated>2019-11-20T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-11-20:/movie-review/gifted2017</id>
+        <summary type="html">Mathematical genius vs scheming Grandma</summary>
     </entry>
     <entry>
         <title>Movie Review: Green Book</title>
@@ -607,5 +629,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-10-20T00:00:00+10:30</updated>
+    <updated>2019-11-20T00:00:00+10:30</updated>
 </feed>

@@ -17,7 +17,7 @@
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/</loc>
-        <lastmod>2019-10-20</lastmod>
+        <lastmod>2019-11-20</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -40,6 +40,11 @@
     <url>
         <loc>https://analysis.null.place/movie-reviews/adrift2018/</loc>
         <lastmod>2019-04-08</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/annabellecomeshome2019/</loc>
+        <lastmod>2019-11-20</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -75,6 +80,11 @@
     <url>
         <loc>https://analysis.null.place/movie-reviews/freddygotfingered2001/</loc>
         <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/gifted2017/</loc>
+        <lastmod>2019-11-20</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
