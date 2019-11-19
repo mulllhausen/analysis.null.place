@@ -480,6 +480,30 @@
             "IMDBID": "tt0253474",
             "genres": ["Biography", "Drama"],
             "reviewDate": "2019-09-20"
+        },
+        {
+            "title": "Gifted",
+            "year": 2017,
+            "rating": 4,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMjQ2NDU3NDE0M15BMl5BanBnXkFtZTgwMjA3OTg0MDI@.jpg",
+            "reviewTitle": "Mathematical genius vs scheming Grandma",
+            "review": "Movie about a young girl, Mary, who is a mathematical genius, a bit like Roald Dahl's Matilda. Though unlike Matilda, this movie is emotionally complex, and not a comedy. Mary's uncle (her guardian) does not push her academically because he is afraid she will end up like her mother, who was also a mathematical genius, but committed suicide. He puts her in a state school so that she can have a normal life with normal friends who are her age. However, pushy manipulative Grandma wants her to solve a <a class=\"link-external\" href=\"https://en.wikipedia.org/wiki/Millennium_Prize_Problems\">Millennium Problem</a>.\nTrust and relationships between parents and kids was a main theme.\nDoes someone with a lot of intelligence have a duty to use it for society even if it puts their life in danger?\nIt is not entirely clear why the mother committed suicide. She did solve one of the Millenium Problems - the Navier-Stokes equation - so maybe she felt she had accomplished everything she possibly could - like when you finish a favourite TV show, that you have been obsessed with, and your life feels empty afterwards. Or maybe she committed suicide to spite her mother. This is likely because she left instructions for her solution to the Navier-Stokes equation to be published after her mother's death.\nNice to see a movie that doesn't fit a simple formula, and that leaves a few puzzles for the viewer to interpret.\n1 star deducted for the movie not being more lighthearted and fun (like Matilda).",
+            "IMDBID": "tt4481414",
+            "genres": ["Drama"],
+            "reviewDate": "2019-11-20"
+        },
+        {
+            "title": "Annabelle Comes Home",
+            "year": 2019,
+            "rating": 3,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BYmI4NDNiMmQtZTFkYi00ZDVmLThlYTAtMWJlMjU1M2I2ZmViXkEyXkFqcGdeQXVyNjg2NjQwMDQ@.jpg",
+            "reviewTitle": "The blunderbuss approach to fear",
+            "review": "This is one of those movies where <a class=\"link-external\" href=\"https://www.youtube.com/watch?v=bCxm7cTpBAs\">the trailer</a> gives away almost all of the movie - so I would recommend just watching the trailer. If you really love the trailer and want more of the same then watch the whole movie.\nThe plot is very simple. Judy's mum and dad are demonologists and they have a room full of evil artifacts. They hire a babysitter for Judy while they go away for the night. Babysitter's friend wants to talk to her dead dad so she comes over and pokes around in the room of evil stuff, unlocking Annabelle's glass case. This causes all the objects to come to life and chase the girls around the house, attempting to kill them in various gruesome ways.\nFor me, only some of the artifacts in the movie were scary. The Ferryman dropping coins just didn't do it for me, and nor did the piano. But the wedding dress and Annabelle did get my spine shivering. By having a museum of evil objects the directors got to use a kind of blunderbuss-approach to fear-inducement - throw lots of different types of fear at the audience and some will land. But the problem with this approach is that the fear is diluted - some people find one thing scary, others find something else scary. Everyone gets, say, 40% afraid, but nobody gets 100%.\nOverall the movie was not bad. Probably a good one to have on in the background at a Halloween party.",
+            "IMDBID": "tt8350360",
+            "genres": ["Biography", "Drama"],
+            "reviewDate": "2019-11-20"
         }
     ]
 }
