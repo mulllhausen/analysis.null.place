@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-11-20T00:00:00+10:30</updated>
+        <updated>2019-11-27T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -320,6 +320,17 @@
         </author>
         <id>tag:analysis.null.place,2019-01-23:/movie-review/requiemforadream2000</id>
         <summary type="html">N/A</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Risky Business</title>
+        <link>https://analysis.null.place/movie-reviews/riskybusiness1983/</link>
+        <published>2019-11-27T00:00:00+10:30</published>
+        <updated>2019-11-27T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-11-27:/movie-review/riskybusiness1983</id>
+        <summary type="html">Hypnotic magic</summary>
     </entry>
     <entry>
         <title>Movie Review: Shoplifters</title>
@@ -629,5 +640,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-11-20T00:00:00+10:30</updated>
+    <updated>2019-11-27T00:00:00+10:30</updated>
 </feed>

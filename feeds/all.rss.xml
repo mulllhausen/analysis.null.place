@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 20 Nov 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -264,6 +264,15 @@
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Wed, 23 Jan 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-review/requiemforadream2000/</guid>
+        </item>
+        <item>
+            <title>Movie Review: Risky Business</title>
+            <link>https://analysis.null.place/movie-reviews/riskybusiness1983/</link>
+            <description>Hypnotic magic</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 27 Nov 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-11-27:/movie-review/riskybusiness1983/</guid>
         </item>
         <item>
             <title>Movie Review: Shoplifters</title>
@@ -517,6 +526,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Wed, 20 Nov 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

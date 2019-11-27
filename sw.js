@@ -1,4 +1,4 @@
-var latestCache = '2019-11-20_09:07:47';
+var latestCache = '2019-11-28_00:34:07';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -114,6 +114,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-montypythonandtheholygrail1975.jpg?hash=dLolO-',
     'https://analysis.null.place/img/movie-thumb-rebelwithoutacause1955.jpg?hash=ICFTC8',
     'https://analysis.null.place/img/movie-thumb-requiemforadream2000.jpg?hash=hU1ML4',
+    'https://analysis.null.place/img/movie-thumb-riskybusiness1983.jpg?hash=hpF7xL',
     'https://analysis.null.place/img/movie-thumb-shoplifters2018.jpg?hash=wjnsRr',
     'https://analysis.null.place/img/movie-thumb-statusupdate2018.jpg?hash=V6s2MM',
     'https://analysis.null.place/img/movie-thumb-taken12008.jpg?hash=Fh7wJO',
@@ -135,15 +136,15 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-10000bc2008.json?hash=4ANHFg',
     'https://analysis.null.place/json/movie-review-aclockworkorange1971.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-adrift2018.json?hash=qRem2E',
-    'https://analysis.null.place/json/movie-review-annabellecomeshome2019.json?hash=0TYWNJ',
-    'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=ViCgKm',
+    'https://analysis.null.place/json/movie-review-annabellecomeshome2019.json?hash=DALP_r',
+    'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=Pe2gZp',
     'https://analysis.null.place/json/movie-review-bladerunner1982.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=TFRbYk',
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
     'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=R_kZ01',
     'https://analysis.null.place/json/movie-review-freddygotfingered2001.json?hash=poY45m',
-    'https://analysis.null.place/json/movie-review-gifted2017.json?hash=6fe58o',
+    'https://analysis.null.place/json/movie-review-gifted2017.json?hash=yoNQLJ',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
     'https://analysis.null.place/json/movie-review-inglouriousbasterds2009.json?hash=poY45m',
@@ -156,6 +157,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-montypythonandtheholygrail1975.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-rebelwithoutacause1955.json?hash=rrh9tF',
     'https://analysis.null.place/json/movie-review-requiemforadream2000.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-riskybusiness1983.json?hash=ovVd1N',
     'https://analysis.null.place/json/movie-review-shoplifters2018.json?hash=ehpuIo',
     'https://analysis.null.place/json/movie-review-statusupdate2018.json?hash=086QgC',
     'https://analysis.null.place/json/movie-review-taken12008.json?hash=EK7Ggf',
@@ -174,9 +176,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
-    'https://analysis.null.place/json/movies-init-list.json?hash=tpviBW',
-    'https://analysis.null.place/json/movies-list.json?hash=gMkxf7',
-    'https://analysis.null.place/json/movies-search-index.json?hash=vZpv8Q',
+    'https://analysis.null.place/json/movies-init-list.json?hash=D6zZcN',
+    'https://analysis.null.place/json/movies-list.json?hash=fd_Lzw',
+    'https://analysis.null.place/json/movies-search-index.json?hash=5Oqt0K',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
