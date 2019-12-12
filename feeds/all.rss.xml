@@ -21,7 +21,7 @@
             <description>My tv-series reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Mon, 22 Jul 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
             <category>tv-series</category>
             <category>reviews</category>
@@ -518,6 +518,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-04:/tv-series-review/nightflyers12018/</guid>
         </item>
         <item>
+            <title>TV-Series Review: Philip K. Dick's Electric Dreams Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/philipkdickselectricdreams12017/</link>
+            <description>An invitation to fantasize</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 13 Dec 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-12-13:/tv-series-review/philipkdickselectricdreams12017/</guid>
+        </item>
+        <item>
             <title>TV-Series Review: The Walking Dead Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
             <description>Learning the new landscape</description>
@@ -526,6 +535,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>
