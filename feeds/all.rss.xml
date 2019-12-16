@@ -21,7 +21,7 @@
             <description>My tv-series reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
             <category>tv-series</category>
             <category>reviews</category>
@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 27 Nov 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -174,6 +174,15 @@
             <pubDate>Thu, 22 Aug 2019 00:00:00 +0930</pubDate>
             <lastBuildDate>Thu, 22 Aug 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-08-22:/movie-review/hellolovegoodbye2019/</guid>
+        </item>
+        <item>
+            <title>Movie Review: Inception</title>
+            <link>https://analysis.null.place/movie-reviews/inception2010/</link>
+            <description>Completely unique</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Mon, 16 Dec 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-12-16:/movie-review/inception2010/</guid>
         </item>
         <item>
             <title>Movie Review: Inglourious Basterds</title>
@@ -527,6 +536,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-12-13:/tv-series-review/philipkdickselectricdreams12017/</guid>
         </item>
         <item>
+            <title>TV-Series Review: Rick and Morty Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/rickandmorty12013/</link>
+            <description>Hillariously disturbing</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Mon, 16 Dec 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-12-16:/tv-series-review/rickandmorty12013/</guid>
+        </item>
+        <item>
             <title>TV-Series Review: The Walking Dead Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
             <description>Learning the new landscape</description>
@@ -535,6 +553,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

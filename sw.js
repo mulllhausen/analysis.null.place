@@ -1,4 +1,4 @@
-var latestCache = '2019-12-13_00:21:37';
+var latestCache = '2019-12-16_15:09:22';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -77,17 +77,19 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/tv-series-thumb-maniac12018.jpg?hash=0nxg5W',
     'https://analysis.null.place/img/tv-series-thumb-nightflyers12018.jpg?hash=mSCzFO',
     'https://analysis.null.place/img/tv-series-thumb-philipkdickselectricdreams12017.jpg?hash=JnDmc6',
+    'https://analysis.null.place/img/tv-series-thumb-rickandmorty12013.jpg?hash=o7FIrK',
     'https://analysis.null.place/img/tv-series-thumb-thewalkingdead12010.jpg?hash=KBZUww',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=SSntoQ',
-    'https://analysis.null.place/json/tv-series-list.json?hash=ovgkXn',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=w6stqW',
+    'https://analysis.null.place/json/tv-series-list.json?hash=l0DRp1',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
     'https://analysis.null.place/json/tv-series-review-blackmirror52019.json?hash=RNRZhV',
     'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=l-lzV-',
     'https://analysis.null.place/json/tv-series-review-maniac12018.json?hash=SjiWtk',
     'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=iSpT3g',
     'https://analysis.null.place/json/tv-series-review-philipkdickselectricdreams12017.json?hash=v0Dl8m',
+    'https://analysis.null.place/json/tv-series-review-rickandmorty12013.json?hash=TxMsVl',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-search-index.json?hash=9gC2wv',
+    'https://analysis.null.place/json/tv-series-search-index.json?hash=uGqEXE',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',
@@ -106,6 +108,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-gifted2017.jpg?hash=Y8MRSd',
     'https://analysis.null.place/img/movie-thumb-greenbook2019.jpg?hash=F_qF0N',
     'https://analysis.null.place/img/movie-thumb-hellolovegoodbye2019.jpg?hash=04Vy6e',
+    'https://analysis.null.place/img/movie-thumb-inception2010.jpg?hash=B0_kdy',
     'https://analysis.null.place/img/movie-thumb-inglouriousbasterds2009.jpg?hash=GD6oJ_',
     'https://analysis.null.place/img/movie-thumb-limitless2011.jpg?hash=y9QKXN',
     'https://analysis.null.place/img/movie-thumb-lockstockandtwosmokingbarrels1998.jpg?hash=YnLVat',
@@ -149,6 +152,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-gifted2017.json?hash=yoNQLJ',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
+    'https://analysis.null.place/json/movie-review-inception2010.json?hash=F1J-2C',
     'https://analysis.null.place/json/movie-review-inglouriousbasterds2009.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-limitless2011.json?hash=jPLrQH',
     'https://analysis.null.place/json/movie-review-lockstockandtwosmokingbarrels1998.json?hash=poY45m',
@@ -178,9 +182,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
-    'https://analysis.null.place/json/movies-init-list.json?hash=D6zZcN',
-    'https://analysis.null.place/json/movies-list.json?hash=fd_Lzw',
-    'https://analysis.null.place/json/movies-search-index.json?hash=5Oqt0K',
+    'https://analysis.null.place/json/movies-init-list.json?hash=RC0BB2',
+    'https://analysis.null.place/json/movies-list.json?hash=TUKMRr',
+    'https://analysis.null.place/json/movies-search-index.json?hash=X_BNTN',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',

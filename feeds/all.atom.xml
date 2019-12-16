@@ -21,7 +21,7 @@
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-12-13T00:00:00+10:30</updated>
+        <updated>2019-12-16T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-11-27T00:00:00+10:30</updated>
+        <updated>2019-12-16T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -210,6 +210,17 @@
         </author>
         <id>tag:analysis.null.place,2019-08-22:/movie-review/hellolovegoodbye2019</id>
         <summary type="html">Romance on the go</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Inception</title>
+        <link>https://analysis.null.place/movie-reviews/inception2010/</link>
+        <published>2019-12-16T00:00:00+10:30</published>
+        <updated>2019-12-16T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-12-16:/movie-review/inception2010</id>
+        <summary type="html">Completely unique</summary>
     </entry>
     <entry>
         <title>Movie Review: Inglourious Basterds</title>
@@ -641,6 +652,17 @@
         <summary type="html">An invitation to fantasize</summary>
     </entry>
     <entry>
+        <title>TV-Series Review: Rick and Morty Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/rickandmorty12013/</link>
+        <published>2019-12-16T00:00:00+10:30</published>
+        <updated>2019-12-16T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-12-16:/tv-series-review/rickandmorty12013</id>
+        <summary type="html">Hillariously disturbing</summary>
+    </entry>
+    <entry>
         <title>TV-Series Review: The Walking Dead Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
         <published>2019-03-26T00:00:00+10:30</published>
@@ -651,5 +673,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-12-13T00:00:00+10:30</updated>
+    <updated>2019-12-16T00:00:00+10:30</updated>
 </feed>
