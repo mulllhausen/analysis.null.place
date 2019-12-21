@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>visual route table</title>
+    <meta name="slug" content="visual-route-table"/>
+    <meta name="date" content="2019-12-16"/>
+    <meta name="category" content="networking"/>
+    <meta name="tags" content="networking"/>
+    <meta name="stylesheets" content="visual-route-table.css"/>
+    <meta name="scripts" content="visual-route-table.js,ip-operations.js"/>
+    <meta name="img_preloads" content="visual-route-table.svg"/>
+    <meta name="summary" content="Visualize Linux, Windows and macOS route tables."/>
+    <meta name="console_explain_scripts" content="js/visual-route-table.js - code for handling events and rendering the visual route table svg.|js/ip-operations.js - code for manipulating ip addresses in the \'visual route table\' article."/>
+</head>
+<body>
+{% from 'form_container.html' import form_container with context %}
+{% from 'codeblock.html' import codeblock with context %}
+
+<p>Have you ever looked at a large route table and thought, "Wow! There are just
+too many rules to see what is going on"? With large route tables even the most
+experienced sysadmin could be forgiven for not knowing which gateway a
+destination IP will use. This is because networks can legally overlap, and when
+they do then it is the applicable rule with the highest mask which takes
+precedence - but that is hard to see from a big list of IP addresses.</p>
+
+<p>I created this tool to visualize route tables and diagnose network issues.
+You can copy and paste your route table here and the graphic will update. All
+the code is in the front-end, so if you add this blog to your home-screen then
+you can use the tool without internet access, which may be useful. It is
+currently in beta so if you see something incorrect then please
+<a href="https://github.com/mulllhausen/analysis.null.place/issues/new">submit
+a bug report</a> and I will fix it ASAP.</p>
+
+{% include 'ads_in_feed.html' %}
+
+{{ form_container('form0', 'start', linkable = False) }}
+    <div class="left">
+        <label for="preload" class="for-textbox">preload example</label><br>
+        <select id="preload">
+            <option value="linux">Linux</option>
+            <option value="windows">Windows</option>
+            <option value="macOS">macOS</option>
+            <option value="no" disabled hidden>N/A</option>
+        </select>
+    </div>
+    <div class="left">
+        <label for="inputDestinationIP" class="for-textbox">destination IP</label><br>
+        <input id="inputDestinationIP" type="text" value="192.168.2.1">
+    </div>
+    <div id="cli">
+        <table id="interactiveCLI" class="hole"></table>
+        <textarea id="routeTable"></textarea>
+    </div>
+    <div class="buttons-area">
+        <button id="edit">edit</button>
+        <button id="parse">parse</button>
+    </div>
+{{ form_container('form0', 'end') }}
+
+{{ form_container('visualRouteTable', 'start', linkable = False) }}
+    <object id="routeTableSVG" data="{{ QS_LINK['/img/visual-route-table.svg'] }}" type="image/svg+xml"></object>
+{{ form_container('visualRouteTable', 'end') }}
+
+{% include 'ads_in_feed.html' %}
+
+</body>
+</html>

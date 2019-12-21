@@ -1,4 +1,5 @@
 // init globals
+
 var passColor = '#7db904'; // green
 var failColor = 'red';
 var stopHashingForm = {}; // eg {2: false}
@@ -29,6 +30,9 @@ var miningData = { // note: raw values are taken directly from the input field
 
     target: null
 };
+
+// events
+
 addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
@@ -208,6 +212,8 @@ addEvent(window, 'load', function () {
             break;
     }
 });
+
+// functions
 
 function initBorderTheDigits() {
     var elementsToBorder = document.querySelectorAll('.individual-digits');

@@ -1,0 +1,69 @@
+select#preload, input#inputDestinationIP {
+    width: 11em;
+}
+#cli {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 10em;
+    resize: vertical;
+}
+input#inputDestinationIP, textarea#routeTable, table#interactiveCLI {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+}
+textarea#routeTable, table#interactiveCLI {
+    position: relative;
+    float: left;
+    /*top: 0; right: 0; bottom: 0; left: 0;*/
+    width: 100%;
+    height: 100%;
+    resize: none;
+    overflow: auto;
+    white-space: pre;/*nowrap;*/
+    border: none;
+}
+table#interactiveCLI {
+    border-collapse: collapse;
+    display: none;
+    cursor: default;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+table#interactiveCLI td, table#interactiveCLI th {
+    padding: 0;
+    border: none;
+    background: none;
+}
+table#interactiveCLI td.is-route {
+    cursor: pointer;
+}
+table#interactiveCLI td.is-route:hover,
+table#interactiveCLI td.is-route.hovered {
+    background: rgba(0, 0, 255, 0.2);
+}
+table#interactiveCLI td.is-route.clicked {
+    color: white;
+    background: rgba(0, 0, 255, 0.7);
+}
+.buttons-area {
+    display: block;
+    clear: both;
+}
+button#parse {
+    display: none;
+}
+#visualRouteTable {
+    padding: 0;
+    overflow-x: scroll;
+}
+#routeTableSVG {
+    width: 100%;
+    min-width: 800px;
+}
+svg {
+    border: none;
+}

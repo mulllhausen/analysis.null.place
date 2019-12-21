@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+
+<svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="400"
+viewBox="0 0 800 400" id="routeTable" class="global">
+<style type="text/css"><![CDATA[
+    .global {
+        fill: none;
+        font-family: monospace;
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* IE/Edge */
+        font-size: 12px;
+        user-select: none;
+    }
+    .namedArea {
+        stroke: #6a6a6a;
+        /*stroke-dasharray: 4;*/
+    }
+    .areaName {
+        dominant-baseline: hanging;
+        text-anchor: middle;/*horizontal*/
+    }
+    .nic rect {
+        fill: #6a6a6a;
+    }
+    .gateway circle {
+        fill: #6a6a6a;
+    }
+    text {
+        fill: white;
+    }
+    .nic text, .gateway text {
+        text-anchor: middle;/*horizontal*/
+        dominant-baseline: middle;/*position the text by the vertical center*/
+    }
+    .nic .inner, #gatewayHalfArrow .inner {
+        fill: #494949;
+    }
+    #z1 .ipRange {
+        opacity: 0.2;
+    }
+    #z2 g.ipRange {
+        opacity: 0;
+        cursor: pointer;
+    }
+    #z2 g.ipRange text {
+        visibility: hidden;
+    }
+    #z2 g.ipRange:hover,
+    #z2 g.ipRange.hovered {
+        opacity: 0.5;
+    }
+    #z2 g.ipRange.clicked {
+        opacity: 0.7;
+    }
+    #z2 g.ipRange:hover text,
+    #z2 g.ipRange.hovered text,
+    #z2 g.ipRange.clicked text {
+        visibility: visible;
+        opacity: 1;
+    }
+    text#largestIP,
+    text#smallestIP {
+        text-anchor: end;
+        fill: blue;
+    }
+    text.destinationIP {
+        text-anchor: end;
+    }
+    text.hostIP, text.destinationIP {
+        dominant-baseline: middle;
+    }
+    text#smallestIP,
+    .ipRange text.startIP,
+    .ipRange text.endIP-near-startIP,
+    text.destinationIP-near-bottom {
+        dominant-baseline: baseline;
+    }
+    text#largestIP,
+    .ipRange text.endIP,
+    .ipRange text.startIP-near-endIP,
+    text.destinationIP-near-top {
+        dominant-baseline: hanging;
+    }
+    .destinationIPFlow {
+        stroke: white;
+        fill: none;
+    }
+]]></style>
+  <defs>
+    <g class="nic">
+      <rect x="0" y="0" width="100" height="100" />
+      <path d="M10,20 H20 V10 H80 V20 H90 V90 H10 Z" class="inner"/>
+      <text transform="translate(50,50)"/>
+    </g>
+    <symbol id="gatewayHalfArrow">
+      <path d="M0,45 10,35 H7 V10 H0 Z" class="inner"/>
+    </symbol>
+    <g class="gateway">
+      <circle cx="0" cy="0" r="50" />
+      <use xlink:href="#gatewayHalfArrow"/>
+      <use xlink:href="#gatewayHalfArrow" transform="scale(-1,1)"/>
+      
+      <use xlink:href="#gatewayHalfArrow" transform="translate(50,0) rotate(90)"/>
+      <use xlink:href="#gatewayHalfArrow" transform="translate(50,0) rotate(90) scale(-1,1)"/>
+      
+      <use xlink:href="#gatewayHalfArrow" transform="rotate(180)"/>
+      <use xlink:href="#gatewayHalfArrow" transform="rotate(180) scale(-1,1)"/>
+      
+      <use xlink:href="#gatewayHalfArrow" transform="translate(-50,0) rotate(-90)"/>
+      <use xlink:href="#gatewayHalfArrow" transform="translate(-50,0) rotate(-90) scale(-1,1)"/>
+      <text x="0" y="0"></text>
+    </g>
+    <g class="cloud">
+      <circle cx="14" cy="34" r="14" fill="red"/>
+      <circle cx="30" cy="25" r="13" fill="red"/>
+      <circle cx="44" cy="26" r="10" fill="red"/>
+      <circle cx="51" cy="38" r="10" fill="red"/>
+      <rect x="14" y="34" width="37" height="14" fill="red"/>
+    </g>
+  </defs>
+  <rect width="100%" height="100%" fill="black"/>
+  <g id="z0"/>
+  <g id="z1"/>
+  <g id="z2"/>
+  <g id="z3"/>
+  <g id="z4"/>
+</svg>

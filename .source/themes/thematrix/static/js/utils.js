@@ -85,6 +85,10 @@ function isEven(i) {
     return ((i % 2) == 0);
 }
 
+function copyList(list) {
+    return list.slice();
+}
+
 function trim(str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 }
@@ -203,18 +207,27 @@ function deleteElements(element) {
 
 function addCSSClass(el, newClass) {
     if (el == null) return; // there is no element to add a class to
-    var classList = el.className.split(/\s+/);
+    var classList = getClassList(el);
     classList.push(newClass);
     el.className = classList.join(' ');
 }
 
 function removeCSSClass(el, removeClass) {
     if (el == null) return; // there is no element to remove a class from
-    var classList = el.className.split(/\s+/);
+    var classList = getClassList(el);
     var i = classList.indexOf(removeClass);
     if (i == -1) return; // not found
     classList.splice(i, 1); // remove 1 list item
     el.className = classList.join(' ');
+}
+
+function getClassList(el) {
+    if (typeof el.className == 'string') return el.className.split(/\s+/);
+    try {
+        return el.className.baseVal.split(/\s+/);
+    } catch (e) {
+        return null;
+    }
 }
 
 var permanentlyRemovedGlassCases = [];
@@ -297,7 +310,8 @@ function ajax(url, callback) {
         if (this.status != 200) return;
         callback(this.responseText);
     });
-    xhttp.open('GET', url, true); // async
+    var async = true;
+    xhttp.open('GET', url, async);
     xhttp.send();
 }
 
@@ -562,6 +576,10 @@ function debounce(func, wait, debounceType) {
 function generateCleanURL(pathPlus) {
     if (pathPlus[0] != '/') pathPlus = '/' + pathPlus;
     return siteGlobals.siteURL + pathPlus;
+}
+
+function newSVGEl(elType) {
+    return document.createElementNS('http://www.w3.org/2000/svg', elType);
 }
 
 // events for all pages

@@ -55,7 +55,7 @@ label {
 label.for-textbox:after, label.for-select:after {
     content: ": ";
 }
-textarea, input[type="text"], select {/*made to look like it is a small hole in the page*/
+textarea, input[type="text"], select, .hole {/*made to look like it is a hole in the page*/
     box-sizing: border-box;/*keep the input from overflowing its parent*/
     margin: 5px 0 5px 0;
     font-size: 14px;
