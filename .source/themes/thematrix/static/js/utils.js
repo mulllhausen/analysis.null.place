@@ -578,6 +578,12 @@ function generateCleanURL(pathPlus) {
     return siteGlobals.siteURL + pathPlus;
 }
 
+function removeAllChildren(el) {
+    while (el.lastChild) {
+        el.removeChild(el.lastChild);
+    }
+}
+
 function newSVGEl(elType) {
     return document.createElementNS('http://www.w3.org/2000/svg', elType);
 }

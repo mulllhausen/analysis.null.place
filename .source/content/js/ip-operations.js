@@ -68,8 +68,8 @@ function maskList2Bits(maskList) {
     for (var i = 0; i < maskList.length; i++) {
         var octet = maskList[i]; 
         for (var j = 7; j >= 0; j--) {
-            var bit = octet & (1 << j);
-            if (bit == 1) {
+            var bit = (octet & (1 << j)) > 0; // eg (255 & 64) > 0
+            if (bit) {
                 if (foundAZero) throw 'invalid mask: ' + ipList2IP(maskList) +
                 ' (non contiguous bits are not supported)';
                 else bits++;
@@ -81,7 +81,7 @@ function maskList2Bits(maskList) {
 
 function validIP(ipList, ipVersion) {
     for (var i = 0; i < ipVersion; i++) {
-        if ((typeof ipList[i] != 'number') || (ipList[i] < 0)) return false;
+        if ((ipList[i] == null) || (ipList[i] < 0)) return false;
         switch (ipVersion) {
             case 4: if (ipList[i] > 0xff) return false;
             case 6: if (ipList[i] > 0xffff) return false;
@@ -108,9 +108,15 @@ function ip2List(ip) {
             break;
     }
     for (var i = 0; i < ipList.length; i++) {
+        var octet = ipList[i];
         switch (ipVersion) {
             case 4:
-                ipList[i] = parseInt(ipList[i]);
+                if (octet == '') octet = null;
+                else {
+                    octet = parseInt(octet);
+                    if (isNaN(octet)) octet = null;
+                }
+                ipList[i] = octet;
                 break;
             case 6:
                 ipList[i] = parseInt(ipList[i], 16);

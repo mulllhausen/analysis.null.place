@@ -23,6 +23,12 @@ textarea#routeTable, table#interactiveCLI {
     white-space: pre;/*nowrap;*/
     border: none;
 }
+#destinationIPErrorContainer, #routeTableErrorContainer {
+    width: 100%;
+}
+#destinationIPErrors, #routeTableErrors {
+    color: red;
+}
 table#interactiveCLI {
     border-collapse: collapse;
     display: none;

@@ -1,6 +1,8 @@
 // todo: ipv6
 // todo: rules for 192, 10, etc
 
+(function () { // new namespace
+
 // init globals
 
 var preloadData = {
@@ -11,7 +13,7 @@ var preloadData = {
 '172.16.0.0      wan      255.255.0.0     UG        0 0          0 eth0\n' +
 '192.168.0.0     *        255.255.255.0   U         0 0          0 eth0\n' +
 '192.168.1.0     *        255.255.255.0   U         0 0          0 eth1',
-    windows: '$ route print\n' +
+    windows: '> route print\n' +
 '===========================================================================\n' +
 'Interface List\n' +
 ' 55...00 00 00 00 00 00 ......Intel(R) Ethernet Connection I217-LM\n' +
@@ -127,7 +129,9 @@ var svgProperties = {
     fontSize: 12,
     areaBorderWidth: 1,
 
-    verticalGapBeforeAndAfterIPRange: 20, // the gap before the ip ranges, repeated at the bottom too
+    // the gap before the ip ranges, repeated at the bottom too
+    verticalGapBeforeAndAfterIPRange: 20,
+
     ipTextVerticalMargin: 4,
     ipLeft: 113, // the left position of the ip ranges
     ipHorizontalMargin: 2,
@@ -138,26 +142,45 @@ var svgProperties = {
     deviceSquareHeight: 100, // the height for interfaces and gateways
     interfaceLeft: 260, // the left position of the interfaces
     minVerticalGapBetweenInterfaces: 10,
-    verticalGapBeforeAndAfterInterfaces: 30, // the gap before interfaces, repeated at the bottom too
+
+    // the gap before interfaces, repeated at the bottom too
+    verticalGapBeforeAndAfterInterfaces: 30,
 
     gatewayLeft: 460, // the left position of the gateways
     minVerticalGapBetweenGateways: 10,
-    verticalGapBeforeAndAfterGateways: 30, // the gap before gateways, repeated at the bottom too
+
+    // the gap before gateways, repeated at the bottom too
+    verticalGapBeforeAndAfterGateways: 30,
     
-    externalDestinationLeft: 650, // the left position of the external destination
+    externalDestinationLeft: 650, // the left position of the wan destination
     verticalGapBetweenOtherNicAndGateways: 70,
     verticalGapAfterOtherNic: 20
 };
 var donePaths = []; // keep a list of z1 paths
+
+// globals so that the destination ip and input route table can be updated
+// independently without requiring a complete recalc each time
+var routeTableData = null; // init
+var interfaceData = null; // init
+var gatewayData = null; // init
 
 // events
 
 addEvent(window, 'load', function () {
     initSVGProperties();
 
-    addEvent(document.getElementById('routeTable'), 'change,keyup', routeTableChanged);
+    addEvent(
+        document.getElementById('routeTable'),
+        'change,keyup',
+        routeTableChanged
+    );
     addEvent(document.getElementById('preload'), 'change', preloadChanged);
     preloadChanged(); // init    
+    addEvent(
+        document.getElementById('inputDestinationIP'),
+        'change,keyup',
+        updateDestinationIP
+    );
     
     removeGlassCase('form0', true); // permanently = true
     removeGlassCase('visualRouteTable', true); // permanently = true
@@ -189,6 +212,7 @@ function initSVGProperties() {
 
 function editButton() {
     switchCLITo('input');
+    clearSVG();
 }
 
 function routeTableChanged() {
@@ -197,6 +221,64 @@ function routeTableChanged() {
     var actualRouteTable = document.getElementById('routeTable').value;
     if (actualRouteTable == preloadData[preload]) return; // no change
     document.getElementById('preload').value = 'no';
+}
+
+function updateDestinationIP() {
+    // select the correct route table line
+    clearDestinationIPFlow();
+    var destinationIP = document.getElementById('inputDestinationIP').value;
+    var destinationIPList = ip2List(destinationIP);
+    if (!validIP(destinationIPList, 4)) return writeDestinationIPError(
+        'invalid destination IP address'
+    );
+    var routeTableDataLine = pickPath(destinationIPList, routeTableData);
+    if (typeof routeTableDataLine == 'string') {
+        // string = error
+        return writeDestinationIPError(routeTableDataLine);
+    }
+
+    // render the desination ip flow
+    renderDestinationIPFlow(
+        destinationIP,
+        destinationIPList,
+        routeTableDataLine,
+        interfaceData,
+        gatewayData,
+        routeTableData
+    );
+    writeDestinationIPError(); // clear previous errors
+}
+
+function writeDestinationIPError(text) {
+    var errorContainer = document.getElementById('destinationIPErrorContainer');
+    var destinationIPInput = document.getElementById('inputDestinationIP');
+    var errorText = document.getElementById('destinationIPErrors');
+    if (text == null) {
+        errorContainer.style.display = 'none';
+        destinationIPInput.style.borderColor =
+        'rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)';
+        errorText.innerHTML = '';
+        return;
+    }
+    else {
+        errorContainer.style.display = 'block';
+        destinationIPInput.style.borderColor = 'red';
+        errorText.innerHTML = text;
+    }
+}
+
+function writeRouteTableError(text) {
+    var errorContainer = document.getElementById('routeTableErrorContainer');
+    var errorText = document.getElementById('routeTableErrors');
+    if (text == null) {
+        errorContainer.style.display = 'none';
+        errorText.innerHTML = '';
+        return;
+    }
+    else {
+        errorContainer.style.display = 'block';
+        errorText.innerHTML = text;
+    }
 }
 
 function preloadChanged() {
@@ -242,9 +324,9 @@ function parseButton() {
     clearSVG();
     var routeTableStr = document.getElementsByTagName('textarea')[0].value;
     var routeTableList = routeTableStr.split('\n');
-    var routeTableData = parseRouteTable(routeTableList);
+    routeTableData = parseRouteTable(routeTableList); // global
     if (routeTableData.routes.length == 0) {
-        error('no routes found');
+        writeRouteTableError('no routes found');
         return null;
     }
     try {
@@ -267,12 +349,13 @@ function parseButton() {
             ) routeTableData.maxIPList = routeTableLine.hostEndList;
         }
     } catch (e) {
-        error(e);
+        writeRouteTableError(e);
         return null;
     }
     render(routeTableData);
     convertTextarea(routeTableList, routeTableData);
     switchCLITo('interactive');
+    writeRouteTableError();
 }
 
 function switchCLITo(what) {
@@ -296,14 +379,14 @@ function switchCLITo(what) {
     }
 }
 
-function convertTextarea(routeTableList, routeTableData) {
+function convertTextarea(routeTableList, tmpRouteTableData) {
     var interactiveCLI = document.getElementById('interactiveCLI');
     var html = ''; // init
     // lines that have route rules in them (examples of other lines are headings, separators, and empty lines)
     //var actualRouteLines = [];
-    var mapRouteLines = {}; // from route table list to routeTableData.routes
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var route = routeTableData.routes[i];
+    var mapRouteLines = {}; // from route table list to tmpRouteTableData.routes
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var route = tmpRouteTableData.routes[i];
         mapRouteLines[route.originalLineNum] = i;
     }
     for (var i = 0; i < routeTableList.length; i++) {
@@ -454,10 +537,6 @@ function parseRouteTable(routeTableList) {
     return parsedData;
 }
 
-function error(txt) {
-    document.getElementById('error').innerHTML = txt;
-}
-
 // rendering
 
 function clearSVG() {
@@ -469,16 +548,10 @@ function clearSVG() {
     donePaths = []; // reset
 }
 
-function removeAllChildren(el) {
-    while (el.lastChild) {
-        el.removeChild(el.lastChild);
-    }
-}
-
-function render(routeTableData) {
+function render(tmpRouteTableData) {
     document.getElementById('visualRouteTable').style.display = 'block';
     // resize the svg height to fit the interfaces and gateways
-    resizeSVGHeight(routeTableData);
+    resizeSVGHeight(tmpRouteTableData);
 
     // render the areas
     renderNamedArea(
@@ -501,13 +574,13 @@ function render(routeTableData) {
         svgProperties.overallWidth + 1, // +1 as with -1 above
         'WAN'
     );
-    renderIPLimits(routeTableData);
+    renderIPLimits(tmpRouteTableData);
 
     // get the interface coordinates
-    var interfaceData = getInterfaceCoordinates(routeTableData);
+    interfaceData = getInterfaceCoordinates(tmpRouteTableData); // global
 
     // get the gateway coordinates
-    var gatewayData = getGatewayCoordinates(routeTableData);
+    gatewayData = getGatewayCoordinates(tmpRouteTableData); // global
 
     // render the interfaces
     renderInterfaces(interfaceData);
@@ -519,34 +592,20 @@ function render(routeTableData) {
     renderExternalDestinations(gatewayData);
 
     // then get the ip range coordinates
-    var ipRangesData = getIPRangeCoordinates(routeTableData);
-    // render the ip ranges going to the interfaces
+    var ipRangesData = getIPRangeCoordinates(tmpRouteTableData);
 
+    // render the ip ranges going to the interfaces
     renderIPRanges(ipRangesData, interfaceData, gatewayData);
 
-    // select the correct route table line
-    var destinationIP = document.getElementById('inputDestinationIP').value;
-    var destinationIPList = ip2List(destinationIP);
-    var routeTableDataLine = pickPath(destinationIPList, routeTableData);
-    if (routeTableDataLine == null) return;
-
-    // render the desination ip flow
-    renderDestinationIPFlow(
-        destinationIP,
-        destinationIPList,
-        routeTableDataLine,
-        interfaceData,
-        gatewayData,
-        routeTableData
-    );
+    updateDestinationIP(); // uses globals
 }
 
-function resizeSVGHeight(routeTableData) {
+function resizeSVGHeight(tmpRouteTableData) {
     var interfaceNames = []; // init
     var gatewayNames = []; // init
     var defaultGWFound = false;
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var routeLine = routeTableData.routes[i];
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var routeLine = tmpRouteTableData.routes[i];
 
         var interfaceName = routeLine.interface;
         if (interfaceNames.indexOf(interfaceName) == -1) {
@@ -616,7 +675,7 @@ function renderNamedArea(height, startX, endX, text) {
     svg.getElementById('z0').appendChild(textEl);
 }
 
-function renderIPLimits(routeTableData) {
+function renderIPLimits(tmpRouteTableData) {
     var minIPTextEl = newSVGEl('text');
     minIPTextEl.setAttribute(
         'x',
@@ -629,7 +688,7 @@ function renderIPLimits(routeTableData) {
         svgProperties.ipTextVerticalMargin
     );
     minIPTextEl.setAttribute('id', 'smallestIP');
-    minIPTextEl.textContent = ipList2IP(routeTableData.minIPList);
+    minIPTextEl.textContent = ipList2IP(tmpRouteTableData.minIPList);
     svg.getElementById('z1').appendChild(minIPTextEl);
 
     var maxIPTextEl = newSVGEl('text');
@@ -642,19 +701,19 @@ function renderIPLimits(routeTableData) {
         svgProperties.ipTextVerticalMargin
     );
     maxIPTextEl.setAttribute('id', 'largestIP');
-    maxIPTextEl.textContent = ipList2IP(routeTableData.maxIPList);
+    maxIPTextEl.textContent = ipList2IP(tmpRouteTableData.maxIPList);
     svg.getElementById('z1').appendChild(maxIPTextEl);
 }
 
-function getInterfaceCoordinates(routeTableData) {
+function getInterfaceCoordinates(tmpRouteTableData) {
     var interfaceNames = [];
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var interfaceName = routeTableData.routes[i].interface;
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var interfaceName = tmpRouteTableData.routes[i].interface;
         if (interfaceNames.indexOf(interfaceName) != -1) continue;
         interfaceNames.push(interfaceName);
     }
     if (interfaceNames.length == 0) return null;
-    var interfaceData = []; // init
+    var tmpInterfaceData = []; // init
     var heightForInterfaces =
     svgProperties.topHalfHeight -
     (svgProperties.verticalGapBeforeAndAfterInterfaces * 2);
@@ -668,29 +727,29 @@ function getInterfaceCoordinates(routeTableData) {
                 svgProperties.deviceSquareHeight + verticalGapBetweenInterfaces
             )
         );
-        interfaceData.push({
+        tmpInterfaceData.push({
             name: interfaceNames[i],
             top: top,
             midway: top + (svgProperties.deviceSquareHeight / 2),
             bottom: top + svgProperties.deviceSquareHeight
         });
     }
-    return interfaceData;
+    return tmpInterfaceData;
 }
 
-function renderInterfaces(interfaceData) {
-    for (var i = 0; i < interfaceData.length; i++) {
-        var nicData = interfaceData[i];
+function renderInterfaces(tmpInterfaceData) {
+    for (var i = 0; i < tmpInterfaceData.length; i++) {
+        var nicData = tmpInterfaceData[i];
         render1Nic(svgProperties.interfaceLeft, nicData.top, nicData.name);
     }
 }
 
-function getGatewayCoordinates(routeTableData) {
+function getGatewayCoordinates(tmpRouteTableData) {
     var gatewayNames = [];
     var defaultGWFound = false;
     var defaultGWName;
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var gatewayName = routeTableData.routes[i].originalGateway;
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var gatewayName = tmpRouteTableData.routes[i].originalGateway;
         switch (gatewayName) {
             case '0.0.0.0':
             case '*':
@@ -705,7 +764,7 @@ function getGatewayCoordinates(routeTableData) {
     // the default gateway must go on the end
     if (defaultGWFound) gatewayNames.push(defaultGWName);
     if (gatewayNames.length == 0) return null;
-    var gatewayData = []; // init
+    var tmpGatewayData = []; // init
     var heightForGateways = svgProperties.topHalfHeight -
     (svgProperties.verticalGapBeforeAndAfterGateways * 2);
     var verticalGapBetweenGateways = (
@@ -716,19 +775,19 @@ function getGatewayCoordinates(routeTableData) {
         var top = svgProperties.verticalGapBeforeAndAfterGateways + (
             i * (svgProperties.deviceSquareHeight + verticalGapBetweenGateways)
         );
-        gatewayData.push({
+        tmpGatewayData.push({
             name: gatewayNames[i],
             top: top,
             midway: top + (svgProperties.deviceSquareHeight / 2),
             bottom: top + svgProperties.deviceSquareHeight
         });
     }
-    return gatewayData;
+    return tmpGatewayData;
 }
 
-function renderGateways(gatewayData) {
-    for (var i = 0; i < gatewayData.length; i++) {
-        var gwData = gatewayData[i];
+function renderGateways(tmpGatewayData) {
+    for (var i = 0; i < tmpGatewayData.length; i++) {
+        var gwData = tmpGatewayData[i];
         var text = gwData.name;
         switch (text) {
             case '0.0.0.0':
@@ -741,9 +800,9 @@ function renderGateways(gatewayData) {
     }
 }
 
-function renderExternalDestinations(gatewayData) {
-    for (var i = 0; i < gatewayData.length; i++) {
-        var gwData = gatewayData[i];
+function renderExternalDestinations(tmpGatewayData) {
+    for (var i = 0; i < tmpGatewayData.length; i++) {
+        var gwData = tmpGatewayData[i];
         switch (gwData.name) {
             case '0.0.0.0':
             case '*':
@@ -808,19 +867,19 @@ function renderMultilineText(textEl, text) {
     }
 }
 
-function getIPRangeCoordinates(routeTableData) {
-    var interfaceData = []; // init
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var routeTableLine = routeTableData.routes[i];
+function getIPRangeCoordinates(tmpRouteTableData) {
+    var tmpInterfaceData = []; // init
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var routeTableLine = tmpRouteTableData.routes[i];
         var start = ipInt2Y(
             ipList2Int(routeTableLine.hostStartList),
-            routeTableData
+            tmpRouteTableData
         );
         var end = ipInt2Y(
             ipList2Int(routeTableLine.hostEndList),
-            routeTableData
+            tmpRouteTableData
         );
-        interfaceData.push({
+        tmpInterfaceData.push({
             routeLine: i,
             startIP: routeTableLine.hostStartList.join('.'), 
             endIP: routeTableLine.hostEndList.join('.'),
@@ -830,12 +889,12 @@ function getIPRangeCoordinates(routeTableData) {
             gatewayName: routeTableLine.originalGateway
         });
     }
-    return interfaceData;
+    return tmpInterfaceData;
 }
 
-function ipInt2Y(ipInt, routeTableData) {
-    var maxIPInt = ipList2Int(routeTableData.maxIPList);
-    var minIPInt = ipList2Int(routeTableData.minIPList);
+function ipInt2Y(ipInt, tmpRouteTableData) {
+    var maxIPInt = ipList2Int(tmpRouteTableData.maxIPList);
+    var minIPInt = ipList2Int(tmpRouteTableData.minIPList);
     // given 2 points, we can find the line between them:
     var p1x = minIPInt;
     var p1y = svgProperties.topHalfHeight -
@@ -854,17 +913,17 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
             i % svgProperties.ipColors.length
         ];
         var ipRangeData = ipRangesData[i];
-        var interfaceData = null; //init/reset
+        var tmpInterfaceData = null; //init/reset
         for (var j = 0; j < interfacesData.length; j++) {
             if (ipRangeData.interfaceName != interfacesData[j].name) continue;
-            interfaceData = interfacesData[j]; // use this one
+            tmpInterfaceData = interfacesData[j]; // use this one
             break;
         }
 
-        var gatewayData = null; //init/reset
+        var tmpGatewayData = null; //init/reset
         for (var j = 0; j < gatewaysData.length; j++) {
             if (ipRangeData.gatewayName != gatewaysData[j].name) continue;
-            gatewayData = gatewaysData[j]; // use this one
+            tmpGatewayData = gatewaysData[j]; // use this one
             break;
         }
         var group = newSVGEl('g');
@@ -876,11 +935,11 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
         var path = 'M' + startX + ',' + startY + ' ';
 
         var endX = svgProperties.interfaceLeft;
-        var endY = interfaceData.bottom;
+        var endY = tmpInterfaceData.bottom;
         path += getIPBezier(startX, startY, endX, endY);
 
         startX = endX;
-        startY = interfaceData.top;
+        startY = tmpInterfaceData.top;
         path += 'V' + startY + ' ';
 
         endX = svgProperties.ipLeft;
@@ -890,36 +949,36 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
 
         // the path from the interface to the gateway
         startX = svgProperties.interfaceLeft + svgProperties.deviceSquareHeight;
-        startY = interfaceData.top;
+        startY = tmpInterfaceData.top;
         path = 'M' + startX + ',' + startY + ' '; // new path
 
         endX = svgProperties.gatewayLeft +
         (svgProperties.deviceSquareHeight / 2);
-        endY = gatewayData.top;
+        endY = tmpGatewayData.top;
         path += getIPBezier(startX, startY, endX, endY);
 
-        endY = gatewayData.bottom;
+        endY = tmpGatewayData.bottom;
         path += 'V' + endY;
 
         startX = endX;
         startY = endY;
         endX = svgProperties.interfaceLeft + svgProperties.deviceSquareHeight;
-        endY = interfaceData.bottom;
+        endY = tmpInterfaceData.bottom;
         path += getIPBezier(startX, startY, endX, endY) + 'Z';
         group = renderIPRange(path, group, pathColor);
 
         // the path from the gateway to the foreign gateway
-        switch (gatewayData.name) {
+        switch (tmpGatewayData.name) {
             case '0.0.0.0':
             case '*':
             case 'on-link':
                 // LAN - go downwards
                 startX = svgProperties.gatewayLeft;
-                startY = gatewayData.top +
+                startY = tmpGatewayData.top +
                 (svgProperties.deviceSquareHeight / 2);
                 path = 'M' + startX + ',' + startY + ' '; // new path
 
-                endY = gatewayData.bottom +
+                endY = tmpGatewayData.bottom +
                 svgProperties.verticalGapBetweenOtherNicAndGateways;
                 path += 'V' + endY;
 
@@ -933,13 +992,13 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
             default: // WAN - go right
                 startX = svgProperties.gatewayLeft +
                 (svgProperties.deviceSquareHeight / 2);
-                startY = gatewayData.top;
+                startY = tmpGatewayData.top;
                 path = 'M' + startX + ',' + startY + ' '; // new path
 
                 endX = svgProperties.overallWidth;
                 path += 'H' + endX;
 
-                endY = gatewayData.bottom;
+                endY = tmpGatewayData.bottom;
                 path += 'V' + endY;
 
                 endX = startX;
@@ -1058,17 +1117,23 @@ function renderIPText(group, ipRangeData) {
 // given a destination ip (list), choose the line from the route table that
 // applies to it. if there is more than one line then set an error and return
 // null
-function pickPath(destinationIPList, routeTableData) {
+function pickPath(destinationIPList, tmpRouteTableData) {
     // first find all route table lines that apply
     var applicableRouteLines = []; // init
     var largestNetmaskBits = 0; // init (largest = 32 = the most specific)
-    for (var i = 0; i < routeTableData.routes.length; i++) {
-        var routeTableDataLine = routeTableData.routes[i];
+    for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
+        var routeTableDataLine = tmpRouteTableData.routes[i];
         var inRange = true; // start optimistic
         for (var j = 0; j < destinationIPList.length; j++) {
+            var startRange = routeTableDataLine.hostStartList[j];
+            var endRange = routeTableDataLine.hostEndList[j];
+            if (j == (destinationIPList.length - 1)) {
+                startRange--;
+                endRange++;
+            }
             if (
-                (destinationIPList[j] < routeTableDataLine.hostStartList[j])
-                || (destinationIPList[j] > routeTableDataLine.hostEndList[j])
+                (destinationIPList[j] < startRange)
+                || (destinationIPList[j] > endRange)
             ) {
                 inRange = false;
                 break;
@@ -1091,31 +1156,30 @@ function pickPath(destinationIPList, routeTableData) {
         keep.push(applicableRouteData.line);
     }
     
-    if (keep.length == 0) {
-        error('no route rules apply to this destination ip');
-        return null;
-    }
-    if (keep.length > 1) {
-        error('more than 1 route rule applies to this destination ip');
-        return null;
-    }
-    return routeTableData.routes[keep[0]];
+    if (keep.length == 0) return 'no route rules apply to this destination IP';
+    if (keep.length > 1) return 'more than 1 route rule applies to this destination IP';
+    return tmpRouteTableData.routes[keep[0]];
+}
+
+function clearDestinationIPFlow() {
+    deleteElement(svg.querySelector('.destinationIPFlow'));
+    deleteElement(svg.querySelector('.destinationIP'));
 }
 
 function renderDestinationIPFlow(
-    destinationIP, destinationIPList, routeTableLine, interfaceData,
-    gatewayData, routeTableData
+    destinationIP, destinationIPList, routeTableLine, tmpInterfaceData,
+    tmpGatewayData, tmpRouteTableData
 ) {
     var destinationIPInt = ipList2Int(destinationIPList);
 
     var startX = svgProperties.ipLeft;
-    var startY = ipInt2Y(destinationIPInt, routeTableData);
+    var startY = ipInt2Y(destinationIPInt, tmpRouteTableData);
     var path = 'M' + startX + ',' + startY + ' ';
 
     var relevantInterface = null;
-    for (var i = 0; i < interfaceData.length; i++) {
-        if (interfaceData[i].name != routeTableLine.interface) continue;
-        relevantInterface = interfaceData[i];
+    for (var i = 0; i < tmpInterfaceData.length; i++) {
+        if (tmpInterfaceData[i].name != routeTableLine.interface) continue;
+        relevantInterface = tmpInterfaceData[i];
         break;
     }
     var endY = relevantInterface.midway;
@@ -1134,9 +1198,9 @@ function renderDestinationIPFlow(
     path += 'H' + startX;
     
     var relevantGateway = null;
-    for (var i = 0; i < gatewayData.length; i++) {
-        if (gatewayData[i].name != routeTableLine.gateway) continue;
-        relevantGateway = gatewayData[i];
+    for (var i = 0; i < tmpGatewayData.length; i++) {
+        if (tmpGatewayData[i].name != routeTableLine.originalGateway) continue;
+        relevantGateway = tmpGatewayData[i];
         break;
     }
     endY = relevantGateway.midway;
@@ -1183,3 +1247,4 @@ function getIPBezier(startX, startY, endX, endY, angledEnd) {
     return 'C ' + controlX1 + ' ' + controlY1 + ',' + controlX2 + ' ' +
     controlY2 + ',' + endX + ' ' + endY + ' ';
 }
+})();

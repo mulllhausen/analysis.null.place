@@ -46,9 +46,15 @@ a bug report</a> and I will fix it ASAP.</p>
         <label for="inputDestinationIP" class="for-textbox">destination IP</label><br>
         <input id="inputDestinationIP" type="text" value="192.168.2.1">
     </div>
+    <div class="left" id="destinationIPErrorContainer">
+        <span id="destinationIPErrors"></span>
+    </div>
     <div id="cli">
         <table id="interactiveCLI" class="hole"></table>
         <textarea id="routeTable"></textarea>
+    </div>
+    <div class="left" id="routeTableErrorContainer">
+        <span id="routeTableErrors"></span>
     </div>
     <div class="buttons-area">
         <button id="edit">edit</button>
