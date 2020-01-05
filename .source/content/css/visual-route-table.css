@@ -22,6 +22,7 @@ textarea#routeTable, table#interactiveCLI {
     overflow: auto;
     white-space: pre;/*nowrap;*/
     border: none;
+    line-height: 17px;
 }
 #destinationIPErrorContainer, #routeTableErrorContainer {
     width: 100%;
@@ -38,22 +39,34 @@ table#interactiveCLI {
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
+    line-height: 16px;
 }
 table#interactiveCLI td, table#interactiveCLI th {
-    padding: 0;
+    padding: 0 0 1px 0;
     border: none;
     background: none;
 }
 table#interactiveCLI td.is-route {
     cursor: pointer;
 }
-table#interactiveCLI td.is-route:hover,
-table#interactiveCLI td.is-route.hovered {
+table#interactiveCLI:not(.error) td.is-route:hover,
+table#interactiveCLI:not(.error) td.is-route.hovered {
     background: rgba(0, 0, 255, 0.2);
 }
 table#interactiveCLI td.is-route.clicked {
     color: white;
     background: rgba(0, 0, 255, 0.7);
+}
+.borderError {
+    border: 1px solid red;
+    margin: 0 -2px 0 -1px;
+    padding-right: 1px;
+}
+.borderError.highlighted, .borderError.clicklighted {
+    color: red;
+}
+ul#routeTableErrors span.listRouteError:hover {
+    cursor: pointer;
 }
 .buttons-area {
     display: block;
@@ -65,6 +78,7 @@ button#parse {
 #visualRouteTable {
     padding: 0;
     overflow-x: scroll;
+    visibility: hidden; /* initially hidden */
 }
 #routeTableSVG {
     width: 100%;

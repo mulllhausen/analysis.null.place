@@ -35,7 +35,7 @@ a bug report</a> and I will fix it ASAP.</p>
 {{ form_container('form0', 'start', linkable = False) }}
     <div class="left">
         <label for="preload" class="for-textbox">preload example</label><br>
-        <select id="preload">
+        <select id="preload" disabled>
             <option value="linux">Linux</option>
             <option value="windows">Windows</option>
             <option value="macOS">macOS</option>
@@ -44,21 +44,21 @@ a bug report</a> and I will fix it ASAP.</p>
     </div>
     <div class="left">
         <label for="inputDestinationIP" class="for-textbox">destination IP</label><br>
-        <input id="inputDestinationIP" type="text" value="192.168.2.1">
+        <input id="inputDestinationIP" type="text" value="192.168.2.1" disabled>
     </div>
     <div class="left" id="destinationIPErrorContainer">
         <span id="destinationIPErrors"></span>
     </div>
     <div id="cli">
         <table id="interactiveCLI" class="hole"></table>
-        <textarea id="routeTable"></textarea>
+        <textarea id="routeTable" disabled></textarea>
     </div>
     <div class="left" id="routeTableErrorContainer">
-        <span id="routeTableErrors"></span>
+        <ul id="routeTableErrors"></ul>
     </div>
     <div class="buttons-area">
-        <button id="edit">edit</button>
-        <button id="parse">parse</button>
+        <button id="edit" disabled>edit</button>
+        <button id="parse" disabled>parse</button>
     </div>
 {{ form_container('form0', 'end') }}
 

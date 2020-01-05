@@ -16,6 +16,7 @@ function getMissingData(dataIn) {
         originalGateway: dataIn.originalgateway,
         gateway: dataIn.gateway
     };
+    if (dataIn.hasOwnProperty('error')) dataOut.error = dataIn.error;
     validIP(dataOut.destinationList, dataOut.destinationIPVersion);
     validIP(dataOut.maskList, dataOut.maskIPVersion);
 
@@ -83,8 +84,12 @@ function validIP(ipList, ipVersion) {
     for (var i = 0; i < ipVersion; i++) {
         if ((ipList[i] == null) || (ipList[i] < 0)) return false;
         switch (ipVersion) {
-            case 4: if (ipList[i] > 0xff) return false;
-            case 6: if (ipList[i] > 0xffff) return false;
+            case 4:
+                if (ipList[i] > 0xff) return false;
+                break;
+            case 6:
+                if (ipList[i] > 0xffff) return false;
+                break;
         }
     }
     return true;
@@ -108,18 +113,12 @@ function ip2List(ip) {
             break;
     }
     for (var i = 0; i < ipList.length; i++) {
-        var octet = ipList[i];
         switch (ipVersion) {
             case 4:
-                if (octet == '') octet = null;
-                else {
-                    octet = parseInt(octet);
-                    if (isNaN(octet)) octet = null;
-                }
-                ipList[i] = octet;
+                ipList[i] = betterParseInt(ipList[i]);
                 break;
             case 6:
-                ipList[i] = parseInt(ipList[i], 16);
+                ipList[i] = betterParseInt(ipList[i], 16);
                 break;
         }
     }

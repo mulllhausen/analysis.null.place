@@ -95,6 +95,8 @@ var preloadData = {
 '\n' +
 '255.255.255.255/32 link#5             UCS             0        0     en0      !'
 };
+var mode = null; // 'editing' or 'parsed'
+var parseErrors = false; // init
 var routeTableFormat = {
     linux: {
         routes: {
@@ -181,23 +183,30 @@ addEvent(window, 'load', function () {
         'change,keyup',
         updateDestinationIP
     );
-    
-    removeGlassCase('form0', true); // permanently = true
-    removeGlassCase('visualRouteTable', true); // permanently = true
 
-    addEvent(svg, 'click', function(e) { svgAction(e, 'clicked'); });
-    addEvent(svg, 'mouseover', function(e) { svgAction(e, 'hovered'); });
+    addEvent(svg, 'mouseover,click', svgAction);
 
     addEvent(document.getElementById('parse'), 'click', parseButton);
-    parseButton(); // init
     addEvent(document.getElementById('edit'), 'click', editButton);
 
-    addEvent(document.getElementById('interactiveCLI'), 'click', function(e) {
-        interactiveCLIAction(e, 'clicked');
-    });
-    addEvent(document.getElementById('interactiveCLI'), 'mouseover', function(e) {
-        interactiveCLIAction(e, 'hovered');
-    });
+    addEvent(
+        document.getElementById('interactiveCLI'),
+        'mouseover,click',
+        interactiveCLIAction
+    );
+
+    addEvent(
+        document.getElementById('routeTableErrors'),
+        'mouseover,mouseout,click',
+        highlightRouteTableError
+    );
+    document.getElementById('preload').removeAttribute('disabled');
+    document.getElementById('inputDestinationIP').removeAttribute('disabled');
+    document.getElementById('routeTable').removeAttribute('disabled');
+    document.getElementById('edit').removeAttribute('disabled');
+    document.getElementById('parse').removeAttribute('disabled');
+    removeGlassCase('form0', true); // permanently = true
+    removeGlassCase('visualRouteTable', true); // permanently = true
 });
 
 // functions
@@ -213,6 +222,9 @@ function initSVGProperties() {
 function editButton() {
     switchCLITo('input');
     clearSVG();
+    hideSVG();
+    writeRouteTableErrors();
+    mode = 'editing';
 }
 
 function routeTableChanged() {
@@ -223,7 +235,7 @@ function routeTableChanged() {
     document.getElementById('preload').value = 'no';
 }
 
-function updateDestinationIP() {
+function updateDestinationIP(doNotRender) {
     // select the correct route table line
     clearDestinationIPFlow();
     var destinationIP = document.getElementById('inputDestinationIP').value;
@@ -238,7 +250,7 @@ function updateDestinationIP() {
     }
 
     // render the desination ip flow
-    renderDestinationIPFlow(
+    if (mode == 'parsed' && doNotRender != true) renderDestinationIPFlow(
         destinationIP,
         destinationIPList,
         routeTableDataLine,
@@ -258,38 +270,57 @@ function writeDestinationIPError(text) {
         destinationIPInput.style.borderColor =
         'rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)';
         errorText.innerHTML = '';
-        return;
-    }
-    else {
+    } else {
         errorContainer.style.display = 'block';
         destinationIPInput.style.borderColor = 'red';
         errorText.innerHTML = text;
     }
 }
 
-function writeRouteTableError(text) {
+function writeRouteTableErrors(dict) {
     var errorContainer = document.getElementById('routeTableErrorContainer');
     var errorText = document.getElementById('routeTableErrors');
-    if (text == null) {
+    if (dict == null) {
         errorContainer.style.display = 'none';
         errorText.innerHTML = '';
-        return;
-    }
-    else {
+    } else {
         errorContainer.style.display = 'block';
-        errorText.innerHTML = text;
+        var html = '';
+        foreach (dict, function (i, k) {
+            var startLink = ''; // init/reset
+            var endLink = ''; // init/reset
+            if (k.hasOwnProperty('routeNum') && k.hasOwnProperty('fieldNum')) {
+                startLink = '<span' +
+                    ' class="listRouteError"' +
+                    ' routeNum="' + k.routeNum + '"' +
+                    ' fieldNum="' + k.fieldNum + '">';
+                endLink = '</span>';
+            }
+            html += '<li>' + startLink + k.text + endLink + '</li>\n';
+        });
+        errorText.innerHTML = html;
     }
 }
 
 function preloadChanged() {
+    writeRouteTableErrors();
+    hideSVG();
     var preload = document.getElementById('preload').value;
     if (preload == 'no') return;
     document.getElementById('routeTable').value = preloadData[preload];
-    switchCLITo('input');
-    clearSVG();
+    parseButton();
 }
 
-function svgAction(e, what) {
+function svgAction(e) {
+    var what;
+    switch (e.type) {
+        case 'click':
+            what = 'clicked';
+            break;
+        case 'mouseover':
+            what = 'hovered';
+            break;
+    }
     var actionEl = e.srcElement;
     clearSVGSelection(what);
     clearInteractiveCLISelection(what);
@@ -320,13 +351,13 @@ function makeSVGSelection(svgEl, what) {
 }
 
 function parseButton() {
-    svg.style.display = 'inline';
+    showSVG();
     clearSVG();
     var routeTableStr = document.getElementsByTagName('textarea')[0].value;
     var routeTableList = routeTableStr.split('\n');
     routeTableData = parseRouteTable(routeTableList); // global
     if (routeTableData.routes.length == 0) {
-        writeRouteTableError('no routes found');
+        writeRouteTableErrors([{ text: 'no routes found'}]);
         return null;
     }
     try {
@@ -349,13 +380,24 @@ function parseButton() {
             ) routeTableData.maxIPList = routeTableLine.hostEndList;
         }
     } catch (e) {
-        writeRouteTableError(e);
+        writeRouteTableErrors([{ text: e }]);
         return null;
     }
-    render(routeTableData);
-    convertTextarea(routeTableList, routeTableData);
+    var anyErrors = convertTextarea(routeTableList, routeTableData);
     switchCLITo('interactive');
-    writeRouteTableError();
+    mode = 'parsed';
+    if (anyErrors) {
+        clearInteractiveCLISelection('hovered');
+        clearInteractiveCLISelection('clicked');
+        addCSSClass(document.getElementById('interactiveCLI'), 'error');
+        parseErrors = true; // global
+        return hideSVG();
+    }
+    parseErrors = false; // global
+    removeCSSClass(document.getElementById('interactiveCLI'), 'error');
+    render(routeTableData);
+    updateDestinationIP(anyErrors); // uses globals
+    writeRouteTableErrors();
 }
 
 function switchCLITo(what) {
@@ -380,28 +422,111 @@ function switchCLITo(what) {
 }
 
 function convertTextarea(routeTableList, tmpRouteTableData) {
+    var anyErrors = false;
     var interactiveCLI = document.getElementById('interactiveCLI');
     var html = ''; // init
-    // lines that have route rules in them (examples of other lines are headings, separators, and empty lines)
+    // lines that have route rules in them (examples of other lines are
+    // headings, separators, and empty lines)
     //var actualRouteLines = [];
     var mapRouteLines = {}; // from route table list to tmpRouteTableData.routes
     for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
         var route = tmpRouteTableData.routes[i];
         mapRouteLines[route.originalLineNum] = i;
     }
+    var routeTableErrors = [];
     for (var i = 0; i < routeTableList.length; i++) {
         var routeTableLine = routeTableList[i];
         var extra = '';
 
-        if (mapRouteLines.hasOwnProperty(i)) extra = ' id="routeLine' +
-        mapRouteLines[i] + '" class="is-route"';
+        if (mapRouteLines.hasOwnProperty(i)) {
+            extra = ' id="routeLine' + mapRouteLines[i] + '" class="is-route"';
+            var routeTableDataItem = tmpRouteTableData.routes[mapRouteLines[i]];
+            if (routeTableDataItem.hasOwnProperty('error')) {
+                anyErrors = true;
+                routeTableLine = renderTextareaLineWithError(
+                    routeTableLine, routeTableDataItem.error.fieldNum
+                );
+                routeTableErrors.push(routeTableDataItem.error);
+            }
+        }
 
         html += '<tr><td' + extra + '>' + routeTableLine + '</td></tr>';
     }
     interactiveCLI.innerHTML = html;
+    writeRouteTableErrors(routeTableErrors);
+    return anyErrors;
 }
 
-function interactiveCLIAction(e, what) {
+function renderTextareaLineWithError(tmpRouteTableLine, errorOnFieldNum) {
+    var lineAsList = splitRouteTableLineKeepSpaces(tmpRouteTableLine);
+    var currentFieldNum = 0;
+    // 0 1 2 3 4 5 6 ~ i
+    // x   x   x   x ~ fields
+    // 0   1   2   3 ~ fieldNum
+    var line = ''; // init
+    for (var i = 0; i < lineAsList.length; i++) {
+        var fieldNum = i / 2;
+        var field = lineAsList[i];
+        if (errorOnFieldNum == fieldNum) field = '<span class="borderError"' +
+        ' fieldNum="' + fieldNum + '">' + field + '</span>';
+        line += field;
+    }
+    return line;
+}
+
+function highlightRouteTableError(e) {
+    var el = e.srcElement;
+    if (el.tagName.toLowerCase() != 'span') return;
+    if (getClassList(el).indexOf('listRouteError') == -1) return;
+    removeCSSClass( // clear all highlights first
+        document.querySelectorAll('#interactiveCLI .highlighted'),
+        'highlighted'
+    );
+    var eventType = e.type;
+    var newClass;
+    switch (eventType) {
+        case 'mouseout':
+            // all highlights have already been removed - exit here
+            return;
+        case 'mouseover':
+            newClass = 'highlighted';
+            break;
+        case 'click':
+            removeCSSClass( // clear all clicklights first
+                document.querySelectorAll('#interactiveCLI .clicklighted'),
+                'clicklighted'
+            );
+            var previouslyClicked = el.hasAttribute('clicked');
+            removeAttributes(
+                document.querySelectorAll('#routeTableErrors .listRouteError'),
+                'clicked'
+            );
+            if (previouslyClicked) return;
+
+            // the error text was not previously clicked
+            el.setAttribute('clicked', '');
+            newClass = 'clicklighted';
+            break;
+    }
+    // highlight the associated route table error
+    var routeNum = el.getAttribute('routeNum') - 1;
+    var fieldNum = el.getAttribute('fieldNum');
+    var correspondingCell = '#routeLine' + routeNum + ' [fieldNum="' +
+    fieldNum + '"]';
+    addCSSClass(document.querySelector(correspondingCell), newClass);
+}
+
+function interactiveCLIAction(e) {
+    if (parseErrors) return; // svg does not exist - nothing to select
+    var what;
+    switch (e.type) {
+        case 'click':
+            what = 'clicked';
+            break;
+        case 'mouseover':
+            what = 'hovered';
+            break;
+    }
     clearInteractiveCLISelection(what);
     clearSVGSelection(what);
     var actionEl = e.srcElement;
@@ -412,11 +537,12 @@ function interactiveCLIAction(e, what) {
 }
 
 function clearInteractiveCLISelection(what) {
-    var selectedEls = document.querySelectorAll('#interactiveCLI td.' + what);
+    removeCSSClass(document.querySelectorAll('#interactiveCLI td.' + what), what);
+    /*var selectedEls = document.querySelectorAll('#interactiveCLI td.' + what);
     for (var i = 0; i < selectedEls.length; i++) {
         var previouslyClickedEl = selectedEls[i];
         removeCSSClass(previouslyClickedEl, what);
-    }
+    }*/
 }
 
 function makeInteractiveCLISelection(el, what) {
@@ -426,6 +552,13 @@ function makeInteractiveCLISelection(el, what) {
     return true;
 }
 
+function splitRouteTableLine(routeLine) {
+    return routeLine.split(/[\s]+/);
+}
+
+function splitRouteTableLineKeepSpaces(routeLine) {
+    return routeLine.split(/(\s+)/);
+}
 
 function parseRouteTable(routeTableList) {
     var section = '';
@@ -435,9 +568,10 @@ function parseRouteTable(routeTableList) {
         maxIPList: null,
         routes: []
     };
+    var routeNum = 0; // init
     for (var i = 0; i < routeTableList.length; i++) {
         var thisLine = trim(routeTableList[i].toLowerCase());
-        var thisLineList = thisLine.split(/[\s]+/);
+        var thisLineList = splitRouteTableLine(thisLine);
 
         if (thisLineList[0] == '') continue; // ignore empty lines
         if (thisLine[0] == '=') continue; // ignore separators
@@ -502,10 +636,11 @@ function parseRouteTable(routeTableList) {
                 && thisLineList[1] == 'routes:'
             ) continue; // ignore 'active routes:' line
         }
-
+        routeNum++;
         var lineDict = {
             originalLineNum: i
         };
+        var error = null; // init
         for (var key in routeTableFormat[parsedData.os][section]) {
             var name = routeTableFormat[parsedData.os][section][key];
             var translatedName = name; // init
@@ -519,6 +654,14 @@ function parseRouteTable(routeTableList) {
                 case 'destination':
                     lineDict['original' + translatedName] = value;
                     if (value == 'default') value = '0.0.0.0';
+                    if (error == null && !validIP(ip2List(value), 4)) {
+                        error = {
+                            routeNum: routeNum,
+                            fieldNum: key,
+                            text: 'invalid destination IP address in route ' +
+                            routeNum
+                        };
+                    }
                     break;
                 case 'gateway':
                     lineDict['original' + translatedName] = value;
@@ -529,15 +672,33 @@ function parseRouteTable(routeTableList) {
                             break;
                     }
                     break;
+                case 'mask':
+                    if (error == null && !validIP(ip2List(value), 4)) {
+                        error = {
+                            routeNum: routeNum,
+                            fieldNum: key,
+                            text: 'invalid mask IP address in route ' + routeNum
+                        };
+                    }
+                    break;
             }
             lineDict[translatedName] = value;
         }
+        if (error != null) lineDict.error = error;
         parsedData[section].push(lineDict);
     }
     return parsedData;
 }
 
 // rendering
+
+function hideSVG() {
+    document.getElementById('visualRouteTable').style.visibility = 'hidden';
+}
+
+function showSVG() {
+    document.getElementById('visualRouteTable').style.visibility = 'visible';
+}
 
 function clearSVG() {
     removeAllChildren(svg.getElementById('z0'));
@@ -596,8 +757,6 @@ function render(tmpRouteTableData) {
 
     // render the ip ranges going to the interfaces
     renderIPRanges(ipRangesData, interfaceData, gatewayData);
-
-    updateDestinationIP(); // uses globals
 }
 
 function resizeSVGHeight(tmpRouteTableData) {

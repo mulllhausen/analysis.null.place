@@ -205,20 +205,34 @@ function deleteElements(element) {
     });
 }
 
-function addCSSClass(el, newClass) {
-    if (el == null) return; // there is no element to add a class to
-    var classList = getClassList(el);
-    classList.push(newClass);
-    el.className = classList.join(' ');
+function addCSSClass(els, newClass) {
+    if (els == null) return; // there is no element to add a class to
+    if (!isNodeList(els)) els = [els];
+    foreach(els, function (i, el) {
+        var classList = getClassList(el);
+        classList.push(newClass);
+        el.className = classList.join(' ');
+    });
 }
 
-function removeCSSClass(el, removeClass) {
-    if (el == null) return; // there is no element to remove a class from
-    var classList = getClassList(el);
-    var i = classList.indexOf(removeClass);
-    if (i == -1) return; // not found
-    classList.splice(i, 1); // remove 1 list item
-    el.className = classList.join(' ');
+function removeCSSClass(els, removeClass) {
+    if (els == null) return; // there is no element to remove a class from
+    if (!isNodeList(els)) els = [els];
+    foreach(els, function (i, el) {
+        var classList = getClassList(el);
+        var i = classList.indexOf(removeClass);
+        if (i == -1) return; // not found - continue
+        classList.splice(i, 1); // remove 1 list item
+        el.className = classList.join(' ');
+    });
+}
+
+function removeAttributes(els, attr) {
+    if (els == null) return; // there is no element to remove an attribute from
+    if (!isNodeList(els)) els = [els];
+    foreach(els, function (i, el) {
+        el.removeAttribute(attr);
+    });
 }
 
 function getClassList(el) {
@@ -260,6 +274,13 @@ function stringIsInt(x)  {
 
 function stringIsFloat(x)  {
     return (x == parseFloat(x));
+}
+
+// a better version of parseInt
+// - return null if not an int ('123xyz' now returns null, not 123)
+function betterParseInt(x, base) {
+    var y = parseInt(x, base);
+    return (y == x) ? y : null;
 }
 
 function setButtons(enable) {
