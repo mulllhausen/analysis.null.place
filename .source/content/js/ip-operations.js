@@ -1,5 +1,5 @@
 // take basic data from 1 line of the route table and fill in missing data
-function getMissingData(dataIn) {
+function get1RouteMissingData(dataIn) {
     var dataOut = {
         originalLineNum: dataIn.originalLineNum,
 

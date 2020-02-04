@@ -65,7 +65,8 @@ table#interactiveCLI td.is-route.clicked {
 .borderError.highlighted, .borderError.clicklighted {
     color: red;
 }
-ul#routeTableErrors span.listRouteError:hover {
+ul#routeTableErrors span.listRouteError:hover,
+ul#routeTableErrors span.listRouteWarning:hover {
     cursor: pointer;
 }
 .buttons-area {

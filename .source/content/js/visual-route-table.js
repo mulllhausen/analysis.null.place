@@ -97,27 +97,140 @@ var preloadData = {
 };
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
-var routeTableFormat = {
-    linux: {
-        routes: {
-            0: 'destination',
-            1: 'gateway',
-            2: 'genmask',
-            3: 'flags',
-            4: 'metric',
-            last: 'iface'
-        }
+var routeTableFormat = [ // list of objects. 1 object = 1 rule
+    {
+        action: 'ignore',
+        type: 'regex',
+        regex: '^\\s*$' // any amount of whitespace
     },
-    windows: {
-        routes: {
-            0: 'network destination',
-            1: 'netmask',
-            2: 'gateway',
-            3: 'interface',
-            4: 'metric'
-        }
+    {
+        action: 'ignore',
+        type: 'regex',
+        regex: '^\\s*=*\\s*$' // something like '   ======== '
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*kernel\\s+ip\\s+routing\\s+table\\s*$',
+        beginsSection: 'routes',
+        os: 'linux',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*interface\\s+list\\s*$',
+        beginsSection: 'interface list',
+        os: 'windows',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*ipv4\\s+route\\s+table\\s*$',
+        terminatesSection: 'interface list',
+        beginsSection: 'routes',
+        ipv: 4,
+        os: 'windows',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*ipv6\\s+route\\s+table\\s*$',
+        beginsSection: 'routes',
+        ipv: 6,
+        os: 'windows',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*active\\s+routes\\s*:\\s*$',
+        withinSection: 'routes',
+        os: 'windows',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*persistent\\s+routes\\s*$',
+        beginsSection: 'persistent routes',
+        os: 'windows',
+        deducedCommand: null // do not alter the deduced command (eg. route -e)
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: [
+            'destination', 'gateway', 'genmask', 'flags', 'metric', 'ref',
+            'use', 'iface'
+        ],
+        beginsSection: 'routes',
+        os: 'linux',
+        deducedCommand: 'route',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: [
+            'destination', 'gateway', 'genmask', 'flags', 'mss', 'window',
+            'irtt', 'iface'
+        ],
+        beginsSection: 'routes',
+        os: 'linux',
+        deducedCommand: 'route -e',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: [
+            'destination', 'gateway', 'genmask', 'flags', 'metric', 'ref',
+            'use', 'iface', 'mss', 'window', 'irtt'
+        ],
+        beginsSection: 'routes',
+        os: 'linux',
+        deducedCommand: 'route -ee',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: [
+            'network destination', 'netmask', 'gateway', 'interface', 'metric'
+        ],
+        beginsSection: 'routes',
+        os: 'windows',
+        deducedCommand: 'route print',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: [
+            'destination', 'gateway', 'flags', 'refs', 'use', 'netif expire'
+        ],
+        beginsSection: 'routes',
+        os: 'windows',
+        deducedCommand: 'netstat -rn',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'dynamic-list',
+        dynamicListLength: function (argsList) {
+            var headers = argsList[0];
+            if (headers == null) return 0;
+            return headers.length;
+        },
+        dynamicListLengthArgs: ['parsedData.headers'],
+        dynamicListItem: '\\S+',
+        withinSection: 'routes',
+        isRoute: true
     }
-};
+];
 var translations = {
     'network destination': 'destination',
     genmask: 'mask',
@@ -277,29 +390,60 @@ function writeDestinationIPError(text) {
     }
 }
 
-function writeRouteTableErrors(dict) {
+function writeRouteTableErrors(routeTableData) {
     var errorContainer = document.getElementById('routeTableErrorContainer');
     var errorText = document.getElementById('routeTableErrors');
-    if (dict == null) {
+    if (
+        (routeTableData == null) || (
+            (routeTableData.generalErrors.length == 0)
+            && (routeTableData.generalWarnings.length == 0)
+        )
+    ) {
         errorContainer.style.display = 'none';
         errorText.innerHTML = '';
     } else {
         errorContainer.style.display = 'block';
         var html = '';
-        foreach (dict, function (i, k) {
-            var startLink = ''; // init/reset
-            var endLink = ''; // init/reset
-            if (k.hasOwnProperty('routeNum') && k.hasOwnProperty('fieldNum')) {
-                startLink = '<span' +
-                    ' class="listRouteError"' +
-                    ' routeNum="' + k.routeNum + '"' +
-                    ' fieldNum="' + k.fieldNum + '">';
-                endLink = '</span>';
-            }
-            html += '<li>' + startLink + k.text + endLink + '</li>\n';
-        });
+        if (routeTableData.generalWarnings.length > 0) {
+            foreach (routeTableData.generalWarnings, function (i, k) {
+                html = write1RouteTableError(i, k, 'warning', html);
+            });
+            addCSSClass(document.getElementById('interactiveCLI'), 'warning');
+        }
+        if (routeTableData.generalErrors.length > 0) {
+            foreach (routeTableData.generalErrors, function (i, k) {
+                html = write1RouteTableError(i, k, 'error', html);
+            });
+            addCSSClass(document.getElementById('interactiveCLI'), 'error');
+            parseErrors = true; // global
+            hideSVG();
+        }
         errorText.innerHTML = html;
+
+        clearInteractiveCLISelection('hovered');
+        clearInteractiveCLISelection('clicked');
     }
+}
+
+function write1RouteTableError(i, k, type, html) {
+    var startLink = ''; // init/reset
+    var endLink = ''; // init/reset
+    if (k.hasOwnProperty('routeNum') && k.hasOwnProperty('fieldNum')) {
+        startLink = '<span' +
+            ' class="listRoute' + capitalizeFirst(type) + '"' +
+            ' routeNum="' + k.routeNum + '"' +
+            ' fieldNum="' + k.fieldNum + '">';
+        endLink = '</span>';
+    }
+    if (k.hasOwnProperty('lineNum')) {
+// todo: test this
+        startLink = '<span' +
+            ' class="listRoute' + capitalizeFirst(type) + '"' +
+            ' lineNum="' + k.lineNum + '">';
+        endLink = '</span>';
+    }
+    html += '<li>' + startLink + k.text + endLink + '</li>\n';
+    return html;
 }
 
 function preloadChanged() {
@@ -351,53 +495,57 @@ function makeSVGSelection(svgEl, what) {
 }
 
 function parseButton() {
+debugger;
+    writeRouteTableErrors();
     showSVG();
     clearSVG();
     var routeTableStr = document.getElementsByTagName('textarea')[0].value;
     var routeTableList = routeTableStr.split('\n');
     routeTableData = parseRouteTable(routeTableList); // global
-    if (routeTableData.routes.length == 0) {
-        writeRouteTableErrors([{ text: 'no routes found'}]);
-        return null;
-    }
+    if (
+        (routeTableData.generalErrors.length > 0)
+        || (routeTableData.generalWarnings.length > 0)
+    ) writeRouteTableErrors(routeTableData);
+    if (routeTableData.generalErrors.length > 0) return null;
     try {
-        for (var i = 0; i < routeTableData.routes.length; i++) {
-            routeTableData.routes[i] = getMissingData(routeTableData.routes[i]);
-
-            // extract the minimum and maximum ip addresses
-            var routeTableLine = routeTableData.routes[i];
-            if (
-                (routeTableData.minIPList == null) || (
-                    ipList2Int(routeTableData.minIPList) >
-                    ipList2Int(routeTableLine.hostStartList)
-                )
-            ) routeTableData.minIPList = routeTableLine.hostStartList;
-            if (
-                (routeTableData.maxIPList == null) || (
-                    ipList2Int(routeTableData.maxIPList) <
-                    ipList2Int(routeTableLine.hostEndList)
-                )
-            ) routeTableData.maxIPList = routeTableLine.hostEndList;
-        }
+        routeTableData = getAllMissingData(routeTableData);
     } catch (e) {
-        writeRouteTableErrors([{ text: e }]);
+        routeTableData.generalErrors.push({ text: e });
+        writeRouteTableErrors(routeTableData);
         return null;
     }
     var anyErrors = convertTextarea(routeTableList, routeTableData);
     switchCLITo('interactive');
     mode = 'parsed';
-    if (anyErrors) {
-        clearInteractiveCLISelection('hovered');
-        clearInteractiveCLISelection('clicked');
-        addCSSClass(document.getElementById('interactiveCLI'), 'error');
-        parseErrors = true; // global
-        return hideSVG();
-    }
+    if (anyErrors) return null;
+
     parseErrors = false; // global
     removeCSSClass(document.getElementById('interactiveCLI'), 'error');
     render(routeTableData);
     updateDestinationIP(anyErrors); // uses globals
-    writeRouteTableErrors();
+}
+
+function getAllMissingData(routeTableData) {
+    for (var i = 0; i < routeTableData.routes.length; i++) {
+        var route = routeTableData.routes[i];
+        routeTableData.routes[i] = get1RouteMissingData(route);
+
+        // extract the minimum and maximum ip addresses
+        var routeTableLine = routeTableData.routes[i];
+        if (
+            (routeTableData.minIPList == null) || (
+                ipList2Int(routeTableData.minIPList) >
+                ipList2Int(routeTableLine.hostStartList)
+            )
+        ) routeTableData.minIPList = routeTableLine.hostStartList;
+        if (
+            (routeTableData.maxIPList == null) || (
+                ipList2Int(routeTableData.maxIPList) <
+                ipList2Int(routeTableLine.hostEndList)
+            )
+        ) routeTableData.maxIPList = routeTableLine.hostEndList;
+    }
+    return routeTableData;
 }
 
 function switchCLITo(what) {
@@ -445,6 +593,7 @@ function convertTextarea(routeTableList, tmpRouteTableData) {
                 anyErrors = true;
                 routeTableLine = renderTextareaLineWithError(
                     routeTableLine, routeTableDataItem.error.fieldNum
+// todo: add warnings here
                 );
                 routeTableErrors.push(routeTableDataItem.error);
             }
@@ -453,7 +602,7 @@ function convertTextarea(routeTableList, tmpRouteTableData) {
         html += '<tr><td' + extra + '>' + routeTableLine + '</td></tr>';
     }
     interactiveCLI.innerHTML = html;
-    writeRouteTableErrors(routeTableErrors);
+    if (anyErrors) writeRouteTableErrors(routeTableErrors);
     return anyErrors;
 }
 
@@ -477,7 +626,10 @@ function renderTextareaLineWithError(tmpRouteTableLine, errorOnFieldNum) {
 function highlightRouteTableError(e) {
     var el = e.srcElement;
     if (el.tagName.toLowerCase() != 'span') return;
-    if (getClassList(el).indexOf('listRouteError') == -1) return;
+    if (
+        (getClassList(el).indexOf('listRouteError') == -1) // not found
+        && (getClassList(el).indexOf('listRouteWarning') == -1) // not found
+    ) return;
     removeCSSClass( // clear all highlights first
         document.querySelectorAll('#interactiveCLI .highlighted'),
         'highlighted'
@@ -508,11 +660,18 @@ function highlightRouteTableError(e) {
             newClass = 'clicklighted';
             break;
     }
+    var correspondingCell = '';
     // highlight the associated route table error
-    var routeNum = el.getAttribute('routeNum') - 1;
-    var fieldNum = el.getAttribute('fieldNum');
-    var correspondingCell = '#routeLine' + routeNum + ' [fieldNum="' +
-    fieldNum + '"]';
+    if (el.hasAttribute('routeNum') && el.hasAttribute('fieldNum')) {
+        var routeNum = el.getAttribute('routeNum') - 1;
+        var fieldNum = el.getAttribute('fieldNum');
+        correspondingCell = '#routeLine' + routeNum +
+        ' [fieldNum="' + fieldNum + '"]';
+    } else if (el.hasAttribute('lineNum')) {
+        var lineNum = parseInt(el.getAttribute('lineNum')) + 1;
+        correspondingCell = '#interactiveCLI tbody' +
+        ' tr:nth-child(' + lineNum + ') td';
+    }
     addCSSClass(document.querySelector(correspondingCell), newClass);
 }
 
@@ -561,134 +720,253 @@ function splitRouteTableLineKeepSpaces(routeLine) {
 }
 
 function parseRouteTable(routeTableList) {
-    var section = '';
+    var section = ''; // what section are we currently in?
     var parsedData = {
         os: null,
+        headers: null,
+        generalWarnings: [],
+        generalErrors: [],
+        ipv: null,
         minIPList: null,
         maxIPList: null,
+        deducedCommand: null, // deduced from the header row
         routes: []
     };
     var routeNum = 0; // init
-    for (var i = 0; i < routeTableList.length; i++) {
-        var thisLine = trim(routeTableList[i].toLowerCase());
-        var thisLineList = splitRouteTableLine(thisLine);
-
-        if (thisLineList[0] == '') continue; // ignore empty lines
-        if (thisLine[0] == '=') continue; // ignore separators
-
-        if (thisLineList[0] == 'kernel') {
-            parsedData.os = 'linux';
-            section = 'routes';
+    for (var linei = 0; linei < routeTableList.length; linei++) {
+        var thisLine = trim(routeTableList[linei].toLowerCase());
+        var rulei = findMatchingRule(thisLine, parsedData);
+        if (rulei == null) {
+            // no matching rules - ignore this line
+            parsedData.generalWarnings.push({
+                lineNum: linei,
+                text: 'unexpected character sequence on line ' + linei
+            });
             continue;
         }
-        if (thisLineList[0] == 'interface' && thisLineList[1] == 'list') {
-            parsedData.os = 'windows';
-            section = ''; // not implemented
-            continue;
-        }
-        if (
-            thisLineList[0] == 'ipv4'
-            && thisLineList[1] == 'route'
-            && thisLineList[2] == 'table'
-        ) {
-            parsedData.os = 'windows';
-            section = 'routes';
-            continue;
-        }
-        if (
-            thisLineList[0] == 'ipv6'
-            && thisLineList[1] == 'route'
-            && thisLineList[2] == 'table'
-        ) {
-            parsedData.os = 'windows';
-            section = ''; // not implemented
-            continue;
-        }
-        if (thisLineList[0] == 'persistent' && thisLineList[1] == 'routes:') {
-            parsedData.os = 'windows';
-            section = ''; // not implemented
-            continue;
-        }
-
-        if (parsedData.os == null || section == '') continue;
-
-        if (
-            parsedData.os == 'linux'
-            && section == 'routes'
-            && parsedData[section].length == 0 // we have not yet begun
-            && thisLineList[0] == 'destination'
-        ) continue; // ignore route table header row
-
-        if (parsedData.os == 'windows') {
-            if (section == 'interfaces') continue; // ignore windows interfaces
-
-            if (
-                section == 'routes'
-                && parsedData[section].length == 0 // we have not yet begun
-                && thisLineList[0] == 'network'
-                && thisLineList[1] == 'destination'
-            ) continue; // ignore route table header row
-
-            if (
-                section == 'routes'
-                && parsedData[section].length == 0 // we have not yet begun
-                && thisLineList[0] == 'active'
-                && thisLineList[1] == 'routes:'
-            ) continue; // ignore 'active routes:' line
-        }
+        var rule = routeTableFormat[rulei];
+        var tmp = implementRule(rule, section, parsedData);
+        section = tmp[0];
+        parsedData = tmp[1];
+        if (!rule.hasOwnProperty('isRoute') || !rule.isRoute) continue;
+        parsedData = parseRoute(routeNum, thisLine, parsedData, linei);
         routeNum++;
-        var lineDict = {
-            originalLineNum: i
-        };
-        var error = null; // init
-        for (var key in routeTableFormat[parsedData.os][section]) {
-            var name = routeTableFormat[parsedData.os][section][key];
-            var translatedName = name; // init
-            if (translations.hasOwnProperty(name)) {
-                translatedName = translations[name];
-            }
-            var value;
-            if (parseInt(key) == key) value = thisLineList[key];
-            else if (key == 'last') value = thisLineList[thisLineList.length - 1];
-            switch (translatedName) {
-                case 'destination':
-                    lineDict['original' + translatedName] = value;
-                    if (value == 'default') value = '0.0.0.0';
-                    if (error == null && !validIP(ip2List(value), 4)) {
-                        error = {
-                            routeNum: routeNum,
-                            fieldNum: key,
-                            text: 'invalid destination IP address in route ' +
-                            routeNum
-                        };
-                    }
-                    break;
-                case 'gateway':
-                    lineDict['original' + translatedName] = value;
-                    switch (value) {
-                        case '*':
-                        case 'on-link':
-                            value = '0.0.0.0';
-                            break;
-                    }
-                    break;
-                case 'mask':
-                    if (error == null && !validIP(ip2List(value), 4)) {
-                        error = {
-                            routeNum: routeNum,
-                            fieldNum: key,
-                            text: 'invalid mask IP address in route ' + routeNum
-                        };
-                    }
-                    break;
-            }
-            lineDict[translatedName] = value;
-        }
-        if (error != null) lineDict.error = error;
-        parsedData[section].push(lineDict);
+    }
+    if (parsedData.headers == null) {
+        parsedData.generalErrors.push({ text: 'unable to find header row' });
+    }
+    if (parsedData.routes.length == 0) {
+        parsedData.generalErrors.push({ text: 'no routes found' });
     }
     return parsedData;
 }
+
+function findMatchingRule(lineText, parsedData) {
+    // loop through all rules and exit when a match is found
+    // note: routeTableFormat is global and gets updated here
+    for (var rulei = 0; rulei < routeTableFormat.length; rulei++) {
+        var rule = routeTableFormat[rulei]; // by reference
+        switch (rule.type) {
+            case 'regex':
+                if (!rule.hasOwnProperty('regexObj')) {
+                    // save for speed later
+                    rule.regexObj = new RegExp(rule.regex);
+                }
+                break;
+            case 'dynamic-list':
+                var vars = { // any vars used in rules go in this object
+                    parsedData: parsedData
+                };
+                var tmpList = [];
+                var dynamicListLengthArgs = []; // init
+
+                // first convert var names to their values
+                var tmpLen = rule.dynamicListLengthArgs.length;
+                for (var argi = 0; argi < tmpLen; argi++) {
+                    dynamicListLengthArgs[argi] = getVar(
+                        vars, rule.dynamicListLengthArgs[argi]
+                    );
+                }
+
+                var listLength = rule.dynamicListLength(
+                    dynamicListLengthArgs
+                );
+                if (listLength == 0) return null;
+                for (var listi = 0; listi < listLength; listi++) {
+                    tmpList.push(rule.dynamicListItem);
+                }
+                rule.regex = '^\\s*' + tmpList.join('\\s+') + '\\s*$';
+                rule.regexObj = new RegExp(rule.regex);
+                break;
+            case 'list':
+                if (!rule.hasOwnProperty('regex')) {
+                    var tmpList = [];
+                    for (var listi = 0; listi < rule.list.length; listi++) {
+                        tmpList.push(rule.list[listi].replace(/ /g, '\\s*'));
+                    }
+                    // save for speed later
+                    rule.regex = '^\\s*' + tmpList.join('\\s+') + '\\s*$';
+                    rule.regexObj = new RegExp(rule.regex);
+                }
+                break;
+        }
+        if (rule.regexObj.test(lineText)) return rulei;
+    }
+    return null;
+}
+
+function implementRule(rule, section, parsedData) {
+    switch (rule.action) {
+        case 'match':
+            parsedData.os = rule.os;
+            if (
+                rule.hasOwnProperty('withinSection')
+                && (section != rule.withinSection)
+            ) {
+                parsedData.generalErrors.push({
+                    lineNum: linei,
+                    text: 'supposed to be within section <i>' +
+                    rule.withinSection + '</i> but is actually within section' +
+                    ' <i>' + section + '</i>'
+                });
+                break;
+            }
+
+            if (
+                (section != '')
+                && rule.hasOwnProperty('terminatesSection')
+            ) {
+                if (section != rule.terminatesSection) {
+                    parsedData.generalErrors.push({
+                        lineNum: linei,
+                        text: 'attempted to terminate section <i>' +
+                        rule.terminatesSection + '</i> during section' +
+                        ' <i>' + section + '</i>'
+                    });
+                    break;
+                }
+                section = ''; // terminated
+            }
+
+            // not allowed to change section without ending the previous
+            // section
+            if (rule.hasOwnProperty('beginsSection')) {
+                if ((section != '') && (section != rule.beginsSection)) {
+                    parsedData.generalErrors.push({
+                        lineNum: linei,
+                        text: 'section <i>' + section + '</i> was not' +
+                        ' terminated before section <i>' + rule.beginsSection +
+                        '</i> was found.'
+                    });
+                    break;
+                }
+                section = rule.beginsSection;
+            }
+            if (rule.hasOwnProperty('ipv')) parsedData.ipv = rule.ipv;
+            if (rule.hasOwnProperty('isHeaderRow') && rule.isHeaderRow) {
+                parsedData.headers = rule.list;
+            }
+            if (
+                rule.hasOwnProperty('deducedCommand')
+                && (rule.deducedCommand != null)
+            ) parsedData.deducedCommand = rule.deducedCommand;
+            break;
+        case 'ignore':
+            break;
+    }
+    return [section, parsedData];
+}
+
+function parseRoute(routeNum, thisLine, parsedData, linei) {
+    var thisLineList = splitRouteTableLine(thisLine);
+    var error = null; // init
+    var lineDict = { // init
+        originalLineNum: linei
+    };
+    for (var headeri = 0; headeri < parsedData.headers.length; headeri++) {
+        var name = parsedData.headers[headeri];
+
+        var translatedName = name; // init
+        if (translations.hasOwnProperty(name)) {
+            translatedName = translations[name];
+        }
+        var value = thisLineList[headeri];
+        switch (translatedName) {
+            case 'destination':
+                lineDict['original' + translatedName] = value;
+                if (value == 'default') value = '0.0.0.0';
+                if ((error == null) && !validIP(ip2List(value), 4)) {
+                    error = {
+                        routeNum: routeNum,
+                        fieldNum: key,
+                        text: 'invalid destination IP address in route ' +
+                        routeNum
+                    };
+                }
+                break;
+            case 'gateway':
+                lineDict['original' + translatedName] = value;
+                switch (value) {
+                    case '*':
+                    case 'on-link':
+                        value = '0.0.0.0';
+                        break;
+                }
+                break;
+            case 'mask':
+                if ((error == null) && !validIP(ip2List(value), 4)) {
+                    error = {
+                        routeNum: routeNum,
+                        fieldNum: key,
+                        text: 'invalid mask IP address in route ' + routeNum
+                    };
+                }
+                break;
+        }
+        lineDict[translatedName] = value;
+    }
+    if (error != null) lineDict.error = error;
+    parsedData.routes.push(lineDict);
+    return parsedData;
+}
+
+/*function deduceCommand(os, lineList) {
+    var deducedCommand = null;
+    foreach (routeTableFormat[os].routeHeaderRows, function (command, fields) {
+        deducedCommand = command;
+        var offset = 0;
+        foreach (fields, function (fieldNum, fieldName) {
+            fieldNum = parseInt(fieldNum);
+            var fieldNameParts = fieldName.split(' ');
+            var match = true;
+            for (var i = 0; i < fieldNameParts.length; i++) {
+                if (lineList[fieldNum + offset] == fieldName) {
+                    offset += i;
+                    continue; // all good
+                }
+                match = false;
+                break;
+            }
+            if (match) return; // all good - continue
+            deducedCommand = null;
+            return false; // break
+        });
+        if (deducedCommand != null) return false; // break
+    });
+    return deducedCommand;
+}*/
+
+/*function deduceCommandAndOS(lineList) {
+    var os = null;
+    var deducedCommand = null;
+    foreach (routeTableFormat, function (tmpOS, _) {
+        deducedCommand = deduceCommand(tmpOS, lineList);
+        if (deducedCommand == null) return;
+        os = tmpOS;
+        return false; // break
+    });
+    return [os, deducedCommand];
+}*/
 
 // rendering
 

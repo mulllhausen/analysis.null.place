@@ -310,6 +310,26 @@ function jsonCopyObject(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+function getVar(context, propertyStr) {
+    try {
+        var val = context;
+        var nestedProperties = propertyStr.split('.');
+        for (var propi = 0; propi < nestedProperties.length; propi++) {
+            var prop = nestedProperties[propi];
+            val = val[prop];
+        }
+        return val;
+    } catch (err) {
+        return null;
+    }
+}
+
+function capitalizeFirst(str) {
+    if (str.length == 0) return str;
+    var firstLetter = str[0].toUpperCase();
+    return firstLetter + str.substring(1).toLowerCase();
+}
+
 // 1000 -> 1,000
 function addThousandCommas(number) {
     number += ''; // convert to string
