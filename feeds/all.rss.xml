@@ -32,7 +32,7 @@
             <description>My movie reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
             <category>movie</category>
             <category>reviews</category>
@@ -102,6 +102,15 @@
             <pubDate>Wed, 13 Feb 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-02-13:/movie-review/bladerunner1982/</guid>
+        </item>
+        <item>
+            <title>Movie Review: Crocoile Dundee 1</title>
+            <link>https://analysis.null.place/movie-reviews/crocoiledundee11986/</link>
+            <description>Magic outback vibes</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 05 Feb 2020 00:00:00 +1030</pubDate>
+            <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2020-02-05:/movie-review/crocoiledundee11986/</guid>
         </item>
         <item>
             <title>Movie Review: Dark City</title>
@@ -553,6 +562,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

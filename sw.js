@@ -1,4 +1,4 @@
-var latestCache = '2019-12-16_15:41:21';
+var latestCache = '2020-02-05_23:23:28';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -100,6 +100,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-annabellecomeshome2019.jpg?hash=O4dANe',
     'https://analysis.null.place/img/movie-thumb-birdbox2018.jpg?hash=dhDclx',
     'https://analysis.null.place/img/movie-thumb-bladerunner1982.jpg?hash=EFay0z',
+    'https://analysis.null.place/img/movie-thumb-crocoiledundee11986.jpg?hash=tAVDf0',
     'https://analysis.null.place/img/movie-thumb-darkcity1998.jpg?hash=KwU5zR',
     'https://analysis.null.place/img/movie-thumb-district92009.jpg?hash=j3UZi4',
     'https://analysis.null.place/img/movie-thumb-eternalsunshineofthespotlessmind2004.jpg?hash=JHOOvN',
@@ -144,6 +145,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-annabellecomeshome2019.json?hash=DALP_r',
     'https://analysis.null.place/json/movie-review-birdbox2018.json?hash=Pe2gZp',
     'https://analysis.null.place/json/movie-review-bladerunner1982.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-crocoiledundee11986.json?hash=kIWa71',
     'https://analysis.null.place/json/movie-review-darkcity1998.json?hash=XK-6MN',
     'https://analysis.null.place/json/movie-review-district92009.json?hash=TFRbYk',
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
@@ -182,9 +184,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
-    'https://analysis.null.place/json/movies-init-list.json?hash=RC0BB2',
-    'https://analysis.null.place/json/movies-list.json?hash=TUKMRr',
-    'https://analysis.null.place/json/movies-search-index.json?hash=X_BNTN',
+    'https://analysis.null.place/json/movies-init-list.json?hash=9G2-Zf',
+    'https://analysis.null.place/json/movies-list.json?hash=K4apAf',
+    'https://analysis.null.place/json/movies-search-index.json?hash=ROCBeD',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',

@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-12-16T00:00:00+10:30</updated>
+        <updated>2020-02-05T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -122,6 +122,17 @@
         </author>
         <id>tag:analysis.null.place,2019-02-13:/movie-review/bladerunner1982</id>
         <summary type="html">N/A</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Crocoile Dundee 1</title>
+        <link>https://analysis.null.place/movie-reviews/crocoiledundee11986/</link>
+        <published>2020-02-05T00:00:00+10:30</published>
+        <updated>2020-02-05T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-02-05:/movie-review/crocoiledundee11986</id>
+        <summary type="html">Magic outback vibes</summary>
     </entry>
     <entry>
         <title>Movie Review: Dark City</title>
@@ -673,5 +684,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2019-12-16T00:00:00+10:30</updated>
+    <updated>2020-02-05T00:00:00+10:30</updated>
 </feed>
