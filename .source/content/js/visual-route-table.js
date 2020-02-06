@@ -97,6 +97,8 @@ var preloadData = {
 };
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
+var parseWarnings = false; // init
+var destinationIPErrors = false; // init
 var routeTableFormat = [ // list of objects. 1 object = 1 rule
     {
         action: 'ignore',
@@ -353,13 +355,19 @@ function updateDestinationIP(doNotRender) {
     clearDestinationIPFlow();
     var destinationIP = document.getElementById('inputDestinationIP').value;
     var destinationIPList = ip2List(destinationIP);
-    if (!validIP(destinationIPList, 4)) return writeDestinationIPError(
-        'invalid destination IP address'
-    );
+    if (!validIP(destinationIPList, 4)) {
+        destinationIPErrors = true; // global
+        showErrorLegend();
+        writeDestinationIPError('invalid destination IP address');
+        return;
+    }
     var routeTableDataLine = pickPath(destinationIPList, routeTableData);
     if (typeof routeTableDataLine == 'string') {
         // string = error
-        return writeDestinationIPError(routeTableDataLine);
+        destinationIPErrors = true; // global
+        showErrorLegend();
+        writeDestinationIPError(routeTableDataLine);
+        return;
     }
 
     // render the desination ip flow
@@ -371,7 +379,14 @@ function updateDestinationIP(doNotRender) {
         gatewayData,
         routeTableData
     );
+    destinationIPErrors = false; // global
+    showErrorLegend();
     writeDestinationIPError(); // clear previous errors
+}
+
+function showErrorLegend() {
+    document.getElementById('warningAndErrorLegend').style.display =
+    (destinationIPErrors || parseErrors || parseWarnings) ? 'block' : 'none';
 }
 
 function writeDestinationIPError(text) {
@@ -391,43 +406,54 @@ function writeDestinationIPError(text) {
 }
 
 function writeRouteTableErrors(routeTableData) {
+    parseErrors = false; // init (global)
+    parseWarnings = false; // init (global)
     var errorContainer = document.getElementById('routeTableErrorContainer');
     var errorText = document.getElementById('routeTableErrors');
-    if (
-        (routeTableData == null) || (
-            (routeTableData.generalErrors.length == 0)
-            && (routeTableData.generalWarnings.length == 0)
-        )
-    ) {
+    if (routeTableData == null) {
         errorContainer.style.display = 'none';
         errorText.innerHTML = '';
-    } else {
-        errorContainer.style.display = 'block';
-        var html = '';
-        if (routeTableData.generalWarnings.length > 0) {
-            foreach (routeTableData.generalWarnings, function (i, k) {
-                html = write1RouteTableError(i, k, 'warning', html);
-            });
-            addCSSClass(document.getElementById('interactiveCLI'), 'warning');
-        }
-        if (routeTableData.generalErrors.length > 0) {
-            foreach (routeTableData.generalErrors, function (i, k) {
-                html = write1RouteTableError(i, k, 'error', html);
-            });
-            addCSSClass(document.getElementById('interactiveCLI'), 'error');
-            parseErrors = true; // global
-            hideSVG();
-        }
-        errorText.innerHTML = html;
-
-        clearInteractiveCLISelection('hovered');
-        clearInteractiveCLISelection('clicked');
+        showErrorLegend();
+        return;
     }
+    errorContainer.style.display = 'block';
+    var html = ''; // init
+
+    // write the general warnings
+    if (routeTableData.generalWarnings.length > 0) {
+        parseWarnings = true; // global
+        foreach (routeTableData.generalWarnings, function (i, k) {
+            html += write1RouteTableError(k, 'warning');
+        });
+        addCSSClass(document.getElementById('interactiveCLI'), 'warning');
+    }
+
+    // write the general errors
+    if (routeTableData.generalErrors.length > 0) {
+        parseErrors = true; // global
+        foreach (routeTableData.generalErrors, function (i, k) {
+            html += write1RouteTableError(k, 'error');
+        });
+        addCSSClass(document.getElementById('interactiveCLI'), 'error');
+    }
+
+    // write the route errors
+    for (var i = 0; i < routeTableData.routes.length; i++) {
+        var route = routeTableData.routes[i];
+        if (!route.hasOwnProperty('error')) continue;
+        html += write1RouteTableError(route.error, 'error');
+        parseErrors = true; // global
+    }
+    errorText.innerHTML = html;
+    clearInteractiveCLISelection('hovered');
+    clearInteractiveCLISelection('clicked');
+    if (parseErrors) hideSVG();
+    showErrorLegend();
 }
 
-function write1RouteTableError(i, k, type, html) {
-    var startLink = ''; // init/reset
-    var endLink = ''; // init/reset
+function write1RouteTableError(k, type) {
+    var startLink = ''; // init
+    var endLink = ''; // init
     if (k.hasOwnProperty('routeNum') && k.hasOwnProperty('fieldNum')) {
         startLink = '<span' +
             ' class="listRoute' + capitalizeFirst(type) + '"' +
@@ -436,14 +462,12 @@ function write1RouteTableError(i, k, type, html) {
         endLink = '</span>';
     }
     if (k.hasOwnProperty('lineNum')) {
-// todo: test this
         startLink = '<span' +
             ' class="listRoute' + capitalizeFirst(type) + '"' +
             ' lineNum="' + k.lineNum + '">';
         endLink = '</span>';
     }
-    html += '<li>' + startLink + k.text + endLink + '</li>\n';
-    return html;
+    return '<li class="' + type + '">' + startLink + k.text + endLink + '</li>\n';
 }
 
 function preloadChanged() {
@@ -495,7 +519,6 @@ function makeSVGSelection(svgEl, what) {
 }
 
 function parseButton() {
-debugger;
     writeRouteTableErrors();
     showSVG();
     clearSVG();
@@ -570,39 +593,58 @@ function switchCLITo(what) {
 }
 
 function convertTextarea(routeTableList, tmpRouteTableData) {
-    var anyErrors = false;
+    var anyErrors = false; // init
     var interactiveCLI = document.getElementById('interactiveCLI');
     var html = ''; // init
     // lines that have route rules in them (examples of other lines are
     // headings, separators, and empty lines)
-    //var actualRouteLines = [];
     var mapRouteLines = {}; // from route table list to tmpRouteTableData.routes
     for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
         var route = tmpRouteTableData.routes[i];
         mapRouteLines[route.originalLineNum] = i;
     }
-    var routeTableErrors = [];
+    var errorLines = {}; // list of all lines that have errors
+    for (var i = 0; i < tmpRouteTableData.generalErrors.length; i++) {
+        var error = tmpRouteTableData.generalErrors[i];
+        errorLines[error.lineNum] = null; // keys avoid duplicates
+        anyErrors = true;
+    }
+    var warningLines = {}; // list of all lines that have warnings
+    for (var i = 0; i < tmpRouteTableData.generalWarnings.length; i++) {
+        var warning = tmpRouteTableData.generalWarnings[i];
+        warningLines[warning.lineNum] = null; // keys avoid duplicates
+    }
     for (var i = 0; i < routeTableList.length; i++) {
         var routeTableLine = routeTableList[i];
-        var extra = '';
+        var tdExtra = '';
+
+        if (warningLines.hasOwnProperty(i) || errorLines.hasOwnProperty(i)) {
+            var classes = [];
+            if (warningLines.hasOwnProperty(i)) classes.push('warning');
+            if (errorLines.hasOwnProperty(i)) classes.push('error');
+            var id = 'id="line' + i + '"';
+            var clas = 'class="' + classes.join(' ') + '"';
+            routeTableLine = '<span ' + id + ' ' + clas + '>' +
+                routeTableLine +
+            '</span>';
+        }
 
         if (mapRouteLines.hasOwnProperty(i)) {
-            extra = ' id="routeLine' + mapRouteLines[i] + '" class="is-route"';
+            tdExtra = ' id="routeLine' + mapRouteLines[i] + '" class="is-route"';
+
             var routeTableDataItem = tmpRouteTableData.routes[mapRouteLines[i]];
             if (routeTableDataItem.hasOwnProperty('error')) {
-                anyErrors = true;
                 routeTableLine = renderTextareaLineWithError(
                     routeTableLine, routeTableDataItem.error.fieldNum
-// todo: add warnings here
                 );
-                routeTableErrors.push(routeTableDataItem.error);
+                anyErrors = true;
             }
         }
 
-        html += '<tr><td' + extra + '>' + routeTableLine + '</td></tr>';
+        html += '<tr><td' + tdExtra + '>' + routeTableLine + '</td></tr>';
     }
     interactiveCLI.innerHTML = html;
-    if (anyErrors) writeRouteTableErrors(routeTableErrors);
+    writeRouteTableErrors(tmpRouteTableData);
     return anyErrors;
 }
 
@@ -616,7 +658,7 @@ function renderTextareaLineWithError(tmpRouteTableLine, errorOnFieldNum) {
     for (var i = 0; i < lineAsList.length; i++) {
         var fieldNum = i / 2;
         var field = lineAsList[i];
-        if (errorOnFieldNum == fieldNum) field = '<span class="borderError"' +
+        if (errorOnFieldNum == fieldNum) field = '<span class="error"' +
         ' fieldNum="' + fieldNum + '">' + field + '</span>';
         line += field;
     }
@@ -668,9 +710,7 @@ function highlightRouteTableError(e) {
         correspondingCell = '#routeLine' + routeNum +
         ' [fieldNum="' + fieldNum + '"]';
     } else if (el.hasAttribute('lineNum')) {
-        var lineNum = parseInt(el.getAttribute('lineNum')) + 1;
-        correspondingCell = '#interactiveCLI tbody' +
-        ' tr:nth-child(' + lineNum + ') td';
+        correspondingCell = '#interactiveCLI #line' + el.getAttribute('lineNum');
     }
     addCSSClass(document.querySelector(correspondingCell), newClass);
 }
@@ -740,7 +780,7 @@ function parseRouteTable(routeTableList) {
             // no matching rules - ignore this line
             parsedData.generalWarnings.push({
                 lineNum: linei,
-                text: 'unexpected character sequence on line ' + linei
+                text: 'ignoring unexpected character sequence on line ' + linei
             });
             continue;
         }
@@ -898,7 +938,7 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
                 if ((error == null) && !validIP(ip2List(value), 4)) {
                     error = {
                         routeNum: routeNum,
-                        fieldNum: key,
+                        fieldNum: headeri,
                         text: 'invalid destination IP address in route ' +
                         routeNum
                     };
@@ -917,7 +957,7 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
                 if ((error == null) && !validIP(ip2List(value), 4)) {
                     error = {
                         routeNum: routeNum,
-                        fieldNum: key,
+                        fieldNum: headeri,
                         text: 'invalid mask IP address in route ' + routeNum
                     };
                 }

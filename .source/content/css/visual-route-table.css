@@ -1,3 +1,35 @@
+#warningAndErrorLegend {
+    display: none;
+}
+#warningLegend, #errorLegend {
+    position: relative;
+    float: left;
+    display: inline-block;
+    margin: 5px 10px 0 0;
+    line-height: 10px;
+}
+#warningLegend .box, #errorLegend .box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    width: 8px;
+}
+#warningLegend .box {
+    background-color: #ff9900;/*orange*/
+}
+#warningLegend span, #errorLegend span {
+    margin-left: 15px;
+}
+#warningLegend span {
+    color: #ff9900;/*orange*/
+}
+#errorLegend .box {
+    background-color: red;
+}
+#errorLegend span {
+    color: red;
+}
 select#preload, input#inputDestinationIP {
     width: 11em;
 }
@@ -27,7 +59,13 @@ textarea#routeTable, table#interactiveCLI {
 #destinationIPErrorContainer, #routeTableErrorContainer {
     width: 100%;
 }
-#destinationIPErrors, #routeTableErrors {
+#destinationIPErrors {
+    color: red;
+}
+#routeTableErrors .warning {
+    color: #ff9900;/*orange*/
+}
+#routeTableErrors .error {
     color: red;
 }
 table#interactiveCLI {
@@ -57,13 +95,23 @@ table#interactiveCLI td.is-route.clicked {
     color: white;
     background: rgba(0, 0, 255, 0.7);
 }
-.borderError {
-    border: 1px solid red;
+table#interactiveCLI .warning {
+    color: #ff9900;/*orange*/
+}
+table#interactiveCLI .error {
+    color: red;
+}
+table#interactiveCLI .warning.highlighted,
+table#interactiveCLI .warning.clicklighted {
+    border: 1px solid #ff9900;/*orange*/
     margin: 0 -2px 0 -1px;
     padding-right: 1px;
 }
-.borderError.highlighted, .borderError.clicklighted {
-    color: red;
+table#interactiveCLI .error.highlighted,
+table#interactiveCLI .error.clicklighted {
+    border: 1px solid red;
+    margin: 0 -2px 0 -1px;
+    padding-right: 1px;
 }
 ul#routeTableErrors span.listRouteError:hover,
 ul#routeTableErrors span.listRouteWarning:hover {
