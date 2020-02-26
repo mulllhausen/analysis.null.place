@@ -113,6 +113,10 @@ table#interactiveCLI .error.clicklighted {
     margin: 0 -2px 0 -1px;
     padding-right: 1px;
 }
+ul#routeTableErrors {
+    max-height: 100px;
+    overflow-y: auto;
+}
 ul#routeTableErrors span.listRouteError:hover,
 ul#routeTableErrors span.listRouteWarning:hover {
     cursor: pointer;

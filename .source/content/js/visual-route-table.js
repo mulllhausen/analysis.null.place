@@ -115,26 +115,15 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         type: 'regex',
         regex: '^\\s*kernel\\s+ip\\s+routing\\s+table\\s*$',
         beginsSection: 'routes',
-        os: 'linux',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
-    },
-    {
-        action: 'match',
-        type: 'regex',
-        regex: '^\\s*interface\\s+list\\s*$',
-        beginsSection: 'interface list',
-        os: 'windows',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
+        os: 'linux'
     },
     {
         action: 'match',
         type: 'regex',
         regex: '^\\s*ipv4\\s+route\\s+table\\s*$',
-        terminatesSection: 'interface list',
         beginsSection: 'routes',
         ipv: 4,
-        os: 'windows',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
+        os: 'windows'
     },
     {
         action: 'match',
@@ -142,24 +131,42 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         regex: '^\\s*ipv6\\s+route\\s+table\\s*$',
         beginsSection: 'routes',
         ipv: 6,
-        os: 'windows',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
+        os: 'windows'
     },
     {
         action: 'match',
         type: 'regex',
         regex: '^\\s*active\\s+routes\\s*:\\s*$',
         withinSection: 'routes',
-        os: 'windows',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
+        os: 'windows'
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*persistent\\s+routes\\s*:\\s*$',
+        terminatesSection: 'routes',
+        os: 'windows'
     },
     {
         action: 'match',
         type: 'regex',
         regex: '^\\s*persistent\\s+routes\\s*$',
         beginsSection: 'persistent routes',
-        os: 'windows',
-        deducedCommand: null // do not alter the deduced command (eg. route -e)
+        os: 'windows'
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*routing\\s+tables\\s*$',
+        beginsSection: 'routes',
+        os: 'macos'
+    },
+    {
+        action: 'match',
+        type: 'regex',
+        regex: '^\\s*internet:\\s*$',
+        withinSection: 'routes',
+        os: 'macos'
     },
     {
         action: 'match',
@@ -170,6 +177,7 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         ],
         beginsSection: 'routes',
         os: 'linux',
+        isCIDRFormat: false,
         deducedCommand: 'route',
         isHeaderRow: true
     },
@@ -182,6 +190,7 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         ],
         beginsSection: 'routes',
         os: 'linux',
+        isCIDRFormat: false,
         deducedCommand: 'route -e',
         isHeaderRow: true
     },
@@ -194,6 +203,7 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         ],
         beginsSection: 'routes',
         os: 'linux',
+        isCIDRFormat: false,
         deducedCommand: 'route -ee',
         isHeaderRow: true
     },
@@ -205,6 +215,17 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         ],
         beginsSection: 'routes',
         os: 'windows',
+        isCIDRFormat: false,
+        deducedCommand: 'route print',
+        isHeaderRow: true
+    },
+    {
+        action: 'match',
+        type: 'list',
+        list: ['if', 'metric', 'network destination', 'gateway'],
+        beginsSection: 'routes',
+        os: 'windows',
+        isCIDRFormat: true,
         deducedCommand: 'route print',
         isHeaderRow: true
     },
@@ -212,10 +233,11 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         action: 'match',
         type: 'list',
         list: [
-            'destination', 'gateway', 'flags', 'refs', 'use', 'netif expire'
+            'destination', 'gateway', 'flags', 'refs', 'use', 'netif', 'expire'
         ],
-        beginsSection: 'routes',
-        os: 'windows',
+        withinSection: 'routes',
+        os: 'macos',
+        isCIDRFormat: true,
         deducedCommand: 'netstat -rn',
         isHeaderRow: true
     },
@@ -237,7 +259,8 @@ var translations = {
     'network destination': 'destination',
     genmask: 'mask',
     netmask: 'mask',
-    iface: 'interface'
+    iface: 'interface',
+    netif: 'interface'
 }
 var svgProperties = {
     overallHeight: 400, // gets updated to match the svg
@@ -519,7 +542,7 @@ function makeSVGSelection(svgEl, what) {
 }
 
 function parseButton() {
-    writeRouteTableErrors();
+    writeRouteTableErrors(); // clear previous errors
     showSVG();
     clearSVG();
     var routeTableStr = document.getElementsByTagName('textarea')[0].value;
@@ -763,6 +786,7 @@ function parseRouteTable(routeTableList) {
     var section = ''; // what section are we currently in?
     var parsedData = {
         os: null,
+        isCIDRFormat: null,
         headers: null,
         generalWarnings: [],
         generalErrors: [],
@@ -785,9 +809,10 @@ function parseRouteTable(routeTableList) {
             continue;
         }
         var rule = routeTableFormat[rulei];
-        var tmp = implementRule(rule, section, parsedData);
+        var tmp = implementRule(rule, section, parsedData, linei);
         section = tmp[0];
         parsedData = tmp[1];
+        if (parsedData.generalErrors.length > 0) break;
         if (!rule.hasOwnProperty('isRoute') || !rule.isRoute) continue;
         parsedData = parseRoute(routeNum, thisLine, parsedData, linei);
         routeNum++;
@@ -855,19 +880,50 @@ function findMatchingRule(lineText, parsedData) {
     return null;
 }
 
-function implementRule(rule, section, parsedData) {
+function implementRule(rule, section, parsedData, linei) {
     switch (rule.action) {
         case 'match':
-            parsedData.os = rule.os;
+            // not allowewd to change os
+            if (rule.hasOwnProperty('os')) {
+                if ((parsedData.os != null) && (rule.os != parsedData.os)) {
+                    parsedData.generalErrors.push({
+                        lineNum: linei,
+                        text: 'os <i>' + parsedData.os + '</i> was previously' +
+                        ' detected, however line ' + linei + ' exclusively' +
+                        ' matches <i>' + rule.os + '</i>'
+                    });
+                    break;
+                }
+                parsedData.os = rule.os;
+            }
+            if (rule.hasOwnProperty('isCIDRFormat')) {
+                if (
+                    (parsedData.isCIDRFormat != null)
+                    && (rule.isCIDRFormat != parsedData.isCIDRFormat)
+                ) {
+                    parsedData.generalErrors.push({
+                        lineNum: linei,
+                        text: 'it was previously determined that the' +
+                        ' destination field did ' +
+                        (parsedData.isCIDRFormat ? '' : 'not') +
+                        ' contain the mask, however line ' + linei +
+                        ' indicates that the destination field does ' +
+                        (rule.isCIDRFormat ? '' : 'not') +
+                        + ' contain the mask. this property is immutable.'
+                    });
+                    break;
+                }
+                parsedData.isCIDRFormat = rule.isCIDRFormat;
+            }
             if (
                 rule.hasOwnProperty('withinSection')
                 && (section != rule.withinSection)
             ) {
                 parsedData.generalErrors.push({
                     lineNum: linei,
-                    text: 'supposed to be within section <i>' +
-                    rule.withinSection + '</i> but is actually within section' +
-                    ' <i>' + section + '</i>'
+                    text: 'supposed to be within section <i>' + section
+                    + '</i> but line ' + linei +
+                    ' corresponds to section <i>' + rule.withinSection + '</i>'
                 });
                 break;
             }
@@ -933,8 +989,20 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
         var value = thisLineList[headeri];
         switch (translatedName) {
             case 'destination':
-                lineDict['original' + translatedName] = value;
-                if (value == 'default') value = '0.0.0.0';
+                var cidr, incompleteDestination; // init
+                if (parsedData.isCIDRFormat) {
+                    if (inArray('/', value)) {
+                        var tmp = value.split('/');
+                        incompleteDestination = tmp[0];
+                        cidr = tmp[1];
+                    } else {
+                        incompleteDestination = value;
+                        cidr = 0; // default
+                    }
+                    lineDict['mask'] = ipList2IP(maskBits2List(cidr));
+                } else incompleteDestination = value;
+                lineDict['original' + translatedName] = incompleteDestination;
+                value = extrapolateIP(incompleteDestination);
                 if ((error == null) && !validIP(ip2List(value), 4)) {
                     error = {
                         routeNum: routeNum,

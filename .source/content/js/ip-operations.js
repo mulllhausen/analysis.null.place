@@ -80,6 +80,25 @@ function maskList2Bits(maskList) {
     return bits;
 }
 
+function maskBits2List(bits, ipVersion) {
+    // 32 -> 255.255.255.255
+    // 8 -> 255.0.0.0
+    // 24 -> 255.255.255.0
+    var numOctets;
+    var maskList = [];
+    switch (ipVersion) {
+        case 4: numOctets = 4; break;
+    }
+    var maskBinList = parseInt(bits, 2)
+    for (var i = 0; i < numOctets; i++) {
+        if (bits >= 8) {
+            maskList.push((2 ** 8) - 1);
+            bits -= 8;
+        } else maskList.push((2 ** bits) - 1);
+    }
+    return maskList;
+}
+
 function validIP(ipList, ipVersion) {
     for (var i = 0; i < ipVersion; i++) {
         if ((ipList[i] == null) || (ipList[i] < 0)) return false;
@@ -150,5 +169,26 @@ function binInvert(intt, ipVersion) {
     switch (ipVersion) {
         case 4: return 0xff - intt;
         case 6: return 0xffff - intt;
+    }
+}
+
+function extrapolateIP(incompleteIP, ipVersion) {
+    // ipv4: 127 -> 127.0.0.0
+    var completeIP, numOctets;
+    switch (ipVersion) {
+        case 4:
+            if (incompleteIP == 'default') return '0.0.0.0';
+            var incompleteIP = incompleteIP.split('.');
+            numOctets = 4;
+            break;
+        return null;
+    }
+    for (var i = 0; i < numOctets; i++) {
+        if (!incompleteIP.hasOwnProperty(i)) completeIP.push(0);
+        else completeIP.push(incompleteIP[i]);
+    }
+    switch (ipVersion) {
+        case 4: return completeIP.join('.');
+        default: return null;
     }
 }
