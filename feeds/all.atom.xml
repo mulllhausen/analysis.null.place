@@ -21,7 +21,7 @@
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2019-12-16T00:00:00+10:30</updated>
+        <updated>2020-02-26T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -597,6 +597,17 @@
         <summary type="html">Critical-thinking clarity</summary>
     </entry>
     <entry>
+        <title>TV-Series Review: BBC War of the Worlds Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/bbcwaroftheworlds12019/</link>
+        <published>2020-02-26T00:00:00+10:30</published>
+        <updated>2020-02-26T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-02-26:/tv-series-review/bbcwaroftheworlds12019</id>
+        <summary type="html">A dirty city gets slightly dirtier</summary>
+    </entry>
+    <entry>
         <title>TV-Series Review: Black Mirror Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/blackmirror12011/</link>
         <published>2019-03-26T00:00:00+10:30</published>
@@ -684,5 +695,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2020-02-05T00:00:00+10:30</updated>
+    <updated>2020-02-26T00:00:00+10:30</updated>
 </feed>

@@ -1,4 +1,4 @@
-var latestCache = '2020-02-05_23:23:28';
+var latestCache = '2020-02-26_20:23:04';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -71,6 +71,7 @@ var mandatoryAssets = [
     // assets for the "tv-series reviews" article
     'https://analysis.null.place/tv-series-reviews/',
     'https://analysis.null.place/tv-series-reviews/index.html',
+    'https://analysis.null.place/img/tv-series-thumb-bbcwaroftheworlds12019.jpg?hash=p58cAg',
     'https://analysis.null.place/img/tv-series-thumb-blackmirror12011.jpg?hash=EDPW69',
     'https://analysis.null.place/img/tv-series-thumb-blackmirror52019.jpg?hash=Jsu8GJ',
     'https://analysis.null.place/img/tv-series-thumb-deadpixels12019.jpg?hash=hlvMUx',
@@ -79,8 +80,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/tv-series-thumb-philipkdickselectricdreams12017.jpg?hash=JnDmc6',
     'https://analysis.null.place/img/tv-series-thumb-rickandmorty12013.jpg?hash=o7FIrK',
     'https://analysis.null.place/img/tv-series-thumb-thewalkingdead12010.jpg?hash=KBZUww',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=ayNT0j',
-    'https://analysis.null.place/json/tv-series-list.json?hash=psYTQw',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=xPrcT6',
+    'https://analysis.null.place/json/tv-series-list.json?hash=M2-YhO',
+    'https://analysis.null.place/json/tv-series-review-bbcwaroftheworlds12019.json?hash=YBNVu4',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
     'https://analysis.null.place/json/tv-series-review-blackmirror52019.json?hash=RNRZhV',
     'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=l-lzV-',
@@ -89,7 +91,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/tv-series-review-philipkdickselectricdreams12017.json?hash=v0Dl8m',
     'https://analysis.null.place/json/tv-series-review-rickandmorty12013.json?hash=nn1WAw',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-search-index.json?hash=uGqEXE',
+    'https://analysis.null.place/json/tv-series-search-index.json?hash=tj7sKx',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',

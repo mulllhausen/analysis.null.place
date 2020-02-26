@@ -12,7 +12,7 @@
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/</loc>
-        <lastmod>2019-12-16</lastmod>
+        <lastmod>2020-02-26</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -278,6 +278,11 @@
     <!-- end URLs for https://analysis.null.place/book-reviews/ -->
 
     <!-- begin URLs for https://analysis.null.place/tv-series-reviews/ -->
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/bbcwaroftheworlds12019/</loc>
+        <lastmod>2020-02-26</lastmod>
+        <priority>0.8</priority>
+    </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/blackmirror12011/</loc>
         <lastmod>2019-03-26</lastmod>

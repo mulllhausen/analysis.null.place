@@ -21,7 +21,7 @@
             <description>My tv-series reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
             <category>tv-series</category>
             <category>reviews</category>
@@ -491,6 +491,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-06-07:/book-review/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011/</guid>
         </item>
         <item>
+            <title>TV-Series Review: BBC War of the Worlds Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/bbcwaroftheworlds12019/</link>
+            <description>A dirty city gets slightly dirtier</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 26 Feb 2020 00:00:00 +1030</pubDate>
+            <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2020-02-26:/tv-series-review/bbcwaroftheworlds12019/</guid>
+        </item>
+        <item>
             <title>TV-Series Review: Black Mirror Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/blackmirror12011/</link>
             <description>Technology as a force for bad</description>
@@ -562,6 +571,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>
