@@ -34,7 +34,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2020-02-05T00:00:00+10:30</updated>
+        <updated>2020-02-26T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -188,6 +188,17 @@
         </author>
         <id>tag:analysis.null.place,2019-02-13:/movie-review/freddygotfingered2001</id>
         <summary type="html">N/A</summary>
+    </entry>
+    <entry>
+        <title>Movie Review: Gemini Man</title>
+        <link>https://analysis.null.place/movie-reviews/geminiman2019/</link>
+        <published>2020-02-26T00:00:00+10:30</published>
+        <updated>2020-02-26T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-02-26:/movie-review/geminiman2019</id>
+        <summary type="html">Intense superhuman chase scenes</summary>
     </entry>
     <entry>
         <title>Movie Review: Gifted</title>

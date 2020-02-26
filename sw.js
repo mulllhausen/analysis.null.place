@@ -1,4 +1,4 @@
-var latestCache = '2020-02-26_20:23:04';
+var latestCache = '2020-02-26_23:06:36';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -108,6 +108,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/movie-thumb-eternalsunshineofthespotlessmind2004.jpg?hash=JHOOvN',
     'https://analysis.null.place/img/movie-thumb-fightclub1999.jpg?hash=7ipBk9',
     'https://analysis.null.place/img/movie-thumb-freddygotfingered2001.jpg?hash=fdMrI6',
+    'https://analysis.null.place/img/movie-thumb-geminiman2019.jpg?hash=Oqwdg6',
     'https://analysis.null.place/img/movie-thumb-gifted2017.jpg?hash=Y8MRSd',
     'https://analysis.null.place/img/movie-thumb-greenbook2019.jpg?hash=F_qF0N',
     'https://analysis.null.place/img/movie-thumb-hellolovegoodbye2019.jpg?hash=04Vy6e',
@@ -153,6 +154,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-eternalsunshineofthespotlessmind2004.json?hash=oc2Pao',
     'https://analysis.null.place/json/movie-review-fightclub1999.json?hash=R_kZ01',
     'https://analysis.null.place/json/movie-review-freddygotfingered2001.json?hash=poY45m',
+    'https://analysis.null.place/json/movie-review-geminiman2019.json?hash=L9LGAx',
     'https://analysis.null.place/json/movie-review-gifted2017.json?hash=yoNQLJ',
     'https://analysis.null.place/json/movie-review-greenbook2019.json?hash=385v2y',
     'https://analysis.null.place/json/movie-review-hellolovegoodbye2019.json?hash=FfU6sw',
@@ -186,9 +188,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/movie-review-transcendence2014.json?hash=poY45m',
     'https://analysis.null.place/json/movie-review-upgrade2018.json?hash=atWiE-',
     'https://analysis.null.place/json/movie-review-whatwedidonourholiday2014.json?hash=O08RIC',
-    'https://analysis.null.place/json/movies-init-list.json?hash=9G2-Zf',
-    'https://analysis.null.place/json/movies-list.json?hash=K4apAf',
-    'https://analysis.null.place/json/movies-search-index.json?hash=ROCBeD',
+    'https://analysis.null.place/json/movies-init-list.json?hash=g2cITA',
+    'https://analysis.null.place/json/movies-list.json?hash=EFCRI-',
+    'https://analysis.null.place/json/movies-search-index.json?hash=mS6-AB',
 
     // assets for the "how do the bitcoin mining algorithms work?" article
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
