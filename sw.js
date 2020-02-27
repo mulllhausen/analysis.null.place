@@ -1,4 +1,4 @@
-var latestCache = '2020-02-26_23:06:36';
+var latestCache = '2020-02-28_08:20:14';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
@@ -229,6 +229,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    debugger;
     var request = event.request; // init
     var urlObj = new URL(request.url);
     var pathParts = urlObj.pathname.split('/');
