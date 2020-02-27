@@ -124,6 +124,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
+    debugger;
     var request = event.request; // init
 {% if MEDIA_REVIEWS %}
     var urlObj = new URL(request.url);
