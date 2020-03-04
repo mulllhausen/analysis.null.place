@@ -1,35 +1,3 @@
-#warningAndErrorLegend {
-    display: none;
-}
-#warningLegend, #errorLegend {
-    position: relative;
-    float: left;
-    display: inline-block;
-    margin: 5px 10px 0 0;
-    line-height: 10px;
-}
-#warningLegend .box, #errorLegend .box {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 8px;
-    width: 8px;
-}
-#warningLegend .box {
-    background-color: #ff9900;/*orange*/
-}
-#warningLegend span, #errorLegend span {
-    margin-left: 15px;
-}
-#warningLegend span {
-    color: #ff9900;/*orange*/
-}
-#errorLegend .box {
-    background-color: red;
-}
-#errorLegend span {
-    color: red;
-}
 select#preload, input#inputDestinationIP {
     width: 11em;
 }
@@ -39,6 +7,7 @@ select#preload, input#inputDestinationIP {
     width: 100%;
     height: 10em;
     resize: vertical;
+    margin-bottom: 10px;
 }
 input#inputDestinationIP, textarea#routeTable, table#interactiveCLI {
     font-family: "Courier New", Courier, monospace;
@@ -62,10 +31,13 @@ textarea#routeTable, table#interactiveCLI {
 #destinationIPErrors {
     color: red;
 }
-#routeTableErrors .warning {
+#routeTableErrorContainer {
+    margin-top: 10px;
+}
+#routeTableErrorContainer .warning {
     color: #ff9900;/*orange*/
 }
-#routeTableErrors .error {
+#routeTableErrorContainer .error {
     color: red;
 }
 table#interactiveCLI {
@@ -114,8 +86,14 @@ table#interactiveCLI .error.clicklighted {
     padding-right: 1px;
 }
 ul#routeTableErrors {
+    margin-top: 5px;
     max-height: 100px;
     overflow-y: auto;
+}
+ul#routeTableErrors.with-border {
+    border: 1px solid #6a6a6a;
+    border-radius: 4px;
+    padding-left: 10px;
 }
 ul#routeTableErrors span.listRouteError:hover,
 ul#routeTableErrors span.listRouteWarning:hover {

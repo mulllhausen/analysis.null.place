@@ -46,11 +46,6 @@ a bug report</a> and I will fix it ASAP.</p>
         <label for="inputDestinationIP" class="for-textbox">destination IP</label><br>
         <input id="inputDestinationIP" type="text" value="192.168.2.1" disabled>
     </div>
-    <div class="left" id="warningAndErrorLegend">
-        <label for="xyz" class="for-textbox">legend</label><br>
-        <div id="warningLegend"><div class="box"></div><span>warning</span></div>
-        <div id="errorLegend"><div class="box"></div><span>error</span></div>
-    </div>
     <div class="left" id="destinationIPErrorContainer">
         <span id="destinationIPErrors"></span>
     </div>
@@ -59,6 +54,8 @@ a bug report</a> and I will fix it ASAP.</p>
         <textarea id="routeTable" disabled></textarea>
     </div>
     <div class="left" id="routeTableErrorContainer">
+        <span class="error">errors</span> /
+        <span class="warning">warnings</span>
         <ul id="routeTableErrors"></ul>
     </div>
     <div class="buttons-area">

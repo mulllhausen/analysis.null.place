@@ -95,6 +95,7 @@ var preloadData = {
 '\n' +
 '255.255.255.255/32 link#5             UCS             0        0     en0      !'
 };
+var maxErrorListHeight = 100; // px (copy this to keep in sync with ul#routeTableErrors max-height css)
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
 var parseWarnings = false; // init
@@ -380,7 +381,6 @@ function updateDestinationIP(doNotRender) {
     var destinationIPList = ip2List(destinationIP);
     if (!validIP(destinationIPList, 4)) {
         destinationIPErrors = true; // global
-        showErrorLegend();
         writeDestinationIPError('invalid destination IP address');
         return;
     }
@@ -388,7 +388,6 @@ function updateDestinationIP(doNotRender) {
     if (typeof routeTableDataLine == 'string') {
         // string = error
         destinationIPErrors = true; // global
-        showErrorLegend();
         writeDestinationIPError(routeTableDataLine);
         return;
     }
@@ -403,13 +402,12 @@ function updateDestinationIP(doNotRender) {
         routeTableData
     );
     destinationIPErrors = false; // global
-    showErrorLegend();
     writeDestinationIPError(); // clear previous errors
 }
 
 function showErrorLegend() {
-    document.getElementById('warningAndErrorLegend').style.display =
-    (destinationIPErrors || parseErrors || parseWarnings) ? 'block' : 'none';
+    document.getElementById('routeTableErrorContainer').style.display =
+    (parseErrors || parseWarnings) ? 'block' : 'none';
 }
 
 function writeDestinationIPError(text) {
@@ -468,6 +466,7 @@ function writeRouteTableErrors(routeTableData) {
         parseErrors = true; // global
     }
     errorText.innerHTML = html;
+    showErrorsWarningsBorder();
     clearInteractiveCLISelection('hovered');
     clearInteractiveCLISelection('clicked');
     if (parseErrors) hideSVG();
@@ -491,6 +490,13 @@ function write1RouteTableError(k, type) {
         endLink = '</span>';
     }
     return '<li class="' + type + '">' + startLink + k.text + endLink + '</li>\n';
+}
+
+function showErrorsWarningsBorder() {
+    var errorListEl = document.getElementById('routeTableErrors');
+    var actualHeight = errorListEl.offsetHeight;
+    if (actualHeight >= maxErrorListHeight) addCSSClass(errorListEl, 'with-border');
+    else removeCSSClass(errorListEl, 'with-border');
 }
 
 function preloadChanged() {
@@ -543,22 +549,23 @@ function makeSVGSelection(svgEl, what) {
 
 function parseButton() {
     writeRouteTableErrors(); // clear previous errors
-    showSVG();
-    clearSVG();
-    var routeTableStr = document.getElementsByTagName('textarea')[0].value;
+    showSVG(); // css
+    clearSVG(); // set svg innerHTML to empty
+    var routeTableStr = document.getElementById('routeTable').value; // textarea
     var routeTableList = routeTableStr.split('\n');
     routeTableData = parseRouteTable(routeTableList); // global
     if (
         (routeTableData.generalErrors.length > 0)
         || (routeTableData.generalWarnings.length > 0)
     ) writeRouteTableErrors(routeTableData);
-    if (routeTableData.generalErrors.length > 0) return null;
-    try {
-        routeTableData = getAllMissingData(routeTableData);
-    } catch (e) {
-        routeTableData.generalErrors.push({ text: e });
-        writeRouteTableErrors(routeTableData);
-        return null;
+    if (routeTableData.generalErrors.length == 0) {
+        try {
+            routeTableData = getAllMissingData(routeTableData);
+        } catch (e) {
+            routeTableData.generalErrors.push({ text: e });
+            writeRouteTableErrors(routeTableData);
+            return null;
+        }
     }
     var anyErrors = convertTextarea(routeTableList, routeTableData);
     switchCLITo('interactive');
@@ -909,7 +916,7 @@ function implementRule(rule, section, parsedData, linei) {
                         ' contain the mask, however line ' + linei +
                         ' indicates that the destination field does ' +
                         (rule.isCIDRFormat ? '' : 'not') +
-                        + ' contain the mask. this property is immutable.'
+                        ' contain the mask. this property is immutable.'
                     });
                     break;
                 }
@@ -999,10 +1006,10 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
                         incompleteDestination = value;
                         cidr = 0; // default
                     }
-                    lineDict['mask'] = ipList2IP(maskBits2List(cidr));
+                    lineDict['mask'] = ipList2IP(maskBits2List(cidr, 4));
                 } else incompleteDestination = value;
                 lineDict['original' + translatedName] = incompleteDestination;
-                value = extrapolateIP(incompleteDestination);
+                value = extrapolateIP(incompleteDestination, 4);
                 if ((error == null) && !validIP(ip2List(value), 4)) {
                     error = {
                         routeNum: routeNum,

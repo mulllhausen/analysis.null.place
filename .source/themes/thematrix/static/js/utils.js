@@ -207,9 +207,17 @@ function deleteElements(element) {
 
 function addCSSClass(els, newClass) {
     if (els == null) return; // there is no element to add a class to
-    if (!isNodeList(els)) els = [els];
+    if (isNodeList(els)) {
+        if (els.length == 0) return; // there is no element to add a class to
+        else els = [els];
+    }
     foreach(els, function (i, el) {
         var classList = getClassList(el);
+        if (classList == null) {
+            el.className = newClass;
+            return; // done
+        }
+        if (inArray(newClass, classList)) return; // no dups
         classList.push(newClass);
         el.className = classList.join(' ');
     });
@@ -217,9 +225,13 @@ function addCSSClass(els, newClass) {
 
 function removeCSSClass(els, removeClass) {
     if (els == null) return; // there is no element to remove a class from
-    if (!isNodeList(els)) els = [els];
+    if (isNodeList(els)) {
+        if (els.length == 0) return; // there is no element to remove a class from
+        else els = [els];
+    }
     foreach(els, function (i, el) {
         var classList = getClassList(el);
+        if (classList == null) return; // not found - continue
         var i = classList.indexOf(removeClass);
         if (i == -1) return; // not found - continue
         classList.splice(i, 1); // remove 1 list item
@@ -236,9 +248,13 @@ function removeAttributes(els, attr) {
 }
 
 function getClassList(el) {
-    if (typeof el.className == 'string') return el.className.split(/\s+/);
+    if (typeof el.className == 'string') {
+        if (el.className == '') return null;
+        else return el.className.split(/\s+/);
+    }
     try {
-        return el.className.baseVal.split(/\s+/);
+        if (el.className.baseVal == '') return null;
+        else return el.className.baseVal.split(/\s+/);
     } catch (e) {
         return null;
     }

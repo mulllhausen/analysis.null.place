@@ -80,21 +80,35 @@ function maskList2Bits(maskList) {
     return bits;
 }
 
+function getClassfulCIDRForIP(incompleteIP) {
+    //var ipList = ip2List(ip);
+    //TODO
+}
+
 function maskBits2List(bits, ipVersion) {
     // 32 -> 255.255.255.255
     // 8 -> 255.0.0.0
     // 24 -> 255.255.255.0
-    var numOctets;
+    // 1 -> 128.0.0.0
+    var numOctets = 0; // init
+    var bitsPerOctet = 0;
     var maskList = [];
     switch (ipVersion) {
-        case 4: numOctets = 4; break;
+        case 4:
+            numOctets = 4;
+            bitsPerOctet = 8;
+            break;
     }
-    var maskBinList = parseInt(bits, 2)
     for (var i = 0; i < numOctets; i++) {
-        if (bits >= 8) {
-            maskList.push((2 ** 8) - 1);
-            bits -= 8;
-        } else maskList.push((2 ** bits) - 1);
+        var thisOctet = 0; // init
+        if (bits >= bitsPerOctet) thisOctet = (2 ** bitsPerOctet) - 1;
+        else {
+            for (var j = 0; j < bits; j++) { // skips when bits <= 0
+                thisOctet += (2 ** (bitsPerOctet - 1 - j));
+            }
+        }
+        maskList.push(thisOctet);
+        bits -= bitsPerOctet;
     }
     return maskList;
 }
@@ -114,9 +128,10 @@ function validIP(ipList, ipVersion) {
     return true;
 }
 
-function getIPVersion(ip) {
+function getIPVersion(ip, ipIsIncomplete) {
     if (ip.indexOf('.') != -1) return 4;
     if (ip.indexOf(':') != -1) return 6;
+    if (ipIsIncomplete) return 4; // default
     throw 'unknown ip version: ' + ip;
 }
 
@@ -173,8 +188,9 @@ function binInvert(intt, ipVersion) {
 }
 
 function extrapolateIP(incompleteIP, ipVersion) {
-    // ipv4: 127 -> 127.0.0.0
-    var completeIP, numOctets;
+    // ipv4: '127' -> '127.0.0.0'
+    var completeIP = [];
+    var numOctets;
     switch (ipVersion) {
         case 4:
             if (incompleteIP == 'default') return '0.0.0.0';
@@ -184,7 +200,7 @@ function extrapolateIP(incompleteIP, ipVersion) {
         return null;
     }
     for (var i = 0; i < numOctets; i++) {
-        if (!incompleteIP.hasOwnProperty(i)) completeIP.push(0);
+        if ((incompleteIP.length - 1) < i) completeIP.push('0');
         else completeIP.push(incompleteIP[i]);
     }
     switch (ipVersion) {
