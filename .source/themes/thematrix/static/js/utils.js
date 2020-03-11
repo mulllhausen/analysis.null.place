@@ -209,8 +209,8 @@ function addCSSClass(els, newClass) {
     if (els == null) return; // there is no element to add a class to
     if (isNodeList(els)) {
         if (els.length == 0) return; // there is no element to add a class to
-        else els = [els];
     }
+    else els = [els];
     foreach(els, function (i, el) {
         var classList = getClassList(el);
         if (classList == null) {
@@ -227,8 +227,8 @@ function removeCSSClass(els, removeClass) {
     if (els == null) return; // there is no element to remove a class from
     if (isNodeList(els)) {
         if (els.length == 0) return; // there is no element to remove a class from
-        else els = [els];
     }
+    else els = [els];
     foreach(els, function (i, el) {
         var classList = getClassList(el);
         if (classList == null) return; // not found - continue
@@ -308,6 +308,7 @@ function setButtons(enable) {
 
 // find needle in haystack - works for strings as well as arrays
 function inArray(needle, haystack) {
+    if (haystack == null) return false;
     // note: does not work with with NaN or ie < 9
     return (haystack.indexOf(needle) > -1);
 }
@@ -446,6 +447,11 @@ function plural(wordEnding, plural) {
 
 function scrollToElement(element) {
     element.scrollIntoView();
+}
+
+function scrollToElementWithinElement(parentEl, childEl, extraTopOffset) {
+    if (extraTopOffset == null) extraTopOffset = 0;
+    parentEl.scrollTop = childEl.offsetTop + extraTopOffset;
 }
 
 // trim an <input type="text"> and maintain cursor position

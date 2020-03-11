@@ -765,7 +765,7 @@ blockquote {
     margin: 0 6px;
 }
 .comments {
-    display: none;/*initially-hidden*/
+    display: none;/*initially hidden*/
     margin: 0 20px;/*match the padding of col-1*/
     overflow: hidden;
     position: absolute;

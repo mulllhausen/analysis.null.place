@@ -80,9 +80,16 @@ function maskList2Bits(maskList) {
     return bits;
 }
 
+// thanks to superuser.com/q/1502902
+// for now just use 8 x num octets. if this is found to be incorrect then update
+// to analyzing the class of network based on partial ip
 function getClassfulCIDRForIP(incompleteIP) {
-    //var ipList = ip2List(ip);
-    //TODO
+    var ipMayBeIncomplete = true;
+    if (getIPVersion(incompleteIP, ipMayBeIncomplete) != 4) throw 'the' +
+    ' classful CIDR can only be determined for ipv4 addresses. ' +
+    incompleteIP + ' is not IPv4';
+    var ipList = ip2List(incompleteIP);
+    return ipList.length * 8;
 }
 
 function maskBits2List(bits, ipVersion) {

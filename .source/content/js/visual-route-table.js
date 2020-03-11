@@ -1,5 +1,7 @@
+// note: computers count from 0 (code), humans count from 1 (gui)
 // todo: ipv6
 // todo: rules for 192, 10, etc
+// todo: prevent script injection
 
 (function () { // new namespace
 
@@ -95,7 +97,7 @@ var preloadData = {
 '\n' +
 '255.255.255.255/32 link#5             UCS             0        0     en0      !'
 };
-var maxErrorListHeight = 100; // px (copy this to keep in sync with ul#routeTableErrors max-height css)
+var maxErrorListHeight = 100; // px (copy this to keep in sync with ul#errorList max-height css)
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
 var parseWarnings = false; // init
@@ -335,10 +337,16 @@ addEvent(window, 'load', function () {
     );
 
     addEvent(
-        document.getElementById('routeTableErrors'),
+        document.getElementById('errorList'),
         'mouseover,mouseout,click',
-        highlightRouteTableError
+        function(e) { highlightWarningOrError(e, 'errorList'); }
     );
+    addEvent(
+        document.querySelector('#interactiveCLI.warning, #interactiveCLI.error'),
+        'mouseover,mouseout,click',
+        function(e) { highlightWarningOrError(e, 'interactiveCLI'); }
+    );
+
     document.getElementById('preload').removeAttribute('disabled');
     document.getElementById('inputDestinationIP').removeAttribute('disabled');
     document.getElementById('routeTable').removeAttribute('disabled');
@@ -362,7 +370,7 @@ function editButton() {
     switchCLITo('input');
     clearSVG();
     hideSVG();
-    writeRouteTableErrors();
+    writeErrorList();
     mode = 'editing';
 }
 
@@ -426,11 +434,11 @@ function writeDestinationIPError(text) {
     }
 }
 
-function writeRouteTableErrors(routeTableData) {
+function writeErrorList(routeTableData) {
     parseErrors = false; // init (global)
     parseWarnings = false; // init (global)
     var errorContainer = document.getElementById('routeTableErrorContainer');
-    var errorText = document.getElementById('routeTableErrors');
+    var errorText = document.getElementById('errorList');
     if (routeTableData == null) {
         errorContainer.style.display = 'none';
         errorText.innerHTML = '';
@@ -459,11 +467,16 @@ function writeRouteTableErrors(routeTableData) {
     }
 
     // write the route errors
+    var anyRouteErrors = false;
     for (var i = 0; i < routeTableData.routes.length; i++) {
         var route = routeTableData.routes[i];
         if (!route.hasOwnProperty('error')) continue;
         html += write1RouteTableError(route.error, 'error');
+        anyRouteErrors = true;
         parseErrors = true; // global
+    }
+    if (anyRouteErrors) {
+        addCSSClass(document.getElementById('interactiveCLI'), 'error');
     }
     errorText.innerHTML = html;
     showErrorsWarningsBorder();
@@ -478,29 +491,28 @@ function write1RouteTableError(k, type) {
     var endLink = ''; // init
     if (k.hasOwnProperty('routeNum') && k.hasOwnProperty('fieldNum')) {
         startLink = '<span' +
-            ' class="listRoute' + capitalizeFirst(type) + '"' +
-            ' routeNum="' + k.routeNum + '"' +
-            ' fieldNum="' + k.fieldNum + '">';
+            ' class="' + type + '"' +
+            ' routenum="' + k.routeNum + '"' +
+            ' fieldnum="' + k.fieldNum + '">';
         endLink = '</span>';
-    }
-    if (k.hasOwnProperty('lineNum')) {
+    } else if (k.hasOwnProperty('lineNum')) {
         startLink = '<span' +
-            ' class="listRoute' + capitalizeFirst(type) + '"' +
-            ' lineNum="' + k.lineNum + '">';
+            ' class="' + type + '"' +
+            ' linenum="' + k.lineNum + '">';
         endLink = '</span>';
     }
     return '<li class="' + type + '">' + startLink + k.text + endLink + '</li>\n';
 }
 
 function showErrorsWarningsBorder() {
-    var errorListEl = document.getElementById('routeTableErrors');
+    var errorListEl = document.getElementById('errorList');
     var actualHeight = errorListEl.offsetHeight;
     if (actualHeight >= maxErrorListHeight) addCSSClass(errorListEl, 'with-border');
     else removeCSSClass(errorListEl, 'with-border');
 }
 
 function preloadChanged() {
-    writeRouteTableErrors();
+    writeErrorList();
     hideSVG();
     var preload = document.getElementById('preload').value;
     if (preload == 'no') return;
@@ -523,14 +535,17 @@ function svgAction(e) {
     clearInteractiveCLISelection(what);
 
     if (actionEl.tagName.toLowerCase() != 'path') return;
-    if (getClassList(actionEl).indexOf('ipRange') == -1) return;
+    if (!inArray('ipRange', getClassList(actionEl))) return;
     var actionGroup = actionEl.parentNode;
     if (actionGroup.tagName.toLowerCase() != 'g') return;
     if (actionGroup.parentNode.tagName.toLowerCase() != 'g') return;
     if (actionGroup.parentNode.id != 'z2') return;
 
     makeSVGSelection(actionGroup, what);
-    var routeLineEl = document.querySelector('#interactiveCLI td#' + actionGroup.id);
+    var routeNum = actionGroup.getAttribute('routenum');
+    var routeLineEl = document.querySelector(
+        '#interactiveCLI td[routenum="' + routeNum + '"]'
+    );
     makeInteractiveCLISelection(routeLineEl, what);
 }
 
@@ -548,7 +563,7 @@ function makeSVGSelection(svgEl, what) {
 }
 
 function parseButton() {
-    writeRouteTableErrors(); // clear previous errors
+    writeErrorList(); // clear previous errors
     showSVG(); // css
     clearSVG(); // set svg innerHTML to empty
     var routeTableStr = document.getElementById('routeTable').value; // textarea
@@ -557,13 +572,13 @@ function parseButton() {
     if (
         (routeTableData.generalErrors.length > 0)
         || (routeTableData.generalWarnings.length > 0)
-    ) writeRouteTableErrors(routeTableData);
+    ) writeErrorList(routeTableData);
     if (routeTableData.generalErrors.length == 0) {
         try {
             routeTableData = getAllMissingData(routeTableData);
         } catch (e) {
             routeTableData.generalErrors.push({ text: e });
-            writeRouteTableErrors(routeTableData);
+            writeErrorList(routeTableData);
             return null;
         }
     }
@@ -652,15 +667,15 @@ function convertTextarea(routeTableList, tmpRouteTableData) {
             var classes = [];
             if (warningLines.hasOwnProperty(i)) classes.push('warning');
             if (errorLines.hasOwnProperty(i)) classes.push('error');
-            var id = 'id="line' + i + '"';
+            var lineNum = 'linenum="' + i + '"';
             var clas = 'class="' + classes.join(' ') + '"';
-            routeTableLine = '<span ' + id + ' ' + clas + '>' +
+            routeTableLine = '<span ' + lineNum + ' ' + clas + '>' +
                 routeTableLine +
             '</span>';
         }
 
         if (mapRouteLines.hasOwnProperty(i)) {
-            tdExtra = ' id="routeLine' + mapRouteLines[i] + '" class="is-route"';
+            tdExtra = ' routenum="' + mapRouteLines[i] + '" class="is-route"';
 
             var routeTableDataItem = tmpRouteTableData.routes[mapRouteLines[i]];
             if (routeTableDataItem.hasOwnProperty('error')) {
@@ -674,7 +689,7 @@ function convertTextarea(routeTableList, tmpRouteTableData) {
         html += '<tr><td' + tdExtra + '>' + routeTableLine + '</td></tr>';
     }
     interactiveCLI.innerHTML = html;
-    writeRouteTableErrors(tmpRouteTableData);
+    writeErrorList(tmpRouteTableData);
     return anyErrors;
 }
 
@@ -689,60 +704,94 @@ function renderTextareaLineWithError(tmpRouteTableLine, errorOnFieldNum) {
         var fieldNum = i / 2;
         var field = lineAsList[i];
         if (errorOnFieldNum == fieldNum) field = '<span class="error"' +
-        ' fieldNum="' + fieldNum + '">' + field + '</span>';
+        ' fieldnum="' + fieldNum + '">' + field + '</span>';
         line += field;
     }
     return line;
 }
 
-function highlightRouteTableError(e) {
+function highlightWarningOrError(e, me) {
+    // this function is called when the user hovers or clicks an error or
+    // warning in either the <ul> of errors or in the interactive cli.
+    // it keeps the highlighted warnings/errors in sync between the <ul> and the
+    // interactive cli
     var el = e.srcElement;
     if (el.tagName.toLowerCase() != 'span') return;
-    if (
-        (getClassList(el).indexOf('listRouteError') == -1) // not found
-        && (getClassList(el).indexOf('listRouteWarning') == -1) // not found
-    ) return;
-    removeCSSClass( // clear all highlights first
-        document.querySelectorAll('#interactiveCLI .highlighted'),
-        'highlighted'
-    );
+    var classList = getClassList(el);
+    if (!inArray('warning', classList) && !inArray('error', classList)) return;
+    clearAllLights('hover'); // clear all hoverlights first
     var eventType = e.type;
     var newClass;
     switch (eventType) {
         case 'mouseout':
-            // all highlights have already been removed - exit here
+            // all hoverlights have already been removed - exit here
             return;
         case 'mouseover':
-            newClass = 'highlighted';
+            newClass = 'hoverlighted';
             break;
         case 'click':
-            removeCSSClass( // clear all clicklights first
-                document.querySelectorAll('#interactiveCLI .clicklighted'),
-                'clicklighted'
-            );
-            var previouslyClicked = el.hasAttribute('clicked');
-            removeAttributes(
-                document.querySelectorAll('#routeTableErrors .listRouteError'),
-                'clicked'
-            );
-            if (previouslyClicked) return;
-
-            // the error text was not previously clicked
-            el.setAttribute('clicked', '');
+            var alreadyClicked = inArray('clicklighted', classList);
+            clearAllLights('click'); // clear all clicklights first
+            if (alreadyClicked) return; // click when already clicked deselects
             newClass = 'clicklighted';
             break;
     }
-    var correspondingCell = '';
-    // highlight the associated route table error
-    if (el.hasAttribute('routeNum') && el.hasAttribute('fieldNum')) {
-        var routeNum = el.getAttribute('routeNum') - 1;
-        var fieldNum = el.getAttribute('fieldNum');
-        correspondingCell = '#routeLine' + routeNum +
-        ' [fieldNum="' + fieldNum + '"]';
-    } else if (el.hasAttribute('lineNum')) {
-        correspondingCell = '#interactiveCLI #line' + el.getAttribute('lineNum');
+    // highlight the associated error. clicks for me and you. hoverlights only
+    // for you (me already has :hover, which is the same as 'hoverlighted').
+    var cliCell = '#interactiveCLI ';
+    var errCell = '#errorList ';
+    if (el.hasAttribute('fieldnum')) { // error for a field (cell within row)
+        var fieldNum = el.getAttribute('fieldnum');
+        var fieldCSS = '[fieldnum="' + fieldNum + '"]';
+
+        // in the interactive cli the route belongs to the row (parent of el),
+        // but in the <ul> the route number belongs to el
+        var routeNum;
+        switch (me) {
+            case 'interactiveCLI':
+                routeNum = el.parentNode.getAttribute('routenum');
+                break;
+            case 'errorList':
+                routeNum = el.getAttribute('routenum');
+                break;
+        }
+        var routeCSS = '[routenum="' + routeNum + '"]';
+        cliCell += routeCSS + ' ' + fieldCSS;
+        errCell += routeCSS + fieldCSS;
+    } else { // error for entire row
+        var lineNum = el.getAttribute('linenum');
+        var lineCSS = '[linenum="' + lineNum + '"]';
+        cliCell += lineCSS;
+        errCell += lineCSS;
     }
-    addCSSClass(document.querySelector(correspondingCell), newClass);
+    var you, meCell, youCell;
+    switch (me) {
+        case 'interactiveCLI':
+            meCell = cliCell;
+            youCell = errCell;
+            you = 'errorList';
+            break;
+        case 'errorList':
+            meCell = errCell;
+            youCell = cliCell;
+            you = 'interactiveCLI';
+            break;
+    }
+    var correspondingCells = youCell; // item 0 always = you
+    if (eventType == 'click') correspondingCells += ',' + meCell;
+
+    var errorEl = document.querySelectorAll(correspondingCells);
+    addCSSClass(errorEl, newClass);
+    var errParent = errorEl[0].parentNode; // item 0 = you
+    var scrollingEl = document.getElementById(you);
+    var scrollOffset = (errParent.offsetHeight - scrollingEl.offsetHeight) / 2;
+    scrollToElementWithinElement(scrollingEl, errParent, scrollOffset);
+}
+
+function clearAllLights(type) {
+    type = type + 'lighted';
+    var query = '#interactiveCLI .' + type + ',#errorList .' + type;
+    removeCSSClass(document.querySelectorAll(query), type);
 }
 
 function interactiveCLIAction(e) {
@@ -761,22 +810,18 @@ function interactiveCLIAction(e) {
     var actionEl = e.srcElement;
     var validElForSelection = makeInteractiveCLISelection(actionEl, what);
     if (!validElForSelection) return;
-    var svgGroupEl = svg.getElementById(actionEl.id);
+    var routeNum = actionEl.getAttribute('routenum');
+    var svgGroupEl = svg.querySelector('[routenum="' + routeNum + '"]');
     makeSVGSelection(svgGroupEl, what);
 }
 
 function clearInteractiveCLISelection(what) {
     removeCSSClass(document.querySelectorAll('#interactiveCLI td.' + what), what);
-    /*var selectedEls = document.querySelectorAll('#interactiveCLI td.' + what);
-    for (var i = 0; i < selectedEls.length; i++) {
-        var previouslyClickedEl = selectedEls[i];
-        removeCSSClass(previouslyClickedEl, what);
-    }*/
 }
 
 function makeInteractiveCLISelection(el, what) {
     if (el.tagName.toLowerCase() != 'td') return false;
-    if (getClassList(el).indexOf('is-route') == -1) return false;
+    if (!inArray('is-route', getClassList(el))) return false;
     addCSSClass(el, what);
     return true;
 }
@@ -804,24 +849,26 @@ function parseRouteTable(routeTableList) {
         routes: []
     };
     var routeNum = 0; // init
-    for (var linei = 0; linei < routeTableList.length; linei++) {
-        var thisLine = trim(routeTableList[linei].toLowerCase());
+    for (var lineNum = 0; lineNum < routeTableList.length; lineNum++) {
+        var thisLine = trim(routeTableList[lineNum].toLowerCase());
         var rulei = findMatchingRule(thisLine, parsedData);
         if (rulei == null) {
             // no matching rules - ignore this line
+            var humanLineNum = lineNum + 1;
             parsedData.generalWarnings.push({
-                lineNum: linei,
-                text: 'ignoring unexpected character sequence on line ' + linei
+                lineNum: lineNum,
+                text: 'ignoring unexpected character sequence on line ' +
+                humanLineNum
             });
             continue;
         }
         var rule = routeTableFormat[rulei];
-        var tmp = implementRule(rule, section, parsedData, linei);
+        var tmp = implementRule(rule, section, parsedData, lineNum);
         section = tmp[0];
         parsedData = tmp[1];
         if (parsedData.generalErrors.length > 0) break;
         if (!rule.hasOwnProperty('isRoute') || !rule.isRoute) continue;
-        parsedData = parseRoute(routeNum, thisLine, parsedData, linei);
+        parsedData = parseRoute(routeNum, thisLine, parsedData, lineNum);
         routeNum++;
     }
     if (parsedData.headers == null) {
@@ -887,17 +934,18 @@ function findMatchingRule(lineText, parsedData) {
     return null;
 }
 
-function implementRule(rule, section, parsedData, linei) {
+function implementRule(rule, section, parsedData, lineNum) {
+    var humanLineNum = lineNum + 1;
     switch (rule.action) {
         case 'match':
             // not allowewd to change os
             if (rule.hasOwnProperty('os')) {
                 if ((parsedData.os != null) && (rule.os != parsedData.os)) {
                     parsedData.generalErrors.push({
-                        lineNum: linei,
+                        lineNum: lineNum,
                         text: 'os <i>' + parsedData.os + '</i> was previously' +
-                        ' detected, however line ' + linei + ' exclusively' +
-                        ' matches <i>' + rule.os + '</i>'
+                        ' detected, however line ' + humanLineNum +
+                        ' exclusively matches <i>' + rule.os + '</i>'
                     });
                     break;
                 }
@@ -909,11 +957,11 @@ function implementRule(rule, section, parsedData, linei) {
                     && (rule.isCIDRFormat != parsedData.isCIDRFormat)
                 ) {
                     parsedData.generalErrors.push({
-                        lineNum: linei,
+                        lineNum: lineNum,
                         text: 'it was previously determined that the' +
                         ' destination field did ' +
                         (parsedData.isCIDRFormat ? '' : 'not') +
-                        ' contain the mask, however line ' + linei +
+                        ' contain the mask, however line ' + humanLineNum +
                         ' indicates that the destination field does ' +
                         (rule.isCIDRFormat ? '' : 'not') +
                         ' contain the mask. this property is immutable.'
@@ -927,9 +975,9 @@ function implementRule(rule, section, parsedData, linei) {
                 && (section != rule.withinSection)
             ) {
                 parsedData.generalErrors.push({
-                    lineNum: linei,
+                    lineNum: lineNum,
                     text: 'supposed to be within section <i>' + section
-                    + '</i> but line ' + linei +
+                    + '</i> but line ' + humanLineNum +
                     ' corresponds to section <i>' + rule.withinSection + '</i>'
                 });
                 break;
@@ -941,7 +989,7 @@ function implementRule(rule, section, parsedData, linei) {
             ) {
                 if (section != rule.terminatesSection) {
                     parsedData.generalErrors.push({
-                        lineNum: linei,
+                        lineNum: lineNum,
                         text: 'attempted to terminate section <i>' +
                         rule.terminatesSection + '</i> during section' +
                         ' <i>' + section + '</i>'
@@ -956,7 +1004,7 @@ function implementRule(rule, section, parsedData, linei) {
             if (rule.hasOwnProperty('beginsSection')) {
                 if ((section != '') && (section != rule.beginsSection)) {
                     parsedData.generalErrors.push({
-                        lineNum: linei,
+                        lineNum: lineNum,
                         text: 'section <i>' + section + '</i> was not' +
                         ' terminated before section <i>' + rule.beginsSection +
                         '</i> was found.'
@@ -980,12 +1028,14 @@ function implementRule(rule, section, parsedData, linei) {
     return [section, parsedData];
 }
 
-function parseRoute(routeNum, thisLine, parsedData, linei) {
+function parseRoute(routeNum, thisLine, parsedData, lineNum) {
     var thisLineList = splitRouteTableLine(thisLine);
     var error = null; // init
     var lineDict = { // init
-        originalLineNum: linei
+        originalLineNum: lineNum
     };
+    var humanLineNum = lineNum + 1;
+    var humanRouteNum = routeNum + 1;
     for (var headeri = 0; headeri < parsedData.headers.length; headeri++) {
         var name = parsedData.headers[headeri];
 
@@ -1015,7 +1065,7 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
                         routeNum: routeNum,
                         fieldNum: headeri,
                         text: 'invalid destination IP address in route ' +
-                        routeNum
+                        humanRouteNum
                     };
                 }
                 break;
@@ -1033,7 +1083,7 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
                     error = {
                         routeNum: routeNum,
                         fieldNum: headeri,
-                        text: 'invalid mask IP address in route ' + routeNum
+                        text: 'invalid mask IP address in route ' + humanRouteNum
                     };
                 }
                 break;
@@ -1044,44 +1094,6 @@ function parseRoute(routeNum, thisLine, parsedData, linei) {
     parsedData.routes.push(lineDict);
     return parsedData;
 }
-
-/*function deduceCommand(os, lineList) {
-    var deducedCommand = null;
-    foreach (routeTableFormat[os].routeHeaderRows, function (command, fields) {
-        deducedCommand = command;
-        var offset = 0;
-        foreach (fields, function (fieldNum, fieldName) {
-            fieldNum = parseInt(fieldNum);
-            var fieldNameParts = fieldName.split(' ');
-            var match = true;
-            for (var i = 0; i < fieldNameParts.length; i++) {
-                if (lineList[fieldNum + offset] == fieldName) {
-                    offset += i;
-                    continue; // all good
-                }
-                match = false;
-                break;
-            }
-            if (match) return; // all good - continue
-            deducedCommand = null;
-            return false; // break
-        });
-        if (deducedCommand != null) return false; // break
-    });
-    return deducedCommand;
-}*/
-
-/*function deduceCommandAndOS(lineList) {
-    var os = null;
-    var deducedCommand = null;
-    foreach (routeTableFormat, function (tmpOS, _) {
-        deducedCommand = deduceCommand(tmpOS, lineList);
-        if (deducedCommand == null) return;
-        os = tmpOS;
-        return false; // break
-    });
-    return [os, deducedCommand];
-}*/
 
 // rendering
 
@@ -1559,7 +1571,7 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
         }
         group = renderIPRange(path, group, pathColor);
         group = renderIPText(group, ipRangeData);
-        group.setAttribute('id', 'routeLine' + ipRangeData.routeLine);
+        group.setAttribute('routenum', ipRangeData.routeLine);
         svg.getElementById('z2').appendChild(group);
     }
 }

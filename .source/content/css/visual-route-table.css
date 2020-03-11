@@ -16,7 +16,6 @@ input#inputDestinationIP, textarea#routeTable, table#interactiveCLI {
 textarea#routeTable, table#interactiveCLI {
     position: relative;
     float: left;
-    /*top: 0; right: 0; bottom: 0; left: 0;*/
     width: 100%;
     height: 100%;
     resize: none;
@@ -32,6 +31,7 @@ textarea#routeTable, table#interactiveCLI {
     color: red;
 }
 #routeTableErrorContainer {
+    display: none;/*initially hidden*/
     margin-top: 10px;
 }
 #routeTableErrorContainer .warning {
@@ -44,11 +44,11 @@ table#interactiveCLI {
     border-collapse: collapse;
     display: none;
     cursor: default;
-    user-select: none; /* supported by Chrome and Opera */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;/*supported by chrome and opera*/
+    -webkit-user-select: none;/*safari*/
+    -khtml-user-select: none;/*konqueror html*/
+    -moz-user-select: none;/*firefox*/
+    -ms-user-select: none;/*internet explorer/edge*/
     line-height: 16px;
 }
 table#interactiveCLI td, table#interactiveCLI th {
@@ -56,7 +56,7 @@ table#interactiveCLI td, table#interactiveCLI th {
     border: none;
     background: none;
 }
-table#interactiveCLI td.is-route {
+table#interactiveCLI:not(.error) td.is-route {
     cursor: pointer;
 }
 table#interactiveCLI:not(.error) td.is-route:hover,
@@ -73,31 +73,41 @@ table#interactiveCLI .warning {
 table#interactiveCLI .error {
     color: red;
 }
-table#interactiveCLI .warning.highlighted,
-table#interactiveCLI .warning.clicklighted {
+table#interactiveCLI .warning.hoverlighted,
+table#interactiveCLI .warning.clicklighted,
+table#interactiveCLI .warning:hover {
     border: 1px solid #ff9900;/*orange*/
     margin: 0 -2px 0 -1px;
     padding-right: 1px;
+    cursor: pointer;
 }
-table#interactiveCLI .error.highlighted,
-table#interactiveCLI .error.clicklighted {
+table#interactiveCLI .error.hoverlighted,
+table#interactiveCLI .error.clicklighted,
+table#interactiveCLI .error:hover {
     border: 1px solid red;
     margin: 0 -2px 0 -1px;
     padding-right: 1px;
+    cursor: pointer;
 }
-ul#routeTableErrors {
+ul#errorList {
+    position: relative;/*necessary for correct offsetTop of <li> children*/
     margin-top: 5px;
     max-height: 100px;
     overflow-y: auto;
 }
-ul#routeTableErrors.with-border {
+ul#errorList.with-border {
     border: 1px solid #6a6a6a;
     border-radius: 4px;
     padding-left: 10px;
 }
-ul#routeTableErrors span.listRouteError:hover,
-ul#routeTableErrors span.listRouteWarning:hover {
+ul#errorList span.warning.hoverlighted,
+ul#errorList span.warning.clicklighted,
+ul#errorList span.error.hoverlighted,
+ul#errorList span.error.clicklighted,
+ul#errorList span.error:hover,
+ul#errorList span.warning:hover {
     cursor: pointer;
+    border-bottom: 1px solid;/*same color as font*/
 }
 .buttons-area {
     display: block;
@@ -109,7 +119,7 @@ button#parse {
 #visualRouteTable {
     padding: 0;
     overflow-x: scroll;
-    visibility: hidden; /* initially hidden */
+    visibility: hidden;/*initially hidden*/
 }
 #routeTableSVG {
     width: 100%;
