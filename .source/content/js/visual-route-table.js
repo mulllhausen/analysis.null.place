@@ -843,6 +843,7 @@ function parseRouteTable(routeTableList) {
         generalWarnings: [],
         generalErrors: [],
         ipv: null,
+        ignore2End: false,
         minIPList: null,
         maxIPList: null,
         deducedCommand: null, // deduced from the header row
@@ -867,6 +868,7 @@ function parseRouteTable(routeTableList) {
         section = tmp[0];
         parsedData = tmp[1];
         if (parsedData.generalErrors.length > 0) break;
+        if (parsedData.ignore2End) break;
         if (!rule.hasOwnProperty('isRoute') || !rule.isRoute) continue;
         parsedData = parseRoute(routeNum, thisLine, parsedData, lineNum);
         routeNum++;
@@ -1013,7 +1015,23 @@ function implementRule(rule, section, parsedData, lineNum) {
                 }
                 section = rule.beginsSection;
             }
-            if (rule.hasOwnProperty('ipv')) parsedData.ipv = rule.ipv;
+
+            // changing ipv means ignore everything from here onwards
+            if (rule.hasOwnProperty('ipv')) {
+                if ((parsedData.ipv != null) && (rule.ipv != parsedData.ipv)) {
+                    parsedData.generalWarnings.push({
+                        lineNum: lineNum,
+                        text: 'the output was previously identified as IPv' +
+                        parsedData.ipv + ', however line ' + humanLineNum +
+                        ' indicates IPv' + rule.ipv + ', so everything from' +
+                        ' here on is ignored'
+                    });
+                    parsedData.ignore2End = true;
+                    break;
+                }
+                parsedData.ipv = rule.ipv;
+            }
+
             if (rule.hasOwnProperty('isHeaderRow') && rule.isHeaderRow) {
                 parsedData.headers = rule.list;
             }
