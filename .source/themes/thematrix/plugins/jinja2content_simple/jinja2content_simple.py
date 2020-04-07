@@ -2,8 +2,46 @@ import pelican
 import os
 import re
 import datetime
-from jinja2 import Environment, FileSystemLoader
+import jinja2
 #import pudb
+
+#
+# begin custom functions
+#
+
+class Context:
+    def __init__(self, data_from_pelican):
+        self.data_from_pelican = data_from_pelican
+
+    def base_include(self, path_and_file, raw = False):
+        """ insert the content of a file from anywhere (relative to .source) """
+        #pu.db
+        base_dir = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), '../../../..')
+        )
+        path_and_file_from_base = os.path.join(base_dir, path_and_file)
+        file_content = '' # init
+        with open(path_and_file_from_base, "rb") as f:
+            file_content = f.read()
+
+        if raw:
+            return file_content
+        else:
+            data_from_pelican = self.data_from_pelican
+            jinja_environment = data_from_pelican.settings['JINJA_ENVIRONMENT']
+            theme_dir = os.path.join(
+                data_from_pelican.settings['THEME'],
+                'templates'
+            )
+            jenv = jinja2.Environment(
+                loader = jinja2.FileSystemLoader(theme_dir),
+                **jinja_environment
+            )
+            return jenv.from_string(file_content).render(data_from_pelican.settings)
+
+#
+# end custom functions
+#
 
 #
 # begin custom filters
@@ -23,11 +61,14 @@ def process_content(data_from_pelican):
     #pu.db
     theme_dir = os.path.join(data_from_pelican.settings['THEME'], 'templates')
     jinja_environment = data_from_pelican.settings['JINJA_ENVIRONMENT']
-    jenv = Environment(
-        loader = FileSystemLoader(theme_dir),
+    jenv = jinja2.Environment(
+        loader = jinja2.FileSystemLoader(theme_dir),
         **jinja_environment
     )
     jenv.filters['cleanstr'] = cleanstr
+
+    context = Context(data_from_pelican)
+    jenv.globals['base_include'] = context.base_include
 
     # now convert jinja values in article metadata settings variables
 

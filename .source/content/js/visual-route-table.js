@@ -1,102 +1,16 @@
 // note: computers count from 0 (code), humans count from 1 (gui)
+
+// todo: multiple link-local gateways
 // todo: ipv6
 // todo: rules for 192, 10, etc
 // todo: prevent script injection
 
-(function () { // new namespace
+(function (preloadData, siteGlobals) { // new namespace
 
 // init globals
 
-var preloadData = {
-    linux: '$ route -ve\n' +
-'Kernel IP routing table\n' +
-'Destination     Gateway  Genmask         Flags   MSS Window  irtt Iface\n' +
-'default         net1     0.0.0.0         UG        0 0          0 eth1\n' +
-'172.16.0.0      wan      255.255.0.0     UG        0 0          0 eth0\n' +
-'192.168.0.0     *        255.255.255.0   U         0 0          0 eth0\n' +
-'192.168.1.0     *        255.255.255.0   U         0 0          0 eth1',
-    windows: '> route print\n' +
-'===========================================================================\n' +
-'Interface List\n' +
-' 55...00 00 00 00 00 00 ......Intel(R) Ethernet Connection I217-LM\n' +
-'  1...........................Software Loopback Interface 1\n' +
-' 31...00 00 00 00 00 00 00 e0 Microsoft ISATAP Adapter\n' +
-' 16...00 00 00 00 00 00 00 e0 Teredo Tunneling Pseudo-Interface\n' +
-'===========================================================================\n' +
-'\n' +
-'IPv4 Route Table\n' +
-'===========================================================================\n' +
-'Active Routes:\n' +
-'Network Destination        Netmask          Gateway       Interface  Metric\n' +
-'          0.0.0.0          0.0.0.0      192.168.0.1      192.168.0.2     20\n' +
-'        127.0.0.0        255.0.0.0         On-link         127.0.0.1    306\n' +
-'        127.0.0.1  255.255.255.255         On-link         127.0.0.1    306\n' +
-'  127.255.255.255  255.255.255.255         On-link         127.0.0.1    306\n' +
-'       172.16.0.0      255.255.0.0      192.168.0.8      192.168.0.2     21\n' +
-'       172.16.0.0    255.255.255.0      192.168.0.8      192.168.0.2     21\n' +
-'      192.168.0.0    255.255.255.0         On-link       192.168.0.2    276\n' +
-'      192.168.0.2  255.255.255.255         On-link       192.168.0.2    276\n' +
-'    192.168.0.255  255.255.255.255         On-link       192.168.0.2    276\n' +
-'      192.168.3.0    255.255.255.0      192.168.0.8      192.168.0.2     21\n' +
-'      192.168.5.0    255.255.255.0      192.168.0.8      192.168.0.2     21\n' +
-'    203.41.188.96  255.255.255.240      192.168.0.8      192.168.0.2     21\n' +
-'    203.42.70.224  255.255.255.240      192.168.0.8      192.168.0.2     21\n' +
-'    203.44.43.160  255.255.255.240      192.168.0.8      192.168.0.2     21\n' +
-'       203.52.0.0    255.255.254.0      192.168.0.8      192.168.0.2     21\n' +
-'        224.0.0.0        240.0.0.0         On-link         127.0.0.1    306\n' +
-'        224.0.0.0        240.0.0.0         On-link       192.168.0.2    276\n' +
-'  255.255.255.255  255.255.255.255         On-link         127.0.0.1    306\n' +
-'  255.255.255.255  255.255.255.255         On-link       192.168.0.2    276\n' +
-'===========================================================================\n' +
-'Persistent Routes:\n' +
-'  Network Address          Netmask  Gateway Address  Metric\n' +
-'       172.16.0.0    255.255.255.0      192.168.0.8       1\n' +
-'===========================================================================\n' +
-'\n' +
-'IPv6 Route Table\n' +
-'===========================================================================\n' +
-'Active Routes:\n' +
-' If Metric Network Destination      Gateway\n' +
-'  1    306 ::1/128                  On-link\n' +
-'  1    306 ff00::/8                 On-link\n' +
-'===========================================================================\n' +
-'Persistent Routes:\n' +
-'  None',
-    macOS: '$ netstat -rn\n' +
-'Routing tables\n' +
-'\n' +
-'\n' +
-'\n' +
-'Internet:\n' +
-'\n' +
-'Destination        Gateway            Flags        Refs      Use   Netif Expire\n' +
-'\n' +
-'default            192.168.1.1        UGSc          192        0     en0       \n' +
-'\n' +
-'127                127.0.0.1          UCS             0        0     lo0       \n' +
-'\n' +
-'127.0.0.1          127.0.0.1          UH              1      248     lo0       \n' +
-'\n' +
-'169.254            link#5             UCS             1        0     en0      !\n' +
-'\n' +
-'192.168.1          link#5             UCS             1        0     en0      !\n' +
-'\n' +
-'192.168.1.1/32     link#5             UCS             1        0     en0      !\n' +
-'\n' +
-'192.168.1.1        1:0:0:0:0:0        UHLWIir        68     1450     en0   1144\n' +
-'\n' +
-'192.168.1.101      2:0:0:0:0:0        UHLWI           0        0     en0   1073\n' +
-'\n' +
-'192.168.1.103/32   link#5             UCS             0        0     en0      !\n' +
-'\n' +
-'224.0.0/4          link#5             UmCS            2        0     en0      !\n' +
-'\n' +
-'224.0.0.251        3:0:0:0:0:0        UHmLWI          0        0     en0       \n' +
-'\n' +
-'239.255.255.250    4:0:0:0:0:0        UHmLWI          0      540     en0       \n' +
-'\n' +
-'255.255.255.255/32 link#5             UCS             0        0     en0      !'
-};
+var baseSVG = null;
+var svgXML = null;
 var maxErrorListHeight = 100; // px (copy this to keep in sync with ul#errorList max-height css)
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
@@ -254,6 +168,9 @@ var routeTableFormat = [ // list of objects. 1 object = 1 rule
         },
         dynamicListLengthArgs: ['parsedData.headers'],
         dynamicListItem: '\\S+',
+        lastDynamicListItem: { // also includes the final seperator
+            macos: '\\s*\\S*'
+        },
         withinSection: 'routes',
         isRoute: true
     }
@@ -310,6 +227,8 @@ var gatewayData = null; // init
 // events
 
 addEvent(window, 'load', function () {
+    initPreloads();
+
     initSVGProperties();
 
     addEvent(
@@ -358,9 +277,45 @@ addEvent(window, 'load', function () {
 
 // functions
 
+function initPreloads() {
+    var typicalOutputs = [];
+    var unitTests = [];
+    for (var k in preloadData) {
+        if (!preloadData.hasOwnProperty(k)) continue;
+
+        // clean up the global var values
+        preloadData[k] = trim(preloadData[k]);
+
+        // rename the keys
+        if (inArray('-typicalOutput', k)) {
+            var newK = k.replace('-typicalOutput', '');
+            preloadData[newK] = preloadData[k];
+            delete preloadData[k];
+            typicalOutputs.push(newK);
+        } else if (inArray('-unitTest', k)) {
+            var newK = k.replace('-unitTest', '');
+            preloadData[newK] = preloadData[k];
+            delete preloadData[k];
+            unitTests.push(newK);
+        }
+    }
+    var ddlInnerHTML = '<option disabled>Typical Outputs</option>\n';
+    for (var i = 0; i < typicalOutputs.length; i++) {
+        var val = typicalOutputs[i];
+        ddlInnerHTML += '<option value="' + val + '">' + val + '</option>\n';
+    }
+    ddlInnerHTML += '<option disabled>Unit Tests</option>\n';
+    for (var i = 0; i < unitTests.length; i++) {
+        var val = unitTests[i];
+        ddlInnerHTML += '<option value="' + val + '">' + val + '</option>';
+    }
+    ddlInnerHTML += '<option value="no" disabled hidden>N/A</option>';
+    document.getElementById('preload').innerHTML = ddlInnerHTML;
+}
+
 function initSVGProperties() {
-    svg = document.getElementById('routeTableSVG').contentDocument.
-    getElementsByTagName('svg')[0];
+    svg = document.getElementById('routeTableSVG');//.contentDocument.
+    //getElementsByTagName('svg')[0];
     svgDefs = svg.getElementsByTagName('defs')[0];
     var nicEl = svgDefs.querySelectorAll('.nic')[0];
     svgProperties.overallWidth = svg.getBBox().width;
@@ -546,7 +501,8 @@ function svgAction(e) {
     var routeLineEl = document.querySelector(
         '#interactiveCLI td[routenum="' + routeNum + '"]'
     );
-    makeInteractiveCLISelection(routeLineEl, what);
+    var scroll = true;
+    makeInteractiveCLISelection(routeLineEl, what, scroll);
 }
 
 function clearSVGSelection(what) {
@@ -591,6 +547,7 @@ function parseButton() {
     removeCSSClass(document.getElementById('interactiveCLI'), 'error');
     render(routeTableData);
     updateDestinationIP(anyErrors); // uses globals
+    setupSaveSVGButton();
 }
 
 function getAllMissingData(routeTableData) {
@@ -808,7 +765,8 @@ function interactiveCLIAction(e) {
     clearInteractiveCLISelection(what);
     clearSVGSelection(what);
     var actionEl = e.srcElement;
-    var validElForSelection = makeInteractiveCLISelection(actionEl, what);
+    var scroll = false;
+    var validElForSelection = makeInteractiveCLISelection(actionEl, what, scroll);
     if (!validElForSelection) return;
     var routeNum = actionEl.getAttribute('routenum');
     var svgGroupEl = svg.querySelector('[routenum="' + routeNum + '"]');
@@ -819,10 +777,15 @@ function clearInteractiveCLISelection(what) {
     removeCSSClass(document.querySelectorAll('#interactiveCLI td.' + what), what);
 }
 
-function makeInteractiveCLISelection(el, what) {
+function makeInteractiveCLISelection(el, what, scroll) {
     if (el.tagName.toLowerCase() != 'td') return false;
     if (!inArray('is-route', getClassList(el))) return false;
     addCSSClass(el, what);
+    if (scroll) {
+        var scrollingEl = document.getElementById('interactiveCLI');
+        var scrollOffset = (el.offsetHeight - scrollingEl.offsetHeight) / 2;
+        scrollToElementWithinElement(scrollingEl, el, scrollOffset);
+    }
     return true;
 }
 
@@ -913,10 +876,20 @@ function findMatchingRule(lineText, parsedData) {
                     dynamicListLengthArgs
                 );
                 if (listLength == 0) return null;
+                var lastListItem = null; //init
+                if (
+                    rule.hasOwnProperty('lastDynamicListItem')
+                    && rule.lastDynamicListItem.hasOwnProperty(parsedData.os)
+                ) {
+                    lastListItem = rule.lastDynamicListItem[parsedData.os];
+                    listLength--;
+                }
                 for (var listi = 0; listi < listLength; listi++) {
                     tmpList.push(rule.dynamicListItem);
                 }
-                rule.regex = '^\\s*' + tmpList.join('\\s+') + '\\s*$';
+                rule.regex = '^\\s*' + tmpList.join('\\s+');
+                if (lastListItem != null) rule.regex += lastListItem;
+                rule.regex += '\\s*$';
                 rule.regexObj = new RegExp(rule.regex);
                 break;
             case 'list':
@@ -1061,7 +1034,7 @@ function parseRoute(routeNum, thisLine, parsedData, lineNum) {
         if (translations.hasOwnProperty(name)) {
             translatedName = translations[name];
         }
-        var value = thisLineList[headeri];
+        var value = thisLineList[headeri]; // works even if thisLineList[i] dne
         switch (translatedName) {
             case 'destination':
                 var cidr, incompleteDestination; // init
@@ -1072,7 +1045,7 @@ function parseRoute(routeNum, thisLine, parsedData, lineNum) {
                         cidr = tmp[1];
                     } else {
                         incompleteDestination = value;
-                        cidr = 0; // default
+                        cidr = extrapolateMaskBits(incompleteDestination, 4);
                     }
                     lineDict['mask'] = ipList2IP(maskBits2List(cidr, 4));
                 } else incompleteDestination = value;
@@ -1089,11 +1062,9 @@ function parseRoute(routeNum, thisLine, parsedData, lineNum) {
                 break;
             case 'gateway':
                 lineDict['original' + translatedName] = value;
-                switch (value) {
-                    case '*':
-                    case 'on-link':
-                        value = '0.0.0.0';
-                        break;
+                if (isLinkLocalGateway(value)) {
+                    lineDict.isLinkLocalGateway = true;
+                    value = '0.0.0.0'; // wikipedia.org/wiki/0.0.0.0#Routing
                 }
                 break;
             case 'mask':
@@ -1105,6 +1076,10 @@ function parseRoute(routeNum, thisLine, parsedData, lineNum) {
                     };
                 }
                 break;
+            case 'interface':
+                break; // save
+            default:
+                continue; // do not save
         }
         lineDict[translatedName] = value;
     }
@@ -1185,7 +1160,7 @@ function render(tmpRouteTableData) {
 function resizeSVGHeight(tmpRouteTableData) {
     var interfaceNames = []; // init
     var gatewayNames = []; // init
-    var defaultGWFound = false;
+    var linkLocalGWFound = false;
     for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
         var routeLine = tmpRouteTableData.routes[i];
 
@@ -1195,13 +1170,7 @@ function resizeSVGHeight(tmpRouteTableData) {
         }
         var gatewayName = routeLine.gateway;
         if (gatewayNames.indexOf(gatewayName) == -1) {
-            switch (gatewayName) {
-                case '0.0.0.0':
-                case '*':
-                case 'on-link':
-                    defaultGWFound = true;
-                    break;
-            }
+            if (routeLine.isLinkLocalGateway) linkLocalGWFound = true;
             gatewayNames.push(gatewayName);
         }
     }
@@ -1222,7 +1191,7 @@ function resizeSVGHeight(tmpRouteTableData) {
         svgProperties.topHalfHeight = minHeightForGateways;
     }
     var minHeightForGatewaysAndOtherMachines = 0;
-    if (defaultGWFound) minHeightForGatewaysAndOtherMachines =
+    if (linkLocalGWFound) minHeightForGatewaysAndOtherMachines =
     svgProperties.topHalfHeight -
     svgProperties.verticalGapBeforeAndAfterGateways +
     svgProperties.verticalGapAfterOtherNic +
@@ -1328,23 +1297,22 @@ function renderInterfaces(tmpInterfaceData) {
 
 function getGatewayCoordinates(tmpRouteTableData) {
     var gatewayNames = [];
-    var defaultGWFound = false;
-    var defaultGWName;
+    var linkLocalGWFound = false;
+    var linkLocalGWNames = [];
     for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
-        var gatewayName = tmpRouteTableData.routes[i].originalGateway;
-        switch (gatewayName) {
-            case '0.0.0.0':
-            case '*':
-            case 'on-link':
-                defaultGWName = gatewayName;
-                defaultGWFound = true;
-                continue;
+        var route = tmpRouteTableData.routes[i];
+        var gatewayName = route.originalGateway;
+        if (route.isLinkLocalGateway) {
+            linkLocalGWFound = true;
+            if (linkLocalGWNames.indexOf(gatewayName) != -1) continue; // unique
+            linkLocalGWNames.push(gatewayName);
+            continue;
         }
-        if (gatewayNames.indexOf(gatewayName) != -1) continue;
+        if (gatewayNames.indexOf(gatewayName) != -1) continue; // unique
         gatewayNames.push(gatewayName);
     }
-    // the default gateway must go on the end
-    if (defaultGWFound) gatewayNames.push(defaultGWName);
+    // the link-local gateway must go on the end
+    if (linkLocalGWFound) gatewayNames = gatewayNames.concat(linkLocalGWNames);
     if (gatewayNames.length == 0) return null;
     var tmpGatewayData = []; // init
     var heightForGateways = svgProperties.topHalfHeight -
@@ -1357,11 +1325,13 @@ function getGatewayCoordinates(tmpRouteTableData) {
         var top = svgProperties.verticalGapBeforeAndAfterGateways + (
             i * (svgProperties.deviceSquareHeight + verticalGapBetweenGateways)
         );
+        var gatewayName = gatewayNames[i];
         tmpGatewayData.push({
-            name: gatewayNames[i],
+            name: gatewayName,
             top: top,
             midway: top + (svgProperties.deviceSquareHeight / 2),
-            bottom: top + svgProperties.deviceSquareHeight
+            bottom: top + svgProperties.deviceSquareHeight,
+            isLinkLocalGateway: inArray(gatewayName, linkLocalGWNames)
         });
     }
     return tmpGatewayData;
@@ -1371,13 +1341,7 @@ function renderGateways(tmpGatewayData) {
     for (var i = 0; i < tmpGatewayData.length; i++) {
         var gwData = tmpGatewayData[i];
         var text = gwData.name;
-        switch (text) {
-            case '0.0.0.0':
-            case '*':
-            case 'on-link':
-                text += '\n(default)';
-                break;
-        }
+        if (gwData.isLinkLocalGateway) text += '\n(link-local)';
         render1Gateway(svgProperties.gatewayLeft, gwData.top, text);
     }
 }
@@ -1385,25 +1349,19 @@ function renderGateways(tmpGatewayData) {
 function renderExternalDestinations(tmpGatewayData) {
     for (var i = 0; i < tmpGatewayData.length; i++) {
         var gwData = tmpGatewayData[i];
-        switch (gwData.name) {
-            case '0.0.0.0':
-            case '*':
-            case 'on-link':
-                // LAN
-                render1Nic(
-                    svgProperties.gatewayLeft,
-                    gwData.top + svgProperties.deviceSquareHeight +
-                    svgProperties.verticalGapBetweenOtherNicAndGateways,
-                    'other\nmachines'
-                );
-                break;
-            default: // WAN or internet
-                render1Gateway(
-                    svgProperties.externalDestinationLeft,
-                    gwData.top,
-                    ''
-                );
-                break;
+        if (gwData.isLinkLocalGateway) { // LAN
+            render1Nic(
+                svgProperties.gatewayLeft,
+                gwData.top + svgProperties.deviceSquareHeight +
+                svgProperties.verticalGapBetweenOtherNicAndGateways,
+                'other\nmachines'
+            );
+        } else { // WAN or internet
+            render1Gateway(
+                svgProperties.externalDestinationLeft,
+                gwData.top,
+                ''
+            );
         }
     }
 }
@@ -1495,14 +1453,14 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
             i % svgProperties.ipColors.length
         ];
         var ipRangeData = ipRangesData[i];
-        var tmpInterfaceData = null; //init/reset
+        var tmpInterfaceData = null; // init/reset
         for (var j = 0; j < interfacesData.length; j++) {
             if (ipRangeData.interfaceName != interfacesData[j].name) continue;
             tmpInterfaceData = interfacesData[j]; // use this one
             break;
         }
 
-        var tmpGatewayData = null; //init/reset
+        var tmpGatewayData = null; // init/reset
         for (var j = 0; j < gatewaysData.length; j++) {
             if (ipRangeData.gatewayName != gatewaysData[j].name) continue;
             tmpGatewayData = gatewaysData[j]; // use this one
@@ -1550,42 +1508,36 @@ function renderIPRanges(ipRangesData, interfacesData, gatewaysData) {
         group = renderIPRange(path, group, pathColor);
 
         // the path from the gateway to the foreign gateway
-        switch (tmpGatewayData.name) {
-            case '0.0.0.0':
-            case '*':
-            case 'on-link':
-                // LAN - go downwards
-                startX = svgProperties.gatewayLeft;
-                startY = tmpGatewayData.top +
-                (svgProperties.deviceSquareHeight / 2);
-                path = 'M' + startX + ',' + startY + ' '; // new path
+        if (tmpGatewayData.isLinkLocalGateway) { // LAN - go downwards
+            startX = svgProperties.gatewayLeft;
+            startY = tmpGatewayData.top +
+            (svgProperties.deviceSquareHeight / 2);
+            path = 'M' + startX + ',' + startY + ' '; // new path
 
-                endY = tmpGatewayData.bottom +
-                svgProperties.verticalGapBetweenOtherNicAndGateways;
-                path += 'V' + endY;
+            endY = tmpGatewayData.bottom +
+            svgProperties.verticalGapBetweenOtherNicAndGateways;
+            path += 'V' + endY;
 
-                endX = svgProperties.gatewayLeft +
-                svgProperties.deviceSquareHeight;
-                path += 'H' + endX;
+            endX = svgProperties.gatewayLeft +
+            svgProperties.deviceSquareHeight;
+            path += 'H' + endX;
 
-                endY = startY;
-                path += 'V' + endY + 'Z';
-                break;
-            default: // WAN - go right
-                startX = svgProperties.gatewayLeft +
-                (svgProperties.deviceSquareHeight / 2);
-                startY = tmpGatewayData.top;
-                path = 'M' + startX + ',' + startY + ' '; // new path
+            endY = startY;
+            path += 'V' + endY + 'Z';
+        } else { // WAN - go right
+            startX = svgProperties.gatewayLeft +
+            (svgProperties.deviceSquareHeight / 2);
+            startY = tmpGatewayData.top;
+            path = 'M' + startX + ',' + startY + ' '; // new path
 
-                endX = svgProperties.overallWidth;
-                path += 'H' + endX;
+            endX = svgProperties.overallWidth;
+            path += 'H' + endX;
 
-                endY = tmpGatewayData.bottom;
-                path += 'V' + endY;
+            endY = tmpGatewayData.bottom;
+            path += 'V' + endY;
 
-                endX = startX;
-                path += 'H' + endX + 'Z';
-                break;
+            endX = startX;
+            path += 'H' + endX + 'Z';
         }
         group = renderIPRange(path, group, pathColor);
         group = renderIPText(group, ipRangeData);
@@ -1789,20 +1741,12 @@ function renderDestinationIPFlow(
     endX = svgProperties.gatewayLeft + (svgProperties.deviceSquareHeight / 2);
     var angledEnd = true;
     path += getIPBezier(startX, startY, endX, endY, angledEnd);
-    switch (relevantGateway.name) {
-        case '0.0.0.0':
-        case '*':
-        case 'on-link':
-            path += 'V' + (
-                svgProperties.overallHeight -
-                svgProperties.verticalGapAfterOtherNic -
-                svgProperties.deviceSquareHeight
-            );
-            break;
-        default:
-            path += 'H' + svgProperties.externalDestinationLeft;
-            break;
-    }
+    if (relevantGateway.isLinkLocalGateway) path += 'V' + (
+        svgProperties.overallHeight -
+        svgProperties.verticalGapAfterOtherNic -
+        svgProperties.deviceSquareHeight
+    );
+    else path += 'H' + svgProperties.externalDestinationLeft;
     
     pathEl = newSVGEl('path');
     pathEl.setAttribute('d', path);
@@ -1829,4 +1773,15 @@ function getIPBezier(startX, startY, endX, endY, angledEnd) {
     return 'C ' + controlX1 + ' ' + controlY1 + ',' + controlX2 + ' ' +
     controlY2 + ',' + endX + ' ' + endY + ' ';
 }
-})();
+
+// thanks to stackoverflow.com/a/29579591
+function setupSaveSVGButton() {
+    var saveButton = document.getElementById('saveSVG');
+    var lang = 'image/svg+xml';
+    saveButton.setAttribute('href-lang', lang);
+    saveButton.href = 'data:' + lang + ';utf8,' + encodeURIComponent(
+        document.getElementById('routeTableSVG').outerHTML
+    );
+}
+
+})(preloadData, siteGlobals);

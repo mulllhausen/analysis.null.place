@@ -506,7 +506,7 @@ function englishList(list, joinWord, finalJoinWord) {
     var english = ''; // init
     foreach(list, function (i, el) {
         english += el;
-        switch(i) {
+        switch (i) {
             case (list.length - 2): // penultimate
                 english += finalJoinWord;
                 break;

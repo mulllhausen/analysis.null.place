@@ -90,7 +90,9 @@ textarea:focus, input[type="text"]:focus, select:focus {/*appears deeper when in
 select option:disabled {
     cursor: not-allowed;
 }
-button, button:visited, button:hover {/*made to look like a small bump in the page*/
+/*made to look like a small bump in the page*/
+button, button:visited, button:hover,
+a.button, a.button:visited, a.button:hover {
     font-size: 14px;
     color: #fff;/*white*/
     text-align: center;
@@ -115,16 +117,18 @@ button, button:visited, button:hover {/*made to look like a small bump in the pa
     -moz-box-shadow:    inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
     box-shadow:         inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.075);
 }
-button:active, button:focus, button:disabled {/*appears flat while clicked*/
+/*appears flat while clicked*/
+button:active, button:focus, button:disabled,
+a.button:active, a.button:focus, a.button:disabled {
     box-shadow: none;
     background-image: none;
     background-color: #222;
     outline: none;
 }
-button:disabled {
+button:disabled, a.button:disabled {
     cursor: not-allowed;
 }
-p button {
+p button, p .button {
     padding: 4px 6px;
     margin: 0;
 }

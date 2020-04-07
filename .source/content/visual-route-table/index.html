@@ -7,9 +7,9 @@
     <meta name="tags" content="networking"/>
     <meta name="stylesheets" content="visual-route-table.css"/>
     <meta name="scripts" content="visual-route-table.js,ip-operations.js"/>
-    <meta name="img_preloads" content="visual-route-table.svg"/>
     <meta name="summary" content="Visualize Linux, Windows and macOS route tables."/>
     <meta name="console_explain_scripts" content="js/visual-route-table.js - code for handling events and rendering the visual route table svg.|js/ip-operations.js - code for manipulating ip addresses in the \'visual route table\' article."/>
+    <meta name="jsons" content="route-table-preloads.json"/>
 </head>
 <body>
 {% from 'form_container.html' import form_container with context %}
@@ -34,13 +34,8 @@ a bug report</a> and I will fix it ASAP.</p>
 
 {{ form_container('form0', 'start', linkable = False) }}
     <div class="left">
-        <label for="preload" class="for-textbox">preload example</label><br>
-        <select id="preload" disabled>
-            <option value="linux">Linux</option>
-            <option value="windows">Windows</option>
-            <option value="macOS">macOS</option>
-            <option value="no" disabled hidden>N/A</option>
-        </select>
+        <label for="preload" class="for-textbox">preload</label><br>
+        <select id="preload" disabled>{# populated by js #}</select>
     </div>
     <div class="left">
         <label for="inputDestinationIP" class="for-textbox">destination IP</label><br>
@@ -61,14 +56,22 @@ a bug report</a> and I will fix it ASAP.</p>
     <div class="buttons-area">
         <button id="edit" disabled>edit</button>
         <button id="parse" disabled>parse</button>
+        <a id="saveSVG" class="button" download="visual_route_table" target="_blank">
+            save image
+        </a>
     </div>
 {{ form_container('form0', 'end') }}
 
 {{ form_container('visualRouteTable', 'start', linkable = False) }}
-    <object id="routeTableSVG" data="{{ QS_LINK['/img/visual-route-table.svg'] }}" type="image/svg+xml"></object>
+{{ base_include('content/visual-route-table/img/template.svg', raw = True) }}
 {{ form_container('visualRouteTable', 'end') }}
 
 {% include 'ads_in_feed.html' %}
+
+<script>
+siteGlobals.baseSVG = '{{ QS_LINK['/img/visual-route-table.svg'] }}';
+{{ base_include('content/visual-route-table/js/preload-data.js') }}
+</script>
 
 </body>
 </html>

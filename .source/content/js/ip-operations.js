@@ -14,7 +14,8 @@ function get1RouteMissingData(dataIn) {
 
         interface: dataIn.interface,
         originalGateway: dataIn.originalgateway,
-        gateway: dataIn.gateway
+        gateway: dataIn.gateway,
+        isLinkLocalGateway: dataIn.isLinkLocalGateway
     };
     if (dataIn.hasOwnProperty('error')) dataOut.error = dataIn.error;
     validIP(dataOut.destinationList, dataOut.destinationIPVersion);
@@ -61,6 +62,23 @@ function getBroadcastAddress(destinationList, maskList) {
         destinationList[i] | binInvert(maskList[i], maskList.length);
     }
     return broadcastAddressList;
+}
+
+// check if the gateway indicates our own LAN. thanks to:
+// - superuser.com/a/580708 (`route` on linux)
+// - superuser.com/a/60003 (`route print` on windows)
+// - superuser.com/a/1067742 (`netstat` on macos or bsd)
+// - wikipedia.org/wiki/Link-local_address (general info)
+function isLinkLocalGateway(gateway) {
+    gateway = gateway.toLowerCase();
+    switch (gateway) {
+        case '0.0.0.0':
+        case '*':
+        case 'on-link':
+            return true;
+    }
+    if (gateway.substr(0, 5) == 'link#') return true;
+    return false;
 }
 
 function maskList2Bits(maskList) {
@@ -201,10 +219,11 @@ function extrapolateIP(incompleteIP, ipVersion) {
     switch (ipVersion) {
         case 4:
             if (incompleteIP == 'default') return '0.0.0.0';
-            var incompleteIP = incompleteIP.split('.');
+            incompleteIP = incompleteIP.split('.');
             numOctets = 4;
             break;
-        return null;
+        default:
+            return null;
     }
     for (var i = 0; i < numOctets; i++) {
         if ((incompleteIP.length - 1) < i) completeIP.push('0');
@@ -213,5 +232,19 @@ function extrapolateIP(incompleteIP, ipVersion) {
     switch (ipVersion) {
         case 4: return completeIP.join('.');
         default: return null;
+    }
+}
+
+// thanks to superuser.com/a/1502933
+function extrapolateMaskBits(incompleteIP, ipVersion) {
+    // x.x -> 2 * 8 -> 16
+    // x.x.x -> 3 * 8 -> 24
+    var numOctets;
+    switch (ipVersion) {
+        case 4:
+            if (incompleteIP == 'default') return 0;
+            return incompleteIP.split('.').length * 8;
+        default:
+            return null;
     }
 }
