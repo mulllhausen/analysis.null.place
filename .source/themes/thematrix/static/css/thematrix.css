@@ -569,6 +569,9 @@ ul.taglist li {
 .entry-content ul {
     list-style-type: none;
 }
+.entry-content li ul {/*1 level deep nested list*/
+    margin-left: 40px;
+}
 .entry-content ul li:before {
     content: "\2011 \a0\a0";/*dash space space in utf8*/
 }
