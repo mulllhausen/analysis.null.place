@@ -21,7 +21,7 @@
             <description>My tv-series reviews. A big work in progress!</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
             <category>tv-series</category>
             <category>reviews</category>
@@ -572,6 +572,24 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-12-16:/tv-series-review/rickandmorty12013/</guid>
         </item>
         <item>
+            <title>TV-Series Review: The End of the F***ing World Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld12017/</link>
+            <description>Awkward teenage angst meets <i>Pulp Fiction</i></description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 10 Jun 2020 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld12017/</guid>
+        </item>
+        <item>
+            <title>TV-Series Review: The End of the F***ing World Season 2</title>
+            <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld22019/</link>
+            <description>Brought down a peg</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 10 Jun 2020 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld22019/</guid>
+        </item>
+        <item>
             <title>TV-Series Review: The Walking Dead Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
             <description>Learning the new landscape</description>
@@ -580,6 +598,6 @@
             <lastBuildDate>Tue, 26 Mar 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010/</guid>
         </item>
-        <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

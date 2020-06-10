@@ -1,7 +1,7 @@
-var latestCache = '2020-02-28_08:20:14';
+var latestCache = '2020-06-10_22:54:31';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=7jVg_n',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=BAHRa8',
     'https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
@@ -79,10 +79,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/img/tv-series-thumb-nightflyers12018.jpg?hash=mSCzFO',
     'https://analysis.null.place/img/tv-series-thumb-philipkdickselectricdreams12017.jpg?hash=JnDmc6',
     'https://analysis.null.place/img/tv-series-thumb-rickandmorty12013.jpg?hash=o7FIrK',
+    'https://analysis.null.place/img/tv-series-thumb-theendofthefingworld12017.jpg?hash=ZEFnTO',
+    'https://analysis.null.place/img/tv-series-thumb-theendofthefingworld22019.jpg?hash=rsq51R',
     'https://analysis.null.place/img/tv-series-thumb-thewalkingdead12010.jpg?hash=KBZUww',
-    'https://analysis.null.place/json/tv-series-init-list.json?hash=xPrcT6',
-    'https://analysis.null.place/json/tv-series-list.json?hash=M2-YhO',
-    'https://analysis.null.place/json/tv-series-review-bbcwaroftheworlds12019.json?hash=YBNVu4',
+    'https://analysis.null.place/json/tv-series-init-list.json?hash=3ccS5C',
+    'https://analysis.null.place/json/tv-series-list.json?hash=IJNPnh',
+    'https://analysis.null.place/json/tv-series-review-bbcwaroftheworlds12019.json?hash=kg5Gd4',
     'https://analysis.null.place/json/tv-series-review-blackmirror12011.json?hash=poY45m',
     'https://analysis.null.place/json/tv-series-review-blackmirror52019.json?hash=RNRZhV',
     'https://analysis.null.place/json/tv-series-review-deadpixels12019.json?hash=l-lzV-',
@@ -90,8 +92,10 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/tv-series-review-nightflyers12018.json?hash=iSpT3g',
     'https://analysis.null.place/json/tv-series-review-philipkdickselectricdreams12017.json?hash=v0Dl8m',
     'https://analysis.null.place/json/tv-series-review-rickandmorty12013.json?hash=nn1WAw',
+    'https://analysis.null.place/json/tv-series-review-theendofthefingworld12017.json?hash=EWNbB7',
+    'https://analysis.null.place/json/tv-series-review-theendofthefingworld22019.json?hash=7iOJh3',
     'https://analysis.null.place/json/tv-series-review-thewalkingdead12010.json?hash=poY45m',
-    'https://analysis.null.place/json/tv-series-search-index.json?hash=tj7sKx',
+    'https://analysis.null.place/json/tv-series-search-index.json?hash=RsSj7M',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',

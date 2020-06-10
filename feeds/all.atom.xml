@@ -21,7 +21,7 @@
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
         <published>2019-03-29T00:00:00+10:30</published>
-        <updated>2020-02-26T00:00:00+10:30</updated>
+        <updated>2020-06-10T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -696,6 +696,28 @@
         <summary type="html">Hillariously disturbing</summary>
     </entry>
     <entry>
+        <title>TV-Series Review: The End of the F***ing World Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld12017/</link>
+        <published>2020-06-10T00:00:00+09:30</published>
+        <updated>2020-06-10T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld12017</id>
+        <summary type="html">Awkward teenage angst meets <i>Pulp Fiction</i></summary>
+    </entry>
+    <entry>
+        <title>TV-Series Review: The End of the F***ing World Season 2</title>
+        <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld22019/</link>
+        <published>2020-06-10T00:00:00+09:30</published>
+        <updated>2020-06-10T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld22019</id>
+        <summary type="html">Brought down a peg</summary>
+    </entry>
+    <entry>
         <title>TV-Series Review: The Walking Dead Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
         <published>2019-03-26T00:00:00+10:30</published>
@@ -706,5 +728,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
-    <updated>2020-02-26T00:00:00+10:30</updated>
+    <updated>2020-06-10T00:00:00+09:30</updated>
 </feed>
