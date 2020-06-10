@@ -9,8 +9,6 @@
 
 // init globals
 
-var baseSVG = null;
-var svgXML = null;
 var maxErrorListHeight = 100; // px (copy this to keep in sync with ul#errorList max-height css)
 var mode = null; // 'editing' or 'parsed'
 var parseErrors = false; // init
@@ -1144,10 +1142,10 @@ function render(tmpRouteTableData) {
     // render the interfaces
     renderInterfaces(interfaceData);
 
-    // render the gateways
+    // render the LAN gateways
     renderGateways(gatewayData);
 
-    // render the external destinations
+    // render the external destinations (WAN gateways and "other machines")
     renderExternalDestinations(gatewayData);
 
     // then get the ip range coordinates
@@ -1196,7 +1194,7 @@ function resizeSVGHeight(tmpRouteTableData) {
     svgProperties.verticalGapBeforeAndAfterGateways +
     svgProperties.verticalGapAfterOtherNic +
     svgProperties.verticalGapBetweenOtherNicAndGateways +
-    svgProperties.deviceSquareHeight
+    svgProperties.deviceSquareHeight;
 
     svgProperties.overallHeight = svgProperties.topHalfHeight; // init
     if (minHeightForGatewaysAndOtherMachines > svgProperties.overallHeight) {
@@ -1297,13 +1295,11 @@ function renderInterfaces(tmpInterfaceData) {
 
 function getGatewayCoordinates(tmpRouteTableData) {
     var gatewayNames = [];
-    var linkLocalGWFound = false;
     var linkLocalGWNames = [];
     for (var i = 0; i < tmpRouteTableData.routes.length; i++) {
         var route = tmpRouteTableData.routes[i];
         var gatewayName = route.originalGateway;
         if (route.isLinkLocalGateway) {
-            linkLocalGWFound = true;
             if (linkLocalGWNames.indexOf(gatewayName) != -1) continue; // unique
             linkLocalGWNames.push(gatewayName);
             continue;
@@ -1311,8 +1307,10 @@ function getGatewayCoordinates(tmpRouteTableData) {
         if (gatewayNames.indexOf(gatewayName) != -1) continue; // unique
         gatewayNames.push(gatewayName);
     }
-    // the link-local gateway must go on the end
-    if (linkLocalGWFound) gatewayNames = gatewayNames.concat(linkLocalGWNames);
+    // the link-local gateways must go on the end
+    if (linkLocalGWNames.length > 0) {
+        gatewayNames = gatewayNames.concat(linkLocalGWNames);
+    }
     if (gatewayNames.length == 0) return null;
     var tmpGatewayData = []; // init
     var heightForGateways = svgProperties.topHalfHeight -
@@ -1347,15 +1345,18 @@ function renderGateways(tmpGatewayData) {
 }
 
 function renderExternalDestinations(tmpGatewayData) {
+    var doneLinkLocalNic = false;
     for (var i = 0; i < tmpGatewayData.length; i++) {
         var gwData = tmpGatewayData[i];
         if (gwData.isLinkLocalGateway) { // LAN
+            if (doneLinkLocalNic) continue;
             render1Nic(
                 svgProperties.gatewayLeft,
                 gwData.top + svgProperties.deviceSquareHeight +
                 svgProperties.verticalGapBetweenOtherNicAndGateways,
                 'other\nmachines'
             );
+            doneLinkLocalNic = true;
         } else { // WAN or internet
             render1Gateway(
                 svgProperties.externalDestinationLeft,
