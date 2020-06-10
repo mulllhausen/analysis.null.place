@@ -1,4 +1,4 @@
-var latestCache = '2020-06-10_22:54:31';
+var latestCache = '2020-06-10_23:43:02';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=BAHRa8',
@@ -233,7 +233,6 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    debugger;
     var request = event.request; // init
     var urlObj = new URL(request.url);
     var pathParts = urlObj.pathname.split('/');
@@ -253,7 +252,9 @@ self.addEventListener('fetch', function (event) {
     }
     event.respondWith(
         caches.match(request).then(function (swResponse) {
-            return (swResponse || fetch(request));
+            if (swResponse) return swResponse;
+            console.log('sw fetching, because not cached: ' + urlObj.toString());
+            return fetch(request);
         })
     );
 });
