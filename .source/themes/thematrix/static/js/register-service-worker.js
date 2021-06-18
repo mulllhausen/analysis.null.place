@@ -27,5 +27,5 @@ if ('serviceWorker' in navigator) {
 }
 
 function showNewVersionNotice() {
-    document.querySelector('.new-version-info-notice').style.display = 'block';
+    addCSSClass(document.querySelector('.new-version-info-notice'), 'show');
 }
