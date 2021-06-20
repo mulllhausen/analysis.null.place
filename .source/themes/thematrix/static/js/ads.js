@@ -106,6 +106,9 @@ function archiveInFeedAds() {
     // situated between dynamic content
     // this function is still allowed even when not on a phone since it will
     // hide the in-feed ads if they are showing due to dynamic resizing
+
+    return; // in-feed ads are now deprecated in favor of a bottom anchor ad
+
     foreach(
         document.querySelectorAll('.col-1 .in-feed-ad-container'),
         function (i, el) {
@@ -116,6 +119,7 @@ function archiveInFeedAds() {
     );
 }
 function populateInFeedAds() {
+    return; // in-feed ads are now deprecated in favor of a bottom anchor ad
     if (initialDeviceType != 'phone') return;
 
     // get the archived ads in a list. note: use .children and not .childNodes
@@ -163,7 +167,7 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     // there is 1 sample in-feed ad in the archive area initially. save it for
     // use later before any <ins> elements are converted to <iframe> elements by
     // google
-    sampleInFeedAdHTML = trim(document.getElementById('adsArchiveArea').innerHTML);
+    //sampleInFeedAdHTML = trim(document.getElementById('adsArchiveArea').innerHTML);
 
     // delete the sample ad
     document.getElementById('adsArchiveArea').innerHTML = '';
@@ -171,12 +175,12 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     switch (initialDeviceType) {
         case 'phone':
             deleteSkyscraperAds();
-            loadInFeedAds();
+            //loadInFeedAds();
             loadBottomAnchorAd();
             break;
         case 'pc':
         case 'tablet':
-            deleteInFeedAds();
+            //deleteInFeedAds();
             hideBottomAnchorAd();
             fillSkyscraperAds();
             break;
