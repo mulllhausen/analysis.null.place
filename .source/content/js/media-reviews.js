@@ -18,7 +18,11 @@ numMediaShowing = 0;
 pageSize = 10; // load this many media at once in the infinite scroll page
 currentlySearching = false;
 reviewsPerAd = 3; // this many reviews before each in-feed ad
-inFeedAdContainer = '<div class="in-feed-ad-container"></div>';
+
+// in feed ads have been replaced with a bottom-anchor ad
+// todo - remove entirely
+//inFeedAdContainer = '<div class="in-feed-ad-container"></div>';
+inFeedAdContainer = '';
 
 addEvent(window, 'load', function () {
     resetSearchBox();

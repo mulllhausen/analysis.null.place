@@ -135,11 +135,12 @@ footer {
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
     bottom: 0;/*only used when js changes this to position:absolute*/
-    margin-bottom: 100px;/*the height of the sticky ad without a notice bar*/
+    margin-bottom: 0;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     footer {/*when no col 1 (menu and logo) showing*/
         padding: 20px 20px 0 20px;
+        margin-bottom: 130px;/*the height of the sticky ad with a notice bar*/
     }
 }
 abbr[title] {
@@ -893,11 +894,13 @@ blockquote {
     z-index: 4;
 }
 .bottom-anchor-ad {
+    background-color: #000;/*black*/
     position: relative;
     float: left;
     text-align: center;
     width: 100%;
     height: auto;
+    padding-top: 10px;
 }
 .bottom-notice-bars {
     position: relative;
@@ -947,7 +950,7 @@ trick thanks to stackoverflow.com/a/8539107
 }
 .cookie-policy-link {
     /*this is the last element before the anchor ad, so put some space between*/
-    height: 30px;
+    height: 40px;
 }
 /* end cookie-info styles */
 
