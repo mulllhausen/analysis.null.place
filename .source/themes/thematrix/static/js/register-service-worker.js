@@ -28,4 +28,7 @@ if ('serviceWorker' in navigator) {
 
 function showNewVersionNotice() {
     addCSSClass(document.querySelector('.new-version-info-notice'), 'show');
+
+    // height of anchor ad and notice bar
+    document.getElementsByTagName('footer')[0].style.marginBottom = '140px';
 }

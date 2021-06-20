@@ -171,7 +171,7 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
     switch (initialDeviceType) {
         case 'phone':
             deleteSkyscraperAds();
-            //loadInFeedAds();
+            loadInFeedAds();
             loadBottomAnchorAd();
             break;
         case 'pc':

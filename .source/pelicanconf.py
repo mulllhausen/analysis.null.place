@@ -146,13 +146,13 @@ GOOGLE_AD_CLIENT = 'ca-pub-0118741364962624'
 GOOGLE_AD_CLIENT_SKYSCRAPER_ID = 5984463506
 GOOGLE_AD_CLIENT_IN_FEED_ID = 7540285424
 # services.google.com/fh/files/emails/sticky_ads_guide.pdf
-GOOGLE_AD_CLIENT_BOTTOM_ANCHOR_ID = 1428367556;
+GOOGLE_AD_CLIENT_BOTTOM_ANCHOR_ID = 5866230036
 TEST_ADSENSE = True
 
 # debug settings:
 
-# add 127.0.0.1 analysis.null.place to /etc/hosts for this (it is necessary if you want
-# to debug the fb comments section on localhost)
+# add 127.0.0.1 analysis.null.place to /etc/hosts for this (it is necessary if
+# you want to debug the fb comments section on localhost)
 #SITE_HOSTNAME = 'analysis.null.place'
 #SITEURL = 'http://' + SITE_HOSTNAME + ':8000'
 

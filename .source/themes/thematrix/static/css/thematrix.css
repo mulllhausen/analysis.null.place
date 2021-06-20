@@ -135,6 +135,7 @@ footer {
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
     bottom: 0;/*only used when js changes this to position:absolute*/
+    margin-bottom: 100px;/*the height of the sticky ad without a notice bar*/
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     footer {/*when no col 1 (menu and logo) showing*/
@@ -295,9 +296,20 @@ article {
     height: 600px;
 }
 .adsbygoogle.bottom-anchor {
-    display: block;
-    width: 100%;
-    height: 100%;
+/*
+support.google.com/google-ads/answer/7031480
+these are examples for high end mobile devices: 300x100
+*/
+    display: inline-block;
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+}
+@media (min-width: 801px) {/* when x >= 801px */
+    .bottom-anchor-ad,
+    .adsbygoogle.bottom-anchor {
+        display: none;
+    }
 }
 .in-feed-ad-container {
     width: 100%;
@@ -883,8 +895,9 @@ blockquote {
 .bottom-anchor-ad {
     position: relative;
     float: left;
+    text-align: center;
     width: 100%;
-    height: 80px;
+    height: auto;
 }
 .bottom-notice-bars {
     position: relative;
@@ -933,8 +946,8 @@ trick thanks to stackoverflow.com/a/8539107
     margin: 0 2px;
 }
 .cookie-policy-link {
-    /*make this cookie link in the footer hidden by .cookie-warning-notice*/
-    height: 40px;
+    /*this is the last element before the anchor ad, so put some space between*/
+    height: 30px;
 }
 /* end cookie-info styles */
 
