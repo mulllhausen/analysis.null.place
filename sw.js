@@ -1,7 +1,7 @@
-var latestCache = '2020-06-10_23:43:02';
+var latestCache = '2021-06-20_14:51:45';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=BAHRa8',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=j5eVii',
     'https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
@@ -12,7 +12,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=BdhbuQ',
+    'https://analysis.null.place/theme/js/base.js?hash=UthhKN',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
