@@ -135,6 +135,7 @@ footer {
     left: 0;/*only used when js changes this to position:absolute*/
     right: 0;/*only used when js changes this to position:absolute*/
     bottom: 0;/*only used when js changes this to position:absolute*/
+    margin-bottom: 100px;/*the height of the sticky ad without a notice bar*/
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     footer {/*when no col 1 (menu and logo) showing*/
@@ -293,6 +294,22 @@ article {
     display: inline-block;
     width: 160px;
     height: 600px;
+}
+.adsbygoogle.bottom-anchor {
+/*
+support.google.com/google-ads/answer/7031480
+these are examples for high end mobile devices: 300x100
+*/
+    display: inline-block;
+    width: 300px;
+    height: 100px;
+    margin: 0 auto;
+}
+@media (min-width: 801px) {/* when x >= 801px */
+    .bottom-anchor-ad,
+    .adsbygoogle.bottom-anchor {
+        display: none;
+    }
 }
 .in-feed-ad-container {
     width: 100%;
@@ -866,40 +883,73 @@ blockquote {
 }
 /* end comments section */
 
-/* begin bottom notice bars area */
-.bottom-notice-bar {
+/* begin bottom sticky area */
+.sticky-bottom {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    /*height expands to fit contents*/
+    z-index: 4;
+}
+.bottom-anchor-ad {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 100%;
+    height: auto;
+}
+.bottom-notice-bars {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.bottom-notice-bar {
+    position: relative;
+    width: 100%;
     line-height: 40px;/*vertical centre*/
     background-color: #7db904;/*green*/
     color: #000;/*black*/
     text-align: center;
-    z-index: 4;
+    display: none;/*hidden by default*/
 }
-/* end bottom notice bars area */
+/*
+hide any shown notice bar that is after another shown notice bar.
+trick thanks to stackoverflow.com/a/8539107
+*/
+.bottom-notice-bar.show ~ .bottom-notice-bar.show {
+    display: none;/*hidden by default*/
+}
+/*show any remaining notice bars - ie only the first visible one*/
+.bottom-notice-bar.show {
+    display: block;
+}
+/* end bottom sticky area */
 
-/* begin new-version warnings */
-.new-version-info-notice {
-    display: none;/*initially hidden. shown with javascript.*/
+/* begin no-javascript-notice styles */
+.no-javascript-notice {
     height: 40px;
 }
-/* end new-version warnings */
+/* end no-javascript-notice styles */
 
-/* begin cookie warnings */
+/* begin new-version styles */
+.new-version-info-notice {
+    height: 40px;
+}
+/* end new-version styles */
+
+/* begin cookie-info styles */
 .cookie-warning-notice {
-    display: none;/*initially hidden. shown with javascript.*/
     height: 40px;
 }
 .cookie-warning-notice button, .cookie-warning-notice span {
     margin: 0 2px;
 }
 .cookie-policy-link {
-    /*make this cookie link in the footer hidden by .cookie-warning-notice*/
-    height: 40px;
+    /*this is the last element before the anchor ad, so put some space between*/
+    height: 30px;
 }
-/* end cookie warnings */
+/* end cookie-info styles */
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */

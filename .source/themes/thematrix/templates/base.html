@@ -149,9 +149,14 @@
         </div>
 
         {% include 'footer.html' %}
-        {% include 'noscript_banner.html' %}
-        {% include 'cookie_usage_banner.html' %}
-        {% include 'new_version_available_banner.html' %}
+        <div class="sticky-bottom">
+            {% include 'bottom_anchor_ad.html' %}
+            <div class="bottom-notice-bars">
+                {% include 'noscript_banner.html' %}
+                {% include 'cookie_usage_banner.html' %}
+                {% include 'new_version_available_banner.html' %}
+            </div>
+        </div>
 
         {# le javascript - at the end of the document so the pages load faster #}
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->

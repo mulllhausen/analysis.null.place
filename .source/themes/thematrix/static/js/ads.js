@@ -8,6 +8,9 @@ function deleteInFeedAds() {
 function deleteSkyscraperAds() {
     deleteElements(document.querySelectorAll('.col-0 .adsbygoogle'));
 }
+function hideBottomAnchorAd() {
+    document.querySelector('.bottom-anchor-ad').style.display = 'none';
+}
 var sampleSkyscraperAd = null; // init
 function fillSkyscraperAds() {
     // the first skyscraper ad already exists. save a copy before converting it
@@ -16,7 +19,7 @@ function fillSkyscraperAds() {
 
         // convert it to an ad
         loadAdsenseScript(function () {
-            (adsbygoogle = window.adsbygoogle || []).push({})
+            (adsbygoogle = window.adsbygoogle || []).push({});
         });
     }
 
@@ -45,7 +48,7 @@ function add1MoreSkyscraperAd(adEl) {
     else {
         document.querySelector('.col-0').appendChild(adEl.cloneNode());
         loadAdsenseScript(function () {
-            (adsbygoogle = window.adsbygoogle || []).push({})
+            (adsbygoogle = window.adsbygoogle || []).push({});
         });
     }
     return false; // limit not reached
@@ -84,10 +87,19 @@ function loadInFeedAds() {
         function (i, el) {
             addCSSClass(el, 'load');
             loadAdsenseScript(function() {
-                (adsbygoogle = window.adsbygoogle || []).push({})
+                (adsbygoogle = window.adsbygoogle || []).push({});
             });
         }
     );
+}
+function loadBottomAnchorAd() {
+    if (initialDeviceType != 'phone') return;
+    document.querySelector('.bottom-anchor-ad').style.display = 'block';
+    var el = document.querySelector('.bottom-anchor-ad .adsbygoogle:not(.load)');
+    addCSSClass(el, 'load');
+    loadAdsenseScript(function() {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    });
 }
 function archiveInFeedAds() {
     // move the in-feed ads to the archive area. this is useful when ads are
@@ -119,7 +131,7 @@ function populateInFeedAds() {
             // there are no archived ads so create a new one from sample
             el.innerHTML = sampleInFeedAdHTML;
             loadAdsenseScript(function () {
-                (adsbygoogle = window.adsbygoogle || []).push({})
+                (adsbygoogle = window.adsbygoogle || []).push({});
             });
         }
     });
@@ -160,10 +172,12 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
         case 'phone':
             deleteSkyscraperAds();
             loadInFeedAds();
+            loadBottomAnchorAd();
             break;
         case 'pc':
         case 'tablet':
             deleteInFeedAds();
+            hideBottomAnchorAd();
             fillSkyscraperAds();
             break;
     }
