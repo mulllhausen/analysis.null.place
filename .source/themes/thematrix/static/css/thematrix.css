@@ -140,7 +140,7 @@ footer {
 @media (max-width: 800px) {/*when x <= 800px*/
     footer {/*when no col 1 (menu and logo) showing*/
         padding: 20px 20px 0 20px;
-        margin-bottom: 130px;/*the height of the sticky ad with a notice bar*/
+        margin-bottom: 140px;/*the height of the sticky ad with a notice bar*/
     }
 }
 abbr[title] {
