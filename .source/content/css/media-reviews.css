@@ -78,7 +78,7 @@
     border: 1px solid #7db904;/*green*/
 }
 
-.media img {
+.media img.thumbnail {
     position: static;
     border: 1px solid #6a6a6a;/*light-grey*/
     border-radius: 4px;
@@ -87,8 +87,34 @@
     width: 100px;
 }
 
-.media img:after {
+.media img.thumbnail:after {
     content: " ";
+}
+
+.media .load-review {
+    margin-right: 15px;
+}
+
+.media .review-text button {
+    margin-top: 15px;
+}
+
+.media.movie .external-site img,
+.media.tv-series .external-site img {
+    width: 38px;
+}
+
+.media.book .external-site img {
+    width: 20px;
+}
+
+.media.movie button.external-site,
+.media.tv-series button.external-site {
+    padding: 6px 6px 2px 6px;
+}
+
+.media.book button.external-site {
+    padding: 6px 6px 1px 6px;
 }
 
 .media .stars {

@@ -90,6 +90,11 @@ var mandatoryAssets = [
     {% endif %}
 
 {% endfor %}
+{% if MEDIA_REVIEWS %}
+    // media reviews images
+    '{{ QS_LINK['/img/imdb-logo-button.png'] }}',
+    '{{ QS_LINK['/img/goodreads-logo-button.png'] }}',
+{% endif %}
     // cookie warning notice
     '{{ SITEURL }}/cookie-notice/',
     '{{ SITEURL }}/cookie-notice/index.html'
