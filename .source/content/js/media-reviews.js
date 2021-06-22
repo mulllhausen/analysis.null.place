@@ -216,6 +216,7 @@ function initInitialMediaData(callback) {
 }
 
 function linkTo1Media(e) {
+    // todo - use window.open(url, '_blank') except for ie<=11
     // a link within a media item was clicked. figure out which one, and action
     // it
     stopBubble(e);
@@ -245,6 +246,39 @@ function linkTo1Media(e) {
         (el.tagName.toLowerCase() == 'a') &&
         inArray('link-to-other-media', el.className)
     ) return goToOtherMedia(el.href);
+
+    // the link looks like <a class="link-to-other-media"><button><img src="blah">
+    // </button></a> and the <a> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'a') &&
+        inArray('link-to-other-media', el.className)
+    ) {
+        location.href = el.href;
+        return false; // prevent bubble up
+    }
+
+    // the link looks like <a class="link-to-other-media"><button><img src="blah">
+    // </button></a> and the <button> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'button') &&
+        (el.parentNode.tagName.toLowerCase() == 'a') &&
+        inArray('link-to-other-media', el.parentNode.className)
+    ) {
+        location.href = el.parentNode.href;
+        return false; // prevent bubble up
+    }
+
+    // the link looks like <a class="link-to-other-media"><button><img src="blah">
+    // </button></a> and the <img> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'img') &&
+        (el.parentNode.tagName.toLowerCase() == 'button') &&
+        (el.up(2).tagName.toLowerCase() == 'a') &&
+        inArray('link-to-other-media', el.up(2).className)
+    ) {
+        location.href = el.up(2).href;
+        return false; // prevent bubble up
+    }
 
     // the link looks like <a class="link-to-self"><svg class="icon-chain">
     // <use xlink:href="...#icon-chain"></use></svg></a> and the <a> element was
@@ -345,30 +379,25 @@ function generateMediaHTML(mediaData, pinned) {
     var renderedTitle = getRenderedTitle(mediaData);
     var style = '';
     if (mediaData.spoilers) style = ' style="color:red;"';
-    var loadReviewButton = '<button class="load-review" id="load-' + mediaID + '">' +
-        'load review' +
-    '</button><br>' +
-    '<span class="review-explanation"' + style + '>' +
+    var loadReviewButton = '<span class="review-explanation"' + style + '>' +
         '(this review ' + (mediaData.spoilers ? 'contains' : 'has no') + ' spoilers)' +
-    '</span>';
+    '</span>' +
+    '<br>' +
+    '<button class="load-review" id="load-' + mediaID + '">' +
+        'load review' +
+    '</button>';
     var review = '';
     if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
     else review = loadReviewButton;
+    review += getExternalLinkButton(mediaData);
     var imgSrc = siteGlobals.siteURL + '/img/' + generateThumbnailBasename(
         siteGlobals.mediaType, mediaID, 'thumb'
     ) + '.jpg?hash=' + mediaData.thumbnailHash;
-    var titleLink = 'https://';
-    switch (siteGlobals.mediaType) {
-        case 'book':
-            titleLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
-            break;
-        case 'movie':
-        case 'tv-series':
-            titleLink += 'www.imdb.com/title/' + mediaData.IMDBID;
-            break;
-    }
     var href = generateCleanURL(siteGlobals.mediaType + '-reviews/' + mediaID + '/');
-    return '<div class="media' + pinned + '" id="' + mediaID + '">' +
+    return '<div' +
+        ' class="media ' + siteGlobals.mediaType + pinned + '"' +
+        ' id="' + mediaID + '"' +
+    '>' +
         '<a' +
             ' class="link-to-self chain-link"' +
             ' href="' + href + '"' +
@@ -381,15 +410,14 @@ function generateMediaHTML(mediaData, pinned) {
             '</svg>' +
         '</a>' +
         '<div class="thumbnail-and-stars">' +
-            '<img src="' + imgSrc + '" alt="' + mediaData.title + ' ' +
-            siteGlobals.mediaType + ' thumbnail">' +
+            '<img src="' + imgSrc + '" class="thumbnail" ' +
+            'alt="' + mediaData.title + ' ' + siteGlobals.mediaType +
+            ' thumbnail">' +
             '<div class="stars">' +
                 generateMediaStarsHTML(mediaData.rating) +
             '</div>' +
         '</div>' +
-        '<a href="' + titleLink + '">' +
-            '<h3 class="media-title">' + renderedTitle + '</h3>' +
-        '</a>' +
+        '<h3 class="media-title">' + renderedTitle + '</h3>' +
         '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +
         '<div class="review-text">' + review + '</div>' +
     '</div>';
@@ -418,21 +446,22 @@ function loadFullReview(e) {
     linkToSelf(e.target.up(2));
     var mediaID = e.target.id.replace('load-', '');
     var mediaIndex = mediaID2Index(mediaID);
-    if (completeMediaData[mediaIndex].hasOwnProperty('review')) {
-        e.target.parentNode.innerHTML = formatReview(
-            completeMediaData[mediaIndex].review
-        );
+    var mediaData = completeMediaData[mediaIndex];
+    if (mediaData.hasOwnProperty('review')) {
+        e.target.parentNode.innerHTML = formatReview(mediaData.review) +
+        getExternalLinkButton(mediaData);
         return;
     }
     ajax(
         '/json/' + siteGlobals.mediaType + '-review-' + mediaID + '.json?hash=' +
-        completeMediaData[mediaIndex].reviewHash,
+        mediaData.reviewHash,
 
         function (json) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
-            e.target.parentNode.innerHTML = formatReview(fullReviewText);
-            completeMediaData[mediaIndex].review = fullReviewText;
+            e.target.parentNode.innerHTML = formatReview(fullReviewText) +
+            getExternalLinkButton(mediaData);
+            mediaData.review = fullReviewText;
         }
         catch (err) {
             console.log('error in loadFullReview function: ' + err);
@@ -447,6 +476,27 @@ function formatReview(review) {
     if (inArray('<p>', review)) return review;
 
     return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
+}
+
+function getExternalLinkButton(mediaData) {
+    var externalLink = 'https://';
+    var externalSiteLogo = siteGlobals.siteURL + '/img/';
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
+            externalSiteLogo += 'goodreads-logo.png';
+            break;
+        case 'movie':
+        case 'tv-series':
+            externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
+            externalSiteLogo += 'imdb-logo.png';
+            break;
+    }
+    return '<a class="link-to-other-media" href="' + externalLink + '">' +
+        '<button class="external-site">' +
+            '<img src="' + externalSiteLogo + '">' +
+        '</button>' +
+    '</a>';
 }
 
 function generateMediaStarsHTML(mediaDataRating) {
