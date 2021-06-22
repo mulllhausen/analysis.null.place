@@ -1,4 +1,4 @@
-var latestCache = '2021-06-20_20:26:42';
+var latestCache = '2021-06-23_09:05:35';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=EzGJ5H',
@@ -54,8 +54,8 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=Jwpht4',
-    'https://analysis.null.place/css/media-reviews.css?hash=7-vTee',
+    'https://analysis.null.place/js/media-reviews.js?hash=rogCuh',
+    'https://analysis.null.place/css/media-reviews.css?hash=7_CO89',
     'https://analysis.null.place/img/book-thumb-barbaraklipskatheneuroscientistwholosthermind2018.jpg?hash=bffWZ6',
     'https://analysis.null.place/img/book-thumb-robertharrisimperium2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/img/book-thumb-stanislawlemsolaris1961.jpg?hash=55BY16',
@@ -208,6 +208,9 @@ var mandatoryAssets = [
     'https://analysis.null.place/json/hex-trial-attempts.json?hash=sjiIF4',
     'https://analysis.null.place/json/unittest-bits.json?hash=m8SQwF',
 
+    // media reviews images
+    'https://analysis.null.place/img/imdb-logo-button.png?hash=wXTebQ',
+    'https://analysis.null.place/img/goodreads-logo-button.png?hash=C30vpz',
     // cookie warning notice
     'https://analysis.null.place/cookie-notice/',
     'https://analysis.null.place/cookie-notice/index.html'
