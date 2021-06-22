@@ -216,7 +216,6 @@ function initInitialMediaData(callback) {
 }
 
 function linkTo1Media(e) {
-    // todo - use window.open(url, '_blank') except for ie<=11
     // a link within a media item was clicked. figure out which one, and action
     // it
     stopBubble(e);
@@ -228,7 +227,44 @@ function linkTo1Media(e) {
         (el.tagName.toLowerCase() == 'a') &&
         inArray('link-external', el.className)
     ) {
-        location.href = el.href;
+        if (siteGlobals.browser.isIE) location.href = el.href;
+        else window.open(el.href, '_blank');
+        return false; // prevent bubble up
+    }
+
+    // the link looks like <a class="link-external"><button><img></button></a>
+    // and the <a> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'a') &&
+        inArray('link-external', el.className)
+    ) {
+        if (siteGlobals.browser.isIE) location.href = el.href;
+        else window.open(el.href, '_blank');
+        return false; // prevent bubble up
+    }
+
+    // the link looks like <a class="link-external"><button><img></button></a>
+    // and the <button> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'button') &&
+        (el.parentNode.tagName.toLowerCase() == 'a') &&
+        inArray('link-external', el.parentNode.className)
+    ) {
+        if (siteGlobals.browser.isIE) location.href = el.parentNode.href;
+        else window.open(el.parentNode.href, '_blank');
+        return false; // prevent bubble up
+    }
+
+    // the link looks like <a class="link-external"><button><img></button></a>
+    // and the <img> element was clicked
+    if (
+        (el.tagName.toLowerCase() == 'img') &&
+        (el.parentNode.tagName.toLowerCase() == 'button') &&
+        (el.up(2).tagName.toLowerCase() == 'a') &&
+        inArray('link-external', el.up(2).className)
+    ) {
+        if (siteGlobals.browser.isIE) location.href = el.up(2).href;
+        else window.open(el.up(2).href, '_blank');
         return false; // prevent bubble up
     }
 
@@ -246,39 +282,6 @@ function linkTo1Media(e) {
         (el.tagName.toLowerCase() == 'a') &&
         inArray('link-to-other-media', el.className)
     ) return goToOtherMedia(el.href);
-
-    // the link looks like <a class="link-to-other-media"><button><img src="blah">
-    // </button></a> and the <a> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'a') &&
-        inArray('link-to-other-media', el.className)
-    ) {
-        location.href = el.href;
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-to-other-media"><button><img src="blah">
-    // </button></a> and the <button> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'button') &&
-        (el.parentNode.tagName.toLowerCase() == 'a') &&
-        inArray('link-to-other-media', el.parentNode.className)
-    ) {
-        location.href = el.parentNode.href;
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-to-other-media"><button><img src="blah">
-    // </button></a> and the <img> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'img') &&
-        (el.parentNode.tagName.toLowerCase() == 'button') &&
-        (el.up(2).tagName.toLowerCase() == 'a') &&
-        inArray('link-to-other-media', el.up(2).className)
-    ) {
-        location.href = el.up(2).href;
-        return false; // prevent bubble up
-    }
 
     // the link looks like <a class="link-to-self"><svg class="icon-chain">
     // <use xlink:href="...#icon-chain"></use></svg></a> and the <a> element was
@@ -484,15 +487,15 @@ function getExternalLinkButton(mediaData) {
     switch (siteGlobals.mediaType) {
         case 'book':
             externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
-            externalSiteLogo += 'goodreads-logo.png';
+            externalSiteLogo += 'goodreads-logo-button.png';
             break;
         case 'movie':
         case 'tv-series':
             externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
-            externalSiteLogo += 'imdb-logo.png';
+            externalSiteLogo += 'imdb-logo-button.png';
             break;
     }
-    return '<a class="link-to-other-media" href="' + externalLink + '">' +
+    return '<a class="link-external" href="' + externalLink + '">' +
         '<button class="external-site">' +
             '<img src="' + externalSiteLogo + '">' +
         '</button>' +
