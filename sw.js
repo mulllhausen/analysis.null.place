@@ -1,4 +1,4 @@
-var latestCache = '2021-06-23_09:05:35';
+var latestCache = '2021-06-23_09:15:24';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=EzGJ5H',
@@ -211,6 +211,7 @@ var mandatoryAssets = [
     // media reviews images
     'https://analysis.null.place/img/imdb-logo-button.png?hash=wXTebQ',
     'https://analysis.null.place/img/goodreads-logo-button.png?hash=C30vpz',
+
     // cookie warning notice
     'https://analysis.null.place/cookie-notice/',
     'https://analysis.null.place/cookie-notice/index.html'
