@@ -160,7 +160,7 @@ meta_jsons = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
-        "%s-%s.json" % (plural(media_type), x) for x in
+        "%s-reviews/json/%s.json" % (media_type, x) for x in
         ["init-list", "list", "search-index"]
     ]
 
@@ -168,31 +168,20 @@ def generate_unique_id(a_media):
     if (media_type == "movie"):
         # a movie's id is the alphanumeric title and year chars without
         # spaces
-        return re.sub(
-            r"[^a-z0-9]*", "", (
-                "%s%s" % (a_media["title"], a_media["year"])
-            ).lower()
-        )
+        unique_id = "%s%s" % (a_media["title"], a_media["year"])
     elif (media_type == "tv-series"):
         # a tv series' id is the alphanumeric title, year and season without
         # spaces
-        return re.sub(
-            r"[^a-z0-9]*", "", (
-                "%s%s%s" % (
-                    a_media["title"], a_media["season"], a_media["year"]
-                )
-            ).lower()
+        unique_id = "%s%s%s" % (
+            a_media["title"], a_media["season"], a_media["year"]
         )
     elif (media_type == "book"):
         # a book's id is the alphanumeric author, title and year chars
         # without spaces
-        return re.sub(
-            r"[^a-z0-9]*", "", (
-                "%s%s%s" % (
-                    a_media["author"], a_media["title"], a_media["year"]
-                )
-            ).lower()
+        unique_id = "%s%s%s" % (
+            a_media["author"], a_media["title"], a_media["year"]
         )
+    return re.sub(r"[^a-z0-9]*", "", unique_id.lower())
 
 allowed_states = ("original", "larger", "thumb")
 def generate_thumbnail_basename(a_media, state):
@@ -202,7 +191,7 @@ def generate_thumbnail_basename(a_media, state):
                 ", ".join(allowed_states)
             )
         )
-    return "%s-%s-%s.jpg" % (media_type, state, a_media["id"])
+    return "%s-%s.jpg" % (state, a_media["id"])
 
 def save_list_and_individual_review_jsons(all_media_x):
     global meta_img_preloads, meta_jsons
@@ -215,20 +204,20 @@ def save_list_and_individual_review_jsons(all_media_x):
         [a_media for a_media in all_media_x],
         key = lambda a_media: (a_media["reviewDate"], a_media["title"])
     )
+    json_path = "%s/%s-reviews/json" % (content_path, media_type)
     for a_media in all_media_x:
         thumbnail_basename = generate_thumbnail_basename(a_media, "thumb")
         a_media["thumbnailHash"] = get_file_hash(
-            "%s/img/%s" % (content_path, thumbnail_basename)
+            "%s/%s-reviews/img/%s" % (
+                content_path, media_type, thumbnail_basename
+            )
         )
-        meta_img_preloads.append(thumbnail_basename)
+        meta_img_preloads.append(
+            "/%s-reviews/img/%s" % (media_type, thumbnail_basename)
+        )
+        json_review_file = "%s/review-%s.json" % (json_path, a_media["id"])
+        meta_jsons.append(json_review_file)
 
-        json_review_file_basename = "%s-review-%s.json" % (
-            media_type, a_media["id"]
-        )
-        meta_jsons.append(json_review_file_basename)
-        json_review_file = "%s/json/%s" % (
-            content_path, json_review_file_basename
-        )
         # save the json review to the content (not output) dir so that QS_LINK
         # can read it and get its hash
         with open(json_review_file, "w") as f:
@@ -242,10 +231,9 @@ def save_list_and_individual_review_jsons(all_media_x):
 
     # save the media list to the content (not output) dir so that QS_LINK can
     # read it and get its hash
-    with open(
-        "%s/json/%s-list.json" % (content_path, plural(media_type)), "w"
-    ) as f:
+    with open("%s/list.json" % json_path, "w") as f:
         json.dump(all_media_listfile, f, sort_keys = True)
+
     return all_media_x
 
 def save_review_htmls(all_media_x):
@@ -266,10 +254,11 @@ def save_review_htmls(all_media_x):
     for a_media in all_media_x:
         img_larger_name = generate_thumbnail_basename(a_media, "larger")
         img_larger_hash = get_file_hash(
-            "%s/img/%s" % (content_path, img_larger_name)
+            "%s/%s-reviews/img/%s" % (content_path, media_type, img_larger_name)
         )
-        a_media["larger_image_url"] = "%s/img/%s?hash=%s" % (
-            jinja_default_settings["SITEURL"], img_larger_name, img_larger_hash
+        a_media["larger_image_url"] = "%s/%s-reviews/img/%s?hash=%s" % (
+            jinja_default_settings["SITEURL"], media_type, img_larger_name,
+            img_larger_hash
         )
         a_media["external_link_url"] = "https://"
         if media_type == "book":
@@ -380,11 +369,11 @@ def save_init_list(all_media_x):
     # save the media init list to the content (not output) dir so that QS_LINK
     # can read it and get its hash
     with open(
-        "%s/json/%s-init-list.json" % (content_path, plural(media_type)), "w"
+        "%s/%s-reviews/json/init-list.json" % (content_path, media_type), "w"
     ) as f:
         json.dump(init_list2, f, sort_keys = True)
 
-# generate json/<media_type>-search-index.json
+# generate <media_type>-reviews/json/search-index.json
 # this is just a list of media titles and years - used for searching
 def save_search_index(all_media_x):
     media_titles = [generate_search_item(a_media) for a_media in all_media_x]
@@ -392,7 +381,7 @@ def save_search_index(all_media_x):
     # save the media search index to the content (not output) dir so that
     # QS_LINK can read it and get its hash
     with open(
-        "%s/json/%s-search-index.json" % (content_path, plural(media_type)), "w"
+        "%s/%s-reviews/json/search-index.json" % (content_path, media_type), "w"
     ) as f:
         json.dump(media_titles, f)
 
@@ -415,9 +404,10 @@ def add_missing_data(all_media_x):
     for a_media in all_media_x:
         a_media["id"] = generate_unique_id(a_media)
         img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
+        img_path = "%s/%s-reviews/img" % (content_path, media_type)
         try:
             a_media["thumbnailHash"] = get_file_hash(
-                "%s/img/%s" % (content_path, img_thumbnail_name)
+                "%s/%s" % (img_path, img_thumbnail_name)
             )
         except IOError as e:
             if e.errno != errno.ENOENT:
@@ -436,7 +426,7 @@ def add_missing_data(all_media_x):
 
             img_name = generate_thumbnail_basename(a_media, img_size)
             try:
-                img = PIL.Image.open("%s/img/%s" % (content_path, img_name))
+                img = PIL.Image.open("%s/%s" % (img_path, img_name))
                 (
                     a_media["%s_width" % img_size],
                     a_media["%s_height" % img_size]
@@ -455,9 +445,10 @@ def download_all(all_media_x):
     for a_media in all_media_x:
         img_larger_name = generate_thumbnail_basename(a_media, "larger")
         img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
+        img_path = "%s/%s-reviews/img" % (content_path, media_type)
         if (
-            os.path.isfile("%s/img/%s" % (content_path, img_larger_name))
-            and os.path.isfile("%s/img/%s" % (content_path, img_thumbnail_name))
+            os.path.isfile("%s/%s" % (img_path, img_larger_name))
+            and os.path.isfile("%s/%s" % (img_path, img_thumbnail_name))
         ):
             continue # we already have both sizes of this file
 
@@ -472,7 +463,7 @@ def download_all(all_media_x):
         # save the thumbnail to the content (not output) dir so that QS_LINK can
         # read it and get its hash
         img_original_name = generate_thumbnail_basename(a_media, "original")
-        with open("%s/img/%s" % (content_path, img_original_name), "wb") as f:
+        with open("%s/%s" % (img_path, img_original_name), "wb") as f:
             for data in response.iter_content(1024):
                 if not data:
                     break
@@ -491,11 +482,12 @@ def resize_thumbnails(all_media_x):
     if desired_width_larger == 0:
         raise ValueError("the desired larger image width cannot be 0px")
 
+    img_path = "%s/%s-reviews/img" % (content_path, media_type)
     for a_media in all_media_x:
         img_original_name = generate_thumbnail_basename(a_media, "original")
         try:
             img_original = PIL.Image.open(
-                "%s/img/%s" % (content_path, img_original_name)
+                "%s/%s" % (img_path, img_original_name)
             )
         except IOError as e:
             if e.errno == errno.ENOENT:
@@ -517,7 +509,8 @@ def resize_thumbnails(all_media_x):
                 raise ValueError("unknown img_size")
 
             a_media = calculate_new_img_sizes(
-                original_width, original_height, desired_width, a_media, img_size
+                original_width, original_height, desired_width, a_media,
+                img_size
             )
             save_resized_image(img_original, a_media, img_size)
 
@@ -538,7 +531,7 @@ def save_resized_image(img, a_media, what):
         PIL.Image.ANTIALIAS
     )
     img_name = generate_thumbnail_basename(a_media, what)
-    new_img.save("%s/img/%s" % (content_path, img_name))
+    new_img.save("%s/%s-reviews/img/%s" % (content_path, media_type, img_name))
 
 def print_img_size_warning_message(original_width, original_height, title):
     if original_width >= desired_width_larger: # ok
@@ -555,7 +548,9 @@ def delete_original_size_thumbnails(all_media_x):
     for a_media in all_media_x:
         original_img = generate_thumbnail_basename(a_media, "original")
         try:
-            os.remove("%s/img/%s" % (content_path, original_img))
+            os.remove(
+                "%s/%s-reviews/img/%s" % (content_path, media_type, original_img)
+            )
         except OSError as e:
             if e.errno != errno.ENOENT:
                 raise

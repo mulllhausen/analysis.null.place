@@ -6,19 +6,19 @@ it. For example:
 
     MEDIA_REVIEWS = {
         'book': {
-            'src-list': 'json/books-list-all.json',
+            'src-list': 'book-reviews/json/list-all.json',
             'img_preloads': None, # gets populated by the plugin
             'jsons': None, # gets populated by the plugin
             'hash-bang-URLs': None # gets populated by the plugin
         },
         'movie': {
-            'src-list': 'json/movies-list-all.json'
+            'src-list': 'movie-reviews/json/list-all.json'
             'img_preloads': None, # gets populated by the plugin
             'jsons': None, # gets populated by the plugin
             'hash-bang-URLs': None # gets populated by the plugin
         },
         'tv-series': {
-            'src-list': 'json/tv-series-list-all.json'
+            'src-list': 'tv-series-reviews/json/list-all.json'
             'img_preloads': None, # gets populated by the plugin
             'jsons': None, # gets populated by the plugin
             'hash-bang-URLs': None # gets populated by the plugin
