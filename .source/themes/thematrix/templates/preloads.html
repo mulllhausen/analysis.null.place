@@ -11,7 +11,7 @@
     {% if article.scripts %}
         {% set scripts = article.scripts.split(',') %}
         {% for script in scripts %}
-<link rel="preload" as="script" href="{{ QS_LINK['/js/' + script] }}"/>
+<link rel="preload" as="script" href="{{ QS_LINK[script] }}"/>
         {% endfor %}
     {% endif %}
 {% endif %}
@@ -20,7 +20,7 @@
     {% if article.img_preloads %}
         {% set img_preloads = article.img_preloads.split(',') %}
         {% for img_preload in img_preloads %}
-<link rel="preload" as="image" href="{{ QS_LINK['/img/' + img_preload] }}"/>
+<link rel="preload" as="image" href="{{ QS_LINK[img_preload] }}"/>
         {% endfor %}
     {% endif %}
 {% endif %}
