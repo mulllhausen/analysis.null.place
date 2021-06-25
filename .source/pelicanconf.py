@@ -84,7 +84,18 @@ DELETE_OUTPUT_DIRECTORY = False
 
 GITHUB_URL = 'https://github.com/mulllhausen/analysis.null.place'
 
-STATIC_PATHS = ['img', 'js', 'css', 'json']
+STATIC_PATHS = [
+    'img',
+    'movie-reviews/img',
+    'tv-series-reviews/img',
+    'book-reviews/img',
+    'js',
+    'css',
+    'json',
+    'movie-reviews/json',
+    'tv-series-reviews/json',
+    'book-reviews/json'
+]
 # files that will be merged by the static-file-merge plugin
 STATIC_FILE_MERGES = {
     'js/base.js': [
