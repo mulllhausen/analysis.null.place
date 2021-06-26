@@ -160,7 +160,7 @@ meta_jsons = []
 def update_meta_jsons():
     global meta_jsons
     meta_jsons = [
-        "%s-reviews/json/%s.json" % (media_type, x) for x in
+        "/%s-reviews/json/%s.json" % (media_type, x) for x in
         ["init-list", "list", "search-index"]
     ]
 
@@ -204,19 +204,17 @@ def save_list_and_individual_review_jsons(all_media_x):
         [a_media for a_media in all_media_x],
         key = lambda a_media: (a_media["reviewDate"], a_media["title"])
     )
-    json_path = "%s/%s-reviews/json" % (content_path, media_type)
+    json_path = "/%s-reviews/json" % media_type
     for a_media in all_media_x:
         thumbnail_basename = generate_thumbnail_basename(a_media, "thumb")
-        a_media["thumbnailHash"] = get_file_hash(
-            "%s/%s-reviews/img/%s" % (
-                content_path, media_type, thumbnail_basename
-            )
-        )
-        meta_img_preloads.append(
-            "/%s-reviews/img/%s" % (media_type, thumbnail_basename)
-        )
+        img_file = "/%s-reviews/img/%s" % (media_type, thumbnail_basename)
+        meta_img_preloads.append(img_file)
+        img_file = "%s%s" % (content_path, img_file) # update
+        a_media["thumbnailHash"] = get_file_hash(img_file)
+
         json_review_file = "%s/review-%s.json" % (json_path, a_media["id"])
         meta_jsons.append(json_review_file)
+        json_review_file = "%s%s" % (content_path, json_review_file) # update
 
         # save the json review to the content (not output) dir so that QS_LINK
         # can read it and get its hash
@@ -224,14 +222,13 @@ def save_list_and_individual_review_jsons(all_media_x):
             json.dump({ "reviewFull": a_media["review"] }, f)
 
         a_media["reviewHash"] = get_file_hash(json_review_file)
-
         all_media_listfile.append({
             k: v for (k, v) in a_media.iteritems() if (k in listfile_fields)
         })
 
     # save the media list to the content (not output) dir so that QS_LINK can
     # read it and get its hash
-    with open("%s/list.json" % json_path, "w") as f:
+    with open("%s%s/list.json" % (content_path, json_path), "w") as f:
         json.dump(all_media_listfile, f, sort_keys = True)
 
     return all_media_x
