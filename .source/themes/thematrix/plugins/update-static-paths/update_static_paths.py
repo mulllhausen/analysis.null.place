@@ -4,7 +4,6 @@ import os
 
 def process_content(data_from_pelican):
     #pu.db
-    pelican_static_paths = data_from_pelican.settings["STATIC_PATHS"]
     new_static_paths = []
     for prop in (
         "stylesheets",
@@ -41,9 +40,9 @@ def process_content(data_from_pelican):
     if not new_static_paths:
         return
 
-    pelican_static_paths.extend(new_static_paths)
-    pelican_static_paths = list(set(pelican_static_paths))
-    data_from_pelican.settings["STATIC_PATHS"] = pelican_static_paths
+    data_from_pelican.settings["STATIC_PATHS"].extend(new_static_paths)
+    data_from_pelican.settings["STATIC_PATHS"] = \
+    list(set(data_from_pelican.settings["STATIC_PATHS"]))
 
 def register():
     # runs for every article and page
