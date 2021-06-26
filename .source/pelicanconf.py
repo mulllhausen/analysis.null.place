@@ -84,18 +84,6 @@ DELETE_OUTPUT_DIRECTORY = False
 
 GITHUB_URL = 'https://github.com/mulllhausen/analysis.null.place'
 
-STATIC_PATHS = [
-    'img',
-    'movie-reviews/img',
-    'tv-series-reviews/img',
-    'book-reviews/img',
-    'js',
-    'css',
-    'json',
-    'movie-reviews/json',
-    'tv-series-reviews/json',
-    'book-reviews/json'
-]
 # files that will be merged by the static-file-merge plugin
 STATIC_FILE_MERGES = {
     'js/base.js': [
@@ -145,7 +133,12 @@ PLUGINS = [
     # all files this plugin generates
     'media-reviews',
 
-    'querystring-cache',
+    # must come before 'querystring-cache', since 'querystring-cache' needs to
+    # know all the static paths. also must come after 'media-reviews', since
+    # 'media-reviews' creates some new static paths.
+    'update-static-paths',
+
+    'querystring-cache'
 ]
 
 # file paths relative to the output dir

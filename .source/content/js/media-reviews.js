@@ -6,6 +6,7 @@
 // - actions which count as showing interest in another review include:
 //      - clicking on anything in another review (eg. load-button, link icon, etc)
 //      - making any changes in the search area
+// todo: fix underline search the load more items
 
 // init globals
 initialMediaData = []; // static list of initial media data
@@ -393,9 +394,9 @@ function generateMediaHTML(mediaData, pinned) {
     if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
     else review = loadReviewButton;
     review += getExternalLinkButton(mediaData);
-    var imgSrc = siteGlobals.siteURL + '/img/' + generateThumbnailBasename(
-        siteGlobals.mediaType, mediaID, 'thumb'
-    ) + '.jpg?hash=' + mediaData.thumbnailHash;
+    var imgSrc = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + generateThumbnailBasename(mediaID, 'thumb') +
+    '.jpg?hash=' + mediaData.thumbnailHash;
     var href = generateCleanURL(siteGlobals.mediaType + '-reviews/' + mediaID + '/');
     return '<div' +
         ' class="media ' + siteGlobals.mediaType + pinned + '"' +
@@ -426,14 +427,14 @@ function generateMediaHTML(mediaData, pinned) {
     '</div>';
 }
 
-function generateThumbnailBasename(mediaType, mediaID, state) {
+function generateThumbnailBasename(mediaID, state) {
     // keep this function in sync with generate_thumbnail_basename in
     // themes/thematrix/plugins/media-reviews/grunt.py
     switch (state) {
         case 'original':
         case 'larger':
         case 'thumb':
-            return mediaType + '-' + state + '-' + mediaID;
+            return state + '-' + mediaID;
         default:
             throw 'bad state';
     }
@@ -456,8 +457,8 @@ function loadFullReview(e) {
         return;
     }
     ajax(
-        '/json/' + siteGlobals.mediaType + '-review-' + mediaID + '.json?hash=' +
-        mediaData.reviewHash,
+        '/' + siteGlobals.mediaType + '-reviews/json/review-' + mediaID +
+        '.json?hash=' + mediaData.reviewHash,
 
         function (json) {
         try {
