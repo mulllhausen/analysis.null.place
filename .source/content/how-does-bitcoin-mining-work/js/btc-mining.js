@@ -2252,9 +2252,7 @@ function runHash10Changed() {
 }
 
 function initDifficultyAttempts() {
-    ajax(
-        '/json/hex-trial-attempts.json',
-        function (json) {
+    ajax(siteGlobals.hexTrialAttemptsJSON, function (json) {
         try {
             difficultyAttempts = JSON.parse(json).attemptsForHexCharacters;
             triggerEvent(document.getElementById('difficulty11'), 'change');
@@ -2289,9 +2287,8 @@ function initBlockchainSVG() {
         if (txsPerBlock.length > endRange) return;
 
         var startRange = Math.floor(blockNum / 1000) * 1000;
-        ajax(
-            '/json/btc_txs_per_block_' + startRange + '-' + endRange + '.json',
-            function (json) {
+        var range = startRange + '-' + endRange;
+        ajax(siteGlobals.btcTxsPerBlockJSON[range], function (json) {
             try {
                 var numTxsArray = JSON.parse(json).txsPerBlock;
                 txsPerBlock = txsPerBlock.concat(numTxsArray);
