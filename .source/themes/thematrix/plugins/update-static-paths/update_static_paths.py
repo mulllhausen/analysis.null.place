@@ -2,19 +2,20 @@ import pelican
 import os
 #import pudb
 
-def process_content(data_from_pelican):
+def update_static_paths(article_generator, metadata):
     #pu.db
     new_static_paths = []
+
     for prop in (
         "stylesheets",
         "scripts",
         "img_preloads",
         "jsons"
     ):
-        if not hasattr(data_from_pelican, prop):
+        if (metadata is not None) and (prop not in metadata):
             continue
 
-        val = getattr(data_from_pelican, prop)
+        val = metadata[prop]
 
         if type(val) not in (str, unicode):
             continue
@@ -40,10 +41,12 @@ def process_content(data_from_pelican):
     if not new_static_paths:
         return
 
-    data_from_pelican.settings["STATIC_PATHS"].extend(new_static_paths)
-    data_from_pelican.settings["STATIC_PATHS"] = \
-    list(set(data_from_pelican.settings["STATIC_PATHS"]))
+    article_generator.settings["STATIC_PATHS"].extend(new_static_paths)
+    article_generator.settings["STATIC_PATHS"] = \
+    list(set(article_generator.settings["STATIC_PATHS"]))
 
 def register():
-    # runs for every article and page
-    pelican.signals.content_object_init.connect(process_content)
+    # article_generator_context is called early on - before the static paths
+    # have been copied by pelican. only metadata is available here (no content)
+    # but that's fine - its all we need.
+    pelican.signals.article_generator_context.connect(update_static_paths)

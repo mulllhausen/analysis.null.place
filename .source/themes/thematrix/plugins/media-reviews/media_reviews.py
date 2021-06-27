@@ -80,5 +80,6 @@ def media_reviews(pelican_obj):
         grunt.save_iframe_htmls()
 
 def register():
-    # before QS_LINK, so that QS_LINK can find all files this plugin generates
+    # note that initialized is the very first signal. we want this to run before
+    # QS_LINK, so that QS_LINK can find all files this plugin generates
     pelican.signals.initialized.connect(media_reviews)

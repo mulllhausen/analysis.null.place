@@ -84,6 +84,22 @@ DELETE_OUTPUT_DIRECTORY = False
 
 GITHUB_URL = 'https://github.com/mulllhausen/analysis.null.place'
 
+STATIC_PATHS = [
+    'how-do-the-bitcoin-mining-algorithms-work/img',
+    'how-do-the-bitcoin-mining-algorithms-work/js',
+    'how-do-the-bitcoin-mining-algorithms-work/css',
+    'how-do-the-bitcoin-mining-algorithms-work/json',
+    'movie-reviews/img',
+    'movie-reviews/json',
+    'tv-series-reviews/img',
+    'tv-series-reviews/json',
+    'book-reviews/img',
+    'book-reviews/json',
+    'img',
+    'js',
+    'css'
+]
+
 # files that will be merged by the static-file-merge plugin
 STATIC_FILE_MERGES = {
     'js/base.js': [
@@ -125,20 +141,27 @@ MEDIA_REVIEWS = {
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']
-PLUGINS = [
-    'static-file-merge',
-    'jinja2content_simple',
 
+# note: the order of pelican signals is taken from
+# https://chrisramsay.co.uk/posts/2016/11/basic-notes-on-pelican-plugin-architecture/
+# hopefully it is correct.
+PLUGINS = [
+    # called on signals.initialized (the very first signal)
+    'static-file-merge',
+
+    # called on signals.initialized (the very first signal)
     # must come before 'querystring-cache', so that 'querystring-cache' can find
     # all files this plugin generates
     'media-reviews',
 
-    # must come before 'querystring-cache', since 'querystring-cache' needs to
-    # know all the static paths. also must come after 'media-reviews', since
-    # 'media-reviews' creates some new static paths.
-    'update-static-paths',
+    # called on signals.initialized (the very first signal)
+    'querystring-cache',
 
-    'querystring-cache'
+    # called on:
+    # - signals.article_generator_context (early - before the static paths have
+    # been copied. at this point only metadata is available. no content.)
+    # - signals.content_object_init (later on when content is available)
+    'jinja2content_simple'
 ]
 
 # file paths relative to the output dir
