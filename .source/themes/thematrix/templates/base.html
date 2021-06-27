@@ -11,7 +11,7 @@
             {% if (article and article.stylesheets) %}
                 {% set stylesheets = article.stylesheets.split(',') %}
                 {% for stylesheet in stylesheets %}
-        <link rel="stylesheet" href="{{ QS_LINK['/css/' + stylesheet] }}"/>
+        <link rel="stylesheet" href="{{ QS_LINK[stylesheet] }}"/>
                 {% endfor %}
             {% endif %}
             {% include 'adsense_css.html' %}
@@ -177,7 +177,7 @@
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
                 {% for script in scripts %}
-        <script src="{{ QS_LINK['/js/' + script] }}"></script>
+        <script src="{{ QS_LINK[script] }}"></script>
                 {% endfor %}
             {% endif %}
             {% if COMMENTS_SCRIPTS %}

@@ -17,10 +17,15 @@ def cleanstr(text):
 # end custom filters
 #
 
-def process_content(data_from_pelican):
-    if not data_from_pelican._content:
-        return
+def process_metadata(data_from_pelican, metadata):
     #pu.db
+    process_markup(data_from_pelican, metadata)
+
+def process_content(data_from_pelican):
+    #pu.db
+    process_markup(data_from_pelican)
+
+def process_markup(data_from_pelican, metadata = None):
     theme_dir = os.path.join(data_from_pelican.settings['THEME'], 'templates')
     jinja_environment = data_from_pelican.settings['JINJA_ENVIRONMENT']
     jenv = Environment(
@@ -45,19 +50,22 @@ def process_content(data_from_pelican):
         'jsons',
         '_content'
     ):
-        if not hasattr(data_from_pelican, prop):
+        if (metadata is not None) and (prop not in metadata):
             continue
 
-        val = getattr(data_from_pelican, prop)
+        if (metadata is None) and not hasattr(data_from_pelican, prop):
+            continue
+
+        val = getattr(data_from_pelican, prop) if metadata is None else metadata[prop]
 
         if type(val) not in (str, unicode):
             continue
 
-        setattr(
-            data_from_pelican,
-            prop,
-            jenv.from_string(val).render(data_from_pelican.settings)
-        )
+        processed = jenv.from_string(val).render(data_from_pelican.settings)
+        if metadata is None:
+            setattr(data_from_pelican, prop, processed)
+        else:
+            metadata[prop] = processed
 
     # dates - this is tricky - we want to be able to put something like
     # {{ swapme }} in a date type field, however before substitution this will
@@ -68,19 +76,32 @@ def process_content(data_from_pelican):
         'date-datereplacement',
         'modified-datereplacement'
     ):
-        if not hasattr(data_from_pelican, replacement_prop):
+        if (metadata is None) and not hasattr(data_from_pelican, replacement_prop):
+            continue
+
+        if (metadata is not None) and (replacement_prop not in metadata):
             continue
 
         prop = replacement_prop.replace("-datereplacement", "")
-        val = getattr(data_from_pelican, replacement_prop)
-        setattr(
-            data_from_pelican,
-            prop,
-            pelican.utils.get_date(
-                jenv.from_string(val).render(data_from_pelican.settings)
-            )
+
+        val = getattr(data_from_pelican, replacement_prop) if metadata is None \
+        else metadata[replacement_prop]
+
+        processed = pelican.utils.get_date(
+            jenv.from_string(val).render(data_from_pelican.settings)
         )
+        if metadata is None:
+            setattr(data_from_pelican, prop, processed)
+            delattr(data_from_pelican, replacement_prop)
+        else:
+            metadata[prop] = processed
+            del metadata[replacement_prop]
 
 def register():
+    # this signal is called early on (before the static paths have been copied).
+    # not all data is available (no content) - only the metadata, but that's ok
+    # just update what we can and move on
+    pelican.signals.article_generator_context.connect(process_metadata)
+
     # process the content only
     pelican.signals.content_object_init.connect(process_content)

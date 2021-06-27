@@ -5,12 +5,12 @@
     <meta name="date" content="2018-04-17"/>
     <meta name="category" content="cryptocurrencies"/>
     <meta name="tags" content="bitcoin, mining, proof-of-work"/>
-    <meta name="stylesheets" content="btc.css"/>
-    <meta name="scripts" content="sjcl.min.js,btc-mining.js"/>
-    <meta name="img_preloads" content="hashing-flowchart.svg,bitcoin-blockchain.svg"/>
+    <meta name="stylesheets" content="/how-do-the-bitcoin-mining-algorithms-work/css/btc.css"/>
+    <meta name="scripts" content="/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js,/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js"/>
+    <meta name="img_preloads" content="/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg,/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg"/>
     <meta name="summary" content="An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary."/>
-    <meta name="console_explain_scripts" content="js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article."/>
-    <meta name="jsons" content="btc_txs_per_block_0-999.json,hex-trial-attempts.json,unittest-bits.json"/>
+    <meta name="console_explain_scripts" content="how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article."/>
+    <meta name="jsons" content="/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json,/how-do-the-bitcoin-mining-algorithms-work/json/hex-trial-attempts.json,/how-do-the-bitcoin-mining-algorithms-work/json/unittest-bits.json"/>
 </head>
 <body>
 {% from 'h.html' import h with context %}
@@ -83,7 +83,11 @@ them into another string of characters. We call the input characters the
 
 <div class="horizontal-center">
 <div id="hashingFlowchartContainer">
-    <object id="hashingFlowchartSVG" data="{{ QS_LINK['/img/hashing-flowchart.svg'] }}" type="image/svg+xml"></object>
+    <object
+        id="hashingFlowchartSVG"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg'] }}"
+        type="image/svg+xml"
+    ></object>
 </div>
 </div>
 
@@ -466,7 +470,11 @@ in - the current block references the previous block so that blocks build upon
 each other over time, like so:</p>
 
 {{ form_container('dragableBlockchain', 'start') }}
-    <object id="blockchainSVG" data="{{ QS_LINK['/img/bitcoin-blockchain.svg'] }}" type="image/svg+xml"></object>
+    <object
+        id="blockchainSVG"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg'] }}"
+        type="image/svg+xml"
+    ></object>
 {{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
 
@@ -908,7 +916,11 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.</p>
 <script>
-    siteGlobals.unittestBitsJSON = '{{ QS_LINK['/json/unittest-bits.json'] }}';
+    siteGlobals.unittestBitsJSON = '{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/json/unittest-bits.json'] }}';
+    siteGlobals.hexTrialAttemptsJSON = '{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/json/hex-trial-attempts.json'] }}';
+    siteGlobals.btcTxsPerBlockJSON = {
+        '0-999': '{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json'] }}'
+    };
 </script>
 </body>
 </html>
