@@ -1,24 +1,24 @@
 *.pyc
 
 # ignore built files under the .source dir
-.source/themes/thematrix/static/js/base.js
-.source/themes/thematrix/static/js/comments-section.js
+/.source/themes/thematrix/static/js/base.js
+/.source/themes/thematrix/static/js/comments-section.js
 
 # ignore builder files in the output dir
-json/movies-list-all.json
-json/tv-series-list-all.json
-json/books-list-all.json
+/movie-reviews/json/list-all.json
+/tv-series-reviews/json/list-all.json
+/book-reviews/json/list-all.json
 
 # ignore files that get merged into base.js:
-theme/js/polyfills.js
-theme/js/utils.js
-theme/js/matrix-animation.js
-theme/js/autofooter.js
-theme/js/cookie-warning-notice.js
-theme/js/ads.js
-theme/js/register-service-worker.js
+/theme/js/polyfills.js
+/theme/js/utils.js
+/theme/js/matrix-animation.js
+/theme/js/autofooter.js
+/theme/js/cookie-warning-notice.js
+/theme/js/ads.js
+/theme/js/register-service-worker.js
 
 # ignore files that get merged into comments-section.js:
-theme/js/comments-manager.js
-theme/js/facebook-comments.js
-theme/js/disqus-comments.js
+/theme/js/comments-manager.js
+/theme/js/facebook-comments.js
+/theme/js/disqus-comments.js

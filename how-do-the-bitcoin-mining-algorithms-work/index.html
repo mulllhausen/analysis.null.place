@@ -5,7 +5,7 @@
         <title>analysis</title>
 
         <link rel="stylesheet" href="https://analysis.null.place/theme/css/thematrix.css?hash=EzGJ5H"/>
-        <link rel="stylesheet" href="https://analysis.null.place/css/btc.css?hash=93IOhm"/>
+        <link rel="stylesheet" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=93IOhm"/>
 
 <link rel="preload" as="image" href="https://analysis.null.place/theme/img/icons.svg?hash=Xttiu9"/>
 <link rel="preload" as="image" href="https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf"/>
@@ -14,11 +14,11 @@
 
 <link rel="preload" as="script" href="https://www.googletagmanager.com/gtag/js?id=UA-110200325-1"/>
 
-<link rel="preload" as="script" href="https://analysis.null.place/js/sjcl.min.js?hash=0JqGiP"/>
-<link rel="preload" as="script" href="https://analysis.null.place/js/btc-mining.js?hash=Lu0w2L"/>
+<link rel="preload" as="script" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP"/>
+<link rel="preload" as="script" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=XeAwHw"/>
 
-<link rel="preload" as="image" href="https://analysis.null.place/img/hashing-flowchart.svg?hash=NX7qzY"/>
-<link rel="preload" as="image" href="https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdl"/>
+<link rel="preload" as="image" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg?hash=NX7qzY"/>
+<link rel="preload" as="image" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl"/>
 
 <link rel="preload" as="script" href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"/>
 
@@ -77,7 +77,7 @@ var siteGlobals = {
     googleAdClient: 'ca-pub-0118741364962624',
     enableAds: true,
     commentsPlatforms: ['FB','Disqus'],
-    article: {title: 'how do the bitcoin mining algorithms work?',url: 'how-do-the-bitcoin-mining-algorithms-work/',consoleExplainScripts: 'js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article.'}
+    article: {title: 'how do the bitcoin mining algorithms work?',url: 'how-do-the-bitcoin-mining-algorithms-work/',consoleExplainScripts: 'how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article.'}
 };
 </script>
         <link rel="manifest" href="https://analysis.null.place/theme/js/manifest.json"/>
@@ -337,7 +337,7 @@ them into another string of characters. We call the input characters the
 
 <div class="horizontal-center">
 <div id="hashingFlowchartContainer">
-    <object id="hashingFlowchartSVG" data="https://analysis.null.place/img/hashing-flowchart.svg?hash=NX7qzY" type="image/svg+xml"></object>
+    <object id="hashingFlowchartSVG" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg?hash=NX7qzY" type="image/svg+xml"></object>
 </div>
 </div>
 
@@ -793,7 +793,7 @@ each other over time, like so:</p>
         </svg>
     </a>
 
-    <object id="blockchainSVG" data="https://analysis.null.place/img/bitcoin-blockchain.svg?hash=70Cxdl" type="image/svg+xml"></object>
+    <object id="blockchainSVG" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl" type="image/svg+xml"></object>
 </div>
 
 <div class="media-caption">the Bitcoin blockchain</div>
@@ -1491,7 +1491,11 @@ timestamp field in the block by 1 second and begin mining again with a nonce of
 data in the first transaction of the block they are currently mining and reset
 the nonce to 0.</p>
 <script>
-    siteGlobals.unittestBitsJSON = 'https://analysis.null.place/json/unittest-bits.json?hash=m8SQwF';
+    siteGlobals.unittestBitsJSON = 'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/unittest-bits.json?hash=m8SQwF';
+    siteGlobals.hexTrialAttemptsJSON = 'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/hex-trial-attempts.json?hash=sjiIF4';
+    siteGlobals.btcTxsPerBlockJSON = {
+        '0-999': 'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json?hash=i24DRR'
+    };
 </script>
         </div>
         <div class="bottom-spacer"></div>
@@ -1605,8 +1609,8 @@ the nonce to 0.</p>
             });
         </script>
 
-        <script src="https://analysis.null.place/js/sjcl.min.js?hash=0JqGiP"></script>
-        <script src="https://analysis.null.place/js/btc-mining.js?hash=Lu0w2L"></script>
+        <script src="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP"></script>
+        <script src="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=XeAwHw"></script>
         <script src="https://analysis.null.place/theme/js/comments-section.js?hash=H74GHt"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
