@@ -1,4 +1,4 @@
-var latestCache = '2021-06-28_01:45:49';
+var latestCache = '2021-06-29_00:30:30';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=EzGJ5H',
@@ -238,22 +238,6 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
     var request = event.request; // init
-    var urlObj = new URL(request.url);
-    var pathParts = urlObj.pathname.split('/');
-    if (
-        (pathParts.length > 2)
-        && (pathParts[2] != '')
-        && (pathParts[2] != 'redirect.html')
-        && (mediaReviewPages.indexOf(pathParts[1]) != -1)
-    ) {
-        // a media review sub-page is being requested. redirect to the parent
-        urlObj.pathname = '/' + pathParts[1] + '/';
-        pathParts.shift(); // remove empty item
-        pathParts.shift(); // remove parent
-        if (pathParts[pathParts.length - 1] == '') pathParts.pop(); // remove empty item
-        urlObj.hash = '#!' + pathParts.join('/');
-        request = new Request(urlObj.toString());
-    }
     event.respondWith(
         caches.match(request).then(function (swResponse) {
             if (swResponse) return swResponse;
