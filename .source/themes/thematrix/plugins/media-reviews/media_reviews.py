@@ -12,6 +12,7 @@ def media_reviews(pelican_obj):
     grunt.content_path = pelican_obj.settings["PATH"]
     grunt.init_jinja_environment(pelican_obj)
 
+    # loop through each media type (eg. movies, books, etc)
     for (media_type, media_data) in pelican_obj.settings["MEDIA_REVIEWS"].\
     iteritems():
         with open(os.path.join(grunt.content_path, media_data["src-list"])) as f:
@@ -62,6 +63,8 @@ def media_reviews(pelican_obj):
         grunt.save_search_index(all_media_x)
 
         # save data for use in all templates later
+        # todo - match image preloads with init list since there is no need to
+        # preload images that will not be shown
         pelican_obj.settings["MEDIA_REVIEWS"][media_type].update({
             "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
             "jsons": ",".join(sorted(grunt.meta_jsons)),

@@ -131,7 +131,7 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
     var request = event.request; // init
-{% if MEDIA_REVIEWS %}
+{% if False %}{# MEDIA_REVIEWS #}
     var urlObj = new URL(request.url);
     var pathParts = urlObj.pathname.split('/');
     if (
