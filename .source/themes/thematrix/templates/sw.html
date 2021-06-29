@@ -152,6 +152,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(request).then(function (swResponse) {
             if (swResponse) return swResponse;
+            var urlObj = new URL(request.url);
             console.log('sw fetching, because not cached: ' + urlObj.toString());
             return fetch(request);
         })
