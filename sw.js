@@ -1,4 +1,4 @@
-var latestCache = '2021-06-29_00:30:30';
+var latestCache = '2021-06-29_22:17:57';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=EzGJ5H',
@@ -241,6 +241,7 @@ self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(request).then(function (swResponse) {
             if (swResponse) return swResponse;
+            var urlObj = new URL(request.url);
             console.log('sw fetching, because not cached: ' + urlObj.toString());
             return fetch(request);
         })
