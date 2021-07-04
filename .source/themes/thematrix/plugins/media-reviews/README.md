@@ -27,16 +27,16 @@ browser. Each of the following files is initially created automatically in the
 copied to the `OUTPUT_PATH/<media>-reviews/json/` directory by pelican.
 
 - `list-highest-rating.json` - A simple list of tuples for absolutely all
-\<media> \<id>s and their `data-<id>.json` file hashes (see below for a
-description of `data-<id>.json`). For example:
+\<media> IDs and their corresponding `data-<id>.json` file hashes (see below for
+a description of `data-<id>.json`). For example:
 
-    [["birdbox2018", "Ze2gAp"], ["crocoiledundee11986", "jIWb72"], ...]
+        [["birdbox2018", "Ze2gAp"], ["crocoiledundee11986", "jIWb72"], ...]
 
-The list is sorted by highest rating then by title alphabetically. Not cached.
+    The list is sorted by highest rating then by title alphabetically. Not cached.
 
 - `list-lowest-rating.json` - Same but sorted by lowest rating then title.
-- `list-newest.json` - Same but sorted only by newest.
-- `list-oldest.json` - Same but sorted only by oldest.
+- `list-newest.json` - Same but sorted with newest reivews first.
+- `list-oldest.json` - Same but sorted with oldest reivews first.
 - `list-title-a-z.json` - Same but sorted only by title alphabetically.
 - `list-title-z-a.json` - Same but sorted only by title reverse alphabetically.
 
@@ -66,15 +66,16 @@ The following files are initially created automatically in the
 `PATH/<media>-reviews/` directory, and are then automatically copied to the
 `OUTPUT_PATH/<media>-reviews/` directory by Pelican.
 
-- `index.html` - The landing page for all \<media> reviews. No \<media> \<id>s
-are in the html here, so as to avoid them being indexed by search engines. If
-search engines were to index these \<media>s then the page will be out of date
-every time new reviews are added and a user searching for \<media> \<id> would
-click in the search engine and not find \<media> \<id> without searching. This
-would be annoying. A better way is for them to land on the page specific to the
+- `index.html` - The landing page for all \<media> reviews. No \<media> IDs are
+in the html here, so as to avoid them being indexed by search engines. If search
+engines were to index these \<media>s then the search engine entry for this page
+would be out of date every time new reviews are added and a user searching for
+\<media> \<id> would click in the search engine and not find \<media> \<id>
+(unless they use the search box or scroll down a long way). This would be
+annoying. A better way is for the user to land on the page specific to the
 \<media> review they want to read.
 
-- `<id>/index.html` - The page for each \<media> \<id> review. All data for the
+- `<id>/index.html` - The page for the \<media> \<id> review. All data for
 \<media> \<id>, including the thumbnail and review text is in html so it can be
 indexed by search engines.
 
@@ -176,7 +177,7 @@ done by loading the landing page for this type of media.
 
 Offline functionality will only work if the site is loaded (online) at least
 once, so the service worker can cache the required files. In offline mode, only
-10 \<media> items are shown on the \<media> landing page, and none of the \<id>
+10 \<media> items are shown on the \<media> landing page, and none of the ID
 pages are available.
 
 This offline functionality is a natural consequence of only caching the
