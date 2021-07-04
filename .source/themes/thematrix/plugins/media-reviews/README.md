@@ -1,35 +1,38 @@
 # Media Reviews Plugin
 
 To enable this plugin, add `'media-reviews'` to the list of `PLUGINS` in
-pelican.py.
+`pelican.py`.
 
 Currently supported \<media> are:
-- book
-- movie
-- tv-series
+- `book`
+- `movie`
+- `tv-series`
 
 To instruct the plugin to build the pages for all these types, create the
 following list in pelican.py:
 
     MEDIA_REVIEW_TYPES = ['book', 'movie', 'tv-series']
 
-Or include only the list items you want the plugin to build.
+Or include only the types you want the plugin to build.
 
 ## Plugin Files 
 
 - `PATH/<media>-reviews/json/list-all.json` - The list of all \<media> data.
-This file must be created manually by the user. The plugin generates all the
-other files automatically using the data from this file.
+You will need to create this file manually yourself. This plugin generates all
+the other files automatically using the data from this file.
 
-For the following files, "cached" refers to the service worker. Each of the
-following files is initially created automatically in the
+For the following files, "cached" means cached by the service worker, not by the
+browser. Each of the following files is initially created automatically in the
 `PATH/<media>-reviews/json/` directory by this plugin, and is then automatically
 copied to the `OUTPUT_PATH/<media>-reviews/json/` directory by pelican.
 
-- `list-highest-rating.json` - A simple list of absolutely all \<media> \<id>s
-and their `data-<id>.json` file hashes (see below for a description of this
-file). The list is sorted by highest rating then by title alphabetically. Not
-Cached.
+- `list-highest-rating.json` - A simple list of tuples for absolutely all
+\<media> \<id>s and their `data-<id>.json` file hashes (see below for a
+description of `data-<id>.json`). For example:
+
+    [["birdbox2018", "Ze2gAp"], ["crocoiledundee11986", "jIWb72"], ...]
+
+The list is sorted by highest rating then by title alphabetically. Not cached.
 
 - `list-lowest-rating.json` - Same but sorted by lowest rating then title.
 - `list-newest.json` - Same but sorted only by newest.
@@ -59,15 +62,15 @@ cached.
 - `review-<id>.json` - The text for 1 review. Only the files referenced by the
 cached `data-<id>.json` files are cached.
 
-The following files is initially created automatically in the
+The following files are initially created automatically in the
 `PATH/<media>-reviews/` directory, and are then automatically copied to the
-`OUTPUT_PATH/<media>-reviews/` directory by pelican.
+`OUTPUT_PATH/<media>-reviews/` directory by Pelican.
 
 - `index.html` - The landing page for all \<media> reviews. No \<media> \<id>s
 are in the html here, so as to avoid them being indexed by search engines. If
 search engines were to index these \<media>s then the page will be out of date
-every time new reviews are added and a user searching for \<media> \<id> x would
-click in the search engine and not find \<media> \<id> x without searching. This
+every time new reviews are added and a user searching for \<media> \<id> would
+click in the search engine and not find \<media> \<id> without searching. This
 would be annoying. A better way is for them to land on the page specific to the
 \<media> review they want to read.
 
@@ -121,27 +124,28 @@ The search need not be changed by the user, however it is immediately triggered,
 just as if the user had clicked the search button with an empty search box and
 the sort mode in its default position. This causes the page to download the
 `list-highest-rating.json` and `search-index-highest-rating.json` files. The
-files are saved in generic _list_ and _search index_ variables for later. Any
+files are saved in the `full_list` and `search_index` variables for later. Any
 time the sort mode is changed by the user, these same variables are updated by
-downloading and parsing the 2 corresponding json files. A third generic
-variable - _filtered list_ - is populated with a subset of data from _list_. If
-the search box is empty then _filtered list_ contains all the indexes of _list_.
-However, if the search box contains text then only the indexes of items from
-_list_ that are relevant to the search text appear in _filtered list_. This way,
-the _filtered list_ is updated as the user types in the search box using the
-static data from _list_. As a shortcut, if _filtered list_ and _list_ are the
-same then _filtered list_ is set to "all". This is much quicker than populating
-a list with potentially millions of entries which are not needed.
+downloading and parsing the 2 corresponding json files. A third variable -
+`filtered_list` - is populated with a subset of data from `full_list`. If the
+search box is empty then `filtered_list` contains all the indexes of
+`full_list`. However, if the search box contains text then only the indexes of
+items from `full_list` that are relevant to the search text appear in
+`filtered_list`. This way, `filtered_list` is updated as the user types in the
+search box using the static data from `full_list`. As a shortcut, if
+`filtered_list` has every index of `full_list` then `filtered_list` is set to
+"all". This is much quicker than populating a list with potentially millions of
+entries which are not needed.
 
 The logical steps to get all data for a review are:
 
     counter value
             |
             v
-    filtered list index
+    filtered_list index
             |
             v
-    list item (gives data file <id> & <hash>)
+    full_list item (gives data file <id> & <hash>)
             |
             v
     download data using <id> & <hash>
@@ -152,19 +156,19 @@ The logical steps to get all data for a review are:
 As the user scrolls, the area below the last rendered item comes into view. This
 automatically triggers javascript to render the next page of 10 items (30 files
 max.) if available. We compare the counter position to the length of
-_filtered list_. If they are the same then there is nothing more to render.
+`filtered_list`. If they are the same then there is nothing more to render.
 But if the rendered list is shorter than the complete list then the next page is
 rendered.
 
 The functionality for `<id>/index.html` is similar but the review for \<id>
-remains pinned to the top. This is done by first setting _filtered list_ to
+remains pinned to the top. This is done by first setting `filtered_list` to
 
     [<id>, "all"]
 
 then proceeding as before. The value of \<id> within "all" is skipped.
 
 If the user changes the search/sort box, then the \<id> is removed from the url,
-unpinned from the top, and _filtered list_ is reset. On browsers that support
+unpinned from the top, and `filtered_list` is reset. On browsers that support
 altering the history object, this is done by updating the url. Otherwise it is
 done by loading the landing page for this type of media.
 
