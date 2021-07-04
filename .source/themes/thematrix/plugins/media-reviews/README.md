@@ -17,18 +17,19 @@ Or include only the list items you want the plugin to build.
 
 ## Plugin Files 
 
-- `PATH/<media>-reviews/json/list-all.json` - The list of all <media> data. This
-file must be created manually by the user. The plugin generates all the other
-files automatically using the data from this file.
+- `PATH/<media>-reviews/json/list-all.json` - The list of all \<media> data.
+This file must be created manually by the user. The plugin generates all the
+other files automatically using the data from this file.
 
 For the following files, "cached" refers to the service worker. Each of the
 following files is initially created automatically in the
 `PATH/<media>-reviews/json/` directory by this plugin, and is then automatically
 copied to the `OUTPUT_PATH/<media>-reviews/json/` directory by pelican.
 
-- `list-highest-rating.json` - A simple list of absolutely all <media> <id>s and
-their `data-<id>.json` file hashes (see below for a description of this file).
-The list is sorted by highest rating then by title alphabetically. Not Cached.
+- `list-highest-rating.json` - A simple list of absolutely all \<media> \<id>s
+and their `data-<id>.json` file hashes (see below for a description of this
+file). The list is sorted by highest rating then by title alphabetically. Not
+Cached.
 
 - `list-lowest-rating.json` - Same but sorted by lowest rating then title.
 - `list-newest.json` - Same but sorted only by newest.
@@ -41,7 +42,7 @@ The list is sorted by highest rating then by title alphabetically. Not Cached.
 whereas `list-highest-rating.json` grows as more reviews are added, and so
 should not be cached.
 
-- `search-index-highest-rating.json` - A simple list of absolutely all <media>
+- `search-index-highest-rating.json` - A simple list of absolutely all \<media>
 search data in the same order as `list-highest-rating.json`. Used for searching
 and finding reviews. Not cached.
 
@@ -51,7 +52,7 @@ and finding reviews. Not cached.
 - `search-index-title-a-z.json` - Same but for `list-title-a-z.json`.
 - `search-index-title-z-a.json` - Same but for `list-title-z-a.json`.
 
-- `data-<id>.json` - All data needed to render 1 <media> item, except for the
+- `data-<id>.json` - All data needed to render 1 \<media> item, except for the
 review text. Only the files listed in `list-highest-rating-first-10.json` are
 cached.
 
@@ -62,16 +63,16 @@ The following files is initially created automatically in the
 `PATH/<media>-reviews/` directory, and are then automatically copied to the
 `OUTPUT_PATH/<media>-reviews/` directory by pelican.
 
-- `index.html` - The landing page for all <media> reviews. No <media> <id>s
+- `index.html` - The landing page for all \<media> reviews. No \<media> \<id>s
 are in the html here, so as to avoid them being indexed by search engines. If
-search engines were to index these <media>s then the page will be out of date
-every time new reviews are added and a user searching for <media> <id> x would
-click in the search engine and not find <media> <id> x without searching. This
+search engines were to index these \<media>s then the page will be out of date
+every time new reviews are added and a user searching for \<media> \<id> x would
+click in the search engine and not find \<media> \<id> x without searching. This
 would be annoying. A better way is for them to land on the page specific to the
-<media> review they want to read.
+\<media> review they want to read.
 
-- `<id>/index.html` - The page for each <media> <id> review. All data for the
-<media> <id>, including the thumbnail and review text is in html so it can be
+- `<id>/index.html` - The page for each \<media> \<id> review. All data for the
+\<media> \<id>, including the thumbnail and review text is in html so it can be
 indexed by search engines.
 
 ## Functionality
@@ -90,7 +91,7 @@ The following sort modes are available:
 - title ascending
 - title descending
 
-Initially I had thought to split json data into pages of 10 <media> items and
+Initially I had thought to split json data into pages of 10 \<media> items and
 load a page at a time as the user scrolls. But this would make it impossible to
 efficiently load data when searching. When searching we want to show a page of
 10 items, but in the worst case scenario each search item might be in a
@@ -99,12 +100,12 @@ discarding 90 of them. Its not a lot of data, but the network would slow down
 searching. So instead we will just load the searched items and not use pages for
 the items. The only exception is the first page of 10 items that are stored in
 their own json file - `list-highest-rating-first-10.json`. This enables the
-<media> landing page to quickly download a small amount of content for
+\<media> landing page to quickly download a small amount of content for
 rendering.
 
 ### Online Functionality
 
-Initially the <media> search/sort box is disabled by the glass-case css. The
+Initially the \<media> search/sort box is disabled by the glass-case css. The
 search is always empty at page-load and the sorting always defaults to _highest
 rating_.
 
@@ -155,14 +156,14 @@ _filtered list_. If they are the same then there is nothing more to render.
 But if the rendered list is shorter than the complete list then the next page is
 rendered.
 
-The functionality for `<id>/index.html` is similar but the review for <id>
+The functionality for `<id>/index.html` is similar but the review for \<id>
 remains pinned to the top. This is done by first setting _filtered list_ to
 
     [<id>, "all"]
 
-then proceeding as before. The value of <id> within "all" is skipped.
+then proceeding as before. The value of \<id> within "all" is skipped.
 
-If the user changes the search/sort box, then the <id> is removed from the url,
+If the user changes the search/sort box, then the \<id> is removed from the url,
 unpinned from the top, and _filtered list_ is reset. On browsers that support
 altering the history object, this is done by updating the url. Otherwise it is
 done by loading the landing page for this type of media.
@@ -171,14 +172,14 @@ done by loading the landing page for this type of media.
 
 Offline functionality will only work if the site is loaded (online) at least
 once, so the service worker can cache the required files. In offline mode, only
-10 <media> items are shown on the <media> landing page, and none of the <id>
+10 \<media> items are shown on the \<media> landing page, and none of the \<id>
 pages are available.
 
 This offline functionality is a natural consequence of only caching the
 `list-highest-rating-first-10.json` file and the files it references.
 
 After the first 10 items are rendered, javascript attempts to download the list
-off all <media> and its accompanying search file. However, these requests will
+off all \<media> and its accompanying search file. However, these requests will
 time-out, at which point, an offline notice is presented. None of the rendered
 review items on the page is updated in this case.
 
