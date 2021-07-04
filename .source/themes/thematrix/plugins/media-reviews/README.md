@@ -1,9 +1,9 @@
 # Media Reviews Plugin
 
-To enable this plugin, add `'media-reviews'` to the list of PLUGINS in
+To enable this plugin, add `'media-reviews'` to the list of `PLUGINS` in
 pelican.py.
 
-Currently supported <media> are:
+Currently supported \<media> are:
 - book
 - movie
 - tv-series
