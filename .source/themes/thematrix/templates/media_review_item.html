@@ -1,0 +1,42 @@
+{%- macro media_review_item(media) -%}
+{% from 'media_review_stars.html' import media_review_stars with context %}
+    <div class="media {{ media.type_ }} pinned" id="{{ media.id_ }}">
+        <a
+            class="link-to-self chain-link"
+            href="{{ SITEURL }}/{{ media.type_ }}-reviews/{{ media.id_ }}/"
+            title="right click and copy link for the URL of this {{ media.type_ }} review"
+        >
+            <svg class="icon icon-chain">
+                <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-chain">
+                </use>
+            </svg>
+        </a>
+        <div class="thumbnail-and-stars">
+            <img
+{% set img = '/' + media.type_ + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
+                src="{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}"
+                class="thumbnail"
+                alt="{{ media.title }} {{ media.type_ }} thumbnail"
+            >
+            <div class="stars">
+                {{ media_review_stars(media) }}
+            </div>
+        </div>
+        <h3 class="media-title">{{ media.title }}</h3>
+        <h4 class="review-title">{{ media.reviewTitle }}</h4>
+        <div class="review">
+            <span class="review-text">{{ media.review }}</span>
+            <span
+                class="review-explanation"
+                {% if media.spoilers %}style="color:red;"{% endif %}
+            >(this review {% if media.spoilers %}contains{% else %}has no{% endif %} spoilers)</span>
+            <br>
+            <button class="load-review" id="load-{{ media.id_ }}">load review</button>
+            <a class="link-external" href="{{ media.external_link_url }}">
+                <button class="external-site">
+                    <img src="{% raw %}{{{% endraw %} QS_LINK['/img/imdb-logo-button.png'] {% raw %}}}{% endraw %}">
+                </button>
+            </a>
+        </div>
+    </div>
+{%- endmacro -%}

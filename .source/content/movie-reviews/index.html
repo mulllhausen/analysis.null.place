@@ -3,16 +3,15 @@
     <title>movie reviews</title>
     <meta name="slug" content="movie-reviews"/>
     <meta name="date" content="2019-01-23"/>
-    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS['movie']['latest_review'] }}"/>
+    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS.movie.latest_review }}"/>
     <meta name="category" content="reviews"/>
     <meta name="tags" content="movie, reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
-{# todo: only preload the first 10 items #}
-    <meta name="img_preloads" content="{{ MEDIA_REVIEWS['movie']['img_preloads'] }}"/>
+    <meta name="img_preloads" content="{{ MEDIA_REVIEWS.movie.preloads.img }}"/>
     <meta name="summary" content="My movie reviews. A big work in progress!"/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for movies."/>
-    <meta name="jsons" content="{{ MEDIA_REVIEWS['movie']['jsons'] }}"/>
+    <meta name="jsons" content="{{ MEDIA_REVIEWS.movie.preloads.json }}"/>
 </head>
 <body>
 {% from 'form_container.html' import form_container with context %}
@@ -35,10 +34,10 @@ to me.</p>
         <select id="sortBy" disabled>
             <option value="highest-rating">highest rating</option>
             <option value="lowest-rating">lowest rating</option>
-            <option value="newest-reviews">newest reviews</option>
-            <option value="oldest-reviews">oldest reviews</option>
-            <option value="title-ascending">title ascending</option>
-            <option value="title-descending">title descending</option>
+            <option value="newest">newest reviews</option>
+            <option value="oldest">oldest reviews</option>
+            <option value="title-a-z">title ascending</option>
+            <option value="title-z-a">title descending</option>
         </select>
     </div>
 {{ form_container('searchBox', 'end') }}
@@ -65,9 +64,12 @@ to me.</p>
 <script>
     siteGlobals.mediaType = 'movie';
     siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
+    siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS.movie.file_hashes | tojson }};
+{#
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/movie-reviews/json/search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/movie-reviews/json/list.json'] }}';
     siteGlobals.mediaInitListJSON = '{{ QS_LINK['/movie-reviews/json/init-list.json'] }}';
+#}
 </script>
 </body>
 </html>

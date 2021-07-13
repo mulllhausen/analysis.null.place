@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>{{ media.type_ }} reviews</title>
+    <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
+    <meta name="date" content="{{ media.reviewDate }}"/>
+    <meta name="category" content="reviews"/>
+    <meta name="tags" content="{{ media.type_plural }}, reviews"/>
+    <meta name="stylesheets" content="/css/media-reviews.css"/>
+    <meta name="scripts" content="/js/media-reviews.js"/>
+    <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>
+    <meta name="summary" content="{{ media.type_caps }} review of {{ media.title }} by {{ media.author }}"/>
+    <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for {{ media.type_plural }}."/>
+    <meta name="jsons" content="{{ all_media_data.preloads.json | join(',') }}"/>
+    <meta name="linked_data" content="{{ media.linked_data | tojson | replace("\"", "`") }}"/>
+    <meta name="no_ads" content="False"/>
+</head>
+<body>
+{% from 'media_review_item.html' import media_review_item with context %}
+{% from 'form_container.html' import form_container with context %}
+<p>As with
+<a href="{{ SITEURL }}/{{ media.not_media_types[0] }}-reviews/">{{ media.not_media_types_plural[0] }}</a>
+and
+<a href="{{ SITEURL }}/{{ media.not_media_types[1] }}-reviews/">{{ media.not_media_types_plural[1] }}</a>,
+I {{ media.verb_present }} so many {{ media.type_plural }} that I find myself
+forgetting what a given {{ media.type_ }} was about, whether I liked it or
+not, and even whether I have already {{ media.verb_past }} it. So I have made
+this page to keep track of the {{ media.type_plural }} I
+{{ media.verb_present }} - good and bad. Maybe you will also discover some good
+{{ media.type_plural }} here too, or learn what to avoid, assuming you have
+similar tastes to me.</p>
+{{ form_container('searchBox', 'start', None, False) }}
+    <div class="left">
+        <label for="search" class="for-search-box">search</label>
+        <br>
+        <input id="search" type="text" placeholder="{{ media.search_placeholder }}" disabled>
+    </div>
+    <div class="left">
+        <label for="sortBy" class="for-sort-dropdown">sort by</label>
+        <br>
+        <select id="sortBy" disabled>
+            <option value="highest-rating">highest rating</option>
+            <option value="lowest-rating">lowest rating</option>
+            <option value="newest">newest reviews</option>
+            <option value="oldest">oldest reviews</option>
+            <option value="title-a-z">title ascending</option>
+            <option value="title-z-a">title descending</option>
+        </select>
+    </div>
+{{ form_container('searchBox', 'end') }}
+
+<div class="media-count-area">
+    <div id="mediaCountPanel">
+        <span id="xOfYMediaCount">
+            showing <span id="numMediaShowing">{{ all_media_data.preloads.first_page_size }}</span> of
+            <span id="totalMediaFound">{{ all_media_data.preloads.total_size }}</span>
+            <span id="searchTypeDescription">total {{ media.type_plural }}</span>
+        </span>
+        <span id="noMediaCount">no {{ media.type_plural }} found</span>
+    </div>
+</div>
+
+<div id="reviewsArea" class="reviews-area">
+    {{ media_review_item(media) }}
+</div>
+
+<div id="mediaLoaderArea" class="media-loader-area">
+    <div class="media-loader-inner">
+        <div class="loader"></div>
+        <div class="loading-text">loading<br>{{ media.type_plural }}</div>
+    </div>
+</div>
+<script>
+    siteGlobals.mediaType = '{{ media.type_ }}';
+    siteGlobals.iconsSVGURL = '{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}';
+    siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
+{#
+    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/{% endraw %}{{ media.type_ }}{% raw %}-reviews/json/search-index.json'] }}';
+    siteGlobals.mediaListJSON = '{{ QS_LINK['/{% endraw %}{{ media.type_ }}{% raw %}-reviews/json/list.json'] }}';
+    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/{% endraw %}{{ media.type_ }}{% raw %}-reviews/json/init-list.json'] }}';
+#}
+</script>
+</body>
+</html>

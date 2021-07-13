@@ -3,15 +3,15 @@
     <title>tv-series reviews</title>
     <meta name="slug" content="tv-series-reviews"/>
     <meta name="date" content="2019-03-29"/>
-    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS['tv-series']['latest_review'] }}"/>
+    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS['tv-series'].latest_review }}"/>
     <meta name="category" content="reviews"/>
     <meta name="tags" content="tv-series, reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
-    <meta name="img_preloads" content="{{ MEDIA_REVIEWS['tv-series']['img_preloads'] }}"/>
+    <meta name="img_preloads" content="{{ MEDIA_REVIEWS['tv-series'].preloads.img }}"/>
     <meta name="summary" content="My tv-series reviews. A big work in progress!"/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for tv-series."/>
-    <meta name="jsons" content="{{ MEDIA_REVIEWS['tv-series']['jsons'] }}"/>
+    <meta name="jsons" content="{{ MEDIA_REVIEWS['tv-series'].preloads.json }}"/>
 </head>
 <body>
 {% from 'form_container.html' import form_container with context %}
@@ -34,10 +34,10 @@ me.</p>
         <select id="sortBy" disabled>
             <option value="highest-rating">highest rating</option>
             <option value="lowest-rating">lowest rating</option>
-            <option value="newest-reviews">newest reviews</option>
-            <option value="oldest-reviews">oldest reviews</option>
-            <option value="title-ascending">title ascending</option>
-            <option value="title-descending">title descending</option>
+            <option value="newest">newest reviews</option>
+            <option value="oldest">oldest reviews</option>
+            <option value="title-a-z">title ascending</option>
+            <option value="title-z-a">title descending</option>
         </select>
     </div>
 {{ form_container('searchBox', 'end') }}
@@ -64,9 +64,12 @@ me.</p>
 <script>
     siteGlobals.mediaType = 'tv-series';
     siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
+    siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS['tv-series'].file_hashes | tojson }};
+{#
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/tv-series-reviews/json/search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/tv-series-reviews/json/list.json'] }}';
     siteGlobals.mediaInitListJSON = '{{ QS_LINK['/tv-series-reviews/json/init-list.json'] }}';
+#}
 </script>
 </body>
 </html>
