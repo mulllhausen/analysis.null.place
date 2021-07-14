@@ -2,8 +2,6 @@ import pelican
 import grunt
 import os
 import json
-import numbers
-import re
 #import pudb
 
 def media_reviews(pelican_obj):

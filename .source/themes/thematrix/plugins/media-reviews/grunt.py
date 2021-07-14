@@ -456,10 +456,11 @@ def save_1_media_html(a_media, media_data):
     ]
 
     # get json files from ids in a list and add the initial page of review items
-    all_media_data["preloads"]["json"] = [
+    all_media_data["preloads"]["json"] = \
+    ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type] + [
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         preload_ids
-    ] + ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type]
+    ]
 
     # save the review files under the pages dir so that they get built by
     # pelican
@@ -545,10 +546,11 @@ def prepare_landing_page_data(all_media_x, media_data):
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in
         media_data["preloads"]["ids"]
     ]
-    media_data["preloads"]["json"] = [
+    media_data["preloads"]["json"] = \
+    ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type] + [
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         media_data["preloads"]["ids"]
-    ] + ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type]
+    ]
 
     return media_data
 

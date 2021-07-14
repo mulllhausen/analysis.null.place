@@ -6,60 +6,58 @@
 <link rel="preload" as="script" href="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_TRACKING_ID }}"/>
 {%- endif %}
 
-{%- if article -%}
-    {%- if article.scripts -%}
-        {%- set scripts = article.scripts.split(',') -%}
+{% if article %}
+    {% if article.scripts %}
+        {% set scripts = article.scripts.split(',') %}
         {% for script in scripts %}
 <link rel="preload" as="script" href="{{ QS_LINK[script] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
-
-{%- if page -%}
-    {%- if page.scripts -%}
-        {%- set scripts = page.scripts.split(',') -%}
+    {% endif %}
+{% endif %}
+{% if page %}
+    {% if page.scripts %}
+        {% set scripts = page.scripts.split(',') %}
         {% for script in scripts %}
 <link rel="preload" as="script" href="{{ QS_LINK[script] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
+    {% endif %}
+{% endif %}
 
-{%- if article -%}
-    {%- if article.jsons -%}
-        {%- set jsons = article.jsons.split(',') -%}
+{% if article %}
+    {% if article.jsons %}
+        {% set jsons = article.jsons.split(',') %}
         {% for json_ in jsons %}
 <link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
-
-{%- if page -%}
-    {%- if page.jsons -%}
-        {%- set jsons = page.jsons.split(',') -%}
+    {% endif %}
+{% endif %}
+{% if page %}
+    {% if page.jsons %}
+        {% set jsons = page.jsons.split(',') %}
         {% for json_ in jsons %}
 <link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
+    {% endif %}
+{% endif %}
 
-{%- if article -%}
-    {%- if article.img_preloads -%}
-        {%- set img_preloads = article.img_preloads.split(',') -%}
+{% if article %}
+    {% if article.img_preloads %}
+        {% set img_preloads = article.img_preloads.split(',') %}
         {% for img_preload in img_preloads %}
 <link rel="preload" as="image" href="{{ QS_LINK[img_preload] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
-
-{%- if page -%}
-    {%- if page.img_preloads -%}
-        {%- set img_preloads = page.img_preloads.split(',') -%}
+    {% endif %}
+{% endif %}
+{% if page %}
+    {% if page.img_preloads %}
+        {% set img_preloads = page.img_preloads.split(',') %}
         {% for img_preload in img_preloads %}
 <link rel="preload" as="image" href="{{ QS_LINK[img_preload] }}"/>
         {% endfor %}
-    {%- endif -%}
-{%- endif -%}
+    {% endif %}
+{% endif %}
 
 {% if (GOOGLE_AD_CLIENT and ((not page) or (not page.no_ads))) -%}
 <link rel="preload" as="script" href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"/>
 {%- endif %}
+
