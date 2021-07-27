@@ -20,7 +20,7 @@
 that I find myself forgetting what a given book was about, whether I liked it or
 not, and even whether I have already read it. So I have made this page to keep
 track of the books I read - good and bad. Maybe you will also discover some good
-books here too, or learn what to avoid, assuming you have similar tastes to me.</p>
+books here too, or learn what to avoid, if you have similar tastes to me.</p>
 {{ form_container('searchBox', 'start', None, False) }}
     <div class="left">
         <label for="search" class="for-search-box">search</label>
@@ -45,7 +45,7 @@ books here too, or learn what to avoid, assuming you have similar tastes to me.<
     <div id="mediaCountPanel">
         <span id="xOfYMediaCount">
             showing <span id="numMediaShowing">10</span> of
-            <span id="totalMediaFound"></span>
+            <span id="totalMediaFound">{{ MEDIA_REVIEWS.book.total_media_count }}</span>
             <span id="searchTypeDescription">total books</span>
         </span>
         <span id="noMediaCount">no books found</span>
@@ -64,6 +64,7 @@ books here too, or learn what to avoid, assuming you have similar tastes to me.<
     siteGlobals.mediaType = 'book';
     siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS.book.file_hashes | tojson }};
+    siteGlobals.totalMediaCount = {{ MEDIA_REVIEWS.book.total_media_count }};
 {#
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/book-reviews/json/search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/book-reviews/json/list.json'] }}';

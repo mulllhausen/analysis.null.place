@@ -20,8 +20,7 @@
 find myself forgetting what a given movie was about, whether I liked it or not,
 and even whether I have already watched it. So I have made this page to keep
 track of the movies I watch - good and bad. Maybe you will also discover some
-good movies here too, or learn what to avoid, assuming you have similar tastes
-to me.</p>
+good movies here too, or learn what to avoid, if you have similar tastes to me.</p>
 {{ form_container('searchBox', 'start', None, False) }}
     <div class="left">
         <label for="search" class="for-search-box">search</label>
@@ -46,7 +45,7 @@ to me.</p>
     <div id="mediaCountPanel">
         <span id="xOfYMediaCount">
             showing <span id="numMediaShowing">10</span> of
-            <span id="totalMediaFound"></span>
+            <span id="totalMediaFound">{{ MEDIA_REVIEWS.movie.total_media_count }}</span>
             <span id="searchTypeDescription">total movies</span>
         </span>
         <span id="noMediaCount">no movies found</span>
@@ -65,6 +64,7 @@ to me.</p>
     siteGlobals.mediaType = 'movie';
     siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS.movie.file_hashes | tojson }};
+    siteGlobals.totalMediaCount = {{ MEDIA_REVIEWS.movie.total_media_count }};
 {#
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/movie-reviews/json/search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/movie-reviews/json/list.json'] }}';

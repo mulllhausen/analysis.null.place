@@ -20,8 +20,7 @@
 I find myself forgetting what a given show was about, whether I liked it or not,
 and even whether I have already watched it. So I have made this page to keep
 track of the shows I watch - good and bad. Maybe you will also discover some
-good shows here too, or learn what to avoid, assuming you have similar tastes to
-me.</p>
+good shows here too, or learn what to avoid, if you have similar tastes to me.</p>
 {{ form_container('searchBox', 'start', None, False) }}
     <div class="left">
         <label for="search" class="for-search-box">search</label>
@@ -46,7 +45,7 @@ me.</p>
     <div id="mediaCountPanel">
         <span id="xOfYMediaCount">
             showing <span id="numMediaShowing">10</span> of
-            <span id="totalMediaFound"></span>
+            <span id="totalMediaFound">{{ MEDIA_REVIEWS['tv-series'].total_media_count }}</span>
             <span id="searchTypeDescription">total tv-series</span>
         </span>
         <span id="noMediaCount">no tv-series found</span>
@@ -65,6 +64,7 @@ me.</p>
     siteGlobals.mediaType = 'tv-series';
     siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
     siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS['tv-series'].file_hashes | tojson }};
+    siteGlobals.totalMediaCount = {{ MEDIA_REVIEWS['tv-series'].total_media_count }};
 {#
     siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/tv-series-reviews/json/search-index.json'] }}';
     siteGlobals.mediaListJSON = '{{ QS_LINK['/tv-series-reviews/json/list.json'] }}';

@@ -527,8 +527,8 @@ function Retrieve(k) {
 // - when debounceType = 'both' - trigger on the first event and at the end of
 // the wait period
 function debounce(func, wait, debounceType) {
-    // this function is called immediately from within the event handler to
-    // initialise a debounce event function
+    // put this function within an event handler. it will be called immediately
+    // from within the event handler to initialise a debounce event function
     var timeout;
     return function() { // called every time the event fires
         //var context = this, args = arguments; // note: event = args[0]

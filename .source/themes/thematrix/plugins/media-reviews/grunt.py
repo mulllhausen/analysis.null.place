@@ -551,7 +551,7 @@ def prepare_landing_page_data(all_media_x, media_data):
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         media_data["preloads"]["ids"]
     ]
-
+    media_data["total_media_count"] = len(all_media_x)
     return media_data
 
 # downloading thumbnails
