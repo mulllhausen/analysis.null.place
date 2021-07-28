@@ -151,6 +151,24 @@ function addEvent(element, types, callback) {
     });
 }
 
+function removeEvent(element, types, callback) {
+    if (element == null || typeof(element) == 'undefined') return;
+    var elements = (isNodeList(element) ? element : [element]);
+    var typesArr = types.split(',');
+    foreach(elements, function (elI, el) {
+        foreach(typesArr, function (typeI, type) {
+            type = type.replace(/ /g, '');
+            if (el.removeEventListener) {
+                el.removeEventListener(type, callback, false);
+            } else if (el.detachEvent) { // ie
+                el.detachEvent('on' + type, callback);
+            } else {
+                delete el['on' + type];
+            }
+        });
+    });
+}
+
 function triggerEvent(element, type) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
@@ -299,6 +317,48 @@ function ajax(url, callback) {
     });
     xhttp.open('GET', url, true); // async
     xhttp.send();
+}
+
+// a download manager you can call as many times as you like for the same file,
+// but will only download the file once and then run all the callbacks
+// todo: check if this function is needed. maybe browsers are already smart enough to only do 1
+// call and use the first cached response?
+var downloadProperties = {};
+function downloadOnce(id_, url, callback) {
+    if (!downloadProperties.hasOwnProperty[id_]) downloadProperties[id_] = {
+        setupCount: 0,
+        runCount: 0,
+        status_: 'not started',
+        data: null
+    };
+    if (downloadProperties[id_].status_ == 'complete') {
+        return triggerEvent(document, 'done-download-' + id_);
+    }
+
+    // run all the different callbacks when the download finishes
+    var newCallback = function() {
+        downloadProperties[id_].runCount++;
+        callback(downloadProperties[id_]);
+        if (
+            downloadProperties[id_].runCount <
+            downloadProperties[id_].setupCount
+        ) return;
+        removeEvent(document, 'done-download-' + id_, newCallback);
+        downloadProperties[id_].setupCount = 0; // reset
+        downloadProperties[id_].runCount = 0; // reset
+    };
+    downloadFullListJSONSetupCount++;
+    addEvent(document, 'done-download-' + id_, newCallback);
+
+    // 1 attempt at a time
+    if (downloadProperties[id_].status_ == 'in progress') return;
+
+    downloadProperties[id_].status_ = 'in progress'; // lock
+    ajax(url, function (data) {
+        downloadProperties[id_].data = data;
+        downloadProperties[id_].status_ = 'complete';
+        triggerEvent(document, 'done-download-' + id_);
+    });
 }
 
 Element.prototype.up = function (num) {

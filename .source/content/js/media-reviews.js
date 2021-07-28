@@ -1171,51 +1171,31 @@ function sortMedia(preserveFirst, mediaList) {
 // ajax
 
 function downloadFullListJSON(callback) {
-    if (fullListDownloadStatus == 'complete') {
-        return callback(); // exit function here
-    }
-
-    if (fullListDownloadStatus == 'in progress') return; // 1 attempt at a time
-    fullListDownloadStatus = 'in progress'; // lock
-    fullList = []; // reset
-
     var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
     fullListFileName;
 
-    ajax(fileWithPath, function (json) {
+    downloadOnce('fullList', fileWithPath, function (downloadObj) {
         try {
-            fullList = JSON.parse(json);
-            fullListDownloadStatus = 'complete';
-            callback();
+            if (downloadObj.runCount == 1) fullList = JSON.parse(downloadObj.data);
+            return callback();
         }
         catch (err) {
             console.log('error in downloadFullListJSON(): ' + err);
-            fullListDownloadStatus = 'not started'; // unlock again
         }
     });
 }
 
 function downloadSearchIndexJSON(callback) {
-    if (searchIndexDownloadStatus == 'complete') {
-        return callback(); // exit function here
-    }
-
-    if (searchIndexDownloadStatus == 'in progress') return; // 1 attempt at a time
-    searchIndexDownloadStatus = 'in progress'; // lock
-    searchIndex = []; // reset
-
     var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
     searchIndexFileName;
 
-    ajax(fileWithPath, function (json) {
+    downloadOnce('searchIndex', fileWithPath, function (downloadObj) {
         try {
-            searchIndex = JSON.parse(json);
-            searchIndexDownloadStatus = 'complete';
-            callback();
+            if (downloadObj.runCount == 1) searchIndex = JSON.parse(downloadObj.data);
+            return callback();
         }
         catch (err) {
             console.log('error in downloadSearchIndexJSON(): ' + err);
-            searchIndexDownloadStatus = 'not started'; // unlock again
         }
     });
 }
