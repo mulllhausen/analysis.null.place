@@ -72,10 +72,10 @@ addEvent(window, 'load', function () {
     // scroll with debounce
     var lastKnownScrollPosition = 0;
     var ticking = false;
-    addEvent(window, 'scroll', function(e) {
+    addEvent(window, 'scroll', function (e) {
         lastKnownScrollPosition = window.scrollY;
         if (ticking) return;
-        setTimeout(function() {
+        setTimeout(function () {
             positionMediaCounter();
             infiniteLoader();
             ticking = false;
@@ -101,28 +101,36 @@ function clearRenderedMedia() {
 // render a page (eg. 10 items). wait for all to finish downloading before
 // making any visible, and hide any that fail
 function renderNextPage(callback) {
-    var numMediaDownloaded = 0;
+    if (callback == null) callback = function () {};
+    var numMediaDownloadedThisPage = 0;
     var thisPageSize = pageSize;
-
     for (var itemI = 0; itemI < pageSize; itemI++) {
         var minimal1MediaObj = get1MediaIDandHash(itemI + numMediaShowing);
-        if (minimal1MediaObj == null) break; // gone past the last item
+        if (minimal1MediaObj == null) {
+            if (itemI == 0) return callback();
+            // note: if we get here it will always be before the first time
+            // download1MediaItem()'s callback runs. not because downloading is
+            // slow, but because we get here synchronously first.
+            thisPageSize = itemI; // we are already 1 past the last item
+            break; // gone past the last item
+        }
 
-        // create the placeholders for each media item. this keeps correct order
-        // regardless of the order in which the media items are downloaded.
+        // create the placeholders for each media item. this keeps correct
+        // order regardless of the order in which the media items are
+        // downloaded.
         render1MediaItemPlaceholder(minimal1MediaObj);
 
-        download1MediaItem(minimal1MediaObj, function(status, mediaData) {
+        download1MediaItem(minimal1MediaObj, function (status, mediaData) {
             if (status == 'complete') {
                 fillRender1MediaItem(mediaData);
-                numMediaDownloaded++;
+                numMediaDownloadedThisPage++;
             } else {
                 thisPageSize--;
                 removePlaceholder(minimal1MediaObj);
             }
-            if (numMediaDownloaded == thisPageSize) {
+            if (numMediaDownloadedThisPage == thisPageSize) {
                 unhideRenderedMedia();
-                numMediaShowing += numMediaDownloaded;
+                numMediaShowing += numMediaDownloadedThisPage;
                 renderMediaCount();
                 callback();
             }
@@ -162,7 +170,7 @@ function removeMediaIDFromUrl() {
     else window.location.hash = '';
 }
 
-function initMediaRendering() {
+/*function initMediaRendering() {
     var initialMediaDataHTML = '';
     var mediaID = getMediaIDFromURL(); // does not alter url
     var page = siteGlobals.mediaType + '-reviews/';
@@ -315,7 +323,7 @@ function initInitialMediaData(callback) {
             gettingInitialMediaData = false; // unlock again
         }
     });
-}
+}*/
 
 function linkTo1Media(e) {
     // a link within a media item was clicked. figure out which one, and action
@@ -422,7 +430,7 @@ function goToOtherMedia(url) {
 
 function linkToSelf(mediaEl) {
     currentlySearching = false;
-    foreach(document.querySelectorAll('.media.pinned'), function(_, otherMediaEl) {
+    foreach(document.querySelectorAll('.media.pinned'), function (_, otherMediaEl) {
         removeCSSClass(otherMediaEl, 'pinned');
     });
     addCSSClass(mediaEl, 'pinned');
@@ -448,7 +456,7 @@ function loading(status) {
     }
 }
 
-function generateInitialMediaHTML(mediaID, idInInitialList) {
+/*function generateInitialMediaHTML(mediaID, idInInitialList) {
     var adOffset = 0;
     var firstPageSize = initialMediaData.length;
     if (mediaID != null) {
@@ -477,18 +485,9 @@ function generateInitialMediaHTML(mediaID, idInInitialList) {
         if (!skipI) adOffset++;
     }
     return initialMediaDataHTML;
-}
+}*/
 
 function get1MediaHTML(mediaData) {
-    var renderedTitle = getRenderedTitle(mediaData);
-    var spoilerAlert = getSpoilerAlert(mediaData);
-    var loadReviewButton = getLoadReviewButton(mediaData);
-    var review = '';
-    if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
-    else review = loadReviewButton;
-    var imgSrc = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
-    '-reviews/img/' + generateThumbnailBasename(mediaData.id_, 'thumb') +
-    '.jpg?hash=' + mediaData.thumbnailHash;
     var href = generateCleanURL(
         siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
     );
@@ -504,24 +503,31 @@ function get1MediaHTML(mediaData) {
         '</svg>' +
     '</a>' +
     '<div class="thumbnail-and-stars">' +
-        '<img src="' + imgSrc + '" class="thumbnail" ' +
-        'alt="' + mediaData.title + ' ' + siteGlobals.mediaType +
-        ' thumbnail">' +
+        getThumbnailImgHTML(mediaData) +
         '<div class="stars">' +
             getMediaStarsHTML(mediaData.rating) +
         '</div>' +
     '</div>' +
-    '<h3 class="media-title">' + renderedTitle + '</h3>' +
+    '<h3 class="media-title">' + getRenderedTitle(mediaData) + '</h3>' +
     '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +
     '<div class="review-text">' +
-        spoilerAlert +
+        getSpoilerAlertHTML(mediaData) +
         '<br>' +
-        review +
-        getExternalLinkButton(mediaData)
+        getLoadReviewButtonHTML(mediaData) +
+        getExternalLinkButtonHTML(mediaData)
     '</div>';
 }
 
-function getSpoilerAlert(mediaData) {
+function getThumbnailImgHTML(mediaData) {
+    var imgSrc = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+    '.jpg?hash=' + mediaData.thumbnailHash;
+
+    return '<img src="' + imgSrc + '" class="thumbnail" ' +
+    'alt="' + mediaData.title + ' ' + siteGlobals.mediaType + ' thumbnail">';
+}
+
+function getSpoilerAlertHTML(mediaData) {
     var style = '';
     if (mediaData.spoilers) style = ' style="color:red;"';
     return '<span class="review-explanation"' + style + '>' +
@@ -531,7 +537,7 @@ function getSpoilerAlert(mediaData) {
     '</span>';
 }
 
-function getLoadReviewButton(mediaData) {
+function getLoadReviewButtonHTML(mediaData) {
     return '<button class="load-review" id="load-' + mediaData.id_ + '">' +
         'load review' +
     '</button>';
@@ -566,7 +572,7 @@ function formatReview(review) {
     return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
 }
 
-function getExternalLinkButton(mediaData) {
+function getExternalLinkButtonHTML(mediaData) {
     var externalLink = 'https://';
     var externalSiteLogo = siteGlobals.siteURL + '/img/';
     switch (siteGlobals.mediaType) {
@@ -657,7 +663,7 @@ function getMediaIDFromURL() {
     return pathPieces[2];
 }
 
-function generateThumbnailBasename(mediaID, state) {
+function getThumbnailBasename(mediaID, state) {
     // keep this function in sync with generate_thumbnail_basename in
     // themes/thematrix/plugins/media-reviews/grunt.py
     switch (state) {
@@ -671,7 +677,7 @@ function generateThumbnailBasename(mediaID, state) {
 }
 
 function highlightSearch(searchTerms, mediaRenderedTitle) {
-    foreach(searchTerms, function(_, searchTerm) {
+    foreach(searchTerms, function (_, searchTerm) {
         var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
         mediaRenderedTitle = mediaRenderedTitle.replace(regexPattern, '<u>$1</u>');
     });
@@ -723,16 +729,24 @@ function positionMediaCounter() {
 
 function infiniteLoader() {
     if (loadingStatus == 'on') return;
+    if (renderedAllMediaItems()) return;
 
     var footerEl = document.getElementsByTagName('footer')[0];
     if (!isScrolledTo(footerEl, 'view', 'partially')) return;
     loading('on');
-    renderNextPage(function() {
-        loading('off');
+    var useFirst10_ = false; // first get the full list
+    downloadMediaLists(useFirst10_, function () {
+        renderNextPage(function () {
+            loading('off');
+        });
     });
 }
 
-function defunct__renderMoreMedia() {
+function renderedAllMediaItems() {
+    return (numMediaShowing == filteredList.length);
+}
+
+/*function defunct__renderMoreMedia() {
     if (numMediaShowing >= searchResultIndexes.length) return; // no more media to show
     loading('on');
 
@@ -764,7 +778,7 @@ function defunct__renderMoreMedia() {
         renderMediaCount();
         loading('off');
     }, 1000);
-}
+}*/
 
 // searching
 
@@ -780,9 +794,9 @@ function triggerSearch() {
     clearRenderedMedia();
     loading('on');
     var first10Only = useFirst10();
-    downloadMediaLists(first10Only, function() {
+    downloadMediaLists(first10Only, function () {
         updateFilteredListUsingSearch();
-        renderNextPage(function() { // will be the first page, due to globals
+        renderNextPage(function () { // will be the first page, due to globals
             loading('off');
             removeGlassCase('searchBox', true);
 
@@ -813,6 +827,7 @@ function anySearchChanges() {
 // index. this is because the first 10 will only be downloaded when there is no
 // search text and the sort order is at the default value.
 function downloadMediaLists(useFirst10_, callback) {
+    if (callback == null) callback = function () {};
     var fullListIsDownloaded = isFullListDownloaded(useFirst10_);
     var searchIndexIsDownloaded = (useFirst10_ || isSearchIndexDownloaded());
 
@@ -821,7 +836,7 @@ function downloadMediaLists(useFirst10_, callback) {
     if (!fullListIsDownloaded) {
         fullListFileName = getFileJSONName('list', sortMode, useFirst10_);
         fullListDownloadStatus = 'not started'; // unlock again
-        downloadFullListJSON(function() {
+        downloadFullListJSON(function () {
             // only using first 10? then we don't need the search list
             if (useFirst10_) return callback();
 
@@ -835,7 +850,7 @@ function downloadMediaLists(useFirst10_, callback) {
         getFileJSONName('search-index', sortMode, useFirst10_);
 
         searchIndexDownloadStatus = 'not started'; // unlock again
-        downloadSearchIndexJSON(function() {
+        downloadSearchIndexJSON(function () {
             // wait for both lists to download before running callback
             if (fullListDownloadStatus != 'complete') return;
             return callback();
@@ -884,7 +899,7 @@ function updateFilteredListUsingSearch() {
 function getSearchTermsList(searchText) {
     if (searchText == '') return []; // quick
     searchText = searchText.toLowerCase(); // all searching is lowercase
-    return searchText.split(/[^a-z0-9]/g).filter(function(item, i, list) {
+    return searchText.split(/[^a-z0-9]/g).filter(function (item, i, list) {
         if (item == '') return false; // no empty items allowed in result
         return (list.indexOf(item) === i); // keep result unique
     });
@@ -1044,7 +1059,7 @@ function debounceMediaSearch(state) {
     }
 }
 
-function mediaSearchChanged() {
+/*function mediaSearchChanged() {
     archiveInFeedAds();
     document.getElementById('reviewsArea').innerHTML = '';
     var searchText = trim(document.getElementById('search').value).toLowerCase();
@@ -1138,7 +1153,7 @@ function sortMedia(preserveFirst, mediaList) {
             if (preserveFirst) mediaList.unshift(first); // update mediaList
             return mediaList;
     }
-    mediaList.sort(function(a, b) {
+    mediaList.sort(function (a, b) {
         var diff = 0;
         var titleA = a.title.toLowerCase();
         var titleB = b.title.toLowerCase();
@@ -1166,17 +1181,19 @@ function sortMedia(preserveFirst, mediaList) {
     });
     if (preserveFirst) mediaList.unshift(first); // update mediaList
     return mediaList;
-}
+}*/
 
 // ajax
 
 function downloadFullListJSON(callback) {
+    if (callback == null) callback = function () {};
     var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
     fullListFileName;
 
-    downloadOnce('fullList', fileWithPath, function (downloadObj) {
+    downloadOnce(fileWithPath, function (downloadObj) {
         try {
             if (downloadObj.runCount == 1) fullList = JSON.parse(downloadObj.data);
+            fullListDownloadStatus = 'complete'; // global
             return callback();
         }
         catch (err) {
@@ -1186,12 +1203,14 @@ function downloadFullListJSON(callback) {
 }
 
 function downloadSearchIndexJSON(callback) {
+    if (callback == null) callback = function () {};
     var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
     searchIndexFileName;
 
-    downloadOnce('searchIndex', fileWithPath, function (downloadObj) {
+    downloadOnce(fileWithPath, function (downloadObj) {
         try {
             if (downloadObj.runCount == 1) searchIndex = JSON.parse(downloadObj.data);
+            searchIndexDownloadStatus = 'complete'; // global
             return callback();
         }
         catch (err) {
@@ -1201,10 +1220,11 @@ function downloadSearchIndexJSON(callback) {
 }
 
 function download1MediaItem(minimalMediaItemObj, callback) {
+    if (callback == null) callback = function () {};
     var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/data-' +
     minimalMediaItemObj.id_ + '.json?hash=' + minimalMediaItemObj.jsonDataFileHash;
 
-    ajax(fileWithPath, function(json) {
+    ajax(fileWithPath, function (json) {
         try {
             var mediaData = JSON.parse(json);
             mediaData.id_ = getMediaID(mediaData);
@@ -1230,7 +1250,7 @@ function loadFullReview(e) {
     var mediaData = completeMediaData[mediaIndex];
     if (mediaData.hasOwnProperty('review')) {
         e.target.parentNode.innerHTML = formatReview(mediaData.review) +
-        getExternalLinkButton(mediaData);
+        getExternalLinkButtonHTML(mediaData);
         return;
     }
     ajax(
@@ -1241,7 +1261,7 @@ function loadFullReview(e) {
         try {
             var fullReviewText = JSON.parse(json).reviewFull;
             e.target.parentNode.innerHTML = formatReview(fullReviewText) +
-            getExternalLinkButton(mediaData);
+            getExternalLinkButtonHTML(mediaData);
             mediaData.review = fullReviewText;
         }
         catch (err) {

@@ -324,40 +324,39 @@ function ajax(url, callback) {
 // todo: check if this function is needed. maybe browsers are already smart enough to only do 1
 // call and use the first cached response?
 var downloadProperties = {};
-function downloadOnce(id_, url, callback) {
-    if (!downloadProperties.hasOwnProperty[id_]) downloadProperties[id_] = {
+function downloadOnce(url, callback) {
+    if (!downloadProperties.hasOwnProperty[url]) downloadProperties[url] = {
         setupCount: 0,
         runCount: 0,
         status_: 'not started',
         data: null
     };
-    if (downloadProperties[id_].status_ == 'complete') {
-        return triggerEvent(document, 'done-download-' + id_);
+    if (downloadProperties[url].status_ == 'complete') {
+        return triggerEvent(document, 'done-download-' + url);
     }
 
     // run all the different callbacks when the download finishes
     var newCallback = function() {
-        downloadProperties[id_].runCount++;
-        callback(downloadProperties[id_]);
+        downloadProperties[url].runCount++;
+        callback(downloadProperties[url]);
         if (
-            downloadProperties[id_].runCount <
-            downloadProperties[id_].setupCount
+            downloadProperties[url].runCount <
+            downloadProperties[url].setupCount
         ) return;
-        removeEvent(document, 'done-download-' + id_, newCallback);
-        downloadProperties[id_].setupCount = 0; // reset
-        downloadProperties[id_].runCount = 0; // reset
+        removeEvent(document, 'done-download-' + url, newCallback);
+        delete downloadProperties[url]; // clean up
     };
-    downloadFullListJSONSetupCount++;
-    addEvent(document, 'done-download-' + id_, newCallback);
+    downloadProperties[url].setupCount++;
+    addEvent(document, 'done-download-' + url, newCallback);
 
     // 1 attempt at a time
-    if (downloadProperties[id_].status_ == 'in progress') return;
+    if (downloadProperties[url].status_ == 'in progress') return;
 
-    downloadProperties[id_].status_ = 'in progress'; // lock
+    downloadProperties[url].status_ = 'in progress'; // lock
     ajax(url, function (data) {
-        downloadProperties[id_].data = data;
-        downloadProperties[id_].status_ = 'complete';
-        triggerEvent(document, 'done-download-' + id_);
+        downloadProperties[url].data = data;
+        downloadProperties[url].status_ = 'complete';
+        triggerEvent(document, 'done-download-' + url);
     });
 }
 
