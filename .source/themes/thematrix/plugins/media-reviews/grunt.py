@@ -282,6 +282,10 @@ def save_1_data_json(a_media, required_fields):
     json_data_file = "%s/%s-reviews/json/data-%s.json" % (
         content_path, media_type, a_media["id_"]
     )
+
+    # convert python naming format to javascript naming format
+    a_media["thumbnailHeight"] = a_media["thumb_height"]
+
     json_data_content = {
         k: v for (k, v) in a_media.iteritems() if (k in required_fields)
     }
@@ -294,7 +298,7 @@ def save_1_data_json(a_media, required_fields):
 def get_datafile_fields():
     required_fields = [
         "rating", "title", "spoilers", "reviewTitle", "reviewHash", "year",
-        "thumbnailHash"
+        "thumbnailHash", "thumbnailHeight"
     ]
     if (media_type == "movie"):
         required_fields.extend(["IMDBID"])
@@ -642,38 +646,41 @@ def resize_thumbnails(all_media_x):
         print_img_size_warning_message(
             original_width, original_height, a_media["title"]
         )
-        for img_size in ("thumb", "larger"):
+        for img_size_name in ("thumb", "larger"):
             # resize down to create a thumbnail or larger image
-            if img_size == "thumb":
+            if img_size_name == "thumb":
                 desired_width = desired_width_thumbnail
-            elif img_size == "larger":
+            elif img_size_name == "larger":
                 desired_width = desired_width_larger
             else:
                 raise ValueError("unknown img_size")
 
             a_media = calculate_new_img_sizes(
                 original_width, original_height, desired_width, a_media,
-                img_size
+                img_size_name
             )
-            save_resized_image(img_original, a_media, img_size)
+            save_resized_image(img_original, a_media, img_size_name)
 
     return all_media_x
 
 def calculate_new_img_sizes(
-    original_width, original_height, desired_width, a_media, what
+    original_width, original_height, desired_width, a_media, img_size_name
 ):
     width_percent = desired_width / float(original_width)
     desired_height = int(float(original_height) * float(width_percent))
-    a_media["%s_width" % what] = desired_width
-    a_media["%s_height" % what] = desired_height
+    a_media["%s_width" % img_size_name] = desired_width
+    a_media["%s_height" % img_size_name] = desired_height
     return a_media
 
-def save_resized_image(img, a_media, what):
+def save_resized_image(img, a_media, img_size_name):
     new_img = img.resize(
-        (a_media["%s_width" % what], a_media["%s_height" % what]),
+        (
+            a_media["%s_width" % img_size_name],
+            a_media["%s_height" % img_size_name]
+        ),
         PIL.Image.ANTIALIAS
     )
-    new_img.save(get_img_data(a_media["id_"], what)["on_filesystem"])
+    new_img.save(get_img_data(a_media["id_"], img_size_name)["on_filesystem"])
 
 def print_img_size_warning_message(original_width, original_height, title):
     if original_width >= desired_width_larger: # ok

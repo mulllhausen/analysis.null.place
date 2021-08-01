@@ -274,6 +274,16 @@ function setButtons(enable) {
     });
 }
 
+function setButtonLoading(setLoading, buttonEl) {
+    var spinnerHTML = '<span class="button-loading"></span> ';
+    buttonEl.innerHTML = (
+        setLoading ?
+        spinnerHTML + buttonEl.innerHTML :
+        buttonEl.innerHTML.replace(spinnerHTML, '')
+    );
+    return buttonEl;
+}
+
 // find needle in haystack - works for strings as well as arrays
 function inArray(needle, haystack) {
     // note: does not work with with NaN or ie < 9
@@ -316,13 +326,18 @@ function ajax(url, callback) {
         callback(this.responseText);
     });
     xhttp.open('GET', url, true); // async
+    xhttp.timeout = 5000; // ms
+    addEvent(xhttp, 'timeout', function () {
+        callback(null); // null = fail
+    });
+    addEvent(xhttp, 'error', function () {
+        callback(null); // null = fail
+    });
     xhttp.send();
 }
 
 // a download manager you can call as many times as you like for the same file,
 // but will only download the file once and then run all the callbacks
-// todo: check if this function is needed. maybe browsers are already smart enough to only do 1
-// call and use the first cached response?
 var downloadProperties = {};
 function downloadOnce(url, callback) {
     if (!downloadProperties.hasOwnProperty[url]) downloadProperties[url] = {

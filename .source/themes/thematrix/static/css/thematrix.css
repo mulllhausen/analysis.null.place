@@ -748,6 +748,28 @@ blockquote {
         transform: rotate(360deg);
     }
 }
+.button-loading {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    margin-bottom: -3px;
+    border: 2px solid #fff;/*white*/
+    border-radius: 1000px;/*any big number will do*/
+    -moz-animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+.button-loading:after {
+    content: " ";
+    background-color: #2c2c2c;/*button background color*/
+    position: absolute;
+    top: -2px;
+    width: 10%;
+    height: 3px;
+    left: 50%;
+    margin-left: -5%;
+}
 /* end css-only loader */
 
 /* begin comments section */

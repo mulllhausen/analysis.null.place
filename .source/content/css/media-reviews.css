@@ -79,12 +79,16 @@
 }
 
 .media img.thumbnail {
+    display: block;
     position: static;
     border: 1px solid #6a6a6a;/*light-grey*/
     border-radius: 4px;
     padding: 5px;
     background-color: black;
     width: 100px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
 }
 
 .media img.thumbnail:after {
@@ -97,6 +101,11 @@
 
 .media .review-text button {
     margin-top: 15px;
+}
+.media .review-download-error {
+    display: block;
+    color: red;
+    margin-top: 10px;
 }
 
 .media.movie .external-site img,
@@ -145,7 +154,8 @@
     font-weight: normal;
 }
 
-.media .review-explanation {
+.media .spoiler-alert,
+.media .review-download-error {
     font-size: 12px;
 }
 
