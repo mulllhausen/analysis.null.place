@@ -208,22 +208,27 @@ def get_media_type_caps():
 
 def get_id(a_media):
     if (media_type == "movie"):
-        # a movie's id is the alphanumeric title and year chars without
-        # spaces
-        id_ = "%s%s" % (a_media["title"], a_media["year"])
+        # a movie's id is the alphanumeric title and year chars
+        id_ = "%s %s" % (a_media["title"], a_media["year"])
     elif (media_type == "tv-series"):
-        # a tv series' id is the alphanumeric title, year and season without
-        # spaces
-        id_ = "%s%s%s" % (
+        # a tv series' id is the alphanumeric title, season (zero padded to 2
+        # digits) and year
+        id_ = "%s s%02d %s" % (
             a_media["title"], a_media["season"], a_media["year"]
         )
     elif (media_type == "book"):
         # a book's id is the alphanumeric author, title and year chars
-        # without spaces
-        id_ = "%s%s%s" % (
+        id_ = "%s %s %s" % (
             a_media["author"], a_media["title"], a_media["year"]
         )
-    return re.sub(r"[^a-z0-9]*", "", id_.lower())
+
+    # replace all whitespace with a dash
+    id_ = re.sub(r"\s+", "-", id_)
+
+    # remove any non-alphanumeric characters
+    id_ = re.sub(r"[^a-z0-9-]*", "", id_, flags = re.IGNORECASE)
+
+    return id_.lower()
 
 def get_img_data(media_id, state, get_hash = False):
     return_obj = { # init
@@ -613,7 +618,7 @@ def download_all(all_media_x):
 
         # save the thumbnail to the content (not output) dir so that QS_LINK can
         # read it and get its hash
-        img_original = get_img_data(a_media, "original")["on_filesystem"]
+        img_original = get_img_data(a_media["id_"], "original")["on_filesystem"]
         with open(img_original, "wb") as f:
             for data in response.iter_content(1024):
                 if not data:

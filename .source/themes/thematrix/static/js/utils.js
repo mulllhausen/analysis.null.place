@@ -97,6 +97,13 @@ function trimRight(str) {
     return str.replace(/[\s\uFEFF\xA0]+$/g, '');
 }
 
+function leftPad(strToPad, padToLen, padChar) {
+    strToPad = strToPad.toString();
+    if (strToPad.length >= padToLen) return strToPad;
+    if (padChar == null) padChar = '0';
+    return padChar.repeat(padToLen - strToPad.length) + strToPad;
+}
+
 function unixtime(date) {
     switch (typeof date) {
         case 'string': // eg 03 Jan 2009 18:15:05 GMT

@@ -1806,12 +1806,6 @@ function int2hex(intiger, leftPadLen) {
     return leftPad(hex, leftPadLen);
 }
 
-function leftPad(strToPad, padToLen, padChar) {
-    if (strToPad.length >= padToLen) return strToPad;
-    if (padChar == null) padChar = '0';
-    return padChar.repeat(padToLen - strToPad.length) + strToPad;
-}
-
 function toLittleEndian(hexStr) {
     if (hexStr.length <= 2) return hexStr;
     if (hexStr.length % 2 == 1) hexStr = '0' + hexStr;

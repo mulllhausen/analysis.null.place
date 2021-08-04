@@ -778,16 +778,20 @@ function getMediaID(mediaData) {
     var id = '';
     switch (siteGlobals.mediaType) {
         case 'book':
-            id = mediaData.author + mediaData.title + mediaData.year;
+            id = mediaData.author + ' ' + mediaData.title + ' ' + mediaData.year;
             break;
         case 'tv-series':
-            id = mediaData.title + mediaData.season + mediaData.year;
+            id = mediaData.title + ' s' + leftPad(mediaData.season, 2, '0') +
+            ' ' + mediaData.year;
             break;
         case 'movie':
-            id = mediaData.title + mediaData.year;
+            id = mediaData.title + ' ' + mediaData.year;
             break;
     }
-    return id.replace(/[^a-z0-9]*/gi, '').toLowerCase();
+    return id.
+    replace(/\s+/g,'-'). // replace all whitespace with a dash
+    replace(/[^a-z0-9-]*/gi, ''). // remove any non-alphanumeric characters
+    toLowerCase();
 }
 
 /*function mediaID2Index(id) {
