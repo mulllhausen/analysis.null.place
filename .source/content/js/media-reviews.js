@@ -41,7 +41,6 @@ numMediaFound = 0; // total count that match the search criteria
 numMediaDownloadFail = 0;
 nextMediaIndex = 0; // index of panel on the page, from 0 to filteredList.length - 1
 pageSize = 10; // load this many media at once in the infinite scroll page
-currentlySearching = false;
 
 addEvent(window, 'load', function () {
     resetSearchBox();
@@ -714,7 +713,7 @@ function renderMediaCount() {
         document.getElementById('numMediaShowing').innerHTML = getNumMediaShowing();
         document.getElementById('totalMediaFound').innerHTML = numMediaFound;
         document.getElementById('searchTypeDescription').innerHTML = (
-            currentlySearching ?
+            (searchText != '') ?
             'search results' :
             'total ' + easyPlural(siteGlobals.mediaType, 's')
         );
@@ -722,7 +721,6 @@ function renderMediaCount() {
 }
 
 function getRenderedTitle(mediaData) {
-    if (mediaData.hasOwnProperty('renderedTitle')) return mediaData.renderedTitle;
     var renderedTitle = mediaData.title;
     switch (siteGlobals.mediaType) {
         case 'book':
@@ -733,6 +731,8 @@ function getRenderedTitle(mediaData) {
             break;
     }
     renderedTitle += ' (' + mediaData.year + ')';
+    var searchTermsList = getSearchTermsList(searchText);
+    renderedTitle = underlineSearch(searchTermsList, renderedTitle);
     return renderedTitle;
 }
 
@@ -762,11 +762,12 @@ function getThumbnailBasename(mediaID, state) {
     }
 }
 
-function highlightSearch(searchTerms, mediaRenderedTitle) {
-    foreach(searchTerms, function (_, searchTerm) {
+function underlineSearch(searchTerms, mediaRenderedTitle) {
+    for (var i = 0; i < searchTerms.length; i++) {
+        var searchTerm = searchTerms[i];
         var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
         mediaRenderedTitle = mediaRenderedTitle.replace(regexPattern, '<u>$1</u>');
-    });
+    }
     return mediaRenderedTitle;
 }
 
@@ -888,8 +889,14 @@ function triggerSearch() {
     if (!anySearchChanges()) {
         loading('off');
         removeGlassCase('searchBox', true);
+        saveCurrentSearch(); // ready for comparison next time
         return;
     }
+
+    // backup the search early on to prevent accidental re-triggering due to
+    // left/right arrow navigation within the search box
+    saveCurrentSearch();
+
     clearRenderedMedia();
     loading('on');
     var first10Only = useFirst10();
@@ -912,7 +919,6 @@ function triggerSearch() {
 function getSearchValues() {
     searchText = trim(document.getElementById('search').value).toLowerCase();
     sortMode = document.getElementById('sortBy').value; // eg. highest-rating
-    currentlySearching = (searchText != '');
 }
 
 function anySearchChanges() {
@@ -920,6 +926,12 @@ function anySearchChanges() {
         (previousSearchText !== searchText) ||
         (previousSortMode !== sortMode)
     );
+}
+
+// backup the current search so we can see if there were any changes next time
+function saveCurrentSearch() {
+    previousSearchText = searchText;
+    previousSortMode = sortMode;
 }
 
 // note: when downloading only the first 10, do not also download the search
@@ -959,7 +971,7 @@ function downloadMediaLists(useFirst10_, callback) {
 
 function useFirst10() {
     if (sortMode != 'highest-rating') return false;
-    if (currentlySearching) return false;
+    if (searchText != '') return false;
     if (getNumMediaShowing() != 0) return false;
     return true;
 }
@@ -1133,6 +1145,8 @@ function mediaSortChanged() {
 function debounceMediaSearch(state) {
     // downloading the first page of search items takes a short while, so only
     // do this after the user has stopped typing
+    getSearchValues();
+    if (!anySearchChanges()) return;
     switch (state) {
         case 'atStart':
             scrollToElement(document.getElementById('searchBox'));
