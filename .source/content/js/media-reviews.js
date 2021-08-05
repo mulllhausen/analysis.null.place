@@ -39,7 +39,7 @@ filteredList = [];
 
 numMediaFound = 0; // total count that match the search criteria
 numMediaDownloadFail = 0;
-nextMediaIndex = 0;
+nextMediaIndex = 0; // index of panel on the page, from 0 to filteredList.length - 1
 pageSize = 10; // load this many media at once in the infinite scroll page
 currentlySearching = false;
 
@@ -53,17 +53,12 @@ addEvent(window, 'load', function () {
         debounce(debounceMediaSearch, 1000, 'both')
     );
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
+
+    //addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
 /*
     initMediaRendering();
     initMediaSearchList(initSearchResultIndexes);
     initCompleteMediaData(initSearchResultIndexes);
-    addEvent(
-        document.getElementById('search'),
-        'keyup',
-        debounce(debounceMediaSearch, 2000, 'both')
-    );
-    addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
-    addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
     addEvent(document.getElementById('reviewsArea'), 'click', linkTo1Media);
 */
     // scroll with debounce
@@ -80,6 +75,16 @@ addEvent(window, 'load', function () {
         ticking = true;
     });
 });
+
+// url manipulation and navigation
+
+function removeMediaIDFromUrl() {
+    if (typeof window.history.replaceState == 'function') {
+        var page = siteGlobals.mediaType + '-reviews/';
+        window.history.replaceState(null, '', generateCleanURL(page));
+    }
+    else window.location.hash = '';
+}
 
 // rendering
 
@@ -152,6 +157,7 @@ function finishedDownloading1MediaItem(
     if (numMediaDownloadedThisPage == thisPageSize) {
         unhideRenderedMedia();
         renderMediaCount();
+        showMediaCount(true);
         callback();
     }
     return {
@@ -168,12 +174,12 @@ function finishedDownloading1MediaItem(
 function render1MediaItemPlaceholder(mediaIndex) {
     document.getElementById('reviewsArea').innerHTML += '<div ' +
         ' class="media ' + siteGlobals.mediaType + ' hidden"' +
-        ' id="media-index-' + mediaIndex + '"' +
+        ' id="filter-index-' + mediaIndex + '"' +
     '></div>';
 }
 
 function removePlaceholder(mediaIndex) {
-    deleteElement(document.getElementById('media-index-' + mediaIndex));
+    deleteElement(document.getElementById('filter-index-' + mediaIndex));
 }
 
 function unhideRenderedMedia() {
@@ -186,7 +192,7 @@ function unhideRenderedMedia() {
 }
 
 function fillRender1MediaItem(mediaIndex, mediaData) {
-    document.getElementById('media-index-' + mediaIndex).innerHTML =
+    document.getElementById('filter-index-' + mediaIndex).innerHTML =
     get1MediaHTML(mediaData);
 }
 
@@ -200,7 +206,7 @@ function loadFullReview(e) {
     setButtonLoading(true, e.target);
 
     var mediaEl = e.target.up(2);
-    var mediaIndex = parseInt(mediaEl.id.replace('media-index-', ''));
+    var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
     var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
     linkToSelf(mediaEl, minimal1MediaObj.id_);
     download1MediaReview(minimal1MediaObj, function (status, fullReviewText) {
@@ -228,14 +234,6 @@ function loadFullReview(e) {
         mediaEl.querySelector('.review-text').innerHTML = newContent;
         setButtonLoading(false, e.target);
     });
-}
-
-function removeMediaIDFromUrl() {
-    if (typeof window.history.replaceState == 'function') {
-        var page = siteGlobals.mediaType + '-reviews/';
-        window.history.replaceState(null, '', generateCleanURL(page));
-    }
-    else window.location.hash = '';
 }
 
 /*function initMediaRendering() {
@@ -699,6 +697,13 @@ function positionMediaCountPanel(mode) {
     currentMediaCountPanelPosition = mode; // update global
 }
 
+function showMediaCount(status) {
+    // use 'visibility' here to hide the number of search results, but not
+    // collapse the element
+    var visibility = status ? 'visible' : 'hidden';
+    document.querySelector('.media-count-area').style.visibility = visibility;
+}
+
 function renderMediaCount() {
     if (filteredList.length == 0) {
         document.getElementById('xOfYMediaCount').style.display = 'none';
@@ -766,8 +771,15 @@ function highlightSearch(searchTerms, mediaRenderedTitle) {
 }
 
 function get1MediaIDandHash(mediaItemIndex) {
-    var basic1MediaData = fullList[mediaItemIndex];
-    if (basic1MediaData == null) return null;
+    var basic1MediaData = null; // init
+    if (filteredList == 'all') {
+        basic1MediaData = fullList[mediaItemIndex];
+    } else if (mediaItemIndex < filteredList.length) {
+        // if filteredList[mediaItemIndex] is not in fullList then
+        // basic1MediaData will be undefined
+        basic1MediaData = fullList[filteredList[mediaItemIndex]];
+    }
+    if (basic1MediaData == null) return null; // gone off the end of fullList
     return {
         id_: basic1MediaData[0],
         jsonDataFileHash: basic1MediaData[1]
@@ -947,6 +959,7 @@ function downloadMediaLists(useFirst10_, callback) {
 
 function useFirst10() {
     if (sortMode != 'highest-rating') return false;
+    if (currentlySearching) return false;
     if (getNumMediaShowing() != 0) return false;
     return true;
 }
@@ -997,8 +1010,7 @@ function searchMediaTitles(searchTermsList) {
         numMediaFound = siteGlobals.totalMediaCount;
         return 'all'; // nothing to filter
     }
-
-    var searchIndexes = [];
+    var foundResultIndexes = [];
 
     // use a regex to see if the search terms are in the search item
     // stackoverflow.com/a/54417192, regex101.com/r/yVXwk0/1
@@ -1006,16 +1018,16 @@ function searchMediaTitles(searchTermsList) {
     var regexString = '^(?=.*' + searchTermsList.join(')(?=.*') + ')';
     var regexPattern = new RegExp(regexString, 'i');
 
-    for (var i = 0; i < searchIndexes.length; i++) {
-        if (!searchIndexes[i].test(regexPattern)) continue;
-        searchIndexes.push(i);
+    for (var i = 0; i < searchIndex.length; i++) {
+        if (!regexPattern.test(searchIndex[i])) continue;
+        foundResultIndexes.push(i);
     }
-    numMediaFound = searchIndexes.length;
+    numMediaFound = foundResultIndexes.length;
 
     // all items contained all search terms
-    if (searchIndexes.length == searchIndex.length) searchIndexes = 'all';
+    if (foundResultIndexes.length == searchIndex.length) foundResultIndexes = 'all';
 
-    return searchIndexes;
+    return foundResultIndexes;
 }
 
 function defunct__searchMediaTitles(prependMediaIndex, searchTerms) {
@@ -1077,7 +1089,6 @@ function initMediaSearchList(callback) {
         }
     });
 }
-*/
 
 function initSearchResultIndexes() {
     // wait for both lists to be downloaded before proceeding
@@ -1112,6 +1123,7 @@ function generateSortedData(prependMediaIndex, searchTerms) {
     }
     return mediaSearchResults;
 }
+*/
 
 function mediaSortChanged() {
     debounceMediaSearch('atStart');
@@ -1119,29 +1131,19 @@ function mediaSortChanged() {
 }
 
 function debounceMediaSearch(state) {
-    // archiving the in-feed ads takes ages for browsers, so only do this and
-    // update the search-results after the user has stopped typing
+    // downloading the first page of search items takes a short while, so only
+    // do this after the user has stopped typing
     switch (state) {
         case 'atStart':
             scrollToElement(document.getElementById('searchBox'));
             removeMediaIDFromUrl();
             hideAllSkyscraperAds();
-            document.getElementById('reviewsArea').style.display = 'none';
-
-            // hide the number of search results, but do not collapse the element
-            document.querySelector('.media-count-area').style.visibility = 'hidden';
-
+            clearRenderedMedia();
+            showMediaCount(false);
             loading('on');
             break;
         case 'atEnd':
-            document.getElementById('reviewsArea').style.display = 'block';
-
-            // show the number of search results
-            document.querySelector('.media-count-area').style.visibility = 'visible';
-
-            //mediaSearchChanged();
             triggerSearch();
-            loading('off');
             break;
     }
 }
