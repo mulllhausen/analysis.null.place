@@ -11,10 +11,18 @@
 
 // globals
 
-searchText = '';
-sortMode = ''; // value of the search box dropdown (eg. 'highest-first')
-previousSearchText = null; // always init to null
-previousSortMode = null; // always init to null
+searchText = {
+    current: '',
+    previous: null, // always init to null so we find a diff immediately
+    debounceCurrent: '',
+    debouncePrevious: '' // for debouncing we do not want an immediate diff
+};
+sortMode = {
+    current: '', // value of the search box dropdown (eg. 'highest-first')
+    previous: null, // always init to null so we find a diff immediately
+    debounceCurrent: '',
+    debouncePrevious: '' // for debouncing we do not want an immediate diff
+};
 
 // the current search index as determined by search order. populated with an
 // entire json file. eg. search-index-highest-rating.json
@@ -48,8 +56,8 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('sortBy'), 'change', triggerSearch);
     addEvent(
         document.getElementById('search'),
-        'keyup',
-        debounce(debounceMediaSearch, 1000, 'both')
+        'keyup', // don't use 'change' since it only fires onblur
+        debounce(debounceMediaSearch, 1000, 'both', extraDebounceChecks)
     );
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
 
@@ -61,16 +69,14 @@ addEvent(window, 'load', function () {
     addEvent(document.getElementById('reviewsArea'), 'click', linkTo1Media);
 */
     // scroll with debounce
-    var lastKnownScrollPosition = 0;
     var ticking = false;
     addEvent(window, 'scroll', function (e) {
-        lastKnownScrollPosition = window.scrollY;
         if (ticking) return;
         setTimeout(function () {
+            infiniteLoader(); // get the loader going asap
             positionMediaCounter();
-            infiniteLoader();
             ticking = false;
-        }, 200); // check 5 times per second
+        }, 333); // check 3 times per second
         ticking = true;
     });
 });
@@ -100,6 +106,18 @@ function clearRenderedMedia() {
     nextMediaIndex = 0;
 }
 
+function showRenderedMedia(showHide) {
+    if (showHide) { // show
+        document.getElementById('reviewsArea').style.display = 'block';
+        // skyscraper ads are added back automatically
+        showMediaCount(true);
+    } else { // hide
+        document.getElementById('reviewsArea').style.display = 'none';
+        hideAllSkyscraperAds();
+        showMediaCount(false);
+    }
+}
+
 // render a page (eg. 10 items). wait for all to finish downloading before
 // making any visible, and hide any that fail
 function renderNextPage(callback) {
@@ -109,11 +127,14 @@ function renderNextPage(callback) {
     for (var i = 0; i < pageSize; i++, nextMediaIndex++) {
         var minimal1MediaObj = get1MediaIDandHash(nextMediaIndex);
         if (minimal1MediaObj == null) {
-            if (i == 0) return callback();
+            if (i == 0) { // there were no items for this page
+                finishedDownloading1Page();
+                return callback();
+            }
             // note: if we get here it will always be before the first time
             // download1MediaItem()'s callback runs. not because downloading is
             // slow, but because we get here synchronously first.
-            thisPageSize = i; // we are already 1 past the last item
+            thisPageSize = i; // we are already 1 past the last existing item
             break; // gone past the last item
         }
 
@@ -154,9 +175,7 @@ function finishedDownloading1MediaItem(
         removePlaceholder(mediaIndex);
     }
     if (numMediaDownloadedThisPage == thisPageSize) {
-        unhideRenderedMedia();
-        renderMediaCount();
-        showMediaCount(true);
+        finishedDownloading1Page(mediaIndex);
         callback();
     }
     return {
@@ -169,6 +188,11 @@ function finishedDownloading1MediaItem(
     };
 }
 
+function finishedDownloading1Page(mediaIndex) {
+    unhideRenderedMedia();
+    renderMediaCount();
+    showMediaCount(true);
+}
 
 function render1MediaItemPlaceholder(mediaIndex) {
     document.getElementById('reviewsArea').innerHTML += '<div ' +
@@ -507,16 +531,20 @@ function linkToSelf(mediaEl, mediaID) {
     return false; // prevent bubble up
 }
 
-var loadingStatus = 'on';
+// todo: always keep the loader on until the very end
+loadingStatus = 'on';
+var loaderEl = document.getElementById('mediaLoaderArea');
 function loading(status) {
     switch (status) {
         case 'on':
-            document.getElementById('mediaLoaderArea').style.display = 'block';
+            loaderEl.style.display = 'block';
             loadingStatus = 'on';
+            console.log('loading on');
             break;
         case 'off':
-            document.getElementById('mediaLoaderArea').style.display = 'none';
+            loaderEl.style.display = 'none';
             loadingStatus = 'off';
+            console.log('loading off');
             break;
     }
 }
@@ -713,7 +741,7 @@ function renderMediaCount() {
         document.getElementById('numMediaShowing').innerHTML = getNumMediaShowing();
         document.getElementById('totalMediaFound').innerHTML = numMediaFound;
         document.getElementById('searchTypeDescription').innerHTML = (
-            (searchText != '') ?
+            (searchText.current != '') ?
             'search results' :
             'total ' + easyPlural(siteGlobals.mediaType, 's')
         );
@@ -731,7 +759,7 @@ function getRenderedTitle(mediaData) {
             break;
     }
     renderedTitle += ' (' + mediaData.year + ')';
-    var searchTermsList = getSearchTermsList(searchText);
+    var searchTermsList = getSearchTermsList(searchText.current);
     renderedTitle = underlineSearch(searchTermsList, renderedTitle);
     return renderedTitle;
 }
@@ -823,17 +851,17 @@ function positionMediaCounter() {
     );
 }
 
+footerEl = document.getElementsByTagName('footer')[0];
 function infiniteLoader() {
     if (loadingStatus == 'on') return;
     if (areAllMediaItemsRendered()) return;
 
-    var footerEl = document.getElementsByTagName('footer')[0];
     if (!isScrolledTo(footerEl, 'view', 'partially')) return;
     loading('on');
     var useFirst10_ = false; // first get the full list
     downloadMediaLists(useFirst10_, function () {
         renderNextPage(function () {
-            loading('off');
+            /*if (areAllMediaItemsRendered())*/ loading('off'); // at end of page
         });
     });
 }
@@ -889,7 +917,6 @@ function triggerSearch() {
     if (!anySearchChanges()) {
         loading('off');
         removeGlassCase('searchBox', true);
-        saveCurrentSearch(); // ready for comparison next time
         return;
     }
 
@@ -903,7 +930,7 @@ function triggerSearch() {
     downloadMediaLists(first10Only, function () {
         updateFilteredListUsingSearch();
         renderNextPage(function () { // will be the first page, due to globals
-            loading('off');
+            /*if (areAllMediaItemsRendered())*/ loading('off'); // at end of page
             removeGlassCase('searchBox', true);
 
             // if we previously only downloaded the first 10 media items then
@@ -916,22 +943,27 @@ function triggerSearch() {
     });
 }
 
-function getSearchValues() {
-    searchText = trim(document.getElementById('search').value).toLowerCase();
-    sortMode = document.getElementById('sortBy').value; // eg. highest-rating
+function getSearchValues(prefix) {
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
+    searchText[current] = trim(document.getElementById('search').value).toLowerCase();
+    sortMode[current] = document.getElementById('sortBy').value; // eg. highest-rating
 }
 
-function anySearchChanges() {
+function anySearchChanges(prefix) {
+    var previous = (prefix == null) ? 'previous' : prefix + 'Previous';
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
     return (
-        (previousSearchText !== searchText) ||
-        (previousSortMode !== sortMode)
+        (searchText[previous] !== searchText[current]) ||
+        (sortMode[previous] !== sortMode[current])
     );
 }
 
 // backup the current search so we can see if there were any changes next time
-function saveCurrentSearch() {
-    previousSearchText = searchText;
-    previousSortMode = sortMode;
+function saveCurrentSearch(prefix) {
+    var previous = (prefix == null) ? 'previous' : prefix + 'Previous';
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
+    searchText[previous] = searchText[current];
+    sortMode[previous] = sortMode[current];
 }
 
 // note: when downloading only the first 10, do not also download the search
@@ -945,7 +977,7 @@ function downloadMediaLists(useFirst10_, callback) {
     if (fullListIsDownloaded && searchIndexIsDownloaded) return callback();
 
     if (!fullListIsDownloaded) {
-        fullListFileName = getFileJSONName('list', sortMode, useFirst10_);
+        fullListFileName = getFileJSONName('list', sortMode.current, useFirst10_);
         fullListDownloadStatus = 'not started'; // unlock again
         downloadFullListJSON(function () {
             // only using first 10? then we don't need the search list
@@ -958,7 +990,7 @@ function downloadMediaLists(useFirst10_, callback) {
     }
     if (!searchIndexIsDownloaded) {
         searchIndexFileName =
-        getFileJSONName('search-index', sortMode, useFirst10_);
+        getFileJSONName('search-index', sortMode.current, useFirst10_);
 
         searchIndexDownloadStatus = 'not started'; // unlock again
         downloadSearchIndexJSON(function () {
@@ -970,15 +1002,15 @@ function downloadMediaLists(useFirst10_, callback) {
 }
 
 function useFirst10() {
-    if (sortMode != 'highest-rating') return false;
-    if (searchText != '') return false;
+    if (sortMode.current != 'highest-rating') return false;
+    if (searchText.current != '') return false;
     if (getNumMediaShowing() != 0) return false;
     return true;
 }
 
 function isFullListDownloaded(useFirst10_) {
     var requiredFullListFileName =
-    getFileJSONName('list', sortMode, useFirst10_);
+    getFileJSONName('list', sortMode.current, useFirst10_);
 
     return (
         (fullListFileName == requiredFullListFileName) &&
@@ -987,22 +1019,24 @@ function isFullListDownloaded(useFirst10_) {
 }
 
 function isSearchIndexDownloaded() {
-    var requiredSearchIndexFileName = getFileJSONName('search-index', sortMode);
+    var requiredSearchIndexFileName =
+    getFileJSONName('search-index', sortMode.current);
+
     return (
         (searchIndexFileName == requiredSearchIndexFileName) &&
         (searchIndexDownloadStatus == 'complete')
     );
 }
 
-function getFileJSONName(listType, sortMode, useFirst10_) {
+function getFileJSONName(listType, sortMode_, useFirst10_) {
     useFirst10_ = (useFirst10_ == true);
-    var basename = listType + '-' + sortMode + (useFirst10_ ? '-first-10' : '');
+    var basename = listType + '-' + sortMode_ + (useFirst10_ ? '-first-10' : '');
     var hash = siteGlobals.mediaFileHashes[basename];
     return basename + '.json?hash=' + hash;
 }
 
 function updateFilteredListUsingSearch() {
-    var searchTermsList = getSearchTermsList(searchText);
+    var searchTermsList = getSearchTermsList(searchText.current);
 
     // indexes (eg. [0,7]) from searchIndex
     filteredList = searchMediaTitles(searchTermsList);
@@ -1135,28 +1169,54 @@ function generateSortedData(prependMediaIndex, searchTerms) {
     }
     return mediaSearchResults;
 }
-*/
 
 function mediaSortChanged() {
     debounceMediaSearch('atStart');
     debounceMediaSearch('atEnd');
+}*/
+
+function extraDebounceChecks(state) {
+    // we are either 'atStart' or 'atEnd'
+    var extraData = {};
+    var searchPrefix = 'debounce';
+    getSearchValues(searchPrefix);
+    extraData.anySearchChanges = anySearchChanges(searchPrefix);
+    saveCurrentSearch(searchPrefix);
+    extraData.extendTimeout = extraData.anySearchChanges;
+    return extraData;
 }
 
-function debounceMediaSearch(state) {
+function debounceMediaSearch(state, extraData) {
     // downloading the first page of search items takes a short while, so only
     // do this after the user has stopped typing
-    getSearchValues();
-    if (!anySearchChanges()) return;
     switch (state) {
         case 'atStart':
+            console.log('atStart any changes? ' + extraData.anySearchChanges + '. search text: "' + searchText.debounceCurrent + '"');
+            // if there are no changes then do not show the loading spinner
+            if (!extraData.anySearchChanges) return;
+
+            showRenderedMedia(false);
             scrollToElement(document.getElementById('searchBox'));
-            removeMediaIDFromUrl();
-            hideAllSkyscraperAds();
-            clearRenderedMedia();
-            showMediaCount(false);
             loading('on');
             break;
+        case 'atMiddle':
+            console.log('atMiddle any changes? ' + extraData.anySearchChanges + '. search text: "' + searchText.debounceCurrent + '"');
+            break;
         case 'atEnd':
+            console.log('atEnd');
+            getSearchValues();
+            if (!anySearchChanges()) {
+                // note: we are comparing the changes from the previous search
+                // to now - not the changes from the previous debounce to now.
+                // it is possible there were changes during the debounce stage
+                // but they were erased
+                showRenderedMedia(true);
+                loading('off');
+                return;
+            }
+            removeMediaIDFromUrl();
+            getSearchValues('debounce'); // init for next debounce
+            saveCurrentSearch('debounce'); // init for next debounce
             triggerSearch();
             break;
     }

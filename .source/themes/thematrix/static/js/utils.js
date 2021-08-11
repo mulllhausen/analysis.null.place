@@ -602,41 +602,53 @@ function Retrieve(k) {
     }
 }
 
-// - when debounceType = 'start' - trigger once on the first event and only
-// allow again after the wait period ends
-// - when debounceType = 'end' - trigger after the wait period
-// - when debounceType = 'both' - trigger on the first event and at the end of
-// the wait period
-function debounce(func, wait, debounceType) {
+// - when debounceType = 'start' - callback once on the first event with state
+// 'atStart'
+// - when debounceType = 'end' - callback after the wait period with state 'atEnd'
+// - when debounceType = 'both' - callback for each state: 'atStart',
+// 'atMiddle' (triggered on every event between 'start' and 'end') and 'atEnd'
+function debounce(callback, wait, debounceType, extraChecks) {
     // put this function within an event handler. it will be called immediately
     // from within the event handler to initialise a debounce event function
-    var timeout;
-    return function() { // called every time the event fires
-        //var context = this, args = arguments; // note: event = args[0]
+    var timeoutID = null;
+    return function() {
+        // called with the same debounceType every time the event fires
+
         var later = function() {
-            timeout = null;
+            timeoutID = null;
             switch (debounceType) {
-                case 'start':
-                    break;
                 case 'end':
                 case 'both':
-                    func('atEnd');//func.apply(context, args);
+                    // only run the callback if 'end' or 'both' registered
+                    callback('atEnd');
                     break;
             }
         };
-        var callNow;
-        switch (debounceType) {
+        var callbackNow;
+        var state = (timeoutID == null) ? 'atStart' : 'atMiddle';
+console.log('timeoutID:' + timeoutID);
+        switch (debounceType) { // the registered debounce type
             case 'start':
-            case 'both':
-                callNow = !timeout;
+                if (state == 'atStart') callbackNow = true;
+                break;
+            case 'both': // start, middle & end
+                callbackNow = true;
                 break;
             case 'end':
-                callNow = false;
+                // if only registered for the end debounce type then do not
+                // callback now but do extend the timeout
+                callbackNow = false;
                 break;
         }
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func('atStart');//func.apply(context, args);
+        var extraData = {
+            extendTimeout: true
+        };
+        if (extraChecks != null) extraData = extraChecks();
+        if (extraData.extendTimeout) {
+            clearTimeout(timeoutID);
+            timeoutID = setTimeout(later, wait);
+        }
+        if (callbackNow) callback(state, extraData);
     };
 }
 
