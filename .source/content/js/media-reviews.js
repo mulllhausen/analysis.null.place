@@ -532,19 +532,27 @@ function linkToSelf(mediaEl, mediaID) {
 }
 
 // todo: always keep the loader on until the very end
-loadingStatus = 'on';
+loadingStatus = {
+    display: 'on',
+    faux: 'on'
+};
 var loaderEl = document.getElementById('mediaLoaderArea');
-function loading(status) {
+function loading(status, faux) {
+    // "faux loading" is just a state machine that keeps track of whether or not
+    // content is loading - it does not affect the display.
+    faux = (faux == true); // explicit
+
+    if (faux) return loadingStatus.faux = status;
+
+    // display ...
+    loadingStatus.faux = status;
+    loadingStatus.display = status;
     switch (status) {
         case 'on':
             loaderEl.style.display = 'block';
-            loadingStatus = 'on';
-            console.log('loading on');
             break;
         case 'off':
             loaderEl.style.display = 'none';
-            loadingStatus = 'off';
-            console.log('loading off');
             break;
     }
 }
@@ -853,15 +861,17 @@ function positionMediaCounter() {
 
 footerEl = document.getElementsByTagName('footer')[0];
 function infiniteLoader() {
-    if (loadingStatus == 'on') return;
+    if (loadingStatus.faux == 'on') return;
     if (areAllMediaItemsRendered()) return;
 
     if (!isScrolledTo(footerEl, 'view', 'partially')) return;
-    loading('on');
+    loading('on', true); // faux
     var useFirst10_ = false; // first get the full list
     downloadMediaLists(useFirst10_, function () {
         renderNextPage(function () {
-            /*if (areAllMediaItemsRendered())*/ loading('off'); // at end of page
+            var hideFromDisplay = areAllMediaItemsRendered();
+            var faux = !hideFromDisplay;
+            loading('off', faux);
         });
     });
 }
@@ -915,7 +925,7 @@ function getNumMediaShowing() {
 function triggerSearch() {
     getSearchValues();
     if (!anySearchChanges()) {
-        loading('off');
+        loading('off', true); // faux
         removeGlassCase('searchBox', true);
         return;
     }
@@ -925,12 +935,14 @@ function triggerSearch() {
 
     clearRenderedMedia();
     showRenderedMedia(true); // if previously hidden (eg. during search debounce)
-    loading('on');
+    loading('on'); // faux & display
     var first10Only = useFirst10();
     downloadMediaLists(first10Only, function () {
         updateFilteredListUsingSearch();
         renderNextPage(function () { // will be the first page, due to globals
-            /*if (areAllMediaItemsRendered())*/ loading('off'); // at end of page
+            var hideFromDisplay = areAllMediaItemsRendered();
+            var faux = !hideFromDisplay;
+            loading('off', faux);
             removeGlassCase('searchBox', true);
 
             // if we previously only downloaded the first 10 media items then
@@ -1196,7 +1208,7 @@ function debounceMediaSearch(state, extraData) {
 
             showRenderedMedia(false);
             scrollToElement(document.getElementById('searchBox'));
-            loading('on');
+            loading('on', true); // faux
             break;
         case 'atMiddle':
             break;
@@ -1208,7 +1220,7 @@ function debounceMediaSearch(state, extraData) {
                 // it is possible there were changes during the debounce stage
                 // but they were erased
                 showRenderedMedia(true);
-                loading('off');
+                loading('off', true); // faux
                 return;
             }
             removeMediaIDFromUrl();
