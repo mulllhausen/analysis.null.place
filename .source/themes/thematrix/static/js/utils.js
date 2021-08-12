@@ -626,7 +626,6 @@ function debounce(callback, wait, debounceType, extraChecks) {
         };
         var callbackNow;
         var state = (timeoutID == null) ? 'atStart' : 'atMiddle';
-console.log('timeoutID:' + timeoutID);
         switch (debounceType) { // the registered debounce type
             case 'start':
                 if (state == 'atStart') callbackNow = true;
@@ -643,7 +642,7 @@ console.log('timeoutID:' + timeoutID);
         var extraData = {
             extendTimeout: true
         };
-        if (extraChecks != null) extraData = extraChecks();
+        if (extraChecks != null) extraData = extraChecks(state);
         if (extraData.extendTimeout) {
             clearTimeout(timeoutID);
             timeoutID = setTimeout(later, wait);

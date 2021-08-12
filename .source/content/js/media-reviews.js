@@ -20,8 +20,8 @@ searchText = {
 sortMode = {
     current: '', // value of the search box dropdown (eg. 'highest-first')
     previous: null, // always init to null so we find a diff immediately
-    debounceCurrent: '',
-    debouncePrevious: '' // for debouncing we do not want an immediate diff
+    debounceCurrent: 'highest-rating',
+    debouncePrevious: 'highest-rating' // for debouncing - no immediate diff
 };
 
 // the current search index as determined by search order. populated with an
@@ -919,12 +919,12 @@ function triggerSearch() {
         removeGlassCase('searchBox', true);
         return;
     }
-
     // backup the search early on to prevent accidental re-triggering due to
     // left/right arrow navigation within the search box
     saveCurrentSearch();
 
     clearRenderedMedia();
+    showRenderedMedia(true); // if previously hidden (eg. during search debounce)
     loading('on');
     var first10Only = useFirst10();
     downloadMediaLists(first10Only, function () {
@@ -1176,7 +1176,7 @@ function mediaSortChanged() {
 }*/
 
 function extraDebounceChecks(state) {
-    // we are either 'atStart' or 'atEnd'
+    // we are either 'atStart' or 'atMiddle'
     var extraData = {};
     var searchPrefix = 'debounce';
     getSearchValues(searchPrefix);
@@ -1191,7 +1191,6 @@ function debounceMediaSearch(state, extraData) {
     // do this after the user has stopped typing
     switch (state) {
         case 'atStart':
-            console.log('atStart any changes? ' + extraData.anySearchChanges + '. search text: "' + searchText.debounceCurrent + '"');
             // if there are no changes then do not show the loading spinner
             if (!extraData.anySearchChanges) return;
 
@@ -1200,10 +1199,8 @@ function debounceMediaSearch(state, extraData) {
             loading('on');
             break;
         case 'atMiddle':
-            console.log('atMiddle any changes? ' + extraData.anySearchChanges + '. search text: "' + searchText.debounceCurrent + '"');
             break;
         case 'atEnd':
-            console.log('atEnd');
             getSearchValues();
             if (!anySearchChanges()) {
                 // note: we are comparing the changes from the previous search
