@@ -331,10 +331,10 @@ def get_sort_params(sort_mode):
         reverse = True
     elif (sort_mode == "title-a-z"):
         key = lambda x: x["title"]
-        reverse = True
+        reverse = False
     elif (sort_mode == "title-z-a"):
         key = lambda x: x["title"]
-        reverse = False
+        reverse = True
 
     return {
         "key": key,
