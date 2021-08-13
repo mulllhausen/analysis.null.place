@@ -53,16 +53,21 @@ pageSize = 10; // load this many media at once in the infinite scroll page
 addEvent(window, 'load', function () {
     resetSearchBox();
     triggerSearch();
-    addEvent(document.getElementById('sortBy'), 'change', triggerSearch);
-    addEvent(
-        document.getElementById('search'),
-        'keyup', // don't use 'change' since it only fires onblur
-        debounce(debounceMediaSearch, 1000, 'both', extraDebounceChecks)
-    );
-    addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
 
-    //addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
+    var debounceSearchSetup = debounce(
+        debounceSearch, 1000, 'both', extraDebounceChecks
+    );
+    // use 'keyup', not 'change' since 'change' only fires onblur
+    addEvent(document.getElementById('search'), 'keyup', debounceSearchSetup);
+
+    // either typing in the search input, or selecting the sort order from the
+    // dropdown will do a debounce before searching. this way neither cancels
+    // out the other
+    addEvent(document.getElementById('sortBy'), 'change', debounceSearchSetup);
+
+    addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
 /*
+    addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
     initMediaRendering();
     initMediaSearchList(initSearchResultIndexes);
     initCompleteMediaData(initSearchResultIndexes);
@@ -189,6 +194,7 @@ function finishedDownloading1MediaItem(
 }
 
 function finishedDownloading1Page(mediaIndex) {
+    showRenderedMedia(true); // if previously hidden (eg. during search debounce)
     unhideRenderedMedia();
     renderMediaCount();
     showMediaCount(true);
@@ -934,7 +940,6 @@ function triggerSearch() {
     saveCurrentSearch();
 
     clearRenderedMedia();
-    showRenderedMedia(true); // if previously hidden (eg. during search debounce)
     loading('on'); // faux & display
     var first10Only = useFirst10();
     downloadMediaLists(first10Only, function () {
@@ -1183,8 +1188,8 @@ function generateSortedData(prependMediaIndex, searchTerms) {
 }
 
 function mediaSortChanged() {
-    debounceMediaSearch('atStart');
-    debounceMediaSearch('atEnd');
+    debounceSearch('atStart');
+    debounceSearch('atEnd');
 }*/
 
 function extraDebounceChecks(state) {
@@ -1198,7 +1203,7 @@ function extraDebounceChecks(state) {
     return extraData;
 }
 
-function debounceMediaSearch(state, extraData) {
+function debounceSearch(state, extraData) {
     // downloading the first page of search items takes a short while, so only
     // do this after the user has stopped typing
     switch (state) {
