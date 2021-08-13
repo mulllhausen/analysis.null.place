@@ -13,63 +13,6 @@
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for movies."/>
     <meta name="jsons" content="{{ MEDIA_REVIEWS.movie.preloads.json | join(',') }}"/>
 </head>
-<body>
-{% from 'form_container.html' import form_container with context %}
-<p>As with <a href="{{ SITEURL }}/tv-series-reviews/">tv-series</a> and
-<a href="{{ SITEURL }}/book-reviews/">books</a>, I watch so many movies that I
-find myself forgetting what a given movie was about, whether I liked it or not,
-and even whether I have already watched it. So I have made this page to keep
-track of the movies I watch - good and bad. Maybe you will also discover some
-good movies here too, or learn what to avoid, if you have similar tastes to me.</p>
-{{ form_container('searchBox', 'start', None, False) }}
-    <div class="left">
-        <label for="search" class="for-search-box">search</label>
-        <br>
-        <input id="search" type="text" placeholder="movie title or year" disabled>
-    </div>
-    <div class="left">
-        <label for="sortBy" class="for-sort-dropdown">sort by</label>
-        <br>
-        <select id="sortBy" disabled>
-            <option value="highest-rating">highest rating</option>
-            <option value="lowest-rating">lowest rating</option>
-            <option value="newest">newest reviews</option>
-            <option value="oldest">oldest reviews</option>
-            <option value="title-a-z">title ascending</option>
-            <option value="title-z-a">title descending</option>
-        </select>
-    </div>
-{{ form_container('searchBox', 'end') }}
-
-<div class="media-count-area">
-    <div id="mediaCountPanel">
-        <span id="xOfYMediaCount">
-            showing <span id="numMediaShowing">10</span> of
-            <span id="totalMediaFound">{{ MEDIA_REVIEWS.movie.total_media_count }}</span>
-            <span id="searchTypeDescription">total movies</span>
-        </span>
-        <span id="noMediaCount">no movies found</span>
-    </div>
-</div>
-
-<div id="reviewsArea" class="reviews-area"></div>
-
-<div id="mediaLoaderArea" class="media-loader-area">
-    <div class="media-loader-inner">
-        <div class="loader"></div>
-        <div class="loading-text">loading<br>movies</div>
-    </div>
-</div>
-<script>
-    siteGlobals.mediaType = 'movie';
-    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
-    siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS.movie.file_hashes | tojson }};
-    siteGlobals.totalMediaCount = {{ MEDIA_REVIEWS.movie.total_media_count }};
-{#
-    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/movie-reviews/json/search-index.json'] }}';
-    siteGlobals.mediaListJSON = '{{ QS_LINK['/movie-reviews/json/list.json'] }}';
-    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/movie-reviews/json/init-list.json'] }}';
-#}
-</script>
-</body>
+{%- from 'media_body.html' import media_body with context -%}
+{{ media_body(MEDIA_REVIEWS.movie) }}
 </html>

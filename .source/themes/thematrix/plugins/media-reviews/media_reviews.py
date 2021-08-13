@@ -57,11 +57,9 @@ def media_reviews(pelican_obj):
         grunt.media_type = media_type
         required_fields = grunt.get_validation_fields()
         grunt.check_media_type()
-        grunt.update_globals()
-        media_data = { # reset the dict that stores all data for this media type
-            "file_hashes": {},
-            "preloads": {}
-        }
+
+        # reset the dict that stores all data for this media type
+        media_data = grunt.update_globals()
 
         # 1. Validate that each item has the required fields (these are user-
         # created so they may have forgotten a field).
@@ -132,37 +130,6 @@ def media_reviews(pelican_obj):
         # 10. Prepare the data for article <media>-reviews/index.html pages.
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = \
         grunt.prepare_landing_page_data(all_media_x, media_data)
-
-        # create <media>-reviews/json/list.json and
-        # <media>-reviews/json/review-<id>.json
-        # put reviews in their own file, so as to keep list.json from being too
-        # large
-        #grunt.update_meta_jsons()
-        #all_media_x = grunt.save_list_and_individual_review_jsons(all_media_x)
-
-        # create <media>-reviews/json/init-list.json
-        # this is just the first 10 <media>s, sorted by max rating, then
-        # alphabetically by title. this json is used to populate the page
-        # initially
-        #grunt.save_init_list(all_media_x)
-
-        # create json/<media>-search-index.json
-        # this is just a list of <media> titles and years - used for searching
-        #grunt.save_search_index(all_media_x)
-
-        # save data for use in all templates later
-        # todo - match image preloads with init list since there is no need to
-        # preload images that will not be shown
-        #pelican_obj.settings["MEDIA_REVIEWS"][media_type].update({
-        #    "img_preloads": ",".join(sorted(grunt.meta_img_preloads)),
-        #    "jsons": ",".join(sorted(grunt.meta_jsons)),
-        #    "all_data": sorted(
-        #        [a_media for a_media in all_media_x],
-        #        key = lambda a_media: (a_media["id"])
-        #    ),
-        #    "latest_review": max(all_media_x, key = lambda x: x["reviewDate"])\
-        #    ["reviewDate"].strftime("%Y-%m-%d %H:%M:%S %z")
-        #})
 
 def register():
     # note that initialized is the very first signal. we want this to run before

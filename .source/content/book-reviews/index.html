@@ -13,63 +13,6 @@
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for books."/>
     <meta name="jsons" content="{{ MEDIA_REVIEWS.book.preloads.json | join(',') }}"/>
 </head>
-<body>
-{% from 'form_container.html' import form_container with context %}
-<p>As with <a href="{{ SITEURL }}/movie-reviews/">movies</a> and
-<a href="{{ SITEURL }}/tv-series-reviews/">tv-series</a>, I read so many books
-that I find myself forgetting what a given book was about, whether I liked it or
-not, and even whether I have already read it. So I have made this page to keep
-track of the books I read - good and bad. Maybe you will also discover some good
-books here too, or learn what to avoid, if you have similar tastes to me.</p>
-{{ form_container('searchBox', 'start', None, False) }}
-    <div class="left">
-        <label for="search" class="for-search-box">search</label>
-        <br>
-        <input id="search" type="text" placeholder="book title, author or year" disabled>
-    </div>
-    <div class="left">
-        <label for="sortBy" class="for-sort-dropdown">sort by</label>
-        <br>
-        <select id="sortBy" disabled>
-            <option value="highest-rating">highest rating</option>
-            <option value="lowest-rating">lowest rating</option>
-            <option value="newest">newest reviews</option>
-            <option value="oldest">oldest reviews</option>
-            <option value="title-a-z">title ascending</option>
-            <option value="title-z-a">title descending</option>
-        </select>
-    </div>
-{{ form_container('searchBox', 'end') }}
-
-<div class="media-count-area">
-    <div id="mediaCountPanel">
-        <span id="xOfYMediaCount">
-            showing <span id="numMediaShowing">10</span> of
-            <span id="totalMediaFound">{{ MEDIA_REVIEWS.book.total_media_count }}</span>
-            <span id="searchTypeDescription">total books</span>
-        </span>
-        <span id="noMediaCount">no books found</span>
-    </div>
-</div>
-
-<div id="reviewsArea" class="reviews-area"></div>
-
-<div id="mediaLoaderArea" class="media-loader-area">
-    <div class="media-loader-inner">
-        <div class="loader"></div>
-        <div class="loading-text">loading<br>books</div>
-    </div>
-</div>
-<script>
-    siteGlobals.mediaType = 'book';
-    siteGlobals.iconsSVGURL = '{{ QS_LINK['/theme/img/icons.svg'] }}';
-    siteGlobals.mediaFileHashes = {{ MEDIA_REVIEWS.book.file_hashes | tojson }};
-    siteGlobals.totalMediaCount = {{ MEDIA_REVIEWS.book.total_media_count }};
-{#
-    siteGlobals.mediaSearchIndexJSON = '{{ QS_LINK['/book-reviews/json/search-index.json'] }}';
-    siteGlobals.mediaListJSON = '{{ QS_LINK['/book-reviews/json/list.json'] }}';
-    siteGlobals.mediaInitListJSON = '{{ QS_LINK['/book-reviews/json/init-list.json'] }}';
-#}
-</script>
-</body>
+{%- from 'media_body.html' import media_body with context -%}
+{{ media_body(MEDIA_REVIEWS.movie) }}
 </html>

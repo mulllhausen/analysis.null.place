@@ -60,6 +60,17 @@ def update_globals():
     media_type_plural = plural(media_type)
     verb_present = "read" if (media_type == "book") else "watch"
     verb_past = "read" if (media_type == "book") else "watched"
+    return {
+        "file_hashes": {},
+        "preloads": {},
+        "verb_present": verb_present,
+        "verb_past": verb_past,
+        "type_plural": media_type_plural,
+        "type_": media_type,
+        "not_media_types": not_media_types,
+        "not_media_types_plural": not_media_types_plural,
+        "search_placeholder": search_placeholder
+    }
 
 def plural(english_word):
     """
@@ -561,6 +572,8 @@ def prepare_landing_page_data(all_media_x, media_data):
         media_data["preloads"]["ids"]
     ]
     media_data["total_media_count"] = len(all_media_x)
+    media_data["not_media_types"] = not_media_types
+    media_data["not_media_types_plural"] = not_media_types_plural
     return media_data
 
 # downloading thumbnails

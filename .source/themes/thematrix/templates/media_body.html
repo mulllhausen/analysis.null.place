@@ -1,0 +1,38 @@
+{%- macro media_body(all_media_data, media = None) -%}
+<body>
+
+{%- from 'media_search_box.html' import media_search_box with context -%}
+{%- from 'media_count_area.html' import media_count_area with context -%}
+{%- from 'media_review_item.html' import media_review_item with context -%}
+{%- from 'media_loader_area.html' import media_loader_area with context -%}
+
+<p>As with
+<a href="{{ SITEURL }}/{{ all_media_data.not_media_types[0] }}-reviews/">{{ all_media_data.not_media_types_plural[0] }}</a>
+and
+<a href="{{ SITEURL }}/{{ all_media_data.not_media_types[1] }}-reviews/">{{ all_media_data.not_media_types_plural[1] }}</a>,
+I {{ all_media_data.verb_present }} so many {{ all_media_data.type_plural }}
+that I find myself forgetting what a given {{ all_media_data.type_ }} was about,
+whether I liked it or not, and even whether I have already
+{{ all_media_data.verb_past }} it. So I have made this page to keep track of the
+{{ all_media_data.type_plural }} I {{ all_media_data.verb_present }} - good and
+bad. Maybe you will also discover some good {{ all_media_data.type_plural }}
+here too, or learn what to avoid, assuming you have similar tastes to me.</p>
+
+{{ media_search_box(all_media_data.search_placeholder) }}
+
+{{ media_count_area(all_media_data.preloads.first_page_size, all_media_data.type_plural, all_media_data.preloads.total_size) }}
+
+<div id="reviewsArea" class="reviews-area">
+    {% if media != None %}{{ media_review_item(media) }}{% endif %}
+</div>
+
+{{ media_loader_area(all_media_data.type_plural) }}
+
+<script>
+    siteGlobals.mediaType = '{{ all_media_data.type_ }}';
+    siteGlobals.iconsSVGURL = '{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}';
+    siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
+    siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
+</script>
+</body>
+{%- endmacro -%}

@@ -1,0 +1,12 @@
+{%- macro media_count_area(first_page_size, media_type_plural, total_media_count) -%}
+<div class="media-count-area">
+    <div id="mediaCountPanel">
+        <span id="xOfYMediaCount">
+            showing <span id="numMediaShowing">{{ first_page_size }}</span> of
+            <span id="totalMediaFound">{{ total_media_count }}</span>
+            <span id="searchTypeDescription">total {{ media_type_plural }}</span>
+        </span>
+        <span id="noMediaCount">no {{ media_type_plural }} found</span>
+    </div>
+</div>
+{%- endmacro -%}

@@ -1,0 +1,8 @@
+{%- macro media_loader_area(media_type_plural) -%}
+<div id="mediaLoaderArea" class="media-loader-area">
+    <div class="media-loader-inner">
+        <div class="loader"></div>
+        <div class="loading-text">loading<br>{{ media_type_plural }}</div>
+    </div>
+</div>
+{%- endmacro -%}
