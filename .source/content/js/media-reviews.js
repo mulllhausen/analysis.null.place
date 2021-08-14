@@ -245,7 +245,6 @@ function loadFullReview(e) {
         var externalLinkButtonHTML =
         mediaEl.querySelector('button.external-site').outerHTML;
 
-        var oldContent = mediaEl.querySelector('.review-text').innerHTML;
         switch (status) {
             case 'complete':
                 newContent = formatReview(fullReviewText) +
@@ -698,14 +697,15 @@ function getExternalLinkButtonHTML(mediaData) {
     switch (siteGlobals.mediaType) {
         case 'book':
             externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
-            externalSiteLogo += 'goodreads-logo-button.png';
+            externalSiteLogo += 'goodreads';
             break;
         case 'movie':
         case 'tv-series':
             externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
-            externalSiteLogo += 'imdb-logo-button.png';
+            externalSiteLogo += 'imdb';
             break;
     }
+    externalSiteLogo += '-logo-button.png';
     return '<a class="link-external" href="' + externalLink + '">' +
         '<button class="external-site">' +
             '<img src="' + externalSiteLogo + '">' +

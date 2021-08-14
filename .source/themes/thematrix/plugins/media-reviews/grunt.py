@@ -96,6 +96,13 @@ def init_jinja_environment(pelican_obj):
     jinja_default_settings = copy.deepcopy(pelican_obj.settings)
     jinja_default_settings["ARTICLE_TYPE"] = "media-review"
 
+def setup_filters():
+    global jinja_environment
+    jinja_environment.filters["getNBSP"] = getNBSP
+
+def getNBSP(num):
+    return "&#160;" * num
+
 def convert_types(all_media_x, field_formats, timezone_name):
     # note: only call this function if validate() passes
     localtz = pytz.timezone(timezone_name)
@@ -461,11 +468,12 @@ def save_1_media_html(a_media, media_data):
     else:
         a_media["external_link_url"] += "www.imdb.com/title/%s" % \
         a_media["IMDBID"]
+    a_media["html_review"] = format_review(a_media["review"])
 
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
 
-    # add the current id preloads and bump off the 11th since the first page
+    # add the current id to preloads and bump off the 11th since the first page
     # size is 10
     if (a_media["id_"] not in preload_ids):
         preload_ids = [a_media["id_"]] + preload_ids[:9]
@@ -505,6 +513,17 @@ def save_1_media_html(a_media, media_data):
         )
     del jinja_default_settings["media"]
     del jinja_default_settings["all_media_data"]
+
+def format_review(review_text):
+    review_text = review_text.replace(
+        "##siteGlobals.siteURL##",
+        jinja_default_settings["SITEURL"]
+    )
+
+    if "<p>" in review_text:
+        return review_text
+
+    return "<p>%s</p>" % review_text.replace("\n", "</p><p>")
 
 def get_search_placeholder():
     if media_type == "movie":

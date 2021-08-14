@@ -6,11 +6,11 @@
 </svg>
         {% else %}
             {% if (i - 1) < media.rating %}
-<svg class="icon some-star icon-star-half-empty">' +
+<svg class="icon some-star icon-star-half-empty">
     <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-star-half-empty"></use>
 </svg>
             {% else %}
-<svg class="icon some-star icon-star-o">' +
+<svg class="icon some-star icon-star-o">
     <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-star-o"></use>
 </svg>
             {% endif %}

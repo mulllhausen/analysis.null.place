@@ -1,6 +1,6 @@
 {%- macro media_review_item(media) -%}
 {% from 'media_review_stars.html' import media_review_stars with context %}
-    <div class="media {{ media.type_ }} pinned" id="{{ media.id_ }}">
+    <div class="media {{ media.type_ }} pinned" id="filter-index-{{ media.id_ }}">
         <a
             class="link-to-self chain-link"
             href="{{ SITEURL }}/{{ media.type_ }}-reviews/{{ media.id_ }}/"
@@ -16,7 +16,8 @@
 {% set img = '/' + media.type_ + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
                 src="{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}"
                 class="thumbnail"
-                alt="{{ media.title }} {{ media.type_ }} thumbnail"
+                alt="{{ 25 | getNBSP }} thumbnail failed to load"
+                height="{{ media.thumb_height}}"
             >
             <div class="stars">
                 {{ media_review_stars(media) }}
@@ -24,17 +25,26 @@
         </div>
         <h3 class="media-title">{{ media.title }}</h3>
         <h4 class="review-title">{{ media.reviewTitle }}</h4>
-        <div class="review">
-            <span class="review-text">{{ media.review }}</span>
-            <span
-                class="review-explanation"
-                {% if media.spoilers %}style="color:red;"{% endif %}
-            >(this review {% if media.spoilers %}contains{% else %}has no{% endif %} spoilers)</span>
-            <br>
-            <button class="load-review" id="load-{{ media.id_ }}">load review</button>
+        <span
+            class="spoiler-alert"
+            {% if media.spoilers %}style="color:red;"{% endif %}
+        >(this review {% if media.spoilers %}contains{% else %}has no{% endif %} spoilers)</span>
+        <br>
+        <div class="review-text">
+            {{ media.html_review }}
             <a class="link-external" href="{{ media.external_link_url }}">
                 <button class="external-site">
-                    <img src="{% raw %}{{{% endraw %} QS_LINK['/img/imdb-logo-button.png'] {% raw %}}}{% endraw %}">
+                    <img src="
+{%- raw %}{{ {% endraw -%}
+QS_LINK['/img/
+    {%- if media.type_ in ("movie", "tv-series") -%}
+        imdb
+    {%- elif media.type_ == "book" -%}
+        goodreads
+    {%- endif -%}
+-logo-button.png']
+{%- raw %} }}{% endraw -%}
+                    ">
                 </button>
             </a>
         </div>

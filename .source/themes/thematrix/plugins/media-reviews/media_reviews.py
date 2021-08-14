@@ -2,6 +2,7 @@ import pelican
 import grunt
 import os
 import json
+from jinja2 import Environment, FileSystemLoader
 #import pudb
 
 def media_reviews(pelican_obj):
@@ -42,6 +43,7 @@ def media_reviews(pelican_obj):
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
     grunt.init_jinja_environment(pelican_obj)
+    grunt.setup_filters()
     grunt.desired_width_thumbnail = 100 # px
     grunt.desired_width_larger = 200 # px
 
