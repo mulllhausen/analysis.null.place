@@ -14,6 +14,7 @@
     "datePublished": BLOG_FIRST_PUBLISHED_DATE
 } %}
 {% extends "base.html" %}
+{% block description %}{{ page.summary }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.summary }}{% endblock %}
 {% block content %}

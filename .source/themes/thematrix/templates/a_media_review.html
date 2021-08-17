@@ -4,6 +4,7 @@
     <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
     <meta name="date" content="{{ media.reviewDate }}"/>
     <meta name="category" content="reviews"/>
+    <meta name="description" content="My {{ media.type_ }} reviews. A big work in progress!"/>
     <meta name="tags" content="{{ media.type_plural }}, reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
@@ -19,6 +20,8 @@ next level for rendering.
 #}
     <meta name="linked_data" content="{{ media.linked_data | tojson | replace("\"", "`") }}"/>
 </head>
+<body>
 {%- from 'media_body.html' import media_body with context -%}
 {{ media_body(all_media_data, media) }}
+</body>
 </html>

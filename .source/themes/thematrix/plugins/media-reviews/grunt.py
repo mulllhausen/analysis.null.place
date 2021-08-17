@@ -451,7 +451,7 @@ def get_search_item(a_media):
     # remove double spaces, for efficiency
     return re.sub(r" +", " ", search_item)
 
-def save_1_media_html(a_media, media_data):
+def save_1_media_html(a_media, media_data, total_media_count):
     a_media["type_"] = media_type
     a_media["type_caps"] = media_type_caps
     a_media["search_placeholder"] = search_placeholder
@@ -472,6 +472,8 @@ def save_1_media_html(a_media, media_data):
 
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
+
+    all_media_data["total_media_count"] = total_media_count
 
     # add the current id to preloads and bump off the 11th since the first page
     # size is 10

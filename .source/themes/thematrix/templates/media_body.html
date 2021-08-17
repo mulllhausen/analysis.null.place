@@ -1,10 +1,12 @@
 {%- macro media_body(all_media_data, media = None) -%}
-<body>
 
 {%- from 'media_search_box.html' import media_search_box with context -%}
 {%- from 'media_count_area.html' import media_count_area with context -%}
 {%- from 'media_review_item.html' import media_review_item with context -%}
 {%- from 'media_loader_area.html' import media_loader_area with context -%}
+
+{# single <media> pages are parsed twice #}
+{% set double_parsed = (media != None) %}
 
 <p>As with
 <a href="{{ SITEURL }}/{{ all_media_data.not_media_types[0] }}-reviews/">{{ all_media_data.not_media_types_plural[0] }}</a>
@@ -30,9 +32,14 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 
 <script>
     siteGlobals.mediaType = '{{ all_media_data.type_ }}';
-    siteGlobals.iconsSVGURL = '{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}';
+    siteGlobals.iconsSVGURL = '
+{%- if double_parsed -%}
+{%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+';
     siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
     siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
 </script>
-</body>
 {%- endmacro -%}

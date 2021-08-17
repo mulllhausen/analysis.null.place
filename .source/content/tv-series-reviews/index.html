@@ -13,6 +13,8 @@
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for tv-series."/>
     <meta name="jsons" content="{{ MEDIA_REVIEWS['tv-series'].preloads.json | join(',') }}"/>
 </head>
+<body>
 {%- from 'media_body.html' import media_body with context -%}
-{{ media_body(MEDIA_REVIEWS.movie) }}
+{{ media_body(MEDIA_REVIEWS['tv-series']) }}
+</body>
 </html>

@@ -127,7 +127,7 @@ def media_reviews(pelican_obj):
 
         for a_media in all_media_x:
             # 9. Save the <id>/index.html pages
-            grunt.save_1_media_html(a_media, media_data)
+            grunt.save_1_media_html(a_media, media_data, len(all_media_x))
 
         # 10. Prepare the data for article <media>-reviews/index.html pages.
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = \
