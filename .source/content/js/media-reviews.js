@@ -6,8 +6,6 @@
 // - actions which count as showing interest in another review include:
 //      - clicking on anything in another review (eg. load-button, link icon, etc)
 //      - making any changes in the search area
-// todo: fix underline search when loading more items
-// todo: get working for /<media>-reviews/ first, then for individual media IDs
 
 // globals
 
@@ -52,7 +50,8 @@ pageSize = 10; // load this many media at once in the infinite scroll page
 
 addEvent(window, 'load', function () {
     resetSearchBox();
-    triggerSearch();
+    var pageJustLoaded = true;
+    triggerSearch(pageJustLoaded);
 
     var debounceSearchSetup = debounce(
         debounceSearch, 1000, 'both', extraDebounceChecks
@@ -87,6 +86,17 @@ addEvent(window, 'load', function () {
 });
 
 // url manipulation and navigation
+
+// if the url is for 1 media item then return that item's id, else null
+function getMediaIDFromURL() {
+    // split a path like /<media>-reviews/birdbox/ or
+    // /<media>-reviews/id/index.html into
+    // ['', '<media>-reviews', 'id', ''] or
+    // ['', '<media>-reviews', 'id', 'index.html']
+    var pathPieces = window.location.pathname.split('/');
+    if (pathPieces.length != 4) return null; // '/x-reviews/' or '/x/index.html'
+    return pathPieces[2];
+}
 
 function removeMediaIDFromUrl() {
     if (typeof window.history.replaceState == 'function') {
@@ -128,9 +138,21 @@ function showRenderedMedia(showHide) {
 function renderNextPage(callback) {
     if (callback == null) callback = function () {};
     var numMediaDownloadedThisPage = 0;
-    var thisPageSize = pageSize;
-    for (var i = 0; i < pageSize; i++, nextMediaIndex++) {
+    var numMediaToDownloadThisPage = pageSize;
+    var pinnedMediaID = getMediaIDFromURL();
+    var i = 0;
+    var onFirstPage = (nextMediaIndex == 0);
+    if ((pinnedMediaID != null) && onFirstPage) {
+        i = 1;
+        numMediaDownloadedThisPage = 1;
+    }
+    for (; i < pageSize; i++, nextMediaIndex++) {
         var minimal1MediaObj = get1MediaIDandHash(nextMediaIndex);
+        if (minimal1MediaObj.id_ == pinnedMediaID) {
+            if (onFirstPage) numMediaToDownloadThisPage--;
+            else i--; // pinned, but beyond the first page
+            continue;
+        }
         if (minimal1MediaObj == null) {
             if (i == 0) { // there were no items for this page
                 finishedDownloading1Page();
@@ -138,8 +160,8 @@ function renderNextPage(callback) {
             }
             // note: if we get here it will always be before the first time
             // download1MediaItem()'s callback runs. not because downloading is
-            // slow, but because we get here synchronously first.
-            thisPageSize = i; // we are already 1 past the last existing item
+            // slow (it is), but because we get here synchronously first.
+            numMediaToDownloadThisPage = i; // we're 1 past the last existing item
             break; // gone past the last item
         }
 
@@ -154,14 +176,14 @@ function renderNextPage(callback) {
                 // internet delays
                 var x = finishedDownloading1MediaItem(
                     status, mediaData, mediaIndex, numMediaDownloadedThisPage,
-                    numMediaDownloadFail, thisPageSize, callback
+                    numMediaDownloadFail, numMediaToDownloadThisPage, callback
                 );
                 status = x.status;
                 mediaData = x.mediaData;
                 mediaIndex = x.mediaIndex;
                 numMediaDownloadedThisPage = x.numMediaDownloadedThisPage;
                 numMediaDownloadFail = x.numMediaDownloadFail;
-                thisPageSize = x.thisPageSize;
+                numMediaToDownloadThisPage = x.numMediaToDownloadThisPage;
             });
         })(minimal1MediaObj, nextMediaIndex);
     }
@@ -169,17 +191,17 @@ function renderNextPage(callback) {
 
 function finishedDownloading1MediaItem(
     status, mediaData, mediaIndex, numMediaDownloadedThisPage,
-    numMediaDownloadFail, thisPageSize, callback
+    numMediaDownloadFail, numMediaToDownloadThisPage, callback
 ) {
     if (status == 'complete') {
         fillRender1MediaItem(mediaIndex, mediaData);
         numMediaDownloadedThisPage++;
     } else {
         numMediaDownloadFail++;
-        thisPageSize--;
+        numMediaToDownloadThisPage--;
         removePlaceholder(mediaIndex);
     }
-    if (numMediaDownloadedThisPage == thisPageSize) {
+    if (numMediaDownloadedThisPage == numMediaToDownloadThisPage) {
         finishedDownloading1Page(mediaIndex);
         callback();
     }
@@ -189,7 +211,7 @@ function finishedDownloading1MediaItem(
         mediaIndex: mediaIndex,
         numMediaDownloadedThisPage: numMediaDownloadedThisPage,
         numMediaDownloadFail: numMediaDownloadFail,
-        thisPageSize: thisPageSize
+        numMediaToDownloadThisPage: numMediaToDownloadThisPage
     };
 }
 
@@ -536,12 +558,11 @@ function linkToSelf(mediaEl, mediaID) {
     return false; // prevent bubble up
 }
 
-// todo: always keep the loader on until the very end
 loadingStatus = {
     display: 'on',
     faux: 'on'
 };
-var loaderEl = document.getElementById('mediaLoaderArea');
+var loadingSpinnerEl = document.getElementById('mediaLoaderArea');
 function loading(status, faux) {
     // "faux loading" is just a state machine that keeps track of whether or not
     // content is loading - it does not affect the display.
@@ -554,10 +575,10 @@ function loading(status, faux) {
     loadingStatus.display = status;
     switch (status) {
         case 'on':
-            loaderEl.style.display = 'block';
+            loadingSpinnerEl.style.display = 'block';
             break;
         case 'off':
-            loaderEl.style.display = 'none';
+            loadingSpinnerEl.style.display = 'none';
             break;
     }
 }
@@ -780,17 +801,6 @@ function getRenderedTitle(mediaData) {
 
 // media-data manipulation functions
 
-// if the url is for 1 media item then return that item's id, else null
-function getMediaIDFromURL() {
-    // split a path like /<media>-reviews/birdbox/ or
-    // /<media>-reviews/id/index.html into
-    // ['', '<media>-reviews', 'id', ''] or
-    // ['', '<media>-reviews', 'id', 'index.html']
-    var pathPieces = window.location.pathname.split('/');
-    if (pathPieces.length != 4) return null; // '/x-reviews/' or '/x/index.html'
-    return pathPieces[2];
-}
-
 function getThumbnailBasename(mediaID, state) {
     // keep this function in sync with generate_thumbnail_basename in
     // themes/thematrix/plugins/media-reviews/grunt.py
@@ -865,12 +875,11 @@ function positionMediaCounter() {
     );
 }
 
-footerEl = document.getElementsByTagName('footer')[0];
 function infiniteLoader() {
     if (loadingStatus.faux == 'on') return;
     if (areAllMediaItemsRendered()) return;
 
-    if (!isScrolledTo(footerEl, 'view', 'partially')) return;
+    if (!isScrolledTo(loadingSpinnerEl, 'view', 'partially')) return;
     loading('on', true); // faux
     var useFirst10_ = false; // first get the full list
     downloadMediaLists(useFirst10_, function () {
@@ -887,7 +896,7 @@ function areAllMediaItemsRendered() {
 }
 
 function getNumMediaShowing() {
-    return (nextMediaIndex - numMediaDownloadFail);
+    return document.querySelectorAll('#reviewsArea .media').length;
 }
 
 /*function defunct__renderMoreMedia() {
@@ -928,18 +937,18 @@ function getNumMediaShowing() {
 
 // equivalent of clicking the search button
 // note: this will only show the first page of <media>s
-function triggerSearch() {
+function triggerSearch(pageJustLoaded) {
     getSearchValues();
-    if (!anySearchChanges()) {
-        loading('off', true); // faux
+    /*if (!anySearchChanges()) {
+        loading('off', true); // faux loading off, display loading still on
         removeGlassCase('searchBox', true);
         return;
-    }
+    }*/
     // backup the search early on to prevent accidental re-triggering due to
     // left/right arrow navigation within the search box
     saveCurrentSearch();
 
-    clearRenderedMedia();
+    if (!pageJustLoaded) clearRenderedMedia();
     loading('on'); // faux & display
     var first10Only = useFirst10();
     downloadMediaLists(first10Only, function () {
