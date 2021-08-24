@@ -15,6 +15,7 @@
 </head>
 <body>
 {%- from 'media_body.html' import media_body with context -%}
-{{ media_body(MEDIA_REVIEWS.movie) }}
+{% set double_parsed = False %}
+{{ media_body(MEDIA_REVIEWS.movie, double_parsed) }}
 </body>
 </html>

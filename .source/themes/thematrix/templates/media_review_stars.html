@@ -1,17 +1,35 @@
-{%- macro media_review_stars(media) -%}
+{%- macro media_review_stars(media, double_parsed) -%}
     {% for i in (1, 2, 3, 4, 5) %}
-        {% if i <= media.rating %}
+        {% if (media != None) and (i <= media.rating) %}
 <svg class="icon some-star icon-star">
-    <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-star"></use>
+    <use xlink:href="
+{%- if double_parsed -%}
+{%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+#icon-star"></use>
 </svg>
         {% else %}
-            {% if (i - 1) < media.rating %}
+            {% if (media != None) and ((i - 1) < media.rating) %}
 <svg class="icon some-star icon-star-half-empty">
-    <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-star-half-empty"></use>
+    <use xlink:href="
+{%- if double_parsed -%}
+{%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+#icon-star-half-empty"></use>
 </svg>
             {% else %}
 <svg class="icon some-star icon-star-o">
-    <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-star-o"></use>
+    <use xlink:href="
+{%- if double_parsed -%}
+{%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+#icon-star-o"></use>
 </svg>
             {% endif %}
         {% endif %}

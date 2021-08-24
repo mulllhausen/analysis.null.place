@@ -1,49 +1,92 @@
-{%- macro media_review_item(media) -%}
+{%- macro media_review_item(media_type, double_parsed, media) -%}
 {% from 'media_review_stars.html' import media_review_stars with context %}
-    <div class="media {{ media.type_ }} pinned" id="filter-index-{{ media.id_ }}">
+    <div
+        class="media {{ media_type }} {%- if media == None %} empty {%- else %} pinned {%- endif %}"
+{% if media != None %}
+        id="filter-index-{{ media.id_ }}"
+{% endif %}
+    >
         <a
             class="link-to-self chain-link"
-            href="{{ SITEURL }}/{{ media.type_ }}-reviews/{{ media.id_ }}/"
-            title="right click and copy link for the URL of this {{ media.type_ }} review"
+{% if media != None %}
+            href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
+{% endif %}
+            title="right click and copy link for the URL of this {{ media_type }} review"
         >
             <svg class="icon icon-chain">
-                <use xlink:href="{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}#icon-chain">
+                <use xlink:href="
+{%- if double_parsed -%}
+{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+#icon-chain">
                 </use>
             </svg>
         </a>
         <div class="thumbnail-and-stars">
             <img
-{% set img = '/' + media.type_ + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
-                src="{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}"
+{% if media != None %}
+{% set img = '/' + media_type + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
+                src="
+{%- if double_parsed -%}
+{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}
+{%- else -%}
+{{ QS_LINK[img] }}
+{%- endif -%}
+"
+{% endif %}
                 class="thumbnail"
                 alt="thumbnail failed to load"
-                height="{{ media.thumb_height}}"
+{% if media != None %}
+                height="{{ media.thumb_height }}"
+{% endif %}
             >
             <div class="stars">
-                {{ media_review_stars(media) }}
+                {{ media_review_stars(media, double_parsed) }}
             </div>
         </div>
-        <h3 class="media-title">{{ media.title }}</h3>
-        <h4 class="review-title">{{ media.reviewTitle }}</h4>
-        <span
-            class="spoiler-alert"
-            {% if media.spoilers %}style="color:red;"{% endif %}
-        >(this review {% if media.spoilers %}contains{% else %}has no{% endif %} spoilers)</span>
+        <h3 class="media-title">
+{%- if media != None -%}
+    {{ media.title }}
+{%- endif -%}
+        </h3>
+        <h4 class="review-title">
+{%- if media != None -%}
+    {{ media.reviewTitle }}
+{%- endif -%}
+        </h4>
+{# when no media exists, show both, then we will hide one with js later #}
+{% if media == None or media.spoilers %}
+        <span class="spoiler-alert has-spoilers">(this review contains spoilers)</span>
+{% elif media == None or not media.spoilers %}
+        <span class="spoiler-alert no-spoilers">(this review has no spoilers)</span>
+{% endif %}
         <br>
         <div class="review-text">
+{% if media != None %}
             {{ media.html_review }}
-            <a class="link-external" href="{{ media.external_link_url }}">
+{% endif %}
+            <a
+                class="link-external"
+{% if media != None %}
+                href="{{ media.external_link_url }}"
+{% endif %}
+            >
                 <button class="external-site">
                     <img src="
-{%- raw %}{{ {% endraw -%}
-QS_LINK['/img/
-    {%- if media.type_ in ("movie", "tv-series") -%}
-        imdb
-    {%- elif media.type_ == "book" -%}
-        goodreads
+{%- set img = '/img/' -%}
+    {%- if media_type in ("movie", "tv-series") -%}
+        {%- set img = img + 'imdb' -%}
+    {%- elif media_type == "book" -%}
+        {%- set img = img + 'goodreads' -%}
     {%- endif -%}
--logo-button.png']
-{%- raw %} }}{% endraw -%}
+{%- set img = img + '-logo-button.png' -%}
+{%- if double_parsed -%}
+{%- raw %}{{ {% endraw -%}QS_LINK['{{ img }}']{%- raw %} }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK[img] }}
+{%- endif -%}
                     ">
                 </button>
             </a>

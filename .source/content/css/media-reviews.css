@@ -158,6 +158,9 @@
 .media .review-download-error {
     font-size: 12px;
 }
+.media .spoiler-alert .has-spoilers {
+    color: red;
+}
 
 .media .chain-link {
     float: right;
@@ -167,8 +170,11 @@
 }
 /* end each media box section */
 
-.some-star {
+.media .some-star {
     color: #7db904;/*green*/
+}
+.media.empty .some-star {
+    color: 1px solid #1a1a1a;/*dark-grey*/
 }
 
 .some-star:not(:last-child) {

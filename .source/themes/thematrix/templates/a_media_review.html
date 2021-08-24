@@ -22,6 +22,7 @@ next level for rendering.
 </head>
 <body>
 {%- from 'media_body.html' import media_body with context -%}
-{{ media_body(all_media_data, media) }}
+{% set double_parsed = True %}
+{{ media_body(all_media_data, double_parsed, media) }}
 </body>
 </html>
