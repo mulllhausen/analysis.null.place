@@ -1,95 +1,100 @@
-{%- macro media_review_item(media_type, double_parsed, media) -%}
+{% macro media_review_item(media_type, double_parsed, media, max_thumb_height) %}
 {% from 'media_review_stars.html' import media_review_stars with context %}
-    <div
-        class="media {{ media_type }} {%- if media == None %} empty {%- else %} pinned {%- endif %}"
+<div
+    class="media {{ media_type }}
+{%- if media == None %} glass-case {%- else %} pinned {%- endif -%}
+    "
 {% if media != None %}
-        id="filter-index-{{ media.id_ }}"
+    id="filter-index-{{ media.id_ }}"
 {% endif %}
+>
+    <a
+        class="link-to-self chain-link"
+{% if media != None %}
+        href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
+{% endif %}
+        title="right click and copy link for the URL of this {{ media_type }} review"
     >
-        <a
-            class="link-to-self chain-link"
-{% if media != None %}
-            href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
-{% endif %}
-            title="right click and copy link for the URL of this {{ media_type }} review"
-        >
-            <svg class="icon icon-chain">
-                <use xlink:href="
+        <svg class="icon icon-chain">
+            <use xlink:href="
 {%- if double_parsed -%}
 {% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}
 {%- else -%}
 {{ QS_LINK['/theme/img/icons.svg'] }}
 {%- endif -%}
 #icon-chain">
-                </use>
-            </svg>
-        </a>
-        <div class="thumbnail-and-stars">
-            <img
+            </use>
+        </svg>
+    </a>
+    <div class="thumbnail-and-stars">
+{#
+    use an object for the image so that it does not display a broken link icon
+    before the image loads
+#}
+        <object class="thumbnail" type="image/jpg"
 {% if media != None %}
 {% set img = '/' + media_type + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
-                src="
+            data="
 {%- if double_parsed -%}
 {% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}
 {%- else -%}
 {{ QS_LINK[img] }}
 {%- endif -%}
-"
+            "
 {% endif %}
-                class="thumbnail"
-                alt="thumbnail failed to load"
-{% if media != None %}
-                height="{{ media.thumb_height }}"
+{% if media == None %}
+            style="height:{{ max_thumb_height }}px;"
 {% endif %}
-            >
-            <div class="stars">
-                {{ media_review_stars(media, double_parsed) }}
-            </div>
+        >{#thumbnail failed to load#}</object>
+        <div class="stars">
+{{ media_review_stars(media, double_parsed) }}
         </div>
-        <h3 class="media-title">
+    </div>
+    <h3 class="media-title">
 {%- if media != None -%}
-    {{ media.title }}
+{{ media.title }}
 {%- endif -%}
-        </h3>
-        <h4 class="review-title">
+    </h3>
+    <h4 class="review-title">
 {%- if media != None -%}
-    {{ media.reviewTitle }}
+{{ media.reviewTitle }}
 {%- endif -%}
-        </h4>
+    </h4>
 {# when no media exists, show both, then we will hide one with js later #}
 {% if media == None or media.spoilers %}
-        <span class="spoiler-alert has-spoilers">(this review contains spoilers)</span>
-{% elif media == None or not media.spoilers %}
-        <span class="spoiler-alert no-spoilers">(this review has no spoilers)</span>
+    <span class="spoiler-alert has-spoilers">(this review contains spoilers)</span>
 {% endif %}
-        <br>
-        <div class="review-text">
+{% if media == None or not media.spoilers %}
+    <span class="spoiler-alert no-spoilers">(this review has no spoilers)</span>
+{% endif %}
+    <br>
+    <div class="review-text">
 {% if media != None %}
-            {{ media.html_review }}
+        {{ media.html_review }}
 {% endif %}
-            <a
-                class="link-external"
+        <a
+            class="link-external"
 {% if media != None %}
-                href="{{ media.external_link_url }}"
+            href="{{ media.external_link_url }}"
 {% endif %}
-            >
-                <button class="external-site">
-                    <img src="
+        >
+            <button class="external-site" {%- if media == None %} disabled {%- endif %}>
+                <img src="
 {%- set img = '/img/' -%}
-    {%- if media_type in ("movie", "tv-series") -%}
-        {%- set img = img + 'imdb' -%}
-    {%- elif media_type == "book" -%}
-        {%- set img = img + 'goodreads' -%}
-    {%- endif -%}
+{%- if media_type in ("movie", "tv-series") -%}
+    {%- set img = img + 'imdb' -%}
+{%- elif media_type == "book" -%}
+    {%- set img = img + 'goodreads' -%}
+{%- endif -%}
 {%- set img = img + '-logo-button.png' -%}
 {%- if double_parsed -%}
 {%- raw %}{{ {% endraw -%}QS_LINK['{{ img }}']{%- raw %} }}{% endraw -%}
 {%- else -%}
 {{ QS_LINK[img] }}
 {%- endif -%}
-                    ">
-                </button>
-            </a>
-        </div>
+                ">
+            </button>
+        </a>
     </div>
-{%- endmacro -%}
+</div>
+{% endmacro %}

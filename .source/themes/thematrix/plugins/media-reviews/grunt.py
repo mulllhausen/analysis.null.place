@@ -291,6 +291,12 @@ def get_img_data(media_id, state, get_hash = False):
 
     return return_obj
 
+def get_max_img_height(all_media_x, img_size):
+    # note: only run this function after add_missing_data() and download_all()
+    # complete, so that the heights of all thumbnails are available
+
+    return max(a_media["%s_height" % img_size] for a_media in all_media_x)
+
 def save_1_review_json(a_media):
     json_review_file = "%s/%s-reviews/json/review-%s.json" % (
         content_path, media_type, a_media["id_"]

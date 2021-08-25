@@ -22,18 +22,21 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {{ media_count_area(all_media_data.preloads.first_page_size, all_media_data.type_plural, all_media_data.preloads.total_size) }}
 
 <div id="reviewsArea" class="reviews-area">
-    {% if media != None %}{{ media_review_item(media.type_, double_parsed, media) }}{% endif %}
+    {% if media != None -%}
+        {{ media_review_item(media.type_, double_parsed, media, all_media_data.max_thumb_height) }}
+    {%- endif %}
 </div>
 
 {{ media_loader_area(all_media_data.type_plural) }}
 
 <div class="media-placeholder-warehouse hidden">
     {# empty media item html template to be copied by js #}
-    {{ media_review_item(all_media_data.type_, double_parsed, None) }}
+    {{ media_review_item(all_media_data.type_, double_parsed, None, all_media_data.max_thumb_height) }}
 </div>
 
 <script>
     siteGlobals.mediaType = '{{ all_media_data.type_ }}';
+    siteGlobals.maxThumbHeight = {{ all_media_data.max_thumb_height }};
     siteGlobals.iconsSVGURL = '
 {%- if double_parsed -%}
 {%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}

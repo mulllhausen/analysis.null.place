@@ -78,7 +78,7 @@
     border: 1px solid #7db904;/*green*/
 }
 
-.media img.thumbnail {
+.media .thumbnail {
     display: block;
     position: static;
     border: 1px solid #6a6a6a;/*light-grey*/
@@ -91,7 +91,7 @@
     text-align: left;
 }
 
-.media img.thumbnail:after {
+.media .thumbnail:after {
     content: " ";
 }
 
@@ -106,6 +106,13 @@
     display: block;
     color: red;
     margin-top: 10px;
+}
+
+/*move the button link to imdb/goodreads to the bottom before the content loads*/
+.media.glass-case .link-external {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 25px;
 }
 
 .media.movie .external-site img,
@@ -158,13 +165,21 @@
 .media .review-download-error {
     font-size: 12px;
 }
-.media .spoiler-alert .has-spoilers {
+.media .spoiler-alert.has-spoilers {
     color: red;
+}
+.media.glass-case .spoiler-alert.has-spoilers,
+.media.glass-case .spoiler-alert.no-spoilers {
+    display: none;
 }
 
 .media .chain-link {
     float: right;
 }
+.media.glass-case .chain-link {
+    color: #6a6a6a;/*light-grey*/
+}
+
 .media p {
     margin-bottom: 0;
 }
@@ -173,8 +188,9 @@
 .media .some-star {
     color: #7db904;/*green*/
 }
-.media.empty .some-star {
-    color: 1px solid #1a1a1a;/*dark-grey*/
+
+.media.glass-case .some-star {
+    color: #6a6a6a;/*light-grey*/
 }
 
 .some-star:not(:last-child) {

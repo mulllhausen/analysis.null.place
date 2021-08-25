@@ -140,20 +140,16 @@ function renderNextPage(callback) {
     var numMediaDownloadedThisPage = 0;
     var numMediaToDownloadThisPage = pageSize;
     var pinnedMediaID = getMediaIDFromURL();
-    var i = 0;
+    //var i = 0;
     var onFirstPage = (nextMediaIndex == 0);
-    if ((pinnedMediaID != null) && onFirstPage) {
+    /*if ((pinnedMediaID != null) && onFirstPage) {
         i = 1;
         numMediaDownloadedThisPage = 1;
-    }
-    for (; i < pageSize; i++, nextMediaIndex++) {
+    }*/
+    var placeholdersHTML = '';
+    for (var i = 0; i < pageSize; i++, nextMediaIndex++) {
         var minimal1MediaObj = get1MediaIDandHash(nextMediaIndex);
-        if (minimal1MediaObj.id_ == pinnedMediaID) {
-            if (onFirstPage) numMediaToDownloadThisPage--;
-            else i--; // pinned, but beyond the first page
-            continue;
-        }
-        if (minimal1MediaObj == null) {
+        if (minimal1MediaObj == null) { // gone past the last item
             if (i == 0) { // there were no items for this page
                 finishedDownloading1Page();
                 return callback();
@@ -162,13 +158,19 @@ function renderNextPage(callback) {
             // download1MediaItem()'s callback runs. not because downloading is
             // slow (it is), but because we get here synchronously first.
             numMediaToDownloadThisPage = i; // we're 1 past the last existing item
-            break; // gone past the last item
+            break;
+        }
+        else if (minimal1MediaObj.id_ == pinnedMediaID) {
+            if (onFirstPage) numMediaToDownloadThisPage--;
+            else i--; // pinned, but beyond the first page
+            continue;
         }
 
         // create the placeholders for each media item. this keeps correct
         // order regardless of the order in which the media items are
         // downloaded.
-        render1MediaItemPlaceholder(nextMediaIndex, minimal1MediaObj);
+        placeholdersHTML +=
+        get1MediaItemPlaceholderHTML(nextMediaIndex, minimal1MediaObj);
 
         (function (minimal1MediaObjLocal, mediaIndex) {
             download1MediaItem(minimal1MediaObjLocal, function (status, mediaData) {
@@ -187,6 +189,8 @@ function renderNextPage(callback) {
             });
         })(minimal1MediaObj, nextMediaIndex);
     }
+    // render all at once - fewer dom operations
+    document.getElementById('reviewsArea').innerHTML += placeholdersHTML;
 }
 
 function finishedDownloading1MediaItem(
@@ -222,11 +226,14 @@ function finishedDownloading1Page(mediaIndex) {
     showMediaCount(true);
 }
 
-function render1MediaItemPlaceholder(mediaIndex) {
-    document.getElementById('reviewsArea').innerHTML += '<div ' +
-        ' class="media ' + siteGlobals.mediaType + ' hidden"' +
+function get1MediaItemPlaceholderHTML(mediaIndex) {
+    var mediaPlaceholderInnerHTML =
+    document.querySelector('.media-placeholder-warehouse .media.glass-case').innerHTML;
+    return '<div ' +
+        ' class="media ' + siteGlobals.mediaType + ' glass-case"' +
         ' id="filter-index-' + mediaIndex + '"' +
-    '></div>';
+        ' style="height:' + (siteGlobals.maxThumbHeight + 41) + 'px;"' +
+    '>' + mediaPlaceholderInnerHTML + '</div>';
 }
 
 function removePlaceholder(mediaIndex) {
@@ -243,8 +250,35 @@ function unhideRenderedMedia() {
 }
 
 function fillRender1MediaItem(mediaIndex, mediaData) {
-    document.getElementById('filter-index-' + mediaIndex).innerHTML =
-    get1MediaHTML(mediaData);
+    var mediaEl = document.getElementById('filter-index-' + mediaIndex);
+
+    mediaEl.querySelector('a.link-to-self.chain-link').href = generateCleanURL(
+        siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
+    );
+
+    var thumbnail = mediaEl.querySelector('.thumbnail');
+    thumbnail.setAttribute(
+        'data',
+        siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+        '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+        '.jpg?hash=' + mediaData.thumbnailHash
+    );
+    thumbnail.style.removeProperty('height');
+
+    mediaEl.querySelector('.stars').innerHTML = getMediaStarsHTML(mediaData.rating);
+
+    mediaEl.querySelector('.media-title').innerHTML = getRenderedTitle(mediaData);
+    mediaEl.querySelector('.review-title').innerHTML = mediaData.reviewTitle;
+    if (mediaData.spoilers) {
+        mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'inline';
+        mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'none';
+    } else {
+        mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'none';
+        mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
+    }
+
+    //mediaEl.innerHTML = get1MediaHTML(mediaData);
+    removeCSSClass(mediaEl, 'glass-case');
 }
 
 function loadFullReview(e) {

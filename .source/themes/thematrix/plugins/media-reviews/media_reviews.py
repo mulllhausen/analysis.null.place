@@ -85,6 +85,9 @@ def media_reviews(pelican_obj):
             all_media_x = grunt.resize_thumbnails(all_media_x)
             grunt.delete_original_size_thumbnails(all_media_x)
 
+        media_data["max_thumb_height"] = \
+        grunt.get_max_img_height(all_media_x, "thumb")
+
         # At this point we have enough data to begin writing files.
 
         for (i, a_media) in enumerate(all_media_x):
