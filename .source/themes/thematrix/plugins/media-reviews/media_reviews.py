@@ -113,11 +113,12 @@ def media_reviews(pelican_obj):
                 chopped_list_data = grunt.save_full_list_json(
                     sort_mode,
                     all_media_x,
-                    chop_length = 10,
+                    first_page_only = True,
                     return_preloads = True
                 )
-                media_data["file_hashes"]["list-%s-first-10" % sort_mode] = \
-                chopped_list_data["list_file_hash"]
+                media_data["file_hashes"][
+                    "list-%s-first-%s" % (sort_mode, grunt.page_size)
+                ] = chopped_list_data["list_file_hash"]
 
                 media_data["preloads"] = grunt.get_preload_data(
                     chopped_list_data, full_list_data

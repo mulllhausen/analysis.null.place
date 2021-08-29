@@ -117,17 +117,7 @@ DELETE_PRE_MERGE_FILES = False
 
 # tell the plugin which types of media review pages to create
 MEDIA_REVIEW_TYPES = ['book', 'movie', 'tv-series']
-
-# deprecated:
-#MEDIA_REVIEWS = {
-#    'tv-series': {
-#        'src-list': 'tv-series-reviews/json/list-all.json',
-#        'caps_name': 'TV-Series',
-#        'img_preloads': None, # gets populated by the plugin
-#        'jsons': None, # gets populated by the plugin
-#        'hash-bang-URLs': None # gets populated by the plugin
-#    }
-#}
+MEDIA_REVIEWS_PAGE_SIZE = 10 # items
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']

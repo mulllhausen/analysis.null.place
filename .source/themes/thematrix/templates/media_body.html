@@ -3,7 +3,7 @@
 {%- from 'media_search_box.html' import media_search_box with context -%}
 {%- from 'media_count_area.html' import media_count_area with context -%}
 {%- from 'media_review_item.html' import media_review_item with context -%}
-{%- from 'media_loader_area.html' import media_loader_area with context -%}
+{%- from 'media_search_loader.html' import media_search_loader with context -%}
 
 <p>As with
 <a href="{{ SITEURL }}/{{ all_media_data.not_media_types[0] }}-reviews/">{{ all_media_data.not_media_types_plural[0] }}</a>
@@ -27,7 +27,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
     {%- endif %}
 </div>
 
-{{ media_loader_area(all_media_data.type_plural) }}
+{{ media_search_loader(all_media_data.type_plural) }}
 
 <div class="media-placeholder-warehouse hidden">
     {# empty media item html template to be copied by js #}
@@ -45,6 +45,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {%- endif -%}
 ';
     siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
+    siteGlobals.pageSize = {{ MEDIA_REVIEWS_PAGE_SIZE }};
     siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
 </script>
 {%- endmacro -%}

@@ -11,33 +11,21 @@
 }
 /* end search box section*/
 
-/* begin media loader section */
-.media-loader-area {
+/* begin media search loader section */
+.media-search-loader-area {
     position: relative;
     width: 100%;
     text-align: center;
-    font-size: 200%;
     color: #7db904;/*green*/
 }
-.media-loader-inner {
+.media-search-loader {
     position: relative;
     display: inline-block;
     width: 96px;
     height: 96px;
     vertical-align: middle;
 }
-.media-loader-area .icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    text-align: center;
-}
-.media-loader-area {
-    font-size: 96px;
-}
-.loading-text {
+.search-loading-text {
     display: table-cell;
     font-size: 16px;
     vertical-align: middle;
@@ -98,6 +86,9 @@
 .media .load-review {
     margin-right: 15px;
 }
+.media.placeholder .load-review {
+    color: #222;/*same color as the background when disabled. i.e. hide text*/
+}
 
 .media .review-text button {
     margin-top: 15px;
@@ -108,13 +99,6 @@
     margin-top: 10px;
 }
 
-/*move the button link to imdb/goodreads to the bottom before the content loads*/
-.media.glass-case .link-external {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 25px;
-}
-
 .media.movie .external-site img,
 .media.tv-series .external-site img {
     width: 38px;
@@ -122,6 +106,9 @@
 
 .media.book .external-site img {
     width: 20px;
+}
+.media.placeholder .external-site img {
+    visibility: hidden;
 }
 
 .media.movie button.external-site,
@@ -131,6 +118,10 @@
 
 .media.book button.external-site {
     padding: 6px 6px 1px 6px;
+}
+
+.media.placeholder .link-external {
+    pointer-events: none;
 }
 
 .media .stars {
@@ -153,12 +144,24 @@
 .media .media-title {
     margin-right: 20px;
 }
+.media.placeholder .media-title,
+.media.placeholder .review-title {
+    background-color: #222;
+    margin-left: 127px;/*put some space between the thumbnail and this title*/
+    height: 21px;
+}
+.media.placeholder .media-title {
+    margin-right: 30px;
+}
 
 .media .review-title {
     color: #bbbbbb;
     font-size: 16px;
     font-style: italic;
     font-weight: normal;
+}
+.media.placeholder .review-title {
+    margin-right: 150px;
 }
 
 .media .spoiler-alert,
@@ -168,16 +171,17 @@
 .media .spoiler-alert.has-spoilers {
     color: red;
 }
-.media.glass-case .spoiler-alert.has-spoilers,
-.media.glass-case .spoiler-alert.no-spoilers {
+.media.placeholder .spoiler-alert.has-spoilers,
+.media.placeholder .spoiler-alert.no-spoilers {
     display: none;
 }
 
 .media .chain-link {
     float: right;
 }
-.media.glass-case .chain-link {
+.media.placeholder .chain-link {
     color: #6a6a6a;/*light-grey*/
+    pointer-events: none;
 }
 
 .media p {
@@ -189,7 +193,7 @@
     color: #7db904;/*green*/
 }
 
-.media.glass-case .some-star {
+.media.placeholder .some-star {
     color: #6a6a6a;/*light-grey*/
 }
 

@@ -26,6 +26,7 @@ output_path = "" # init
 content_path = "" # init
 jinja_environment = None # init
 jinja_default_settings = None # init
+page_size = 0 # init
 allowed_media_types = ("movie", "tv-series", "book")
 allowed_thumbnail_states = ("original", "larger", "thumb")
 sort_modes = (
@@ -47,10 +48,11 @@ desired_width_thumbnail = 0 # init (px)
 desired_width_larger = 0 # init (px)
 
 def update_globals():
-    global not_media_types, media_type_caps, search_placeholder, \
+    global page_size, not_media_types, media_type_caps, search_placeholder, \
     not_media_types_plural, media_type_plural, verb_past, verb_present
     # note: call this function after check_media_type()
 
+    page_size = jinja_default_settings["MEDIA_REVIEWS_PAGE_SIZE"]
     not_media_types = [
         t for t in allowed_media_types if (t != media_type)
     ]
@@ -366,17 +368,17 @@ def get_sort_params(sort_mode):
     }
 
 def save_full_list_json(
-    sort_mode, all_media_x, chop_length = None, return_preloads = False
+    sort_mode, all_media_x, first_page_only = False, return_preloads = False
 ):
     preload_ids = [] # init
 
     file_basename = "list-%s%s.json" % (
-        sort_mode, "" if chop_length is None else "-first-%s" % chop_length
+        sort_mode, "-first-%s" % page_size if first_page_only else ""
     )
     file_path = "%s-reviews/json/%s" % (media_type, file_basename)
     full_list_file = "%s/%s" % (content_path, file_path)
 
-    the_list = all_media_x if chop_length is None else all_media_x[:chop_length]
+    the_list = all_media_x[:page_size] if first_page_only else all_media_x
 
     # todo: switch to generator once the list becomes too big
     # stackoverflow.com/questions/21663800
@@ -400,7 +402,7 @@ def save_full_list_json(
     return {
         "list_file_hash": full_list_file_hash,
         "ids": preload_ids,
-        "size": len(all_media_x) if chop_length is None else len(the_list)
+        "size": len(the_list) if first_page_only else len(all_media_x)
     }
 
 def get_img_url(a_media, img_size):
@@ -481,10 +483,10 @@ def save_1_media_html(a_media, media_data, total_media_count):
 
     all_media_data["total_media_count"] = total_media_count
 
-    # add the current id to preloads and bump off the 11th since the first page
-    # size is 10
+    # add the current id to preloads and bump off the last to maintain the page
+    # size
     if (a_media["id_"] not in preload_ids):
-        preload_ids = [a_media["id_"]] + preload_ids[:9]
+        preload_ids = [a_media["id_"]] + preload_ids[:page_size]
 
     # get img files from ids in a list
     all_media_data["preloads"]["img"] = [
@@ -492,8 +494,10 @@ def save_1_media_html(a_media, media_data, total_media_count):
     ]
 
     # get json files from ids in a list and add the initial page of review items
-    all_media_data["preloads"]["json"] = \
-    ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type] + [
+    all_media_data["preloads"]["json"] = [
+        "/%s-reviews/json/list-highest-rating-first-%s.json" % \
+        (media_type, page_size)
+    ] + [
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         preload_ids
     ]
@@ -593,8 +597,10 @@ def prepare_landing_page_data(all_media_x, media_data):
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in
         media_data["preloads"]["ids"]
     ]
-    media_data["preloads"]["json"] = \
-    ["/%s-reviews/json/list-highest-rating-first-10.json" % media_type] + [
+    media_data["preloads"]["json"] = [
+        "/%s-reviews/json/list-highest-rating-first-%s.json" % \
+        (media_type, page_size)
+    ] + [
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         media_data["preloads"]["ids"]
     ]
