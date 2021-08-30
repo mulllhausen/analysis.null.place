@@ -123,6 +123,7 @@ def media_reviews(pelican_obj):
                 media_data["preloads"] = grunt.get_preload_data(
                     chopped_list_data, full_list_data
                 )
+                all_media_x = grunt.save_default_sort_indexes(all_media_x)
 
             # 8. Save the search-index-highest-rating.json,
             # search-index-newest.json, etc files.

@@ -342,6 +342,14 @@ def get_datafile_fields():
 def sort_media(sort_mode, all_media_x):
     return sorted(all_media_x, **get_sort_params(sort_mode))
 
+def save_default_sort_indexes(all_media_x):
+    # note: this function should only be called when all_media_x is already
+    # sorted by highest-first
+    for (i, a_media) in enumerate(all_media_x):
+        a_media["default_index"] = i
+
+    return all_media_x
+
 def get_sort_params(sort_mode):
     if (sort_mode == "highest-rating"):
         key = lambda x: (-x["rating"], x["title"])

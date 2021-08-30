@@ -119,6 +119,8 @@ function resetSearchBox() {
 function renderNextPage(totalMediaCount, useFirstPageList_, callback) {
     var pinnedMediaIndex = getPinnedMediaIndex();
     renderNextPagePlaceholders(totalMediaCount, pinnedMediaIndex);
+
+    // note: if media lists are already downloaded then this just passes through
     downloadMediaLists(useFirstPageList_, function () {
         populateMediaPlaceholders(callback);
     });
@@ -144,7 +146,7 @@ function showRenderedMedia(showHide) {
 }
 
 function getPinnedMediaIndex() {
-    var pinnedMediaEl = document.querySelector('.reviewsArea .media.pinned');
+    var pinnedMediaEl = document.querySelector('#reviewsArea .media.pinned');
     if (pinnedMediaEl == null) return null;
     return parseInt(pinnedMediaEl.id.replace('filter-index-', ''));
 }
@@ -182,19 +184,22 @@ function populateMediaPlaceholders(populatedAllPlaceholdersCallback) {
     var placeholderEls = document.
     querySelectorAll('#reviewsArea .media.placeholder');
 
-    // setup an event for when all placeholders have been populated
+    // set up an event for when all placeholders have been populated
     addEvent(placeholderEls, '1-media-populated', function () {
         if (!areAllPlaceholdersPopulated()) return;
-        populatedAllPlaceholdersCallback();
+        if (populatedAllPlaceholdersCallback != null) {
+            populatedAllPlaceholdersCallback();
+        }
     });
 
-    for (var mediaIndex = 0; mediaIndex < placeholderEls.length; mediaIndex++) {
-        var mediaEl = placeholderEls[mediaIndex];
-        populate1MediaPlaceholder(mediaEl, mediaIndex);
+    for (var i = 0; i < placeholderEls.length; i++) {
+        var mediaEl = placeholderEls[i];
+        populate1MediaPlaceholder(mediaEl);
     }
 }
 
-function populate1MediaPlaceholder(mediaEl, mediaIndex) {
+function populate1MediaPlaceholder(mediaEl) {
+    var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
     var useFirstPageList_ = (mediaIndex < siteGlobals.pageSize);
     var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
     download1MediaItem(minimal1MediaObj, function (status, mediaData) {
@@ -371,7 +376,7 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
     }
     removeCSSClass(mediaEl, 'placeholder');
-    removeCSSClass(mediaEl, 'pulsate');
+    // only remove the pulsate class once the image has loaded
 }
 
 function markFailedMediaItem(mediaEl) {
@@ -380,7 +385,9 @@ function markFailedMediaItem(mediaEl) {
 }
 
 function thumbnailLoaded(e) {
+// https://stackoverflow.com/questions/5820209/image-onload-event-not-working-in-chrome/5821388
     e.currentTarget.style.removeProperty('height');
+    removeCSSClass(e.currentTarget.up(2), 'pulsate');
 }
 
 function loadFullReview(e) {
@@ -757,7 +764,6 @@ function positionMediaCounter() {
 
 var infiniteLoaderRunning = false;
 function infiniteLoader() {
-    //if (loadingStatus.faux == 'on') return;
     if (infiniteLoaderRunning) return;
     infiniteLoaderRunning = true; // asap
 
@@ -769,11 +775,9 @@ function infiniteLoader() {
         infiniteLoaderRunning = false;
         return;
     }
-    var useFirstPageList_ = false; // first get the media list
-    downloadMediaLists(useFirstPageList_, function () {
-        renderNextPage();
-    });
-    infiniteLoaderRunning = false;
+    var useFirstPageList_ = false; // already passed the first page
+    renderNextPage(numMediaFound, useFirstPageList_, renderMediaCount);
+    infiniteLoaderRunning = false; // allow multiple placeholder pages at once
 }
 
 function areAllMediaItemsRendered() {

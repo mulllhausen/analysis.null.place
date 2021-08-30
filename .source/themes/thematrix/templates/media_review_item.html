@@ -5,7 +5,7 @@
 {%- if media == None %} placeholder pulsate {%- else %} pinned {%- endif -%}
     "
 {% if media != None %}
-    id="filter-index-{{ media.id_ }}"
+    id="filter-index-{{ media.default_index }}"
 {% endif %}
 >
     <a
