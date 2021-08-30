@@ -39,15 +39,12 @@ mediaListDownloadStatus = 'not started'; // not started, in progress, complete
 // i.e. for default search
 filteredList = 'all';
 
-//initialMediaData = []; // static list of initial media data
-//completeMediaSearch = []; // static index of media searches
-//completeMediaSearchIDs = []; // same as completeMediaSearch but with IDs not names and years
-//completeMediaData = []; // static list of all media data
-//searchResultIndexes = []; // all media indexes that match the search. in order. used for paging.
+// total count that matches the search criteria. no search at the start so
+// initialize to the full list count
+numMediaFound = siteGlobals.totalMediaCount;
 
-numMediaFound = 0; // total count that match the search criteria
-numMediaDownloadFail = 0;
-nextMediaIndex = 0; // index of panel on the page, from 0 to filteredList.length - 1
+//numMediaDownloadFail = 0;
+nextMediaIndex = 0; // index of div on the page, from 0 to filteredList.length - 1
 
 addEvent(window, 'load', function () {
     resetSearchBox();
@@ -130,7 +127,7 @@ function renderNextPage(totalMediaCount, useFirstPageList_, callback) {
 function clearRenderedMedia() {
     document.getElementById('reviewsArea').innerHTML = '';
     filteredList = [];
-    numMediaDownloadFail = 0;
+    //numMediaDownloadFail = 0;
     nextMediaIndex = 0;
 }
 
@@ -785,7 +782,8 @@ function areAllMediaItemsRendered() {
 }
 
 function getNumMediaShowing() {
-    return document.querySelectorAll('#reviewsArea .media').length;
+    return document.querySelectorAll('#reviewsArea .media:not(.placeholder)').
+    length;
 }
 
 // searching

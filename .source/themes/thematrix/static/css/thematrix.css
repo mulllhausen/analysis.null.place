@@ -1055,35 +1055,26 @@ trick thanks to stackoverflow.com/a/8539107
 /* begin pulsate class */
 .pulsate {
     transform: scale(1);
-    -moz-animation: pulse 1.8s infinite;
-    -webkit-animation: pulse 1.8s infinite;
-    animation: pulse 1.8s infinite;
+    -moz-animation: pulse 1s infinite;
+    -webkit-animation: pulse 1s infinite;
+    animation: pulse 1s infinite;
 }
 @-moz-keyframes pulse {
       0% { transform: scale(1); }
-     80% { transform: scale(1); }
-     82% { transform: scale(0.97); }
-     84% { transform: scale(1); }
-     96% { transform: scale(1); }
-     98% { transform: scale(0.97); }
+     90% { transform: scale(1); }
+     95% { transform: scale(0.97); }
     100% { transform: scale(1); }
 }
 @-webkit-keyframes pulse {
       0% { transform: scale(1); }
-     80% { transform: scale(1); }
-     82% { transform: scale(0.97); }
-     84% { transform: scale(1); }
-     96% { transform: scale(1); }
-     98% { transform: scale(0.97); }
+     90% { transform: scale(1); }
+     95% { transform: scale(0.97); }
     100% { transform: scale(1); }
 }
 @keyframes pulse {
       0% { transform: scale(1); }
-     80% { transform: scale(1); }
-     82% { transform: scale(0.97); }
-     84% { transform: scale(1); }
-     96% { transform: scale(1); }
-     98% { transform: scale(0.97); }
+     90% { transform: scale(1); }
+     95% { transform: scale(0.97); }
     100% { transform: scale(1); }
 }
 /* end pulsate class */

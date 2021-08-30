@@ -144,9 +144,10 @@ function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
     var typesArr = types.split(',');
-    foreach(elements, function (elI, el) {
-        foreach(typesArr, function (typeI, type) {
-            type = type.replace(/ /g, '');
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
+        for (var typeI = 0; typeI < typesArr.length; typeI++) {
+            var type = typesArr[typeI].replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
             } else if (el.attachEvent) { // ie
@@ -154,17 +155,18 @@ function addEvent(element, types, callback) {
             } else {
                 el['on' + type] = callback;
             }
-        });
-    });
+        }
+    }
 }
 
 function removeEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
     var typesArr = types.split(',');
-    foreach(elements, function (elI, el) {
-        foreach(typesArr, function (typeI, type) {
-            type = type.replace(/ /g, '');
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
+        for (var typeI = 0; typeI < typesArr.length; typeI++) {
+            var type = typesArr[typeI].replace(/ /g, '');
             if (el.removeEventListener) {
                 el.removeEventListener(type, callback, false);
             } else if (el.detachEvent) { // ie
@@ -172,21 +174,22 @@ function removeEvent(element, types, callback) {
             } else {
                 delete el['on' + type];
             }
-        });
-    });
+        }
+    }
 }
 
 function triggerEvent(element, type) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
-    foreach(elements, function (elI, el) {
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
         if ('createEvent' in document) {
             var evt = document.createEvent('HTMLEvents');
             evt.initEvent(type, false, true);
             el.dispatchEvent(evt);
         }
         else el.fireEvent('on' + type);
-    });
+    }
 }
 
 function popup(heading, detail) {
@@ -330,6 +333,7 @@ function ajax(url, callback) {
     addEvent(xhttp, 'readystatechange', function () {
         if (this.readyState != XMLHttpRequest.DONE) return;
         if (this.status != 200) return;
+        //if (this.status != 304) return; // from cache stackoverflow.com/a/16817752
         callback(this.responseText);
     });
     xhttp.open('GET', url, true); // async
@@ -381,6 +385,36 @@ function downloadOnce(url, callback) {
         triggerEvent(document, 'done-download-' + url);
     });
 }
+
+/*
+// use the service worker (if available), else ajax, to preload an external
+// resource
+function preload(url) {
+    if (!('serviceWorker' in navigator)) {
+        ajax(url);
+        return; // do not return any content
+    }
+    var intervalID = setInterval(function() {
+        var sw = navigator.serviceWorker.controller;
+        // exit if service worker is not yet ready
+        if (sw == null) return;
+
+        if (sw.state == 'activated') return execPreload(intervalID, url);
+        addEvent(sw, 'statechange' function () {
+            execPreload(intervalID, url);
+        });
+    }, 200); // try 5 times a second
+}
+
+function execPreload(intervalID, url) {
+    if (sw.state != 'activated') return;
+
+    clearInterval(intervalID);
+    if (navigator.serviceWorker.controller.postMessage({
+        type: 'preload',
+        url: url
+    });
+}*/
 
 Element.prototype.up = function (num) {
     var el = this;
