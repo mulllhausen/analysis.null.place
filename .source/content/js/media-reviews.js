@@ -6,7 +6,9 @@
 // - actions which count as showing interest in another review include:
 //      - clicking on anything in another review (eg. load-button, link icon, etc)
 //      - making any changes in the search area
-// todo - offline warning
+// todo - offline warning and disable search when offline
+
+do a search - after() is being called twice
 
 // globals
 
@@ -40,7 +42,7 @@ mediaListDownloadStatus = 'not started'; // not started, in progress, complete
 filteredList = 'all';
 
 // total count that matches the search criteria. no search at the start so
-// initialize to the full list count
+// initialize to the full list count. always an int
 numMediaFound = siteGlobals.totalMediaCount;
 
 //numMediaDownloadFail = 0;
@@ -137,11 +139,9 @@ function showRenderedMedia(showHide) {
     if (showHide) { // show
         document.getElementById('reviewsArea').style.display = 'block';
         // skyscraper ads are added back automatically
-        showMediaCount(true);
     } else { // hide
         document.getElementById('reviewsArea').style.display = 'none';
         hideAllSkyscraperAds();
-        showMediaCount(false);
     }
 }
 
@@ -176,7 +176,8 @@ function renderNextPagePlaceholders(totalMediaCount, skipIndex) {
     document.getElementById('reviewsArea').innerHTML += placeholdersHTML;
 
     // update the last existing media element for use in the infinite loader
-    latestMediaEl = document.
+    if (nextMediaIndex == 0) latestMediaEl = null; // no search results
+    else latestMediaEl = document.
     querySelector('#reviewsArea .media#filter-index-' + (nextMediaIndex - 1));
 }
 
@@ -196,6 +197,10 @@ function populateMediaPlaceholders(populatedAllPlaceholdersCallback) {
         var mediaEl = placeholderEls[i];
         populate1MediaPlaceholder(mediaEl);
     }
+    if (
+        (placeholderEls.length == 0) &&
+        (populatedAllPlaceholdersCallback != null)
+    ) populatedAllPlaceholdersCallback();
 }
 
 function populate1MediaPlaceholder(mediaEl) {
@@ -231,101 +236,6 @@ function afterRendering1Page() {
     searchSpinner('off');
 }
 
-/*
-// render a page (eg. 10 items). wait for all to finish downloading before
-// making any visible, and hide any that fail
-function defunct__renderNextPage(callback) {
-    if (callback == null) callback = function () {};
-    var numMediaDownloadedThisPage = 0;
-    var numMediaToDownloadThisPage = siteGlobals.pageSize;
-    var pinnedMediaID = getMediaIDFromURL();
-    //var i = 0;
-    var onFirstPage = (nextMediaIndex == 0);
-    /*if ((pinnedMediaID != null) && onFirstPage) {
-        i = 1;
-        numMediaDownloadedThisPage = 1;
-    }* /
-    var placeholdersHTML = '';
-    for (var i = 0; i < siteGlobals.pageSize; i++, nextMediaIndex++) {
-        var minimal1MediaObj = get1MediaIDandHash(nextMediaIndex);
-        if (minimal1MediaObj == null) { // gone past the last item
-            if (i == 0) { // there were no items for this page
-                finishedDownloading1Page();
-                return callback();
-            }
-            // note: if we get here it will always be before the first time
-            // download1MediaItem()'s callback runs. not because downloading is
-            // slow (it is), but because we get here synchronously first.
-            numMediaToDownloadThisPage = i; // we're 1 past the last existing item
-            break;
-        }
-        else if (minimal1MediaObj.id_ == pinnedMediaID) {
-            if (onFirstPage) numMediaToDownloadThisPage--;
-            else i--; // pinned, but beyond the first page
-            continue;
-        }
-
-        // create the placeholders for each media item. this keeps correct
-        // order regardless of the order in which the media items are
-        // downloaded.
-        placeholdersHTML +=
-        get1MediaItemPlaceholderHTML(nextMediaIndex, minimal1MediaObj);
-
-        (function (minimal1MediaObjLocal, mediaIndex) {
-            download1MediaItem(minimal1MediaObjLocal, function (status, mediaData) {
-                // note: the order in which media arrive here is unknown due to
-                // internet delays
-                var x = finishedDownloading1MediaItem(
-                    status, mediaData, mediaIndex, numMediaDownloadedThisPage,
-                    numMediaDownloadFail, numMediaToDownloadThisPage, callback
-                );
-                status = x.status;
-                mediaData = x.mediaData;
-                mediaIndex = x.mediaIndex;
-                numMediaDownloadedThisPage = x.numMediaDownloadedThisPage;
-                numMediaDownloadFail = x.numMediaDownloadFail;
-                numMediaToDownloadThisPage = x.numMediaToDownloadThisPage;
-            });
-        })(minimal1MediaObj, nextMediaIndex);
-    }
-    // render all at once - fewer dom operations
-    document.getElementById('reviewsArea').innerHTML += placeholdersHTML;
-}
-
-function finishedDownloading1MediaItem(
-    status, mediaData, mediaIndex, numMediaDownloadedThisPage,
-    numMediaDownloadFail, numMediaToDownloadThisPage, callback
-) {
-    if (status == 'complete') {
-        fillRender1MediaItem(mediaIndex, mediaData);
-        numMediaDownloadedThisPage++;
-    } else {
-        numMediaDownloadFail++;
-        numMediaToDownloadThisPage--;
-        removePlaceholder(mediaIndex);
-    }
-    if (numMediaDownloadedThisPage == numMediaToDownloadThisPage) {
-        finishedDownloading1Page(mediaIndex);
-        callback();
-    }
-    return {
-        status: status,
-        mediaData: mediaData,
-        mediaIndex: mediaIndex,
-        numMediaDownloadedThisPage: numMediaDownloadedThisPage,
-        numMediaDownloadFail: numMediaDownloadFail,
-        numMediaToDownloadThisPage: numMediaToDownloadThisPage
-    };
-}
-
-function finishedDownloading1Page(mediaIndex) {
-    showRenderedMedia(true); // if previously hidden (eg. during search debounce)
-    unhideRenderedMedia();
-    renderMediaCount();
-    showMediaCount(true);
-}
-*/
-
 var mediaPlaceholderInnerHTML = null; // init
 function get1MediaItemPlaceholderHTML(mediaIndex) {
     if (mediaPlaceholderInnerHTML == null) mediaPlaceholderInnerHTML = document.
@@ -355,14 +265,26 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     mediaEl.querySelector('a.link-to-self.chain-link').href = generateCleanURL(
         siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
     );
-    var thumbnail = mediaEl.querySelector('.thumbnail');
-    addEvent(thumbnail, 'load', thumbnailLoaded);
-    thumbnail.setAttribute(
+    var thumbnailEl = mediaEl.querySelector('.thumbnail');
+    thumbnailEl.height = mediaData.thumbnailHeight;
+    thumbnailEl.src = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+    '.jpg?hash=' + mediaData.thumbnailHash;
+    thumbnailEl.alt = 'thumbnail for ' + mediaData.title;
+    /*unfortunately, this doesn't work. img-load events do not fire when more
+    than one page of images is loaded immediately.
+    var img = new Image();
+    addEvent(img, 'load', function() { thumbnailLoaded(thumbnailEl); });
+    img.src = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+    '.jpg?hash=' + mediaData.thumbnailHash;
+    thumbnailEl.src = img.src;
+    thumbnailEl.setAttribute(
         'data',
         siteGlobals.siteURL + '/' + siteGlobals.mediaType +
         '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
         '.jpg?hash=' + mediaData.thumbnailHash
-    );
+    );*/
 
     mediaEl.querySelector('.stars').innerHTML = getMediaStarsHTML(mediaData.rating);
 
@@ -376,19 +298,21 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
     }
     removeCSSClass(mediaEl, 'placeholder');
-    // only remove the pulsate class once the image has loaded
+    removeCSSClass(mediaEl, 'pulsate');
 }
 
 function markFailedMediaItem(mediaEl) {
+    // unimplemented
     addCSSClass(mediaEl, 'failed-download');
     removeCSSClass(mediaEl, 'placeholder');
 }
 
-function thumbnailLoaded(e) {
+/*function thumbnailLoaded(el) {
 // https://stackoverflow.com/questions/5820209/image-onload-event-not-working-in-chrome/5821388
-    e.currentTarget.style.removeProperty('height');
-    removeCSSClass(e.currentTarget.up(2), 'pulsate');
-}
+    //e.currentTarget.style.removeProperty('height');
+    el.style.removeProperty('height');
+    removeCSSClass(el.up(2), 'pulsate');
+}*/
 
 function loadFullReview(e) {
     if (
@@ -546,33 +470,6 @@ function linkToSelf(mediaEl, mediaID) {
     return false; // prevent bubble up
 }
 
-/*
-loadingStatus = {
-    display: 'on',
-    faux: 'on'
-};
-var loadingSpinnerEl = document.getElementById('mediaLoaderArea');
-function loading(status, faux) {
-    // "faux loading" is just a state machine that keeps track of whether or not
-    // content is loading - it does not affect the display.
-    faux = (faux == true); // explicit
-
-    if (faux) return loadingStatus.faux = status;
-
-    // display ...
-    loadingStatus.faux = status;
-    loadingStatus.display = status;
-    switch (status) {
-        case 'on':
-            loadingSpinnerEl.style.display = 'block';
-            break;
-        case 'off':
-            loadingSpinnerEl.style.display = 'none';
-            break;
-    }
-}
-*/
-
 function getLoadReviewButtonHTML() {
     return '<button class="load-review">load review</button>';
 }
@@ -661,9 +558,9 @@ function showMediaCount(status) {
 }
 
 function renderMediaCount() {
-    if (filteredList.length == 0) {
-        document.getElementById('xOfYMediaCount').style.display = 'none';
+    if (numMediaFound == 0) { // search returned no results
         document.getElementById('noMediaCount').style.display = 'inline';
+        document.getElementById('xOfYMediaCount').style.display = 'none';
     } else {
         document.getElementById('noMediaCount').style.display = 'none';
         document.getElementById('xOfYMediaCount').style.display = 'inline';
@@ -689,8 +586,17 @@ function getRenderedTitle(mediaData) {
     }
     renderedTitle += ' (' + mediaData.year + ')';
     var searchTermsList = getSearchTermsList(searchText.current);
-    renderedTitle = underlineSearch(searchTermsList, renderedTitle);
+    renderedTitle = htmlUnderline(searchTermsList, renderedTitle);
     return renderedTitle;
+}
+
+function htmlUnderline(needleList, haystack) {
+    for (var i = 0; i < needleList.length; i++) {
+        var needle = needleList[i];
+        var regexPattern = new RegExp('(' + needle + ')', 'i');
+        haystack = haystack.replace(regexPattern, '<u>$1</u>');
+    }
+    return haystack;
 }
 
 // media-data manipulation functions
@@ -706,15 +612,6 @@ function getThumbnailBasename(mediaID, state) {
         default:
             throw 'bad state';
     }
-}
-
-function underlineSearch(searchTerms, mediaRenderedTitle) {
-    for (var i = 0; i < searchTerms.length; i++) {
-        var searchTerm = searchTerms[i];
-        var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
-        mediaRenderedTitle = mediaRenderedTitle.replace(regexPattern, '<u>$1</u>');
-    }
-    return mediaRenderedTitle;
 }
 
 function get1MediaIDandHash(mediaItemIndex) {
@@ -776,7 +673,7 @@ function infiniteLoader() {
         return;
     }
     var useFirstPageList_ = false; // already passed the first page
-    renderNextPage(numMediaFound, useFirstPageList_, renderMediaCount);
+    renderNextPage(numMediaFound, useFirstPageList_, afterRendering1Page);
     infiniteLoaderRunning = false; // allow multiple placeholder pages at once
 }
 
@@ -791,14 +688,6 @@ function getNumMediaShowing() {
 }
 
 // searching
-
-/*function useFirstPageList() {
-    // make sure to call getSearchValues() first
-    if (sortMode.current != 'highest-rating') return false;
-    if (searchText.current != '') return false;
-    if (getNumMediaShowing() != 0) return false;
-    return true;
-}*/
 
 // equivalent of clicking the search button
 // note: this will only show the first page of <media>s. infiniteLoader()
@@ -824,44 +713,12 @@ function triggerSearch(windowJustLoaded) {
     downloadMediaLists(useFirstPageList_, function () {
         updateFilteredListUsingSearch();
         renderNextPage(
-            filteredList.length,
+            numMediaFound,
             useFirstPageList_,
             afterRendering1Page // callback
         );
     });
 }
-/*function defunct__triggerSearch(pageJustLoaded) {
-    //archiveInFeedAds();
-    getSearchValues();
-    /*if (!anySearchChanges()) {
-        loading('off', true); // faux loading off, display loading still on
-        removeGlassCase('searchBox', true);
-        return;
-    }* /
-    // backup the search early on to prevent accidental re-triggering due to
-    // left/right arrow navigation within the search box
-    saveCurrentSearch();
-
-    if (!pageJustLoaded) clearRenderedMedia();
-    //loading('on'); // faux & display
-    var useFirstPageList_ = useFirstPageList();
-    downloadMediaLists(useFirstPageList_, function () {
-        updateFilteredListUsingSearch();
-        renderNextPage(function () { // will be the first page, due to globals
-            var hideFromDisplay = areAllMediaItemsRendered();
-            var faux = !hideFromDisplay;
-            //loading('off', faux);
-            removeGlassCase('searchBox', true);
-
-            // if we previously only downloaded the list for the first page of
-            // media items then get the media list (in the background) now
-            if (useFirstPageList_) {
-                useFirstPageList_ = false;
-                downloadMediaLists(useFirstPageList_);
-            }
-        });
-    });
-}*/
 
 function getSearchValues(prefix) {
     var current = (prefix == null) ? 'current' : prefix + 'Current';
@@ -955,10 +812,11 @@ function debounceSearch(state, extraData) {
     // do this after the user has stopped typing
     switch (state) {
         case 'atStart':
-            // if there are no changes then do not show the loading spinner
+            // if there are no changes then do not show the search spinner
             if (!extraData.anySearchChanges) return;
 
             showRenderedMedia(false);
+            showMediaCount(false);
             scrollToElement(document.getElementById('searchBox'));
             searchSpinner('on');
             break;
@@ -973,6 +831,7 @@ function debounceSearch(state, extraData) {
                 // it is possible there were changes during the debounce stage
                 // but they were erased
                 showRenderedMedia(true);
+                showMediaCount(true);
                 return;
             }
             removeMediaIDFromUrl();
