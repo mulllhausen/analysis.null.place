@@ -13,7 +13,8 @@
             "goodreadsID": "95558",
             "genres": ["Sci-Fi", "Fiction", "Classics"],
             "isbn": "0571311571",
-            "reviewDate": "2019-04-02"
+            "reviewCreated": "2019-04-02",
+            "reviewUpdated": null
         },
         {
             "author": "Barbara K. Lipska",
@@ -27,7 +28,8 @@
             "goodreadsID": "35721138",
             "genres": ["Nonfiction", "Autobiography", "Science", "Psychology", "Medical"],
             "isbn": "1328787303",
-            "reviewDate": "2019-09-21"
+            "reviewCreated": "2019-09-21",
+            "reviewUpdated": null
         },
         {
             "author": "Theodore Schick and Lewis Vaughn",
@@ -41,7 +43,8 @@
             "goodreadsID": "41756",
             "genres": ["Logic", "Philosophy", "Psychology"],
             "isbn": "007287953X",
-            "reviewDate": "2019-06-07"
+            "reviewCreated": "2019-06-07",
+            "reviewUpdated": null
         },
         {
             "author": "Robert Harris",
@@ -55,7 +58,8 @@
             "goodreadsID": "243601",
             "genres": ["Fiction", "Historical"],
             "isbn": "074326603X",
-            "reviewDate": "2019-09-20"
+            "reviewCreated": "2019-09-20",
+            "reviewUpdated": null
         }
     ]
 }

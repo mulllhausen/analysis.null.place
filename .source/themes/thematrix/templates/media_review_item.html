@@ -32,7 +32,7 @@
     use an object for the image so that it does not display a broken link icon
     before the image loads
 #}
-        <img class="thumbnail" loading="lazy"{# only for <object>: type="image/jpg"#}
+        <img class="thumbnail" loading="lazy" {# only for <object>: type="image/jpg"#}
 {% if media != None %}
 {% set img = '/' + media_type + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
             {#data#}src="
@@ -46,9 +46,11 @@
 {% if media == None %}
             height="{{ max_thumb_height }}"
 {% else %}
+            height="{{ media.thumb_height }}"
             alt="loading thumbnail"
 {% endif %}
         >{#thumbnail failed to load</object>#}
+
         <div class="stars">
 {{ media_review_stars(media, double_parsed) }}
         </div>

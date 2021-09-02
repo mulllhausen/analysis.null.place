@@ -12,8 +12,9 @@ def media_reviews(pelican_obj):
 
     The low level functionality of this function is, for each media type
     specified in pelican.py:
-        1. Validate that each item has the required fields (these are user-
-        created so they may have forgotten a field).
+        1. Validate that each item has the required fields and that they are in
+        the correct format (these are user-created so they may have forgotten a
+        field or put the wrong data in it).
         2. Convert data (eg. a date from string to datetime object).
         3. Add missing data (id, thumbnail names and hashes if available).
         4. Download any missing thumbnails and resize.
@@ -43,7 +44,6 @@ def media_reviews(pelican_obj):
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
     grunt.init_jinja_environment(pelican_obj)
-    grunt.setup_filters()
     grunt.desired_width_thumbnail = 100 # px
     grunt.desired_width_larger = 200 # px
 
@@ -57,21 +57,23 @@ def media_reviews(pelican_obj):
             all_media_x = json.load(f)["data"]
 
         grunt.media_type = media_type
-        required_fields = grunt.get_validation_fields()
+        validation_fields = grunt.get_validation_fields()
         grunt.check_media_type()
 
         # reset the dict that stores all data for this media type
         media_data = grunt.update_globals()
 
-        # 1. Validate that each item has the required fields (these are user-
-        # created so they may have forgotten a field).
-        errors = grunt.validate(all_media_x, required_fields)
+        # 1. Validate that each item has the required fields and that they are
+        # in the correct format (these are user-created so they may have
+        # forgotten a field or put the wrong data in it).
+        errors = grunt.validate(all_media_x, validation_fields)
         if len(errors) > 0:
             exit("\n".join(errors))
 
         # 2. Convert data (eg. a date from string to datetime object).
+        convertion_fields = grunt.get_conversion_fields()
         all_media_x = grunt.convert_types(
-            all_media_x, required_fields, pelican_obj.settings["TIMEZONE"]
+            all_media_x, convertion_fields, pelican_obj.settings["TIMEZONE"]
         )
 
         # 3. Add missing data (id, thumbnail names and hashes if available).

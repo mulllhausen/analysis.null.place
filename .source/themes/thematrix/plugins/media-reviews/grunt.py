@@ -98,29 +98,25 @@ def init_jinja_environment(pelican_obj):
     jinja_default_settings = copy.deepcopy(pelican_obj.settings)
     jinja_default_settings["ARTICLE_TYPE"] = "media-review"
 
-def setup_filters():
-    global jinja_environment
-    jinja_environment.filters["getNBSP"] = getNBSP
-
-def getNBSP(num):
-    return "&#160;" * num
-
 def convert_types(all_media_x, field_formats, timezone_name):
     # note: only call this function if validate() passes
     localtz = pytz.timezone(timezone_name)
     for a_media in all_media_x:
         for (k, t) in field_formats.iteritems():
-            if (isinstance(t, basestring) and "datetime" in t):
-                date_format = re.sub(r"datetime\:[\s]*", "", t)
-                a_media[k] = localtz.localize(
-                    datetime.datetime.strptime(a_media[k], date_format)
-                )
+            if isinstance(t, basestring):
+                if ("?" in t) and (a_media[k] is None):
+                    continue
+                if "datetime" in t:
+                    date_format = re.sub(r"datetime\?{0,1}\:[\s]*", "", t)
+                    a_media[k] = localtz.localize(
+                        datetime.datetime.strptime(a_media[k], date_format)
+                    )
     return all_media_x
 
 # validation
 
 def get_validation_fields():
-    required_fields = { # fields common to all types
+    validation_fields = { # fields common to all types
         "title": basestring,
         "year": int,
         "thumbnail": basestring,
@@ -129,24 +125,34 @@ def get_validation_fields():
         "reviewTitle": basestring,
         "review": basestring,
         "genres": list,
-        "reviewDate": "datetime: %Y-%m-%d" # a custom 'type'
+        "reviewCreated": "datetime: %Y-%m-%d", # a custom 'type'
+        "reviewUpdated": "datetime?: %Y-%m-%d" # a custom 'type' (nullable)
     }
     if (media_type == "movie"):
-        required_fields.update({
+        validation_fields.update({
             "IMDBID": basestring,
         })
     elif (media_type == "tv-series"):
-        required_fields.update({
+        validation_fields.update({
             "season": int,
             "IMDBID": basestring,
         })
     elif (media_type == "book"):
-        required_fields.update({
+        validation_fields.update({
             "author": basestring,
             "goodreadsID": basestring,
             "isbn": basestring,
         })
-    return required_fields
+    return validation_fields
+
+def get_conversion_fields():
+    convertion_fields = get_validation_fields()
+
+    # note: validation of these fields was done as dates, however they are only
+    # needed as strings from here on (eg. "1999-12-31")
+    convertion_fields["reviewCreated"] = basestring
+    convertion_fields["reviewUpdated"] = basestring
+    return convertion_fields
 
 def check_media_type():
     global allowed_media_types
@@ -168,8 +174,10 @@ def validate(all_media_x, required_fields):
             if k not in a_media:
                 errors.append("'%s' does not have element '%s'" % (title, k))
             elif (isinstance(t, basestring) and "datetime" in t):
+                if ("?" in t) and (a_media[k] is None): # nullable
+                    continue
                 try:
-                    date_format = re.sub(r"datetime\:[\s]*", "", t)
+                    date_format = re.sub(r"datetime\?{0,1}\:[\s]*", "", t)
                     datetime.datetime.strptime(a_media[k], date_format)
                 except:
                     errors.append(
@@ -227,6 +235,7 @@ def get_media_type_caps():
         return "Book"
 
 def get_id(a_media):
+    # note: keep this function in sync with media-reviews.js getMediaID()
     if (media_type == "movie"):
         # a movie's id is the alphanumeric title and year chars
         id_ = "%s %s" % (a_media["title"], a_media["year"])
@@ -244,6 +253,9 @@ def get_id(a_media):
 
     # replace all whitespace with a dash
     id_ = re.sub(r"\s+", "-", id_)
+
+    # replace multiple dashes with a single dash
+    id_ = re.sub(r"-+", "-", id_)
 
     # remove any non-alphanumeric characters
     id_ = re.sub(r"[^a-z0-9-]*", "", id_, flags = re.IGNORECASE)
@@ -320,6 +332,15 @@ def save_1_data_json(a_media, required_fields):
     json_data_content = {
         k: v for (k, v) in a_media.iteritems() if (k in required_fields)
     }
+    #date_created_str = json_data_content["reviewCreated"].strftime("%d %B %Y")
+    #del json_data_content["reviewCreated"]
+    #json_data_content["reviewCreated"] = date_created_str
+
+    #if json_data_content["reviewUpdated"] is not None:
+    #    date_updated_str = json_data_content["reviewUpdated"].strftime("%d %B %Y")
+    #    del json_data_content["reviewUpdated"]
+    #    json_data_content["reviewUpdated"] = date_updated_str
+
     with open(json_data_file, "w") as f:
         json.dump(json_data_content, f)
 
@@ -329,7 +350,7 @@ def save_1_data_json(a_media, required_fields):
 def get_datafile_fields():
     required_fields = [
         "rating", "title", "spoilers", "reviewTitle", "reviewHash", "year",
-        "thumbnailHash", "thumbnailHeight"
+        "thumbnailHash", "thumbnailHeight", "reviewCreated", "reviewUpdated"
     ]
     if (media_type == "movie"):
         required_fields.extend(["IMDBID"])
@@ -358,10 +379,10 @@ def get_sort_params(sort_mode):
         key = lambda x: (x["rating"], x["title"])
         reverse = False
     elif (sort_mode == "newest"):
-        key = lambda x: x["reviewDate"]
+        key = lambda x: x["reviewCreated"]
         reverse = False
     elif (sort_mode == "oldest"):
-        key = lambda x: x["reviewDate"]
+        key = lambda x: x["reviewCreated"]
         reverse = True
     elif (sort_mode == "title-a-z"):
         key = lambda x: x["title"]
@@ -556,6 +577,7 @@ def get_search_placeholder():
 def get_linked_data(a_media):
     """
     data that is placed in <script type="application/ld+json"></script>
+    spec: https://schema.org/docs/full.html
     """
     if media_type == "movie":
         item_reviewed_type = "Movie"
@@ -578,7 +600,11 @@ def get_linked_data(a_media):
         },
         "image": get_img_data(a_media["id_"], "larger", get_hash = True)["url"],
         "description": a_media["reviewTitle"],
-        "datePublished": a_media["reviewDate"].strftime("%Y-%m-%d"),
+        "datePublished": a_media["reviewCreated"], # .strftime("%Y-%m-%d"),
+        "dateModified": a_media["reviewUpdated"],
+        # "dateModified": None if a_media["reviewUpdated"] is None else \
+        # a_media["reviewUpdated"].strftime("%Y-%m-%d"),
+
         "reviewRating": {
             "@type": "Rating",
             "bestRating": 5,
@@ -599,7 +625,7 @@ def get_linked_data(a_media):
 
 def prepare_landing_page_data(all_media_x, media_data):
     media_data["latest_review"] = \
-    max(all_media_x, key = lambda x: x["reviewDate"])["reviewDate"]
+    max(all_media_x, key = lambda x: x["reviewCreated"])["reviewCreated"]
 
     media_data["preloads"]["img"] = [
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in

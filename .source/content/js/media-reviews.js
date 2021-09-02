@@ -8,8 +8,6 @@
 //      - making any changes in the search area
 // todo - offline warning and disable search when offline
 
-do a search - after() is being called twice
-
 // globals
 
 searchText = {
@@ -119,6 +117,7 @@ function resetSearchBox() {
 }
 
 function renderNextPage(totalMediaCount, useFirstPageList_, callback) {
+    showMediaCount(false);
     var pinnedMediaIndex = getPinnedMediaIndex();
     renderNextPagePlaceholders(totalMediaCount, pinnedMediaIndex);
 
@@ -631,6 +630,7 @@ function get1MediaIDandHash(mediaItemIndex) {
 }
 
 function getMediaID(mediaData) {
+    // note: keep this function in sync with media-reviews/grunt.py:get_id()
     var id = '';
     switch (siteGlobals.mediaType) {
         case 'book':
@@ -646,6 +646,7 @@ function getMediaID(mediaData) {
     }
     return id.
     replace(/\s+/g,'-'). // replace all whitespace with a dash
+    replace(/-+/g,'-'). // replace multiple dashes with a single dash
     replace(/[^a-z0-9-]*/gi, ''). // remove any non-alphanumeric characters
     toLowerCase();
 }
@@ -678,7 +679,6 @@ function infiniteLoader() {
 }
 
 function areAllMediaItemsRendered() {
-    // todo use arePlaceholdersPopulated areAllPlaceholdersPopulated()
     return (nextMediaIndex == numMediaFound);
 }
 
