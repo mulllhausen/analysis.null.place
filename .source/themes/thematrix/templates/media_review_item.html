@@ -102,5 +102,25 @@
             </button>
         </a>
     </div>
+    <div class="dates-spacer">
+{#
+    this div goes behind .review-dates and adds some empty height space to keep
+    the text in .review-dates below the rest of the above content
+#}
+    </div>
+    <div class="review-dates">
+        <span class="review-created">
+{%- if media != None -%}
+            added {{ media.review_created }}
+{%- endif -%}
+        </span>
+        <span class="review-updated">
+            <a>
+{%- if media != None and media.review_updated != None -%}
+                updated {{ media.review_updated }}
+{%- endif -%}
+            </a>
+        </span>
+    </div>
 </div>
 {% endmacro %}

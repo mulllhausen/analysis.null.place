@@ -507,6 +507,10 @@ def save_1_media_html(a_media, media_data, total_media_count):
         a_media["IMDBID"]
     a_media["html_review"] = format_review(a_media["review"])
 
+    # convert javascript naming format to python
+    a_media["review_created"] = a_media["reviewCreated"]
+    a_media["review_updated"] = a_media["reviewUpdated"]
+
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
 

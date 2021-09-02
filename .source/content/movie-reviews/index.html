@@ -3,14 +3,13 @@
     <title>movie reviews</title>
     <meta name="slug" content="movie-reviews"/>
     <meta name="date" content="2019-01-23"/>
-    {#<meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS.movie.latest_review }}"/>#}
-    <meta name="modified" content="{{ MEDIA_REVIEWS.movie.latest_review }}"/>
+    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS.movie.latest_review }}"/>
     <meta name="category" content="reviews"/>
     <meta name="tags" content="movie, reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
     <meta name="img_preloads" content="{{ MEDIA_REVIEWS.movie.preloads.img | join(',') }}"/>
-    <meta name="summary" content="My movie reviews. A big work in progress!"/>
+    <meta name="summary" content="My movie reviews."/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for movies."/>
     <meta name="jsons" content="{{ MEDIA_REVIEWS.movie.preloads.json | join(',') }}"/>
 </head>

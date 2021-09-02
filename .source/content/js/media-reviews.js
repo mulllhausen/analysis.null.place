@@ -243,7 +243,7 @@ function get1MediaItemPlaceholderHTML(mediaIndex) {
     return '<div ' +
         ' class="media ' + siteGlobals.mediaType + ' placeholder pulsate"' +
         ' id="filter-index-' + mediaIndex + '"' +
-        ' style="min-height:' + (siteGlobals.maxThumbHeight + 41) + 'px;"' +
+        ' style="min-height:' + (siteGlobals.maxThumbHeight + 65) + 'px;"' +
     '>' + mediaPlaceholderInnerHTML + '</div>';
 }
 
@@ -295,6 +295,17 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     } else {
         mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'none';
         mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
+    }
+    mediaEl.querySelector('.review-created').innerHTML = 'added ' +
+    mediaData.reviewCreated;
+
+    if (mediaData.reviewUpdated != null) {
+        var a = mediaEl.querySelector('.review-updated a');
+
+        a.href = siteGlobals.githubURL + '/commits/master/movie-reviews/json/' +
+        'review-' + mediaData.id_ + '.json';
+
+        a.innerHTML = 'updated ' + mediaData.reviewUpdated;
     }
     removeCSSClass(mediaEl, 'placeholder');
     removeCSSClass(mediaEl, 'pulsate');

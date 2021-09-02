@@ -196,3 +196,27 @@
 .some-star:not(:last-child) {
     margin-right: 3px;
 }
+
+.media .dates-spacer {
+    height: 24px;
+    float: left;
+    clear: both;
+    width: 100%;
+}
+.media .review-dates {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 10px;/*same as .media padding*/
+    font-size: 12px;
+    width: 100%;
+}
+.media .review-created {
+    margin-left: 10px;/*same as .media padding*/
+    float: left;
+}
+.media .review-updated {
+    margin-right: 10px;/*same as .media padding*/
+    float: right;
+}

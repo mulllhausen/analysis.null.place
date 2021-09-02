@@ -2,12 +2,12 @@
 <head>
     <title>{{ media.type_ }} reviews</title>
     <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
-    <meta name="date" content="{{ media.reviewCreated }}"/>
+    <meta name="date" content="{{ media.review_created }}"/>
 {% if media.review_updated != None %}
-    <meta name="modified" content="{{ media.reviewUpdated }}"/>
+    <meta name="modified" content="{{ media.review_updated }}"/>
 {% endif %}
     <meta name="category" content="reviews"/>
-    <meta name="description" content="My {{ media.type_ }} reviews. A big work in progress!"/>
+    <meta name="description" content="My {{ media.type_ }} reviews."/>
     <meta name="tags" content="{{ media.type_plural }}, reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
