@@ -28,6 +28,7 @@ def media_reviews(pelican_obj):
         etc files.
         9. Save the <id>/index.html pages
         10. Prepare the data for article <media>-reviews/index.html pages.
+        11. Prepare the data for feeds and sitemap.
     """
     # todo:
     # in future, once src-lists grow beyond, say 10,000 review items find a more
@@ -138,6 +139,7 @@ def media_reviews(pelican_obj):
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = \
         grunt.prepare_landing_page_data(all_media_x, media_data)
 
+        # 11. Prepare the data for feeds and sitemap.
         pelican_obj.settings["MEDIA_REVIEWS"][media_type]["feed_and_sitemap_data"] = \
         grunt.prepare_feeds_and_sitemap_data(all_media_x)
 
