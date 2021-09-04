@@ -71,9 +71,8 @@ def media_reviews(pelican_obj):
             exit("\n".join(errors))
 
         # 2. Convert data (eg. a date from string to datetime object).
-        convertion_fields = grunt.get_conversion_fields()
         all_media_x = grunt.convert_types(
-            all_media_x, convertion_fields, pelican_obj.settings["TIMEZONE"]
+            all_media_x, validation_fields, pelican_obj.settings["TIMEZONE"]
         )
 
         # 3. Add missing data (id, thumbnail names and hashes if available).
@@ -97,8 +96,7 @@ def media_reviews(pelican_obj):
             a_media = grunt.save_1_review_json(a_media)
 
             # 6. Save the data-<id>.json files.
-            datafile_fields = grunt.get_datafile_fields()
-            a_media = grunt.save_1_data_json(a_media, datafile_fields)
+            a_media = grunt.save_1_data_json(a_media)
 
             all_media_x[i] = a_media
 
@@ -139,6 +137,9 @@ def media_reviews(pelican_obj):
         # 10. Prepare the data for article <media>-reviews/index.html pages.
         pelican_obj.settings["MEDIA_REVIEWS"][media_type] = \
         grunt.prepare_landing_page_data(all_media_x, media_data)
+
+        pelican_obj.settings["MEDIA_REVIEWS"][media_type]["feed_and_sitemap_data"] = \
+        grunt.prepare_feeds_and_sitemap_data(all_media_x)
 
 def register():
     # note that initialized is the very first signal. we want this to run before

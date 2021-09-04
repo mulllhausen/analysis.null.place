@@ -251,15 +251,6 @@ function removePlaceholder(mediaIndex) {
     deleteElement(document.getElementById('filter-index-' + mediaIndex));
 }
 
-function unhideRenderedMedia() {
-    var hiddenMediaDivs =
-    document.querySelectorAll('#reviewsArea .media.hidden');
-
-    foreach(hiddenMediaDivs, function (i, el) {
-        el.style.display = 'block';
-    });
-}
-
 function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     mediaEl.querySelector('a.link-to-self.chain-link').href = generateCleanURL(
         siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
@@ -296,6 +287,7 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'none';
         mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
     }
+    mediaEl.querySelector('.link-external').href = getExternalLinkURL(mediaData);
     mediaEl.querySelector('.review-created').innerHTML = 'added ' +
     mediaData.reviewCreated;
 
@@ -342,7 +334,7 @@ function loadFullReview(e) {
         // get the external link button from the dom, since we no longer have
         // access to the mediaData to build it from scratch
         var externalLinkButtonHTML =
-        mediaEl.querySelector('button.external-site').outerHTML;
+        mediaEl.querySelector('a.link-external').outerHTML;
 
         switch (status) {
             case 'complete':
@@ -363,7 +355,7 @@ function loadFullReview(e) {
     });
 }
 
-function linkTo1Media(e) {
+/*function linkTo1Media(e) {
     // a link within a media item was clicked. figure out which one, and action
     // it
     stopBubble(e);
@@ -464,13 +456,14 @@ function goToOtherMedia(url) {
     }
     else location.href = generateCleanURL(url);
     return false; // prevent bubble up
-}
+}*/
 
 function linkToSelf(mediaEl, mediaID) {
-    currentlySearching = false;
-    foreach(document.querySelectorAll('.media.pinned'), function (_, otherMediaEl) {
+    var otherMediaEls = document.querySelectorAll('.media.pinned');
+    for (var i = 0; i < otherMediaEls.length; i++) {
+        var otherMediaEl = otherMediaEls[i];
         removeCSSClass(otherMediaEl, 'pinned');
-    });
+    }
     addCSSClass(mediaEl, 'pinned');
     if (typeof window.history.replaceState == 'function') {
         var url = siteGlobals.mediaType + '-reviews/' + mediaID + '/';
@@ -513,26 +506,19 @@ function formatReview(review) {
     return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
 }
 
-function getExternalLinkButtonHTML(mediaData) {
+function getExternalLinkURL(mediaData) {
     var externalLink = 'https://';
     var externalSiteLogo = siteGlobals.siteURL + '/img/';
     switch (siteGlobals.mediaType) {
         case 'book':
             externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
-            externalSiteLogo += 'goodreads';
             break;
         case 'movie':
         case 'tv-series':
             externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
-            externalSiteLogo += 'imdb';
             break;
     }
-    externalSiteLogo += '-logo-button.png';
-    return '<a class="link-external" href="' + externalLink + '">' +
-        '<button class="external-site">' +
-            '<img src="' + externalSiteLogo + '">' +
-        '</button>' +
-    '</a>';
+    return externalLink;
 }
 
 var currentMediaCountPanelPosition = 'inline'; // init

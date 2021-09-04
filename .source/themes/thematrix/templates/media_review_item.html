@@ -62,7 +62,7 @@
     </h3>
     <h4 class="review-title">
 {%- if media != None -%}
-{{ media.reviewTitle }}
+{{ media.review_title }}
 {%- endif -%}
     </h4>
 {# when no media exists, show both, then we will hide one with js later #}
@@ -74,12 +74,13 @@
 {% endif %}
     <br>
     <div class="review-text">
-{% if media != None %}
+{% if media == None %}
+        <button class="load-review">load review</button>
+{% else %}
         {{ media.html_review }}
 {% endif %}
-        <button class="load-review">load review</button>
         <a
-            class="link-external"
+            class="link-external" target="_blank"
 {% if media != None %}
             href="{{ media.external_link_url }}"
 {% endif %}
@@ -115,11 +116,16 @@
 {%- endif -%}
         </span>
         <span class="review-updated">
-            <a>
-{%- if media != None and media.review_updated != None -%}
-                updated {{ media.review_updated }}
+{%- if media == None -%}
+            <a target="_blank"></a>
+{%- else %}
+    {% if media.review_updated != None -%}
+            <a
+                target="_blank"
+                href="{{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json"
+            >updated {{ media.review_updated }}</a>
+    {%- endif -%}
 {%- endif -%}
-            </a>
         </span>
     </div>
 </div>

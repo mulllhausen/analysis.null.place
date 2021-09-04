@@ -24,14 +24,14 @@
     </url>
         {% endfor %}
     {% endfor %}
-    {% if MEDIA_REVIEWS %}
-        {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+    {% if MEDIA_REVIEW_TYPES %}
+        {% for media_type in MEDIA_REVIEW_TYPES %}
 
     <!-- begin URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
-            {% for a_media in media_data['all_data'] %}
+            {% for a_media in MEDIA_REVIEWS[media_type].feed_and_sitemap_data %}
     <url>
-        <loc>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media['id'] }}/</loc>
-        <lastmod>{{ a_media['reviewDate'] | strftime('%Y-%m-%d') }}</lastmod>
+        <loc>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</loc>
+        <lastmod>{{ a_media.last_modified }}{# Y-m-d #}</lastmod>
         <priority>0.8</priority>
     </url>
             {% endfor %}

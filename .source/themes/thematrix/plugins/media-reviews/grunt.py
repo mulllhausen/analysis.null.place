@@ -1,5 +1,7 @@
 #!/usr/bin/env python2.7
 
+# todo - external links and links between media items
+
 """
 shared functionality to build indexes for all types of review pages and to
 download thumbnails
@@ -103,15 +105,36 @@ def convert_types(all_media_x, field_formats, timezone_name):
     localtz = pytz.timezone(timezone_name)
     for a_media in all_media_x:
         for (k, t) in field_formats.iteritems():
+
+            # convert javascript naming format to python naming format
+            # and delete the javascript naming format (single source of truth)
+            underscore_name = camelCase_to_underscores(k)
+            if underscore_name != k:
+                a_media[underscore_name] = a_media[k]
+                del a_media[k]
+                k = underscore_name # for the remainder of this loop
+
             if isinstance(t, basestring):
                 if ("?" in t) and (a_media[k] is None):
                     continue
                 if "datetime" in t:
                     date_format = re.sub(r"datetime\?{0,1}\:[\s]*", "", t)
-                    a_media[k] = localtz.localize(
+                    a_media[k + "_date"] = localtz.localize(
                         datetime.datetime.strptime(a_media[k], date_format)
                     )
+
     return all_media_x
+
+def camelCase_to_underscores(s):
+    # convert theThing to the_thing
+    # and convert goodreadsID to goodreads_id
+    # using a negative lookbehind
+    underscored = re.sub(r"(?<![A-Z])([A-Z])", "_\\1", s)
+
+    if underscored[0] == "_":
+        underscored = underscored[1:]
+
+    return underscored.lower()
 
 # validation
 
@@ -144,15 +167,6 @@ def get_validation_fields():
             "isbn": basestring,
         })
     return validation_fields
-
-def get_conversion_fields():
-    convertion_fields = get_validation_fields()
-
-    # note: validation of these fields was done as dates, however they are only
-    # needed as strings from here on (eg. "1999-12-31")
-    convertion_fields["reviewCreated"] = basestring
-    convertion_fields["reviewUpdated"] = basestring
-    return convertion_fields
 
 def check_media_type():
     global allowed_media_types
@@ -318,47 +332,40 @@ def save_1_review_json(a_media):
     with open(json_review_file, "w") as f:
         json.dump({ "reviewFull": a_media["review"] }, f)
 
-    a_media["reviewHash"] = get_file_hash(json_review_file)
+    a_media["review_hash"] = get_file_hash(json_review_file)
     return a_media
 
-def save_1_data_json(a_media, required_fields):
+def save_1_data_json(a_media):
     json_data_file = "%s/%s-reviews/json/data-%s.json" % (
         content_path, media_type, a_media["id_"]
     )
-
     # convert python naming format to javascript naming format
-    a_media["thumbnailHeight"] = a_media["thumb_height"]
-
     json_data_content = {
-        k: v for (k, v) in a_media.iteritems() if (k in required_fields)
+        "rating": a_media["rating"],
+        "title": a_media["title"],
+        "spoilers": a_media["spoilers"],
+        "reviewUpdated": a_media["review_updated"],
+        "reviewHash": a_media["review_hash"],
+        "year": a_media["year"],
+        "reviewCreated": a_media["review_created"],
+        "thumbnailHeight": a_media["thumb_height"],
+        "reviewTitle": a_media["review_title"],
+        "thumbnailHash": a_media["thumbnail_hash"]
     }
-    #date_created_str = json_data_content["reviewCreated"].strftime("%d %B %Y")
-    #del json_data_content["reviewCreated"]
-    #json_data_content["reviewCreated"] = date_created_str
-
-    #if json_data_content["reviewUpdated"] is not None:
-    #    date_updated_str = json_data_content["reviewUpdated"].strftime("%d %B %Y")
-    #    del json_data_content["reviewUpdated"]
-    #    json_data_content["reviewUpdated"] = date_updated_str
+    if (media_type == "movie"):
+        json_data_content["IMDBID"] = a_media["imdbid"]
+    elif (media_type == "tv-series"):
+        json_data_content["season"] = a_media["season"]
+        json_data_content["IMDBID"] = a_media["imdbid"]
+    elif (media_type == "book"):
+        json_data_content["author"] = a_media["author"]
+        json_data_content["goodreadsID"] = a_media["goodreads_id"]
 
     with open(json_data_file, "w") as f:
         json.dump(json_data_content, f)
 
-    a_media["datafileHash"] = get_file_hash(json_data_file)
+    a_media["datafile_hash"] = get_file_hash(json_data_file)
     return a_media
-
-def get_datafile_fields():
-    required_fields = [
-        "rating", "title", "spoilers", "reviewTitle", "reviewHash", "year",
-        "thumbnailHash", "thumbnailHeight", "reviewCreated", "reviewUpdated"
-    ]
-    if (media_type == "movie"):
-        required_fields.extend(["IMDBID"])
-    elif (media_type == "tv-series"):
-        required_fields.extend(["season", "IMDBID"])
-    elif (media_type == "book"):
-        required_fields.extend(["author", "goodreadsID"])
-    return required_fields
 
 def sort_media(sort_mode, all_media_x):
     return sorted(all_media_x, **get_sort_params(sort_mode))
@@ -379,10 +386,10 @@ def get_sort_params(sort_mode):
         key = lambda x: (x["rating"], x["title"])
         reverse = False
     elif (sort_mode == "newest"):
-        key = lambda x: x["reviewCreated"]
+        key = lambda x: x["review_created"]
         reverse = False
     elif (sort_mode == "oldest"):
-        key = lambda x: x["reviewCreated"]
+        key = lambda x: x["review_created"]
         reverse = True
     elif (sort_mode == "title-a-z"):
         key = lambda x: x["title"]
@@ -412,7 +419,7 @@ def save_full_list_json(
     # todo: switch to generator once the list becomes too big
     # stackoverflow.com/questions/21663800
     list_of_tuples = [
-        [a_media["id_"], a_media["datafileHash"]] for a_media in the_list
+        [a_media["id_"], a_media["datafile_hash"]] for a_media in the_list
     ]
     if return_preloads:
         preload_ids = [a_media["id_"] for a_media in the_list]
@@ -443,7 +450,7 @@ def get_img_url(a_media, img_size):
         media_type,
         img_size,
         a_media["id_"],
-        a_media["thumbnailHash"]
+        a_media["thumbnail_hash"]
     )
 
 def get_json_data_url(a_media):
@@ -451,7 +458,7 @@ def get_json_data_url(a_media):
         jinja_default_settings["SITEURL"],
         media_type,
         a_media["id_"],
-        a_media["datafileHash"]
+        a_media["datafile_hash"]
     )
 
 def get_preload_data(preload_data, full_list_data):
@@ -501,15 +508,11 @@ def save_1_media_html(a_media, media_data, total_media_count):
     a_media["external_link_url"] = "https://"
     if media_type == "book":
         a_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
-        a_media["goodreadsID"]
+        a_media["goodreads_id"]
     else:
         a_media["external_link_url"] += "www.imdb.com/title/%s" % \
-        a_media["IMDBID"]
+        a_media["imdbid"]
     a_media["html_review"] = format_review(a_media["review"])
-
-    # convert javascript naming format to python
-    a_media["review_created"] = a_media["reviewCreated"]
-    a_media["review_updated"] = a_media["reviewUpdated"]
 
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
@@ -603,12 +606,8 @@ def get_linked_data(a_media):
             "genre": a_media["genres"]
         },
         "image": get_img_data(a_media["id_"], "larger", get_hash = True)["url"],
-        "description": a_media["reviewTitle"],
-        "datePublished": a_media["reviewCreated"], # .strftime("%Y-%m-%d"),
-        "dateModified": a_media["reviewUpdated"],
-        # "dateModified": None if a_media["reviewUpdated"] is None else \
-        # a_media["reviewUpdated"].strftime("%Y-%m-%d"),
-
+        "description": a_media["review_title"],
+        "datePublished": a_media["review_created"],
         "reviewRating": {
             "@type": "Rating",
             "bestRating": 5,
@@ -616,6 +615,9 @@ def get_linked_data(a_media):
         },
         "reviewBody": re.sub("<[^<]+?>", "", a_media["review"])
     }
+    if a_media["review_updated"] is not None:
+        linked_data["dateModified"] = a_media["review_updated"]
+
     if media_type == "tv-series":
         linked_data["itemReviewed"]["containsSeason"] = {
             "@type": "TVSeason",
@@ -629,7 +631,7 @@ def get_linked_data(a_media):
 
 def prepare_landing_page_data(all_media_x, media_data):
     media_data["latest_review"] = \
-    max(all_media_x, key = lambda x: x["reviewCreated"])["reviewCreated"]
+    max(all_media_x, key = lambda x: x["review_created"])["review_created"]
 
     media_data["preloads"]["img"] = [
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in
@@ -647,6 +649,28 @@ def prepare_landing_page_data(all_media_x, media_data):
     media_data["not_media_types_plural"] = not_media_types_plural
     return media_data
 
+def prepare_feeds_and_sitemap_data(all_media_x):
+    feed_and_sitemap_data = []
+    # only allow these fields in result
+    fields = [
+        "review_created", "review_created_date", "title", "season", "id_",
+        "review_title", "last_modified_Ymd"
+    ]
+    for a_media in all_media_x:
+        a_filtered_media = {
+            field: a_media[field] for field in fields if field in a_media
+        }
+        a_filtered_media["last_modified"] = a_media["review_created"] if \
+        a_media["review_updated"] is None else a_media["review_updated"]
+
+        a_filtered_media["last_modified_date"] = \
+        a_media["review_created_date"] if a_media["review_updated"] is None \
+        else a_media["review_updated_date"]
+
+        feed_and_sitemap_data.append(a_filtered_media)
+
+    return feed_and_sitemap_data
+
 # downloading thumbnails
 
 def add_missing_data(all_media_x):
@@ -654,7 +678,7 @@ def add_missing_data(all_media_x):
         a_media["id_"] = get_id(a_media)
         img_thumb_data = get_img_data(a_media["id_"], "thumb", get_hash = True)
         if img_thumb_data["hash"] is not None:
-            a_media["thumbnailHash"] = img_thumb_data["hash"]
+            a_media["thumbnail_hash"] = img_thumb_data["hash"]
 
         for img_size in ("thumb", "larger"):
             if (

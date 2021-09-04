@@ -1,3 +1,4 @@
+{#
 {% set include_stylesheets = False %}
 {% set include_preloads = False %}
 {% set include_ie_shim = False %}
@@ -16,11 +17,11 @@
 {% endif %}
 
 {% block meta_custom %}
-{#
+{ #
     we want the search engine to read the linked data on this page, but not to
     execute the javascript redirect below because that page contains other
     reivews in addition to this one
-#}
+# }
 <meta name="robots" content="index, nofollow"/>
 {% endblock %}
 
@@ -109,3 +110,4 @@
 <iframe src="{{ SITEURL }}/{{ MEDIA_REVIEWS["CURRENT_MEDIA_TYPE"] }}-reviews/redirect.html#!{{ MEDIA_REVIEWS["CURRENT_MEDIA_DATA"]["id"] }}"></iframe>
 {% include 'noscript_banner.html' %}
 {% endblock %}
+#}
