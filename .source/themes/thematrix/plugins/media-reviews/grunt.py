@@ -1,7 +1,5 @@
 #!/usr/bin/env python2.7
 
-# todo - external links and links between media items
-
 """
 shared functionality to build indexes for all types of review pages and to
 download thumbnails
