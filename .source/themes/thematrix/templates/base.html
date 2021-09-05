@@ -8,6 +8,12 @@
         {# le styles (must come before all scripts) #}
         {% if include_stylesheets %}
         <link rel="stylesheet" href="{{ QS_LINK['/theme/css/thematrix.css'] }}"/>
+            {% if (page and page.stylesheets) %}
+                {% set stylesheets = page.stylesheets.split(',') %}
+                {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{{ QS_LINK[stylesheet] }}"/>
+                {% endfor %}
+            {% endif %}
             {% if (article and article.stylesheets) %}
                 {% set stylesheets = article.stylesheets.split(',') %}
                 {% for stylesheet in stylesheets %}
@@ -76,7 +82,9 @@
         {% endif %}
 
         {# le linked data (used by search engines for previews) #}
-        {% if LINKED_DATA %}
+        {% if page and page.linked_data %}
+        <script type="application/ld+json">{{ page.linked_data | replace("`", "\"") }}</script>
+        {% elif LINKED_DATA %}
             {% set _ = LINKED_DATA.__setitem__("url", SITEURL + "/" + output_file | replace("index.html", "")) %}
             {% set _ = LINKED_DATA.__setitem__("inLanguage", "English") %}
         <script type="application/ld+json">{{ LINKED_DATA | tojson }}</script>
@@ -129,6 +137,7 @@
             </div>
             <div class="col-2">{# must come before col-1! stackoverflow.com/a/5195902 #}
                 {% with position = "side" %}
+
                 <div class="side-bar">
                     <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
                     {% include 'menu.html' %}
@@ -138,10 +147,11 @@
                         {% include 'comments_opener.html' %}
                     {% endif %}
                 {% endwith %}
+
             </div>
             <div class="col-1">
-{%- block content -%}
-{%- endblock -%}
+{% block content %}
+{% endblock %}
             </div>
         </div>
         <div id="adsArchiveArea" class="important-hidden">
@@ -176,6 +186,17 @@
         {% if article %}
             {% if article.scripts %}
                 {% set scripts = article.scripts.split(',') %}
+                {% for script in scripts %}
+        <script src="{{ QS_LINK[script] }}"></script>
+                {% endfor %}
+            {% endif %}
+            {% if COMMENTS_SCRIPTS %}
+        <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
+            {% endif %}
+        {% endif %}
+        {% if page %}
+            {% if page.scripts %}
+                {% set scripts = page.scripts.split(',') %}
                 {% for script in scripts %}
         <script src="{{ QS_LINK[script] }}"></script>
                 {% endfor %}

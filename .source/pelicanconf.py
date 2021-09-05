@@ -115,29 +115,9 @@ STATIC_FILE_MERGES = {
 }
 DELETE_PRE_MERGE_FILES = False
 
-MEDIA_REVIEWS = {
-    'book': {
-        'src-list': 'book-reviews/json/list-all.json',
-        'caps_name': 'Book',
-        'img_preloads': None, # gets populated by the plugin
-        'jsons': None, # gets populated by the plugin
-        'hash-bang-URLs': None # gets populated by the plugin
-    },
-    'movie': {
-        'src-list': 'movie-reviews/json/list-all.json',
-        'caps_name': 'Movie',
-        'img_preloads': None, # gets populated by the plugin
-        'jsons': None, # gets populated by the plugin
-        'hash-bang-URLs': None # gets populated by the plugin
-    },
-    'tv-series': {
-        'src-list': 'tv-series-reviews/json/list-all.json',
-        'caps_name': 'TV-Series',
-        'img_preloads': None, # gets populated by the plugin
-        'jsons': None, # gets populated by the plugin
-        'hash-bang-URLs': None # gets populated by the plugin
-    }
-}
+# tell the plugin which types of media review pages to create
+MEDIA_REVIEW_TYPES = ['book', 'movie', 'tv-series']
+MEDIA_REVIEWS_PAGE_SIZE = 10 # items
 
 LOAD_CONTENT_CACHE = False
 PLUGIN_PATHS = [THEME + '/plugins']

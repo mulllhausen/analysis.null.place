@@ -22,3 +22,17 @@
 /theme/js/comments-manager.js
 /theme/js/facebook-comments.js
 /theme/js/disqus-comments.js
+
+# ignore built files for media reviews under the .source dir. the files are all
+# copied to output/ and versioned there - no need for duplicates. and note:
+# media reviews are built from json/list-all.json files - these need versioning.
+/.source/content/*-reviews/img/larger-*jpg
+/.source/content/*-reviews/img/thumb-*jpg
+/.source/content/*-reviews/json/data-*.json
+/.source/content/*-reviews/json/review-*.json
+/.source/content/*-reviews/json/search-*.json
+# remove all list files
+/.source/content/*-reviews/json/list-*.json
+# add back list-all files - the master file from which everything else is built
+!/.source/content/*-reviews/json/list-all.json
+/.source/content/pages/*-reviews/

@@ -18,17 +18,73 @@ import copy
 import PIL
 import jinja2
 import errno
+import collections
 
+# globals for this module
 media_type = "" # init
 output_path = "" # init
 content_path = "" # init
 jinja_environment = None # init
 jinja_default_settings = None # init
+page_size = 0 # init
+allowed_media_types = ("movie", "tv-series", "book")
+allowed_thumbnail_states = ("original", "larger", "thumb")
+sort_modes = (
+    "highest-rating",
+    "lowest-rating",
+    "newest",
+    "oldest",
+    "title-a-z",
+    "title-z-a"
+)
+not_media_types = [] # init
+not_media_types_plural = [] # init
+media_type_plural = "" # init
+media_type_caps = "" # init
+verb_present = "" # init
+verb_past = "" # init
+search_placeholder = "" # init
+desired_width_thumbnail = 0 # init (px)
+desired_width_larger = 0 # init (px)
 
-def plural(x):
-    if (x[-1] == "s"):
-        return x
-    return "%ss" % x
+def update_globals():
+    global page_size, not_media_types, media_type_caps, search_placeholder, \
+    not_media_types_plural, media_type_plural, verb_past, verb_present
+    # note: call this function after check_media_type()
+
+    page_size = jinja_default_settings["MEDIA_REVIEWS_PAGE_SIZE"]
+    not_media_types = [
+        t for t in allowed_media_types if (t != media_type)
+    ]
+    media_type_caps = get_media_type_caps()
+    search_placeholder = get_search_placeholder()
+    not_media_types_plural = [plural(t) for t in not_media_types]
+    media_type_plural = plural(media_type)
+    verb_present = "read" if (media_type == "book") else "watch"
+    verb_past = "read" if (media_type == "book") else "watched"
+    return {
+        "file_hashes": {},
+        "preloads": {},
+        "verb_present": verb_present,
+        "verb_past": verb_past,
+        "type_plural": media_type_plural,
+        "type_": media_type,
+        "not_media_types": not_media_types,
+        "not_media_types_plural": not_media_types_plural,
+        "search_placeholder": search_placeholder
+    }
+
+def plural(english_word):
+    """
+    Given the an english word in singular form, get its plural form.
+    Note that this function is grossly simplified and will not work for all
+    english words (eg. bacterium -> bacteria, cactus -> cacti). However it is
+    intended to work perfectly for the limited set of words it is currently used
+    for.
+    """
+    if (english_word[-1] == "s"):
+        return english_word
+    return "%ss" % english_word
 
 def init_jinja_environment(pelican_obj):
     global jinja_environment, jinja_default_settings
@@ -47,17 +103,41 @@ def convert_types(all_media_x, field_formats, timezone_name):
     localtz = pytz.timezone(timezone_name)
     for a_media in all_media_x:
         for (k, t) in field_formats.iteritems():
-            if (isinstance(t, basestring) and "datetime" in t):
-                date_format = re.sub(r"datetime\:[\s]*", "", t)
-                a_media[k] = localtz.localize(
-                    datetime.datetime.strptime(a_media[k], date_format)
-                )
+
+            # convert javascript naming format to python naming format
+            # and delete the javascript naming format (single source of truth)
+            underscore_name = camelCase_to_underscores(k)
+            if underscore_name != k:
+                a_media[underscore_name] = a_media[k]
+                del a_media[k]
+                k = underscore_name # for the remainder of this loop
+
+            if isinstance(t, basestring):
+                if ("?" in t) and (a_media[k] is None):
+                    continue
+                if "datetime" in t:
+                    date_format = re.sub(r"datetime\?{0,1}\:[\s]*", "", t)
+                    a_media[k + "_date"] = localtz.localize(
+                        datetime.datetime.strptime(a_media[k], date_format)
+                    )
+
     return all_media_x
+
+def camelCase_to_underscores(s):
+    # convert theThing to the_thing
+    # and convert goodreadsID to goodreads_id
+    # using a negative lookbehind
+    underscored = re.sub(r"(?<![A-Z])([A-Z])", "_\\1", s)
+
+    if underscored[0] == "_":
+        underscored = underscored[1:]
+
+    return underscored.lower()
 
 # validation
 
 def get_validation_fields():
-    required_fields = { # fields common to all types
+    validation_fields = { # fields common to all types
         "title": basestring,
         "year": int,
         "thumbnail": basestring,
@@ -66,26 +146,26 @@ def get_validation_fields():
         "reviewTitle": basestring,
         "review": basestring,
         "genres": list,
-        "reviewDate": "datetime: %Y-%m-%d"
+        "reviewCreated": "datetime: %Y-%m-%d", # a custom 'type'
+        "reviewUpdated": "datetime?: %Y-%m-%d" # a custom 'type' (nullable)
     }
     if (media_type == "movie"):
-        required_fields.update({
+        validation_fields.update({
             "IMDBID": basestring,
         })
     elif (media_type == "tv-series"):
-        required_fields.update({
+        validation_fields.update({
             "season": int,
             "IMDBID": basestring,
         })
     elif (media_type == "book"):
-        required_fields.update({
+        validation_fields.update({
             "author": basestring,
             "goodreadsID": basestring,
             "isbn": basestring,
         })
-    return required_fields
+    return validation_fields
 
-allowed_media_types = ("movie", "tv-series", "book")
 def check_media_type():
     global allowed_media_types
     if (media_type not in allowed_media_types):
@@ -97,13 +177,19 @@ def check_media_type():
 def validate(all_media_x, required_fields):
     errors = [] # init
     for (i, a_media) in enumerate(all_media_x):
+
+        # title is necessary, but if it is not given then we need a way to
+        # report which item is at fault
         title = a_media["title"] if "title" in a_media else "%s%s" % (media_type, i)
+
         for (k, t) in required_fields.iteritems():
             if k not in a_media:
                 errors.append("'%s' does not have element '%s'" % (title, k))
             elif (isinstance(t, basestring) and "datetime" in t):
+                if ("?" in t) and (a_media[k] is None): # nullable
+                    continue
                 try:
-                    date_format = re.sub(r"datetime\:[\s]*", "", t)
+                    date_format = re.sub(r"datetime\?{0,1}\:[\s]*", "", t)
                     datetime.datetime.strptime(a_media[k], date_format)
                 except:
                     errors.append(
@@ -152,237 +238,249 @@ def get_file_hash(filename):
 
     return base64.urlsafe_b64encode(sha256.digest()).replace("=", "")[:6]
 
-# generate json/<media_type>-list.json and json/<media_type>-review-xyz.json
-# put reviews in their own file, so as to keep <media_type>-list.json from being
-# too large
-meta_img_preloads = []
-meta_jsons = []
-def update_meta_jsons():
-    global meta_jsons
-    meta_jsons = [
-        "/%s-reviews/json/%s.json" % (media_type, x) for x in
-        ["init-list", "list", "search-index"]
-    ]
-
-def generate_unique_id(a_media):
+def get_media_type_caps():
     if (media_type == "movie"):
-        # a movie's id is the alphanumeric title and year chars without
-        # spaces
-        unique_id = "%s%s" % (a_media["title"], a_media["year"])
+        return "Movie"
     elif (media_type == "tv-series"):
-        # a tv series' id is the alphanumeric title, year and season without
-        # spaces
-        unique_id = "%s%s%s" % (
+        return "TV-Series"
+    elif (media_type == "book"):
+        return "Book"
+
+def get_id(a_media):
+    # note: keep this function in sync with media-reviews.js getMediaID()
+    if (media_type == "movie"):
+        # a movie's id is the alphanumeric title and year chars
+        id_ = "%s %s" % (a_media["title"], a_media["year"])
+    elif (media_type == "tv-series"):
+        # a tv series' id is the alphanumeric title, season (zero padded to 2
+        # digits) and year
+        id_ = "%s s%02d %s" % (
             a_media["title"], a_media["season"], a_media["year"]
         )
     elif (media_type == "book"):
         # a book's id is the alphanumeric author, title and year chars
-        # without spaces
-        unique_id = "%s%s%s" % (
+        id_ = "%s %s %s" % (
             a_media["author"], a_media["title"], a_media["year"]
         )
-    return re.sub(r"[^a-z0-9]*", "", unique_id.lower())
 
-allowed_states = ("original", "larger", "thumb")
-def generate_thumbnail_basename(a_media, state):
-    if state not in allowed_states:
+    # replace all whitespace with a dash
+    id_ = re.sub(r"\s+", "-", id_)
+
+    # replace multiple dashes with a single dash
+    id_ = re.sub(r"-+", "-", id_)
+
+    # remove any non-alphanumeric characters
+    id_ = re.sub(r"[^a-z0-9-]*", "", id_, flags = re.IGNORECASE)
+
+    return id_.lower()
+
+def get_img_data(media_id, state, get_hash = False):
+    return_obj = { # init
+        "basename": "",
+        "url": "",
+        "file_path": "",
+        "on_filesystem": "",
+        "on_rel_path": "",
+        "hash": None
+    }
+    if state not in allowed_thumbnail_states:
         raise ValueError(
             "only the following states are allowed: %s" % (
-                ", ".join(allowed_states)
+                ", ".join(allowed_thumbnail_states)
             )
         )
-    return "%s-%s.jpg" % (state, a_media["id"])
 
-def save_list_and_individual_review_jsons(all_media_x):
-    global meta_img_preloads, meta_jsons
-    all_media_listfile = [] # init
-
-    # fields for the list json files
-    listfile_fields = get_listfile_fields()
-
-    all_media_x = sorted(
-        [a_media for a_media in all_media_x],
-        key = lambda a_media: (a_media["reviewDate"], a_media["title"])
+    return_obj["basename"] = "%s-%s.jpg" % (state, media_id)
+    return_obj["file_path"] = "%s/%s-reviews/img" % (content_path, media_type)
+    return_obj["on_filesystem"] = "%s/%s" % (
+        return_obj["file_path"], return_obj["basename"]
     )
-    json_path = "/%s-reviews/json" % media_type
-    for a_media in all_media_x:
-        thumbnail_basename = generate_thumbnail_basename(a_media, "thumb")
-        img_file = "/%s-reviews/img/%s" % (media_type, thumbnail_basename)
-        meta_img_preloads.append(img_file)
-        img_file = "%s%s" % (content_path, img_file) # update
-        a_media["thumbnailHash"] = get_file_hash(img_file)
+    return_obj["on_rel_path"] = "/%s-reviews/img/%s" % (
+        media_type, return_obj["basename"]
+    )
+    return_obj["url"] = "%s/%s-reviews/img/%s" % (
+        jinja_default_settings["SITEURL"], media_type, return_obj["basename"]
+    )
 
-        json_review_file = "%s/review-%s.json" % (json_path, a_media["id"])
-        meta_jsons.append(json_review_file)
-        json_review_file = "%s%s" % (content_path, json_review_file) # update
+    if get_hash:
+        try:
+            return_obj["hash"] = get_file_hash(
+                "%s/%s" % (return_obj["file_path"], return_obj["basename"])
+            )
+            return_obj["url"] += "?hash=%s" % return_obj["hash"]
+        except IOError as e:
+            if e.errno != errno.ENOENT:
+                raise
 
-        # save the json review to the content (not output) dir so that QS_LINK
-        # can read it and get its hash
-        with open(json_review_file, "w") as f:
-            json.dump({ "reviewFull": a_media["review"] }, f)
+            # img file does not exist. no worries - we will download it later
+            pass
 
-        a_media["reviewHash"] = get_file_hash(json_review_file)
-        all_media_listfile.append({
-            k: v for (k, v) in a_media.iteritems() if (k in listfile_fields)
-        })
+    return return_obj
 
-    # save the media list to the content (not output) dir so that QS_LINK can
-    # read it and get its hash
-    with open("%s%s/list.json" % (content_path, json_path), "w") as f:
-        json.dump(all_media_listfile, f, sort_keys = True)
+def get_max_img_height(all_media_x, img_size):
+    # note: only run this function after add_missing_data() and download_all()
+    # complete, so that the heights of all thumbnails are available
+
+    return max(a_media["%s_height" % img_size] for a_media in all_media_x)
+
+def save_1_review_json(a_media):
+    json_review_file = "%s/%s-reviews/json/review-%s.json" % (
+        content_path, media_type, a_media["id_"]
+    )
+    with open(json_review_file, "w") as f:
+        json.dump({ "reviewFull": a_media["review"] }, f)
+
+    a_media["review_hash"] = get_file_hash(json_review_file)
+    return a_media
+
+def save_1_data_json(a_media):
+    json_data_file = "%s/%s-reviews/json/data-%s.json" % (
+        content_path, media_type, a_media["id_"]
+    )
+    # convert python naming format to javascript naming format
+    json_data_content = {
+        "rating": a_media["rating"],
+        "title": a_media["title"],
+        "spoilers": a_media["spoilers"],
+        "reviewUpdated": a_media["review_updated"],
+        "reviewHash": a_media["review_hash"],
+        "year": a_media["year"],
+        "reviewCreated": a_media["review_created"],
+        "thumbnailHeight": a_media["thumb_height"],
+        "reviewTitle": a_media["review_title"],
+        "thumbnailHash": a_media["thumbnail_hash"]
+    }
+    if (media_type == "movie"):
+        json_data_content["IMDBID"] = a_media["imdbid"]
+    elif (media_type == "tv-series"):
+        json_data_content["season"] = a_media["season"]
+        json_data_content["IMDBID"] = a_media["imdbid"]
+    elif (media_type == "book"):
+        json_data_content["author"] = a_media["author"]
+        json_data_content["goodreadsID"] = a_media["goodreads_id"]
+
+    with open(json_data_file, "w") as f:
+        json.dump(json_data_content, f)
+
+    a_media["datafile_hash"] = get_file_hash(json_data_file)
+    return a_media
+
+def sort_media(sort_mode, all_media_x):
+    return sorted(all_media_x, **get_sort_params(sort_mode))
+
+def save_default_sort_indexes(all_media_x):
+    # note: this function should only be called when all_media_x is already
+    # sorted by highest-first
+    for (i, a_media) in enumerate(all_media_x):
+        a_media["default_index"] = i
 
     return all_media_x
 
-def save_review_htmls(all_media_x):
-    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE"] = media_type
+def get_sort_params(sort_mode):
+    if (sort_mode == "highest-rating"):
+        key = lambda x: (-x["rating"], x["title"])
+        reverse = False
+    elif (sort_mode == "lowest-rating"):
+        key = lambda x: (x["rating"], x["title"])
+        reverse = False
+    elif (sort_mode == "newest"):
+        key = lambda x: x["review_created"]
+        reverse = False
+    elif (sort_mode == "oldest"):
+        key = lambda x: x["review_created"]
+        reverse = True
+    elif (sort_mode == "title-a-z"):
+        key = lambda x: x["title"]
+        reverse = False
+    elif (sort_mode == "title-z-a"):
+        key = lambda x: x["title"]
+        reverse = True
 
-    jinja_default_settings["MEDIA_REVIEWS"]["NOT_MEDIA_TYPES"] = [
-        plural(t) for t in allowed_media_types if t != media_type
+    return {
+        "key": key,
+        "reverse": reverse
+    }
+
+def save_full_list_json(
+    sort_mode, all_media_x, first_page_only = False, return_preloads = False
+):
+    preload_ids = [] # init
+
+    file_basename = "list-%s%s.json" % (
+        sort_mode, "-first-%s" % page_size if first_page_only else ""
+    )
+    file_path = "%s-reviews/json/%s" % (media_type, file_basename)
+    full_list_file = "%s/%s" % (content_path, file_path)
+
+    the_list = all_media_x[:page_size] if first_page_only else all_media_x
+
+    # todo: switch to generator once the list becomes too big
+    # stackoverflow.com/questions/21663800
+    list_of_tuples = [
+        [a_media["id_"], a_media["datafile_hash"]] for a_media in the_list
     ]
-    jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_TYPE_PLURAL"] = \
-    plural(media_type)
+    if return_preloads:
+        preload_ids = [a_media["id_"] for a_media in the_list]
 
-    jinja_default_settings["MEDIA_REVIEWS"]["VERB_PRESENT"] = \
-    "read" if media_type == "book" else "watch"
+    # pretty json
+    json_string = json.dumps(list_of_tuples, separators = (",", ":")). \
+    replace("[[", "[\n["). \
+    replace("],", "],\n"). \
+    replace("]]","]\n]")
 
-    jinja_default_settings["MEDIA_REVIEWS"]["VERB_PAST"] = \
-    "read" if media_type == "book" else "watched"
+    with open(full_list_file, "w") as f:
+        f.write(json_string)
 
-    for a_media in all_media_x:
-        img_larger_name = generate_thumbnail_basename(a_media, "larger")
-        img_larger_hash = get_file_hash(
-            "%s/%s-reviews/img/%s" % (content_path, media_type, img_larger_name)
-        )
-        a_media["larger_image_url"] = "%s/%s-reviews/img/%s?hash=%s" % (
-            jinja_default_settings["SITEURL"], media_type, img_larger_name,
-            img_larger_hash
-        )
-        a_media["external_link_url"] = "https://"
-        if media_type == "book":
-            a_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
-            a_media["goodreadsID"]
-        else:
-            a_media["external_link_url"] += "www.imdb.com/title/%s" % \
-            a_media["IMDBID"]
+    full_list_file_hash = get_file_hash(full_list_file)
 
-        jinja_default_settings["MEDIA_REVIEWS"]["CURRENT_MEDIA_DATA"] = a_media
-        review_file_dir = "%s/%s-reviews/%s" % (
-            output_path, media_type, a_media["id"]
-        )
-        # create the directory
-        try:
-            os.makedirs(review_file_dir)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
+    return {
+        "list_file_hash": full_list_file_hash,
+        "ids": preload_ids,
+        "size": len(the_list) if first_page_only else len(all_media_x)
+    }
 
-        # prepare the linked data for rendering
-        if media_type == "movie":
-            item_reviewed_type = "Movie"
-        elif media_type == "tv-series":
-            item_reviewed_type = "TVSeries"
-        elif media_type == "book":
-            item_reviewed_type = "Book"
+def get_img_url(a_media, img_size):
+    if (img_size == "thumb"):
+        img_size = "thumb-"
 
-        jinja_default_settings["LINKED_DATA"] = {
-            "@context": "http://schema.org",
-            "@type": "Review",
-            "itemReviewed": {
-                "@type": item_reviewed_type,
-                "name": a_media["title"],
-                "genre": a_media["genres"]
-            },
-            "image": a_media["larger_image_url"],
-            "description": a_media["reviewTitle"],
-            "datePublished": a_media["reviewDate"].strftime("%Y-%m-%d"),
-            "reviewRating": {
-                "@type": "Rating",
-                "bestRating": 5,
-                "ratingValue": a_media["rating"]
-            },
-            "reviewBody": re.sub("<[^<]+?>", "", a_media["review"])
-        }
-        if media_type == "tv-series":
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
-            ["containsSeason"] = {
-                "@type": "TVSeason",
-                "name": "Season %s" % (a_media["season"])
-            }
-        elif media_type == "book":
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
-            ["isbn"] = a_media["isbn"]
+    return "%s/%s-reviews/img/%s%s.jpg?hash=%s" % (
+        jinja_default_settings["SITEURL"],
+        media_type,
+        img_size,
+        a_media["id_"],
+        a_media["thumbnail_hash"]
+    )
 
-            jinja_default_settings["LINKED_DATA"]["itemReviewed"] \
-            ["author"] = a_media["author"]
+def get_json_data_url(a_media):
+    return "%s/%s-reviews/json/data-%s.json?hash=%s" % (
+        jinja_default_settings["SITEURL"],
+        media_type,
+        a_media["id_"],
+        a_media["datafile_hash"]
+    )
 
-        jinja_default_settings["output_file"] = "%s-reviews/%s/index.html" % (
-            media_type, a_media["id"]
-        )
+def get_preload_data(preload_data, full_list_data):
+    del preload_data["list_file_hash"]
+    preload_data["first_page_size"] = preload_data["size"]
+    preload_data["total_size"] = full_list_data["size"]
+    del preload_data["size"]
+    return preload_data
 
-        # create the html file
-        review_file = "%s/index.html" % (review_file_dir)
-        with open(review_file, "w") as f:
-            f.write(
-                jinja_environment.get_template("media_review.html").
-                render(jinja_default_settings)
-            )
+def save_search_index_json(sort_mode, all_media_x):
+    basename = "search-index-%s.json" % sort_mode
+    search_index_file = "%s/%s-reviews/json/%s" % (
+        content_path, media_type, basename
+    )
+    # todo: switch to generator once the list becomes too big
+    # stackoverflow.com/questions/21663800
+    search_index = [get_search_item(a_media) for a_media in all_media_x]
 
-def save_iframe_htmls():
-    url = "%s/%s-reviews/" % (jinja_default_settings["SITEURL"], media_type)
-    script = "top.location.replace('%s' + window.location.hash);" % url
-    with open("%s/%s-reviews/redirect.html" % (output_path, media_type), "w") as f:
-        f.write(
-            jinja_environment.get_template("iframe_redirect.html").
-            render({'script': script})
-        )
+    with open(search_index_file, "w") as f:
+        json.dump(search_index, f, indent = 1)
 
-def get_listfile_fields():
-    required_fields = [
-        "rating", "title", "spoilers", "reviewTitle", "reviewHash", "year",
-        "thumbnailHash"
-    ]
-    if (media_type == "movie"):
-        required_fields.extend(["IMDBID"])
-    elif (media_type == "tv-series"):
-        required_fields.extend(["season", "IMDBID"])
-    elif (media_type == "book"):
-        required_fields.extend(["author", "goodreadsID"])
-    return required_fields
+    return get_file_hash(search_index_file)
 
-# generate json/<media_type>-init-list.json
-# this is just the first 10 movies, sorted by max rating, then alphabetically by
-# title. this json is used to populate the page initially
-def save_init_list(all_media_x):
-    required_fields = get_listfile_fields()
-    init_list1 = [
-        {k:v for (k, v) in a_media.iteritems() if (k in required_fields)}
-        for a_media in all_media_x
-    ]
-    init_list2 = sorted(
-        [a_media for a_media in init_list1],
-        key = lambda a_media: (-a_media["rating"], a_media["title"])
-    )[:10]
-
-    # save the media init list to the content (not output) dir so that QS_LINK
-    # can read it and get its hash
-    with open(
-        "%s/%s-reviews/json/init-list.json" % (content_path, media_type), "w"
-    ) as f:
-        json.dump(init_list2, f, sort_keys = True)
-
-# generate <media_type>-reviews/json/search-index.json
-# this is just a list of media titles and years - used for searching
-def save_search_index(all_media_x):
-    media_titles = [generate_search_item(a_media) for a_media in all_media_x]
-
-    # save the media search index to the content (not output) dir so that
-    # QS_LINK can read it and get its hash
-    with open(
-        "%s/%s-reviews/json/search-index.json" % (content_path, media_type), "w"
-    ) as f:
-        json.dump(media_titles, f)
-
-def generate_search_item(a_media):
+def get_search_item(a_media):
     search_item = "%s%s %s%s" % (
         "%s " % a_media["author"] if (media_type == "book") else "",
         a_media["title"],
@@ -395,35 +493,206 @@ def generate_search_item(a_media):
     # remove double spaces, for efficiency
     return re.sub(r" +", " ", search_item)
 
+def save_1_media_html(a_media, media_data, total_media_count):
+    a_media["type_"] = media_type
+    a_media["type_caps"] = media_type_caps
+    a_media["search_placeholder"] = search_placeholder
+    a_media["not_media_types"] = not_media_types
+    a_media["not_media_types_plural"] = not_media_types_plural
+    a_media["type_plural"] = media_type_plural
+    a_media["verb_present"] = verb_present
+    a_media["verb_past"] = verb_past
+    a_media["linked_data"] = get_linked_data(a_media)
+    a_media["external_link_url"] = "https://"
+    if media_type == "book":
+        a_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
+        a_media["goodreads_id"]
+    else:
+        a_media["external_link_url"] += "www.imdb.com/title/%s" % \
+        a_media["imdbid"]
+    a_media["html_review"] = format_review(a_media["review"])
+
+    preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
+    all_media_data = copy.deepcopy(media_data)
+
+    all_media_data["total_media_count"] = total_media_count
+
+    # add the current id to preloads and bump off the last to maintain the page
+    # size
+    if (a_media["id_"] not in preload_ids):
+        preload_ids = [a_media["id_"]] + preload_ids[:page_size]
+
+    # get img files from ids in a list
+    all_media_data["preloads"]["img"] = [
+        get_img_data(id_, "thumb")["on_rel_path"] for id_ in preload_ids
+    ]
+
+    # get json files from ids in a list and add the initial page of review items
+    all_media_data["preloads"]["json"] = [
+        "/%s-reviews/json/list-highest-rating-first-%s.json" % \
+        (media_type, page_size)
+    ] + [
+        "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
+        preload_ids
+    ]
+
+    # save the review files under the pages dir so that they get built by
+    # pelican
+    review_file_dir = "%s/pages/%s-reviews/%s" % (
+        content_path, media_type, a_media["id_"]
+    )
+    # create the directory
+    try:
+        os.makedirs(review_file_dir)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+
+    jinja_default_settings["media"] = a_media
+    jinja_default_settings["all_media_data"] = all_media_data
+
+    html_file = "%s/index.html" % review_file_dir
+    with open(html_file, "w") as f:
+        f.write(
+            jinja_environment.get_template("a_media_review.html").
+            render(jinja_default_settings)
+        )
+    del jinja_default_settings["media"]
+    del jinja_default_settings["all_media_data"]
+
+def format_review(review_text):
+    review_text = review_text.replace(
+        "##siteGlobals.siteURL##",
+        jinja_default_settings["SITEURL"]
+    )
+
+    if "<p>" in review_text:
+        return review_text
+
+    return "<p>%s</p>" % review_text.replace("\n", "</p><p>")
+
+def get_search_placeholder():
+    if media_type == "movie":
+        return "movie title or year"
+    elif media_type == "tv-series":
+        return "tv-series title, season or year"
+    elif media_type == "book":
+        return "book title, author or year"
+
+def get_linked_data(a_media):
+    """
+    data that is placed in <script type="application/ld+json"></script>
+    spec: https://schema.org/docs/full.html
+    """
+    if media_type == "movie":
+        item_reviewed_type = "Movie"
+    elif media_type == "tv-series":
+        item_reviewed_type = "TVSeries"
+    elif media_type == "book":
+        item_reviewed_type = "Book"
+
+    linked_data = {
+        "@context": "http://schema.org",
+        "@type": "Review",
+        "url": "%s/%s-reviews/%s/" % (
+            jinja_default_settings["SITEURL"], media_type, a_media["id_"]
+        ),
+        "inLanguage": "English",
+        "itemReviewed": {
+            "@type": item_reviewed_type,
+            "name": a_media["title"],
+            "genre": a_media["genres"]
+        },
+        "image": get_img_data(a_media["id_"], "larger", get_hash = True)["url"],
+        "description": a_media["review_title"],
+        "datePublished": a_media["review_created"],
+        "reviewRating": {
+            "@type": "Rating",
+            "bestRating": 5,
+            "ratingValue": a_media["rating"]
+        },
+        "reviewBody": re.sub("<[^<]+?>", "", a_media["review"])
+    }
+    if a_media["review_updated"] is not None:
+        linked_data["dateModified"] = a_media["review_updated"]
+
+    if media_type == "tv-series":
+        linked_data["itemReviewed"]["containsSeason"] = {
+            "@type": "TVSeason",
+            "name": "Season %s" % a_media["season"]
+        }
+    elif media_type == "book":
+        linked_data["itemReviewed"]["isbn"] = a_media["isbn"]
+        linked_data["itemReviewed"]["author"] = a_media["author"]
+
+    return linked_data
+
+def prepare_landing_page_data(all_media_x, media_data):
+    media_data["latest_review"] = \
+    max(all_media_x, key = lambda x: x["review_created"])["review_created"]
+
+    media_data["preloads"]["img"] = [
+        get_img_data(id_, "thumb")["on_rel_path"] for id_ in
+        media_data["preloads"]["ids"]
+    ]
+    media_data["preloads"]["json"] = [
+        "/%s-reviews/json/list-highest-rating-first-%s.json" % \
+        (media_type, page_size)
+    ] + [
+        "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
+        media_data["preloads"]["ids"]
+    ]
+    media_data["total_media_count"] = len(all_media_x)
+    media_data["not_media_types"] = not_media_types
+    media_data["not_media_types_plural"] = not_media_types_plural
+    return media_data
+
+def prepare_feeds_and_sitemap_data(all_media_x):
+    feed_and_sitemap_data = []
+    # only allow these fields in result
+    fields = [
+        "review_created", "review_created_date", "title", "season", "id_",
+        "review_title", "last_modified_Ymd"
+    ]
+    for a_media in all_media_x:
+        a_filtered_media = {
+            field: a_media[field] for field in fields if field in a_media
+        }
+        a_filtered_media["last_modified"] = a_media["review_created"] if \
+        a_media["review_updated"] is None else a_media["review_updated"]
+
+        a_filtered_media["last_modified_date"] = \
+        a_media["review_created_date"] if a_media["review_updated"] is None \
+        else a_media["review_updated_date"]
+
+        feed_and_sitemap_data.append(a_filtered_media)
+
+    return feed_and_sitemap_data
+
 # downloading thumbnails
 
 def add_missing_data(all_media_x):
     for a_media in all_media_x:
-        a_media["id"] = generate_unique_id(a_media)
-        img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
-        img_path = "%s/%s-reviews/img" % (content_path, media_type)
-        try:
-            a_media["thumbnailHash"] = get_file_hash(
-                "%s/%s" % (img_path, img_thumbnail_name)
-            )
-        except IOError as e:
-            if e.errno != errno.ENOENT:
-                raise
+        a_media["id_"] = get_id(a_media)
+        img_thumb_data = get_img_data(a_media["id_"], "thumb", get_hash = True)
+        if img_thumb_data["hash"] is not None:
+            a_media["thumbnail_hash"] = img_thumb_data["hash"]
 
-            # img file does not exist. no worries - we will download it later
-            pass
-
-        for img_size in ["thumb", "larger"]:
+        for img_size in ("thumb", "larger"):
             if (
                 ("%s_width" % img_size) in a_media
                 and ("%s_height" % img_size) in a_media
             ):
-                # we already have the dimensions for this size
+                # we already have the dimensions for this image size
                 continue
 
-            img_name = generate_thumbnail_basename(a_media, img_size)
+            if img_size == "thumb":
+                img_with_path = img_thumb_data["on_filesystem"]
+            else:
+                img_with_path = \
+                get_img_data(a_media["id_"], img_size)["on_filesystem"]
             try:
-                img = PIL.Image.open("%s/%s" % (img_path, img_name))
+                img = PIL.Image.open(img_with_path)
                 (
                     a_media["%s_width" % img_size],
                     a_media["%s_height" % img_size]
@@ -440,14 +709,10 @@ def add_missing_data(all_media_x):
 def download_all(all_media_x):
     any_downloads_done = False
     for a_media in all_media_x:
-        img_larger_name = generate_thumbnail_basename(a_media, "larger")
-        img_thumbnail_name = generate_thumbnail_basename(a_media, "thumb")
-        img_path = "%s/%s-reviews/img" % (content_path, media_type)
-        if (
-            os.path.isfile("%s/%s" % (img_path, img_larger_name))
-            and os.path.isfile("%s/%s" % (img_path, img_thumbnail_name))
-        ):
-            continue # we already have both sizes of this file
+        img_larger = get_img_data(a_media["id_"], "larger")["on_filesystem"]
+        img_thumbnail = get_img_data(a_media["id_"], "thumb")["on_filesystem"]
+        if (os.path.isfile(img_larger) and os.path.isfile(img_thumbnail)):
+            continue # we already have both sizes of this image on disk
 
         response = requests.get(a_media["thumbnail"])
         if not response.ok:
@@ -459,8 +724,8 @@ def download_all(all_media_x):
 
         # save the thumbnail to the content (not output) dir so that QS_LINK can
         # read it and get its hash
-        img_original_name = generate_thumbnail_basename(a_media, "original")
-        with open("%s/%s" % (img_path, img_original_name), "wb") as f:
+        img_original = get_img_data(a_media["id_"], "original")["on_filesystem"]
+        with open(img_original, "wb") as f:
             for data in response.iter_content(1024):
                 if not data:
                     break
@@ -470,8 +735,6 @@ def download_all(all_media_x):
 
     return any_downloads_done
 
-desired_width_thumbnail = 0 # init (px)
-desired_width_larger = 0 # init (px)
 def resize_thumbnails(all_media_x):
     if desired_width_thumbnail == 0:
         raise ValueError("the desired thumbnail width cannot be 0px")
@@ -479,12 +742,10 @@ def resize_thumbnails(all_media_x):
     if desired_width_larger == 0:
         raise ValueError("the desired larger image width cannot be 0px")
 
-    img_path = "%s/%s-reviews/img" % (content_path, media_type)
     for a_media in all_media_x:
-        img_original_name = generate_thumbnail_basename(a_media, "original")
         try:
             img_original = PIL.Image.open(
-                "%s/%s" % (img_path, img_original_name)
+                get_img_data(a_media["id_"], "original")["on_filesystem"]
             )
         except IOError as e:
             if e.errno == errno.ENOENT:
@@ -496,39 +757,46 @@ def resize_thumbnails(all_media_x):
         print_img_size_warning_message(
             original_width, original_height, a_media["title"]
         )
-        for img_size in ["thumb", "larger"]:
+        for img_size_name in ("thumb", "larger"):
             # resize down to create a thumbnail or larger image
-            if img_size == "thumb":
+            if img_size_name == "thumb":
                 desired_width = desired_width_thumbnail
-            elif img_size == "larger":
+            elif img_size_name == "larger":
                 desired_width = desired_width_larger
             else:
                 raise ValueError("unknown img_size")
 
             a_media = calculate_new_img_sizes(
                 original_width, original_height, desired_width, a_media,
-                img_size
+                img_size_name
             )
-            save_resized_image(img_original, a_media, img_size)
+            save_resized_image(img_original, a_media, img_size_name)
+
+            # save the thumbnail hash to use in download lists later
+            if img_size_name == "thumb":
+                a_media["thumbnail_hash"] = \
+                get_img_data(a_media["id_"], "thumb", get_hash = True)["hash"]
 
     return all_media_x
 
 def calculate_new_img_sizes(
-    original_width, original_height, desired_width, a_media, what
+    original_width, original_height, desired_width, a_media, img_size_name
 ):
     width_percent = desired_width / float(original_width)
     desired_height = int(float(original_height) * float(width_percent))
-    a_media["%s_width" % what] = desired_width
-    a_media["%s_height" % what] = desired_height
+    a_media["%s_width" % img_size_name] = desired_width
+    a_media["%s_height" % img_size_name] = desired_height
     return a_media
 
-def save_resized_image(img, a_media, what):
+def save_resized_image(img, a_media, img_size_name):
     new_img = img.resize(
-        (a_media["%s_width" % what], a_media["%s_height" % what]),
+        (
+            a_media["%s_width" % img_size_name],
+            a_media["%s_height" % img_size_name]
+        ),
         PIL.Image.ANTIALIAS
     )
-    img_name = generate_thumbnail_basename(a_media, what)
-    new_img.save("%s/%s-reviews/img/%s" % (content_path, media_type, img_name))
+    new_img.save(get_img_data(a_media["id_"], img_size_name)["on_filesystem"])
 
 def print_img_size_warning_message(original_width, original_height, title):
     if original_width >= desired_width_larger: # ok
@@ -543,11 +811,8 @@ def print_img_size_warning_message(original_width, original_height, title):
 
 def delete_original_size_thumbnails(all_media_x):
     for a_media in all_media_x:
-        original_img = generate_thumbnail_basename(a_media, "original")
         try:
-            os.remove(
-                "%s/%s-reviews/img/%s" % (content_path, media_type, original_img)
-            )
+            os.remove(get_img_data(a_media["id_"], "original")["on_filesystem"])
         except OSError as e:
             if e.errno != errno.ENOENT:
                 raise

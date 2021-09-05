@@ -6,439 +6,315 @@
 // - actions which count as showing interest in another review include:
 //      - clicking on anything in another review (eg. load-button, link icon, etc)
 //      - making any changes in the search area
-// todo: fix underline search the load more items
+// todo - offline warning and disable search when offline
 
-// init globals
-initialMediaData = []; // static list of initial media data
-completeMediaSearch = []; // static index of media searches
-completeMediaSearchIDs = []; // same as completeMediaSearch but with IDs not names and years
-completeMediaData = []; // static list of all media data
-searchResultIndexes = []; // all media indexes that match the search. in order. used for paging.
-numTotalMedia = 0; // total count that match the search criteria
-numMediaShowing = 0;
-pageSize = 10; // load this many media at once in the infinite scroll page
-currentlySearching = false;
-reviewsPerAd = 3; // this many reviews before each in-feed ad
+// globals
 
-// in feed ads have been replaced with a bottom-anchor ad
-// todo - remove entirely
-//inFeedAdContainer = '<div class="in-feed-ad-container"></div>';
-inFeedAdContainer = '';
+searchText = {
+    current: '',
+    previous: '', // no immediate diff
+    debounceCurrent: '',
+    debouncePrevious: '' // for debouncing we do not want an immediate diff
+};
+sortMode = {
+    current: 'highest-rating',
+    previous: 'highest-rating', // no immediate diff
+    debounceCurrent: 'highest-rating',
+    debouncePrevious: 'highest-rating' // for debouncing - no immediate diff
+};
+
+// the current search index as determined by search order. populated with an
+// entire json file. eg. search-index-highest-rating.json
+searchIndex = [];
+searchIndexFileName = ''; // name of the json file downloaded into searchIndex
+searchIndexDownloadStatus = 'not started'; // not started, in progress, complete
+
+// the current list of media IDs as determined by search order. populated with
+// an entire json file. eg. list-highest-rating.json
+mediaList = [];
+mediaListFileName = ''; // name of the json file downloaded into mediaList
+mediaListDownloadStatus = 'not started'; // not started, in progress, complete
+
+// a list of all media IDs to render. shortcut: 'all' when equal to mediaList
+// i.e. for default search
+filteredList = 'all';
+
+// total count that matches the search criteria. no search at the start so
+// initialize to the full list count. always an int
+numMediaFound = siteGlobals.totalMediaCount;
+
+//numMediaDownloadFail = 0;
+nextMediaIndex = 0; // index of div on the page, from 0 to filteredList.length - 1
 
 addEvent(window, 'load', function () {
     resetSearchBox();
-    initMediaRendering();
-    initMediaSearchList(initSearchResultIndexes);
-    initCompleteMediaData(initSearchResultIndexes);
-    addEvent(
-        document.getElementById('search'),
-        'keyup',
-        debounce(debounceMediaSearch, 2000, 'both')
+    renderNextPage(
+        siteGlobals.totalMediaCount,
+        true, // useFirstPageList_
+        afterRendering1Page // callback
     );
-    addEvent(document.getElementById('sortBy'), 'change', mediaSortChanged);
+    var debounceSearchSetup = debounce(
+        debounceSearch, 1000, 'both', extraDebounceChecks
+    );
+    // use 'keyup', not 'change' since 'change' only fires onblur
+    addEvent(document.getElementById('search'), 'keyup', debounceSearchSetup);
+
+    // either typing in the search input, or selecting the sort order from the
+    // dropdown will do a debounce before searching. this way neither cancels
+    // out the other
+    addEvent(document.getElementById('sortBy'), 'change', debounceSearchSetup);
+
     addEvent(document.getElementById('reviewsArea'), 'click', loadFullReview);
-    addEvent(document.getElementById('reviewsArea'), 'click', linkTo1Media);
 
     // scroll with debounce
-    var lastKnownScrollPosition = 0;
     var ticking = false;
-    addEvent(window, 'scroll', function(e) {
-        lastKnownScrollPosition = window.scrollY;
+    addEvent(window, 'scroll', function (e) {
         if (ticking) return;
-        setTimeout(function() {
+        setTimeout(function () {
+            infiniteLoader(); // get the loader going asap
             positionMediaCounter();
-            infiniteLoader();
             ticking = false;
-        }, 200); // check 5 times per second
+        }, 333); // check 3 times per second
         ticking = true;
     });
 });
 
+// url manipulation and navigation
+
+// if the url is for 1 media item then return that item's id, else null
+function getMediaIDFromURL() {
+    // split a path like /<media>-reviews/birdbox/ or
+    // /<media>-reviews/id/index.html into
+    // ['', '<media>-reviews', 'id', ''] or
+    // ['', '<media>-reviews', 'id', 'index.html']
+    var pathPieces = window.location.pathname.split('/');
+    if (pathPieces.length != 4) return null; // '/x-reviews/' or '/x/index.html'
+    return pathPieces[2];
+}
+
+function removeMediaIDFromUrl() {
+    if (typeof window.history.replaceState == 'function') {
+        var page = siteGlobals.mediaType + '-reviews/';
+        window.history.replaceState(null, '', generateCleanURL(page));
+    }
+    else window.location.hash = '';
+}
+
 // rendering
 
+// rendering a search page (see triggerSearch()):
+// 1. first get the total number of results
+//     - when the search is default, this is just the total media count
+//     - when the search is not default, this requires the search list
+// 2. render (a page of) placeholders < page size & search list size
+// 3. populate the placeholders
+// 4. only allow searching once all placeholders have been populated
+
 function resetSearchBox() {
+    // in case the browser has persisted any values for these inputs
     document.getElementById('search').value = '';
     document.getElementById('sortBy').selectedIndex = 0; // highest rating
 }
 
-function initMediaRendering() {
-    var initialMediaDataHTML = '';
-    var mediaID = getMediaIDFromURL(); // does not alter url
-    var page = siteGlobals.mediaType + '-reviews/';
-    if (mediaID != null) {
-        // show the media with id first, then the initial list after
+function renderNextPage(totalMediaCount, useFirstPageList_, callback) {
+    showMediaCount(false);
+    var pinnedMediaIndex = getPinnedMediaIndex();
+    renderNextPagePlaceholders(totalMediaCount, pinnedMediaIndex);
 
-        // change /#!mediaID to /mediaID in the url
-        if (
-            (typeof window.history.replaceState == 'function')
-            && (window.location.hash.length > 0)
-        ) window.history.replaceState(null, '', generateCleanURL(page + mediaID + '/'));
-
-        var lookedInInitialMediaData = false; // init
-        var lookedInCompleteMediaSearch = false; // init
-        var afterMediaDataDownloaded = function () {
-            // exit if already finished
-            if ((initialMediaDataHTML != '') && (numTotalMedia != 0)) return;
-
-            var idInInitialList = false; // init
-            // check if mediaID is in initialMediaData
-            if ((initialMediaData.length != 0) && !lookedInInitialMediaData) {
-                lookedInInitialMediaData = true;
-                var pinned = true;
-                for (var i = 0; i < initialMediaData.length; i++) {
-                    if (mediaID != getMediaID(initialMediaData[i])) continue;
-                    initialMediaDataHTML = generateMediaHTML(
-                        initialMediaData[i], pinned
-                    );
-                    idInInitialList = true;
-                    break;
-                }
-                if (initialMediaDataHTML == '') {
-                    // mediaID not found in initial data. exit now and wait to
-                    // get it from the complete list
-                    return;
-                }
-                initialMediaDataHTML += generateInitialMediaHTML(
-                    mediaID, idInInitialList
-                );
-                numMediaShowing = initialMediaData.length; // global
-                loading('off');
-                removeGlassCase('searchBox', true);
-                archiveInFeedAds();
-                document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
-                populateInFeedAds();
-            }
-
-            // remove the mediaID from the path if the mediaID is not found in
-            // the complete list. do this without waiting for the complete media
-            // data, which could take ages.
-            if (completeMediaSearch.length != 0) {
-                var mediaIndex = mediaID2Index(mediaID);
-                if (!lookedInCompleteMediaSearch) {
-                    lookedInCompleteMediaSearch = true;
-                    numTotalMedia = completeMediaSearch.length; // global
-
-                    if (mediaIndex === null) { // media not found
-                        if (typeof window.history.replaceState == 'function') {
-                            window.history.replaceState(
-                                null, '', generateCleanURL(page)
-                            );
-                            initMediaRendering();
-                        }
-                        else location.href = generateCleanURL(page);
-                        return;
-                    }
-                }
-            }
-
-            // the mediaID was not found in the initial list, so get it from the
-            // complete list. however we still need the initial list to render
-            // the first page of reviews
-            if (
-                (initialMediaDataHTML == '')
-                && (initialMediaData.length != 0)
-                && (completeMediaSearch.length != 0)
-                && (completeMediaData.length != 0)
-            ) {
-                var mediaData = completeMediaData[mediaIndex];
-                var pinned = true;
-                initialMediaDataHTML = generateMediaHTML(mediaData, pinned);
-                var idInInitialList = false;
-                initialMediaDataHTML += generateInitialMediaHTML(
-                    mediaID, idInInitialList
-                );
-                loading('off');
-                removeGlassCase('searchBox', true);
-                archiveInFeedAds();
-                document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
-                numMediaShowing = initialMediaData.length; // global
-                populateInFeedAds();
-            }
-            if ((numTotalMedia != 0) && (numMediaShowing != 0)) renderMediaCount();
-        };
-        // the media search list tells us where the media id is located. if we
-        // can get it from the initial-media-data then do so because this is
-        // quicker than waiting for the complete-media-data list. however it may
-        // not be available in the initial media data, so the complete list may
-        // be needed. get all data in parallel for speed.
-        initInitialMediaData(afterMediaDataDownloaded);
-        initMediaSearchList(afterMediaDataDownloaded);
-        initCompleteMediaData(afterMediaDataDownloaded);
-    } else { // show initial list
-        var afterInitialMediaDataDownloaded = function () {
-            if (initialMediaData.length != 0 && initialMediaDataHTML == '') {
-                // render the initial media data and ads on the page
-                initialMediaDataHTML = generateInitialMediaHTML();
-                loading('off');
-                removeGlassCase('searchBox', true);
-                archiveInFeedAds();
-                document.getElementById('reviewsArea').innerHTML = initialMediaDataHTML;
-                populateInFeedAds();
-            }
-
-            // wait for both lists to be downloaded before proceeding
-            if (
-                completeMediaSearch.length == 0 ||
-                initialMediaData.length == 0
-            ) return;
-            numMediaShowing = initialMediaData.length; // global
-            numTotalMedia = completeMediaSearch.length; // global
-            currentlySearching = false;
-            renderMediaCount();
-        };
-        initMediaSearchList(afterInitialMediaDataDownloaded);
-        initInitialMediaData(afterInitialMediaDataDownloaded);
-        // note: at this point, searchResultIndexes may not be populated, so
-        // scrolling to the bottom may not yet load any more media
-    }
-}
-
-var gettingInitialMediaData = false; // init (unlocked)
-function initInitialMediaData(callback) {
-    if (initialMediaData.length > 0) return callback(); // exit function here
-
-    // run multiple different callbacks when the data finally arrives
-    addEvent(document, 'got-initial-media-data', callback);
-
-    if (gettingInitialMediaData) return; // 1 attempt at a time
-    gettingInitialMediaData = true; // lock
-    ajax(
-        siteGlobals.mediaInitListJSON,
-        function (json) {
-        try {
-            initialMediaData = JSON.parse(json);
-            triggerEvent(document, 'got-initial-media-data');
-        }
-        catch (err) {
-            console.log('error in initInitialMediaData function: ' + err);
-            gettingInitialMediaData = false; // unlock again
-        }
+    // note: if media lists are already downloaded then this just passes through
+    downloadMediaLists(useFirstPageList_, function () {
+        populateMediaPlaceholders(callback);
     });
 }
 
-function linkTo1Media(e) {
-    // a link within a media item was clicked. figure out which one, and action
-    // it
-    stopBubble(e);
-    e.preventDefault();
-    var el = e.target;
-
-    // the link looks like <a class="link-external" href="http...">blah</a>
-    if (
-        (el.tagName.toLowerCase() == 'a') &&
-        inArray('link-external', el.className)
-    ) {
-        if (siteGlobals.browser.isIE) location.href = el.href;
-        else window.open(el.href, '_blank');
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-external"><button><img></button></a>
-    // and the <a> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'a') &&
-        inArray('link-external', el.className)
-    ) {
-        if (siteGlobals.browser.isIE) location.href = el.href;
-        else window.open(el.href, '_blank');
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-external"><button><img></button></a>
-    // and the <button> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'button') &&
-        (el.parentNode.tagName.toLowerCase() == 'a') &&
-        inArray('link-external', el.parentNode.className)
-    ) {
-        if (siteGlobals.browser.isIE) location.href = el.parentNode.href;
-        else window.open(el.parentNode.href, '_blank');
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-external"><button><img></button></a>
-    // and the <img> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'img') &&
-        (el.parentNode.tagName.toLowerCase() == 'button') &&
-        (el.up(2).tagName.toLowerCase() == 'a') &&
-        inArray('link-external', el.up(2).className)
-    ) {
-        if (siteGlobals.browser.isIE) location.href = el.up(2).href;
-        else window.open(el.up(2).href, '_blank');
-        return false; // prevent bubble up
-    }
-
-    // the link looks like <a class="link-to-other-media"><i>blah</i></a> and
-    // the <i> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'i') &&
-        (el.parentNode.tagName.toLowerCase() == 'a') &&
-        inArray('link-to-other-media', el.parentNode.className)
-    ) return goToOtherMedia(el.parentNode.href);
-
-    // the link looks like <a class="link-to-other-media"><i>blah</i></a> and
-    // the <a> element was clicked
-    if (
-        (el.tagName.toLowerCase() == 'a') &&
-        inArray('link-to-other-media', el.className)
-    ) return goToOtherMedia(el.href);
-
-    // the link looks like <a class="link-to-self"><svg class="icon-chain">
-    // <use xlink:href="...#icon-chain"></use></svg></a> and the <a> element was
-    // clicked
-    if (
-        (el.tagName.toLowerCase() == 'a') &&
-        inArray('link-to-self', el.className)
-    ) return linkToSelf(el.parentNode);
-
-    // the link looks like <a class="link-to-self"><svg class="icon-chain">
-    // <use xlink:href="...#icon-chain"></use></svg></a> and the <svg> element
-    // was clicked
-    if (
-        (el.tagName.toLowerCase() == 'svg') &&
-        inArray('icon-chain', el.outerHTML)
-    ) return linkToSelf(el.up(2));
-
-    // the link looks like <a class="link-to-self"><svg class="icon-chain">
-    // <use xlink:href="...#icon-chain"></use></svg></a> and the <use> element
-    // was clicked
-    if (
-        (el.tagName.toLowerCase() == 'use') &&
-        inArray('icon-chain', el.outerHTML)
-    ) return linkToSelf(el.up(3));
+function clearRenderedMedia() {
+    document.getElementById('reviewsArea').innerHTML = '';
+    filteredList = [];
+    //numMediaDownloadFail = 0;
+    nextMediaIndex = 0;
 }
 
-function goToOtherMedia(url) {
-    if (typeof window.history.replaceState == 'function') {
-        window.history.replaceState(null, '', generateCleanURL(url));
-        scrollToElement(document.getElementById('searchBox'));
-        initMediaRendering(); // show the media in the url pinned to the top
+function showRenderedMedia(showHide) {
+    if (showHide) { // show
+        document.getElementById('reviewsArea').style.display = 'block';
+        // skyscraper ads are added back automatically
+    } else { // hide
+        document.getElementById('reviewsArea').style.display = 'none';
+        hideAllSkyscraperAds();
     }
-    else location.href = generateCleanURL(url);
-    return false; // prevent bubble up
 }
 
-function linkToSelf(mediaEl) {
-    currentlySearching = false;
-    foreach(document.querySelectorAll('.media.pinned'), function(_, otherMediaEl) {
-        removeCSSClass(otherMediaEl, 'pinned');
+function getPinnedMediaIndex() {
+    var pinnedMediaEl = document.querySelector('#reviewsArea .media.pinned');
+    if (pinnedMediaEl == null) return null;
+    return parseInt(pinnedMediaEl.id.replace('filter-index-', ''));
+}
+
+var latestMediaEl = null;
+function renderNextPagePlaceholders(totalMediaCount, skipIndex) {
+    var placeholdersHTML = ''; // init
+    var onFirstPage = (nextMediaIndex == 0);
+    var skipOne = (skipIndex != null);
+    for (
+        var numPlaceholdersRendered = ((onFirstPage & skipOne) ? 1 : 0);
+        numPlaceholdersRendered < siteGlobals.pageSize;
+        numPlaceholdersRendered++
+    ) {
+        // note: nextMediaIndex is a global
+        if (nextMediaIndex == skipIndex) nextMediaIndex++;
+        if (nextMediaIndex >= totalMediaCount) break;
+
+        // create the placeholders for each media item. this keeps correct
+        // order regardless of the order in which the media items are
+        // downloaded.
+        placeholdersHTML += get1MediaItemPlaceholderHTML(nextMediaIndex);
+
+        nextMediaIndex++;
+    }
+    // render all at once - fewer dom operations
+    document.getElementById('reviewsArea').innerHTML += placeholdersHTML;
+
+    // update the last existing media element for use in the infinite loader
+    if (nextMediaIndex == 0) latestMediaEl = null; // no search results
+    else latestMediaEl = document.
+    querySelector('#reviewsArea .media#filter-index-' + (nextMediaIndex - 1));
+}
+
+function populateMediaPlaceholders(populatedAllPlaceholdersCallback) {
+    var placeholderEls = document.
+    querySelectorAll('#reviewsArea .media.placeholder');
+
+    // set up an event for when all placeholders have been populated
+    addEvent(placeholderEls, '1-media-populated', function () {
+        if (!areAllPlaceholdersPopulated()) return;
+        if (populatedAllPlaceholdersCallback != null) {
+            populatedAllPlaceholdersCallback();
+        }
     });
-    addCSSClass(mediaEl, 'pinned');
-    if (typeof window.history.replaceState == 'function') {
-        var url = siteGlobals.mediaType + '-reviews/' + mediaEl.id + '/';
-        window.history.replaceState(null, '', generateCleanURL(url));
+
+    for (var i = 0; i < placeholderEls.length; i++) {
+        var mediaEl = placeholderEls[i];
+        populate1MediaPlaceholder(mediaEl);
     }
-    else window.location.hash = '#!' + mediaEl.id;
-    return false; // prevent bubble up
+    if (
+        (placeholderEls.length == 0) &&
+        (populatedAllPlaceholdersCallback != null)
+    ) populatedAllPlaceholdersCallback();
 }
 
-var loadingStatus = 'on';
-function loading(status) {
-    switch (status) {
-        case 'on':
-            document.getElementById('mediaLoaderArea').style.display = 'block';
-            loadingStatus = 'on';
-            break;
-        case 'off':
-            document.getElementById('mediaLoaderArea').style.display = 'none';
-            loadingStatus = 'off';
-            break;
-    }
-}
-
-function generateInitialMediaHTML(mediaID, idInInitialList) {
-    var adOffset = 0;
-    var firstPageSize = initialMediaData.length;
-    if (mediaID != null) {
-        adOffset++; // start after the first media review item
-
-        // first item was prepopulated - page size is 1 smaller
-        if (!idInInitialList) firstPageSize--;
-    }
-    var initialMediaDataHTML = '';
-    var foundMediaIDI = false; // speed up checks
-    for (var i = 0; i < firstPageSize; i++) {
-        var skipI = false;
-        if (
-            (mediaID != null)
-            && !foundMediaIDI
-            && (getMediaID(initialMediaData[i]) == mediaID)
-        ) {
-            foundMediaIDI = true;
-            skipI = true;
+function populate1MediaPlaceholder(mediaEl) {
+    var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
+    var useFirstPageList_ = (mediaIndex < siteGlobals.pageSize);
+    var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
+    download1MediaItem(minimal1MediaObj, function (status, mediaData) {
+        switch (status) {
+            case 'complete':
+                fillRender1MediaItem(mediaEl, mediaIndex, mediaData);
+                break;
+            case 'fail':
+                markFailedMediaItem(mediaEl);
+                break;
         }
-        if (!skipI) initialMediaDataHTML += generateMediaHTML(initialMediaData[i]);
-        if (((adOffset + 1) % reviewsPerAd) == 0) {
-            // put an in-feed ad after every reviewsPerAd media items
-            initialMediaDataHTML += inFeedAdContainer;
-        }
-        if (!skipI) adOffset++;
-    }
-    return initialMediaDataHTML;
+        triggerEvent(mediaEl, '1-media-populated');
+    });
 }
-function generateMediaHTML(mediaData, pinned) {
-    var mediaID = getMediaID(mediaData);
-    pinned = pinned ? ' pinned' : '';
-    var renderedTitle = getRenderedTitle(mediaData);
-    var style = '';
-    if (mediaData.spoilers) style = ' style="color:red;"';
-    var loadReviewButton = '<span class="review-explanation"' + style + '>' +
-        '(this review ' + (mediaData.spoilers ? 'contains' : 'has no') + ' spoilers)' +
-    '</span>' +
-    '<br>' +
-    '<button class="load-review" id="load-' + mediaID + '">' +
-        'load review' +
-    '</button>';
-    var review = '';
-    if (mediaData.hasOwnProperty('review')) review = formatReview(mediaData.review);
-    else review = loadReviewButton;
-    review += getExternalLinkButton(mediaData);
-    var imgSrc = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
-    '-reviews/img/' + generateThumbnailBasename(mediaID, 'thumb') +
+
+function areAllPlaceholdersPopulated() {
+    // the .placeholder class is removed once a media item is populated
+    var numPlaceholdersUnpopulated = document.
+    querySelectorAll('#reviewsArea .media.placeholder').length;
+
+    return (numPlaceholdersUnpopulated == 0);
+}
+
+function afterRendering1Page() {
+    var persistThenIgnore = true;
+    removeGlassCase('searchBox', persistThenIgnore);
+    renderMediaCount();
+    showMediaCount(true);
+    searchSpinner('off');
+}
+
+var mediaPlaceholderInnerHTML = null; // init
+function get1MediaItemPlaceholderHTML(mediaIndex) {
+    if (mediaPlaceholderInnerHTML == null) mediaPlaceholderInnerHTML = document.
+    querySelector('.media-placeholder-warehouse .media.placeholder').innerHTML;
+
+    return '<div ' +
+        ' class="media ' + siteGlobals.mediaType + ' placeholder pulsate"' +
+        ' id="filter-index-' + mediaIndex + '"' +
+        ' style="min-height:' + (siteGlobals.maxThumbHeight + 65) + 'px;"' +
+    '>' + mediaPlaceholderInnerHTML + '</div>';
+}
+
+function removePlaceholder(mediaIndex) {
+    deleteElement(document.getElementById('filter-index-' + mediaIndex));
+}
+
+function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
+    mediaEl.querySelector('a.link-to-self.chain-link').href = generateCleanURL(
+        siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
+    );
+    var thumbnailEl = mediaEl.querySelector('.thumbnail');
+    thumbnailEl.height = mediaData.thumbnailHeight;
+    thumbnailEl.src = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
     '.jpg?hash=' + mediaData.thumbnailHash;
-    var href = generateCleanURL(siteGlobals.mediaType + '-reviews/' + mediaID + '/');
-    return '<div' +
-        ' class="media ' + siteGlobals.mediaType + pinned + '"' +
-        ' id="' + mediaID + '"' +
-    '>' +
-        '<a' +
-            ' class="link-to-self chain-link"' +
-            ' href="' + href + '"' +
-            ' title="right click and copy link for the URL of this ' +
-            siteGlobals.mediaType + ' review"' +
-        '>' +
-            '<svg class="icon icon-chain">' +
-                '<use xlink:href="' + siteGlobals.iconsSVGURL + '#icon-chain">' +
-                '</use>' +
-            '</svg>' +
-        '</a>' +
-        '<div class="thumbnail-and-stars">' +
-            '<img src="' + imgSrc + '" class="thumbnail" ' +
-            'alt="' + mediaData.title + ' ' + siteGlobals.mediaType +
-            ' thumbnail">' +
-            '<div class="stars">' +
-                generateMediaStarsHTML(mediaData.rating) +
-            '</div>' +
-        '</div>' +
-        '<h3 class="media-title">' + renderedTitle + '</h3>' +
-        '<h4 class="review-title">' + mediaData.reviewTitle + '</h4>' +
-        '<div class="review-text">' + review + '</div>' +
-    '</div>';
+    thumbnailEl.alt = 'thumbnail for ' + mediaData.title;
+    /*unfortunately, this doesn't work. img-load events do not fire when more
+    than one page of images is loaded immediately.
+    var img = new Image();
+    addEvent(img, 'load', function() { thumbnailLoaded(thumbnailEl); });
+    img.src = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+    '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+    '.jpg?hash=' + mediaData.thumbnailHash;
+    thumbnailEl.src = img.src;
+    thumbnailEl.setAttribute(
+        'data',
+        siteGlobals.siteURL + '/' + siteGlobals.mediaType +
+        '-reviews/img/' + getThumbnailBasename(mediaData.id_, 'thumb') +
+        '.jpg?hash=' + mediaData.thumbnailHash
+    );*/
+
+    mediaEl.querySelector('.stars').innerHTML = getMediaStarsHTML(mediaData.rating);
+
+    mediaEl.querySelector('.media-title').innerHTML = getRenderedTitle(mediaData);
+    mediaEl.querySelector('.review-title').innerHTML = mediaData.reviewTitle;
+    if (mediaData.spoilers) {
+        mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'inline';
+        mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'none';
+    } else {
+        mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'none';
+        mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
+    }
+    mediaEl.querySelector('.link-external').href = getExternalLinkURL(mediaData);
+    mediaEl.querySelector('.review-created').innerHTML = 'added ' +
+    mediaData.reviewCreated;
+
+    if (mediaData.reviewUpdated != null) {
+        var a = mediaEl.querySelector('.review-updated a');
+
+        a.href = siteGlobals.githubURL + '/commits/master/movie-reviews/json/' +
+        'review-' + mediaData.id_ + '.json';
+
+        a.innerHTML = 'updated ' + mediaData.reviewUpdated;
+    }
+    removeCSSClass(mediaEl, 'placeholder');
+    removeCSSClass(mediaEl, 'pulsate');
 }
 
-function generateThumbnailBasename(mediaID, state) {
-    // keep this function in sync with generate_thumbnail_basename in
-    // themes/thematrix/plugins/media-reviews/grunt.py
-    switch (state) {
-        case 'original':
-        case 'larger':
-        case 'thumb':
-            return state + '-' + mediaID;
-        default:
-            throw 'bad state';
-    }
+function markFailedMediaItem(mediaEl) {
+    // unimplemented
+    addCSSClass(mediaEl, 'failed-download');
+    removeCSSClass(mediaEl, 'placeholder');
 }
+
+/*function thumbnailLoaded(el) {
+// https://stackoverflow.com/questions/5820209/image-onload-event-not-working-in-chrome/5821388
+    //e.currentTarget.style.removeProperty('height');
+    el.style.removeProperty('height');
+    removeCSSClass(el.up(2), 'pulsate');
+}*/
 
 function loadFullReview(e) {
     if (
@@ -447,63 +323,58 @@ function loadFullReview(e) {
         || !inArray('load-review', e.target.className)
     ) return;
 
-    linkToSelf(e.target.up(2));
-    var mediaID = e.target.id.replace('load-', '');
-    var mediaIndex = mediaID2Index(mediaID);
-    var mediaData = completeMediaData[mediaIndex];
-    if (mediaData.hasOwnProperty('review')) {
-        e.target.parentNode.innerHTML = formatReview(mediaData.review) +
-        getExternalLinkButton(mediaData);
-        return;
-    }
-    ajax(
-        '/' + siteGlobals.mediaType + '-reviews/json/review-' + mediaID +
-        '.json?hash=' + mediaData.reviewHash,
+    setButtonLoading(true, e.target);
 
-        function (json) {
-        try {
-            var fullReviewText = JSON.parse(json).reviewFull;
-            e.target.parentNode.innerHTML = formatReview(fullReviewText) +
-            getExternalLinkButton(mediaData);
-            mediaData.review = fullReviewText;
+    var mediaEl = e.target.up(2);
+    var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
+    var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
+    linkToSelf(mediaEl, minimal1MediaObj.id_);
+    download1MediaReview(minimal1MediaObj, function (status, fullReviewText) {
+        var newContent;
+        // get the external link button from the dom, since we no longer have
+        // access to the mediaData to build it from scratch
+        var externalLinkButtonHTML =
+        mediaEl.querySelector('a.link-external').outerHTML;
+
+        switch (status) {
+            case 'complete':
+                newContent = formatReview(fullReviewText) +
+                externalLinkButtonHTML;
+                break;
+            default:
+            case 'fail':
+                newContent = getLoadReviewButtonHTML() +
+                externalLinkButtonHTML +
+                '<span class="review-download-error">' +
+                    'failed to download review' +
+                '</span>';
+                break;
         }
-        catch (err) {
-            console.log('error in loadFullReview function: ' + err);
-        }
+        mediaEl.querySelector('.review-text').innerHTML = newContent;
+        setButtonLoading(false, e.target);
     });
 }
 
-function formatReview(review) {
-    review = review.replace(/##siteGlobals.siteURL##/g, siteGlobals.siteURL);
-
-    // if the review uses paragraph tags then do not modify it
-    if (inArray('<p>', review)) return review;
-
-    return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
-}
-
-function getExternalLinkButton(mediaData) {
-    var externalLink = 'https://';
-    var externalSiteLogo = siteGlobals.siteURL + '/img/';
-    switch (siteGlobals.mediaType) {
-        case 'book':
-            externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
-            externalSiteLogo += 'goodreads-logo-button.png';
-            break;
-        case 'movie':
-        case 'tv-series':
-            externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
-            externalSiteLogo += 'imdb-logo-button.png';
-            break;
+function linkToSelf(mediaEl, mediaID) {
+    var otherMediaEls = document.querySelectorAll('.media.pinned');
+    for (var i = 0; i < otherMediaEls.length; i++) {
+        var otherMediaEl = otherMediaEls[i];
+        removeCSSClass(otherMediaEl, 'pinned');
     }
-    return '<a class="link-external" href="' + externalLink + '">' +
-        '<button class="external-site">' +
-            '<img src="' + externalSiteLogo + '">' +
-        '</button>' +
-    '</a>';
+    addCSSClass(mediaEl, 'pinned');
+    if (typeof window.history.replaceState == 'function') {
+        var url = siteGlobals.mediaType + '-reviews/' + mediaID + '/';
+        window.history.replaceState(null, '', generateCleanURL(url));
+    }
+    else window.location.hash = '#!' + mediaID;
+    return false; // prevent bubble up
 }
 
-function generateMediaStarsHTML(mediaDataRating) {
+function getLoadReviewButtonHTML() {
+    return '<button class="load-review">load review</button>';
+}
+
+function getMediaStarsHTML(mediaDataRating) {
     var starRating = '';
     for (var i = 1; i <= 5; i++) {
         if (i <= mediaDataRating) starRating +=
@@ -523,29 +394,28 @@ function generateMediaStarsHTML(mediaDataRating) {
     return starRating;
 }
 
-function highlightSearch(searchTerms, mediaRenderedTitle) {
-    foreach(searchTerms, function(_, searchTerm) {
-        var regexPattern = new RegExp('(' + searchTerm + ')', 'i');
-        mediaRenderedTitle = mediaRenderedTitle.replace(regexPattern, '<u>$1</u>');
-    });
-    return mediaRenderedTitle;
+function formatReview(review) {
+    review = review.replace(/##siteGlobals.siteURL##/g, siteGlobals.siteURL);
+
+    // if the review uses paragraph tags then do not modify it
+    if (inArray('<p>', review)) return review;
+
+    return '<p>' + review.replace(/\n/g, '</p><p>') + '</p>';
 }
 
-function renderMediaCount() {
-    if (numTotalMedia == 0) {
-        document.getElementById('xOfYMediaCount').style.display = 'none';
-        document.getElementById('noMediaCount').style.display = 'inline';
-    } else {
-        document.getElementById('noMediaCount').style.display = 'none';
-        document.getElementById('xOfYMediaCount').style.display = 'inline';
-        document.getElementById('numMediaShowing').innerHTML = numMediaShowing;
-        document.getElementById('totalMediaFound').innerHTML = numTotalMedia;
-        document.getElementById('searchTypeDescription').innerHTML = (
-            currentlySearching ?
-            'search results' :
-            'total ' + easyPlural(siteGlobals.mediaType, 's')
-        );
+function getExternalLinkURL(mediaData) {
+    var externalLink = 'https://';
+    var externalSiteLogo = siteGlobals.siteURL + '/img/';
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            externalLink += 'www.goodreads.com/book/show/' + mediaData.goodreadsID;
+            break;
+        case 'movie':
+        case 'tv-series':
+            externalLink += 'www.imdb.com/title/' + mediaData.IMDBID;
+            break;
     }
+    return externalLink;
 }
 
 var currentMediaCountPanelPosition = 'inline'; // init
@@ -573,18 +443,106 @@ function positionMediaCountPanel(mode) {
     currentMediaCountPanelPosition = mode; // update global
 }
 
-// if the url is for 1 media item then return that item's id, else null
-function getMediaIDFromURL() {
-    if (window.location.hash.length > 0) {
-        if (window.location.hash.substr(0, 2) == '#!') {
-            return window.location.hash.replace('#!', ''); // does not update hash
-        }
-        // malformed media id - eg. /#birdbox (should be /#!birdbox)
-        return null;
+function showMediaCount(status) {
+    // use 'visibility' here to hide the number of search results, but not
+    // collapse the element
+    var visibility = status ? 'visible' : 'hidden';
+    document.querySelector('.media-count-area').style.visibility = visibility;
+}
+
+function renderMediaCount() {
+    if (numMediaFound == 0) { // search returned no results
+        document.getElementById('noMediaCount').style.display = 'inline';
+        document.getElementById('xOfYMediaCount').style.display = 'none';
+    } else {
+        document.getElementById('noMediaCount').style.display = 'none';
+        document.getElementById('xOfYMediaCount').style.display = 'inline';
+        document.getElementById('numMediaShowing').innerHTML = getNumMediaShowing();
+        document.getElementById('totalMediaFound').innerHTML = numMediaFound;
+        document.getElementById('searchTypeDescription').innerHTML = (
+            (searchText.current != '') ?
+            'search results' :
+            'total ' + easyPlural(siteGlobals.mediaType, 's')
+        );
     }
-    var pathPieces = window.location.pathname.split('/');
-    if (pathPieces.length != 4) return null; // '/x-reviews/' or '/x/index.html'
-    return pathPieces[2]; // '/book-reviews/abc/'
+}
+
+function getRenderedTitle(mediaData) {
+    var renderedTitle = mediaData.title;
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            renderedTitle = '<i>' + renderedTitle + '</i> by ' + mediaData.author;
+            break;
+        case 'tv-series':
+            renderedTitle += ' Season ' + mediaData.season;
+            break;
+    }
+    renderedTitle += ' (' + mediaData.year + ')';
+    var searchTermsList = getSearchTermsList(searchText.current);
+    renderedTitle = htmlUnderline(searchTermsList, renderedTitle);
+    return renderedTitle;
+}
+
+function htmlUnderline(needleList, haystack) {
+    for (var i = 0; i < needleList.length; i++) {
+        var needle = needleList[i];
+        var regexPattern = new RegExp('(' + needle + ')', 'i');
+        haystack = haystack.replace(regexPattern, '<u>$1</u>');
+    }
+    return haystack;
+}
+
+// media-data manipulation functions
+
+function getThumbnailBasename(mediaID, state) {
+    // keep this function in sync with generate_thumbnail_basename in
+    // themes/thematrix/plugins/media-reviews/grunt.py
+    switch (state) {
+        case 'original':
+        case 'larger':
+        case 'thumb':
+            return state + '-' + mediaID;
+        default:
+            throw 'bad state';
+    }
+}
+
+function get1MediaIDandHash(mediaItemIndex) {
+    var basic1MediaData = null; // init
+    if (filteredList == 'all') {
+        basic1MediaData = mediaList[mediaItemIndex];
+    } else if (mediaItemIndex < filteredList.length) {
+        // if filteredList[mediaItemIndex] is not in mediaList then
+        // basic1MediaData will be undefined
+        basic1MediaData = mediaList[filteredList[mediaItemIndex]];
+    }
+    if (basic1MediaData == null) return null; // gone off the end of mediaList
+    return {
+        id_: basic1MediaData[0],
+        jsonDataFileHash: basic1MediaData[1]
+    };
+}
+
+function getMediaID(mediaData) {
+    // note: keep this function in sync with media-reviews/grunt.py:get_id()
+    var id = '';
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            id = mediaData.author + ' ' + mediaData.title + ' ' + mediaData.year;
+            break;
+        case 'tv-series':
+            id = mediaData.title + ' s' + leftPad(mediaData.season, 2, '0') +
+            ' ' + mediaData.year;
+            break;
+        case 'movie':
+            id = mediaData.title + ' ' + mediaData.year;
+            break;
+    }
+    return id.
+    replace(/\s+/g,'-'). // replace all whitespace with a dash
+    replace(/-+/g,'-'). // replace multiple dashes with a single dash
+    replace(/[^a-z0-9-]*/gi, ''). // remove any non-alphanumeric characters
+    toLowerCase();
 }
 
 // infinite scroll functionality
@@ -596,346 +554,337 @@ function positionMediaCounter() {
     );
 }
 
+var infiniteLoaderRunning = false;
 function infiniteLoader() {
-    if (loadingStatus == 'on') return;
+    if (infiniteLoaderRunning) return;
+    infiniteLoaderRunning = true; // asap
 
-    var footerEl = document.getElementsByTagName('footer')[0];
-    if (!isScrolledTo(footerEl, 'view', 'partially')) return;
-    renderMoreMedia();
+    if (areAllMediaItemsRendered()) {
+        infiniteLoaderRunning = false;
+        return;
+    }
+    if (!isScrolledTo(latestMediaEl, 'view', 'partially')) {
+        infiniteLoaderRunning = false;
+        return;
+    }
+    var useFirstPageList_ = false; // already passed the first page
+    renderNextPage(numMediaFound, useFirstPageList_, afterRendering1Page);
+    infiniteLoaderRunning = false; // allow multiple placeholder pages at once
 }
 
-function renderMoreMedia() {
-    if (numMediaShowing >= searchResultIndexes.length) return; // no more media to show
-    loading('on');
+function areAllMediaItemsRendered() {
+    return (nextMediaIndex == numMediaFound);
+}
 
-    // add a container where all the new media will be placed. it is quicker
-    // for the browser to add them all at once like this since it takes fewer
-    // dom manipilations.
-    var moreMediaEl = document.createElement('div');
-    moreMediaEl.className = 'moreMediaReviews';
-
-    var pointer = numMediaShowing; // init
-    var moreMediaHTML = ''; // init
-
-    // get the next pageSize media to show
-    for (var i = 0; i < pageSize; i++) {
-        if (pointer >= searchResultIndexes.length) break; // we have run out of media to show
-        var mediaIndex = searchResultIndexes[pointer];
-        var mediaData = completeMediaData[mediaIndex];
-        moreMediaHTML += generateMediaHTML(mediaData);
-        if (((pointer + 1) % reviewsPerAd) == 0) {
-            moreMediaHTML += inFeedAdContainer;
-        }
-        pointer++;
-    }
-    moreMediaEl.innerHTML = moreMediaHTML;
-    numMediaShowing += i; // global
-    setTimeout(function () {
-        document.getElementById('reviewsArea').appendChild(moreMediaEl);
-        populateInFeedAds();
-        renderMediaCount();
-        loading('off');
-    }, 1000);
+function getNumMediaShowing() {
+    return document.querySelectorAll('#reviewsArea .media:not(.placeholder)').
+    length;
 }
 
 // searching
 
-var gettingMediaSearchList = false; // init (unlocked)
-function initMediaSearchList(callback) {
-    if (completeMediaSearch.length > 0) return callback(); // exit function here
+// equivalent of clicking the search button
+// note: this will only show the first page of <media>s. infiniteLoader()
+// handles later pages.
+function triggerSearch(windowJustLoaded) {
+    // 1. first get the total number of results
+    //     - when the search is default, this is just the total media count
+    //     - when the search is not default, this requires the search list
+    // 2. render (a page of) placeholders < page size & search list size
+    // 3. populate the placeholders
+    // 4. only allow searching once all placeholders have been populated
 
-    // run multiple different callbacks when the data finally arrives
-    addEvent(document, 'got-media-search-list', callback);
+    getSearchValues();
 
-    if (gettingMediaSearchList) return; // 1 attempt at a time
-    gettingMediaSearchList = true; // lock
-    ajax(
-        siteGlobals.mediaSearchIndexJSON,
-        function (json) {
-        try {
-            completeMediaSearch = JSON.parse(json);
-            completeMediaSearchIDs = new Array(completeMediaSearch.length);
-            for (var i = 0; i < completeMediaSearch.length; i++) {
-                completeMediaSearchIDs[i] = completeMediaSearch[i].
-                replace(/[^a-z0-9]*/g, '');
-            }
-            triggerEvent(document, 'got-media-search-list');
-        }
-        catch (err) {
-            console.log('error in initMediaSearchList function: ' + err);
-            gettingMediaSearchList = false; // unlock again
-        }
+    // backup the search asap to prevent re-triggering due to left/right arrow
+    // navigation within the search box
+    saveCurrentSearch();
+
+    clearRenderedMedia();
+    showRenderedMedia(true); // if previously hidden (eg. during search debounce)
+
+    var useFirstPageList_ = false;
+    downloadMediaLists(useFirstPageList_, function () {
+        updateFilteredListUsingSearch();
+        renderNextPage(
+            numMediaFound,
+            useFirstPageList_,
+            afterRendering1Page // callback
+        );
     });
 }
 
-function getMediaID(mediaData) {
-    var id = '';
-    switch (siteGlobals.mediaType) {
-        case 'book':
-            id = mediaData.author + mediaData.title + mediaData.year;
+function getSearchValues(prefix) {
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
+    searchText[current] = trim(document.getElementById('search').value).toLowerCase();
+    sortMode[current] = document.getElementById('sortBy').value; // eg. highest-rating
+}
+
+function anySearchChanges(prefix) {
+    var previous = (prefix == null) ? 'previous' : prefix + 'Previous';
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
+    return (
+        (searchText[previous] !== searchText[current]) ||
+        (sortMode[previous] !== sortMode[current])
+    );
+}
+
+// backup the current search so we can see if there were any changes next time
+function saveCurrentSearch(prefix) {
+    var previous = (prefix == null) ? 'previous' : prefix + 'Previous';
+    var current = (prefix == null) ? 'current' : prefix + 'Current';
+    searchText[previous] = searchText[current];
+    sortMode[previous] = sortMode[current];
+}
+
+var searchSpinnerEl = document.getElementById('mediaSearchLoaderArea');
+function searchSpinner(status) {
+    switch (status) {
+        case 'on':
+            searchSpinnerEl.style.display = 'block';
             break;
-        case 'tv-series':
-            id = mediaData.title + mediaData.season + mediaData.year;
-            break;
-        case 'movie':
-            id = mediaData.title + mediaData.year;
+        case 'off':
+            searchSpinnerEl.style.display = 'none';
             break;
     }
-    return id.replace(/[^a-z0-9]*/gi, '').toLowerCase();
 }
 
-function getRenderedTitle(mediaData) {
-    if (mediaData.hasOwnProperty('renderedTitle')) return mediaData.renderedTitle;
-    var renderedTitle = mediaData.title;
-    switch (siteGlobals.mediaType) {
-        case 'book':
-            renderedTitle = '<i>' + renderedTitle + '</i> by ' + mediaData.author;
-            break;
-        case 'tv-series':
-            renderedTitle += ' Season ' + mediaData.season;
-            break;
+function updateFilteredListUsingSearch() {
+    var searchTermsList = getSearchTermsList(searchText.current);
+
+    // indexes (eg. [0,7]) from searchIndex
+    filteredList = searchMediaTitles(searchTermsList);
+}
+
+function getSearchTermsList(searchText) {
+    if (searchText == '') return []; // quick
+    searchText = searchText.toLowerCase(); // all searching is lowercase
+    return searchText.split(/[^a-z0-9]/g).filter(function (item, i, list) {
+        if (item == '') return false; // no empty items allowed in result
+        return (list.indexOf(item) === i); // keep result unique
+    });
+}
+
+function searchMediaTitles(searchTermsList) {
+    if (searchTermsList.length == 0) {
+        numMediaFound = siteGlobals.totalMediaCount;
+        return 'all'; // nothing to filter
     }
-    renderedTitle += ' (' + mediaData.year + ')';
-    return renderedTitle;
-}
+    var foundResultIndexes = [];
 
-function mediaID2Index(id) {
-    if (id === null) return null;
-    var mediaIndex = completeMediaSearchIDs.indexOf(id);
-    if (mediaIndex < 0) return null;
-    return mediaIndex;
-}
+    // use a regex to see if the search terms are in the search item
+    // stackoverflow.com/a/54417192, regex101.com/r/yVXwk0/1
+    // ^(?=.*DEF)(?=.*ABC)
+    var regexString = '^(?=.*' + searchTermsList.join(')(?=.*') + ')';
+    var regexPattern = new RegExp(regexString, 'i');
 
-function initSearchResultIndexes() {
-    // wait for both lists to be downloaded before proceeding
-    if (
-        completeMediaSearch.length == 0 ||
-        completeMediaData.length == 0
-    ) return;
-    var prependMediaIndex = mediaID2Index(getMediaIDFromURL());
-    generateSortedData(prependMediaIndex, ''); // init the searchResultIndexes list
-}
-
-// update searchResultIndexes (global) and return mediaSearchResults
-function generateSortedData(prependMediaIndex, searchTerms) {
-    searchResultIndexes = searchMediaTitles(prependMediaIndex, searchTerms);
-
-    // get some of the media data into a tmp list. necessary for sorting.
-    var mediaSearchResults = [];
-    for (var i = 0; i < searchResultIndexes.length; i++) {
-        var mediaIndex = searchResultIndexes[i];
-        var mediaData = jsonCopyObject(completeMediaData[mediaIndex]);
-        mediaData.index = mediaIndex;
-        mediaSearchResults.push(mediaData);
+    for (var i = 0; i < searchIndex.length; i++) {
+        if (!regexPattern.test(searchIndex[i])) continue;
+        foundResultIndexes.push(i);
     }
+    numMediaFound = foundResultIndexes.length;
 
-    // sort it
-    var preserveFirst = (prependMediaIndex !== null);
-    mediaSearchResults = sortMedia(preserveFirst, mediaSearchResults);
+    // all items contained all search terms
+    if (foundResultIndexes.length == searchIndex.length) foundResultIndexes = 'all';
 
-    // sort the global search results
-    for (var i = 0; i < searchResultIndexes.length; i++) {
-        searchResultIndexes[i] = mediaSearchResults[i].index;
-    }
-    return mediaSearchResults;
+    return foundResultIndexes;
 }
 
-function mediaSortChanged() {
-    debounceMediaSearch('atStart');
-    debounceMediaSearch('atEnd');
+function extraDebounceChecks(state) {
+    // we are either 'atStart' or 'atMiddle'
+    var extraData = {};
+    var searchPrefix = 'debounce';
+    getSearchValues(searchPrefix);
+    extraData.anySearchChanges = anySearchChanges(searchPrefix);
+    saveCurrentSearch(searchPrefix);
+    extraData.extendTimeout = extraData.anySearchChanges;
+    return extraData;
 }
 
-function debounceMediaSearch(state) {
-    // archiving the in-feed ads takes ages for browsers, so only do this and
-    // update the search-results after the user has stopped typing
+function debounceSearch(state, extraData) {
+    // downloading the first page of search items takes a short while, so only
+    // do this after the user has stopped typing
     switch (state) {
         case 'atStart':
+            // if there are no changes then do not show the search spinner
+            if (!extraData.anySearchChanges) return;
+
+            showRenderedMedia(false);
+            showMediaCount(false);
             scrollToElement(document.getElementById('searchBox'));
-            if (typeof window.history.replaceState == 'function') {
-                var page = siteGlobals.mediaType + '-reviews/';
-                window.history.replaceState(null, '', generateCleanURL(page));
-            }
-            else window.location.hash = '';
-            hideAllSkyscraperAds();
-            document.getElementById('reviewsArea').style.display = 'none';
-
-            // hide the number of search results, but do not collapse the element
-            document.querySelector('.media-count-area').style.visibility = 'hidden';
-
-            loading('on');
+            searchSpinner('on');
+            break;
+        case 'atMiddle':
             break;
         case 'atEnd':
-            document.getElementById('reviewsArea').style.display = 'block';
-
-            // show the number of search results
-            document.querySelector('.media-count-area').style.visibility = 'visible';
-
-            mediaSearchChanged();
-            loading('off');
+            getSearchValues();
+            if (!anySearchChanges()) {
+                searchSpinner('off');
+                // note: we are comparing the changes from the previous search
+                // to now - not the changes from the previous debounce to now.
+                // it is possible there were changes during the debounce stage
+                // but they were erased
+                showRenderedMedia(true);
+                showMediaCount(true);
+                return;
+            }
+            removeMediaIDFromUrl();
+            getSearchValues('debounce'); // init for next debounce
+            saveCurrentSearch('debounce'); // init for next debounce
+            triggerSearch();
             break;
     }
 }
 
-function mediaSearchChanged() {
-    archiveInFeedAds();
-    document.getElementById('reviewsArea').innerHTML = '';
-    var searchText = trim(document.getElementById('search').value).toLowerCase();
-    var searchTerms = extractSearchTerms(searchText);
-    var finalizeSearch = function () {
-        // wait for both lists to be downloaded before proceeding
-        if (
-            completeMediaSearch.length == 0 ||
-            completeMediaData.length == 0
-        ) return;
+// downloads
 
-        var prependMediaIndex = null;
-        var mediaSearchResults = generateSortedData(prependMediaIndex, searchTerms);
+// note: when downloading only the first 10, do not also download the search
+// index. this is because the first 10 will only be downloaded when there is no
+// search text and the sort order is at the default value.
+function downloadMediaLists(useFirstPageList_, callback) {
+    if (callback == null) callback = function () {};
+    var mediaListIsDownloaded = isMediaListDownloaded(useFirstPageList_);
+    var searchIndexIsDownloaded = (useFirstPageList_ || isSearchIndexDownloaded());
 
-        if (searchText == '') {
-            numMediaShowing = completeMediaSearch.length; // global
-            if (numMediaShowing > pageSize) numMediaShowing = pageSize; // max
-            numTotalMedia = completeMediaSearch.length; // global
-            currentlySearching = false;
-            renderMediaCount();
-        } else {
-            numMediaShowing = searchResultIndexes.length; // global
-            if (numMediaShowing > pageSize) numMediaShowing = pageSize; // max
-            numTotalMedia = searchResultIndexes.length; // global
-            currentlySearching = true;
-            renderMediaCount();
-        }
+    if (mediaListIsDownloaded && searchIndexIsDownloaded) return callback();
 
-        // render the first page of the search results
-        var mediaHTML = '';
-        for (var i = 0; i < numMediaShowing; i++) {
-            var mediaData = mediaSearchResults[i];
-            mediaData.renderedTitle = highlightSearch(
-                searchTerms, getRenderedTitle(mediaData)
-            );
-            mediaHTML += generateMediaHTML(mediaData);
-            if (((i + 1) % reviewsPerAd) == 0) {
-                mediaHTML += inFeedAdContainer;
-            }
+    if (!mediaListIsDownloaded) {
+        mediaListFileName = getFileJSONName(
+            'list', sortMode.current, useFirstPageList_
+        );
+        mediaListDownloadStatus = 'not started'; // unlock again
+        downloadMediaListJSON(function () {
+            // only using first 10? then we don't need the search list
+            if (useFirstPageList_) return callback();
 
-            // if there are less search results than reviewsPerAd then stick an
-            // ad on the end anyway
-            if ((numMediaShowing < reviewsPerAd) && (i + 1) == numMediaShowing) {
-                mediaHTML += inFeedAdContainer;
-            }
-        }
-        document.getElementById('reviewsArea').innerHTML = mediaHTML;
-        populateInFeedAds();
-    };
-    // we need the search-index and the media-data lists before we can complete
-    // this operation. get both lists in parallel for speed.
-    initMediaSearchList(finalizeSearch);
-    initCompleteMediaData(finalizeSearch);
-}
-
-function extractSearchTerms(searchText) {
-    if (searchText == '') return []; // quick
-    return searchText.split(/[^a-z0-9]/gi).map(function(v) {
-        return v.toLowerCase();
-    }).filter(function(item, i, list) {
-        if (item == '') return false; // no empty items in result
-        return list.indexOf(item) === i; // keep result unique
-    });
-}
-
-function searchMediaTitles(prependMediaIndex, searchTerms) {
-    searchResultIndexes = [];
-    if (searchTerms.length == 0) {
-        // add all media
-        for (var i = 0; searchResultIndexes.length < completeMediaSearch.length; i++) {
-            if ((prependMediaIndex !== null) && (i == 0)) {
-                searchResultIndexes.push(prependMediaIndex);
-            }
-            if (prependMediaIndex === i) continue;
-            searchResultIndexes.push(i);
-        }
-        return searchResultIndexes;
-    }
-    if (prependMediaIndex !== null) searchResultIndexes.push(prependMediaIndex);
-    foreach(completeMediaSearch, function (i, mediaWords) {
-        if (prependMediaIndex === i) return; // continue
-        var searchFail = false;
-        foreach(searchTerms, function (_, searchWord) {
-            // all search terms are mandatory
-            if (!inArray(searchWord, mediaWords)) {
-                searchFail = true;
-                return false; // break from inner loop
-            }
+            // otherwise wait for both lists to download before running callback
+            if (searchIndexDownloadStatus != 'complete') return;
+            return callback();
         });
-        if (!searchFail && !inArray(i, searchResultIndexes)) {
-            searchResultIndexes.push(i);
-        }
-    });
-    return searchResultIndexes;
+    }
+    if (!searchIndexIsDownloaded) {
+        searchIndexFileName =
+        getFileJSONName('search-index', sortMode.current, useFirstPageList_);
+
+        searchIndexDownloadStatus = 'not started'; // unlock again
+        downloadSearchIndexJSON(function () {
+            // wait for both lists to download before running callback
+            if (mediaListDownloadStatus != 'complete') return;
+            return callback();
+        });
+    }
 }
 
-var gettingCompleteMediaData = false; // init (unlocked)
-function initCompleteMediaData(callback) {
-    if (completeMediaData.length > 0) return callback(); // exit function here
+function isMediaListDownloaded(useFirstPageList_) {
+    var requiredMediaListFileName =
+    getFileJSONName('list', sortMode.current, useFirstPageList_);
 
-    // run multiple different callbacks when the data finally arrives
-    addEvent(document, 'got-complete-media-data', callback);
+    return (
+        (mediaListFileName == requiredMediaListFileName) &&
+        (mediaListDownloadStatus == 'complete')
+    );
+}
 
-    if (gettingCompleteMediaData) return; // 1 attempt at a time
-    gettingCompleteMediaData = true; // lock
-    ajax(
-        siteGlobals.mediaListJSON,
-        function (json) {
+function isSearchIndexDownloaded() {
+    var requiredSearchIndexFileName =
+    getFileJSONName('search-index', sortMode.current);
+
+    return (
+        (searchIndexFileName == requiredSearchIndexFileName) &&
+        (searchIndexDownloadStatus == 'complete')
+    );
+}
+
+function downloadMediaListJSON(callback) {
+    if (callback == null) callback = function () {};
+    var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
+    mediaListFileName;
+
+    downloadOnce(fileWithPath, function (downloadObj) {
         try {
-            // get the list of all media in order of last-reviewed
-            completeMediaData = JSON.parse(json);
-            triggerEvent(document, 'got-complete-media-data');
+            if (downloadObj.data == null) throw "no data";
+            if (downloadObj.runCount == 1) {
+                mediaList = JSON.parse(downloadObj.data);
+            }
+            mediaListDownloadStatus = 'complete'; // global
+            return callback();
         }
         catch (err) {
-            console.log('error in initCompleteMediaData function: ' + err);
-            gettingCompleteMediaData = false; // unlock again
+            console.error('error in downloadMediaListJSON(): ' + err);
+            mediaListDownloadStatus = 'fail'; // global
+            callback();
         }
     });
 }
 
-function sortMedia(preserveFirst, mediaList) {
-    if (mediaList.length == 0) return [];
-    var sortBy = document.getElementById('sortBy').value;
-    if (preserveFirst) var first = mediaList.shift(); // update mediaList
-    switch (sortBy) {
-        case 'newest-reviews':
-            mediaList.reverse();
-            if (preserveFirst) mediaList.unshift(first); // update mediaList
-            return mediaList;
-        case 'oldest-reviews':
-            if (preserveFirst) mediaList.unshift(first); // update mediaList
-            return mediaList;
-    }
-    mediaList.sort(function(a, b) {
-        var diff = 0;
-        var titleA = a.title.toLowerCase();
-        var titleB = b.title.toLowerCase();
-        switch (sortBy) {
-            case 'highest-rating':
-            case 'lowest-rating':
-                if (a.rating == b.rating) {
-                    // sort alphabetically for same rating media
-                    if (titleA > titleB) diff = 1;
-                    else if (titleA < titleB) diff = -1;
-                } else {
-                    if (a.rating > b.rating) diff = 1;
-                    else if (a.rating < b.rating) diff = -1;
-                    if (sortBy == 'highest-rating') diff *= -1;
-                }
-                break;
-            case 'title-ascending':
-            case 'title-descending':
-                if (titleA > titleB) diff = 1;
-                else if (titleA < titleB) diff = -1;
-                if (sortBy == 'title-descending') diff *= -1;
-                break;
+function downloadSearchIndexJSON(callback) {
+    var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/' +
+    searchIndexFileName;
+
+    downloadOnce(fileWithPath, function (downloadObj) {
+        try {
+            if (downloadObj.data == null) throw "no data";
+            if (downloadObj.runCount == 1) {
+                searchIndex = JSON.parse(downloadObj.data);
+            }
+            searchIndexDownloadStatus = 'complete'; // global
+            return callback();
         }
-        return diff;
+        catch (err) {
+            console.error('error in downloadSearchIndexJSON(): ' + err);
+            searchIndexDownloadStatus = 'fail'; // global
+            callback();
+        }
     });
-    if (preserveFirst) mediaList.unshift(first); // update mediaList
-    return mediaList;
+}
+
+function download1MediaItem(minimalMediaItemObj, callback) {
+    var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/data-' +
+    minimalMediaItemObj.id_ + '.json?hash=' + minimalMediaItemObj.jsonDataFileHash;
+
+    ajax(fileWithPath, function (json) {
+        try {
+            if (json == null) throw "no data";
+            var mediaData = JSON.parse(json);
+            mediaData.id_ = getMediaID(mediaData);
+            if (callback != null) callback('complete', mediaData);
+        }
+        catch (err) {
+            console.error(
+                'error in download1MediaItem() for ' + fileWithPath + ': ' + err
+            );
+            if (callback != null) callback('fail');
+        }
+    });
+}
+
+function download1MediaReview(minimalMediaItemObj, callback) {
+    if (callback == null) callback = function () {};
+    var fileWithPath = '/' + siteGlobals.mediaType + '-reviews/json/review-' +
+    minimalMediaItemObj.id_ + '.json?hash=' + minimalMediaItemObj.jsonDataFileHash;
+
+    ajax(fileWithPath, function (json) {
+        try {
+            if (json == null) throw "no data";
+            var mediaReviewText = JSON.parse(json).reviewFull;
+            callback('complete', mediaReviewText);
+        }
+        catch (err) {
+            console.error(
+                'error in download1MediaReview() for ' + fileWithPath +
+                ': ' + err
+            );
+            callback('fail');
+        }
+    });
+}
+
+function getFileJSONName(listType, sortMode_, useFirstPageList_) {
+    useFirstPageList_ = (useFirstPageList_ == true);
+
+    var basename = listType + '-' + sortMode_ +
+    (useFirstPageList_ ? '-first-' + siteGlobals.pageSize : '');
+
+    var hash = siteGlobals.mediaFileHashes[basename];
+    return basename + '.json?hash=' + hash;
 }

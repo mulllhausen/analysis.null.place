@@ -1,0 +1,132 @@
+{% macro media_review_item(media_type, double_parsed, media, max_thumb_height) %}
+{% from 'media_review_stars.html' import media_review_stars with context %}
+<div
+    class="media {{ media_type }}
+{%- if media == None %} placeholder pulsate {%- else %} pinned {%- endif -%}
+    "
+{% if media != None %}
+    id="filter-index-{{ media.default_index }}"
+{% endif %}
+>
+    <a
+        class="link-to-self chain-link"
+{% if media != None %}
+        href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
+{% endif %}
+        title="right click and copy link for the URL of this {{ media_type }} review"
+    >
+        <svg class="icon icon-chain">
+            <use xlink:href="
+{%- if double_parsed -%}
+{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}
+{%- else -%}
+{{ QS_LINK['/theme/img/icons.svg'] }}
+{%- endif -%}
+#icon-chain">
+            </use>
+        </svg>
+    </a>
+    <div class="thumbnail-and-stars">
+
+{#
+    use an object for the image so that it does not display a broken link icon
+    before the image loads
+#}
+        <img class="thumbnail" loading="lazy" {# only for <object>: type="image/jpg"#}
+{% if media != None %}
+{% set img = '/' + media_type + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
+            {#data#}src="
+{%- if double_parsed -%}
+{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}
+{%- else -%}
+{{ QS_LINK[img] }}
+{%- endif -%}
+            "
+{% endif %}
+{% if media == None %}
+            height="{{ max_thumb_height }}"
+{% else %}
+            height="{{ media.thumb_height }}"
+            alt="loading thumbnail"
+{% endif %}
+        >{#thumbnail failed to load</object>#}
+
+        <div class="stars">
+{{ media_review_stars(media, double_parsed) }}
+        </div>
+    </div>
+    <h3 class="media-title">
+{%- if media != None -%}
+{{ media.title }}
+{%- endif -%}
+    </h3>
+    <h4 class="review-title">
+{%- if media != None -%}
+{{ media.review_title }}
+{%- endif -%}
+    </h4>
+{# when no media exists, show both, then we will hide one with js later #}
+{% if media == None or media.spoilers %}
+    <span class="spoiler-alert has-spoilers">(this review contains spoilers)</span>
+{% endif %}
+{% if media == None or not media.spoilers %}
+    <span class="spoiler-alert no-spoilers">(this review has no spoilers)</span>
+{% endif %}
+    <br>
+    <div class="review-text">
+{% if media == None %}
+        <button class="load-review">load review</button>
+{% else %}
+        {{ media.html_review }}
+{% endif %}
+        <a
+            class="link-external" target="_blank"
+{% if media != None %}
+            href="{{ media.external_link_url }}"
+{% endif %}
+        >
+            <button class="external-site">
+                <img src="
+{%- set img = '/img/' -%}
+{%- if media_type in ("movie", "tv-series") -%}
+    {%- set img = img + 'imdb' -%}
+{%- elif media_type == "book" -%}
+    {%- set img = img + 'goodreads' -%}
+{%- endif -%}
+{%- set img = img + '-logo-button.png' -%}
+{%- if double_parsed -%}
+{%- raw %}{{ {% endraw -%}QS_LINK['{{ img }}']{%- raw %} }}{% endraw -%}
+{%- else -%}
+{{ QS_LINK[img] }}
+{%- endif -%}
+                ">
+            </button>
+        </a>
+    </div>
+    <div class="dates-spacer">
+{#
+    this div goes behind .review-dates and adds some empty height space to keep
+    the text in .review-dates below the rest of the above content
+#}
+    </div>
+    <div class="review-dates">
+        <span class="review-created">
+{%- if media != None -%}
+            added {{ media.review_created }}
+{%- endif -%}
+        </span>
+        <span class="review-updated">
+{%- if media == None -%}
+            <a target="_blank"></a>
+{%- else %}
+    {% if media.review_updated != None -%}
+            <a
+                target="_blank"
+                href="{{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json"
+            >updated {{ media.review_updated }}</a>
+    {%- endif -%}
+{%- endif -%}
+        </span>
+    </div>
+</div>
+{% endmacro %}

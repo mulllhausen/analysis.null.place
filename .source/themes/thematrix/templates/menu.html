@@ -1,15 +1,15 @@
 <ul class="nav-menu">
     {% for cat, articles in categories %}
-    <a href="{{ SITEURL }}/{{ cat.url }}" {% if cat == category %}class="active"{% endif %}>
+    <a href="{{ SITEURL }}/{{ cat.url }}"{% if cat == category %} class="active"{% endif %}>
         <svg class="icon icon-folder-open-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use></svg>
         {{ cat }}<sup> {{ articles | count }}</sup>
     </a>
     {% endfor %}
-    <a href="{{ SITEURL }}/archives/" {% if output_file == "archives/index.html" %}class="active"{% endif %}>
+    <a href="{{ SITEURL }}/archives/"{% if output_file == "archives/index.html" %} class="active"{% endif %}>
         <svg class="icon icon-file-text-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-file-text-o"></use></svg>
         all<sup>&nbsp;</sup>
     </a>
-    <a href="{{ SITEURL }}/tags/" {% if output_file == "tags/index.html" %}class="active"{% endif %}>
+    <a href="{{ SITEURL }}/tags/"{% if output_file == "tags/index.html" %} class="active"{% endif %}>
         <svg class="icon icon-hashtag"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use></svg>
         all<sup>&nbsp;</sup>
     </a>
@@ -17,3 +17,4 @@
         {% include 'comments_opener.html' %}
     {% endif %}
 </ul>
+

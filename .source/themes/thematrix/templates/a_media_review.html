@@ -1,0 +1,32 @@
+{# this file is double parsed #}
+<html>
+<head>
+    <title>{{ media.type_ }} reviews</title>
+    <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
+    <meta name="date" content="{{ media.review_created }}"/>
+{% if media.review_updated != None %}
+    <meta name="modified" content="{{ media.review_updated }}"/>
+{% endif %}
+    <meta name="category" content="reviews"/>
+    <meta name="description" content="My {{ media.type_ }} reviews."/>
+    <meta name="tags" content="{{ media.type_plural }}, reviews"/>
+    <meta name="stylesheets" content="/css/media-reviews.css"/>
+    <meta name="scripts" content="/js/media-reviews.js"/>
+    <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>
+    <meta name="summary" content="{{ media.type_caps }} review of {{ media.title }}{% if media.author %} by {{ media.author }}{% endif %}"/>
+    <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for {{ media.type_plural }}."/>
+    <meta name="jsons" content="{{ all_media_data.preloads.json | join(',') }}"/>
+{#
+note: we cannot put proper json (containing "double quotes") in jinja content
+since jinja will view the first double quote as terminating the content. so we
+replace all double quotes with backticks here and then replace them back in the
+next level for rendering.
+#}
+    <meta name="linked_data" content="{{ media.linked_data | tojson | replace("\"", "`") }}"/>
+</head>
+<body>
+{%- from 'media_body.html' import media_body with context -%}
+{% set double_parsed = True %}
+{{ media_body(all_media_data, double_parsed, media) }}
+</body>
+</html>

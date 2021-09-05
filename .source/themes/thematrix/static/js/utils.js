@@ -97,6 +97,13 @@ function trimRight(str) {
     return str.replace(/[\s\uFEFF\xA0]+$/g, '');
 }
 
+function leftPad(strToPad, padToLen, padChar) {
+    strToPad = strToPad.toString();
+    if (strToPad.length >= padToLen) return strToPad;
+    if (padChar == null) padChar = '0';
+    return padChar.repeat(padToLen - strToPad.length) + strToPad;
+}
+
 function unixtime(date) {
     switch (typeof date) {
         case 'string': // eg 03 Jan 2009 18:15:05 GMT
@@ -137,9 +144,10 @@ function addEvent(element, types, callback) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
     var typesArr = types.split(',');
-    foreach(elements, function (elI, el) {
-        foreach(typesArr, function (typeI, type) {
-            type = type.replace(/ /g, '');
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
+        for (var typeI = 0; typeI < typesArr.length; typeI++) {
+            var type = typesArr[typeI].replace(/ /g, '');
             if (el.addEventListener) {
                 el.addEventListener(type, callback, false);
             } else if (el.attachEvent) { // ie
@@ -147,21 +155,41 @@ function addEvent(element, types, callback) {
             } else {
                 el['on' + type] = callback;
             }
-        });
-    });
+        }
+    }
+}
+
+function removeEvent(element, types, callback) {
+    if (element == null || typeof(element) == 'undefined') return;
+    var elements = (isNodeList(element) ? element : [element]);
+    var typesArr = types.split(',');
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
+        for (var typeI = 0; typeI < typesArr.length; typeI++) {
+            var type = typesArr[typeI].replace(/ /g, '');
+            if (el.removeEventListener) {
+                el.removeEventListener(type, callback, false);
+            } else if (el.detachEvent) { // ie
+                el.detachEvent('on' + type, callback);
+            } else {
+                delete el['on' + type];
+            }
+        }
+    }
 }
 
 function triggerEvent(element, type) {
     if (element == null || typeof(element) == 'undefined') return;
     var elements = (isNodeList(element) ? element : [element]);
-    foreach(elements, function (elI, el) {
+    for (var elI = 0; elI < elements.length; elI++) {
+        var el = elements[elI];
         if ('createEvent' in document) {
             var evt = document.createEvent('HTMLEvents');
             evt.initEvent(type, false, true);
             el.dispatchEvent(evt);
         }
         else el.fireEvent('on' + type);
-    });
+    }
 }
 
 function popup(heading, detail) {
@@ -256,6 +284,16 @@ function setButtons(enable) {
     });
 }
 
+function setButtonLoading(setLoading, buttonEl) {
+    var spinnerHTML = '<span class="button-loading"></span> ';
+    buttonEl.innerHTML = (
+        setLoading ?
+        spinnerHTML + buttonEl.innerHTML :
+        buttonEl.innerHTML.replace(spinnerHTML, '')
+    );
+    return buttonEl;
+}
+
 // find needle in haystack - works for strings as well as arrays
 function inArray(needle, haystack) {
     // note: does not work with with NaN or ie < 9
@@ -295,11 +333,88 @@ function ajax(url, callback) {
     addEvent(xhttp, 'readystatechange', function () {
         if (this.readyState != XMLHttpRequest.DONE) return;
         if (this.status != 200) return;
+        //if (this.status != 304) return; // from cache stackoverflow.com/a/16817752
         callback(this.responseText);
     });
     xhttp.open('GET', url, true); // async
+    xhttp.timeout = 5000; // ms
+    addEvent(xhttp, 'timeout', function () {
+        callback(null); // null = fail
+    });
+    addEvent(xhttp, 'error', function () {
+        callback(null); // null = fail
+    });
     xhttp.send();
 }
+
+// a download manager you can call as many times as you like for the same file,
+// but will only download the file once and then run all the callbacks
+var downloadProperties = {};
+function downloadOnce(url, callback) {
+    if (!downloadProperties.hasOwnProperty[url]) downloadProperties[url] = {
+        setupCount: 0,
+        runCount: 0,
+        status_: 'not started',
+        data: null
+    };
+    if (downloadProperties[url].status_ == 'complete') {
+        return triggerEvent(document, 'done-download-' + url);
+    }
+
+    // run all the different callbacks when the download finishes
+    var newCallback = function() {
+        downloadProperties[url].runCount++;
+        callback(downloadProperties[url]);
+        if (
+            downloadProperties[url].runCount <
+            downloadProperties[url].setupCount
+        ) return;
+        removeEvent(document, 'done-download-' + url, newCallback);
+        delete downloadProperties[url]; // clean up
+    };
+    downloadProperties[url].setupCount++;
+    addEvent(document, 'done-download-' + url, newCallback);
+
+    // 1 attempt at a time
+    if (downloadProperties[url].status_ == 'in progress') return;
+
+    downloadProperties[url].status_ = 'in progress'; // lock
+    ajax(url, function (data) {
+        downloadProperties[url].data = data;
+        downloadProperties[url].status_ = 'complete';
+        triggerEvent(document, 'done-download-' + url);
+    });
+}
+
+/*
+// use the service worker (if available), else ajax, to preload an external
+// resource
+function preload(url) {
+    if (!('serviceWorker' in navigator)) {
+        ajax(url);
+        return; // do not return any content
+    }
+    var intervalID = setInterval(function() {
+        var sw = navigator.serviceWorker.controller;
+        // exit if service worker is not yet ready
+        if (sw == null) return;
+
+        if (sw.state == 'activated') return execPreload(intervalID, url);
+        addEvent(sw, 'statechange' function () {
+            execPreload(intervalID, url);
+        });
+    }, 200); // try 5 times a second
+}
+
+function execPreload(intervalID, url) {
+    if (sw.state != 'activated') return;
+
+    clearInterval(intervalID);
+    if (navigator.serviceWorker.controller.postMessage({
+        type: 'preload',
+        url: url
+    });
+}*/
 
 Element.prototype.up = function (num) {
     var el = this;
@@ -521,41 +636,52 @@ function Retrieve(k) {
     }
 }
 
-// - when debounceType = 'start' - trigger once on the first event and only
-// allow again after the wait period ends
-// - when debounceType = 'end' - trigger after the wait period
-// - when debounceType = 'both' - trigger on the first event and at the end of
-// the wait period
-function debounce(func, wait, debounceType) {
-    // this function is called immediately from within the event handler to
-    // initialise a debounce event function
-    var timeout;
-    return function() { // called every time the event fires
-        //var context = this, args = arguments; // note: event = args[0]
+// - when debounceType = 'start' - callback once on the first event with state
+// 'atStart'
+// - when debounceType = 'end' - callback after the wait period with state 'atEnd'
+// - when debounceType = 'both' - callback for each state: 'atStart',
+// 'atMiddle' (triggered on every event between 'start' and 'end') and 'atEnd'
+function debounce(callback, wait, debounceType, extraChecks) {
+    // put this function within an event handler. it will be called immediately
+    // from within the event handler to initialise a debounce event function
+    var timeoutID = null;
+    return function() {
+        // called with the same debounceType every time the event fires
+
         var later = function() {
-            timeout = null;
+            timeoutID = null;
             switch (debounceType) {
-                case 'start':
-                    break;
                 case 'end':
                 case 'both':
-                    func('atEnd');//func.apply(context, args);
+                    // only run the callback if 'end' or 'both' registered
+                    callback('atEnd');
                     break;
             }
         };
-        var callNow;
-        switch (debounceType) {
+        var callbackNow;
+        var state = (timeoutID == null) ? 'atStart' : 'atMiddle';
+        switch (debounceType) { // the registered debounce type
             case 'start':
-            case 'both':
-                callNow = !timeout;
+                if (state == 'atStart') callbackNow = true;
+                break;
+            case 'both': // start, middle & end
+                callbackNow = true;
                 break;
             case 'end':
-                callNow = false;
+                // if only registered for the end debounce type then do not
+                // callback now but do extend the timeout
+                callbackNow = false;
                 break;
         }
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func('atStart');//func.apply(context, args);
+        var extraData = {
+            extendTimeout: true
+        };
+        if (extraChecks != null) extraData = extraChecks(state);
+        if (extraData.extendTimeout) {
+            clearTimeout(timeoutID);
+            timeoutID = setTimeout(later, wait);
+        }
+        if (callbackNow) callback(state, extraData);
     };
 }
 
