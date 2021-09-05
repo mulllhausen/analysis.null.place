@@ -1,38 +1,38 @@
 *.pyc
 
 # ignore built files under the .source dir
-.source/themes/thematrix/static/js/base.js
-.source/themes/thematrix/static/js/comments-section.js
+/.source/themes/thematrix/static/js/base.js
+/.source/themes/thematrix/static/js/comments-section.js
 
 # ignore builder files in the output dir
-movie-reviews/json/list-all.json
-tv-series-reviews/json/list-all.json
-book-reviews/json/list-all.json
+/movie-reviews/json/list-all.json
+/tv-series-reviews/json/list-all.json
+/book-reviews/json/list-all.json
 
 # ignore files that get merged into base.js:
-theme/js/polyfills.js
-theme/js/utils.js
-theme/js/matrix-animation.js
-theme/js/autofooter.js
-theme/js/cookie-warning-notice.js
-theme/js/ads.js
-theme/js/register-service-worker.js
+/theme/js/polyfills.js
+/theme/js/utils.js
+/theme/js/matrix-animation.js
+/theme/js/autofooter.js
+/theme/js/cookie-warning-notice.js
+/theme/js/ads.js
+/theme/js/register-service-worker.js
 
 # ignore files that get merged into comments-section.js:
-theme/js/comments-manager.js
-theme/js/facebook-comments.js
-theme/js/disqus-comments.js
+/theme/js/comments-manager.js
+/theme/js/facebook-comments.js
+/theme/js/disqus-comments.js
 
 # ignore built files for media reviews under the .source dir. the files are all
 # copied to output/ and versioned there - no need for duplicates. and note:
 # media reviews are built from json/list-all.json files - these need versioning.
-.source/content/*-reviews/img/larger-*jpg
-.source/content/*-reviews/img/thumb-*jpg
-.source/content/*-reviews/json/data-*.json
-.source/content/*-reviews/json/review-*.json
-.source/content/*-reviews/json/search-*.json
+/.source/content/*-reviews/img/larger-*jpg
+/.source/content/*-reviews/img/thumb-*jpg
+/.source/content/*-reviews/json/data-*.json
+/.source/content/*-reviews/json/review-*.json
+/.source/content/*-reviews/json/search-*.json
 # remove all list files
-.source/content/*-reviews/json/list-*.json
+/.source/content/*-reviews/json/list-*.json
 # add back list-all files - the master file from which everything else is built
-!.source/content/*-reviews/json/list-all.json
-.source/content/pages/*-reviews/
+!/.source/content/*-reviews/json/list-all.json
+/.source/content/pages/*-reviews/
