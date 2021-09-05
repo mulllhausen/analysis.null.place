@@ -774,6 +774,11 @@ def resize_thumbnails(all_media_x):
             )
             save_resized_image(img_original, a_media, img_size_name)
 
+            # save the thumbnail hash to use in download lists later
+            if img_size_name == "thumb":
+                a_media["thumbnail_hash"] = \
+                get_img_data(a_media["id_"], "thumb", get_hash = True)["hash"]
+
     return all_media_x
 
 def calculate_new_img_sizes(
