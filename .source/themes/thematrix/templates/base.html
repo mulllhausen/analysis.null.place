@@ -190,7 +190,7 @@
         <script src="{{ QS_LINK[script] }}"></script>
                 {% endfor %}
             {% endif %}
-            {% if COMMENTS_SCRIPTS %}
+            {% if COMMENTS_SCRIPTS and not article.no_comments %}
         <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
             {% endif %}
         {% endif %}
@@ -201,7 +201,7 @@
         <script src="{{ QS_LINK[script] }}"></script>
                 {% endfor %}
             {% endif %}
-            {% if COMMENTS_SCRIPTS %}
+            {% if COMMENTS_SCRIPTS and not page.no_comments %}
         <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
             {% endif %}
         {% endif %}
