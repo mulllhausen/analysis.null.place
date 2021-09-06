@@ -37,7 +37,7 @@ sort_modes = (
     "title-a-z",
     "title-z-a"
 )
-default_sort_mode = "newest"
+default_sort_mode = "title-a-z"
 not_media_types = [] # init
 not_media_types_plural = [] # init
 media_type_plural = "" # init
