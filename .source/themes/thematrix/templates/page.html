@@ -24,6 +24,8 @@
 {{ page.content }}
     </div>
     <div class="bottom-spacer"></div>
-    {% include 'comments.html' %}
+{% if not page.no_comments %}
+     {% include 'comments.html' %}
+{% endif %}
 </section>
 {% endblock %}
