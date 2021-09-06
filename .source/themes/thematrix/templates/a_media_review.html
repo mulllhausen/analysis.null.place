@@ -16,6 +16,7 @@
     <meta name="summary" content="{{ media.type_caps }} review of {{ media.title }}{% if media.author %} by {{ media.author }}{% endif %}"/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for {{ media.type_plural }}."/>
     <meta name="jsons" content="{{ all_media_data.preloads.json | join(',') }}"/>
+    <meta name="override_fb_comments_url" content="{{ SITEURL }}/{{ media.type_ }}-reviews/"/>
 {#
 note: we cannot put proper json (containing "double quotes") in jinja content
 since jinja will view the first double quote as terminating the content. so we

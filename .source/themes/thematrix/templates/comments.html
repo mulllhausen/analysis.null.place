@@ -32,7 +32,8 @@
 
     {% if FACEBOOK_APP_ID %}
     <div id="fb-root"></div>
-    <div class="platform-comments-loader faceboook">{# deliberately use ooo to avoid style conflicts #}
+    <div class="platform-comments-loader faceboook">
+{# deliberately use ooo to avoid style conflicts #}
         <div class="platform-comments-loader-inner">
             <div class="loader"></div>
             <svg class="icon icon-facebook icon-platform">
@@ -40,11 +41,26 @@
             </svg>
         </div>
     </div>
-    <div class="platform-offline faceboook">{# deliberately use ooo to avoid style conflicts #}
+    <div class="platform-offline faceboook">
+{# deliberately use ooo to avoid style conflicts #}
         <span>Facebook could not be reached. Are you offline?</span>
     </div>
     <div class="fb-comments platform-comments"
-        data-href="{{ SITEURL }}/{{ article.url }}"
+        data-href="
+{%- if article -%}
+    {%- if article.override_fb_comments_url -%}
+        {{ article.override_fb_comments_url }}
+    {%- else -%}
+        {{ SITEURL }}/{{ article.url }}
+    {%- endif -%}
+{%- elif page -%}
+    {%- if page.override_fb_comments_url -%}
+        {{ page.override_fb_comments_url }}
+    {%- else -%}
+        {{ SITEURL }}/{{ page.url }}
+    {%- endif -%}
+{%- endif -%}
+        "
         data-numposts="20"
         data-colorscheme="dark"
         data-order-by="reverse_time"
