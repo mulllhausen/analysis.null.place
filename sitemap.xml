@@ -26,323 +26,314 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- begin URLs for https://analysis.null.place/movie-reviews/ -->
     <url>
-        <loc>https://analysis.null.place/movie-reviews/10000bc2008/</loc>
-        <lastmod>2019-04-02</lastmod>
+        <loc>https://analysis.null.place/cookie-notice/</loc>
+        <lastmod>2021-09-07</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/movie-reviews/aclockworkorange1971/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/adrift2018/</loc>
-        <lastmod>2019-04-08</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/annabellecomeshome2019/</loc>
-        <lastmod>2019-11-20</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/birdbox2018/</loc>
-        <lastmod>2019-04-08</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/bladerunner1982/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/crocoiledundee11986/</loc>
-        <lastmod>2020-02-05</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/darkcity1998/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/district92009/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/eternalsunshineofthespotlessmind2004/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/fightclub1999/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/freddygotfingered2001/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/geminiman2019/</loc>
-        <lastmod>2020-02-26</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/gifted2017/</loc>
-        <lastmod>2019-11-20</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/greenbook2019/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/hellolovegoodbye2019/</loc>
-        <lastmod>2019-08-22</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/inception2010/</loc>
-        <lastmod>2019-12-16</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/inglouriousbasterds2009/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/limitless2011/</loc>
-        <lastmod>2019-05-03</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/lockstockandtwosmokingbarrels1998/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/loro2018/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/minorityreport2002/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/missionimpossible6fallout2018/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/mollysgame2017/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/montypythonandtheholygrail1975/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/rebelwithoutacause1955/</loc>
-        <lastmod>2019-10-20</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/requiemforadream2000/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/riskybusiness1983/</loc>
-        <lastmod>2019-11-27</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/shoplifters2018/</loc>
-        <lastmod>2019-04-18</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/statusupdate2018/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/taken12008/</loc>
-        <lastmod>2019-04-18</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thebeach2000/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thebutterflyeffect2004/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thecurseoflallorona2019/</loc>
-        <lastmod>2019-06-07</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thedressmaker2015/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thefounder2016/</loc>
-        <lastmod>2019-04-02</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/themanfromnowhere2010/</loc>
-        <lastmod>2019-04-18</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/themartian2015/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/themask1994/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thematinghabitsoftheearthboundhuman1999/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thematrix11999/</loc>
-        <lastmod>2019-04-19</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/themazerunner2014/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/thepianist2002/</loc>
-        <lastmod>2019-09-20</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/transcendence2014/</loc>
-        <lastmod>2019-02-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/upgrade2018/</loc>
-        <lastmod>2019-01-23</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/movie-reviews/whatwedidonourholiday2014/</loc>
-        <lastmod>2019-09-20</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <!-- end URLs for https://analysis.null.place/movie-reviews/ -->
-
-    <!-- begin URLs for https://analysis.null.place/book-reviews/ -->
-    <url>
-        <loc>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</loc>
+        <loc>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</loc>
         <lastmod>2019-09-21</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/book-reviews/robertharrisimperium2006/</loc>
+        <loc>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</loc>
         <lastmod>2019-09-20</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/book-reviews/stanislawlemsolaris1961/</loc>
+        <loc>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</loc>
         <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/book-reviews/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011/</loc>
+        <loc>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</loc>
         <lastmod>2019-06-07</lastmod>
         <priority>0.8</priority>
     </url>
-    <!-- end URLs for https://analysis.null.place/book-reviews/ -->
-
-    <!-- begin URLs for https://analysis.null.place/tv-series-reviews/ -->
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/bbcwaroftheworlds12019/</loc>
+        <loc>https://analysis.null.place/movie-reviews/10000bc-2008/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/a-clockwork-orange-1971/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/adrift-2018/</loc>
+        <lastmod>2019-04-08</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/annabelle-comes-home-2019/</loc>
+        <lastmod>2019-11-20</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/bird-box-2018/</loc>
+        <lastmod>2019-04-08</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/blade-runner-1982/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/crocoile-dundee-1-1986/</loc>
+        <lastmod>2020-02-05</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/dark-city-1998/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/district-9-2009/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/eternal-sunshine-of-the-spotless-mind-2004/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/fight-club-1999/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/freddy-got-fingered-2001/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/gemini-man-2019/</loc>
         <lastmod>2020-02-26</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/blackmirror12011/</loc>
-        <lastmod>2019-03-26</lastmod>
+        <loc>https://analysis.null.place/movie-reviews/gifted-2017/</loc>
+        <lastmod>2019-11-20</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/blackmirror52019/</loc>
-        <lastmod>2019-07-22</lastmod>
+        <loc>https://analysis.null.place/movie-reviews/green-book-2019/</loc>
+        <lastmod>2019-04-02</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/deadpixels12019/</loc>
-        <lastmod>2019-06-02</lastmod>
+        <loc>https://analysis.null.place/movie-reviews/hello-love-goodbye-2019/</loc>
+        <lastmod>2019-08-22</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/maniac12018/</loc>
-        <lastmod>2019-04-04</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/tv-series-reviews/nightflyers12018/</loc>
-        <lastmod>2019-04-04</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/tv-series-reviews/philipkdickselectricdreams12017/</loc>
-        <lastmod>2019-12-13</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://analysis.null.place/tv-series-reviews/rickandmorty12013/</loc>
+        <loc>https://analysis.null.place/movie-reviews/inception-2010/</loc>
         <lastmod>2019-12-16</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/theendofthefingworld12017/</loc>
-        <lastmod>2020-06-10</lastmod>
+        <loc>https://analysis.null.place/movie-reviews/inglourious-basterds-2009/</loc>
+        <lastmod>2019-02-13</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/theendofthefingworld22019/</loc>
-        <lastmod>2020-06-10</lastmod>
+        <loc>https://analysis.null.place/movie-reviews/limitless-2011/</loc>
+        <lastmod>2019-05-03</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</loc>
+        <loc>https://analysis.null.place/movie-reviews/lock-stock-and-two-smoking-barrels-1998/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/loro-2018/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/minority-report-2002/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/mission-impossible-6-fallout-2018/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/mollys-game-2017/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/monty-python-and-the-holy-grail-1975/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/rebel-without-a-cause-1955/</loc>
+        <lastmod>2019-10-20</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/requiem-for-a-dream-2000/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/risky-business-1983/</loc>
+        <lastmod>2019-11-27</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/shoplifters-2018/</loc>
+        <lastmod>2019-04-18</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/status-update-2018/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/taken-1-2008/</loc>
+        <lastmod>2019-04-18</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-beach-2000/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-butterfly-effect-2004/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-curse-of-la-llorona-2019/</loc>
+        <lastmod>2019-06-07</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-dressmaker-2015/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-founder-2016/</loc>
+        <lastmod>2019-04-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-man-from-nowhere-2010/</loc>
+        <lastmod>2019-04-18</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-martian-2015/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-mask-1994/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-mating-habits-of-the-earthbound-human-1999/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-matrix-1-1999/</loc>
+        <lastmod>2019-04-19</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-maze-runner-2014/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-pianist-2002/</loc>
+        <lastmod>2019-09-20</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/transcendence-2014/</loc>
+        <lastmod>2019-02-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/upgrade-2018/</loc>
+        <lastmod>2019-01-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/what-we-did-on-our-holiday-2014/</loc>
+        <lastmod>2019-09-20</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/bbc-war-of-the-worlds-s01-2019/</loc>
+        <lastmod>2020-02-26</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/black-mirror-s01-2011/</loc>
         <lastmod>2019-03-26</lastmod>
         <priority>0.8</priority>
     </url>
-    <!-- end URLs for https://analysis.null.place/tv-series-reviews/ -->
-
     <url>
-        <loc>https://analysis.null.place/cookie-notice/</loc>
+        <loc>https://analysis.null.place/tv-series-reviews/black-mirror-s05-2019/</loc>
+        <lastmod>2019-07-22</lastmod>
         <priority>0.8</priority>
     </url>
-
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/dead-pixels-s01-2019/</loc>
+        <lastmod>2019-06-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/maniac-s01-2018/</loc>
+        <lastmod>2019-04-04</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/nightflyers-s01-2018/</loc>
+        <lastmod>2019-04-04</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/philip-k-dicks-electric-dreams-s01-2017/</loc>
+        <lastmod>2019-12-13</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/rick-and-morty-s01-2013/</loc>
+        <lastmod>2019-12-16</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s01-2017/</loc>
+        <lastmod>2020-06-10</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s02-2019/</loc>
+        <lastmod>2020-06-10</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/</loc>
+        <lastmod>2019-03-26</lastmod>
+        <priority>0.8</priority>
+    </url>
 </urlset>

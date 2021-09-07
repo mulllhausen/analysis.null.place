@@ -619,17 +619,6 @@
         <summary type="html">A dirty city gets slightly dirtier</summary>
     </entry>
     <entry>
-        <title>tv-series review: Black Mirror Season 5</title>
-        <link>https://analysis.null.place/tv-series-reviews/black-mirror-s05-2019/</link>
-        <published>2019-07-22T00:00:00+09:30</published>
-        <updated>2019-07-22T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-07-22:/tv-series-review/black-mirror-s05-2019</id>
-        <summary type="html">Where'd the dystopia go?</summary>
-    </entry>
-    <entry>
         <title>tv-series review: Black Mirror Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/black-mirror-s01-2011/</link>
         <published>2019-03-26T00:00:00+10:30</published>
@@ -639,6 +628,17 @@
         </author>
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/black-mirror-s01-2011</id>
         <summary type="html">Technology as a force for bad</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Black Mirror Season 5</title>
+        <link>https://analysis.null.place/tv-series-reviews/black-mirror-s05-2019/</link>
+        <published>2019-07-22T00:00:00+09:30</published>
+        <updated>2019-07-22T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-07-22:/tv-series-review/black-mirror-s05-2019</id>
+        <summary type="html">Where'd the dystopia go?</summary>
     </entry>
     <entry>
         <title>tv-series review: Dead Pixels Season 1</title>
@@ -696,17 +696,6 @@
         <summary type="html">Hillariously disturbing</summary>
     </entry>
     <entry>
-        <title>tv-series review: The End of the F***ing World Season 2</title>
-        <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s02-2019/</link>
-        <published>2020-06-10T00:00:00+09:30</published>
-        <updated>2020-06-10T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/the-end-of-the-fing-world-s02-2019</id>
-        <summary type="html">Brought down a peg</summary>
-    </entry>
-    <entry>
         <title>tv-series review: The End of the F***ing World Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s01-2017/</link>
         <published>2020-06-10T00:00:00+09:30</published>
@@ -716,6 +705,17 @@
         </author>
         <id>tag:analysis.null.place,2020-06-10:/tv-series-review/the-end-of-the-fing-world-s01-2017</id>
         <summary type="html">Awkward teenage angst meets <i>Pulp Fiction</i></summary>
+    </entry>
+    <entry>
+        <title>tv-series review: The End of the F***ing World Season 2</title>
+        <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s02-2019/</link>
+        <published>2020-06-10T00:00:00+09:30</published>
+        <updated>2020-06-10T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/the-end-of-the-fing-world-s02-2019</id>
+        <summary type="html">Brought down a peg</summary>
     </entry>
     <entry>
         <title>tv-series review: The Walking Dead Season 1</title>
