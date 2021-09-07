@@ -13,7 +13,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-03-29:/book-reviews/</id>
-        <summary type="html">My book reviews. A big work in progress!</summary>
+        <summary type="html">My book reviews.</summary>
         <category term="book"></category>
         <category term="reviews"></category>
     </entry>
@@ -26,7 +26,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-03-29:/tv-series-reviews/</id>
-        <summary type="html">My tv-series reviews. A big work in progress!</summary>
+        <summary type="html">My tv-series reviews.</summary>
         <category term="tv-series"></category>
         <category term="reviews"></category>
     </entry>
@@ -39,7 +39,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-01-23:/movie-reviews/</id>
-        <summary type="html">My movie reviews. A big work in progress!</summary>
+        <summary type="html">My movie reviews.</summary>
         <category term="movie"></category>
         <category term="reviews"></category>
     </entry>
@@ -58,674 +58,674 @@
         <category term="proof-of-work"></category>
     </entry>
     <entry>
-        <title>Movie Review: 10,000BC</title>
-        <link>https://analysis.null.place/movie-reviews/10000bc2008/</link>
+        <title>movie review: 10,000BC</title>
+        <link>https://analysis.null.place/movie-reviews/10000bc-2008/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/10000bc2008</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/10000bc-2008</id>
         <summary type="html">Surprisingly entertaining</summary>
     </entry>
     <entry>
-        <title>Movie Review: A Clockwork Orange</title>
-        <link>https://analysis.null.place/movie-reviews/aclockworkorange1971/</link>
+        <title>movie review: A Clockwork Orange</title>
+        <link>https://analysis.null.place/movie-reviews/a-clockwork-orange-1971/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/aclockworkorange1971</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/a-clockwork-orange-1971</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Adrift</title>
-        <link>https://analysis.null.place/movie-reviews/adrift2018/</link>
+        <title>movie review: Adrift</title>
+        <link>https://analysis.null.place/movie-reviews/adrift-2018/</link>
         <published>2019-04-08T00:00:00+09:30</published>
         <updated>2019-04-08T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-08:/movie-review/adrift2018</id>
+        <id>tag:analysis.null.place,2019-04-08:/movie-review/adrift-2018</id>
         <summary type="html">Are we not ... land animals?</summary>
     </entry>
     <entry>
-        <title>Movie Review: Annabelle Comes Home</title>
-        <link>https://analysis.null.place/movie-reviews/annabellecomeshome2019/</link>
+        <title>movie review: Annabelle Comes Home</title>
+        <link>https://analysis.null.place/movie-reviews/annabelle-comes-home-2019/</link>
         <published>2019-11-20T00:00:00+10:30</published>
         <updated>2019-11-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-11-20:/movie-review/annabellecomeshome2019</id>
+        <id>tag:analysis.null.place,2019-11-20:/movie-review/annabelle-comes-home-2019</id>
         <summary type="html">The blunderbuss approach to fear</summary>
     </entry>
     <entry>
-        <title>Movie Review: Bird Box</title>
-        <link>https://analysis.null.place/movie-reviews/birdbox2018/</link>
+        <title>movie review: Bird Box</title>
+        <link>https://analysis.null.place/movie-reviews/bird-box-2018/</link>
         <published>2019-04-08T00:00:00+09:30</published>
         <updated>2019-04-08T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-08:/movie-review/birdbox2018</id>
+        <id>tag:analysis.null.place,2019-04-08:/movie-review/bird-box-2018</id>
         <summary type="html">Leaves the fear to your imagination</summary>
     </entry>
     <entry>
-        <title>Movie Review: Blade Runner</title>
-        <link>https://analysis.null.place/movie-reviews/bladerunner1982/</link>
+        <title>movie review: Blade Runner</title>
+        <link>https://analysis.null.place/movie-reviews/blade-runner-1982/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/bladerunner1982</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/blade-runner-1982</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Crocoile Dundee 1</title>
-        <link>https://analysis.null.place/movie-reviews/crocoiledundee11986/</link>
+        <title>movie review: Crocoile Dundee 1</title>
+        <link>https://analysis.null.place/movie-reviews/crocoile-dundee-1-1986/</link>
         <published>2020-02-05T00:00:00+10:30</published>
         <updated>2020-02-05T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2020-02-05:/movie-review/crocoiledundee11986</id>
+        <id>tag:analysis.null.place,2020-02-05:/movie-review/crocoile-dundee-1-1986</id>
         <summary type="html">Magic outback vibes</summary>
     </entry>
     <entry>
-        <title>Movie Review: Dark City</title>
-        <link>https://analysis.null.place/movie-reviews/darkcity1998/</link>
+        <title>movie review: Dark City</title>
+        <link>https://analysis.null.place/movie-reviews/dark-city-1998/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/darkcity1998</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/dark-city-1998</id>
         <summary type="html">Sci-fi meets detective noir</summary>
     </entry>
     <entry>
-        <title>Movie Review: District 9</title>
-        <link>https://analysis.null.place/movie-reviews/district92009/</link>
+        <title>movie review: District 9</title>
+        <link>https://analysis.null.place/movie-reviews/district-9-2009/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/district92009</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/district-9-2009</id>
         <summary type="html">The anthropology of an alien visitation</summary>
     </entry>
     <entry>
-        <title>Movie Review: Eternal Sunshine of the Spotless Mind</title>
-        <link>https://analysis.null.place/movie-reviews/eternalsunshineofthespotlessmind2004/</link>
+        <title>movie review: Eternal Sunshine of the Spotless Mind</title>
+        <link>https://analysis.null.place/movie-reviews/eternal-sunshine-of-the-spotless-mind-2004/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/eternalsunshineofthespotlessmind2004</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/eternal-sunshine-of-the-spotless-mind-2004</id>
         <summary type="html">Another all-time favourite</summary>
     </entry>
     <entry>
-        <title>Movie Review: Fight Club</title>
-        <link>https://analysis.null.place/movie-reviews/fightclub1999/</link>
+        <title>movie review: Fight Club</title>
+        <link>https://analysis.null.place/movie-reviews/fight-club-1999/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/fightclub1999</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/fight-club-1999</id>
         <summary type="html">Instant classic</summary>
     </entry>
     <entry>
-        <title>Movie Review: Freddy Got Fingered</title>
-        <link>https://analysis.null.place/movie-reviews/freddygotfingered2001/</link>
+        <title>movie review: Freddy Got Fingered</title>
+        <link>https://analysis.null.place/movie-reviews/freddy-got-fingered-2001/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/freddygotfingered2001</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/freddy-got-fingered-2001</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Gemini Man</title>
-        <link>https://analysis.null.place/movie-reviews/geminiman2019/</link>
+        <title>movie review: Gemini Man</title>
+        <link>https://analysis.null.place/movie-reviews/gemini-man-2019/</link>
         <published>2020-02-26T00:00:00+10:30</published>
         <updated>2020-02-26T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2020-02-26:/movie-review/geminiman2019</id>
+        <id>tag:analysis.null.place,2020-02-26:/movie-review/gemini-man-2019</id>
         <summary type="html">Intense superhuman chase scenes</summary>
     </entry>
     <entry>
-        <title>Movie Review: Gifted</title>
-        <link>https://analysis.null.place/movie-reviews/gifted2017/</link>
+        <title>movie review: Gifted</title>
+        <link>https://analysis.null.place/movie-reviews/gifted-2017/</link>
         <published>2019-11-20T00:00:00+10:30</published>
         <updated>2019-11-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-11-20:/movie-review/gifted2017</id>
+        <id>tag:analysis.null.place,2019-11-20:/movie-review/gifted-2017</id>
         <summary type="html">Mathematical genius vs scheming Grandma</summary>
     </entry>
     <entry>
-        <title>Movie Review: Green Book</title>
-        <link>https://analysis.null.place/movie-reviews/greenbook2019/</link>
+        <title>movie review: Green Book</title>
+        <link>https://analysis.null.place/movie-reviews/green-book-2019/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/greenbook2019</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/green-book-2019</id>
         <summary type="html">Eye opening</summary>
     </entry>
     <entry>
-        <title>Movie Review: Hello, Love, Goodbye</title>
-        <link>https://analysis.null.place/movie-reviews/hellolovegoodbye2019/</link>
+        <title>movie review: Hello, Love, Goodbye</title>
+        <link>https://analysis.null.place/movie-reviews/hello-love-goodbye-2019/</link>
         <published>2019-08-22T00:00:00+09:30</published>
         <updated>2019-08-22T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-08-22:/movie-review/hellolovegoodbye2019</id>
+        <id>tag:analysis.null.place,2019-08-22:/movie-review/hello-love-goodbye-2019</id>
         <summary type="html">Romance on the go</summary>
     </entry>
     <entry>
-        <title>Movie Review: Inception</title>
-        <link>https://analysis.null.place/movie-reviews/inception2010/</link>
+        <title>movie review: Inception</title>
+        <link>https://analysis.null.place/movie-reviews/inception-2010/</link>
         <published>2019-12-16T00:00:00+10:30</published>
         <updated>2019-12-16T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-12-16:/movie-review/inception2010</id>
+        <id>tag:analysis.null.place,2019-12-16:/movie-review/inception-2010</id>
         <summary type="html">Completely unique</summary>
     </entry>
     <entry>
-        <title>Movie Review: Inglourious Basterds</title>
-        <link>https://analysis.null.place/movie-reviews/inglouriousbasterds2009/</link>
+        <title>movie review: Inglourious Basterds</title>
+        <link>https://analysis.null.place/movie-reviews/inglourious-basterds-2009/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/inglouriousbasterds2009</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/inglourious-basterds-2009</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Limitless</title>
-        <link>https://analysis.null.place/movie-reviews/limitless2011/</link>
+        <title>movie review: Limitless</title>
+        <link>https://analysis.null.place/movie-reviews/limitless-2011/</link>
         <published>2019-05-03T00:00:00+09:30</published>
         <updated>2019-05-03T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-05-03:/movie-review/limitless2011</id>
+        <id>tag:analysis.null.place,2019-05-03:/movie-review/limitless-2011</id>
         <summary type="html">Creative, lighthearted, and motivational</summary>
     </entry>
     <entry>
-        <title>Movie Review: Lock, Stock and Two Smoking Barrels</title>
-        <link>https://analysis.null.place/movie-reviews/lockstockandtwosmokingbarrels1998/</link>
+        <title>movie review: Lock, Stock and Two Smoking Barrels</title>
+        <link>https://analysis.null.place/movie-reviews/lock-stock-and-two-smoking-barrels-1998/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/lockstockandtwosmokingbarrels1998</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/lock-stock-and-two-smoking-barrels-1998</id>
         <summary type="html">Y'wot?</summary>
     </entry>
     <entry>
-        <title>Movie Review: Loro</title>
-        <link>https://analysis.null.place/movie-reviews/loro2018/</link>
+        <title>movie review: Loro</title>
+        <link>https://analysis.null.place/movie-reviews/loro-2018/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/loro2018</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/loro-2018</id>
         <summary type="html">Damage control for Berlusconi?</summary>
     </entry>
     <entry>
-        <title>Movie Review: Minority Report</title>
-        <link>https://analysis.null.place/movie-reviews/minorityreport2002/</link>
+        <title>movie review: Minority Report</title>
+        <link>https://analysis.null.place/movie-reviews/minority-report-2002/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/minorityreport2002</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/minority-report-2002</id>
         <summary type="html">Exquisite philosophical sci-fi</summary>
     </entry>
     <entry>
-        <title>Movie Review: Mission: Impossible 6 - Fallout</title>
-        <link>https://analysis.null.place/movie-reviews/missionimpossible6fallout2018/</link>
+        <title>movie review: Mission: Impossible 6 - Fallout</title>
+        <link>https://analysis.null.place/movie-reviews/mission-impossible-6-fallout-2018/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/missionimpossible6fallout2018</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/mission-impossible-6-fallout-2018</id>
         <summary type="html">Great action flick, mediocre plot</summary>
     </entry>
     <entry>
-        <title>Movie Review: Molly's Game</title>
-        <link>https://analysis.null.place/movie-reviews/mollysgame2017/</link>
+        <title>movie review: Molly's Game</title>
+        <link>https://analysis.null.place/movie-reviews/mollys-game-2017/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/mollysgame2017</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/mollys-game-2017</id>
         <summary type="html">Highly driven protagonist continually gets screwed over</summary>
     </entry>
     <entry>
-        <title>Movie Review: Monty Python and the Holy Grail</title>
-        <link>https://analysis.null.place/movie-reviews/montypythonandtheholygrail1975/</link>
+        <title>movie review: Monty Python and the Holy Grail</title>
+        <link>https://analysis.null.place/movie-reviews/monty-python-and-the-holy-grail-1975/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/montypythonandtheholygrail1975</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/monty-python-and-the-holy-grail-1975</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Rebel Without a Cause</title>
-        <link>https://analysis.null.place/movie-reviews/rebelwithoutacause1955/</link>
+        <title>movie review: Rebel Without a Cause</title>
+        <link>https://analysis.null.place/movie-reviews/rebel-without-a-cause-1955/</link>
         <published>2019-10-20T00:00:00+10:30</published>
         <updated>2019-10-20T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-10-20:/movie-review/rebelwithoutacause1955</id>
+        <id>tag:analysis.null.place,2019-10-20:/movie-review/rebel-without-a-cause-1955</id>
         <summary type="html">A conservative rebel?</summary>
     </entry>
     <entry>
-        <title>Movie Review: Requiem for a Dream</title>
-        <link>https://analysis.null.place/movie-reviews/requiemforadream2000/</link>
+        <title>movie review: Requiem for a Dream</title>
+        <link>https://analysis.null.place/movie-reviews/requiem-for-a-dream-2000/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/requiemforadream2000</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/requiem-for-a-dream-2000</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Risky Business</title>
-        <link>https://analysis.null.place/movie-reviews/riskybusiness1983/</link>
+        <title>movie review: Risky Business</title>
+        <link>https://analysis.null.place/movie-reviews/risky-business-1983/</link>
         <published>2019-11-27T00:00:00+10:30</published>
         <updated>2019-11-27T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-11-27:/movie-review/riskybusiness1983</id>
+        <id>tag:analysis.null.place,2019-11-27:/movie-review/risky-business-1983</id>
         <summary type="html">Hypnotic magic</summary>
     </entry>
     <entry>
-        <title>Movie Review: Shoplifters</title>
-        <link>https://analysis.null.place/movie-reviews/shoplifters2018/</link>
+        <title>movie review: Shoplifters</title>
+        <link>https://analysis.null.place/movie-reviews/shoplifters-2018/</link>
         <published>2019-04-18T00:00:00+09:30</published>
         <updated>2019-04-18T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-18:/movie-review/shoplifters2018</id>
+        <id>tag:analysis.null.place,2019-04-18:/movie-review/shoplifters-2018</id>
         <summary type="html">Adopted family take care of each other</summary>
     </entry>
     <entry>
-        <title>Movie Review: Status Update</title>
-        <link>https://analysis.null.place/movie-reviews/statusupdate2018/</link>
+        <title>movie review: Status Update</title>
+        <link>https://analysis.null.place/movie-reviews/status-update-2018/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/statusupdate2018</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/status-update-2018</id>
         <summary type="html">Childish and lacking imagination</summary>
     </entry>
     <entry>
-        <title>Movie Review: Taken 1</title>
-        <link>https://analysis.null.place/movie-reviews/taken12008/</link>
+        <title>movie review: Taken 1</title>
+        <link>https://analysis.null.place/movie-reviews/taken-1-2008/</link>
         <published>2019-04-18T00:00:00+09:30</published>
         <updated>2019-04-18T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-18:/movie-review/taken12008</id>
+        <id>tag:analysis.null.place,2019-04-18:/movie-review/taken-1-2008</id>
         <summary type="html">I will find you... I will kill you</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Beach</title>
-        <link>https://analysis.null.place/movie-reviews/thebeach2000/</link>
+        <title>movie review: The Beach</title>
+        <link>https://analysis.null.place/movie-reviews/the-beach-2000/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/thebeach2000</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/the-beach-2000</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Butterfly Effect</title>
-        <link>https://analysis.null.place/movie-reviews/thebutterflyeffect2004/</link>
+        <title>movie review: The Butterfly Effect</title>
+        <link>https://analysis.null.place/movie-reviews/the-butterfly-effect-2004/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/thebutterflyeffect2004</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/the-butterfly-effect-2004</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Curse of La Llorona</title>
-        <link>https://analysis.null.place/movie-reviews/thecurseoflallorona2019/</link>
+        <title>movie review: The Curse of La Llorona</title>
+        <link>https://analysis.null.place/movie-reviews/the-curse-of-la-llorona-2019/</link>
         <published>2019-06-07T00:00:00+09:30</published>
         <updated>2019-06-07T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-06-07:/movie-review/thecurseoflallorona2019</id>
+        <id>tag:analysis.null.place,2019-06-07:/movie-review/the-curse-of-la-llorona-2019</id>
         <summary type="html">Decent horror flick</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Dressmaker</title>
-        <link>https://analysis.null.place/movie-reviews/thedressmaker2015/</link>
+        <title>movie review: The Dressmaker</title>
+        <link>https://analysis.null.place/movie-reviews/the-dressmaker-2015/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/thedressmaker2015</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/the-dressmaker-2015</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Founder</title>
-        <link>https://analysis.null.place/movie-reviews/thefounder2016/</link>
+        <title>movie review: The Founder</title>
+        <link>https://analysis.null.place/movie-reviews/the-founder-2016/</link>
         <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-04-02T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-02:/movie-review/thefounder2016</id>
+        <id>tag:analysis.null.place,2019-04-02:/movie-review/the-founder-2016</id>
         <summary type="html">Morbidly fascinating</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Man from Nowhere</title>
-        <link>https://analysis.null.place/movie-reviews/themanfromnowhere2010/</link>
+        <title>movie review: The Man from Nowhere</title>
+        <link>https://analysis.null.place/movie-reviews/the-man-from-nowhere-2010/</link>
         <published>2019-04-18T00:00:00+09:30</published>
         <updated>2019-04-18T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-18:/movie-review/themanfromnowhere2010</id>
+        <id>tag:analysis.null.place,2019-04-18:/movie-review/the-man-from-nowhere-2010</id>
         <summary type="html">Basically the South Korean version of Taken</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Martian</title>
-        <link>https://analysis.null.place/movie-reviews/themartian2015/</link>
+        <title>movie review: The Martian</title>
+        <link>https://analysis.null.place/movie-reviews/the-martian-2015/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/themartian2015</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/the-martian-2015</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Mask</title>
-        <link>https://analysis.null.place/movie-reviews/themask1994/</link>
+        <title>movie review: The Mask</title>
+        <link>https://analysis.null.place/movie-reviews/the-mask-1994/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/themask1994</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/the-mask-1994</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Mating Habits of the Earthbound Human</title>
-        <link>https://analysis.null.place/movie-reviews/thematinghabitsoftheearthboundhuman1999/</link>
+        <title>movie review: The Mating Habits of the Earthbound Human</title>
+        <link>https://analysis.null.place/movie-reviews/the-mating-habits-of-the-earthbound-human-1999/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/thematinghabitsoftheearthboundhuman1999</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/the-mating-habits-of-the-earthbound-human-1999</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Matrix 1</title>
-        <link>https://analysis.null.place/movie-reviews/thematrix11999/</link>
+        <title>movie review: The Matrix 1</title>
+        <link>https://analysis.null.place/movie-reviews/the-matrix-1-1999/</link>
         <published>2019-04-19T00:00:00+09:30</published>
         <updated>2019-04-19T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-04-19:/movie-review/thematrix11999</id>
+        <id>tag:analysis.null.place,2019-04-19:/movie-review/the-matrix-1-1999</id>
         <summary type="html">The best sci-fi I have ever seen</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Maze Runner</title>
-        <link>https://analysis.null.place/movie-reviews/themazerunner2014/</link>
+        <title>movie review: The Maze Runner</title>
+        <link>https://analysis.null.place/movie-reviews/the-maze-runner-2014/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/themazerunner2014</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/the-maze-runner-2014</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: The Pianist</title>
-        <link>https://analysis.null.place/movie-reviews/thepianist2002/</link>
+        <title>movie review: The Pianist</title>
+        <link>https://analysis.null.place/movie-reviews/the-pianist-2002/</link>
         <published>2019-09-20T00:00:00+09:30</published>
         <updated>2019-09-20T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-09-20:/movie-review/thepianist2002</id>
+        <id>tag:analysis.null.place,2019-09-20:/movie-review/the-pianist-2002</id>
         <summary type="html">Nazi brutality vs the perfection of Chopin</summary>
     </entry>
     <entry>
-        <title>Movie Review: Transcendence</title>
-        <link>https://analysis.null.place/movie-reviews/transcendence2014/</link>
+        <title>movie review: Transcendence</title>
+        <link>https://analysis.null.place/movie-reviews/transcendence-2014/</link>
         <published>2019-02-13T00:00:00+10:30</published>
         <updated>2019-02-13T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-02-13:/movie-review/transcendence2014</id>
+        <id>tag:analysis.null.place,2019-02-13:/movie-review/transcendence-2014</id>
         <summary type="html">N/A</summary>
     </entry>
     <entry>
-        <title>Movie Review: Upgrade</title>
-        <link>https://analysis.null.place/movie-reviews/upgrade2018/</link>
+        <title>movie review: Upgrade</title>
+        <link>https://analysis.null.place/movie-reviews/upgrade-2018/</link>
         <published>2019-01-23T00:00:00+10:30</published>
         <updated>2019-01-23T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-01-23:/movie-review/upgrade2018</id>
+        <id>tag:analysis.null.place,2019-01-23:/movie-review/upgrade-2018</id>
         <summary type="html">A great movie but it babies the viewer at the end</summary>
     </entry>
     <entry>
-        <title>Movie Review: What We Did on Our Holiday</title>
-        <link>https://analysis.null.place/movie-reviews/whatwedidonourholiday2014/</link>
+        <title>movie review: What We Did on Our Holiday</title>
+        <link>https://analysis.null.place/movie-reviews/what-we-did-on-our-holiday-2014/</link>
         <published>2019-09-20T00:00:00+09:30</published>
         <updated>2019-09-20T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-09-20:/movie-review/whatwedidonourholiday2014</id>
+        <id>tag:analysis.null.place,2019-09-20:/movie-review/what-we-did-on-our-holiday-2014</id>
         <summary type="html">"Dysfunctional" family goes to visit granddad</summary>
     </entry>
     <entry>
-        <title>Book Review: The Neuroscientist Who Lost Her Mind</title>
-        <link>https://analysis.null.place/book-reviews/barbaraklipskatheneuroscientistwholosthermind2018/</link>
-        <published>2019-09-21T00:00:00+09:30</published>
-        <updated>2019-09-21T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-09-21:/book-review/barbaraklipskatheneuroscientistwholosthermind2018</id>
-        <summary type="html">Medical memoir</summary>
-    </entry>
-    <entry>
-        <title>Book Review: Imperium</title>
-        <link>https://analysis.null.place/book-reviews/robertharrisimperium2006/</link>
-        <published>2019-09-20T00:00:00+09:30</published>
-        <updated>2019-09-20T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-09-20:/book-review/robertharrisimperium2006</id>
-        <summary type="html">Ancient Roman political intrigue</summary>
-    </entry>
-    <entry>
-        <title>Book Review: Solaris</title>
-        <link>https://analysis.null.place/book-reviews/stanislawlemsolaris1961/</link>
-        <published>2019-04-02T00:00:00+10:30</published>
-        <updated>2019-04-02T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-04-02:/book-review/stanislawlemsolaris1961</id>
-        <summary type="html">Minimalist sci-fi</summary>
-    </entry>
-    <entry>
-        <title>Book Review: How to think about weird things</title>
-        <link>https://analysis.null.place/book-reviews/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011/</link>
+        <title>book review: How to think about weird things</title>
+        <link>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</link>
         <published>2019-06-07T00:00:00+09:30</published>
         <updated>2019-06-07T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-06-07:/book-review/theodoreschickandlewisvaughnhowtothinkaboutweirdthings2011</id>
+        <id>tag:analysis.null.place,2019-06-07:/book-review/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011</id>
         <summary type="html">Critical-thinking clarity</summary>
     </entry>
     <entry>
-        <title>TV-Series Review: BBC War of the Worlds Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/bbcwaroftheworlds12019/</link>
+        <title>book review: Imperium</title>
+        <link>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</link>
+        <published>2019-09-20T00:00:00+09:30</published>
+        <updated>2019-09-20T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006</id>
+        <summary type="html">Ancient Roman political intrigue</summary>
+    </entry>
+    <entry>
+        <title>book review: Solaris</title>
+        <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
+        <published>2019-04-02T00:00:00+10:30</published>
+        <updated>2019-04-02T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961</id>
+        <summary type="html">Minimalist sci-fi</summary>
+    </entry>
+    <entry>
+        <title>book review: The Neuroscientist Who Lost Her Mind</title>
+        <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
+        <published>2019-09-21T00:00:00+09:30</published>
+        <updated>2019-09-21T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018</id>
+        <summary type="html">Medical memoir</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: BBC War of the Worlds Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/bbc-war-of-the-worlds-s01-2019/</link>
         <published>2020-02-26T00:00:00+10:30</published>
         <updated>2020-02-26T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2020-02-26:/tv-series-review/bbcwaroftheworlds12019</id>
+        <id>tag:analysis.null.place,2020-02-26:/tv-series-review/bbc-war-of-the-worlds-s01-2019</id>
         <summary type="html">A dirty city gets slightly dirtier</summary>
     </entry>
     <entry>
-        <title>TV-Series Review: Black Mirror Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/blackmirror12011/</link>
-        <published>2019-03-26T00:00:00+10:30</published>
-        <updated>2019-03-26T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-03-26:/tv-series-review/blackmirror12011</id>
-        <summary type="html">Technology as a force for bad</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: Black Mirror Season 5</title>
-        <link>https://analysis.null.place/tv-series-reviews/blackmirror52019/</link>
+        <title>tv-series review: Black Mirror Season 5</title>
+        <link>https://analysis.null.place/tv-series-reviews/black-mirror-s05-2019/</link>
         <published>2019-07-22T00:00:00+09:30</published>
         <updated>2019-07-22T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-07-22:/tv-series-review/blackmirror52019</id>
+        <id>tag:analysis.null.place,2019-07-22:/tv-series-review/black-mirror-s05-2019</id>
         <summary type="html">Where'd the dystopia go?</summary>
     </entry>
     <entry>
-        <title>TV-Series Review: Dead Pixels Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/deadpixels12019/</link>
-        <published>2019-06-02T00:00:00+09:30</published>
-        <updated>2019-06-02T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-06-02:/tv-series-review/deadpixels12019</id>
-        <summary type="html">Gaming obssession</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: Maniac Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/maniac12018/</link>
-        <published>2019-04-04T00:00:00+10:30</published>
-        <updated>2019-04-04T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-04-04:/tv-series-review/maniac12018</id>
-        <summary type="html">What if the 80s never ended but just became more Japanese?</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: Nightflyers Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/nightflyers12018/</link>
-        <published>2019-04-04T00:00:00+10:30</published>
-        <updated>2019-04-04T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-04-04:/tv-series-review/nightflyers12018</id>
-        <summary type="html">Trapped in a malicious holodeck</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: Philip K. Dick's Electric Dreams Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/philipkdickselectricdreams12017/</link>
-        <published>2019-12-13T00:00:00+10:30</published>
-        <updated>2019-12-13T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-12-13:/tv-series-review/philipkdickselectricdreams12017</id>
-        <summary type="html">An invitation to fantasize</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: Rick and Morty Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/rickandmorty12013/</link>
-        <published>2019-12-16T00:00:00+10:30</published>
-        <updated>2019-12-16T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-12-16:/tv-series-review/rickandmorty12013</id>
-        <summary type="html">Hillariously disturbing</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: The End of the F***ing World Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld12017/</link>
-        <published>2020-06-10T00:00:00+09:30</published>
-        <updated>2020-06-10T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld12017</id>
-        <summary type="html">Awkward teenage angst meets <i>Pulp Fiction</i></summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: The End of the F***ing World Season 2</title>
-        <link>https://analysis.null.place/tv-series-reviews/theendofthefingworld22019/</link>
-        <published>2020-06-10T00:00:00+09:30</published>
-        <updated>2020-06-10T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/theendofthefingworld22019</id>
-        <summary type="html">Brought down a peg</summary>
-    </entry>
-    <entry>
-        <title>TV-Series Review: The Walking Dead Season 1</title>
-        <link>https://analysis.null.place/tv-series-reviews/thewalkingdead12010/</link>
+        <title>tv-series review: Black Mirror Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/black-mirror-s01-2011/</link>
         <published>2019-03-26T00:00:00+10:30</published>
         <updated>2019-03-26T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-03-26:/tv-series-review/thewalkingdead12010</id>
+        <id>tag:analysis.null.place,2019-03-26:/tv-series-review/black-mirror-s01-2011</id>
+        <summary type="html">Technology as a force for bad</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Dead Pixels Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/dead-pixels-s01-2019/</link>
+        <published>2019-06-02T00:00:00+09:30</published>
+        <updated>2019-06-02T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-06-02:/tv-series-review/dead-pixels-s01-2019</id>
+        <summary type="html">Gaming obssession</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Maniac Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/maniac-s01-2018/</link>
+        <published>2019-04-04T00:00:00+10:30</published>
+        <updated>2019-04-04T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-04-04:/tv-series-review/maniac-s01-2018</id>
+        <summary type="html">What if the 80s never ended but just became more Japanese?</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Nightflyers Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/nightflyers-s01-2018/</link>
+        <published>2019-04-04T00:00:00+10:30</published>
+        <updated>2019-04-04T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-04-04:/tv-series-review/nightflyers-s01-2018</id>
+        <summary type="html">Trapped in a malicious holodeck</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Philip K. Dick's Electric Dreams Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/philip-k-dicks-electric-dreams-s01-2017/</link>
+        <published>2019-12-13T00:00:00+10:30</published>
+        <updated>2019-12-13T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-12-13:/tv-series-review/philip-k-dicks-electric-dreams-s01-2017</id>
+        <summary type="html">An invitation to fantasize</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Rick and Morty Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/rick-and-morty-s01-2013/</link>
+        <published>2019-12-16T00:00:00+10:30</published>
+        <updated>2019-12-16T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-12-16:/tv-series-review/rick-and-morty-s01-2013</id>
+        <summary type="html">Hillariously disturbing</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: The End of the F***ing World Season 2</title>
+        <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s02-2019/</link>
+        <published>2020-06-10T00:00:00+09:30</published>
+        <updated>2020-06-10T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/the-end-of-the-fing-world-s02-2019</id>
+        <summary type="html">Brought down a peg</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: The End of the F***ing World Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s01-2017/</link>
+        <published>2020-06-10T00:00:00+09:30</published>
+        <updated>2020-06-10T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2020-06-10:/tv-series-review/the-end-of-the-fing-world-s01-2017</id>
+        <summary type="html">Awkward teenage angst meets <i>Pulp Fiction</i></summary>
+    </entry>
+    <entry>
+        <title>tv-series review: The Walking Dead Season 1</title>
+        <link>https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/</link>
+        <published>2019-03-26T00:00:00+10:30</published>
+        <updated>2019-03-26T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">Learning the new landscape</summary>
     </entry>
     <updated>2020-06-10T00:00:00+09:30</updated>
