@@ -24,27 +24,19 @@
     </url>
         {% endfor %}
     {% endfor %}
-    {% if MEDIA_REVIEW_TYPES %}
-        {% for media_type in MEDIA_REVIEW_TYPES %}
 
-    <!-- begin URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
-            {% for a_media in MEDIA_REVIEWS[media_type].feed_and_sitemap_data %}
-    <url>
-        <loc>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</loc>
-        <lastmod>{{ a_media.last_modified }}{# Y-m-d #}</lastmod>
-        <priority>0.8</priority>
-    </url>
-            {% endfor %}
-    <!-- end URLs for {{ SITEURL }}/{{ media_type }}-reviews/ -->
-        {% endfor %}
-
-    {% endif %}
     {% for page in pages %}
     <url>
         <loc>{{ SITEURL }}/{{ page.url }}</loc>
+        <lastmod>
+        {%- if page.modified -%}
+            {{ page.modified | strftime('%Y-%m-%d') }}
+        {%- else -%}
+            {{ page.date | strftime('%Y-%m-%d') }}
+        {%- endif -%}
+        </lastmod>
         <priority>0.8</priority>
     </url>
-
         {% for translation in page.translations %}
     <url>
         <loc>{{ SITEURL }}/{{ translation.url }}</loc>

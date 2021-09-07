@@ -391,10 +391,10 @@ def get_sort_params(sort_mode):
         key = lambda x: x["review_created"]
         reverse = True
     elif (sort_mode == "title-a-z"):
-        key = lambda x: x["title"]
+        key = lambda x: (x["title"], x["season"] if "season" in x else None)
         reverse = False
     elif (sort_mode == "title-z-a"):
-        key = lambda x: x["title"]
+        key = lambda x: (x["title"], x["season"] if "season" in x else None)
         reverse = True
 
     return {
@@ -648,12 +648,12 @@ def prepare_landing_page_data(all_media_x, media_data):
     media_data["not_media_types_plural"] = not_media_types_plural
     return media_data
 
-def prepare_feeds_and_sitemap_data(all_media_x):
+def prepare_rss_feed_data(all_media_x):
     feed_and_sitemap_data = []
     # only allow these fields in result
     fields = [
         "review_created", "review_created_date", "title", "season", "id_",
-        "review_title", "last_modified_Ymd"
+        "review_title"
     ]
     for a_media in all_media_x:
         a_filtered_media = {
