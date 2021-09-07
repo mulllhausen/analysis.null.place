@@ -144,7 +144,7 @@ def media_reviews(pelican_obj):
 
         # 11. Prepare the data for feeds and sitemap.
         pelican_obj.settings["MEDIA_REVIEWS"][media_type]["feed_and_sitemap_data"] = \
-        grunt.prepare_feeds_and_sitemap_data(all_media_x)
+        grunt.prepare_rss_feed_data(all_media_x)
 
 def register():
     # note that initialized is the very first signal. we want this to run before
