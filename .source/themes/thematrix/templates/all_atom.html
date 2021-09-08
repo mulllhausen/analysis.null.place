@@ -40,7 +40,7 @@
         <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
         <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</link>
         <published>{{ a_media.review_created_date.isoformat() }}</published>
-        <updated>{{ a_media.review_created_date.isoformat() }}</updated>
+        <updated>{{ a_media.last_modified_date.isoformat() }}</updated>
         <author>
             <name>{{ AUTHOR }}</name>
         </author>
