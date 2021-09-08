@@ -1,4 +1,4 @@
-var latestCache = '2021-09-07_23:54:12';
+var latestCache = '2021-09-09_01:23:13';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=iwd4On',
@@ -79,12 +79,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/tv-series-reviews/img/thumb-dead-pixels-s01-2019.jpg?hash=OSc0E5',
     'https://analysis.null.place/tv-series-reviews/img/thumb-bbc-war-of-the-worlds-s01-2019.jpg?hash=p58cAg',
     'https://analysis.null.place/tv-series-reviews/img/thumb-nightflyers-s01-2018.jpg?hash=A_kJz9',
-    'https://analysis.null.place/tv-series-reviews/json/list-highest-rating-first-10.json?hash=zUX3ep',
+    'https://analysis.null.place/tv-series-reviews/json/list-highest-rating-first-10.json?hash=GWOndZ',
     'https://analysis.null.place/tv-series-reviews/json/data-black-mirror-s01-2011.json?hash=GxvbqZ',
     'https://analysis.null.place/tv-series-reviews/json/data-philip-k-dicks-electric-dreams-s01-2017.json?hash=GJUuoK',
     'https://analysis.null.place/tv-series-reviews/json/data-rick-and-morty-s01-2013.json?hash=cjzGjw',
     'https://analysis.null.place/tv-series-reviews/json/data-the-end-of-the-fing-world-s01-2017.json?hash=iEK1hD',
-    'https://analysis.null.place/tv-series-reviews/json/data-the-walking-dead-s01-2010.json?hash=2TcLDH',
+    'https://analysis.null.place/tv-series-reviews/json/data-the-walking-dead-s01-2010.json?hash=Xermvo',
     'https://analysis.null.place/tv-series-reviews/json/data-maniac-s01-2018.json?hash=CdJlBr',
     'https://analysis.null.place/tv-series-reviews/json/data-black-mirror-s05-2019.json?hash=gE2M3i',
     'https://analysis.null.place/tv-series-reviews/json/data-dead-pixels-s01-2019.json?hash=5xLbUX',
