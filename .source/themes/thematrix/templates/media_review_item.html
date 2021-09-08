@@ -57,7 +57,13 @@
     </div>
     <h3 class="media-title">
 {%- if media != None -%}
-{{ media.title }}
+    {%- if media_type == "movie" -%}
+        {{ media.title }}
+    {%- elif media_type == "book" -%}
+        <i>{{ media.title }}</i> by {{ media.author }}
+    {%- elif media_type == "tv-series" -%}
+        {{ media.title }} Season {{ media.season }}
+    {%- endif %} ({{ media.year }})
 {%- endif -%}
     </h3>
     <h4 class="review-title">
