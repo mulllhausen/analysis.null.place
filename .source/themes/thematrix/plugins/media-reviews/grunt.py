@@ -385,11 +385,11 @@ def get_sort_params(sort_mode):
         key = lambda x: (x["rating"], x["title"])
         reverse = False
     elif (sort_mode == "newest"):
-        key = lambda x: x["review_created"]
-        reverse = False
-    elif (sort_mode == "oldest"):
-        key = lambda x: x["review_created"]
+        key = lambda x: x["last_modified"]
         reverse = True
+    elif (sort_mode == "oldest"):
+        key = lambda x: x["last_modified"]
+        reverse = False
     elif (sort_mode == "title-a-z"):
         key = lambda x: (x["title"], x["season"] if "season" in x else None)
         reverse = False
@@ -630,7 +630,7 @@ def get_linked_data(a_media):
 
 def prepare_landing_page_data(all_media_x, media_data):
     media_data["latest_review"] = \
-    max(all_media_x, key = lambda x: x["review_created"])["review_created"]
+    max(all_media_x, key = lambda x: x["last_modified"])["last_modified"]
 
     media_data["preloads"]["img"] = [
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in
@@ -659,8 +659,6 @@ def prepare_rss_feed_data(all_media_x):
         a_filtered_media = {
             field: a_media[field] for field in fields if field in a_media
         }
-        a_filtered_media["last_modified"] = a_media["review_created"] if \
-        a_media["review_updated"] is None else a_media["review_updated"]
 
         a_filtered_media["last_modified_date"] = \
         a_media["review_created_date"] if a_media["review_updated"] is None \
@@ -670,11 +668,14 @@ def prepare_rss_feed_data(all_media_x):
 
     return feed_and_sitemap_data
 
-# downloading thumbnails
-
 def add_missing_data(all_media_x):
     for a_media in all_media_x:
+
         a_media["id_"] = get_id(a_media)
+
+        a_media["last_modified"] = a_media["review_created"] if \
+        a_media["review_updated"] is None else a_media["review_updated"]
+
         img_thumb_data = get_img_data(a_media["id_"], "thumb", get_hash = True)
         if img_thumb_data["hash"] is not None:
             a_media["thumbnail_hash"] = img_thumb_data["hash"]
@@ -706,6 +707,8 @@ def add_missing_data(all_media_x):
                 pass
 
     return all_media_x
+
+# downloading thumbnails
 
 def download_all(all_media_x):
     any_downloads_done = False

@@ -294,8 +294,9 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     if (mediaData.reviewUpdated != null) {
         var a = mediaEl.querySelector('.review-updated a');
 
-        a.href = siteGlobals.githubURL + '/commits/master/movie-reviews/json/' +
-        'review-' + mediaData.id_ + '.json';
+        a.href = siteGlobals.githubURL + '/commits/master/' +
+        siteGlobals.mediaType  + '-reviews/json/review-' + mediaData.id_ +
+        '.json';
 
         a.innerHTML = 'updated ' + mediaData.reviewUpdated;
     }
