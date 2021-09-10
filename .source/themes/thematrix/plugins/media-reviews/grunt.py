@@ -595,6 +595,7 @@ def get_linked_data(a_media):
     linked_data = {
         "@context": "http://schema.org",
         "@type": "Review",
+        "author": jinja_default_settings["AUTHOR"],
         "url": "%s/%s-reviews/%s/" % (
             jinja_default_settings["SITEURL"], media_type, a_media["id_"]
         ),
