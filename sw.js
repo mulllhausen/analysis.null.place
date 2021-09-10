@@ -1,4 +1,4 @@
-var latestCache = '2021-09-09_01:58:22';
+var latestCache = '2021-09-10_09:36:14';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=iwd4On',
@@ -54,7 +54,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=8FSkDL',
+    'https://analysis.null.place/js/media-reviews.js?hash=gbU6F8',
     'https://analysis.null.place/css/media-reviews.css?hash=U1la7K',
     'https://analysis.null.place/book-reviews/img/thumb-theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011.jpg?hash=TN51ee',
     'https://analysis.null.place/book-reviews/img/thumb-robert-harris-imperium-2006.jpg?hash=I6ji6V',
