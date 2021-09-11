@@ -495,32 +495,41 @@ def get_search_item(a_media):
     return re.sub(r" +", " ", search_item)
 
 def save_1_media_html(a_media, media_data, total_media_count):
-    a_media["type_"] = media_type
-    a_media["type_caps"] = media_type_caps
-    a_media["search_placeholder"] = search_placeholder
-    a_media["not_media_types"] = not_media_types
-    a_media["not_media_types_plural"] = not_media_types_plural
-    a_media["type_plural"] = media_type_plural
-    a_media["verb_present"] = verb_present
-    a_media["verb_past"] = verb_past
-    a_media["linked_data"] = get_linked_data(a_media)
-    a_media["external_link_url"] = "https://"
+    # filter a_media by these fields
+    fields = [
+        "id_", "title", "review_created", "review_updated", "author", "season",
+        "year", "default_index", "thumb_height", "review_title", "spoilers",
+        "rating", "larger_height", "larger_width"
+    ]
+    tmp_media = { field: a_media[field] for field in fields if field in a_media }
+    tmp_media.update({
+        "type_": media_type,
+        "type_caps": media_type_caps,
+        "search_placeholder": search_placeholder,
+        "not_media_types": not_media_types,
+        "not_media_types_plural": not_media_types_plural,
+        "type_plural": media_type_plural,
+        "verb_present": verb_present,
+        "verb_past": verb_past,
+        "linked_data": get_linked_data(a_media),
+        "thumb_larger": get_img_data(a_media["id_"], "larger")["on_rel_path"],
+        "html_review": format_review(a_media["review"])
+    })
+    tmp_media["external_link_url"] = "https://"
     if media_type == "book":
-        a_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
+        tmp_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
         a_media["goodreads_id"]
     else:
-        a_media["external_link_url"] += "www.imdb.com/title/%s" % \
+        tmp_media["external_link_url"] += "www.imdb.com/title/%s" % \
         a_media["imdbid"]
-    a_media["html_review"] = format_review(a_media["review"])
 
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
-
     all_media_data["total_media_count"] = total_media_count
 
     # add the current id to preloads and bump off the last to maintain the page
     # size
-    if (a_media["id_"] not in preload_ids):
+    if a_media["id_"] not in preload_ids:
         preload_ids = [a_media["id_"]] + preload_ids[:page_size]
 
     # get img files from ids in a list
@@ -549,7 +558,7 @@ def save_1_media_html(a_media, media_data, total_media_count):
         if e.errno != errno.EEXIST:
             raise
 
-    jinja_default_settings["media"] = a_media
+    jinja_default_settings["media"] = tmp_media
     jinja_default_settings["all_media_data"] = all_media_data
 
     html_file = "%s/index.html" % review_file_dir
@@ -651,7 +660,7 @@ def prepare_landing_page_data(all_media_x, media_data):
 
 def prepare_rss_feed_data(all_media_x):
     feed_and_sitemap_data = []
-    # only allow these fields in result
+    # filter each media item by these fields
     fields = [
         "review_created", "review_created_date", "title", "season", "id_",
         "review_title"
