@@ -19,6 +19,27 @@
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block description %}{{ article.summary | striptags }}{% endblock %}
 {% block og_description %}{{ article.summary | striptags }}{% endblock %}
+{% block og_image %}
+    {%- if article.thumbnail_larger_image -%}
+        {{ QS_LINK[article.thumbnail_larger_image] }}
+    {%- else -%}
+        {{ super() }}
+    {%- endif -%}
+{% endblock %}
+{% block og_image_width %}
+    {%- if article.thumbnail_larger_width -%}
+        {{ article.thumbnail_larger_width }}
+    {%- else -%}
+        {{ super() }}
+    {%- endif -%}
+{% endblock %}
+{% block og_image_height %}
+    {%- if article.thumbnail_larger_height -%}
+        {{ article.thumbnail_larger_height }}
+    {%- else -%}
+        {{ super() }}
+    {%- endif -%}
+{% endblock %}
 {% block google_title %}{{ article.summary | striptags }}{% endblock %}
 {% block content %}
 <section id="content">
