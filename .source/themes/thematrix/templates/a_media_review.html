@@ -3,10 +3,10 @@
 #}
 <html>
 <head>
-    <title>{{ media.type_ }} reviews</title>
+    <title>{{ media.type_caps }} Review: {{ media.title }}{% if media.author %} by {{ media.author }}{% endif %}</title>
     <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
     <meta name="date" content="{{ media.review_created }}"/>
-{% if media.review_updated != None %}
+{% if media.review_updated %}
     <meta name="modified" content="{{ media.review_updated }}"/>
 {% endif %}
     <meta name="category" content="reviews"/>
@@ -15,13 +15,16 @@
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
     <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>
-    <meta name="summary" content="{{ media.type_caps }} review of {{ media.title }}{% if media.author %} by {{ media.author }}{% endif %}"/>
+    <meta name="summary" content=""/>{# everything breaks if this is removed. i have no idea why since it is not needed in other pages (eg. pages/404.html) #}
+    <meta name="og_description" content="{{ media.rating }}/5&#9733; {{ media.review_title }}"/>
+    <meta name="ld_description" content="{{ media.review_title }}"/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for {{ media.type_plural }}."/>
     <meta name="jsons" content="{{ all_media_data.preloads.json | join(',') }}"/>
     <meta name="override_fb_comments_url" content="{{ SITEURL }}/{{ media.type_ }}-reviews/"/>
     <meta name="thumbnail_larger_image" content="{{ media.thumb_larger }}"/>
     <meta name="thumbnail_larger_width" content="{{ media.larger_width }}"/>
     <meta name="thumbnail_larger_height" content="{{ media.larger_height }}"/>
+    <meta name="og_type" content="{{ media.og_type }}"/>
 {#
 note: we cannot put proper json (containing "double quotes") in jinja content
 since jinja will view the first double quote as terminating the content. so we
