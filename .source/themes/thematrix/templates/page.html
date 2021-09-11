@@ -54,13 +54,22 @@
 {% endblock %}
 {% block content %}
 <section id="content" class="body">
-    <h1 class="entry-title">{{ page.title }}</h1>
-    <div class="entry-content">
-{{ page.content }}
-    </div>
-    <div class="bottom-spacer"></div>
-{% if not page.no_comments %}
-     {% include 'comments.html' %}
+    <article>
+        <header>
+            <h1 class="entry-title">{{ page.title }}</h1>
+        </header>
+        <div class="entry-content">
+{% if page.page_as_article %}
+            <div class="info-box">
+                {% include 'article_infos.html' %}
+            </div>
 {% endif %}
+{{ page.content }}
+        </div>
+        <div class="bottom-spacer"></div>
+{% if not page.no_comments %}
+         {% include 'comments.html' %}
+{% endif %}
+    </article>
 </section>
 {% endblock %}

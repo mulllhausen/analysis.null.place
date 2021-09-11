@@ -16,7 +16,13 @@
         {% if position != "top" %}
             {# there is no counter for comments on mobile - it would be too small to see and get in the way #}
         {# this functionality is deprecated by the facebook api:
-        <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/{{ article.url }}">0</span>
+        <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/
+{%- if article -%}
+    {{ article.url }}
+{%- elif (page or page.page_as_article) -%}
+    {{ page.url }}
+{%- endif -%}
+        ">0</span>
         previously it would automatically populate the span with a comment count #}
         <span class="comments-count fb-comment-count">0</span>
         {% endif %}
@@ -29,7 +35,13 @@
         </svg>
         {% if position != "top" %}
             {# there is no counter for comments on mobile - it would be too small to see and get in the way #}
-        <span class="comments-count disqus-comment-count" data-disqus-identifier="{{ article.title }}">0</span>
+        <span class="comments-count disqus-comment-count" data-disqus-identifier="
+{%- if article -%}
+    {{ article.title }}
+{%- elif (page and page.page_as_article) -%}
+    {{ page.title }}
+{%- endif -%}
+        ">0</span>
         {% endif %}
     </div>
     {% endif %}

@@ -3,17 +3,31 @@
 <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i> {{ article.author }}</a>
 {% endif %#}
 
-
-<a href="{{ SITEURL }}/{{ article.category.url }}"><svg class="icon icon-folder-open-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use></svg> {{ article.category }}</a>
+{% if article %}
+    {% set category_url = article.category.url %}
+    {% set category = article.category %}
+    {% set ddate = article.date %}
+    {% set locale_date = article.locale_date %}
+{% elif page and page.page_as_article %}
+    {% set category_url = page.category.url %}
+    {% set category = page.category %}
+    {% set ddate = page.date %}
+    {% set locale_date = page.locale_date %}
+{% endif %}
+<a href="{{ SITEURL }}/{{ category_url }}">
+    <svg class="icon icon-folder-open-o">
+        <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use>
+    </svg> {{ category }}{# comment deletes whitespace #}
+</a>
 
 {#<span class="label">Date</span>#}
-(<abbr class="published" title="{{ article.date.isoformat() }}">{#<i class="icon-calendar"></i>#}{{ article.locale_date }}</abbr>)
+(<abbr class="published" title="{{ ddate.isoformat() }}">{#<i class="icon-calendar"></i>#}{{ locale_date }}</abbr>)
 
-{% if PDF_PROCESSOR %}
+{#% if PDF_PROCESSOR %}
 <span class="label">
 <a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">PDF</a>
 </span>
-{% endif %}
+{% endif %#}
 
 {% include 'taglist.html' %}
 {% include 'translations.html' %}
