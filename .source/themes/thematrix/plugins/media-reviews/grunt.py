@@ -517,9 +517,15 @@ def save_1_media_html(a_media, media_data, total_media_count):
     })
     tmp_media["external_link_url"] = "https://"
     if media_type == "book":
+        tmp_media["og_type"] = "book"
         tmp_media["external_link_url"] += "www.goodreads.com/book/show/%s" % \
         a_media["goodreads_id"]
     else:
+        if media_type == "movie":
+            tmp_media["og_type"] = "video.movie"
+        else:
+            tmp_media["og_type"] = "video.tv_show"
+
         tmp_media["external_link_url"] += "www.imdb.com/title/%s" % \
         a_media["imdbid"]
 

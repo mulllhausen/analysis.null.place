@@ -4,13 +4,13 @@
     class="media {{ media_type }}
 {%- if media == None %} placeholder pulsate {%- else %} pinned {%- endif -%}
     "
-{% if media != None %}
+{% if media %}
     id="filter-index-{{ media.default_index }}"
 {% endif %}
 >
     <a
         class="link-to-self chain-link"
-{% if media != None %}
+{% if media %}
         href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
 {% endif %}
         title="right click and copy link for the URL of this {{ media_type }} review"
@@ -18,9 +18,9 @@
         <svg class="icon icon-chain">
             <use xlink:href="
 {%- if double_parsed -%}
-{% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}
+    {% raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw %}
 {%- else -%}
-{{ QS_LINK['/theme/img/icons.svg'] }}
+    {{ QS_LINK['/theme/img/icons.svg'] }}
 {%- endif -%}
 #icon-chain">
             </use>
@@ -33,13 +33,13 @@
     before the image loads
 #}
         <img class="thumbnail" loading="lazy" {# only for <object>: type="image/jpg"#}
-{% if media != None %}
+{% if media %}
 {% set img = '/' + media_type + '-reviews/img/thumb-' + media.id_ + '.jpg' %}
             {#data#}src="
 {%- if double_parsed -%}
-{% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}
+    {% raw %}{{{% endraw %} QS_LINK['{{ img }}'] {% raw %}}}{% endraw %}
 {%- else -%}
-{{ QS_LINK[img] }}
+    {{ QS_LINK[img] }}
 {%- endif -%}
             "
 {% endif %}
@@ -56,7 +56,7 @@
         </div>
     </div>
     <h3 class="media-title">
-{%- if media != None -%}
+{%- if media -%}
     {%- if media_type == "movie" -%}
         {{ media.title }}
     {%- elif media_type == "book" -%}
@@ -67,7 +67,7 @@
 {%- endif -%}
     </h3>
     <h4 class="review-title">
-{%- if media != None -%}
+{%- if media -%}
 {{ media.review_title }}
 {%- endif -%}
     </h4>
@@ -87,7 +87,7 @@
 {% endif %}
         <a
             class="link-external" target="_blank"
-{% if media != None %}
+{% if media %}
             href="{{ media.external_link_url }}"
 {% endif %}
         >
@@ -117,7 +117,7 @@
     </div>
     <div class="review-dates">
         <span class="review-created">
-{%- if media != None -%}
+{%- if media -%}
             added {{ media.review_created }}
 {%- endif -%}
         </span>
@@ -125,7 +125,7 @@
 {%- if media == None -%}
             <a target="_blank"></a>
 {%- else %}
-    {% if media.review_updated != None -%}
+    {% if media.review_updated -%}
             <a
                 target="_blank"
                 href="{{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json"

@@ -10,14 +10,27 @@
     "@type": "WebPage",
     "author": AUTHOR,
     "name": page.title,
-    "description": page.summary,
+    "description": page.ld_description if page.ld_description else page.title,
     "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
     "datePublished": BLOG_FIRST_PUBLISHED_DATE
 } %}
 {% extends "base.html" %}
-{% block description %}{{ page.summary }}{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
-{% block og_description %}{{ page.summary }}{% endblock %}
+{% block og_description %}
+    {%- if page.og_description -%}
+        {{ page.og_description }}
+    {%- else -%}
+        {{ page.title }}
+    {%- endif -%}
+{% endblock %}
+{% block og_type %}
+    {%- if page.og_type -%}
+        {{ page.og_type }}
+    {%- else -%}
+        {{ super() }}
+    {%- endif -%}
+{% endblock %}
 {% block og_image %}
     {%- if page.thumbnail_larger_image -%}
         {{ QS_LINK[page.thumbnail_larger_image] }}

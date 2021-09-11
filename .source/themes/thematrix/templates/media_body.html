@@ -22,7 +22,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {{ media_count_area(all_media_data.preloads.first_page_size, all_media_data.type_plural, all_media_data.preloads.total_size) }}
 
 <div id="reviewsArea" class="reviews-area">
-    {% if media != None -%}
+    {% if media -%}
         {{ media_review_item(media.type_, double_parsed, media, all_media_data.max_thumb_height) }}
     {%- endif %}
 </div>
@@ -39,9 +39,9 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
     siteGlobals.maxThumbHeight = {{ all_media_data.max_thumb_height }};
     siteGlobals.iconsSVGURL = '
 {%- if double_parsed -%}
-{%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
+    {%- raw %}{{ QS_LINK['/theme/img/icons.svg'] }}{% endraw -%}
 {%- else -%}
-{{ QS_LINK['/theme/img/icons.svg'] }}
+    {{ QS_LINK['/theme/img/icons.svg'] }}
 {%- endif -%}
 ';
     siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
