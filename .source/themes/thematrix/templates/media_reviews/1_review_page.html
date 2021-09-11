@@ -43,7 +43,7 @@ next level for rendering.
     <meta name="linked_data" content="{{ media.linked_data | tojson | replace("\"", "`") }}"/>
 </head>
 <body>
-{%- from 'media_body.html' import media_body with context -%}
+{%- from 'media_reviews/body.html' import media_body with context -%}
 {% set double_parsed = True %}
 {{ media_body(all_media_data, double_parsed, media) }}
 </body>

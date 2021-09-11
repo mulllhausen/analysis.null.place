@@ -48,6 +48,12 @@
         {% endif %}
 
         {# le twitter card data # }
+        { # not needed - twitter can use open graph. on the twitter website -
+        https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started
+        - it says "Twitter's parser will fall back to using property and
+        content, so there is no need to modify existing Open Graph protocol
+        markup if it already exists." # }
+
         <meta name="twitter:card" content="summary_large_image"/>
         <meta name="twitter:site" content="@publisher_handle"/>
         <meta name="twitter:title" content="{% block twitter_title %}{{ SITENAME }}{% endblock %}"/>

@@ -1,5 +1,5 @@
 {% macro media_review_item(media_type, double_parsed, media, max_thumb_height) %}
-{% from 'media_review_stars.html' import media_review_stars with context %}
+{% from 'media_reviews/review_stars.html' import media_review_stars with context %}
 <div
     class="media {{ media_type }}
 {%- if media == None %} placeholder pulsate {%- else %} pinned {%- endif -%}
