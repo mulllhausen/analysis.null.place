@@ -149,7 +149,7 @@
                     {% include 'menu.html' %}
                 </div>
                     {% include 'logo.html' %}
-                    {% if article %}
+                    {% if article or (page and page.page_as_article) %}
                         {% include 'comments_opener.html' %}
                     {% endif %}
                 {% endwith %}

@@ -40,21 +40,17 @@
         {{ super() }}
     {%- endif -%}
 {% endblock %}
-{% block google_title %}{{ article.summary | striptags }}{% endblock %}
 {% block content %}
-<section id="content">
+<section id="content" class="body">
     <article>
         <header>
-            <h1>
-            <svg class="icon icon-file-text-o"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-file-text-o"></use></svg>
-            {{ article.title }}
-            </h1>
+            <h1 class="entry-title">{{ article.title }}</h1>
         </header>
         <div class="entry-content">
             <div class="info-box">
                 {% include 'article_infos.html' %}
             </div>
-            {{ article.content }}
+{{ article.content }}
         </div>
         <div class="bottom-spacer"></div>
         {% include 'comments.html' %}
