@@ -60,7 +60,6 @@
 
 <script>
 var siteGlobals = {
-    events: {},
     sitename: 'analysis',
     sitenameASCIIArt: "\n" +
 "                    _           _      \n" +
@@ -78,7 +77,8 @@ var siteGlobals = {
     googleAdClient: 'ca-pub-0118741364962624',
     enableAds: true,
     commentsPlatforms: ['FB','Disqus'],
-    article: {title: 'how do the bitcoin mining algorithms work?',url: 'how-do-the-bitcoin-mining-algorithms-work/',consoleExplainScripts: 'how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article.'}
+    article: {title: 'how do the bitcoin mining algorithms work?',url: 'how-do-the-bitcoin-mining-algorithms-work/',consoleExplainScripts: 'how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js - the Standford University Javascript Crypto Library (https://crypto.stanford.edu/sjcl/) - used in this article to run SHA256.|how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js - code specifically for the \'how do the bitcoin mining algorithms work?\' article.'},
+    events: {}
 };
 </script>
         <link rel="manifest" href="https://analysis.null.place/theme/js/manifest.json"/>
@@ -209,19 +209,18 @@ var siteGlobals = {
 
             </div>
             <div class="col-1">
-<section id="content">
+<section id="content" class="body">
     <article>
         <header>
-            <h1>
-            <svg class="icon icon-file-text-o"><use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-file-text-o"></use></svg>
-            how do the bitcoin mining algorithms work?
-            </h1>
+            <h1 class="entry-title">how do the bitcoin mining algorithms work?</h1>
         </header>
         <div class="entry-content">
             <div class="info-box">
 
-
-<a href="https://analysis.null.place/cryptocurrencies/"><svg class="icon icon-folder-open-o"><use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-folder-open-o"></use></svg> cryptocurrencies</a>
+<a href="https://analysis.null.place/cryptocurrencies/">
+    <svg class="icon icon-folder-open-o">
+        <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-folder-open-o"></use>
+    </svg> cryptocurrencies</a>
 
 (<abbr class="published" title="2018-04-17T00:00:00+09:30">2018-04-17</abbr>)
 
@@ -248,7 +247,7 @@ var siteGlobals = {
         </a>
     </span>
             </div>
-            
+
 <blockquote><p>
 Bitcoin mining involves computers competing with each other to solve a random
 puzzle. The answer found by the winner is shared and verified by all

@@ -52,7 +52,6 @@
 
 <script>
 var siteGlobals = {
-    events: {},
     sitename: 'analysis',
     sitenameASCIIArt: "\n" +
 "                    _           _      \n" +
@@ -70,6 +69,7 @@ var siteGlobals = {
     googleAdClient: 'ca-pub-0118741364962624',
     enableAds: false,
     commentsPlatforms: ['FB','Disqus'],
+    events: {}
 };
 </script>
         <link rel="manifest" href="https://analysis.null.place/theme/js/manifest.json"/>
@@ -163,8 +163,11 @@ var siteGlobals = {
             </div>
             <div class="col-1">
 <section id="content" class="body">
-    <h1 class="entry-title">cookie policy</h1>
-    <div class="entry-content">
+    <article>
+        <header>
+            <h1 class="entry-title">cookie policy</h1>
+        </header>
+        <div class="entry-content">
 
 <p>A cookie is a small piece of text that allows a website to recognize your
 device and maintain a consistent, cohesive experience throughout multiple
@@ -211,8 +214,9 @@ would like more information on how Disqus uses cookies the please
 blog, then a cookie is saved. This ensures you only see the message once.</p>
 
 
-    </div>
-    <div class="bottom-spacer"></div>
+        </div>
+        <div class="bottom-spacer"></div>
+    </article>
 </section>
             </div>
         </div>
