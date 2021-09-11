@@ -20,7 +20,7 @@
 {% block og_description %}{{ page.summary }}{% endblock %}
 {% block og_image %}
     {%- if page.thumbnail_larger_image -%}
-        {{ page.thumbnail_larger_image }}
+        {{ QS_LINK[page.thumbnail_larger_image] }}
     {%- else -%}
         {{ super() }}
     {%- endif -%}
