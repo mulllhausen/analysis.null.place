@@ -1,9 +1,9 @@
 {%- macro media_body(all_media_data, double_parsed, media = None) -%}
 
-{%- from 'media_search_box.html' import media_search_box with context -%}
-{%- from 'media_count_area.html' import media_count_area with context -%}
-{%- from 'media_review_item.html' import media_review_item with context -%}
-{%- from 'media_search_loader.html' import media_search_loader with context -%}
+{%- from 'media_reviews/search_box.html' import media_search_box with context -%}
+{%- from 'media_reviews/count_area.html' import media_count_area with context -%}
+{%- from 'media_reviews/1_review_item.html' import media_review_item with context -%}
+{%- from 'media_reviews/search_loader.html' import media_search_loader with context -%}
 
 <p>As with
 <a href="{{ SITEURL }}/{{ all_media_data.not_media_types[0] }}-reviews/">{{ all_media_data.not_media_types_plural[0] }}</a>

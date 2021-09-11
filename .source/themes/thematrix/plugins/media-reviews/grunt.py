@@ -570,7 +570,7 @@ def save_1_media_html(a_media, media_data, total_media_count):
     html_file = "%s/index.html" % review_file_dir
     with open(html_file, "w") as f:
         f.write(
-            jinja_environment.get_template("a_media_review.html").
+            jinja_environment.get_template("media_reviews/1_review_page.html").
             render(jinja_default_settings)
         )
     del jinja_default_settings["media"]

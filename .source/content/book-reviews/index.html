@@ -14,7 +14,7 @@
     <meta name="jsons" content="{{ MEDIA_REVIEWS.book.preloads.json | join(',') }}"/>
 </head>
 <body>
-{%- from 'media_body.html' import media_body with context -%}
+{%- from 'media_reviews/body.html' import media_body with context -%}
 {% set double_parsed = False %}
 {{ media_body(MEDIA_REVIEWS.book, double_parsed) }}
 </body>
