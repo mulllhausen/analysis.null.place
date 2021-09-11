@@ -7,7 +7,7 @@ import base64
 def create_static_links(pelican_obj):
     """
     get a dict of file urls with hashes in the querystring and add this to the
-    pelican settings so that it is available within templates and articles
+    pelican settings so that it is available within templates, articles and pages
     """
     #pu.db
     hashes = {}

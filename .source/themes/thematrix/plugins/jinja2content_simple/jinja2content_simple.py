@@ -48,6 +48,9 @@ def process_markup(data_from_pelican, metadata = None):
         'summary',
         'console_explain_scripts',
         'jsons',
+        'thumbnail_larger_image',
+        'thumbnail_larger_width',
+        'thumbnail_larger_height',
         '_content'
     ):
         if (metadata is not None) and (prop not in metadata):
@@ -98,10 +101,11 @@ def process_markup(data_from_pelican, metadata = None):
             del metadata[replacement_prop]
 
 def register():
-    # this signal is called early on (before the static paths have been copied).
-    # not all data is available (no content) - only the metadata, but that's ok
-    # just update what we can and move on
+    # these signals are called early on (before the static paths have been
+    # copied). not all data is available (no content) - only the metadata, but
+    # that's ok just update what we can and move on
     pelican.signals.article_generator_context.connect(process_metadata)
+    pelican.signals.page_generator_context.connect(process_metadata)
 
     # process the content only
     pelican.signals.content_object_init.connect(process_content)

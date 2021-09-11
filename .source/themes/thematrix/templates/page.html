@@ -18,6 +18,9 @@
 {% block description %}{{ page.summary }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.summary }}{% endblock %}
+{% block og_image %}{{ page.thumbnail_larger_image }}{% endblock %}
+{% block og_image_width %}{{ page.thumbnail_larger_width}}{% endblock %}
+{% block og_image_height %}{{ page.thumbnail_larger_height }}{% endblock %}
 {% block content %}
 <section id="content" class="body">
     <h1 class="entry-title">{{ page.title }}</h1>
