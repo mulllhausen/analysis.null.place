@@ -56,7 +56,7 @@ AUTHOR_SAVE_AS = ''
 # articles, so index.html must be a direct template - not a page.
 DIRECT_TEMPLATES = [
     'index', 'tags', 'archives', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest',
-    'feeds/all_rss', 'feeds/all_atom'
+    'all_rss', 'all_atom'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
