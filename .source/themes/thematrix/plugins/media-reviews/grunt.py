@@ -673,7 +673,9 @@ def prepare_landing_page_data(all_media_x, media_data):
     media_data["total_media_count"] = len(all_media_x)
     media_data["not_media_types"] = not_media_types
     media_data["not_media_types_plural"] = not_media_types_plural
-    media_data["first_page_default_media"] = get_first_page_media(all_media_x)
+    media_data["first_page_default_media"] = get_first_page_media(
+        sort_media(default_sort_mode, all_media_x)
+    )
     return media_data
 
 def prepare_rss_feed_data(all_media_x):
