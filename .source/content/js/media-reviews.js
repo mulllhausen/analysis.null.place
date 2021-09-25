@@ -126,6 +126,8 @@ function terminateFirstPage() {
         nextMediaIndex = siteGlobals.numStaticlyRenderedMedia;
         latestMediaEl = getLatestMediaEl();
         afterRendering1Page();
+        var useFirstPageList_ = true;
+        downloadMediaLists(useFirstPageList_, enableAllLoadReviewButtons);
     } else {
         // a pinned media item page - render the remainder of the first page
         renderNextPage(
@@ -133,6 +135,14 @@ function terminateFirstPage() {
             true, // useFirstPageList_
             afterRendering1Page // callback
         );
+    }
+}
+
+function enableAllLoadReviewButtons() {
+    var buttonEls = document.querySelectorAll('button.load-review:disabled');
+    for (var i = 0; i < buttonEls.length; i++) {
+        var buttonEl = buttonEls[i];
+        buttonEl.disabled = false;
     }
 }
 
@@ -338,7 +348,7 @@ function markFailedMediaItem(mediaEl) {
 }
 
 /*function thumbnailLoaded(el) {
-// https://stackoverflow.com/questions/5820209/image-onload-event-not-working-in-chrome/5821388
+// https://stackoverflow.com/questions/5820209/image-onload-event-not-working-in-chrome/
     //e.currentTarget.style.removeProperty('height');
     el.style.removeProperty('height');
     removeCSSClass(el.up(2), 'pulsate');
