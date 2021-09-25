@@ -80,8 +80,11 @@
 {% endif %}
     <br>
     <div class="review-text">
-{% if (media == None) or (pinned == False) %}
+{% if media == None %}
         <button class="load-review">load review</button>
+{% elif pinned == False %}
+        {# the button is initially disabled, and then enabled by js #}
+        <button class="load-review" disabled>load review</button>
 {% else %}
         {{ media.html_review }}
 {% endif %}
