@@ -110,7 +110,7 @@ def media_reviews(pelican_obj):
             media_data["file_hashes"]["list-%s" % sort_mode] = \
             full_list_data["list_file_hash"]
 
-            if sort_mode == "highest-rating":
+            if sort_mode == grunt.default_sort_mode:
                 # returns data jsons and the chopped list
                 chopped_list_data = grunt.save_full_list_json(
                     sort_mode,

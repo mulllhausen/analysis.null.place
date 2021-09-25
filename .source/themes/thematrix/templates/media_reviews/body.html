@@ -27,6 +27,10 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
     {% endfor %}
 </div>
 
+{# % if %}
+<a href=""><button>next page</button></a>
+{% endif % #}
+
 {{ media_search_loader(all_media_data.type_plural) }}
 
 <div class="media-placeholder-warehouse hidden">
@@ -45,7 +49,9 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {%- endif -%}
 ';
     siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
-    siteGlobals.pageSize = {{ MEDIA_REVIEWS_PAGE_SIZE }};
+    siteGlobals.pageSize = {{ MEDIA_REVIEWS_PAGE_SIZE }}; // the maximum possible number of media items per page
+    siteGlobals.numStaticlyRenderedMedia = {{ staticly_rendered_media | length }};
+    siteGlobals.firstPageSize = {{ all_media_data.preloads.first_page_size }}; // firstPageSize <= pageSize
     siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
 </script>
 {%- endmacro -%}
