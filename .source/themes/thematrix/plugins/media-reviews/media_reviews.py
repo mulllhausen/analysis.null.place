@@ -132,9 +132,6 @@ def media_reviews(pelican_obj):
             file_hash = grunt.save_search_index_json(sort_mode, all_media_x)
             media_data["file_hashes"]["search-index-%s" % sort_mode] = file_hash
 
-        # reset the sort mode for use in feeds, sitemap, sw.js
-        all_media_x = grunt.sort_media(grunt.default_sort_mode, all_media_x)
-
         for a_media in all_media_x:
             # 9. Save the <id>/index.html pages
             grunt.save_1_media_html(a_media, media_data, len(all_media_x))
