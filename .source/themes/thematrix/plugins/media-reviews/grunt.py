@@ -683,7 +683,7 @@ def prepare_rss_feed_data(all_media_x):
         "review_created", "review_created_date", "title", "season", "id_",
         "review_title"
     ]
-    for a_media in all_media_x:
+    for a_media in sort_media("title-a-z", all_media_x):
         a_filtered_media = {
             field: a_media[field] for field in fields if field in a_media
         }
