@@ -36,6 +36,7 @@ def media_reviews(pelican_obj):
     # generators.
     # that will be a fun task, but there is no need to design it for a long
     # while yet.
+    # also fix for incremental static rendering at that time
 
     #pu.db
 

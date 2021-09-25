@@ -494,7 +494,7 @@ def get_search_item(a_media):
     # remove double spaces, for efficiency
     return re.sub(r" +", " ", search_item)
 
-def save_1_media_html(a_media, media_data, total_media_count):
+def get_1_media_html_data(a_media):
     # filter a_media by these fields
     fields = [
         "id_", "title", "review_created", "review_updated", "author", "season",
@@ -529,6 +529,9 @@ def save_1_media_html(a_media, media_data, total_media_count):
         tmp_media["external_link_url"] += "www.imdb.com/title/%s" % \
         a_media["imdbid"]
 
+    return tmp_media
+
+def get_all_media_for_1_media_html(a_media, media_data, total_media_count):
     preload_ids = copy.deepcopy(media_data["preloads"]["ids"])
     all_media_data = copy.deepcopy(media_data)
     all_media_data["total_media_count"] = total_media_count
@@ -551,7 +554,9 @@ def save_1_media_html(a_media, media_data, total_media_count):
         "/%s-reviews/json/data-%s.json" % (media_type, id_) for id_ in
         preload_ids
     ]
+    return all_media_data
 
+def save_1_media_html(a_media, media_data, total_media_count):
     # save the review files under the pages dir so that they get built by
     # pelican
     review_file_dir = "%s/pages/%s-reviews/%s" % (
@@ -564,7 +569,10 @@ def save_1_media_html(a_media, media_data, total_media_count):
         if e.errno != errno.EEXIST:
             raise
 
-    jinja_default_settings["media"] = tmp_media
+    all_media_data = get_all_media_for_1_media_html(
+        a_media, media_data, total_media_count
+    )
+    jinja_default_settings["media"] = get_1_media_html_data(a_media)
     jinja_default_settings["all_media_data"] = all_media_data
 
     html_file = "%s/index.html" % review_file_dir
@@ -575,6 +583,9 @@ def save_1_media_html(a_media, media_data, total_media_count):
         )
     del jinja_default_settings["media"]
     del jinja_default_settings["all_media_data"]
+
+def get_first_page_media(all_media_x):
+    return [get_1_media_html_data(a_media) for a_media in all_media_x][:page_size]
 
 def format_review(review_text):
     review_text = review_text.replace(
@@ -662,6 +673,7 @@ def prepare_landing_page_data(all_media_x, media_data):
     media_data["total_media_count"] = len(all_media_x)
     media_data["not_media_types"] = not_media_types
     media_data["not_media_types_plural"] = not_media_types_plural
+    media_data["first_page_default_media"] = get_first_page_media(all_media_x)
     return media_data
 
 def prepare_rss_feed_data(all_media_x):

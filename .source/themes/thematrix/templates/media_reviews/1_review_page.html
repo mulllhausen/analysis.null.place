@@ -46,6 +46,7 @@ next level for rendering.
 <body>
 {%- from 'media_reviews/body.html' import media_body with context -%}
 {% set double_parsed = True %}
-{{ media_body(all_media_data, double_parsed, media) }}
+{% set pin_first = True %}
+{{ media_body(all_media_data, double_parsed, [media], pin_first) }}
 </body>
 </html>
