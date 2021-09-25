@@ -16,6 +16,7 @@
 <body>
 {%- from 'media_reviews/body.html' import media_body with context -%}
 {% set double_parsed = False %}
-{{ media_body(MEDIA_REVIEWS.book, double_parsed) }}
+{% set pin_first = False %}
+{{ media_body(MEDIA_REVIEWS.book, double_parsed, MEDIA_REVIEWS.book.first_page_default_media, pin_first) }}
 </body>
 </html>

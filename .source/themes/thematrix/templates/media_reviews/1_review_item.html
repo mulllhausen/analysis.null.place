@@ -1,8 +1,8 @@
-{% macro media_review_item(media_type, double_parsed, media, max_thumb_height) %}
+{% macro media_review_item(media_type, double_parsed, media, max_thumb_height, pinned = False) %}
 {% from 'media_reviews/review_stars.html' import media_review_stars with context %}
 <div
     class="media {{ media_type }}
-{%- if media == None %} placeholder pulsate {%- else %} pinned {%- endif -%}
+{%- if media == None %} placeholder pulsate {%- elif pinned %} pinned {%- endif -%}
     "
 {% if media %}
     id="filter-index-{{ media.default_index }}"
@@ -80,7 +80,7 @@
 {% endif %}
     <br>
     <div class="review-text">
-{% if media == None %}
+{% if (media == None) or (pinned == False) %}
         <button class="load-review">load review</button>
 {% else %}
         {{ media.html_review }}

@@ -1,4 +1,4 @@
-{%- macro media_body(all_media_data, double_parsed, media = None) -%}
+{%- macro media_body(all_media_data, double_parsed, staticly_rendered_media, pin_first) -%}
 
 {%- from 'media_reviews/search_box.html' import media_search_box with context -%}
 {%- from 'media_reviews/count_area.html' import media_count_area with context -%}
@@ -22,10 +22,14 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {{ media_count_area(all_media_data.preloads.first_page_size, all_media_data.type_plural, all_media_data.preloads.total_size) }}
 
 <div id="reviewsArea" class="reviews-area">
-    {% if media -%}
-        {{ media_review_item(media.type_, double_parsed, media, all_media_data.max_thumb_height) }}
-    {%- endif %}
+    {% for media in staticly_rendered_media %}
+{{ media_review_item(media.type_, double_parsed, media, all_media_data.max_thumb_height, pin_first) }}
+    {% endfor %}
 </div>
+
+{# % if %}
+<a href=""><button>next page</button></a>
+{% endif % #}
 
 {{ media_search_loader(all_media_data.type_plural) }}
 
@@ -45,7 +49,9 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 {%- endif -%}
 ';
     siteGlobals.mediaFileHashes = {{ all_media_data.file_hashes | tojson }};
-    siteGlobals.pageSize = {{ MEDIA_REVIEWS_PAGE_SIZE }};
+    siteGlobals.pageSize = {{ MEDIA_REVIEWS_PAGE_SIZE }}; // the maximum possible number of media items per page
+    siteGlobals.numStaticlyRenderedMedia = {{ staticly_rendered_media | length }};
+    siteGlobals.firstPageSize = {{ all_media_data.preloads.first_page_size }}; // firstPageSize <= pageSize
     siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
 </script>
 {%- endmacro -%}

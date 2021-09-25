@@ -1,11 +1,17 @@
 // rules:
-// - so long as the url specifies a particular review (eg. /movie-reviews/birdbox2018/)
+// - so long as the url specifies a particular review (eg. /movie-reviews/bird-box-2018/)
 // then that review will be pinned to the top of the search results
 // - if a user is viewing a pinned review page and they show interest in another
 // media review, then the pinned review's id will be removed from the url
 // - actions which count as showing interest in another review include:
 //      - clicking on anything in another review (eg. load-button, link icon, etc)
 //      - making any changes in the search area
+
+// note: initial pinned media (green border rendered first in the list) are the
+// only media that are ever out of the order specified by the list. therefore
+// pinned initial media are skipped later on when rendering the list to avoid
+// rendering a duplicate.
+
 // todo - offline warning and disable search when offline
 
 // globals
@@ -48,11 +54,8 @@ nextMediaIndex = 0; // index of div on the page, from 0 to filteredList.length -
 
 addEvent(window, 'load', function () {
     resetSearchBox();
-    renderNextPage(
-        siteGlobals.totalMediaCount,
-        true, // useFirstPageList_
-        afterRendering1Page // callback
-    );
+    terminateFirstPage();
+
     var debounceSearchSetup = debounce(
         debounceSearch, 1000, 'both', extraDebounceChecks
     );
@@ -116,6 +119,23 @@ function resetSearchBox() {
     document.getElementById('sortBy').selectedIndex = 0; // highest rating
 }
 
+function terminateFirstPage() {
+    if (siteGlobals.numStaticlyRenderedMedia == siteGlobals.firstPageSize) {
+        // <media> landing page - here the first page of items is already
+        // statically rendered, so just update some variables
+        nextMediaIndex = siteGlobals.numStaticlyRenderedMedia;
+        latestMediaEl = getLatestMediaEl();
+        afterRendering1Page();
+    } else {
+        // a pinned media item page - render the remainder of the first page
+        renderNextPage(
+            siteGlobals.totalMediaCount,
+            true, // useFirstPageList_
+            afterRendering1Page // callback
+        );
+    }
+}
+
 function renderNextPage(totalMediaCount, useFirstPageList_, callback) {
     showMediaCount(false);
     var pinnedMediaIndex = getPinnedMediaIndex();
@@ -156,7 +176,9 @@ function renderNextPagePlaceholders(totalMediaCount, skipIndex) {
     var onFirstPage = (nextMediaIndex == 0);
     var skipOne = (skipIndex != null);
     for (
-        var numPlaceholdersRendered = ((onFirstPage & skipOne) ? 1 : 0);
+        var numPlaceholdersRendered = ( // this page
+            (onFirstPage & skipOne) ? 1 : 0
+        );
         numPlaceholdersRendered < siteGlobals.pageSize;
         numPlaceholdersRendered++
     ) {
@@ -171,13 +193,18 @@ function renderNextPagePlaceholders(totalMediaCount, skipIndex) {
 
         nextMediaIndex++;
     }
-    // render all at once - fewer dom operations
+    // render all at once - fewer dom operations - quickest
     document.getElementById('reviewsArea').innerHTML += placeholdersHTML;
 
     // update the last existing media element for use in the infinite loader
     if (nextMediaIndex == 0) latestMediaEl = null; // no search results
-    else latestMediaEl = document.
-    querySelector('#reviewsArea .media#filter-index-' + (nextMediaIndex - 1));
+    else latestMediaEl = getLatestMediaEl();
+}
+
+function getLatestMediaEl() {
+    return document.querySelector(
+        '#reviewsArea .media#filter-index-' + (nextMediaIndex - 1)
+    );
 }
 
 function populateMediaPlaceholders(populatedAllPlaceholdersCallback) {
@@ -739,9 +766,9 @@ function debounceSearch(state, extraData) {
 
 // downloads
 
-// note: when downloading only the first 10, do not also download the search
-// index. this is because the first 10 will only be downloaded when there is no
-// search text and the sort order is at the default value.
+// note: when downloading only the first page, do not also download the search
+// index. this is because the first page will only be downloaded when there is
+// no search text and the sort order is at the default value.
 function downloadMediaLists(useFirstPageList_, callback) {
     if (callback == null) callback = function () {};
     var mediaListIsDownloaded = isMediaListDownloaded(useFirstPageList_);
@@ -755,7 +782,7 @@ function downloadMediaLists(useFirstPageList_, callback) {
         );
         mediaListDownloadStatus = 'not started'; // unlock again
         downloadMediaListJSON(function () {
-            // only using first 10? then we don't need the search list
+            // only using first page? then we don't need the search list
             if (useFirstPageList_) return callback();
 
             // otherwise wait for both lists to download before running callback
@@ -805,7 +832,7 @@ function downloadMediaListJSON(callback) {
         try {
             if (downloadObj.data == null) throw "no data";
             if (downloadObj.runCount == 1) {
-                mediaList = JSON.parse(downloadObj.data);
+                mediaList = JSON.parse(downloadObj.data); // global
             }
             mediaListDownloadStatus = 'complete'; // global
             return callback();
@@ -826,7 +853,7 @@ function downloadSearchIndexJSON(callback) {
         try {
             if (downloadObj.data == null) throw "no data";
             if (downloadObj.runCount == 1) {
-                searchIndex = JSON.parse(downloadObj.data);
+                searchIndex = JSON.parse(downloadObj.data); // global
             }
             searchIndexDownloadStatus = 'complete'; // global
             return callback();
