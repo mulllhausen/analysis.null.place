@@ -6,13 +6,19 @@
 {% if article %}
     {% set category_url = article.category.url %}
     {% set category = article.category %}
-    {% set ddate = article.date %}
+    {% set date_ = article.date %}
     {% set locale_date = article.locale_date %}
+    {% if article.modified %}
+        {% set date_modified = article.modified.strftime("%Y-%m-%d") %}
+    {% endif %}
 {% elif page and page.page_as_article %}
     {% set category_url = page.category.url %}
     {% set category = page.category %}
-    {% set ddate = page.date %}
+    {% set date_ = page.date %}
     {% set locale_date = page.locale_date %}
+    {% if page.modified %}
+        {% set date_modified = page.modified.strftime("%Y-%m-%d") %}
+    {% endif %}
 {% endif %}
 <a href="{{ SITEURL }}/{{ category_url }}">
     <svg class="icon icon-folder-open-o">
@@ -20,8 +26,13 @@
     </svg> {{ category }}{# comment deletes whitespace #}
 </a>
 
-{#<span class="label">Date</span>#}
-(<abbr class="published" title="{{ ddate.isoformat() }}">{#<i class="icon-calendar"></i>#}{{ locale_date }}</abbr>)
+{# <span class="label">Date</span> #}
+{# (<abbr class="published" title="{{ date_.isoformat() }}">{ #<i class="icon-calendar"></i># }{{ locale_date }}</abbr>) #}
+<span class="dates">({{ locale_date }}
+{%- if date_modified -%}
+, updated {{ date_modified }}
+{%- endif -%}
+)</span>
 
 {#% if PDF_PROCESSOR %}
 <span class="label">

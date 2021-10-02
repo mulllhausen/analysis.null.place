@@ -42,6 +42,18 @@
         <meta property="og:image" content="{% block og_image %}{{ QS_LINK['/theme/img/shattered-glass-matrix.png'] }}{% endblock %}"/>
         <meta property="og:image:width" content="{% block og_image_width %}266{% endblock %}"/>
         <meta property="og:image:height" content="{% block og_image_height %}266{% endblock %}"/>
+        {% if article %}
+        <meta property="og:article:published_time" content="{{ article.date.strftime("%Y-%m-%d") }}"/>
+            {% if article.modified %}
+        <meta property="og:article:modified_time" content="{{ article.modified.strftime("%Y-%m-%d") }}"/>
+            {% endif %}
+        {% elif page and page.page_as_article %}
+        <meta property="og:article:published_time" content="{{ page.date.strftime("%Y-%m-%d") }}"/>
+            {% if page.modified %}
+        <meta property="og:article:modified_time" content="{{ page.modified.strftime("%Y-%m-%d") }}"/>
+            {% endif %}
+        {% endif %}
+
         {% if FACEBOOK_APP_ID %}
         <meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}"/>
         {% block og_custom %}{% endblock %}
@@ -199,8 +211,7 @@
             {% if COMMENTS_SCRIPTS and not article.no_comments %}
         <script src="{{ QS_LINK['/theme/js/comments-section.js'] }}"></script>
             {% endif %}
-        {% endif %}
-        {% if page %}
+        {% elif page %}
             {% if page.scripts %}
                 {% set scripts = page.scripts.split(',') %}
                 {% for script in scripts %}
