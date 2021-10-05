@@ -8,7 +8,10 @@
 {% set LINKED_DATA = {
     "@context": "http://schema.org",
     "@type": "WebPage",
-    "author": AUTHOR,
+    "author": {
+        "@type": "Person",
+        "name": AUTHOR
+    },
     "name": page.ld_name if page.ld_name else page.title,
     "description": page.ld_description if page.ld_description else page.title,
     "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
