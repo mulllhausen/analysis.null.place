@@ -150,7 +150,7 @@ footer {
         margin-bottom: 140px;/*the height of the sticky ad with a notice bar*/
     }
 }
-abbr[title] {
+.info-box .dates {
     border-bottom: none;
     cursor: default;
     font-size: 12px;
