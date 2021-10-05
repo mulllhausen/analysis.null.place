@@ -12,7 +12,7 @@
     "name": article.title,
     "description": article.summary,
     "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
-    "datePublished": article.date.strftime("%Y-%m-%d"),
+    "datePublished": article.date.strftime("%Y-%m-%d")
 } %}
 {% if article and article.modified %}
     {% set x=LINKED_DATA.__setitem__("dateModified", article.modified.strftime("%Y-%m-%d")) %}
