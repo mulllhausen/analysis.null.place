@@ -215,7 +215,9 @@ var siteGlobals = {
 <section id="content" class="body">
     <article>
         <header>
-            <h1 class="entry-title">how do the bitcoin mining algorithms work?</h1>
+            <h1 class="entry-title">
+                <a href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/">how do the bitcoin mining algorithms work?</a>
+            </h1>
         </header>
         <div class="entry-content">
             <div class="info-box">
@@ -294,7 +296,7 @@ at what this does each time, then try typing different things in the
 <i>pre-image</i> field and clicking the <i>SHA256</i> button to see what that
 does:</p>
 
-<div class="form-container glass-case" id="form0">
+<form class="form-container glass-case" id="form0">
     <a href="#form0">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -326,7 +328,7 @@ does:</p>
     <div id="hash0Results" class="codeblock"></div>
 </div>
 
-</div>
+</form>
 
 
 <p><i>SHA256</i> stands for <i>Secure Hash Algorithm (256 bits)</i>.
@@ -442,7 +444,7 @@ with <i>SHA256</i> earlier and it gave this result. But if I give you
 then you will not be able to find the pre-image which results in this hash -
 i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 
-<div class="form-container glass-case" id="form1">
+<form class="form-container glass-case" id="form1">
     <a href="#form1">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -481,7 +483,7 @@ i.e. you will not be able to invert this hash. Seriously - give it a go:</p>
 status: <span id="matchStatus1"></span></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p>The difficulty of inverting a <i>SHA256</i> hash is due its enormous length!
@@ -496,7 +498,7 @@ computers do the hashing at their maximum speeds. If you click the <i>Run SHA256
 Automatically</i> button below then you can have your device cycle through
 pre-images and show you the results at its maximum possible speed:</p>
 
-<div class="form-container glass-case" id="form2">
+<form class="form-container glass-case" id="form2">
     <a href="#form2">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -536,7 +538,7 @@ pre-images and show you the results at its maximum possible speed:</p>
 status: <span id="matchStatus2"></span></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p><span id="showHowLongForThisDevice" style="display:none;">Using your device's
@@ -597,7 +599,7 @@ after you give it a go. Click the <i>Mine with SHA256</i> button and look
 carefully at what this does. Once you find the solution, try changing the
 difficulty:</p>
 
-<div class="form-container glass-case" id="form3">
+<form class="form-container glass-case" id="form3">
     <a href="#form3">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -643,7 +645,7 @@ difficulty:</p>
 status: <span id="matchStatus3"></span><span id="mining3Statistics"></span></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p>In that scenario, your device was the miner. When you passed the test, you
@@ -794,7 +796,7 @@ the rules governing Bitcoin behaviour).</p>
 in - the current block references the previous block so that blocks build upon
 each other over time, like so:</p>
 
-<div class="form-container glass-case" id="dragableBlockchain">
+<form class="form-container glass-case" id="dragableBlockchain">
     <a href="#dragableBlockchain">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -802,7 +804,7 @@ each other over time, like so:</p>
     </a>
 
     <object id="blockchainSVG" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl" type="image/svg+xml"></object>
-</div>
+</form>
 
 <div class="media-caption">the Bitcoin blockchain</div>
 
@@ -846,7 +848,7 @@ this works. Click the <i>Mine manually with SHA256</i> button a few times and
 have a look at what this does, both to the results area and to the nonce in the
 block header:</p>
 
-<div class="form-container glass-case" id="form4">
+<form class="form-container glass-case" id="form4">
     <a href="#form4">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -901,7 +903,7 @@ block hash: <span class="aligner"></span><span id="blockhash4" class="individual
 status: <span class="aligner">    </span><span id="mineStatus4"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p>The data in the simulation block header is actually that of the very first
@@ -1042,7 +1044,7 @@ method used by Bitcoin.</p>
 human-readable <i>version</i> value to see how this changes the value stored in
 the blockchain:</p>
 
-<div class="form-container glass-case annex" id="form5">
+<form class="form-container glass-case annex" id="form5">
     <a href="#form5">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1068,7 +1070,7 @@ convert to 4 bytes (big endian): <span class="aligner"></span><span id="version5
 convert to little endian: <span class="aligner">       </span><span id="version5BytesLE"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p>Note that <i>converting to
@@ -1089,7 +1091,7 @@ currently imposes some restrictions on the permissible date range. Try altering
 the human-readable <i>timestamp</i> value to see how this changes the value
 stored in the blockchain:</p>
 
-<div class="form-container glass-case annex" id="form6">
+<form class="form-container glass-case annex" id="form6">
     <a href="#form6">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1116,7 +1118,7 @@ convert to hexadecimal (always 4 bytes - big endian): <span class="aligner"></sp
 convert to little endian: <span class="aligner">                    </span><span id="timestamp6BytesLE"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <h3 class="heading-with-link" id="heading_bits_difficulty_target">
@@ -1182,7 +1184,7 @@ the c++ Bitcoin source code into Javascript which runs on this page. The
 textarea explains exactly what the original Bitcoin source code does to perform
 the conversions.</p>
 
-<div class="form-container glass-case annex" id="form7">
+<form class="form-container glass-case annex" id="form7">
     <a href="#form7">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1222,7 +1224,7 @@ the conversions.</p>
     <div class="codeblock"></div>
 </div>
 
-</div>
+</form>
 
 
 <p>The Bitcoin source code
@@ -1275,7 +1277,7 @@ tests.</p>
 <p>The human readable <i>nonce</i> is stored in the blockchain as 4 little
 endian bytes:</p>
 
-<div class="form-container glass-case annex" id="form8">
+<form class="form-container glass-case annex" id="form8">
     <a href="#form8">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1301,7 +1303,7 @@ convert to 4 bytes (big endian): <span class="aligner"></span><span id="nonce8By
 convert to little endian: <span class="aligner">       </span><span id="nonce8BytesLE"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <h3 class="heading-with-link" id="heading_block_hashing_in_detail">
@@ -1318,7 +1320,7 @@ in the human-readable block header is converted to bytes to be stored in the
 blockchain, and how these are concatenated together. The block header is always
 80 bytes:</p>
 
-<div class="form-container glass-case annex" id="form9">
+<form class="form-container glass-case annex" id="form9">
     <a href="#form9">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1373,7 +1375,7 @@ block header -> SHA256 -> SHA256 -> <span class="aligner"></span><span id="secon
 convert to little endian: <span class="aligner">          </span><span id="secondSHA256OutputLE9"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <h3 class="heading-with-link" id="heading_hashing_hexadecimal_vs_ascii">
@@ -1394,7 +1396,7 @@ implemented for a pre-image expressed in bytes. You can see the difference in
 the following form by ticking and unticking the <i>pre-image is hexadecimal</i>
 checkbox and observing how the resulting hash changes:</p>
 
-<div class="form-container glass-case annex" id="form10">
+<form class="form-container glass-case annex" id="form10">
     <a href="#form10">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1421,7 +1423,7 @@ checkbox and observing how the resulting hash changes:</p>
 pre-image -> SHA256 (little endian) -> <span class="aligner"></span><span id="sha256OutputLE10"></span></div>
 </div>
 
-</div>
+</form>
 
 
 <p>That covers most of the nitty-gritty detail regarding the process of hashing
@@ -1455,7 +1457,7 @@ average attempts = (16<sup>number of hexadecimal digits</sup>) / 2
 <p>I have created a difficulty calculator so you can see the average number of
 hashes that must be made for a given difficulty:</p>
 
-<div class="form-container glass-case annex" id="form11">
+<form class="form-container glass-case annex" id="form11">
     <a href="#form11">
         <svg class="icon icon-chain">
             <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
@@ -1478,7 +1480,7 @@ hashes that must be made for a given difficulty:</p>
     <div id="difficulty11Calculation" class="codeblock"></div>
 </div>
 
-</div>
+</form>
 
 
 <p>Of course, a miner may be lucky or unlucky. You will have noticed this when
