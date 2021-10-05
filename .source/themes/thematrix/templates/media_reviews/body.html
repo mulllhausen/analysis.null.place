@@ -5,6 +5,7 @@
 {%- from 'media_reviews/1_review_item.html' import media_review_item with context -%}
 {%- from 'media_reviews/search_loader.html' import media_search_loader with context -%}
 
+{#
 <p>As with
 <a href="{{ SITEURL }}/{{ all_media_data.not_media_types[0] }}-reviews/">{{ all_media_data.not_media_types_plural[0] }}</a>
 and
@@ -16,6 +17,7 @@ whether I liked it or not, and even whether I have already
 {{ all_media_data.type_plural }} I {{ all_media_data.verb_present }} - good and
 bad. Maybe you will also discover some good {{ all_media_data.type_plural }}
 here too, or learn what to avoid, assuming you have similar tastes to me.</p>
+#}
 
 {{ media_search_box(all_media_data.search_placeholder) }}
 
