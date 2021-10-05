@@ -1,6 +1,6 @@
 {%- macro form_container(id, piece, extra_classes = None, linkable = True) -%}
 {% if piece == 'start' %}
-<div class="form-container glass-case{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
+<form class="form-container glass-case{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
     {% if linkable %}
     <a href="#{{ id }}">
         <svg class="icon icon-chain">
@@ -10,6 +10,6 @@
     {% endif %}
 {% endif %}
 {% if piece == 'end' %}
-</div>
+</form>
 {% endif %}
 {%- endmacro -%}

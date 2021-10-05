@@ -95,12 +95,18 @@ function getMediaIDFromURL() {
     return pathPieces[2];
 }
 
-function removeMediaIDFromUrl() {
+var mediaURLRemoved = false;
+function removeMediaIDFromURL() {
+    if (mediaURLRemoved) return;
+
+    var page = siteGlobals.mediaType + '-reviews/';
+    var url = generateCleanURL(page);
     if (typeof window.history.replaceState == 'function') {
-        var page = siteGlobals.mediaType + '-reviews/';
-        window.history.replaceState(null, '', generateCleanURL(page));
+        window.history.replaceState(null, '', url);
     }
     else window.location.hash = '';
+    document.querySelector('h1.entry-title a').href = url;
+    mediaURLRemoved = true;
 }
 
 // rendering
@@ -289,9 +295,12 @@ function removePlaceholder(mediaIndex) {
 }
 
 function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
-    mediaEl.querySelector('a.link-to-self.chain-link').href = generateCleanURL(
+    var selfURL = generateCleanURL(
         siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
     );
+    mediaEl.querySelector('a.link-to-self.chain-link').href = selfURL;
+    mediaEl.querySelector('h3.media-title a.link-to-self').href = selfURL;
+
     var thumbnailEl = mediaEl.querySelector('.thumbnail');
     thumbnailEl.height = mediaData.thumbnailHeight;
     thumbnailEl.src = siteGlobals.siteURL + '/' + siteGlobals.mediaType +
@@ -315,7 +324,9 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
 
     mediaEl.querySelector('.stars').innerHTML = getMediaStarsHTML(mediaData.rating);
 
-    mediaEl.querySelector('.media-title').innerHTML = getRenderedTitle(mediaData);
+    mediaEl.querySelector('.media-title a.link-to-self').innerHTML =
+    getRenderedTitle(mediaData);
+
     mediaEl.querySelector('.review-title').innerHTML = mediaData.reviewTitle;
     if (mediaData.spoilers) {
         mediaEl.querySelector('.spoiler-alert.has-spoilers').style.display = 'inline';
@@ -766,7 +777,7 @@ function debounceSearch(state, extraData) {
                 showMediaCount(true);
                 return;
             }
-            removeMediaIDFromUrl();
+            removeMediaIDFromURL();
             getSearchValues('debounce'); // init for next debounce
             saveCurrentSearch('debounce'); // init for next debounce
             triggerSearch();

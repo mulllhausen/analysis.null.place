@@ -56,6 +56,12 @@
         </div>
     </div>
     <h3 class="media-title">
+        <a class="link-to-self" href="
+{%- if media -%}
+        {{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/
+{%- endif -%}
+        "
+        >
 {%- if media -%}
     {%- if media_type == "movie" -%}
         {{ media.title }}
@@ -65,6 +71,7 @@
         {{ media.title }} Season {{ media.season }}
     {%- endif %} ({{ media.year }})
 {%- endif -%}
+        </a>
     </h3>
     <h4 class="review-title">
 {%- if media -%}
