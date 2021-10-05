@@ -621,7 +621,10 @@ def get_linked_data(a_media):
     linked_data = {
         "@context": "http://schema.org",
         "@type": "Review",
-        "author": jinja_default_settings["AUTHOR"],
+        "author": {
+            "@type": "Person",
+            "name": jinja_default_settings["AUTHOR"]
+        },
         "url": "%s/%s-reviews/%s/" % (
             jinja_default_settings["SITEURL"], media_type, a_media["id_"]
         ),
@@ -629,9 +632,9 @@ def get_linked_data(a_media):
         "itemReviewed": {
             "@type": item_reviewed_type,
             "name": a_media["title"],
-            "genre": a_media["genres"]
+            "genre": a_media["genres"],
+            "image": get_img_data(a_media["id_"], "larger", get_hash = True)["url"],
         },
-        "image": get_img_data(a_media["id_"], "larger", get_hash = True)["url"],
         "description": a_media["review_title"],
         "datePublished": a_media["review_created"],
         "reviewRating": {
