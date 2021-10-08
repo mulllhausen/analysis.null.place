@@ -3,6 +3,11 @@
 from __future__ import unicode_literals
 import time
 
+# var dump: pelican --print-settings
+
+# use DEBUG1 since DEBUG is reserved
+DEBUG1 = True
+
 AUTHOR = u'Peter Miller'
 BLOG_FIRST_PUBLISHED_DATE = '2018-04-17'
 SITENAME = u'analysis'

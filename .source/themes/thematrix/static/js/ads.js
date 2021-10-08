@@ -10,6 +10,7 @@ function deleteSkyscraperAds() {
 }
 function hideBottomAnchorAd() {
     document.querySelector('.bottom-anchor-ad').style.display = 'none';
+    document.querySelector('footer').style.marginBottom = '0px';
 }
 var sampleSkyscraperAd = null; // init
 function fillSkyscraperAds() {
@@ -92,6 +93,7 @@ function loadInFeedAds() {
         }
     );
 }
+var oneSecondInMilliseconds = 1000;
 function loadBottomAnchorAd() {
     if (initialDeviceType != 'phone') return;
     document.querySelector('.bottom-anchor-ad').style.display = 'block';
@@ -99,7 +101,26 @@ function loadBottomAnchorAd() {
     addCSSClass(el, 'load');
     loadAdsenseScript(function() {
         (adsbygoogle = window.adsbygoogle || []).push({});
+
+        if (siteGlobals.debugging === true) return; // exit here to show the ad
+
+        var timerID = setInterval(function () {
+            switch (getBottomAnchorAdFillStatus()) {
+                case 'unfilled': // a final status was assigned
+                    hideBottomAnchorAd();
+                    // fallthrough
+                case 'filled': // a final status was assigned
+                    clearInterval(timerID);
+                    break;
+                default: // status still not assigned - keep waiting
+                    break;
+            }
+        }, oneSecondInMilliseconds);
     });
+}
+function getBottomAnchorAdFillStatus() {
+    return document.querySelector('.bottom-anchor-ad ins.adsbygoogle').
+    getAttribute('data-ad-status');
 }
 function archiveInFeedAds() {
     // move the in-feed ads to the archive area. this is useful when ads are

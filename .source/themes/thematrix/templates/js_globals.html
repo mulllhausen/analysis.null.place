@@ -26,6 +26,7 @@ var siteGlobals = {
         {%- if page.console_explain_scripts %},consoleExplainScripts: '{{ page.console_explain_scripts }}'{% endif -%}
     },
     {% endif %}
+    {% if DEBUG1 %}debugging: true,{% endif %}
     events: {}
 };
 </script>
