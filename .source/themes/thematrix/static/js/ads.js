@@ -93,7 +93,9 @@ function loadInFeedAds() {
         }
     );
 }
-var oneSecondInMilliseconds = 1000;
+// using 1 second, i saw cases where the ad showed but was marked as 'unfilled'
+// and so was removed. try 5 seconds instead.
+var fiveSecondsInMilliseconds = 5000;
 function loadBottomAnchorAd() {
     if (initialDeviceType != 'phone') return;
     document.querySelector('.bottom-anchor-ad').style.display = 'block';
@@ -115,7 +117,7 @@ function loadBottomAnchorAd() {
                 default: // status still not assigned - keep waiting
                     break;
             }
-        }, oneSecondInMilliseconds);
+        }, fiveSecondsInMilliseconds);
     });
 }
 function getBottomAnchorAdFillStatus() {
