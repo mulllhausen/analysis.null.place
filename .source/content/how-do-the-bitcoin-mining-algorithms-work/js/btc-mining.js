@@ -29,26 +29,46 @@ var miningData = { // note: raw values are taken directly from the input field
 
     target: null
 };
+var permanently = true;
+var keyCodeENTER = 13;
 addEvent(window, 'load', function () {
     // border the digits anywhere on the page initially (grey only)
     initBorderTheDigits();
 
     // put newlines in codeblocks when wrap button is clicked
-    addEvent(document.querySelectorAll('button.wrap-nowrap'), 'click', runHashWrapClicked);
+    addEvent(
+        document.querySelectorAll('button.wrap-nowrap'),
+        'click',
+        function(e) {
+            e.preventDefault();
+            runHashWrapClicked(e);
+            return false; // do not submit form
+        }
+    );
 
     // form 0 - hashing demo
-    addEvent(document.getElementById('btnRunHash0'), 'click', runHash0Clicked);
-    addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
-        if (e.keyCode != 13) return; // only allow the enter key
+    addEvent(document.getElementById('btnRunHash0'), 'click', function (e) {
+        e.preventDefault();
         runHash0Clicked();
+        return false; // do not submit form
     });
-    removeGlassCase('form0', true); // permanently = true
+    addEvent(document.getElementById('inputMessage0'), 'keyup', function (e) {
+        e.preventDefault();
+        if (e.keyCode != keyCodeENTER) return;
+        runHash0Clicked(e);
+        return false; // do not submit the form
+    });
+    removeGlassCase('form0', permanently);
 
     // dec to hex table
     addEvent(
         document.querySelector('#dec2hexTable .instructions'),
         'click',
-        showMoreDec2Hex
+        function (e) {
+            e.preventDefault();
+            showMoreDec2Hex();
+            return false; // do not submit form
+        }
     );
 
     // form 1 - hashing manually to match hash
@@ -64,14 +84,18 @@ addEvent(window, 'load', function () {
     };
     stopHashingForm[1] = false;
     difficultyChars[1] = 64; // match all characters
-    addEvent(document.getElementById('btnRunHash1'), 'click', function () {
+    addEvent(document.getElementById('btnRunHash1'), 'click', function (e) {
+        e.preventDefault();
         runHash1Or2Or3Clicked(hash1Params);
+        return false; // do not submit form
     });
     addEvent(document.getElementById('inputMessage1'), 'keyup', function (e) {
-        if (e.keyCode != 13) return; // only allow the enter key
+        e.preventDefault();
+        if (e.keyCode != keyCodeENTER) return;
         runHash1Or2Or3Clicked(hash1Params);
+        return false; // do not submit form
     });
-    removeGlassCase('form1', true); // permanently = true
+    removeGlassCase('form1', permanently);
 
     // form 2 - hashing automatically to match hash
     var hash2Params = { // use an object for pass-by-reference
@@ -88,9 +112,11 @@ addEvent(window, 'load', function () {
     stopHashingForm[2] = false;
     difficultyChars[2] = 64; // match all characters
     addEvent(document.getElementById('btnRunHash2'), 'click', function (e) {
+        e.preventDefault();
         runHash2Clicked(e, hash2Params);
+        return false; // do not submit form
     });
-    removeGlassCase('form2', true); // permanently = true
+    removeGlassCase('form2', permanently);
 
     // form 3 - proof of work
     var hash3Params = {
@@ -107,96 +133,204 @@ addEvent(window, 'load', function () {
     };
     initDifficultyLevelDropdown(3);
     addEvent(document.getElementById('btnRunHash3'), 'click', function (e) {
+        e.preventDefault();
         runHash3Clicked(e, hash3Params);
+        return false; // do not submit form
     });
     difficultyChars[3] = 1; // init: match first character only
-    addEvent(document.getElementById('difficulty3'), 'change', difficulty3Changed);
-    addEvent(document.getElementById('inputCheckbox3'), 'click', checkbox3Changed);
-    removeGlassCase('form3', true); // permanently = true
+    addEvent(document.getElementById('difficulty3'), 'change', function (e) {
+        e.preventDefault();
+        difficulty3Changed(e);
+        return false; // do not submit form
+    });
+    addEvent(document.getElementById('inputCheckbox3'), 'click', function (e) {
+        e.preventDefault();
+        checkbox3Changed(e);
+        return false; // do not submit form
+    });
+    removeGlassCase('form3', permanently);
 
     // dragable blockchain svg
     initBlockchainSVG();
 
     // form 4 - bitcoin mining
-    addEvent(document.getElementById('version4'), 'keyup, change', version4Changed);
+    addEvent(document.getElementById('version4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        version4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('version4'), 'change');
 
-    addEvent(document.getElementById('prevHash4'), 'keyup, change', prevHash4Changed);
+    addEvent(document.getElementById('prevHash4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        prevHash4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('prevHash4'), 'change');
 
-    addEvent(document.getElementById('merkleRoot4'), 'keyup, change', merkleRoot4Changed);
+    addEvent(document.getElementById('merkleRoot4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        merkleRoot4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('merkleRoot4'), 'change');
 
-    addEvent(document.getElementById('timestamp4'), 'keyup, change', timestamp4Changed);
+    addEvent(document.getElementById('timestamp4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        timestamp4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('timestamp4'), 'change');
 
-    addEvent(document.getElementById('bits4'), 'keyup, change', bits4Changed);
+    addEvent(document.getElementById('bits4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        bits4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('bits4'), 'change');
 
-    addEvent(document.getElementById('nonce4'), 'keyup, change', nonce4Changed);
+    addEvent(document.getElementById('nonce4'), 'keyup, change', function (e) {
+        e.preventDefault();
+        nonce4Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('nonce4'), 'change');
 
-    addEvent(document.getElementById('btnRunHash4'), 'click', mine4AndRenderResults);
+    addEvent(document.getElementById('btnRunHash4'), 'click', function (e) {
+        e.preventDefault();
+        mine4AndRenderResults(e);
+        return false; // do not submit form
+    });
 
-    addEvent(document.getElementById('makeBlockPass4'), 'click', function () {
+    addEvent(document.getElementById('makeBlockPass4'), 'click', function (e) {
+        e.preventDefault();
         scrollToElement(document.getElementById('form4'));
         resetBlock4(true);
+        return false; // do not submit form
     });
-    removeGlassCase('form4', true); // permanently = true
+    removeGlassCase('form4', permanently);
 
     // annex - form 5
-    addEvent(document.getElementById('version5'), 'keyup, change', version5Changed);
+    addEvent(document.getElementById('version5'), 'keyup, change', function (e) {
+        e.preventDefault();
+        version5Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('version5'), 'change');
-    removeGlassCase('form5', true); // permanently = true
+    removeGlassCase('form5', permanently);
 
     // annex - form 6
-    addEvent(document.getElementById('timestamp6'), 'keyup, change', timestamp6Changed);
+    addEvent(document.getElementById('timestamp6'), 'keyup, change', function (e) {
+        e.preventDefault();
+        timestamp6Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('timestamp6'), 'change');
-    removeGlassCase('form6', true); // permanently = true
+    removeGlassCase('form6', permanently);
 
     // annex - form 7
-    addEvent(document.getElementById('difficulty7'), 'keyup, change', difficulty7Changed);
-    addEvent(document.getElementById('bits7'), 'keyup, change', bits7Changed);
-    addEvent(document.getElementById('bitsAreHex7'), 'click', bitsAreHex7Changed);
-    addEvent(document.getElementById('target7'), 'keyup, change', target7Changed);
+    addEvent(document.getElementById('difficulty7'), 'keyup, change', function (e) {
+        e.preventDefault();
+        difficulty7Changed(e);
+        return false; // do not submit form
+    });
+    addEvent(document.getElementById('bits7'), 'keyup, change', function (e) {
+        e.preventDefault();
+        bits7Changed(e);
+        return false; // do not submit form
+    });
+    addEvent(document.getElementById('bitsAreHex7'), 'click', function (e) {
+        e.preventDefault();
+        bitsAreHex7Changed(e);
+        return false; // do not submit form
+    });
+    addEvent(document.getElementById('target7'), 'keyup, change', function (e) {
+        e.preventDefault();
+        target7Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('bits7'), 'change');
-    addEvent(document.getElementById('runDifficultyUnitTests'), 'click', runDifficultyUnitTests);
-    removeGlassCase('form7', true); // permanently = true
+    addEvent(document.getElementById('runDifficultyUnitTests'), 'click', function (e) {
+        e.preventDefault();
+        runDifficultyUnitTests(e);
+        return false; // do not submit form
+    });
+    removeGlassCase('form7', permanently);
 
     // annex - form 8
-    addEvent(document.getElementById('nonce8'), 'keyup, change', nonce8Changed);
+    addEvent(document.getElementById('nonce8'), 'keyup, change', function (e) {
+        e.preventDefault();
+        nonce8Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('nonce8'), 'change');
-    removeGlassCase('form8', true); // permanently = true
+    removeGlassCase('form8', permanently);
 
     // annex - form 9
-    addEvent(document.getElementById('version9'), 'keyup, change', version9Changed);
+    addEvent(document.getElementById('version9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        version9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('version9'), 'change');
 
-    addEvent(document.getElementById('prevHash9'), 'keyup, change', prevHash9Changed);
+    addEvent(document.getElementById('prevHash9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        prevHash9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('prevHash9'), 'change');
 
-    addEvent(document.getElementById('merkleRoot9'), 'keyup, change', merkleRoot9Changed);
+    addEvent(document.getElementById('merkleRoot9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        merkleRoot9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('merkleRoot9'), 'change');
 
-    addEvent(document.getElementById('timestamp9'), 'keyup, change', timestamp9Changed);
+    addEvent(document.getElementById('timestamp9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        timestamp9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('timestamp9'), 'change');
 
-    addEvent(document.getElementById('bits9'), 'keyup, change', bits9Changed);
+    addEvent(document.getElementById('bits9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        bits9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('bits9'), 'change');
 
-    addEvent(document.getElementById('nonce9'), 'keyup, change', nonce9Changed);
+    addEvent(document.getElementById('nonce9'), 'keyup, change', function (e) {
+        e.preventDefault();
+        nonce9Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('nonce9'), 'change');
-    removeGlassCase('form9', true); // permanently = true
+    removeGlassCase('form9', permanently);
 
     // form 10 - hashing hex and ascii
-    addEvent(document.getElementById('inputMessage10'), 'keyup, change', runHash10Changed);
+    addEvent(document.getElementById('inputMessage10'), 'keyup, change', function (e) {
+        e.preventDefault();
+        runHash10Changed(e);
+        return false; // do not submit form
+    });
     triggerEvent(document.getElementById('inputMessage10'), 'change');
-    addEvent(document.getElementById('inputCheckbox10'), 'click', runHash10Changed);
-    removeGlassCase('form10', true); // permanently = true
+    addEvent(document.getElementById('inputCheckbox10'), 'click', function (e) {
+        e.preventDefault();
+        runHash10Changed(e);
+        return false; // do not submit form
+    });
+    removeGlassCase('form10', permanently);
 
     // form 11 - luck calculator
     initDifficultyLevelDropdown(11);
-    addEvent(document.getElementById('difficulty11'), 'change', difficulty11Changed);
+    addEvent(document.getElementById('difficulty11'), 'change', function (e) {
+        e.preventDefault();
+        difficulty11Changed(e);
+        return false; // do not submit form
+    });
     initDifficultyAttempts();
 
     switch (getDeviceType()) {
@@ -293,7 +427,7 @@ function showMoreDec2Hex() {
     }
     try {
         table.innerHTML = chunkOfRows;
-    } catch(e) {
+    } catch (err) {
         // fucking internet explorer!
         // http://webbugtrack.blogspot.com.au/2007/12/bug-210-no-innerhtml-support-on-tables.html
         table.outerHTML = '<table id="dec2hexData">' + chunkOfRows + '</table>';
@@ -2250,7 +2384,7 @@ function initDifficultyAttempts() {
         try {
             difficultyAttempts = JSON.parse(json).attemptsForHexCharacters;
             triggerEvent(document.getElementById('difficulty11'), 'change');
-            removeGlassCase('form11', true); // permanently = true
+            removeGlassCase('form11', permanently);
         }
         catch (err) {}
     });
@@ -2287,7 +2421,7 @@ function initBlockchainSVG() {
                 var numTxsArray = JSON.parse(json).txsPerBlock;
                 txsPerBlock = txsPerBlock.concat(numTxsArray);
                 // this will create a huge array, but javascript can handle it :)
-                removeGlassCase('dragableBlockchain', true); // permanently = true
+                removeGlassCase('dragableBlockchain', permanently);
             }
             catch (err) {}
         });
