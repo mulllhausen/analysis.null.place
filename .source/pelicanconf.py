@@ -115,7 +115,8 @@ STATIC_FILE_MERGES = {
         'js/cookie-warning-notice.js',
         'js/ads.js',
         'js/register-service-worker.js',
-        'js/background-images.js'
+        'js/background-images.js',
+        'js/css-ascend.js'
     ]
 }
 DELETE_PRE_MERGE_FILES = False

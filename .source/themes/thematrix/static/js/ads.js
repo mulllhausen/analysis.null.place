@@ -8,10 +8,6 @@ function deleteInFeedAds() {
 function deleteSkyscraperAds() {
     deleteElements(document.querySelectorAll('.col-0 .adsbygoogle'));
 }
-function hideBottomAnchorAd() {
-    document.querySelector('.bottom-anchor-ad').style.display = 'none';
-    document.querySelector('footer').style.marginBottom = '0px';
-}
 var sampleSkyscraperAd = null; // init
 function fillSkyscraperAds() {
     // the first skyscraper ad already exists. save a copy before converting it
@@ -93,9 +89,6 @@ function loadInFeedAds() {
         }
     );
 }
-// using 1 second, i saw cases where the ad showed but was marked as 'unfilled'
-// and so was removed. try 5 seconds instead.
-var fiveSecondsInMilliseconds = 5000;
 function loadBottomAnchorAd() {
     if (initialDeviceType != 'phone') return;
     document.querySelector('.bottom-anchor-ad').style.display = 'block';
@@ -103,26 +96,7 @@ function loadBottomAnchorAd() {
     addCSSClass(el, 'load');
     loadAdsenseScript(function() {
         (adsbygoogle = window.adsbygoogle || []).push({});
-
-        if (siteGlobals.debugging === true) return; // exit here to show the ad
-
-        var timerID = setInterval(function () {
-            switch (getBottomAnchorAdFillStatus()) {
-                case 'unfilled': // a final status was assigned
-                    hideBottomAnchorAd();
-                    // fallthrough
-                case 'filled': // a final status was assigned
-                    clearInterval(timerID);
-                    break;
-                default: // status still not assigned - keep waiting
-                    break;
-            }
-        }, fiveSecondsInMilliseconds);
-    });
-}
-function getBottomAnchorAdFillStatus() {
-    return document.querySelector('.bottom-anchor-ad ins.adsbygoogle').
-    getAttribute('data-ad-status');
+   });
 }
 function archiveInFeedAds() {
     // move the in-feed ads to the archive area. this is useful when ads are
@@ -204,7 +178,6 @@ if (siteGlobals.enableAds) addEvent(window, 'load', function () {
         case 'pc':
         case 'tablet':
             //deleteInFeedAds();
-            hideBottomAnchorAd();
             fillSkyscraperAds();
             break;
     }

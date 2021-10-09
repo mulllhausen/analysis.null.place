@@ -149,6 +149,9 @@ footer {
         padding: 20px 20px 0 20px;
         margin-bottom: 140px;/*the height of the sticky ad with a notice bar*/
     }
+    body.bottom-anchor-ad-unfilled footer {
+        margin-bottom: 0;
+    }
 }
 .info-box .dates {
     border-bottom: none;
@@ -290,6 +293,14 @@ article {
 /* end page layout */
 
 /* begin ads */
+body:not(.bottom-anchor-ad-unfilled) .bottom-anchor-ad {
+    /* make the background black (ie. visible) only once the ad is filled */
+    background-color: #000;/ *black*/
+}
+/* https://support.google.com/adsense/answer/10762946 */
+ins.adsbygoogle[data-ad-status="unfilled"] {
+   display: none !important;
+}
 .adsbygoogle.in-feed {
     display: block;
     width: 100%;
@@ -313,10 +324,10 @@ these are examples for high end mobile devices: 300x100
     height: 100px;
     margin: 0 auto;
 }
-@media (min-width: 801px) {/* when x >= 801px */
-    .bottom-anchor-ad,
-    .adsbygoogle.bottom-anchor {
-        display: none;
+@media (max-width: 800px) {/*when x <= 800px*/
+    /* when the ad is not there then hide the vertical spacing behind the ad */
+    body.bottom-anchor-ad-unfilled footer {
+        margin-bottom: 0;
     }
 }
 .in-feed-ad-container {
@@ -923,7 +934,6 @@ blockquote {
     z-index: 4;
 }
 .bottom-anchor-ad {
-    background-color: #000;/*black*/
     position: relative;
     float: left;
     text-align: center;
