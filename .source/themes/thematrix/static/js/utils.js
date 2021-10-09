@@ -232,6 +232,8 @@ function deleteElements(element) {
 function addCSSClass(el, newClass) {
     if (el == null) return; // there is no element to add a class to
     var classList = el.className.split(/\s+/);
+    var i = classList.indexOf(newClass);
+    if (i != -1) return; // already found
     classList.push(newClass);
     el.className = classList.join(' ');
 }
