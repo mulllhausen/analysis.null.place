@@ -17,6 +17,7 @@
 /theme/js/cookie-warning-notice.js
 /theme/js/ads.js
 /theme/js/register-service-worker.js
+/theme/js/css-ascend.js
 
 # ignore files that get merged into comments-section.js:
 /theme/js/comments-manager.js
