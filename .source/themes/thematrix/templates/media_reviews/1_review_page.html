@@ -17,8 +17,8 @@
     <meta name="modified" content="{{ media.review_updated }}"/>
 {% endif %}
     <meta name="category" content="reviews"/>
-    <meta name="page_as_article" content="."/>
-    <meta name="tags" content="{{ media.type_ }}, reviews"/>
+    <meta name="page_as_sub_article" content="."/>
+    <meta name="parent_article_title" content="{{ media.type_ }} reviews"/>
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
     <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>

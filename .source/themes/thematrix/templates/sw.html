@@ -33,6 +33,7 @@ var mandatoryAssets = [
     '{{ SITEURL }}/archives/',
     '{{ SITEURL }}/archives/index.html',
 
+{#
     // tags pages
     '{{ SITEURL }}/tags/',
     '{{ SITEURL }}/tags/index.html',
@@ -46,6 +47,7 @@ var mandatoryAssets = [
     '{{ SITEURL }}/{{ cat.url }}',
     '{{ SITEURL }}/{{ cat.url }}index.html',
 {% endfor %}
+#}
 
 {% set all_assets = [] %}
 {% for article in articles %}

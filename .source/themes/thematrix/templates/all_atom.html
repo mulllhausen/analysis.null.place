@@ -25,11 +25,11 @@
         <id>tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</id>
         <summary type="html">{{ article.summary }}</summary>
         {#<content type="html">{{ article.content }}</content>#}
-        {% if article.tags %}
+        {# % if article.tags %}
         {% for tag in article.tags %}
         <category term="{{ tag }}"></category>
         {% endfor %}
-        {% endif %}
+        {% endif % #}
     </entry>
     {% endfor %}
     {% if MEDIA_REVIEWS %}

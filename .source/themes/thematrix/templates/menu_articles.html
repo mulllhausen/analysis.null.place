@@ -1,0 +1,24 @@
+{% if article %}
+    {% set current_article_title = article.title %}
+{% elif (page and page.page_as_sub_article) %}
+    {% set current_article_title = page.parent_article_title %}
+{% endif %}
+<ul class="nav-menu">
+    {% for each_article in articles %}
+    <li{% if each_article.title == current_article_title %} class="active"{% endif %}>
+        <a href="{{ SITEURL }}/{{ each_article.url }}">{{ each_article.title }}
+            {%- if each_article.show_sub_article_count -%}
+            <span class="article-count">(
+                {%- if each_article.category.name == "reviews" -%}
+                    {{ MEDIA_REVIEWS[each_article.review_type].total_media_count }}
+                {%- endif -%}
+            )</span>
+            {%- endif -%}
+        </a>
+    </li>
+    {% endfor %}
+    {% if (position == "top") and (article or (page and page.page_as_sub_article)) %}
+        {% include 'comments_opener.html' %}
+    {% endif %}
+</ul>
+
