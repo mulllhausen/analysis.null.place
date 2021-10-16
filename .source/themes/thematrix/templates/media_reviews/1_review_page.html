@@ -3,7 +3,7 @@
 #}
 <html>
 <head>
-    <title>{{ media.type_ }} reviews</title>
+    <title>{{ media.title }} ({{ media.year }})</title>
     {% set media_title = media.type_caps + ' Review: ' + media.title %}
     {% if media.author %}
         {% set media_title = media_title + ' by ' + media.author %}
@@ -18,7 +18,10 @@
 {% endif %}
     <meta name="category" content="reviews"/>
     <meta name="page_as_sub_article" content="."/>
+    <meta name="parent_article_url" content="{{ media.type_ }}-reviews/"/>
     <meta name="parent_article_title" content="{{ media.type_ }} reviews"/>
+    <meta name="hide_title" content="."/>
+
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
     <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>

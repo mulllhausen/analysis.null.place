@@ -110,6 +110,7 @@ STATIC_FILE_MERGES = {
     'js/base.js': [
         'js/polyfills.js',
         'js/utils.js',
+        'js/dateutils.js',
         'js/matrix-animation.js',
         'js/autofooter.js',
         'js/cookie-warning-notice.js',

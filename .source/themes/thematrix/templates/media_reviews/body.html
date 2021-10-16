@@ -55,5 +55,7 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
     siteGlobals.numStaticlyRenderedMedia = {{ staticly_rendered_media | length }};
     siteGlobals.firstPageSize = {{ all_media_data.preloads.first_page_size }}; // firstPageSize <= pageSize
     siteGlobals.totalMediaCount = {{ all_media_data.total_media_count }};
+    siteGlobals.earliestReview = '{{ all_media_data.earliest_review }}';
+    siteGlobals.lastModifiedReview = '{{ all_media_data.last_modified_review }}';
 </script>
 {%- endmacro -%}

@@ -513,8 +513,14 @@ def get_1_media_html_data(a_media):
         "verb_past": verb_past,
         "linked_data": get_linked_data(a_media),
         "thumb_larger": get_img_data(a_media["id_"], "larger")["on_rel_path"],
-        "html_review": format_review(a_media["review"])
+        "html_review": format_review(a_media["review"]),
+        "review_created_dmmmYYYY": a_media["review_created_date"].\
+        strftime("%-d %b %Y").lower()
     })
+    if "review_updated_date" in a_media:
+        tmp_media["review_updated_dmmmYYYY"] = a_media["review_updated_date"].\
+        strftime("%-d %b %Y").lower()
+
     tmp_media["external_link_url"] = "https://"
     if media_type == "book":
         tmp_media["og_type"] = "book"
@@ -659,9 +665,6 @@ def get_linked_data(a_media):
     return linked_data
 
 def prepare_landing_page_data(all_media_x, media_data):
-    media_data["latest_review"] = \
-    max(all_media_x, key = lambda x: x["last_modified"])["last_modified"]
-
     media_data["preloads"]["img"] = [
         get_img_data(id_, "thumb")["on_rel_path"] for id_ in
         media_data["preloads"]["ids"]
@@ -740,6 +743,21 @@ def add_missing_data(all_media_x):
                 pass
 
     return all_media_x
+
+def get_review_extreme_dates(all_media_x, media_data):
+    last_modified_review = all_media_x[0]["last_modified"] # init
+    earliest_review = all_media_x[0]["review_created"] # init
+    for a_media in all_media_x:
+        if a_media["review_created"] < earliest_review:
+            earliest_review = a_media["review_created"]
+
+        if a_media["last_modified"] > last_modified_review:
+            last_modified_review = a_media["last_modified"]
+
+    media_data["earliest_review"] = earliest_review
+    media_data["last_modified_review"] = last_modified_review
+
+    return media_data
 
 # downloading thumbnails
 

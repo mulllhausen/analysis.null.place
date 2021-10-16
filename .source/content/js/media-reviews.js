@@ -95,18 +95,24 @@ function getMediaIDFromURL() {
     return pathPieces[2];
 }
 
-var mediaURLRemoved = false;
-function removeMediaIDFromURL() {
-    if (mediaURLRemoved) return;
+var pageResetToParent = false;
+function resetPageToParent() {
+    if (pageResetToParent) return;
 
     var page = siteGlobals.mediaType + '-reviews/';
-    var url = generateCleanURL(page);
+    var parentURL = generateCleanURL(page);
+
+    removeMediaIDFromURL(parentURL);
+    resetHeaderToParent(parentURL);
+
+    pageResetToParent = true;
+}
+
+function removeMediaIDFromURL(parentURL) {
     if (typeof window.history.replaceState == 'function') {
-        window.history.replaceState(null, '', url);
+        window.history.replaceState(null, '', parentURL);
     }
     else window.location.hash = '';
-    document.querySelector('h1.entry-title a').href = url;
-    mediaURLRemoved = true;
 }
 
 // rendering
@@ -118,6 +124,22 @@ function removeMediaIDFromURL() {
 // 2. render (a page of) placeholders < page size & search list size
 // 3. populate the placeholders
 // 4. only allow searching once all placeholders have been populated
+
+function resetHeaderToParent(parentURL) {
+    var headerEl = document.querySelector('article header');
+
+    headerEl.querySelector('h1.entry-title').innerHTML =
+    '<a href="' + parentURL + '">' + siteGlobals.mediaType + ' reviews</a>';
+
+    var parentDatesHTML = '<span class="dates">added ' +
+    dateYYYYMMDD2dmmmYYYY(siteGlobals.earliestReview) + '</span>';
+    if (siteGlobals.earliestReview != siteGlobals.lastModifiedReview) {
+        parentDatesHTML += '<span class="dates">updated ' +
+        dateYYYYMMDD2dmmmYYYY(siteGlobals.lastModifiedReview) + '</span>';
+    }
+    headerEl.querySelector('.info-box').innerHTML = parentDatesHTML;
+    removeCSSClass(headerEl, 'hidden');
+}
 
 function resetSearchBox() {
     // in case the browser has persisted any values for these inputs
@@ -337,7 +359,7 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     }
     mediaEl.querySelector('.link-external').href = getExternalLinkURL(mediaData);
     mediaEl.querySelector('.review-created').innerHTML = 'added ' +
-    mediaData.reviewCreated;
+    dateYYYYMMDD2dmmmYYYY(mediaData.reviewCreated);
 
     if (mediaData.reviewUpdated != null) {
         var a = mediaEl.querySelector('.review-updated a');
@@ -346,7 +368,7 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         siteGlobals.mediaType  + '-reviews/json/review-' + mediaData.id_ +
         '.json';
 
-        a.innerHTML = 'updated ' + mediaData.reviewUpdated;
+        a.innerHTML = 'updated ' + dateYYYYMMDD2dmmmYYYY(mediaData.reviewUpdated);
     }
     removeCSSClass(mediaEl, 'placeholder');
     removeCSSClass(mediaEl, 'pulsate');
@@ -777,7 +799,7 @@ function debounceSearch(state, extraData) {
                 showMediaCount(true);
                 return;
             }
-            removeMediaIDFromURL();
+            resetPageToParent();
             getSearchValues('debounce'); // init for next debounce
             saveCurrentSearch('debounce'); // init for next debounce
             triggerSearch();
