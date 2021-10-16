@@ -60,8 +60,8 @@ AUTHOR_SAVE_AS = ''
 # note that only templates have access to common variables such as dates and
 # articles, so index.html must be a direct template - not a page.
 DIRECT_TEMPLATES = [
-    'index', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest',
-    'all_rss', 'all_atom'
+    'index', 'sitemap', 'robots', 'CNAME', 'sw', 'manifest', 'all_rss',
+    'all_atom'
 ]
 INDEX_SAVE_AS = 'index.html'
 TAGS_SAVE_AS = 'tags/index.html'
@@ -78,8 +78,8 @@ ARTICLE_URL = '{slug}/'
 ARTICLE_SAVE_AS = '{slug}/index.html'
 PAGE_URL = '{slug}/'
 PAGE_SAVE_AS = '{slug}/index.html'
-#CATEGORY_URL = '{slug}/'
-#CATEGORY_SAVE_AS = '{slug}/index.html'
+CATEGORY_URL = ''
+CATEGORY_SAVE_AS = '' # suppress category output files
 TAG_URL = 'tag/{slug}/'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 
