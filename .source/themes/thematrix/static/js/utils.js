@@ -104,17 +104,6 @@ function leftPad(strToPad, padToLen, padChar) {
     return padChar.repeat(padToLen - strToPad.length) + strToPad;
 }
 
-function unixtime(date) {
-    switch (typeof date) {
-        case 'string': // eg 03 Jan 2009 18:15:05 GMT
-            return Math.round(Date.parse(date) / 1000);
-        case 'object': // ie a Date() object
-            return Math.round(date.getTime() / 1000);
-        default:
-            return Math.round((new Date()).getTime() / 1000);
-    }
-}
-
 NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function () {
     return true;
 };

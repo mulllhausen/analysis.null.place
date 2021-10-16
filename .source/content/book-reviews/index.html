@@ -2,14 +2,15 @@
 <head>
     <title>book reviews</title>
     <meta name="slug" content="book-reviews"/>
-    <meta name="date" content="2019-03-29"/>
-    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS.book.latest_review }}"/>
+    <meta name="date-datereplacement" content="{{ MEDIA_REVIEWS.book.earliest_review }}"/>
+    <meta name="modified-datereplacement" content="{{ MEDIA_REVIEWS.book.last_modified_review }}"/>
     <meta name="category" content="reviews"/>
-    <meta name="tags" content="book, reviews"/>
+    <meta name="review_type" content="book"/>
+    <meta name="show_sub_article_count" content=".">
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
+    <meta name="summary" content=""/>
     <meta name="img_preloads" content="{{ MEDIA_REVIEWS.book.preloads.img | join(',') }}"/>
-    <meta name="summary" content="My book reviews."/>
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for books."/>
     <meta name="jsons" content="{{ MEDIA_REVIEWS.book.preloads.json | join(',') }}"/>
 </head>

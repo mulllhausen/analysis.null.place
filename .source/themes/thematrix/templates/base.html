@@ -47,7 +47,7 @@
             {% if article.modified %}
         <meta property="og:article:modified_time" content="{{ article.modified.strftime("%Y-%m-%d") }}"/>
             {% endif %}
-        {% elif page and page.page_as_article %}
+        {% elif page and page.page_as_sub_article %}
         <meta property="og:article:published_time" content="{{ page.date.strftime("%Y-%m-%d") }}"/>
             {% if page.modified %}
         <meta property="og:article:modified_time" content="{{ page.modified.strftime("%Y-%m-%d") }}"/>
@@ -144,7 +144,7 @@
             </table>
             <div id="navMenu" class="nav-menu-phone">
                 {% with position = "top" %}
-                    {% include 'menu.html' %}
+                    {% include 'menu_articles.html' %}
                 {% endwith %}
             </div>
         </div>
@@ -158,10 +158,10 @@
 
                 <div class="side-bar">
                     <a class="brand" href="{{ SITEURL }}/">{{ SITENAME }}</a>
-                    {% include 'menu.html' %}
+                    {% include 'menu_articles.html' %}
                 </div>
                     {% include 'logo.html' %}
-                    {% if article or (page and page.page_as_article) %}
+                    {% if article or (page and page.page_as_sub_article) %}
                         {% include 'comments_opener.html' %}
                     {% endif %}
                 {% endwith %}

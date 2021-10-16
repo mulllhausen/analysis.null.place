@@ -19,7 +19,7 @@
         <span class="comments-count fb-comments-count" data-href="{{ SITEURL }}/
 {%- if article -%}
     {{ article.url }}
-{%- elif (page or page.page_as_article) -%}
+{%- elif (page or page.page_as_sub_article) -%}
     {{ page.url }}
 {%- endif -%}
         ">0</span>
@@ -38,7 +38,7 @@
         <span class="comments-count disqus-comment-count" data-disqus-identifier="
 {%- if article -%}
     {{ article.title }}
-{%- elif (page and page.page_as_article) -%}
+{%- elif (page and page.page_as_sub_article) -%}
     {{ page.title }}
 {%- endif -%}
         ">0</span>

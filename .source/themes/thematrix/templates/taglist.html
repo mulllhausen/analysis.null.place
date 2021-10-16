@@ -1,4 +1,4 @@
-{% if (article and article.tags) or (page and page.page_as_article and page.tags) %}
+{% if (article and article.tags) or (page and page.page_as_sub_article and page.tags) %}
 {% if article %}
     {% set tags = article.tags %}
 {% elif page %}

@@ -50,15 +50,15 @@
 {% block content %}
 <section id="content" class="body">
     <article>
-        <header>
+        <header{% if article.hide_title %} class="hidden"{% endif %}>
             <h1 class="entry-title">
                 <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
             </h1>
-        </header>
-        <div class="entry-content">
             <div class="info-box">
                 {% include 'article_infos.html' %}
             </div>
+        </header>
+        <div class="entry-content">
 {{ article.content }}
         </div>
         <div class="bottom-spacer"></div>

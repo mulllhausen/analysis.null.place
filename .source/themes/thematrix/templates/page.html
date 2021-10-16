@@ -58,17 +58,20 @@
 {% block content %}
 <section id="content" class="body">
     <article>
-        <header>
+        <header{% if page.hide_title %} class="hidden"{% endif %}>
             <h1 class="entry-title">
+{% if page.page_as_sub_article %}
+                <a href="{{ SITEURL }}/{{ page.parent_article_url }}">{{ page.parent_article_title }}</a> /
+{% endif %}
                 <a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a>
             </h1>
-        </header>
-        <div class="entry-content">
-{% if page.page_as_article %}
+{% if page.page_as_sub_article %}
             <div class="info-box">
                 {% include 'article_infos.html' %}
             </div>
 {% endif %}
+        </header>
+        <div class="entry-content">
 {{ page.content }}
         </div>
         <div class="bottom-spacer"></div>

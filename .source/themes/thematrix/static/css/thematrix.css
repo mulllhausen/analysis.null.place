@@ -153,11 +153,6 @@ footer {
         margin-bottom: 0;
     }
 }
-.info-box .dates {
-    border-bottom: none;
-    cursor: default;
-    font-size: 12px;
-}
 code, pre {
     font-family: monospace;
     font-size: 13px;
@@ -354,7 +349,7 @@ these are examples for high end mobile devices: 300x100
     width: 0.9285714285714285em;
 }
 .icon-bars {
-    margin-bottom: -3px;
+    margin-bottom: -5px;
     width: 0.8571428571428571em;
 }
 .icon-file-text-o {
@@ -472,19 +467,26 @@ ul.nav-menu > div {
     min-height: 1.4em;
 }
 ul.nav-menu a {
-    display: list-item;
-    padding: 4px 10px 7px 10px;
+    display: block;
+    padding: 4px 10px 4px 10px;
     border-radius: 10px;
-    min-height: 1.4em;
 }
-ul.nav-menu a:not(:last-child) {
+ul.nav-menu li .article-count {
+    font-size: 90%;
+}
+ul.nav-menu li {
+    border-radius: 10px;
+}
+ul.nav-menu li:not(:last-child) {
     margin-bottom: 2px;
 }
-ul.nav-menu a.active {
+ul.nav-menu li.active {
     background: rgba(0, 0, 0, 0.8);/*black*/
+}
+ul.nav-menu li.active a {
     color: #bbb;/*off-white*/
 }
-ul.nav-menu a:hover:not(.active):not(:active) {
+ul.nav-menu li:hover:not(.active):not(:active) {
     background: rgba(65, 65, 65, 0.7);/*light-grey*/
 }
 /* end navigation menu */
@@ -559,20 +561,38 @@ h1:hover .icon-chain-90, h2:hover .icon-chain-90, h3:hover .icon-chain-90,
 h4:hover .icon-chain-90, h5:hover .icon-chain-90, h6:hover .icon-chain-90 {
     visibility: visible;
 }
+.article-count {
+    margin-left: 0.25em;
+    color: #bbb;/*off-white*/
+    cursor: default;
+    font-weight: normal;
+}
+h1 .article-count {
+    font-size: 75%;
+}
 
+/* begin info box */
 .info-box {
-    padding: 15px;
+    padding: 10px 0 10px 0;
     margin-bottom: 20px;
-    background: rgba(31, 31, 31, 0.7);/*very-dark-grey*/
-    border: 1px solid #1a1a1a;/*light-grey*/
-    border-radius: 4px;
     line-height: 24px;
+}
+.info-box .dates {
+    cursor: default;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 14px;
+    background: rgba(31, 31, 31, 0.7);/*very-dark-grey*/
+}
+.info-box .dates:not(:last-child) {
+    margin-right: 12px;
 }
 @media (max-width: 800px) {/*when x <= 800px*/
     .info-box {
         padding: 10px 15px;
     }
 }
+/* end info box */
 
 address#about {
     font-style: normal;

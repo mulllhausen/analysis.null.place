@@ -1,6 +1,6 @@
 {% if article %}
     {% set category = article.category %}
-{% elif (page and page.page_as_article) %}
+{% elif (page and page.page_as_sub_article) %}
     {% set category = page.category %}
 {% endif %}
 <ul class="nav-menu">
@@ -18,7 +18,7 @@
         <svg class="icon icon-hashtag"><use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-hashtag"></use></svg>
         all<sup>&nbsp;</sup>
     </a>
-    {% if (position == "top") and (article or (page and page.page_as_article)) %}
+    {% if (position == "top") and (article or (page and page.page_as_sub_article)) %}
         {% include 'comments_opener.html' %}
     {% endif %}
 </ul>

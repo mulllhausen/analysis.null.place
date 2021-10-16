@@ -128,18 +128,18 @@
     <div class="review-dates">
         <span class="review-created">
 {%- if media -%}
-            added {{ media.review_created }}
+            added {{ media.review_created_dmmmYYYY }}
 {%- endif -%}
         </span>
         <span class="review-updated">
 {%- if media == None -%}
             <a target="_blank"></a>
 {%- else %}
-    {% if media.review_updated -%}
+    {% if media.review_updated_dmmmYYYY -%}
             <a
                 target="_blank"
                 href="{{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json"
-            >updated {{ media.review_updated }}</a>
+            >updated {{ media.review_updated_dmmmYYYY }}</a>
     {%- endif -%}
 {%- endif -%}
         </span>

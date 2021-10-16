@@ -22,11 +22,11 @@
             {%- endif -%}
             </lastBuildDate>
             <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</guid>
-            {% if article.tags %}
+            {# % if article.tags %}
                 {% for tag in article.tags %}
             <category>{{ tag }}</category>
                 {% endfor %}
-            {% endif %}
+            {% endif % #}
         </item>
         {% endfor %}
         {% if MEDIA_REVIEWS %}

@@ -9,30 +9,29 @@
     {% set date_ = article.date %}
     {% set locale_date = article.locale_date %}
     {% if article.modified %}
-        {% set date_modified = article.modified.strftime("%Y-%m-%d") %}
+        {% set date_modified = article.modified.strftime("%-d %b %Y").lower() %}
     {% endif %}
-{% elif page and page.page_as_article %}
+{% elif page and page.page_as_sub_article %}
     {% set category_url = page.category.url %}
     {% set category = page.category %}
     {% set date_ = page.date %}
     {% set locale_date = page.locale_date %}
     {% if page.modified %}
-        {% set date_modified = page.modified.strftime("%Y-%m-%d") %}
+        {% set date_modified = page.modified.strftime("%Y-%m-%d").lower() %}
     {% endif %}
 {% endif %}
-<a href="{{ SITEURL }}/{{ category_url }}">
+{#<a href="{{ SITEURL }}/{{ category_url }}">
     <svg class="icon icon-folder-open-o">
         <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use>
-    </svg> {{ category }}{# comment deletes whitespace #}
-</a>
+    </svg> {{ category }}{ # comment deletes whitespace # }
+</a>#}
 
 {# <span class="label">Date</span> #}
 {# (<abbr class="published" title="{{ date_.isoformat() }}">{ #<i class="icon-calendar"></i># }{{ locale_date }}</abbr>) #}
-<span class="dates">({{ locale_date }}
+<span class="dates">added {{ date_.strftime("%-d %b %Y").lower() }}</span>
 {%- if date_modified -%}
-, updated {{ date_modified }}
+<span class="dates">updated {{ date_modified }}</span>
 {%- endif -%}
-)</span>
 
 {#% if PDF_PROCESSOR %}
 <span class="label">
@@ -40,5 +39,5 @@
 </span>
 {% endif %#}
 
-{% include 'taglist.html' %}
-{% include 'translations.html' %}
+{#% include 'taglist.html' %}
+{% include 'translations.html' %#}
