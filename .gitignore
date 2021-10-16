@@ -12,6 +12,7 @@
 # ignore files that get merged into base.js:
 /theme/js/polyfills.js
 /theme/js/utils.js
+/theme/js/dateutils.js
 /theme/js/matrix-animation.js
 /theme/js/autofooter.js
 /theme/js/cookie-warning-notice.js
