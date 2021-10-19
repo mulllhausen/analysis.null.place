@@ -37,9 +37,17 @@
             {# there is no counter for comments on mobile - it would be too small to see and get in the way #}
         <span class="comments-count disqus-comment-count" data-disqus-identifier="
 {%- if article -%}
-    {{ article.title }}
+    {% if article.override_disqus_comments_id %}
+        {{ article.override_disqus_comments_id }}
+    {% else %}
+        {{ article.title }}
+    {%- endif -%}
 {%- elif (page and page.page_as_sub_article) -%}
-    {{ page.title }}
+    {% if page.override_disqus_comments_id %}
+        {{ page.override_disqus_comments_id }}
+    {% else %}
+        {{ page.title }}
+    {%- endif -%}
 {%- endif -%}
         ">0</span>
         {% endif %}

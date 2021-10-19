@@ -49,9 +49,11 @@ function fbRendered(data) {
     commentsLoaded();
 }
 function fbUpdateCommentCount() {
+    var urlPath = siteGlobals.article.url;
+    if (siteGlobals.article.parentArticleURL) urlPath = siteGlobals.article.parentArticleURL;
     ajax(
         'https://graph.facebook.com/v2.1/' +
-        encodeURIComponent(siteGlobals.siteURL + '/' + siteGlobals.article.url) +
+        encodeURIComponent(siteGlobals.siteURL + '/' + urlPath) +
         '?fields=share&method=get&pretty=0&sdk=joey&suppress_http_code=1',
         function (json) {
             try {
