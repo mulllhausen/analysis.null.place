@@ -1,7 +1,7 @@
-var latestCache = '2021-10-09_15:33:49';
+var latestCache = '2021-10-19_22:32:22';
 var mandatoryAssets = [
     // common assets for all pages
-    'https://analysis.null.place/theme/css/thematrix.css?hash=LrMcOI',
+    'https://analysis.null.place/theme/css/thematrix.css?hash=-GVNzG',
     'https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo',
     'https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf',
     'https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV',
@@ -12,12 +12,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=1VqIOe',
+    'https://analysis.null.place/theme/js/base.js?hash=klUmu1',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
     // common assets for all article pages
-    'https://analysis.null.place/theme/js/comments-section.js?hash=H74GHt',
+    'https://analysis.null.place/theme/js/comments-section.js?hash=bEAA0S',
 
     // home page
     'https://analysis.null.place/',
@@ -27,35 +27,12 @@ var mandatoryAssets = [
     'https://analysis.null.place/archives/',
     'https://analysis.null.place/archives/index.html',
 
-    // tags pages
-    'https://analysis.null.place/tags/',
-    'https://analysis.null.place/tags/index.html',
-    'https://analysis.null.place/tag/mining/',
-    'https://analysis.null.place/tag/mining/index.html',
-    'https://analysis.null.place/tag/movie/',
-    'https://analysis.null.place/tag/movie/index.html',
-    'https://analysis.null.place/tag/bitcoin/',
-    'https://analysis.null.place/tag/bitcoin/index.html',
-    'https://analysis.null.place/tag/reviews/',
-    'https://analysis.null.place/tag/reviews/index.html',
-    'https://analysis.null.place/tag/book/',
-    'https://analysis.null.place/tag/book/index.html',
-    'https://analysis.null.place/tag/tv-series/',
-    'https://analysis.null.place/tag/tv-series/index.html',
-    'https://analysis.null.place/tag/proof-of-work/',
-    'https://analysis.null.place/tag/proof-of-work/index.html',
-
-    // categories
-    'https://analysis.null.place/cryptocurrencies/',
-    'https://analysis.null.place/cryptocurrencies/index.html',
-    'https://analysis.null.place/reviews/',
-    'https://analysis.null.place/reviews/index.html',
 
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=x_S7s7',
-    'https://analysis.null.place/css/media-reviews.css?hash=U1la7K',
+    'https://analysis.null.place/js/media-reviews.js?hash=fULs04',
+    'https://analysis.null.place/css/media-reviews.css?hash=YvYLd9',
     'https://analysis.null.place/book-reviews/img/thumb-theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011.jpg?hash=TN51ee',
     'https://analysis.null.place/book-reviews/img/thumb-robert-harris-imperium-2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/book-reviews/img/thumb-stanislaw-lem-solaris-1961.jpg?hash=55BY16',
