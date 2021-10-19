@@ -17,10 +17,13 @@
     <meta name="modified" content="{{ media.review_updated }}"/>
 {% endif %}
     <meta name="category" content="reviews"/>
+
     <meta name="page_as_sub_article" content="."/>
     <meta name="parent_article_url" content="{{ media.type_ }}-reviews/"/>
     <meta name="parent_article_title" content="{{ media.type_ }} reviews"/>
     <meta name="hide_title" content="."/>
+    <meta name="override_fb_comments_url" content="{{ SITEURL }}/{{ media.type_ }}-reviews/"/>
+    <meta name="override_disqus_comments_id" content="{{ media.type_ }} reviews/"/>
 
     <meta name="stylesheets" content="/css/media-reviews.css"/>
     <meta name="scripts" content="/js/media-reviews.js"/>
@@ -33,7 +36,6 @@
 
     <meta name="console_explain_scripts" content="js/media-reviews.js - search and render reviews for {{ media.type_plural }}."/>
     <meta name="jsons" content="{{ all_media_data.preloads.json | join(',') }}"/>
-    <meta name="override_fb_comments_url" content="{{ SITEURL }}/{{ media.type_ }}-reviews/"/>
     <meta name="thumbnail_larger_image" content="{{ media.thumb_larger }}"/>
     <meta name="thumbnail_larger_width" content="{{ media.larger_width }}"/>
     <meta name="thumbnail_larger_height" content="{{ media.larger_height }}"/>

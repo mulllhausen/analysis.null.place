@@ -1,7 +1,12 @@
 addEvent(window, 'load', resetDisqusComments);
 var disqus_config = function () {
     if (siteGlobals.siteURL != '') {
-        this.page.url = siteGlobals.siteURL + '/' + siteGlobals.article.url;
+        var urlPath = siteGlobals.article.url;
+
+        if (siteGlobals.article.parentArticleURL) urlPath =
+        siteGlobals.article.parentArticleURL;
+
+        this.page.url = siteGlobals.siteURL + '/' + urlPath;
     }
     this.page.identifier = siteGlobals.article.title;
     this.page.sortOrder = 'newest';

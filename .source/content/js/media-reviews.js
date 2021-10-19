@@ -99,8 +99,9 @@ var pageResetToParent = false;
 function resetPageToParent() {
     if (pageResetToParent) return;
 
-    var page = siteGlobals.mediaType + '-reviews/';
-    var parentURL = generateCleanURL(page);
+    siteGlobals.article.url = siteGlobals.mediaType + '-reviews/';
+    siteGlobals.article.title = siteGlobals.mediaType + ' reviews';
+    var parentURL = generateCleanURL(siteGlobals.article.url);
 
     removeMediaIDFromURL(parentURL);
     resetHeaderToParent(parentURL);

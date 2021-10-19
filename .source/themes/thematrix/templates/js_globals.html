@@ -17,12 +17,14 @@ var siteGlobals = {
     article: {
         {%- if article.title %}title: '{{ article.title }}'{% endif -%}
         {%- if article.url %},url: '{{ article.url }}'{% endif -%}
+        {%- if article.parent_article_url %},parentArticleURL: '{{ article.parent_article_url }}'{% endif -%}
         {%- if article.console_explain_scripts %},consoleExplainScripts: '{{ article.console_explain_scripts }}'{% endif -%}
     },
     {% elif (page and page.page_as_sub_article) %}
     article: {
         {%- if page.title %}title: '{{ page.title }}'{% endif -%}
         {%- if page.url %},url: '{{ page.url }}'{% endif -%}
+        {%- if page.parent_article_url %},parentArticleURL: '{{ page.parent_article_url }}'{% endif -%}
         {%- if page.console_explain_scripts %},consoleExplainScripts: '{{ page.console_explain_scripts }}'{% endif -%}
     },
     {% endif %}
