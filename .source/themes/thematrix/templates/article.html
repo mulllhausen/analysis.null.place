@@ -24,8 +24,20 @@
 {% extends "base.html" %}
 
 {% block og_title %}{{ article.title }}{% endblock %}
-{% block description %}{{ article.summary | striptags }}{% endblock %}
-{% block og_description %}{{ article.summary | striptags }}{% endblock %}
+{% block description %}
+    {%- if article.summary -%}
+        {{ article.summary | striptags }}
+    {%- else -%}
+        {{ article.title | striptags }}
+    {%- endif -%}
+{% endblock %}
+{% block og_description %}
+    {%- if article.summary -%}
+        {{ article.summary | striptags }}
+    {%- else -%}
+        {{ article.title | striptags }}
+    {%- endif -%}
+{% endblock %}
 {% block og_image %}
     {%- if article.thumbnail_larger_image -%}
         {{ QS_LINK[article.thumbnail_larger_image] }}
