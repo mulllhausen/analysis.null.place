@@ -23,7 +23,13 @@
             <name>{{ AUTHOR }}</name>
         </author>
         <id>tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</id>
-        <summary type="html">{{ article.summary }}</summary>
+        <summary type="html">
+            {%- if article.summary -%}
+                {{ article.summary }}
+            {%- else -%}
+                {{ article.title }}
+            {%- endif -%}
+        </summary>
         {#<content type="html">{{ article.content }}</content>#}
         {# % if article.tags %}
         {% for tag in article.tags %}

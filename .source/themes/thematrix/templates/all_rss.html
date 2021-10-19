@@ -9,7 +9,13 @@
         <item>
             <title>{{ article.title }}</title>
             <link>{{ SITEURL }}/{{ article.url }}</link>
-            <description>{{ article.summary }}</description>
+            <description>
+                {%- if article.summary -%}
+                    {{ article.summary }}
+                {%- else -%}
+                    {{ article.title }}
+                {%- endif -%}
+            </description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
             <lastBuildDate>
