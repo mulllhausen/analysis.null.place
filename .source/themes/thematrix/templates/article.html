@@ -13,7 +13,7 @@
         "name": AUTHOR
     },
     "name": article.title,
-    "description": article.summary if article.summary else page.title,
+    "description": article.summary if article.summary else article.title,
     "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
     "datePublished": article.date.strftime("%Y-%m-%d")
 } %}
