@@ -7,35 +7,29 @@
         <item>
             <title>book reviews</title>
             <link>https://analysis.null.place/book-reviews/</link>
-            <description>My book reviews.</description>
+            <description>book reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
+            <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/book-reviews/</guid>
-            <category>book</category>
-            <category>reviews</category>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-reviews/</guid>
         </item>
         <item>
             <title>tv-series reviews</title>
             <link>https://analysis.null.place/tv-series-reviews/</link>
-            <description>My tv-series reviews.</description>
+            <description>tv-series reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Fri, 29 Mar 2019 00:00:00 +1030</pubDate>
+            <pubDate>Tue, 26 Mar 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-03-29:/tv-series-reviews/</guid>
-            <category>tv-series</category>
-            <category>reviews</category>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-reviews/</guid>
         </item>
         <item>
             <title>movie reviews</title>
             <link>https://analysis.null.place/movie-reviews/</link>
-            <description>My movie reviews.</description>
+            <description>movie reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
-            <category>movie</category>
-            <category>reviews</category>
         </item>
         <item>
             <title>how do the bitcoin mining algorithms work?</title>
@@ -45,9 +39,6 @@
             <pubDate>Tue, 17 Apr 2018 00:00:00 +0930</pubDate>
             <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</guid>
-            <category>bitcoin</category>
-            <category>mining</category>
-            <category>proof-of-work</category>
         </item>
         <item>
             <title>movie review: 10,000BC</title>

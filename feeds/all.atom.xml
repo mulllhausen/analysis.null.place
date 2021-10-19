@@ -7,28 +7,24 @@
     <entry>
         <title>book reviews</title>
         <link href="https://analysis.null.place/book-reviews/" rel="alternate"></link>
-        <published>2019-03-29T00:00:00+10:30</published>
+        <published>2019-04-02T00:00:00+10:30</published>
         <updated>2019-09-21T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-03-29:/book-reviews/</id>
-        <summary type="html">My book reviews.</summary>
-        <category term="book"></category>
-        <category term="reviews"></category>
+        <id>tag:analysis.null.place,2019-04-02:/book-reviews/</id>
+        <summary type="html">book reviews</summary>
     </entry>
     <entry>
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
-        <published>2019-03-29T00:00:00+10:30</published>
+        <published>2019-03-26T00:00:00+10:30</published>
         <updated>2021-09-09T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
-        <id>tag:analysis.null.place,2019-03-29:/tv-series-reviews/</id>
-        <summary type="html">My tv-series reviews.</summary>
-        <category term="tv-series"></category>
-        <category term="reviews"></category>
+        <id>tag:analysis.null.place,2019-03-26:/tv-series-reviews/</id>
+        <summary type="html">tv-series reviews</summary>
     </entry>
     <entry>
         <title>movie reviews</title>
@@ -39,9 +35,7 @@
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-01-23:/movie-reviews/</id>
-        <summary type="html">My movie reviews.</summary>
-        <category term="movie"></category>
-        <category term="reviews"></category>
+        <summary type="html">movie reviews</summary>
     </entry>
     <entry>
         <title>how do the bitcoin mining algorithms work?</title>
@@ -53,9 +47,6 @@
         </author>
         <id>tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</id>
         <summary type="html">An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</summary>
-        <category term="bitcoin"></category>
-        <category term="mining"></category>
-        <category term="proof-of-work"></category>
     </entry>
     <entry>
         <title>movie review: 10,000BC</title>
