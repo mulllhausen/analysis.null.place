@@ -2,7 +2,6 @@
 <span class="label">By</span>
 <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i> {{ article.author }}</a>
 {% endif %#}
-
 {% if article %}
     {% set category_url = article.category.url %}
     {% set category = article.category %}
@@ -25,14 +24,12 @@
         <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-folder-open-o"></use>
     </svg> {{ category }}{ # comment deletes whitespace # }
 </a>#}
-
 {# <span class="label">Date</span> #}
 {# (<abbr class="published" title="{{ date_.isoformat() }}">{ #<i class="icon-calendar"></i># }{{ locale_date }}</abbr>) #}
 <span class="dates">added {{ date_.strftime("%-d %b %Y").lower() }}</span>
 {%- if date_modified -%}
 <span class="dates">updated {{ date_modified }}</span>
 {%- endif -%}
-
 {#% if PDF_PROCESSOR %}
 <span class="label">
 <a href="{{ SITEURL }}/pdf/{{ article.slug }}.pdf">PDF</a>

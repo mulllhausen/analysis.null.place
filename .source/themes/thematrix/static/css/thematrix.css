@@ -587,11 +587,6 @@ h1 .article-count {
 .info-box .dates:not(:last-child) {
     margin-right: 12px;
 }
-@media (max-width: 800px) {/*when x <= 800px*/
-    .info-box {
-        padding: 10px 15px;
-    }
-}
 /* end info box */
 
 address#about {
