@@ -28,7 +28,7 @@
             <description>movie reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 26 Feb 2020 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Thu, 21 Oct 2021 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
         </item>
         <item>
@@ -322,10 +322,10 @@
         <item>
             <title>movie review: The Beach</title>
             <link>https://analysis.null.place/movie-reviews/the-beach-2000/</link>
-            <description>N/A</description>
+            <description>Thailand's best kept secret</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Wed, 23 Jan 2019 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Thu, 21 Oct 2021 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-review/the-beach-2000/</guid>
         </item>
         <item>
@@ -589,6 +589,6 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Thu, 21 Oct 2021 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

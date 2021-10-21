@@ -30,7 +30,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2020-02-26T00:00:00+10:30</updated>
+        <updated>2021-10-21T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -393,12 +393,12 @@
         <title>movie review: The Beach</title>
         <link>https://analysis.null.place/movie-reviews/the-beach-2000/</link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2019-01-23T00:00:00+10:30</updated>
+        <updated>2021-10-21T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
         <id>tag:analysis.null.place,2019-01-23:/movie-review/the-beach-2000</id>
-        <summary type="html">N/A</summary>
+        <summary type="html">Thailand's best kept secret</summary>
     </entry>
     <entry>
         <title>movie review: The Butterfly Effect</title>
@@ -719,5 +719,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">The Hobbesian state of nature</summary>
     </entry>
-    <updated>2021-09-09T00:00:00+09:30</updated>
+    <updated>2021-10-21T00:00:00+10:30</updated>
 </feed>
