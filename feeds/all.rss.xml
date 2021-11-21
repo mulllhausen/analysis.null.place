@@ -10,7 +10,7 @@
             <description>book reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-reviews/</guid>
         </item>
         <item>
@@ -491,6 +491,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</guid>
         </item>
         <item>
+            <title>book review: Zero to One</title>
+            <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
+            <description>Philosophizing on start-ups</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Mon, 22 Nov 2021 00:00:00 +1030</pubDate>
+            <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014/</guid>
+        </item>
+        <item>
             <title>tv-series review: BBC War of the Worlds Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/bbc-war-of-the-worlds-s01-2019/</link>
             <description>A dirty city gets slightly dirtier</description>
@@ -589,6 +598,6 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Thu, 21 Oct 2021 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

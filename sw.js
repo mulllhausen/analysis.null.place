@@ -1,4 +1,4 @@
-var latestCache = '2021-10-21_23:33:08';
+var latestCache = '2021-11-22_08:21:51';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -37,11 +37,13 @@ var mandatoryAssets = [
     'https://analysis.null.place/book-reviews/img/thumb-robert-harris-imperium-2006.jpg?hash=I6ji6V',
     'https://analysis.null.place/book-reviews/img/thumb-stanislaw-lem-solaris-1961.jpg?hash=55BY16',
     'https://analysis.null.place/book-reviews/img/thumb-barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018.jpg?hash=bffWZ6',
-    'https://analysis.null.place/book-reviews/json/list-highest-rating-first-10.json?hash=QdTTUP',
+    'https://analysis.null.place/book-reviews/img/thumb-peter-thiel-zero-to-one-2014.jpg?hash=uNJhQp',
+    'https://analysis.null.place/book-reviews/json/list-highest-rating-first-10.json?hash=JRGZjx',
     'https://analysis.null.place/book-reviews/json/data-theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011.json?hash=ST1Uaq',
     'https://analysis.null.place/book-reviews/json/data-robert-harris-imperium-2006.json?hash=O1htJJ',
     'https://analysis.null.place/book-reviews/json/data-stanislaw-lem-solaris-1961.json?hash=pNgy9e',
     'https://analysis.null.place/book-reviews/json/data-barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018.json?hash=mADbyI',
+    'https://analysis.null.place/book-reviews/json/data-peter-thiel-zero-to-one-2014.json?hash=kRmx33',
 
     // assets for the "tv-series reviews" article
     'https://analysis.null.place/tv-series-reviews/',

@@ -8,7 +8,7 @@
         <title>book reviews</title>
         <link href="https://analysis.null.place/book-reviews/" rel="alternate"></link>
         <published>2019-04-02T00:00:00+10:30</published>
-        <updated>2019-09-21T00:00:00+09:30</updated>
+        <updated>2021-11-22T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -599,6 +599,17 @@
         <summary type="html">Medical memoir</summary>
     </entry>
     <entry>
+        <title>book review: Zero to One</title>
+        <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
+        <published>2021-11-22T00:00:00+10:30</published>
+        <updated>2021-11-22T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014</id>
+        <summary type="html">Philosophizing on start-ups</summary>
+    </entry>
+    <entry>
         <title>tv-series review: BBC War of the Worlds Season 1</title>
         <link>https://analysis.null.place/tv-series-reviews/bbc-war-of-the-worlds-s01-2019/</link>
         <published>2020-02-26T00:00:00+10:30</published>
@@ -719,5 +730,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">The Hobbesian state of nature</summary>
     </entry>
-    <updated>2021-10-21T00:00:00+10:30</updated>
+    <updated>2021-11-22T00:00:00+10:30</updated>
 </feed>
