@@ -104,7 +104,7 @@ var mandatoryAssets = [
 ];
 {% if MEDIA_REVIEWS %}
 var mediaReviewPages = [
-    {%- for (media_type, media_data) in MEDIA_REVIEWS.iteritems() -%}
+    {%- for (media_type, media_data) in MEDIA_REVIEWS.items() -%}
     '{{ media_type }}-reviews'
         {%- if media_type != MEDIA_REVIEWS.keys()[-1] -%}
         ,

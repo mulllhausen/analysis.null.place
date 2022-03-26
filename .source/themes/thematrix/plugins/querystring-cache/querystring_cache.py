@@ -50,7 +50,8 @@ def get_file_hash(basename):
                 break
             sha256.update(data)
 
-    return base64.urlsafe_b64encode(sha256.digest()).replace('=', '')[:6]
+    return base64.urlsafe_b64encode(sha256.digest()).decode('utf-8'). \
+    replace('=', '')[:6]
 
 def register():
     signals.initialized.connect(create_static_links)
