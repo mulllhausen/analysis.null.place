@@ -2,7 +2,7 @@ User-agent: *
 Disallow: /drafts/
 Disallow: /.source/
 {% if MEDIA_REVIEWS %}
-    {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+    {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
 Disallow: /{{ media_type }}-reviews/redirect.html
     {% endfor %}
 {% endif %}

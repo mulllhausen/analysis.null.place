@@ -1,9 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 import pelican
 import grunt
-import os
 import json
 from jinja2 import Environment, FileSystemLoader
-#import pudb
+import pudb
 
 def media_reviews(pelican_obj):
     """

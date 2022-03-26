@@ -36,7 +36,7 @@
         </item>
         {% endfor %}
         {% if MEDIA_REVIEWS %}
-            {% for (media_type, media_data) in MEDIA_REVIEWS.iteritems() %}
+            {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
                 {% for a_media in media_data.feed_and_sitemap_data %}
                 {% set channel.max_date = a_media.last_modified_date if a_media.last_modified_date > channel.max_date else channel.max_date %}
         <item>

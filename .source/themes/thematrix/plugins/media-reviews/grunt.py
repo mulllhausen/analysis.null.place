@@ -103,7 +103,7 @@ def convert_types(all_media_x, field_formats, timezone_name):
     # note: only call this function if validate() passes
     localtz = pytz.timezone(timezone_name)
     for a_media in all_media_x:
-        for (k, t) in field_formats.iteritems():
+        for (k, t) in field_formats.items():
 
             # convert javascript naming format to python naming format
             # and delete the javascript naming format (single source of truth)
@@ -113,7 +113,7 @@ def convert_types(all_media_x, field_formats, timezone_name):
                 del a_media[k]
                 k = underscore_name # for the remainder of this loop
 
-            if isinstance(t, basestring):
+            if isinstance(t, str):
                 if ("?" in t) and (a_media[k] is None):
                     continue
                 if "datetime" in t:
@@ -139,31 +139,31 @@ def camelCase_to_underscores(s):
 
 def get_validation_fields():
     validation_fields = { # fields common to all types
-        "title": basestring,
+        "title": str,
         "year": int,
-        "thumbnail": basestring,
+        "thumbnail": str,
         "rating": numbers.Number,
         "spoilers": bool,
-        "reviewTitle": basestring,
-        "review": basestring,
+        "reviewTitle": str,
+        "review": str,
         "genres": list,
         "reviewCreated": "datetime: %Y-%m-%d", # a custom 'type'
         "reviewUpdated": "datetime?: %Y-%m-%d" # a custom 'type' (nullable)
     }
     if (media_type == "movie"):
         validation_fields.update({
-            "IMDBID": basestring,
+            "IMDBID": str,
         })
     elif (media_type == "tv-series"):
         validation_fields.update({
             "season": int,
-            "IMDBID": basestring,
+            "IMDBID": str,
         })
     elif (media_type == "book"):
         validation_fields.update({
-            "author": basestring,
-            "goodreadsID": basestring,
-            "isbn": basestring,
+            "author": str,
+            "goodreadsID": str,
+            "isbn": str,
         })
     return validation_fields
 
@@ -183,10 +183,10 @@ def validate(all_media_x, required_fields):
         # report which item is at fault
         title = a_media["title"] if "title" in a_media else "%s%s" % (media_type, i)
 
-        for (k, t) in required_fields.iteritems():
+        for (k, t) in required_fields.items():
             if k not in a_media:
                 errors.append("'%s' does not have element '%s'" % (title, k))
-            elif (isinstance(t, basestring) and "datetime" in t):
+            elif (isinstance(t, str) and "datetime" in t):
                 if ("?" in t) and (a_media[k] is None): # nullable
                     continue
                 try:
@@ -201,7 +201,7 @@ def validate(all_media_x, required_fields):
                 errors.append(
                     "'%s': element '%s' has the wrong type" % (title, k)
                 )
-            elif isinstance(a_media[k], basestring) and (a_media[k].strip() == ""):
+            elif isinstance(a_media[k], str) and (a_media[k].strip() == ""):
                 errors.append(
                     "'%s': element '%s' cannot be an empty string" % (title, k)
                 )
@@ -237,7 +237,8 @@ def get_file_hash(filename):
                 break
             sha256.update(data)
 
-    return base64.urlsafe_b64encode(sha256.digest()).replace("=", "")[:6]
+    return base64.urlsafe_b64encode(sha256.digest()).decode("utf-8"). \
+    replace("=", "")[:6]
 
 def get_media_type_caps():
     if (media_type == "movie"):
@@ -762,11 +763,21 @@ def get_review_extreme_dates(all_media_x, media_data):
 # downloading thumbnails
 
 def download_all(all_media_x):
+    img_path = os.path.dirname(get_img_data("", "original")["on_filesystem"])
+    img_path_found = os.path.isdir(img_path)
+    if not img_path_found:
+        os.mkdir(img_path)
+
     any_downloads_done = False
     for a_media in all_media_x:
         img_larger = get_img_data(a_media["id_"], "larger")["on_filesystem"]
         img_thumbnail = get_img_data(a_media["id_"], "thumb")["on_filesystem"]
-        if (os.path.isfile(img_larger) and os.path.isfile(img_thumbnail)):
+        if (
+            # if the image path has only just been created then it will not
+            # contain any files
+            img_path_found and os.path.isfile(img_larger) and
+            os.path.isfile(img_thumbnail)
+        ):
             continue # we already have both sizes of this image on disk
 
         response = requests.get(a_media["thumbnail"])

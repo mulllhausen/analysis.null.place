@@ -61,7 +61,7 @@ def process_markup(data_from_pelican, metadata = None):
 
         val = getattr(data_from_pelican, prop) if metadata is None else metadata[prop]
 
-        if type(val) not in (str, unicode):
+        if type(val) not in (bytes, str):
             continue
 
         processed = jenv.from_string(val).render(data_from_pelican.settings)
