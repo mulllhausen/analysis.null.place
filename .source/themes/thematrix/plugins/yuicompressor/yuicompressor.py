@@ -45,7 +45,7 @@ def minify(pelican):
                 logger.info('minify %s', filepath)
                 verbose = '-v' if SHOW_OUTPUT else ''
                 call(
-                    "yuicompressor {} --charset utf-8 {} -o {}".format(
+                    "yui-compressor {} --charset utf-8 {} -o {}".format(
                         verbose, filepath, filepath
                     ), shell = True
                 )
