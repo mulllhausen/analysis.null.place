@@ -2,12 +2,13 @@
 <span class="label">By</span>
 <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i> {{ article.author }}</a>
 {% endif %#}
+{% set date_modified = None %}
 {% if article %}
     {% set category_url = article.category.url %}
     {% set category = article.category %}
     {% set date_ = article.date %}
     {% set locale_date = article.locale_date %}
-    {% if article.modified %}
+    {% if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) %}
         {% set date_modified = article.modified.strftime("%-d %b %Y").lower() %}
     {% endif %}
 {% elif page and page.page_as_sub_article %}
@@ -15,7 +16,7 @@
     {% set category = page.category %}
     {% set date_ = page.date %}
     {% set locale_date = page.locale_date %}
-    {% if page.modified %}
+    {% if page.modified and (page.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) %}
         {% set date_modified = page.modified.strftime("%Y-%m-%d").lower() %}
     {% endif %}
 {% endif %}

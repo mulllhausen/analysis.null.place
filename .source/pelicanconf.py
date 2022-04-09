@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
-import time
+import time, datetime
 
 # var dump: pelican --print-settings
 
@@ -29,6 +29,8 @@ PATH = 'content'
 TIMEZONE = 'Australia/Adelaide'
 UNIXTIME = int(time.time())
 NOWYMD = time.strftime('%Y-%m-%d_%H:%M:%S')
+DATE_NULL_VALUE_HACK = datetime.datetime(2000, 1, 1)
+DATE_NULL_VALUE_HACK_YMD = DATE_NULL_VALUE_HACK.strftime('%Y%m%d').encode('ascii', 'ignore')
 # note: timestamps do not change per pelican session unless this file changes
 
 DEFAULT_LANG = u'en'

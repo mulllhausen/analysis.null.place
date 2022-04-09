@@ -19,7 +19,7 @@
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
             <lastBuildDate>
-            {%- if article.modified -%}
+            {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
                 {%- set channel.max_date = article.modified if article.modified > channel.max_date else channel.max_date -%}
                 {{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- else -%}

@@ -11,7 +11,7 @@
         <link href="{{ SITEURL }}/{{ article.url }}" rel="alternate"></link>
         <published>{{ article.date.isoformat() }}</published>
         <updated>
-            {%- if article.modified -%}
+            {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
                 {%- set feed.max_date = article.modified if article.modified > feed.max_date else feed.max_date -%}
                 {{ article.modified.isoformat() }}
             {%- else -%}
