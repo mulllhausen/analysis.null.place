@@ -17,7 +17,7 @@
     "image": QS_LINK["/theme/img/shattered-glass-matrix.png"],
     "datePublished": article.date.strftime("%Y-%m-%d")
 } %}
-{% if article and article.modified %}
+{% if article and article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) %}
     {% set x=LINKED_DATA.__setitem__("dateModified", article.modified.strftime("%Y-%m-%d")) %}
 {% endif %}
 
