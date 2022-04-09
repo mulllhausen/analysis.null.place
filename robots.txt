@@ -1,7 +1,7 @@
 User-agent: *
 Disallow: /drafts/
 Disallow: /.source/
-Disallow: /movie-reviews/redirect.html
 Disallow: /book-reviews/redirect.html
+Disallow: /movie-reviews/redirect.html
 Disallow: /tv-series-reviews/redirect.html
 Sitemap: https://analysis.null.place/sitemap.xml
