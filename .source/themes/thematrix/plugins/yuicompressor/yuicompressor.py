@@ -57,7 +57,11 @@ def minify(pelican):
                 with open(filepath, 'r+') as f:
                     json_data = json.load(f)
                     f.seek(0)
-                    f.write(json.dumps(json_data, separators = (',', ':')))
+                    f.write(json.dumps(
+                        json_data,
+                        separators = (',', ':'),
+                        sort_keys = True
+                    ))
                     f.truncate()
 
 def register():

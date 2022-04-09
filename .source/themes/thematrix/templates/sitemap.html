@@ -9,7 +9,7 @@
     <url>
         <loc>{{ SITEURL }}/{{ article.url }}</loc>
         <lastmod>
-        {%- if article.modified -%}
+        {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
             {{ article.modified | strftime('%Y-%m-%d') }}
         {%- else -%}
             {{ article.date | strftime('%Y-%m-%d') }}
@@ -29,7 +29,7 @@
     <url>
         <loc>{{ SITEURL }}/{{ page.url }}</loc>
         <lastmod>
-        {%- if page.modified -%}
+        {%- if page.modified and (page.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
             {{ page.modified | strftime('%Y-%m-%d') }}
         {%- else -%}
             {{ page.date | strftime('%Y-%m-%d') }}
