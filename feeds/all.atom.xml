@@ -49,6 +49,61 @@
         <summary type="html">An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.</summary>
     </entry>
     <entry>
+        <title>book review: How to think about weird things</title>
+        <link>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</link>
+        <published>2019-06-07T00:00:00+09:30</published>
+        <updated>2019-06-07T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-06-07:/book-review/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011</id>
+        <summary type="html">Critical-thinking clarity</summary>
+    </entry>
+    <entry>
+        <title>book review: Imperium</title>
+        <link>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</link>
+        <published>2019-09-20T00:00:00+09:30</published>
+        <updated>2019-09-20T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006</id>
+        <summary type="html">Ancient Roman political intrigue</summary>
+    </entry>
+    <entry>
+        <title>book review: Solaris</title>
+        <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
+        <published>2019-04-02T00:00:00+10:30</published>
+        <updated>2019-04-02T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961</id>
+        <summary type="html">Minimalist sci-fi</summary>
+    </entry>
+    <entry>
+        <title>book review: The Neuroscientist Who Lost Her Mind</title>
+        <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
+        <published>2019-09-21T00:00:00+09:30</published>
+        <updated>2019-09-21T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018</id>
+        <summary type="html">Medical memoir</summary>
+    </entry>
+    <entry>
+        <title>book review: Zero to One</title>
+        <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
+        <published>2021-11-22T00:00:00+10:30</published>
+        <updated>2021-11-22T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014</id>
+        <summary type="html">Philosophizing on start-ups</summary>
+    </entry>
+    <entry>
         <title>movie review: 10,000BC</title>
         <link>https://analysis.null.place/movie-reviews/10000bc-2008/</link>
         <published>2019-04-02T00:00:00+10:30</published>
@@ -553,61 +608,6 @@
         </author>
         <id>tag:analysis.null.place,2019-09-20:/movie-review/what-we-did-on-our-holiday-2014</id>
         <summary type="html">"Dysfunctional" family goes to visit granddad</summary>
-    </entry>
-    <entry>
-        <title>book review: How to think about weird things</title>
-        <link>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</link>
-        <published>2019-06-07T00:00:00+09:30</published>
-        <updated>2019-06-07T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-06-07:/book-review/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011</id>
-        <summary type="html">Critical-thinking clarity</summary>
-    </entry>
-    <entry>
-        <title>book review: Imperium</title>
-        <link>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</link>
-        <published>2019-09-20T00:00:00+09:30</published>
-        <updated>2019-09-20T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006</id>
-        <summary type="html">Ancient Roman political intrigue</summary>
-    </entry>
-    <entry>
-        <title>book review: Solaris</title>
-        <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
-        <published>2019-04-02T00:00:00+10:30</published>
-        <updated>2019-04-02T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961</id>
-        <summary type="html">Minimalist sci-fi</summary>
-    </entry>
-    <entry>
-        <title>book review: The Neuroscientist Who Lost Her Mind</title>
-        <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
-        <published>2019-09-21T00:00:00+09:30</published>
-        <updated>2019-09-21T00:00:00+09:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018</id>
-        <summary type="html">Medical memoir</summary>
-    </entry>
-    <entry>
-        <title>book review: Zero to One</title>
-        <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
-        <published>2021-11-22T00:00:00+10:30</published>
-        <updated>2021-11-22T00:00:00+10:30</updated>
-        <author>
-            <name>Peter Miller</name>
-        </author>
-        <id>tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014</id>
-        <summary type="html">Philosophizing on start-ups</summary>
     </entry>
     <entry>
         <title>tv-series review: BBC War of the Worlds Season 1</title>

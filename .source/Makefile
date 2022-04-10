@@ -27,6 +27,11 @@ PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 #GITHUB_PAGES_BRANCH=gh-pages
 
+QUIET ?= 0
+ifeq ($(QUIET), 1)
+	PELICANOPTS += -q
+endif
+
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
 	PELICANOPTS += -D

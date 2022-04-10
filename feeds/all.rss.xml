@@ -41,6 +41,51 @@
             <guid isPermaLink="false">tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</guid>
         </item>
         <item>
+            <title>book review: How to think about weird things</title>
+            <link>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</link>
+            <description>Critical-thinking clarity</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 07 Jun 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 07 Jun 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-06-07:/book-review/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</guid>
+        </item>
+        <item>
+            <title>book review: Imperium</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</link>
+            <description>Ancient Roman political intrigue</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006/</guid>
+        </item>
+        <item>
+            <title>book review: Solaris</title>
+            <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
+            <description>Minimalist sci-fi</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
+            <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961/</guid>
+        </item>
+        <item>
+            <title>book review: The Neuroscientist Who Lost Her Mind</title>
+            <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
+            <description>Medical memoir</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 21 Sep 2019 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</guid>
+        </item>
+        <item>
+            <title>book review: Zero to One</title>
+            <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
+            <description>Philosophizing on start-ups</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Mon, 22 Nov 2021 00:00:00 +1030</pubDate>
+            <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014/</guid>
+        </item>
+        <item>
             <title>movie review: 10,000BC</title>
             <link>https://analysis.null.place/movie-reviews/10000bc-2008/</link>
             <description>Surprisingly entertaining</description>
@@ -453,51 +498,6 @@
             <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
             <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/movie-review/what-we-did-on-our-holiday-2014/</guid>
-        </item>
-        <item>
-            <title>book review: How to think about weird things</title>
-            <link>https://analysis.null.place/book-reviews/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</link>
-            <description>Critical-thinking clarity</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Fri, 07 Jun 2019 00:00:00 +0930</pubDate>
-            <lastBuildDate>Fri, 07 Jun 2019 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-06-07:/book-review/theodore-schick-and-lewis-vaughn-how-to-think-about-weird-things-2011/</guid>
-        </item>
-        <item>
-            <title>book review: Imperium</title>
-            <link>https://analysis.null.place/book-reviews/robert-harris-imperium-2006/</link>
-            <description>Ancient Roman political intrigue</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Fri, 20 Sep 2019 00:00:00 +0930</pubDate>
-            <lastBuildDate>Fri, 20 Sep 2019 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006/</guid>
-        </item>
-        <item>
-            <title>book review: Solaris</title>
-            <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
-            <description>Minimalist sci-fi</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Tue, 02 Apr 2019 00:00:00 +1030</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961/</guid>
-        </item>
-        <item>
-            <title>book review: The Neuroscientist Who Lost Her Mind</title>
-            <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
-            <description>Medical memoir</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Sat, 21 Sep 2019 00:00:00 +0930</pubDate>
-            <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</guid>
-        </item>
-        <item>
-            <title>book review: Zero to One</title>
-            <link>https://analysis.null.place/book-reviews/peter-thiel-zero-to-one-2014/</link>
-            <description>Philosophizing on start-ups</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
-            <pubDate>Mon, 22 Nov 2021 00:00:00 +1030</pubDate>
-            <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2021-11-22:/book-review/peter-thiel-zero-to-one-2014/</guid>
         </item>
         <item>
             <title>tv-series review: BBC War of the Worlds Season 1</title>
