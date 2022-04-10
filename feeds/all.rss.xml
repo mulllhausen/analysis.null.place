@@ -28,7 +28,7 @@
             <description>movie reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Thu, 21 Oct 2021 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
         </item>
         <item>
@@ -102,6 +102,15 @@
             <pubDate>Wed, 13 Feb 2019 00:00:00 +1030</pubDate>
             <lastBuildDate>Wed, 13 Feb 2019 00:00:00 +1030</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-02-13:/movie-review/a-clockwork-orange-1971/</guid>
+        </item>
+        <item>
+            <title>movie review: Acts of Vengeance</title>
+            <link>https://analysis.null.place/movie-reviews/acts-of-vengeance-2017/</link>
+            <description>Stoic revenge</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 06 Mar 2022 00:00:00 +1030</pubDate>
+            <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-03-06:/movie-review/acts-of-vengeance-2017/</guid>
         </item>
         <item>
             <title>movie review: Adrift</title>
@@ -473,6 +482,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/movie-review/the-pianist-2002/</guid>
         </item>
         <item>
+            <title>movie review: The Talented Mr. Ripley</title>
+            <link>https://analysis.null.place/movie-reviews/the-talented-mr-ripley-1999/</link>
+            <description>Well that escalated quickly</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 06 Mar 2022 00:00:00 +1030</pubDate>
+            <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-03-06:/movie-review/the-talented-mr-ripley-1999/</guid>
+        </item>
+        <item>
             <title>movie review: Transcendence</title>
             <link>https://analysis.null.place/movie-reviews/transcendence-2014/</link>
             <description>N/A</description>
@@ -598,6 +616,6 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
     </channel>
 </rss>

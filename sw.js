@@ -1,4 +1,4 @@
-var latestCache = '2022-04-10_11:48:37';
+var latestCache = '2022-04-10_12:16:08';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -83,8 +83,8 @@ var mandatoryAssets = [
     'https://analysis.null.place/movie-reviews/img/thumb-inception-2010.jpg?hash=HTZ7_S',
     'https://analysis.null.place/movie-reviews/img/thumb-limitless-2011.jpg?hash=mFtwcd',
     'https://analysis.null.place/movie-reviews/img/thumb-lock-stock-and-two-smoking-barrels-1998.jpg?hash=_67jTj',
-    'https://analysis.null.place/movie-reviews/json/list-highest-rating-first-10.json?hash=tlnAiF',
-    'https://analysis.null.place/movie-reviews/json/data-bird-box-2018.json?hash=p2kN3D',
+    'https://analysis.null.place/movie-reviews/json/list-highest-rating-first-10.json?hash=JNEP3J',
+    'https://analysis.null.place/movie-reviews/json/data-bird-box-2018.json?hash=ooYc0U',
     'https://analysis.null.place/movie-reviews/json/data-crocoile-dundee-1-1986.json?hash=uUj0xd',
     'https://analysis.null.place/movie-reviews/json/data-dark-city-1998.json?hash=8D4DN8',
     'https://analysis.null.place/movie-reviews/json/data-district-9-2009.json?hash=2-O0L_',

@@ -30,7 +30,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2021-10-21T00:00:00+10:30</updated>
+        <updated>2022-03-06T00:00:00+10:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -124,6 +124,17 @@
         </author>
         <id>tag:analysis.null.place,2019-02-13:/movie-review/a-clockwork-orange-1971</id>
         <summary type="html">N/A</summary>
+    </entry>
+    <entry>
+        <title>movie review: Acts of Vengeance</title>
+        <link>https://analysis.null.place/movie-reviews/acts-of-vengeance-2017/</link>
+        <published>2022-03-06T00:00:00+10:30</published>
+        <updated>2022-03-06T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2022-03-06:/movie-review/acts-of-vengeance-2017</id>
+        <summary type="html">Stoic revenge</summary>
     </entry>
     <entry>
         <title>movie review: Adrift</title>
@@ -577,6 +588,17 @@
         <summary type="html">Nazi brutality vs the perfection of Chopin</summary>
     </entry>
     <entry>
+        <title>movie review: The Talented Mr. Ripley</title>
+        <link>https://analysis.null.place/movie-reviews/the-talented-mr-ripley-1999/</link>
+        <published>2022-03-06T00:00:00+10:30</published>
+        <updated>2022-03-06T00:00:00+10:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2022-03-06:/movie-review/the-talented-mr-ripley-1999</id>
+        <summary type="html">Well that escalated quickly</summary>
+    </entry>
+    <entry>
         <title>movie review: Transcendence</title>
         <link>https://analysis.null.place/movie-reviews/transcendence-2014/</link>
         <published>2019-02-13T00:00:00+10:30</published>
@@ -730,5 +752,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">The Hobbesian state of nature</summary>
     </entry>
-    <updated>2021-11-22T00:00:00+10:30</updated>
+    <updated>2022-03-06T00:00:00+10:30</updated>
 </feed>
