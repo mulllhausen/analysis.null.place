@@ -398,7 +398,7 @@
             "spoilers": true,
             "thumbnail": "https://m.media-amazon.com/images/M/MV5BMjAzMTI1MjMyN15BMl5BanBnXkFtZTgwNzU5MTE2NjM@.jpg",
             "reviewTitle": "Leaves the fear to your imagination",
-            "review": "So many good ideas in this movie! Apparently aliens have come to earth and they cause visions that strike so much fear into the people who see them that they immediately kill themselves. Except for the insane, who find the visions enjoyable!\nIn the best horror fashion, we never get to see exactly what it is that scares people to the point of suicide. The protagonists blindfold themselves to avoid seeing the alien visions, and the director takes full advantage of this fact - frequently showing us a dark screen of the view through the blindfolds, instead of the aliens. I was wondering why this is such an effective horror technique. I think it's because each viewer has their own unique fears, so if the movie were to be more specific then some viewers would find it very scary but others not so much. But by showing the physical symptoms of the the fear on characters who we have come to empathise with, the movie can conjure the scariest of each of our thoughts.\nAt one point we do see some pencil drawings by one of the insane people who enjoys the alien visions. They are all different. One was some kind of tentacle monster coming out of a wormhole, one looked like a skeleton, and one looked a bit like Cthulhu. We only see these for a moment, and the fact that there were many different indistinct drawings still leaves the viewer to focus on what they find most scary.",
+            "review": "So many good ideas in this movie! Apparently aliens have come to earth and they cause visions that strike so much fear into the people who see them that they immediately kill themselves. Except for the insane, who find the visions enjoyable!\nIn the best horror fashion, we never get to see exactly what it is that scares people to the point of suicide. The protagonists blindfold themselves to avoid seeing the alien visions, and the director takes full advantage of this fact - frequently showing us a dark screen of the view through the blindfolds, instead of the aliens. I was wondering why this is such an effective horror technique. I think it's because each viewer has their own unique fears, so if the movie were to be more specific then some viewers would find it very scary but others not so much. But by showing the physical symptoms of the the fear on characters who we have come to empathise with, the movie can conjure the scariest of each of our thoughts.\nAt one point we do see some pencil drawings by one of the insane people who enjoys the alien visions. They are all different. One was some kind of tentacle monster coming out of a wormhole, one looked like a skeleton, and one looked a bit like <a target=\"_blank\" href=\"https://en.wikipedia.org/wiki/Cthulhu\">Cthulhu</a>. We only see these for a moment, and the fact that there were many different indistinct drawings still leaves the viewer to focus on what they find most scary.",
             "IMDBID": "tt2737304",
             "genres": ["Drama", "Horror", "Sci-Fi"],
             "reviewCreated": "2019-04-08",
@@ -595,8 +595,34 @@
             "reviewTitle": "Intense superhuman chase scenes",
             "review": "I watched this one in the middle of a 13hr flight and I was pretty impressed. Other reviewers have said that the frame rate and digital effects made this movie unbearable on the big screen, but on the little screen attached to the seat in front of me I didn't notice any of that.\nIt's an action flick (just barely a sci-fi), so don't expect deep dialogue or groundbreaking futurism. But the superhuman chase scenes were intense and the occasional wide camera shots made them all the more stunning. What would it look like if someone could jump onto a roof? Or use a dirtbike during a fight to roundhouse their opponent in the face? Pretty much like it does in this movie I imagine - pretty spectacular!\nI won't say that this movie is one of my favourites. The action was impressive but very similar things have been done already in many other movies. It's a bit like running the 4 minute mile - the first person to do it became world famous, the second not so much and by the time the 10th person did it then they barely made a headline. But still, running a 4 minute mile is no easy feat - I'd still applaud it - and likewise this movie earns 5 stars from me.",
             "IMDBID": "tt1025100",
-            "genres": [" Action", "Drama", "Sci-Fi"],
+            "genres": ["Action", "Drama", "Sci-Fi"],
             "reviewCreated": "2020-02-26",
+            "reviewUpdated": null
+        },
+        {
+            "title": "Acts of Vengeance",
+            "year": 2017,
+            "rating": 4,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BMjI2NTg5NDA1NF5BMl5BanBnXkFtZTgwNjEyMDk2MzI@.jpg",
+            "reviewTitle": "Stoic revenge",
+            "review": "As a lifelong fan of both stoicism and revenge, this movie obviously appealed to me. Banderas' vow of silence was a nice touch too. It kept him from saying anything corny before committing his vengeance, such as, \"You want my car? You'll have to kill me first\".",
+            "IMDBID": "tt6288694",
+            "genres": ["Action", "Drama"],
+            "reviewCreated": "2022-03-06",
+            "reviewUpdated": null
+        },
+        {
+            "title": "The Talented Mr. Ripley",
+            "year": 1999,
+            "rating": 4,
+            "spoilers": true,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BODA3NDhiZjYtYTk2NS00ZWYwLTljYTQtMjU0NzcyMGEzNTU2L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@.jpg",
+            "reviewTitle": "Well that escalated quickly",
+            "review": "Starts off interesting but gets a bit depressing Tom Ripley he starts killing people to cover his fraudulent tracks. Dickie is a great character study! With the attention span of a mole rat. When someone new comes into his life he is fascinated, then gets bored and moves on.",
+            "IMDBID": "tt0134119",
+            "genres": ["Crime", "Drama"],
+            "reviewCreated": "2022-03-06",
             "reviewUpdated": null
         }
     ]
