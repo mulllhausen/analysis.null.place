@@ -783,7 +783,7 @@ def download_all(all_media_x):
         response = requests.get(a_media["thumbnail"])
         if not response.ok:
             raise IOError(
-                "failed to download the thumbnail for %s \"%s\": %s" % (
+                "failed to download the thumbnail for %s \"%s\": \"%s\"" % (
                     media_type, a_media["title"], a_media["thumbnail"]
                 )
             )
