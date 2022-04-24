@@ -10,7 +10,7 @@
             <description>book reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Tue, 02 Apr 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Mon, 22 Nov 2021 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-reviews/</guid>
         </item>
         <item>
@@ -28,7 +28,7 @@
             <description>movie reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
         </item>
         <item>
@@ -39,6 +39,249 @@
             <pubDate>Tue, 17 Apr 2018 00:00:00 +0930</pubDate>
             <lastBuildDate>Tue, 17 Apr 2018 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2018-04-17:/how-do-the-bitcoin-mining-algorithms-work/</guid>
+        </item>
+        <item>
+            <title>book review: A Random Walk Down Wall Street</title>
+            <link>https://analysis.null.place/book-reviews/burton-malkiel-a-random-walk-down-wall-street-1973/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/burton-malkiel-a-random-walk-down-wall-street-1973/</guid>
+        </item>
+        <item>
+            <title>book review: A Short History of Nearly Everything</title>
+            <link>https://analysis.null.place/book-reviews/bill-bryson-a-short-history-of-nearly-everything-2003/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/bill-bryson-a-short-history-of-nearly-everything-2003/</guid>
+        </item>
+        <item>
+            <title>book review: Adventures with Extremists</title>
+            <link>https://analysis.null.place/book-reviews/jon-ronson-adventures-with-extremists-2001/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/jon-ronson-adventures-with-extremists-2001/</guid>
+        </item>
+        <item>
+            <title>book review: An Officer and a Spy</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-an-officer-and-a-spy-2013/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/robert-harris-an-officer-and-a-spy-2013/</guid>
+        </item>
+        <item>
+            <title>book review: Atlas Shrugged</title>
+            <link>https://analysis.null.place/book-reviews/ayn-rand-atlas-shrugged-1957/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-24:/book-review/ayn-rand-atlas-shrugged-1957/</guid>
+        </item>
+        <item>
+            <title>book review: Boy: Tales of Childhood</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-boy-tales-of-childhood-1984/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/roald-dahl-boy-tales-of-childhood-1984/</guid>
+        </item>
+        <item>
+            <title>book review: Brave New World</title>
+            <link>https://analysis.null.place/book-reviews/aldous-huxley-brave-new-world-1958/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/aldous-huxley-brave-new-world-1958/</guid>
+        </item>
+        <item>
+            <title>book review: Brideshead Revisited</title>
+            <link>https://analysis.null.place/book-reviews/evelyn-waugh-brideshead-revisited-1945/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/evelyn-waugh-brideshead-revisited-1945/</guid>
+        </item>
+        <item>
+            <title>book review: Charlie and the Chocolate Factory</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-charlie-and-the-chocolate-factory-1964/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/roald-dahl-charlie-and-the-chocolate-factory-1964/</guid>
+        </item>
+        <item>
+            <title>book review: Childhood's End</title>
+            <link>https://analysis.null.place/book-reviews/arthur-clarke-childhoods-end-1953/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/arthur-clarke-childhoods-end-1953/</guid>
+        </item>
+        <item>
+            <title>book review: Conclave</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-conclave-2016/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-20:/book-review/robert-harris-conclave-2016/</guid>
+        </item>
+        <item>
+            <title>book review: Cryptonomicon</title>
+            <link>https://analysis.null.place/book-reviews/neal-stephenson-cryptonomicon-1999/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/neal-stephenson-cryptonomicon-1999/</guid>
+        </item>
+        <item>
+            <title>book review: Danny, the Champion of the World</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-danny-the-champion-of-the-world-6690/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/roald-dahl-danny-the-champion-of-the-world-6690/</guid>
+        </item>
+        <item>
+            <title>book review: Do Androids Dream of Electric Sheep?</title>
+            <link>https://analysis.null.place/book-reviews/philip-dick-do-androids-dream-of-electric-sheep-1968/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-24:/book-review/philip-dick-do-androids-dream-of-electric-sheep-1968/</guid>
+        </item>
+        <item>
+            <title>book review: Dune</title>
+            <link>https://analysis.null.place/book-reviews/frank-herbert-dune-1965/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/frank-herbert-dune-1965/</guid>
+        </item>
+        <item>
+            <title>book review: Fahrenheit 451</title>
+            <link>https://analysis.null.place/book-reviews/ray-bradbury-fahrenheit-451-1953/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/ray-bradbury-fahrenheit-451-1953/</guid>
+        </item>
+        <item>
+            <title>book review: Fantastic Mr Fox</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-fantastic-mr-fox-1970/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/roald-dahl-fantastic-mr-fox-1970/</guid>
+        </item>
+        <item>
+            <title>book review: Fear and Loathing in Las Vegas</title>
+            <link>https://analysis.null.place/book-reviews/hunter-thompson-fear-and-loathing-in-las-vegas-1971/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/hunter-thompson-fear-and-loathing-in-las-vegas-1971/</guid>
+        </item>
+        <item>
+            <title>book review: Foundation</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-foundation-1951/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/isaac-asimov-foundation-1951/</guid>
+        </item>
+        <item>
+            <title>book review: Foundation and Empire</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-foundation-and-empire-1952/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/isaac-asimov-foundation-and-empire-1952/</guid>
+        </item>
+        <item>
+            <title>book review: Free Will</title>
+            <link>https://analysis.null.place/book-reviews/sam-harris-free-will-2012/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-24:/book-review/sam-harris-free-will-2012/</guid>
+        </item>
+        <item>
+            <title>book review: George's Marvellous Medicine</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-georges-marvellous-medicine-1981/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/roald-dahl-georges-marvellous-medicine-1981/</guid>
+        </item>
+        <item>
+            <title>book review: Going Solo</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-going-solo-1986/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/roald-dahl-going-solo-1986/</guid>
+        </item>
+        <item>
+            <title>book review: Ham On Rye</title>
+            <link>https://analysis.null.place/book-reviews/charles-bukowski-ham-on-rye-1982/</link>
+            <description>Childhood autobiography</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/charles-bukowski-ham-on-rye-1982/</guid>
+        </item>
+        <item>
+            <title>book review: Harry Potter and the Chamber of Secrets</title>
+            <link>https://analysis.null.place/book-reviews/joanne-rowling-harry-potter-and-the-chamber-of-secrets-1998/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/joanne-rowling-harry-potter-and-the-chamber-of-secrets-1998/</guid>
+        </item>
+        <item>
+            <title>book review: Harry Potter and the Prisoner of Azkaban</title>
+            <link>https://analysis.null.place/book-reviews/joanne-rowling-harry-potter-and-the-prisoner-of-azkaban-1999/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/joanne-rowling-harry-potter-and-the-prisoner-of-azkaban-1999/</guid>
+        </item>
+        <item>
+            <title>book review: Harry Potter and the Sorcerer's Stone</title>
+            <link>https://analysis.null.place/book-reviews/joanne-rowling-harry-potter-and-the-sorcerers-stone-1997/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/joanne-rowling-harry-potter-and-the-sorcerers-stone-1997/</guid>
         </item>
         <item>
             <title>book review: How to think about weird things</title>
@@ -59,6 +302,240 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-09-20:/book-review/robert-harris-imperium-2006/</guid>
         </item>
         <item>
+            <title>book review: Kitchen Confidential</title>
+            <link>https://analysis.null.place/book-reviews/anthony-bourdain-kitchen-confidential-2000/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-24:/book-review/anthony-bourdain-kitchen-confidential-2000/</guid>
+        </item>
+        <item>
+            <title>book review: Lord of the Flies</title>
+            <link>https://analysis.null.place/book-reviews/william-golding-lord-of-the-flies-1954/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/william-golding-lord-of-the-flies-1954/</guid>
+        </item>
+        <item>
+            <title>book review: Lustrum</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-lustrum-2009/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-20:/book-review/robert-harris-lustrum-2009/</guid>
+        </item>
+        <item>
+            <title>book review: Manfacturing Consent</title>
+            <link>https://analysis.null.place/book-reviews/noam-chomsky-manfacturing-consent-1988/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/noam-chomsky-manfacturing-consent-1988/</guid>
+        </item>
+        <item>
+            <title>book review: Matilda</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-matilda-1988/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/roald-dahl-matilda-1988/</guid>
+        </item>
+        <item>
+            <title>book review: Meditations</title>
+            <link>https://analysis.null.place/book-reviews/marcus-aurelius-meditations-180/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/marcus-aurelius-meditations-180/</guid>
+        </item>
+        <item>
+            <title>book review: Narrative of the Life of Frederick Douglass</title>
+            <link>https://analysis.null.place/book-reviews/frederick-douglass-narrative-of-the-life-of-frederick-douglass-1845/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/frederick-douglass-narrative-of-the-life-of-frederick-douglass-1845/</guid>
+        </item>
+        <item>
+            <title>book review: Nemesis</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-nemesis-1989/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/isaac-asimov-nemesis-1989/</guid>
+        </item>
+        <item>
+            <title>book review: Not a Penny More, Not a Penny Less</title>
+            <link>https://analysis.null.place/book-reviews/jeffrey-archer-not-a-penny-more-not-a-penny-less-1976/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/jeffrey-archer-not-a-penny-more-not-a-penny-less-1976/</guid>
+        </item>
+        <item>
+            <title>book review: Notes from a Small Island</title>
+            <link>https://analysis.null.place/book-reviews/bill-bryson-notes-from-a-small-island-1995/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/bill-bryson-notes-from-a-small-island-1995/</guid>
+        </item>
+        <item>
+            <title>book review: On the Shortness of Life</title>
+            <link>https://analysis.null.place/book-reviews/lucius-seneca-on-the-shortness-of-life-49/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/lucius-seneca-on-the-shortness-of-life-49/</guid>
+        </item>
+        <item>
+            <title>book review: Pebble in the Sky</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-pebble-in-the-sky-1950/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/isaac-asimov-pebble-in-the-sky-1950/</guid>
+        </item>
+        <item>
+            <title>book review: Pompeii</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-pompeii-2003/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-20:/book-review/robert-harris-pompeii-2003/</guid>
+        </item>
+        <item>
+            <title>book review: Post Office</title>
+            <link>https://analysis.null.place/book-reviews/charles-bukowski-post-office-1971/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/charles-bukowski-post-office-1971/</guid>
+        </item>
+        <item>
+            <title>book review: Project Hail Mary</title>
+            <link>https://analysis.null.place/book-reviews/andy-weir-project-hail-mary-2021/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/andy-weir-project-hail-mary-2021/</guid>
+        </item>
+        <item>
+            <title>book review: Project Hail Mary</title>
+            <link>https://analysis.null.place/book-reviews/andy-weir-project-hail-mary-2021/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/andy-weir-project-hail-mary-2021/</guid>
+        </item>
+        <item>
+            <title>book review: Reamde</title>
+            <link>https://analysis.null.place/book-reviews/neal-stephenson-reamde-2011/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/neal-stephenson-reamde-2011/</guid>
+        </item>
+        <item>
+            <title>book review: Red Mars</title>
+            <link>https://analysis.null.place/book-reviews/kim-robinson-red-mars-1992/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/kim-robinson-red-mars-1992/</guid>
+        </item>
+        <item>
+            <title>book review: Rendezvous with Rama</title>
+            <link>https://analysis.null.place/book-reviews/arthur-clarke-rendezvous-with-rama-1973/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/arthur-clarke-rendezvous-with-rama-1973/</guid>
+        </item>
+        <item>
+            <title>book review: Roadside Picnic</title>
+            <link>https://analysis.null.place/book-reviews/arkady-strugatsky-and-boris-strugatsky-roadside-picnic-1972/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/arkady-strugatsky-and-boris-strugatsky-roadside-picnic-1972/</guid>
+        </item>
+        <item>
+            <title>book review: Sapiens: A Brief History of Humankind</title>
+            <link>https://analysis.null.place/book-reviews/yuval-harari-sapiens-a-brief-history-of-humankind-2011/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/yuval-harari-sapiens-a-brief-history-of-humankind-2011/</guid>
+        </item>
+        <item>
+            <title>book review: Scoop</title>
+            <link>https://analysis.null.place/book-reviews/evelyn-waugh-scoop-1938/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/evelyn-waugh-scoop-1938/</guid>
+        </item>
+        <item>
+            <title>book review: Second Foundation</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-second-foundation-1952/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/isaac-asimov-second-foundation-1952/</guid>
+        </item>
+        <item>
+            <title>book review: Seveneves</title>
+            <link>https://analysis.null.place/book-reviews/neal-stephenson-seveneves-2015/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/neal-stephenson-seveneves-2015/</guid>
+        </item>
+        <item>
+            <title>book review: Snow Crash</title>
+            <link>https://analysis.null.place/book-reviews/neal-stephenson-snow-crash-1992/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/neal-stephenson-snow-crash-1992/</guid>
+        </item>
+        <item>
+            <title>book review: So You've Been Publicly Shamed</title>
+            <link>https://analysis.null.place/book-reviews/jon-ronson-so-youve-been-publicly-shamed-2015/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/jon-ronson-so-youve-been-publicly-shamed-2015/</guid>
+        </item>
+        <item>
             <title>book review: Solaris</title>
             <link>https://analysis.null.place/book-reviews/stanislaw-lem-solaris-1961/</link>
             <description>Minimalist sci-fi</description>
@@ -68,13 +545,274 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-02:/book-review/stanislaw-lem-solaris-1961/</guid>
         </item>
         <item>
+            <title>book review: Stranger in a Strange Land</title>
+            <link>https://analysis.null.place/book-reviews/robert-heinlein-stranger-in-a-strange-land-1961/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/robert-heinlein-stranger-in-a-strange-land-1961/</guid>
+        </item>
+        <item>
+            <title>book review: The Bitcoin Standard</title>
+            <link>https://analysis.null.place/book-reviews/saifedean-ammous-the-bitcoin-standard-2018/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/saifedean-ammous-the-bitcoin-standard-2018/</guid>
+        </item>
+        <item>
+            <title>book review: The Curious Incident of the Dog in the Night-Time</title>
+            <link>https://analysis.null.place/book-reviews/mark-haddon-the-curious-incident-of-the-dog-in-the-night-time-2003/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/mark-haddon-the-curious-incident-of-the-dog-in-the-night-time-2003/</guid>
+        </item>
+        <item>
+            <title>book review: The End of Eternity</title>
+            <link>https://analysis.null.place/book-reviews/isaac-asimov-the-end-of-eternity-1955/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/isaac-asimov-the-end-of-eternity-1955/</guid>
+        </item>
+        <item>
+            <title>book review: The Fear Index</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-the-fear-index-2011/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-20:/book-review/robert-harris-the-fear-index-2011/</guid>
+        </item>
+        <item>
+            <title>book review: The Fellowship of the Ring</title>
+            <link>https://analysis.null.place/book-reviews/john-tolkien-the-fellowship-of-the-ring-1954/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/john-tolkien-the-fellowship-of-the-ring-1954/</guid>
+        </item>
+        <item>
+            <title>book review: The Fountainhead</title>
+            <link>https://analysis.null.place/book-reviews/ayn-rand-the-fountainhead-1943/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-24:/book-review/ayn-rand-the-fountainhead-1943/</guid>
+        </item>
+        <item>
+            <title>book review: The Fourth Turning</title>
+            <link>https://analysis.null.place/book-reviews/william-strauss-and-neil-howe-the-fourth-turning-1996/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/william-strauss-and-neil-howe-the-fourth-turning-1996/</guid>
+        </item>
+        <item>
+            <title>book review: The Ghost</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-the-ghost-2007/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Wed, 20 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-20:/book-review/robert-harris-the-ghost-2007/</guid>
+        </item>
+        <item>
+            <title>book review: The Great Gatsby</title>
+            <link>https://analysis.null.place/book-reviews/francis-fitzgerald-the-great-gatsby-1925/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/francis-fitzgerald-the-great-gatsby-1925/</guid>
+        </item>
+        <item>
+            <title>book review: The Happiness Hypothesis</title>
+            <link>https://analysis.null.place/book-reviews/jonathan-haidt-the-happiness-hypothesis-2006/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/jonathan-haidt-the-happiness-hypothesis-2006/</guid>
+        </item>
+        <item>
+            <title>book review: The Hobbit</title>
+            <link>https://analysis.null.place/book-reviews/john-tolkien-the-hobbit-1937/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/john-tolkien-the-hobbit-1937/</guid>
+        </item>
+        <item>
+            <title>book review: The Illustrated Man</title>
+            <link>https://analysis.null.place/book-reviews/ray-bradbury-the-illustrated-man-1951/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/ray-bradbury-the-illustrated-man-1951/</guid>
+        </item>
+        <item>
+            <title>book review: The Kentucky Derby Is Decadent and Depraved</title>
+            <link>https://analysis.null.place/book-reviews/hunter-thompson-the-kentucky-derby-is-decadent-and-depraved-1970/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/hunter-thompson-the-kentucky-derby-is-decadent-and-depraved-1970/</guid>
+        </item>
+        <item>
+            <title>book review: The Long Earth</title>
+            <link>https://analysis.null.place/book-reviews/terry-pratchett-and-stephen-baxter-the-long-earth-2012/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/terry-pratchett-and-stephen-baxter-the-long-earth-2012/</guid>
+        </item>
+        <item>
+            <title>book review: The Loved One</title>
+            <link>https://analysis.null.place/book-reviews/evelyn-waugh-the-loved-one-1948/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/evelyn-waugh-the-loved-one-1948/</guid>
+        </item>
+        <item>
+            <title>book review: The Moon is a Harsh Mistress</title>
+            <link>https://analysis.null.place/book-reviews/robert-heinlein-the-moon-is-a-harsh-mistress-1966/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/robert-heinlein-the-moon-is-a-harsh-mistress-1966/</guid>
+        </item>
+        <item>
             <title>book review: The Neuroscientist Who Lost Her Mind</title>
-            <link>https://analysis.null.place/book-reviews/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
+            <link>https://analysis.null.place/book-reviews/barbara-lipska-the-neuroscientist-who-lost-her-mind-2018/</link>
             <description>Medical memoir</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Sat, 21 Sep 2019 00:00:00 +0930</pubDate>
             <lastBuildDate>Sat, 21 Sep 2019 00:00:00 +0930</lastBuildDate>
-            <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbara-k-lipska-the-neuroscientist-who-lost-her-mind-2018/</guid>
+            <guid isPermaLink="false">tag:analysis.null.place,2019-09-21:/book-review/barbara-lipska-the-neuroscientist-who-lost-her-mind-2018/</guid>
+        </item>
+        <item>
+            <title>book review: The Return of the King</title>
+            <link>https://analysis.null.place/book-reviews/john-tolkien-the-return-of-the-king-1955/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/john-tolkien-the-return-of-the-king-1955/</guid>
+        </item>
+        <item>
+            <title>book review: The Righteous Mind</title>
+            <link>https://analysis.null.place/book-reviews/jonathan-haidt-the-righteous-mind-2012/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/jonathan-haidt-the-righteous-mind-2012/</guid>
+        </item>
+        <item>
+            <title>book review: The Rise and Fall of DODO</title>
+            <link>https://analysis.null.place/book-reviews/neal-stephenson-the-rise-and-fall-of-dodo-2017/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-22:/book-review/neal-stephenson-the-rise-and-fall-of-dodo-2017/</guid>
+        </item>
+        <item>
+            <title>book review: The Triumph of Conservatism</title>
+            <link>https://analysis.null.place/book-reviews/gabriel-kolko-the-triumph-of-conservatism-1977/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/gabriel-kolko-the-triumph-of-conservatism-1977/</guid>
+        </item>
+        <item>
+            <title>book review: The Twits</title>
+            <link>https://analysis.null.place/book-reviews/roald-dahl-the-twits-1980/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/roald-dahl-the-twits-1980/</guid>
+        </item>
+        <item>
+            <title>book review: The Two Towers</title>
+            <link>https://analysis.null.place/book-reviews/john-tolkien-the-two-towers-1954/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sat, 23 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sat, 23 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-23:/book-review/john-tolkien-the-two-towers-1954/</guid>
+        </item>
+        <item>
+            <title>book review: The Wind in the Willows</title>
+            <link>https://analysis.null.place/book-reviews/kenneth-grahame-the-wind-in-the-willows-1908/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/kenneth-grahame-the-wind-in-the-willows-1908/</guid>
+        </item>
+        <item>
+            <title>book review: The Woodcutter</title>
+            <link>https://analysis.null.place/book-reviews/reginald-hill-the-woodcutter-2010/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/reginald-hill-the-woodcutter-2010/</guid>
+        </item>
+        <item>
+            <title>book review: Things Fall Apart</title>
+            <link>https://analysis.null.place/book-reviews/chinua-achebe-things-fall-apart-1958/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/chinua-achebe-things-fall-apart-1958/</guid>
+        </item>
+        <item>
+            <title>book review: Time Enough for Love</title>
+            <link>https://analysis.null.place/book-reviews/robert-heinlein-time-enough-for-love-1973/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/robert-heinlein-time-enough-for-love-1973/</guid>
+        </item>
+        <item>
+            <title>book review: V2</title>
+            <link>https://analysis.null.place/book-reviews/robert-harris-v2-2020/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Sun, 17 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Sun, 17 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-17:/book-review/robert-harris-v2-2020/</guid>
+        </item>
+        <item>
+            <title>book review: Women</title>
+            <link>https://analysis.null.place/book-reviews/charles-bukowski-women-1978/</link>
+            <description>N/A</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Fri, 15 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Fri, 15 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-15:/book-review/charles-bukowski-women-1978/</guid>
         </item>
         <item>
             <title>book review: Zero to One</title>
@@ -487,7 +1225,7 @@
             <description>Well that escalated quickly</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Sun, 06 Mar 2022 00:00:00 +1030</pubDate>
-            <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
+            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2022-03-06:/movie-review/the-talented-mr-ripley-1999/</guid>
         </item>
         <item>
@@ -616,6 +1354,6 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +1030</lastBuildDate>
+        <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>
