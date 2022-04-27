@@ -30,7 +30,7 @@
         <title>movie reviews</title>
         <link href="https://analysis.null.place/movie-reviews/" rel="alternate"></link>
         <published>2019-01-23T00:00:00+10:30</published>
-        <updated>2022-04-22T00:00:00+09:30</updated>
+        <updated>2022-04-28T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -1358,6 +1358,17 @@
         <summary type="html">I will find you... I will kill you</summary>
     </entry>
     <entry>
+        <title>movie review: The Batman</title>
+        <link>https://analysis.null.place/movie-reviews/the-batman-2022/</link>
+        <published>2022-04-28T00:00:00+09:30</published>
+        <updated>2022-04-28T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2022-04-28:/movie-review/the-batman-2022</id>
+        <summary type="html">Gothic</summary>
+    </entry>
+    <entry>
         <title>movie review: The Beach</title>
         <link>https://analysis.null.place/movie-reviews/the-beach-2000/</link>
         <published>2019-01-23T00:00:00+10:30</published>
@@ -1654,5 +1665,5 @@
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">The Hobbesian state of nature</summary>
     </entry>
-    <updated>2022-04-24T00:00:00+09:30</updated>
+    <updated>2022-04-28T00:00:00+09:30</updated>
 </feed>

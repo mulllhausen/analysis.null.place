@@ -28,7 +28,7 @@
             <description>movie reviews</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 23 Jan 2019 00:00:00 +1030</pubDate>
-            <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-01-23:/movie-reviews/</guid>
         </item>
         <item>
@@ -1112,6 +1112,15 @@
             <guid isPermaLink="false">tag:analysis.null.place,2019-04-18:/movie-review/taken-1-2008/</guid>
         </item>
         <item>
+            <title>movie review: The Batman</title>
+            <link>https://analysis.null.place/movie-reviews/the-batman-2022/</link>
+            <description>Gothic</description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
+            <pubDate>Thu, 28 Apr 2022 00:00:00 +0930</pubDate>
+            <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0930</lastBuildDate>
+            <guid isPermaLink="false">tag:analysis.null.place,2022-04-28:/movie-review/the-batman-2022/</guid>
+        </item>
+        <item>
             <title>movie review: The Beach</title>
             <link>https://analysis.null.place/movie-reviews/the-beach-2000/</link>
             <description>Thailand's best kept secret</description>
@@ -1354,6 +1363,6 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Sun, 24 Apr 2022 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>

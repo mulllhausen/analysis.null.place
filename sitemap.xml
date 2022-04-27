@@ -17,7 +17,7 @@
     </url>
     <url>
         <loc>https://analysis.null.place/movie-reviews/</loc>
-        <lastmod>2022-04-22</lastmod>
+        <lastmod>2022-04-28</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -624,6 +624,11 @@
     <url>
         <loc>https://analysis.null.place/movie-reviews/taken-1-2008/</loc>
         <lastmod>2019-04-18</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/movie-reviews/the-batman-2022/</loc>
+        <lastmod>2022-04-28</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
