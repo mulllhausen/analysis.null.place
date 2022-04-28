@@ -2,7 +2,7 @@
 <html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
         <meta charset="utf-8"/>
-        <title>{{ SITENAME }}</title>
+        <title>{% if self.og_title() and self.og_title() != SITENAME %}{{ self.og_title() }} | {% endif %}{{ SITENAME }}</title>
         {% block meta_custom %}{% endblock %}
 
         {# le styles (must come before all scripts) #}
