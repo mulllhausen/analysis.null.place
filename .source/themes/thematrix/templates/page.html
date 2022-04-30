@@ -60,9 +60,6 @@
     <article>
         <header{% if page.hide_title %} class="hidden"{% endif %}>
             <h1 class="entry-title">
-{% if page.page_as_sub_article %}
-                <a href="{{ SITEURL }}/{{ page.parent_article_url }}">{{ page.parent_article_title }}</a> /
-{% endif %}
                 <a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a>
             </h1>
 {% if page.page_as_sub_article %}

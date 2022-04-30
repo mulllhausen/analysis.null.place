@@ -3,13 +3,10 @@
 #}
 <html>
 <head>
-    <title>{{ media.title }} ({{ media.year }})</title>
-    {% set media_title = media.type_caps + ' Review: ' + media.title %}
-    {% if media.author %}
-        {% set media_title = media_title + ' by ' + media.author %}
-    {% endif %}
-    <meta name="og_title" content="{{ media_title }}"/>
-    <meta name="ld_name" content="{{ media_title }}"/>
+    <title>{{ media.full_title }}</title>
+    <meta name="small_title" content="{{ media.title }}"/>
+    <meta name="og_title" content="{{ media.full_title }}"/>
+    <meta name="ld_name" content="{{ media.full_title }}"/>
 
     <meta name="slug" content="{{ media.type_ }}-reviews/{{ media.id_ }}"/>
     <meta name="date" content="{{ media.review_created }}"/>
@@ -32,7 +29,7 @@
     <meta name="img_preloads" content="{{ all_media_data.preloads.img | join(',') }}"/>
 
     <meta name="summary" content=""/>{# everything breaks if this is removed. i have no idea why since it is not needed in other pages (eg. pages/404.html) #}
-    <meta name="description" content="{{ media_title }}"/>
+    <meta name="description" content="{{ media.full_title }}"/>
     <meta name="og_description" content="{{ media.rating }}/5&#9733; {{ media.review_title }}"/>
     <meta name="ld_description" content="{{ media.review_title }}"/>
 
