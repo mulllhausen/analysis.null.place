@@ -254,7 +254,7 @@ def get_id(a_media):
         # a movie's id is the alphanumeric title and year chars
         id_ = "%s %s" % (a_media["title"], a_media["year"])
     elif (media_type == "tv-series"):
-        # a tv series' id is the alphanumeric title, season (zero padded to 2
+        # a tv series' id is the alphanumeric title, season (zero-padded to 2
         # digits) and year
         id_ = "%s s%02d %s" % (
             a_media["title"], a_media["season"], a_media["year"]
@@ -275,6 +275,18 @@ def get_id(a_media):
     id_ = re.sub(r"[^a-z0-9-]*", "", id_, flags = re.IGNORECASE)
 
     return id_.lower()
+
+def get_full_title(a_media):
+    # note: keep this function in sync with media-reviews.js getFullTitle()
+
+    full_title = "%s Review: %s" % (media_type_caps, a_media["title"])
+
+    if (media_type == "tv-series"):
+        full_title += " Season %s" % a_media["season"]
+    elif (media_type == "book"):
+        full_title += " by %s" % a_media["author"]
+
+    return "%s (%s)" % (full_title, a_media["year"])
 
 def get_img_data(media_id, state, get_hash = False):
     return_obj = { # init
@@ -498,9 +510,9 @@ def get_search_item(a_media):
 def get_1_media_html_data(a_media):
     # filter a_media by these fields
     fields = [
-        "id_", "title", "review_created", "review_updated", "author", "season",
-        "year", "default_index", "thumb_height", "review_title", "spoilers",
-        "rating", "larger_height", "larger_width"
+        "id_", "title", "full_title", "review_created", "review_updated",
+        "author", "season", "year", "default_index", "thumb_height",
+        "review_title", "spoilers", "rating", "larger_height", "larger_width"
     ]
     tmp_media = { field: a_media[field] for field in fields if field in a_media }
     tmp_media.update({
@@ -709,6 +721,7 @@ def add_missing_data(all_media_x):
     for a_media in all_media_x:
 
         a_media["id_"] = get_id(a_media)
+        a_media["full_title"] = get_full_title(a_media)
 
         a_media["last_modified"] = a_media["review_created"] if \
         a_media["review_updated"] is None else a_media["review_updated"]

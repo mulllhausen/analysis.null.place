@@ -22,7 +22,7 @@ var siteGlobals = {
     },
     {% elif (page and page.page_as_sub_article) %}
     article: {
-        {%- if page.title %}title: '{{ page.title }}'{% endif -%}
+        {%- if page.title %}title: '{{ page.small_title }}'{% endif -%}
         {%- if page.url %}, url: '{{ page.url }}'{% endif -%}
         {%- if page.parent_article_url %}, parentArticleURL: '{{ page.parent_article_url }}'{% endif -%}
         {%- if page.console_explain_scripts %}, consoleExplainScripts: '{{ page.console_explain_scripts }}'{% endif -%}
