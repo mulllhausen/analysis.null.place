@@ -127,19 +127,40 @@ function removeMediaIDFromURL(parentURL) {
 // 4. only allow searching once all placeholders have been populated
 
 function resetHeaderToParent(parentURL) {
-    var headerEl = document.querySelector('article header');
+    populatePageHeader(parentURL);
+    populateArticleDates(
+        siteGlobals.earliestReview, siteGlobals.lastModifiedReview
+    );
+    removeCSSClass(document.querySelector('article header'), 'hidden');
+}
 
-    headerEl.querySelector('h1.entry-title').innerHTML =
-    '<a href="' + parentURL + '">' + siteGlobals.mediaType + ' reviews</a>';
+function populatePageHeader(url, text) {
+    var newText = capitalizeFirstLetter(siteGlobals.mediaType) + ' Review' +
+    ((text == null) ? 's' : (': ' + text));
 
-    var parentDatesHTML = '<span class="dates">added ' +
-    dateYYYYMMDD2dmmmYYYY(siteGlobals.earliestReview) + '</span>';
-    if (siteGlobals.earliestReview != siteGlobals.lastModifiedReview) {
-        parentDatesHTML += '<span class="dates">updated ' +
-        dateYYYYMMDD2dmmmYYYY(siteGlobals.lastModifiedReview) + '</span>';
+    document.querySelector('article header').querySelector('h1.entry-title').
+    innerHTML = '<a href="' + url + '">' + newText + '</a>';
+}
+
+function populateArticleDates(dateAdded, dateUpdated) {
+    // dateAdded is either 2031-12-31 or 'added 31 dec 2031'
+    // dateUpdated is either 2031-12-31 or 'updated 31 dec 2031' or null or ''
+
+    var sameDates = (dateAdded == dateUpdated);
+
+    if (!inArray('added', dateAdded)) dateAdded = 'added ' +
+    dateYYYYMMDD2dmmmYYYY(dateAdded);
+    var articleInfosHTML = '<span class="dates">' + dateAdded + '</span>';
+
+    if ((dateUpdated != null) && (dateUpdated != '') && !sameDates) {
+        if (!inArray('updated', dateUpdated)) dateUpdated = 'updated ' +
+        dateYYYYMMDD2dmmmYYYY(dateUpdated);
+
+        articleInfosHTML += '<span class="dates">' + dateUpdated + '</span>';
     }
-    headerEl.querySelector('.info-box').innerHTML = parentDatesHTML;
-    removeCSSClass(headerEl, 'hidden');
+
+    document.querySelector('article header').querySelector('.info-box').
+    innerHTML = articleInfosHTML;
 }
 
 function resetSearchBox() {
@@ -318,9 +339,7 @@ function removePlaceholder(mediaIndex) {
 }
 
 function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
-    var selfURL = generateCleanURL(
-        siteGlobals.mediaType + '-reviews/' + mediaData.id_ + '/'
-    );
+    var selfURL = mediaID2URL(mediaData.id_);
     mediaEl.querySelector('a.link-to-self.chain-link').href = selfURL;
     mediaEl.querySelector('h3.media-title a.link-to-self').href = selfURL;
 
@@ -401,6 +420,14 @@ function loadFullReview(e) {
     var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
     var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
     linkToSelf(mediaEl, minimal1MediaObj.id_);
+    populatePageHeader(
+        mediaID2URL(minimal1MediaObj.id_),
+        mediaEl.querySelector('.media-title a').innerHTML
+    );
+    populateArticleDates(
+        mediaEl.querySelector('.review-dates .review-created').innerHTML,
+        trim(mediaEl.querySelector('.review-dates .review-updated a').innerHTML)
+    );
     download1MediaReview(minimal1MediaObj, function (status, fullReviewText) {
         var newContent;
         // get the external link button from the dom, since we no longer have
@@ -440,6 +467,11 @@ function linkToSelf(mediaEl, mediaID) {
     }
     else window.location.hash = '#!' + mediaID;
     return false; // prevent bubble up
+}
+
+function mediaID2URL(mediaID) {
+    var url = siteGlobals.mediaType + '-reviews/' + mediaID + '/';
+    return generateCleanURL(url);
 }
 
 function getLoadReviewButtonHTML() {
