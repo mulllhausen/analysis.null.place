@@ -549,6 +549,10 @@ function englishList(list, joinWord, finalJoinWord) {
     return english;
 }
 
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 // browser detect - only use when absolutely necessary. it may break for future
 // versions of all these browses. thanks to stackoverflow.com/a/9851769 - check
 // this link regularly for updates.
