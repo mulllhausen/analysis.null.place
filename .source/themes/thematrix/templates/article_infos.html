@@ -17,7 +17,7 @@
     {% set date_ = page.date %}
     {% set locale_date = page.locale_date %}
     {% if page.modified and (page.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) %}
-        {% set date_modified = page.modified.strftime("%Y-%m-%d").lower() %}
+        {% set date_modified = page.modified.strftime("%-d %b %Y").lower() %}
     {% endif %}
 {% endif %}
 {#<a href="{{ SITEURL }}/{{ category_url }}">
