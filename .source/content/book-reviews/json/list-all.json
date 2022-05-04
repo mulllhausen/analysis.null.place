@@ -1052,21 +1052,6 @@
             "reviewUpdated": null
         },
         {
-            "author": "Andy Weir",
-            "title": "Project Hail Mary",
-            "year": 2021,
-            "rating": 5,
-            "spoilers": false,
-            "thumbnail": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1597695864l/54493401.jpg",
-            "reviewTitle": "N/A",
-            "review": "N/A",
-            "goodreadsID": "54493401",
-            "genres": ["sci-fi"],
-            "isbn": "0593135202",
-            "reviewCreated": "2022-04-23",
-            "reviewUpdated": null
-        },
-        {
             "author": "Evelyn Waugh",
             "title": "Brideshead Revisited",
             "year": 1945,
