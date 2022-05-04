@@ -149,12 +149,12 @@ function populateArticleDates(dateAdded, dateUpdated) {
     var sameDates = (dateAdded == dateUpdated);
 
     if (!inArray('added', dateAdded)) dateAdded = 'added ' +
-    dateYYYYMMDD2dmmmYYYY(dateAdded);
+    dateYYYYMMDD2dmmmYYYY(dateAdded).toLowerCase();
     var articleInfosHTML = '<span class="dates">' + dateAdded + '</span>';
 
     if ((dateUpdated != null) && !sameDates) {
         if (!inArray('updated', dateUpdated)) dateUpdated = 'updated ' +
-        dateYYYYMMDD2dmmmYYYY(dateUpdated);
+        dateYYYYMMDD2dmmmYYYY(dateUpdated).toLowerCase();
 
         articleInfosHTML += '<span class="dates">' + dateUpdated + '</span>';
     }
@@ -379,7 +379,7 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     }
     mediaEl.querySelector('.link-external').href = getExternalLinkURL(mediaData);
     mediaEl.querySelector('.review-created').innerHTML = 'added ' +
-    dateYYYYMMDD2dmmmYYYY(mediaData.reviewCreated);
+    dateYYYYMMDD2dmmmYYYY(mediaData.reviewCreated).toLowerCase();
 
     if (mediaData.reviewUpdated != null) {
         var a = mediaEl.querySelector('.review-updated a');
@@ -388,7 +388,8 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         siteGlobals.mediaType  + '-reviews/json/review-' + mediaData.id_ +
         '.json';
 
-        a.innerHTML = 'updated ' + dateYYYYMMDD2dmmmYYYY(mediaData.reviewUpdated);
+        a.innerHTML = 'updated ' +
+        dateYYYYMMDD2dmmmYYYY(mediaData.reviewUpdated).toLowerCase();
     }
     removeCSSClass(mediaEl, 'placeholder');
     removeCSSClass(mediaEl, 'pulsate');
@@ -424,12 +425,13 @@ function loadFullReview(e) {
         mediaID2URL(minimal1MediaObj.id_),
         mediaEl.querySelector('.media-title a').innerHTML
     );
+
+    var dateAdded = mediaEl.querySelector('.review-dates .review-created').innerHTML;
     var a = mediaEl.querySelector('.review-dates .review-updated a');
-    var dateUpdated = (a == null) ? null : trim(a.innerHTML);
-    populateArticleDates(
-        mediaEl.querySelector('.review-dates .review-created').innerHTML,
-        dateUpdated
-    );
+    var dateUpdated = ((a == null) || (trim(a.innerHTML) == '')) ?
+    null : trim(a.innerHTML);
+    populateArticleDates(dateAdded, dateUpdated);
+
     download1MediaReview(minimal1MediaObj, function (status, fullReviewText) {
         var newContent;
         // get the external link button from the dom, since we no longer have
