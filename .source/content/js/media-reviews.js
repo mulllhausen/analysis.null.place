@@ -144,7 +144,7 @@ function populatePageHeader(url, text) {
 
 function populateArticleDates(dateAdded, dateUpdated) {
     // dateAdded is either 2031-12-31 or 'added 31 dec 2031'
-    // dateUpdated is either 2031-12-31 or 'updated 31 dec 2031' or null or ''
+    // dateUpdated is either 2031-12-31 or 'updated 31 dec 2031' or null
 
     var sameDates = (dateAdded == dateUpdated);
 
@@ -152,7 +152,7 @@ function populateArticleDates(dateAdded, dateUpdated) {
     dateYYYYMMDD2dmmmYYYY(dateAdded);
     var articleInfosHTML = '<span class="dates">' + dateAdded + '</span>';
 
-    if ((dateUpdated != null) && (dateUpdated != '') && !sameDates) {
+    if ((dateUpdated != null) && !sameDates) {
         if (!inArray('updated', dateUpdated)) dateUpdated = 'updated ' +
         dateYYYYMMDD2dmmmYYYY(dateUpdated);
 
@@ -424,9 +424,11 @@ function loadFullReview(e) {
         mediaID2URL(minimal1MediaObj.id_),
         mediaEl.querySelector('.media-title a').innerHTML
     );
+    var a = mediaEl.querySelector('.review-dates .review-updated a');
+    var dateUpdated = (a == null) ? null : trim(a.innerHTML);
     populateArticleDates(
         mediaEl.querySelector('.review-dates .review-created').innerHTML,
-        trim(mediaEl.querySelector('.review-dates .review-updated a').innerHTML)
+        dateUpdated
     );
     download1MediaReview(minimal1MediaObj, function (status, fullReviewText) {
         var newContent;
