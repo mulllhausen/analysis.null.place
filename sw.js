@@ -1,4 +1,4 @@
-var latestCache = '2022-05-07_12:52:08';
+var latestCache = '2022-05-07_13:19:31';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -31,7 +31,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=AzjdQi',
+    'https://analysis.null.place/js/media-reviews.js?hash=6QKVck',
     'https://analysis.null.place/css/media-reviews.css?hash=YvYLd9',
     'https://analysis.null.place/book-reviews/img/thumb-bill-bryson-a-short-history-of-nearly-everything-2003.jpg?hash=oqVKkX',
     'https://analysis.null.place/book-reviews/img/thumb-jon-ronson-adventures-with-extremists-2001.jpg?hash=PCqmla',
