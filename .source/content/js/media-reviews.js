@@ -135,12 +135,15 @@ function resetHeaderToParent(parentURL) {
 }
 
 function populatePageHeaderAndTitle(url, text) {
-    // replace() just gets rid of html italic tags
-    var newText = siteGlobals.mediaTypeCaps + ' Review' +
-    ((text == null) ? 's' : (': ' + text.replace(/<\/?i>/g, '')));
-    document.title = newText;
+    // if there is no highlighted media then show lowercase title, otherwise
+    // show caps title with media name and use replace() to get rid of html
+    // italic and underline tags
+    var title = (text == null) ? siteGlobals.mediaType + ' reviews' :
+    siteGlobals.mediaTypeCaps + ' Review: ' + text.replace(/<\/?[iu]>/g, '');
+
+    document.title = title;
     document.querySelector('article header').querySelector('h1.entry-title').
-    innerHTML = '<a href="' + url + '">' + newText + '</a>';
+    innerHTML = '<a href="' + url + '">' + title + '</a>';
 }
 
 function populateArticleDates(dateAdded, dateUpdated) {
