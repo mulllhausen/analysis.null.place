@@ -1,4 +1,4 @@
-var latestCache = '2022-05-05_08:56:35';
+var latestCache = '2022-05-07_12:52:08';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -12,7 +12,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=Iyt_SO',
+    'https://analysis.null.place/theme/js/base.js?hash=klUmu1',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -31,7 +31,7 @@ var mandatoryAssets = [
     // assets for the "book reviews" article
     'https://analysis.null.place/book-reviews/',
     'https://analysis.null.place/book-reviews/index.html',
-    'https://analysis.null.place/js/media-reviews.js?hash=3HNS4G',
+    'https://analysis.null.place/js/media-reviews.js?hash=AzjdQi',
     'https://analysis.null.place/css/media-reviews.css?hash=YvYLd9',
     'https://analysis.null.place/book-reviews/img/thumb-bill-bryson-a-short-history-of-nearly-everything-2003.jpg?hash=oqVKkX',
     'https://analysis.null.place/book-reviews/img/thumb-jon-ronson-adventures-with-extremists-2001.jpg?hash=PCqmla',
