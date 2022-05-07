@@ -70,6 +70,7 @@ def update_globals():
         "verb_past": verb_past,
         "type_plural": media_type_plural,
         "type_": media_type,
+        "type_caps": media_type_caps,
         "not_media_types": not_media_types,
         "not_media_types_plural": not_media_types_plural,
         "search_placeholder": search_placeholder
@@ -517,7 +518,7 @@ def get_1_media_html_data(a_media):
     tmp_media = { field: a_media[field] for field in fields if field in a_media }
     tmp_media.update({
         "type_": media_type,
-        "type_caps": media_type_caps,
+        #"type_caps": media_type_caps,
         "search_placeholder": search_placeholder,
         "not_media_types": not_media_types,
         "not_media_types_plural": not_media_types_plural,

@@ -127,17 +127,18 @@ function removeMediaIDFromURL(parentURL) {
 // 4. only allow searching once all placeholders have been populated
 
 function resetHeaderToParent(parentURL) {
-    populatePageHeader(parentURL);
+    populatePageHeaderAndTitle(parentURL);
     populateArticleDates(
         siteGlobals.earliestReview, siteGlobals.lastModifiedReview
     );
     removeCSSClass(document.querySelector('article header'), 'hidden');
 }
 
-function populatePageHeader(url, text) {
-    var newText = capitalizeFirstLetter(siteGlobals.mediaType) + ' Review' +
-    ((text == null) ? 's' : (': ' + text));
-
+function populatePageHeaderAndTitle(url, text) {
+    // replace() just gets rid of html italic tags
+    var newText = siteGlobals.mediaTypeCaps + ' Review' +
+    ((text == null) ? 's' : (': ' + text.replace(/<\/?i>/g, '')));
+    document.title = newText;
     document.querySelector('article header').querySelector('h1.entry-title').
     innerHTML = '<a href="' + url + '">' + newText + '</a>';
 }
@@ -421,7 +422,7 @@ function loadFullReview(e) {
     var mediaIndex = parseInt(mediaEl.id.replace('filter-index-', ''));
     var minimal1MediaObj = get1MediaIDandHash(mediaIndex);
     linkToSelf(mediaEl, minimal1MediaObj.id_);
-    populatePageHeader(
+    populatePageHeaderAndTitle(
         mediaID2URL(minimal1MediaObj.id_),
         mediaEl.querySelector('.media-title a').innerHTML
     );
