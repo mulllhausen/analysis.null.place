@@ -1,10 +1,10 @@
 {# make pelican variables available to js #}
 <script>
 var siteGlobals = {
-    sitename: '{{ SITENAME }}',
+    sitename: {{ SITENAME | tojson }},
     sitenameASCIIArt: "{{ SITENAME_ASCIIART | replace('\\', '\\\\') | replace('!', '"') | replace('\n', '\\n" +\n') }}",
-    siteURL: '{{ SITEURL }}',
-    githubURL: '{{ GITHUB_URL }}',
+    siteURL: {{ SITEURL | tojson }},
+    githubURL: {{ GITHUB_URL | tojson }},
     facebookAppID: '{{ FACEBOOK_APP_ID }}',
     disqusSiteName: '{{ DISQUS_SITENAME }}',
     googleAdClient: '{{ GOOGLE_AD_CLIENT }}',
@@ -15,17 +15,17 @@ var siteGlobals = {
     ],
     {% if article %}
     article: {
-        {%- if article.title %}title: '{{ article.title }}'{% endif -%}
-        {%- if article.url %}, url: '{{ article.url }}'{% endif -%}
-        {%- if article.parent_article_url %}, parentArticleURL: '{{ article.parent_article_url }}'{% endif -%}
-        {%- if article.console_explain_scripts %}, consoleExplainScripts: '{{ article.console_explain_scripts }}'{% endif -%}
+        {%- if article.title %}title: {{ article.title | tojson }}{% endif -%}
+        {%- if article.url %}, url: {{ article.url | tojson }}{% endif -%}
+        {%- if article.parent_article_url %}, parentArticleURL: {{ article.parent_article_url | tojson }}{% endif -%}
+        {%- if article.console_explain_scripts %}, consoleExplainScripts: {{ article.console_explain_scripts | tojson }}{% endif -%}
     },
     {% elif (page and page.page_as_sub_article) %}
     article: {
-        {%- if page.title %}title: '{{ page.title }}'{% endif -%}
-        {%- if page.url %}, url: '{{ page.url }}'{% endif -%}
-        {%- if page.parent_article_url %}, parentArticleURL: '{{ page.parent_article_url }}'{% endif -%}
-        {%- if page.console_explain_scripts %}, consoleExplainScripts: '{{ page.console_explain_scripts }}'{% endif -%}
+        {%- if page.title %}title: {{ page.title | tojson }}{% endif -%}
+        {%- if page.url %}, url: {{ page.url | tojson }}{% endif -%}
+        {%- if page.parent_article_url %}, parentArticleURL: {{ page.parent_article_url | tojson }}{% endif -%}
+        {%- if page.console_explain_scripts %}, consoleExplainScripts: {{ page.console_explain_scripts | tojson }}{% endif -%}
     },
     {% endif %}
     {% if DEBUG1 %}debugging: true,{% endif %}

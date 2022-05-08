@@ -41,8 +41,8 @@ here too, or learn what to avoid, assuming you have similar tastes to me.</p>
 </div>
 
 <script>
-    siteGlobals.mediaType = '{{ all_media_data.type_ }}';
-    siteGlobals.mediaTypeCaps = '{{ all_media_data.type_caps }}';
+    siteGlobals.mediaType = {{ all_media_data.type_ | tojson }};
+    siteGlobals.mediaTypeCaps = {{ all_media_data.type_caps | tojson }};
     siteGlobals.maxThumbHeight = {{ all_media_data.max_thumb_height }};
     siteGlobals.iconsSVGURL = '
 {%- if double_parsed -%}
