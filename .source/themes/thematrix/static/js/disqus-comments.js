@@ -148,6 +148,10 @@ function disqusReady(data) {
     } catch (e) {}
     commentsLoaded();
 }
+/*
+note: the comment count is now done with jsonp in templates/comments.html to
+avoid the need for a cors proxy
+
 function disqusUpdateCommentCount() {
     ajax(
         'https://cors-anywhere.herokuapp.com/https://' + siteGlobals.disqusSiteName +
@@ -164,3 +168,4 @@ function disqusUpdateCommentCount() {
     );
 }
 disqusUpdateCommentCount(); // init
+*/
