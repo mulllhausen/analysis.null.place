@@ -1,4 +1,4 @@
-var latestCache = '2022-05-09_12:11:08';
+var latestCache = '2022-08-25_21:57:27';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -17,7 +17,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/js/manifest.json',
 
     // common assets for all article pages
-    'https://analysis.null.place/theme/js/comments-section.js?hash=bEAA0S',
+    'https://analysis.null.place/theme/js/comments-section.js?hash=QBgWaM',
 
     // home page
     'https://analysis.null.place/',
