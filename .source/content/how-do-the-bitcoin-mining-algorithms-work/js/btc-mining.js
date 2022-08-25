@@ -144,7 +144,7 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     addEvent(document.getElementById('inputCheckbox3'), 'click', function (e) {
-        e.preventDefault();
+        // e.preventDefault(); // don't do this - it prevents checkbox toggle
         checkbox3Changed(e);
         return false; // do not submit form
     });
@@ -240,7 +240,7 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     addEvent(document.getElementById('bitsAreHex7'), 'click', function (e) {
-        e.preventDefault();
+        // e.preventDefault(); // don't do this - it prevents checkbox toggle
         bitsAreHex7Changed(e);
         return false; // do not submit form
     });
@@ -318,7 +318,7 @@ addEvent(window, 'load', function () {
     });
     triggerEvent(document.getElementById('inputMessage10'), 'change');
     addEvent(document.getElementById('inputCheckbox10'), 'click', function (e) {
-        e.preventDefault();
+        // e.preventDefault(); // don't do this - it prevents checkbox toggle
         runHash10Changed(e);
         return false; // do not submit form
     });
