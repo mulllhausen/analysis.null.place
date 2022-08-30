@@ -51,7 +51,7 @@ table#dec2hexData tr:nth-child(2n + 2) td {
 #dec2hexTable td {
     padding: 1px;
 }
-#btnRunHash3 {
+#btnRunHash3, #btnRunHashSHA256Prob {
     margin-top: 21px;
 }
 #info3 {

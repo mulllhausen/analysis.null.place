@@ -5,6 +5,21 @@ var stopHashingForm = {}; // eg {2: false}
 var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
 var difficultyAttempts = {}; // ie {1:8, 2: 128, etc}
 var txsPerBlock = [];
+var selectedSHA256ProbabilityDigit = 0;
+var probabilitySVGs = {
+    'coin': {
+        yAxisNumberEls: [],
+        digitEls: { heads: null, tails: null }
+    },
+    'dice': {
+        yAxisNumberEls: [],
+        digitEls: []
+    },
+    'sha256Digit': {
+        yAxisNumberEls: [],
+        digitEls: []
+    }
+};
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
     versionInt : null,
@@ -149,6 +164,16 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form3', permanently);
+
+    // probability distribution graph
+    initSHA256ProbabilityDigitDropdown();
+    addEvent(
+        document.getElementById('inspectSHA256ProbDigit'), 'change', function (e) {
+        e.preventDefault();
+        sha256ProbabilityDigitChanged(e);
+        return false; // do not submit form
+    });
+    initProbabilitySVG();
 
     // dragable blockchain svg
     initBlockchainSVG();
@@ -2396,6 +2421,88 @@ function difficulty11Changed(e) {
     '(16<sup>' + numDifficultyChars + '</sup>)/2 = ' +
     addThousandCommas(difficultyAttempts[numDifficultyChars]) +
     ' hashes on average';
+}
+
+// probability distribution graph
+function initSHA256ProbabilityDigitDropdown() {
+    var dropdownEl = document.getElementById('inspectSHA256ProbDigit');
+    var contentHTML = '';
+    for (var i = 1; i <= 64; i++) {
+        contentHTML += '<option value="' + i + '">digit ' + i + '</option>';
+    }
+    dropdownEl.innerHTML = contentHTML;
+}
+
+function sha256ProbabilityDigitChanged(e) {
+    selectedSHA256ProbabilityDigit = parseInt(e.currentTarget.value);
+    var selectArray = new Array(64); // all off
+    selectArray[selectedSHA256ProbabilityDigit] = true;
+    borderTheDigits('#inspectSHA256ProbDigit', selectArray); // erase colors
+    resetProbabilitySVG('sha256Digit');
+}
+
+function initProbabilitySVG() {
+    debugger;
+    var svg = document.getElementById('probabilityGraphSVG').contentDocument.
+    getElementsByTagName('svg')[0];
+    var svgView = svg.getElementById('view');
+
+    probabilitySVGs.sha256Digit.yAxisNumberEls[0] = svgView.getElementById('yAxisMiddleNumber');
+    probabilitySVGs.sha256Digit.yAxisNumberEls[1] = svgView.getElementById('yAxisTopNumber');
+
+    // create the bars
+    var barCaptions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a',
+    'b', 'c', 'd', 'e', 'f'];
+    var numBars = barCaptions.length;
+    var spacingBetweenBars = 5;
+    var xAxisEl = svgView.querySelector('.xAxis');
+    var xAxisLength = xAxisEl.x2.baseVal.value - xAxisEl.x1.baseVal.value;
+    //xAxisLength = (numBars * barWidth) + (numBars + 1) * spacingBetweenBars
+    var barWidth = (xAxisLength - ((numBars + 1) * spacingBetweenBars)) / numBars;
+
+    var currentBarLeftX = xAxisEl.x1.baseVal.value;
+    for (var barI = 0; barI < numBars; barI++) {
+        currentBarLeftX += spacingBetweenBars;
+        var caption = barCaptions[barI];
+        var newSVGGroup = document.createElementNS(
+            'http://www.w3.org/2000/svg', 'g'
+        );
+        newSVGGroup.setAttribute(
+            'transform', 'translate(' + currentBarLeftX + ',' + 170 + ')'
+        );
+        var barXML = '<rect' +
+            ' class="probabilityBar"' +
+            ' id="p' + caption + '"' +
+            ' x="0"' +
+            ' y="0"' +
+            ' width="' + barWidth + '"' +
+            ' height="10"' +
+            ' transform="scale(1,-1)"' +
+        '/>';
+        var barCaptionXML = '<text' +
+            ' class="xAxisNumber"' +
+            ' x="' + (barWidth / 2) + '"' +
+            ' y="20"' +
+        '>' + caption + '</text>';
+        newSVGGroup.innerHTML = barXML + barCaptionXML;
+        svgView.appendChild(newSVGGroup);
+
+        currentBarLeftX += barWidth;
+
+        probabilitySVGs.sha256Digit.digitEls[barI] =
+        newSVGGroup.getElementsByTagName('rect')[0];
+    }
+
+    removeGlassCase('probabilityGraph', permanently);
+}
+
+function resetProbabilitySVG(which) {
+    var model = probabilitySVGs[which];
+    for (var barI = 0; barI < model.digitEls.length; barI++) {
+        model[barI].setAttribute('height', 0);
+    }
+    model.yAxisNumberEls[0].textContent = '.5';
+    model.yAxisNumberEls[1].textContent = '1';
 }
 
 // dragable blockchain svg
