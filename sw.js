@@ -1,4 +1,4 @@
-var latestCache = '2022-08-25_23:39:31';
+var latestCache = '2022-08-30_23:24:30';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -22,10 +22,6 @@ var mandatoryAssets = [
     // home page
     'https://analysis.null.place/',
     'https://analysis.null.place/index.html',
-
-    // archives page
-    'https://analysis.null.place/archives/',
-    'https://analysis.null.place/archives/index.html',
 
 
     // assets for the "book reviews" article
