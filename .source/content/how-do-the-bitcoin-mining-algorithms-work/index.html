@@ -481,30 +481,30 @@ each other over time, like so:</p>
 {{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
 
-{{ form_container('probabilityGraph', 'start') }}
-    <input type="checkbox" id="inputCheckboxSHA256Prob" disabled>
-    <label for="inputCheckboxSHA256Prob">run automatically</label>
+{{ form_container('probabilityGraph_sha256Digit', 'start') }}
+    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit" disabled>
+    <label for="inputCheckboxAutomatic_sha256Digit">run automatically</label>
     <br><br>
     <div class="left">
-        <label for="inspectSHA256ProbDigit" class="for-select">inspect</label><br>
-        <select id="inspectSHA256ProbDigit" disabled></select>
+        <label for="selectBin_sha256Digit" class="for-select">inspect</label><br>
+        <select id="selectBin_sha256Digit" disabled></select>
     </div>
     <div class="left">
-        <label for="inputMessageSHA256Prob3" class="for-textbox">pre-image nonce</label><br>
-        <input id="inputMessageSHA256Prob3" type="text" value="a" disabled>
+        <label for="inputMessage_sha256Digit" class="for-textbox">pre-image nonce</label><br>
+        <input id="inputMessage_sha256Digit" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHashSHA256Prob" disabled>Run SHA256 Manually</button>
+        <button id="btnRunHash_sha256Digit" disabled>Run SHA256 Manually</button>
     </div>
     <br><br>
-{{ codeblock('codeblockSHA256ProbHashResults', start = True) }}<span id="showResultsSHA256Prob" style="display:none;"><span id="hashSHA256ProbResult" class="individual-digits"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockHashResults_sha256Digit', start = True) }}<span id="showResults_sha256Digit" style="display:none;"><span id="hashResult_sha256Digit" class="individual-digits"></span>{{ codeblock(end = True) }}
     <br>
     <object
-        id="probabilityGraphSVG"
-        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
+        id="probabilityGraphSVG_sha256Digit"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph-sha256Digit.svg'] }}"
         type="image/svg+xml"
     ></object>
-{{ form_container('probabilityGraph', 'end') }}
+{{ form_container('probabilityGraph_sha256Digit', 'end') }}
 
 <p>Looking at that diagram, we can see that the <i>previous block hash</i> value
 in the current block is found by doing a <i>SHA265</i> hash twice in succession

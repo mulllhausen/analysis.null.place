@@ -26,28 +26,28 @@ viewBox="0 0 430 200" style="background-color:black" class="global">
         fill: #7db904;/*green*/
         stroke-width: 1;
     }
-    .xAxisNumber {
-        text-anchor: middle;/*horizontal*/
+    .axisNumber {
         fill: #7db904;/*green*/
         font-size: 16px;
+    }
+    .xAxisNumber {
+        text-anchor: middle;/*horizontal*/
     }
     .xAxis, .yAxis, .yAxisNotch {
         stroke: #7db904;/*green*/
     }
     .yAxisNumber {
         text-anchor: end;/*right side*/
-        fill: #7db904;/*green*/
-        font-size: 16px;
     }
 ]]></style>
     <g id="view">
-        <text id="yAxisTopNumber" class="yAxisNumber" x="30" y="25">1</text>
+        <text id="yAxisTopNumber" class="axisNumber yAxisNumber" x="30" y="25">1</text>
         <line class="yAxisNotch" x1="35" y1="20" x2="40" y2="20"/>
 
-        <text id="yAxisMiddleNumber" class="yAxisNumber" x="30" y="102.5">.5</text>
+        <text id="yAxisMiddleNumber" class="axisNumber yAxisNumber" x="30" y="102.5">.5</text>
         <line class="yAxisNotch" x1="35" y1="97.5" x2="40" y2="97.5"/>
 
-        <text class="yAxisNumber" x="30" y="175">0</text>
+        <text class="axisNumber yAxisNumber" x="30" y="175">0</text>
         <line class="yAxisNotch" x1="35" y1="170" x2="40" y2="170"/>
 
         <line class="yAxis" x1="40" y1="20" x2="40" y2="170"/>
