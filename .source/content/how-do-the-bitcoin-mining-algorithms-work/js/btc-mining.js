@@ -2523,18 +2523,24 @@ function initDropdownProbabilityOptions(which) {
     dropdownEl.innerHTML = contentHTML;
 }
 
+// note: we only get here for sha256 hash probabilities
 function probabilityDigitChanged(e, which) {
     var model = probabilitySVGs[which];
 
     model.selectedDigit = parseInt(e.currentTarget.value);
-    // todo: border one digit using css
-    //model.matchList = newList(64, false);
-    //model.matchList[model.selectedDigit] = true;
-    //borderTheDigits('#hashResult_' + which, model.matchList); // erase colors
-    //var codeblock = document.queryS('').styles nth child
-
-    model.countPerBin = newList(model.bins.length, 0);
-    updateProbabilitySVG(which);
+    var adHocStyleSheetID = 'probabilityDigitsStyleSheet';
+    var codeblockIDSelector = '#codeblockRandomResults_sha256Digit ';
+    var adHocStyleSheet = codeblockIDSelector +
+    '.individual-digit:nth-child(' + (model.selectedDigit + 1) + ') {' +
+        'border: 1px solid ' + passColor + ';' +
+    '}' +
+    codeblockIDSelector +
+    '.individual-digit:nth-child(' + (model.selectedDigit + 2) + ') {' +
+        'border-left: 1px solid ' + passColor + ';' +
+    '}';
+    removeHocStyleSheet(adHocStyleSheetID);
+    addHocStyleSheet(adHocStyleSheetID, adHocStyleSheet);
+    resetProbabilityForm(which);
 }
 
 function newList(length, initVal) {
@@ -2605,7 +2611,6 @@ function incrementProbabilityGraph(which) {
             latestResult = model.bins[randomlySelectedBin];
             break;
         case 'sha256Digit':
-// see runHash1Or2Or3Clicked
             var messageEl = document.getElementById('inputMessage_sha256Digit');
             var message = messageEl.value;
             var bitArray = sjcl.hash.sha256.hash(message);
@@ -2613,7 +2618,7 @@ function incrementProbabilityGraph(which) {
             randomlySelectedBin = parseInt(sha256HashResult[model.selectedDigit], 16);
             latestResult = '<span>' +
                 borderTheChars(sha256HashResult, 1) +
-            '</span>' + '<br>'; // model.matchList);
+            '</span>' + '<br>';
             messageEl.value = incrementAlpha(message);
             break;
     }
@@ -2642,7 +2647,6 @@ function updateProbabilitySVG(which) {
 function resetProbabilityForm(which) {
     var model = probabilitySVGs[which];
     stopHashingForm[which] = true;
-    document.getElementById('inputCheckboxAutomatic_' + which).disabled = false;
     model.countPerBin = newList(model.bins.length, 0);
     model.totalCount = 0;
     document.getElementById('randomResult_' + which).innerHTML = '';

@@ -236,6 +236,21 @@ function removeCSSClass(el, removeClass) {
     el.className = classList.join(' ');
 }
 
+function addHocStyleSheet(id, styles) {
+    // thanks to stackoverflow.com/a/524721
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    head.appendChild(style);
+    style.type = 'text/css';
+    style.id = id;
+    if (style.styleSheet) style.styleSheet.cssText = styles; // ie <= 8
+    else style.appendChild(document.createTextNode(styles));
+}
+
+function removeHocStyleSheet(id) {
+    deleteElementById(id);
+}
+
 var permanentlyRemovedGlassCases = [];
 function removeGlassCase(formID, permanently) {
     if (inArray(formID, permanentlyRemovedGlassCases)) return;
