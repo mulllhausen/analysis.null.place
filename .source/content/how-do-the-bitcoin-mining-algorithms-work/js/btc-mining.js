@@ -10,23 +10,21 @@ var probabilitySVGs = {
         bins: ['heads', 'tails'],
         countPerBin: [],
         totalCount: 0, // init
-        //yAxisNumberEls: [],
         digitEls: {}
     },
     dice: {
         bins: [1, 2, 3, 4, 5, 6],
         countPerBin: [],
         totalCount: 0, // init
-        //yAxisNumberEls: [],
         digitEls: {}
     },
     sha256Digit: {
         bins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'],
         countPerBin: [],
         totalCount: 0, // init
-        //yAxisNumberEls: [],
         digitEls: {},
-        selectedDigit: 0 // init 0-63
+        selectedDigit: 0, // init 0-63
+        matchList: []
     }
 };
 var miningData = { // note: raw values are taken directly from the input field
@@ -438,10 +436,15 @@ debugger;
         triggerEvent(dropdownEl, 'change');
     }
 
-    var btn = '#probabilityGraph_' + which + ' .btn';
+    var probParams = { // use an object for pass-by-reference
+        which: which,
+        state: 'stopped'
+    };
+    stopHashingForm[which] = false;
+    var btn = '#probabilityForm_' + which + ' .btn';
     addEvent(document.querySelector(btn + 'Run'), 'click', function (e) {
         e.preventDefault();
-        runProbabilityGraphClicked(which);
+        runProbabilityGraphClicked(e, probParams);
         return false; // do not submit form
     });
 
@@ -451,7 +454,7 @@ debugger;
         return false; // do not submit form
     });
 
-    removeGlassCase('probabilityGraph_' + which, permanently);
+    removeGlassCase('probabilityForm_' + which, permanently);
 }
 
 // end initializations
@@ -2515,7 +2518,7 @@ function initDropdownProbabilityOptions(which) {
     var dropdownEl = document.getElementById('selectBin_' + which);
     var contentHTML = '';
     for (var i = 0; i < 64; i++) {
-        contentHTML += '<option value="' + i + '">digit ' + i + '</option>';
+        contentHTML += '<option value="' + i + '">digit ' + (i + 1) + '</option>';
     }
     dropdownEl.innerHTML = contentHTML;
 }
@@ -2524,9 +2527,11 @@ function probabilityDigitChanged(e, which) {
     var model = probabilitySVGs[which];
 
     model.selectedDigit = parseInt(e.currentTarget.value);
-    var selectArray = newList(64, false);
-    selectArray[model.selectedDigit] = true;
-    borderTheDigits('#hashResult_' + which, selectArray); // erase colors
+    // todo: border one digit using css
+    //model.matchList = newList(64, false);
+    //model.matchList[model.selectedDigit] = true;
+    //borderTheDigits('#hashResult_' + which, model.matchList); // erase colors
+    //var codeblock = document.queryS('').styles nth child
 
     model.countPerBin = newList(model.bins.length, 0);
     updateProbabilitySVG(which);
@@ -2540,9 +2545,54 @@ function newList(length, initVal) {
     return newList;
 }
 
-function runProbabilityGraphClicked(which) {
+function runProbabilityGraphClicked(e, params) {
+    switch (params.state) {
+        case 'running':
+            stopHashingForm[params.which] = true;
+            params.state = 'stopped';
+            switch (params.which) {
+                case 'coin': e.currentTarget.innerHTML = 'Toss Coin'; break;
+                case 'dice': e.currentTarget.innerHTML = 'Roll Dice'; break;
+                case 'sha256Digit': e.currentTarget.innerHTML = 'Run SHA256'; break;
+            }
+            setProbabilityForm(params.which, true);
+            break;
+        case 'stopped':
+            stopHashingForm[params.which] = false;
+            params.state = 'running';
+            e.currentTarget.innerHTML = 'Stop';
+            setProbabilityForm(params.which, false);
+
+            var automatically = document.
+            getElementById('inputCheckboxAutomatic_' + params.which).checked;
+
+            (function loop(params) {
+                if (stopHashingForm[params.which]) return;
+                incrementProbabilityGraph(params.which);
+                if (automatically) setTimeout(function () { loop(params); }, 0);
+                else runProbabilityGraphClicked(e, params);
+            })(params);
+            break;
+    }
+}
+
+function setProbabilityForm(which, enabled) {
+    var queries = [
+        '#inputCheckboxAutomatic_' + which,
+        '#probabilityForm_' + which + ' .btnReset'
+    ];
+    if (which == 'sha256Digit') {
+        queries.push('#selectBin_sha256Digit');
+        queries.push('#inputMessage_sha256Digit');
+    }
+    for (var i = 0; i < queries.length; i++) {
+        document.querySelector(queries[i]).disabled = !enabled;
+    }
+}
+
+function incrementProbabilityGraph(which) {
     var model = probabilitySVGs[which];
-    var form = document.getElementById('probabilityGraph_' + which);
+    var form = document.getElementById('probabilityForm_' + which);
     var randomlySelectedBin;
     var latestResult;
     switch (which) {
@@ -2555,25 +2605,25 @@ function runProbabilityGraphClicked(which) {
             latestResult = model.bins[randomlySelectedBin];
             break;
         case 'sha256Digit':
-            var message = document.getElementById('inputMessage_' + which).value;
+// see runHash1Or2Or3Clicked
+            var messageEl = document.getElementById('inputMessage_sha256Digit');
+            var message = messageEl.value;
             var bitArray = sjcl.hash.sha256.hash(message);
             var sha256HashResult = sjcl.codec.hex.fromBits(bitArray); // 64 digits
             randomlySelectedBin = parseInt(sha256HashResult[model.selectedDigit], 16);
-            codeblockText = sha256Hash;
+            latestResult = '<span>' +
+                borderTheChars(sha256HashResult, 1) +
+            '</span>' + '<br>'; // model.matchList);
+            messageEl.value = incrementAlpha(message);
             break;
     }
     model.countPerBin[randomlySelectedBin]++; // +1 for this digit's count
     model.totalCount++;
-    //var wrapButtonIsOn = (
-    //    form.querySelector('button.wrap-nowrap').getAttribute('wrapped') == 'true'
-    //);
-    var probResults = document.getElementById('randomResult_' + which);
-    probResults.innerHTML = latestResult + probResults.innerHTML;
+    var probResultsEl = document.getElementById('randomResult_' + which);
+    probResultsEl.innerHTML = latestResult + probResultsEl.innerHTML;
 
     document.getElementById('randomResultCount_' + which).innerHTML =
     model.totalCount;
-    //if (!wrapButtonIsOn) alignText(hash0Results);
-    //hash0Results.closest('.codeblock-container').style.display = 'block';
     updateProbabilitySVG(which);
 }
 
@@ -2591,6 +2641,8 @@ function updateProbabilitySVG(which) {
 
 function resetProbabilityForm(which) {
     var model = probabilitySVGs[which];
+    stopHashingForm[which] = true;
+    document.getElementById('inputCheckboxAutomatic_' + which).disabled = false;
     model.countPerBin = newList(model.bins.length, 0);
     model.totalCount = 0;
     document.getElementById('randomResult_' + which).innerHTML = '';
@@ -2608,8 +2660,6 @@ function initProbabilitySVG(which) {
     var svgView = svg.getElementById('view');
     var yAxisEl = svgView.querySelector('.yAxis');
     probabilitySVGYAxisHeight = yAxisEl.y2.baseVal.value - yAxisEl.y1.baseVal.value;
-    //model.yAxisNumberEls[0] = svg.getElementById('yAxisMiddleNumber');
-    //model.yAxisNumberEls[1] = svg.getElementById('yAxisTopNumber');
 
     // create the bars from bins
     var numBars = model.bins.length;
@@ -2635,7 +2685,7 @@ function initProbabilitySVG(which) {
             ' x="0"' +
             ' y="0"' +
             ' width="' + barWidth + '"' +
-            ' height="10"' +
+            ' height="0"' +
             ' transform="scale(1,-1)"' +
         '/>';
         var barCaptionXML = '<text' +

@@ -481,7 +481,7 @@ each other over time, like so:</p>
 {{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
 
-{{ form_container('probabilityGraph_coin', 'start') }}
+{{ form_container('probabilityForm_coin', 'start') }}
     <input type="checkbox" id="inputCheckboxAutomatic_coin" disabled>
     <label for="inputCheckboxAutomatic_coin">run automatically</label>
     <br><br>
@@ -490,16 +490,16 @@ each other over time, like so:</p>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_coin', start = True) }}total coin tosses: <span id="randomResultCount_coin">0</span><br>coin&nbsp;toss:&nbsp;<span id="randomResult_coin"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockRandomResults_coin', start = True) }}total coin tosses: <span id="randomResultCount_coin">0</span><br>coin&nbsp;toss:&nbsp;<span id="randomResult_coin"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_coin"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
     ></object>
-{{ form_container('probabilityGraph_coin', 'end') }}
+{{ form_container('probabilityForm_coin', 'end') }}
 
-{{ form_container('probabilityGraph_dice', 'start') }}
+{{ form_container('probabilityForm_dice', 'start') }}
     <input type="checkbox" id="inputCheckboxAutomatic_dice" disabled>
     <label for="inputCheckboxAutomatic_dice">run automatically</label>
     <br><br>
@@ -508,17 +508,17 @@ each other over time, like so:</p>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_dice', start = True) }}total dice rolls: <span id="randomResultCount_dice">0</span><br>dice&nbsp;roll:&nbsp;<span id="randomResult_dice"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockRandomResults_dice', start = True) }}total dice rolls: <span id="randomResultCount_dice">0</span><br>dice&nbsp;roll:&nbsp;<span id="randomResult_dice"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_dice"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
     ></object>
-{{ form_container('probabilityGraph_dice', 'end') }}
+{{ form_container('probabilityForm_dice', 'end') }}
 
-{{ form_container('probabilityGraph_sha256Digit', 'start') }}
-    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit" disabled>
+{{ form_container('probabilityForm_sha256Digit', 'start') }}
+    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit">
     <label for="inputCheckboxAutomatic_sha256Digit">run automatically</label>
     <br><br>
     <div class="left">
@@ -526,7 +526,7 @@ each other over time, like so:</p>
         <select id="selectBin_sha256Digit" disabled></select>
     </div>
     <div class="left">
-        <label for="inputMessage_sha256Digit" class="for-textbox">pre-image nonce</label><br>
+        <label for="inputMessage_sha256Digit" class="for-textbox">pre-image</label><br>
         <input id="inputMessage_sha256Digit" type="text" value="a" disabled>
     </div>
     <div class="left">
@@ -534,14 +534,14 @@ each other over time, like so:</p>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_sha256Digit', start = True) }}total hashes: <span id="randomResult_sha256Digit"></span><br><span id="randomResult_sha256Digit" class="individual-digits"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockRandomResults_sha256Digit', start = True) }}total hashes: <span id="randomResultCount_sha256Digit"></span><br><span id="randomResult_sha256Digit"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_sha256Digit"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
     ></object>
-{{ form_container('probabilityGraph_sha256Digit', 'end') }}
+{{ form_container('probabilityForm_sha256Digit', 'end') }}
 
 <p>Looking at that diagram, we can see that the <i>previous block hash</i> value
 in the current block is found by doing a <i>SHA265</i> hash twice in succession
