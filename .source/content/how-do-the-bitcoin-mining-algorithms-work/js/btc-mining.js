@@ -10,13 +10,15 @@ var probabilitySVGs = {
         bins: ['heads', 'tails'],
         countPerBin: [],
         totalCount: 0, // init
-        digitEls: {}
+        digitEls: {},
+        enableSpeed: false
     },
     dice: {
         bins: [1, 2, 3, 4, 5, 6],
         countPerBin: [],
         totalCount: 0, // init
-        digitEls: {}
+        digitEls: {},
+        enableSpeed: false
     },
     sha256Digit: {
         bins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'],
@@ -24,7 +26,8 @@ var probabilitySVGs = {
         totalCount: 0, // init
         digitEls: {},
         selectedDigit: 0, // init 0-63
-        matchList: []
+        matchList: [],
+        enableSpeed: true
     }
 };
 var miningData = { // note: raw values are taken directly from the input field
@@ -412,16 +415,6 @@ debugger;
 
     // must come before triggering the dropdown to reset this graph
     initProbabilitySVG(which);
-
-    addEvent(
-        document.getElementById('inputCheckboxAutomatic_' + which),
-        'click',
-        function (e) {
-            // e.preventDefault(); // don't do this - it prevents checkbox toggle
-            probabilityCheckboxAutomaticChanged(e, which);
-            return false; // do not submit form
-        }
-    );
 
     // models that have a selected digit need a dropdown to choose the diigit
     if (model.hasOwnProperty('selectedDigit')) {
@@ -2508,12 +2501,6 @@ function difficulty11Changed(e) {
 }
 
 // probability distribution graph
-function probabilityCheckboxAutomaticChanged(e, which) {
-    document.getElementById('btnRunHash_' + which).innerHTML = 'Hash ' + (
-        e.currentTarget.checked ? 'automatically' : 'manually'
-    ) + ' with SHA256';
-}
-
 function initDropdownProbabilityOptions(which) {
     var dropdownEl = document.getElementById('selectBin_' + which);
     var contentHTML = '';
@@ -2574,7 +2561,8 @@ function runProbabilityGraphClicked(e, params) {
 
             (function loop(params) {
                 if (stopHashingForm[params.which]) return;
-                incrementProbabilityGraph(params.which);
+                incrementProbabilityCodeblock(params.which);
+                updateProbabilitySVG(params.which);
                 if (automatically) setTimeout(function () { loop(params); }, 0);
                 else runProbabilityGraphClicked(e, params);
             })(params);
@@ -2588,6 +2576,7 @@ function setProbabilityForm(which, enabled) {
         '#probabilityForm_' + which + ' .btnReset'
     ];
     if (which == 'sha256Digit') {
+        queries.push('#inputCheckboxSpeed_sha256Digit');
         queries.push('#selectBin_sha256Digit');
         queries.push('#inputMessage_sha256Digit');
     }
@@ -2596,7 +2585,7 @@ function setProbabilityForm(which, enabled) {
     }
 }
 
-function incrementProbabilityGraph(which) {
+function incrementProbabilityCodeblock(which) {
     var model = probabilitySVGs[which];
     var form = document.getElementById('probabilityForm_' + which);
     var randomlySelectedBin;
@@ -2618,18 +2607,35 @@ function incrementProbabilityGraph(which) {
             randomlySelectedBin = parseInt(sha256HashResult[model.selectedDigit], 16);
             latestResult = '<span>' +
                 borderTheChars(sha256HashResult, 1) +
-            '</span>' + '<br>';
+            '</span>';
             messageEl.value = incrementAlpha(message);
             break;
     }
     model.countPerBin[randomlySelectedBin]++; // +1 for this digit's count
     model.totalCount++;
-    var probResultsEl = document.getElementById('randomResult_' + which);
-    probResultsEl.innerHTML = latestResult + probResultsEl.innerHTML;
+    updateRandomResults(which, latestResult);
 
     document.getElementById('randomResultCount_' + which).innerHTML =
     model.totalCount;
-    updateProbabilitySVG(which);
+}
+
+function updateRandomResults(which, latestResult) {
+    var model = probabilitySVGs[which];
+    var probResultsEl = document.getElementById('randomResult_' + which);
+    var previousResultsStr = probResultsEl.innerHTML;
+    if (
+        which == 'sha256Digit' &&
+        model.enableSpeed && // avoid a dom call if possible
+        previousResultsStr.length > 0 &&
+        document.getElementById('inputCheckboxSpeed_sha256Digit').checked
+    ) {
+        var previousResultsList = previousResultsStr.split('<br>');
+        if (previousResultsList.length > 10) {
+            previousResultsList = previousResultsList.slice(0, 9);
+            previousResultsStr = previousResultsList.join('<br>');
+        }
+    }
+    probResultsEl.innerHTML = latestResult + '<br>' + previousResultsStr;
 }
 
 function updateProbabilitySVG(which) {
