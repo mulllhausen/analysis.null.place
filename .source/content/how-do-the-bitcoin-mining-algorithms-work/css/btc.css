@@ -154,6 +154,13 @@ ul.error li {
 #blockchainSVG {
     width: 100%;
 }
+#probabilityGraphSVG_coin,
+#probabilityGraphSVG_dice,
+#probabilityGraphSVG_sha256Digit {
+    display: table;
+    margin: 0 auto;
+    max-width: 100%;
+}
 #form10 textarea {
     width: 100%;
     resize: vertical;

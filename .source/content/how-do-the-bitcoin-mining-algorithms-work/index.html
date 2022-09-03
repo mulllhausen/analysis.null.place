@@ -486,11 +486,11 @@ each other over time, like so:</p>
     <label for="inputCheckboxAutomatic_coin">run automatically</label>
     <br><br>
     <div class="left">
-        <button id="btnRun" disabled>Toss Coin Once</button>
+        <button class="btnRun" disabled>Toss Coin</button>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_coin', start = True) }}<span id="showResults_coin" style="display:none;"><span id="hashResult_coin" class="individual-digits"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockHashResults_coin', start = True) }}total coin tosses: <span id="randomResultCount_coin">0</span><br>coin&nbsp;toss:&nbsp;<span id="randomResult_coin"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_coin"
@@ -504,11 +504,11 @@ each other over time, like so:</p>
     <label for="inputCheckboxAutomatic_dice">run automatically</label>
     <br><br>
     <div class="left">
-        <button class="btnRun" disabled>Roll Dice Once</button>
+        <button class="btnRun" disabled>Roll Dice</button>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_dice', start = True) }}<span id="showResults_dice" style="display:none;"><span id="hashResult_dice" class="individual-digits"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockHashResults_dice', start = True) }}total dice rolls: <span id="randomResultCount_dice">0</span><br>dice&nbsp;roll:&nbsp;<span id="randomResult_dice"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_dice"
@@ -530,11 +530,11 @@ each other over time, like so:</p>
         <input id="inputMessage_sha256Digit" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRun" disabled>Run SHA256 Manually</button>
+        <button class="btnRun" disabled>Run SHA256</button>
         <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
-{{ codeblock('codeblockHashResults_sha256Digit', start = True) }}<span id="showResults_sha256Digit" style="display:none;"><span id="hashResult_sha256Digit" class="individual-digits"></span>{{ codeblock(end = True) }}
+{{ codeblock('codeblockHashResults_sha256Digit', start = True) }}total hashes: <span id="randomResult_sha256Digit"></span><br><span id="randomResult_sha256Digit" class="individual-digits"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_sha256Digit"

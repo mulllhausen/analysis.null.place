@@ -52,7 +52,5 @@ viewBox="0 0 430 200" style="background-color:black" class="global">
 
         <line class="yAxis" x1="50" y1="20" x2="50" y2="170"/>
         <line class="xAxis" x1="50" y1="170" x2="410" y2="170"/>
-
-        <rect x="0" y="0" width="430" height="200" stroke="red"/>
     </g>
 </svg>
