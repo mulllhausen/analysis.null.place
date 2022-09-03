@@ -41,17 +41,17 @@ viewBox="0 0 430 200" style="background-color:black" class="global">
     }
 ]]></style>
     <g id="view">
-        <text id="yAxisTopNumber" class="axisNumber yAxisNumber" x="30" y="25">1</text>
-        <line class="yAxisNotch" x1="35" y1="20" x2="40" y2="20"/>
+        <text id="yAxisTopNumber" class="axisNumber yAxisNumber" x="40" y="25">100%</text>
+        <line class="yAxisNotch" x1="45" y1="20" x2="50" y2="20"/>
 
-        <text id="yAxisMiddleNumber" class="axisNumber yAxisNumber" x="30" y="102.5">.5</text>
-        <line class="yAxisNotch" x1="35" y1="97.5" x2="40" y2="97.5"/>
+        <text id="yAxisMiddleNumber" class="axisNumber yAxisNumber" x="40" y="102.5">50%</text>
+        <line class="yAxisNotch" x1="45" y1="97.5" x2="50" y2="97.5"/>
 
-        <text class="axisNumber yAxisNumber" x="30" y="175">0</text>
-        <line class="yAxisNotch" x1="35" y1="170" x2="40" y2="170"/>
+        <text class="axisNumber yAxisNumber" x="40" y="175">0%</text>
+        <line class="yAxisNotch" x1="45" y1="170" x2="50" y2="170"/>
 
-        <line class="yAxis" x1="40" y1="20" x2="40" y2="170"/>
-        <line class="xAxis" x1="40" y1="170" x2="400" y2="170"/>
+        <line class="yAxis" x1="50" y1="20" x2="50" y2="170"/>
+        <line class="xAxis" x1="50" y1="170" x2="410" y2="170"/>
 
         <rect x="0" y="0" width="430" height="200" stroke="red"/>
     </g>
