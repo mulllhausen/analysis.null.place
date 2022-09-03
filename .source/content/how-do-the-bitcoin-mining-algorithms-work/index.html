@@ -481,6 +481,42 @@ each other over time, like so:</p>
 {{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
 
+{{ form_container('probabilityGraph_coin', 'start') }}
+    <input type="checkbox" id="inputCheckboxAutomatic_coin" disabled>
+    <label for="inputCheckboxAutomatic_coin">run automatically</label>
+    <br><br>
+    <div class="left">
+        <button id="btnRun" disabled>Toss Coin Once</button>
+        <button class="btnReset" disabled>Reset</button>
+    </div>
+    <br><br>
+{{ codeblock('codeblockHashResults_coin', start = True) }}<span id="showResults_coin" style="display:none;"><span id="hashResult_coin" class="individual-digits"></span>{{ codeblock(end = True) }}
+    <br>
+    <object
+        id="probabilityGraphSVG_coin"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
+        type="image/svg+xml"
+    ></object>
+{{ form_container('probabilityGraph_coin', 'end') }}
+
+{{ form_container('probabilityGraph_dice', 'start') }}
+    <input type="checkbox" id="inputCheckboxAutomatic_dice" disabled>
+    <label for="inputCheckboxAutomatic_dice">run automatically</label>
+    <br><br>
+    <div class="left">
+        <button class="btnRun" disabled>Roll Dice Once</button>
+        <button class="btnReset" disabled>Reset</button>
+    </div>
+    <br><br>
+{{ codeblock('codeblockHashResults_dice', start = True) }}<span id="showResults_dice" style="display:none;"><span id="hashResult_dice" class="individual-digits"></span>{{ codeblock(end = True) }}
+    <br>
+    <object
+        id="probabilityGraphSVG_dice"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
+        type="image/svg+xml"
+    ></object>
+{{ form_container('probabilityGraph_dice', 'end') }}
+
 {{ form_container('probabilityGraph_sha256Digit', 'start') }}
     <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit" disabled>
     <label for="inputCheckboxAutomatic_sha256Digit">run automatically</label>
@@ -494,14 +530,15 @@ each other over time, like so:</p>
         <input id="inputMessage_sha256Digit" type="text" value="a" disabled>
     </div>
     <div class="left">
-        <button id="btnRunHash_sha256Digit" disabled>Run SHA256 Manually</button>
+        <button id="btnRun" disabled>Run SHA256 Manually</button>
+        <button class="btnReset" disabled>Reset</button>
     </div>
     <br><br>
 {{ codeblock('codeblockHashResults_sha256Digit', start = True) }}<span id="showResults_sha256Digit" style="display:none;"><span id="hashResult_sha256Digit" class="individual-digits"></span>{{ codeblock(end = True) }}
     <br>
     <object
         id="probabilityGraphSVG_sha256Digit"
-        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph-sha256Digit.svg'] }}"
+        data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
     ></object>
 {{ form_container('probabilityGraph_sha256Digit', 'end') }}
