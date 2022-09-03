@@ -409,7 +409,6 @@ function initCodeblocks_ToggleWrapsMobileOnly() {
 }
 
 function initForm_probabilityDistributionGraph(which) {
-debugger;
     var model = probabilitySVGs[which];
     model.countPerBin = newList(model.bins.length, 0);
 
@@ -2623,19 +2622,22 @@ function updateRandomResults(which, latestResult) {
     var model = probabilitySVGs[which];
     var probResultsEl = document.getElementById('randomResult_' + which);
     var previousResultsStr = probResultsEl.innerHTML;
-    if (
-        which == 'sha256Digit' &&
-        model.enableSpeed && // avoid a dom call if possible
-        previousResultsStr.length > 0 &&
-        document.getElementById('inputCheckboxSpeed_sha256Digit').checked
-    ) {
-        var previousResultsList = previousResultsStr.split('<br>');
-        if (previousResultsList.length > 10) {
-            previousResultsList = previousResultsList.slice(0, 9);
-            previousResultsStr = previousResultsList.join('<br>');
+    var separator = '';
+    if (which == 'sha256Digit') {
+        separator = '<br>';
+        if (
+            model.enableSpeed && // avoid a dom call if possible
+            previousResultsStr.length > 0 &&
+            document.getElementById('inputCheckboxSpeed_sha256Digit').checked
+        ) {
+            var previousResultsList = previousResultsStr.split(separator);
+            if (previousResultsList.length > 10) {
+                previousResultsList = previousResultsList.slice(0, 10);
+                previousResultsStr = previousResultsList.join(separator);
+            }
         }
     }
-    probResultsEl.innerHTML = latestResult + '<br>' + previousResultsStr;
+    probResultsEl.innerHTML = latestResult + separator + previousResultsStr;
 }
 
 function updateProbabilitySVG(which) {
