@@ -484,6 +484,13 @@ each other over time, like so:</p>
 {{ form_container('probabilityForm_coin', 'start') }}
     <input type="checkbox" id="inputCheckboxAutomatic_coin" disabled>
     <label for="inputCheckboxAutomatic_coin">run automatically</label>
+
+    <input type="checkbox" id="inputCheckboxSpeed_coin" checked disabled>
+    <label for="inputCheckboxSpeed_coin">show only visible coin tosses (for speed)</label>
+
+    <input type="checkbox" id="inputCheckboxZoomYAxis_coin" disabled>
+    <label for="inputCheckboxYAxisZoomSpeed_coin">zoom y-axis</label>
+
     <br><br>
     <div class="left">
         <button class="btnRun" disabled>Toss Coin</button>
@@ -502,6 +509,13 @@ each other over time, like so:</p>
 {{ form_container('probabilityForm_dice', 'start') }}
     <input type="checkbox" id="inputCheckboxAutomatic_dice" disabled>
     <label for="inputCheckboxAutomatic_dice">run automatically</label>
+
+    <input type="checkbox" id="inputCheckboxSpeed_dice" checked disabled>
+    <label for="inputCheckboxSpeed_dice">show only visible dice rolls (for speed)</label>
+
+    <input type="checkbox" id="inputCheckboxZoomYAxis_dice" disabled>
+    <label for="inputCheckboxYAxisZoomSpeed_dice">zoom y-axis</label>
+
     <br><br>
     <div class="left">
         <button class="btnRun" disabled>Roll Dice</button>
@@ -518,13 +532,13 @@ each other over time, like so:</p>
 {{ form_container('probabilityForm_dice', 'end') }}
 
 {{ form_container('probabilityForm_sha256Digit', 'start') }}
-    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit">
+    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit" disabled>
     <label for="inputCheckboxAutomatic_sha256Digit">run automatically</label>
 
-    <input type="checkbox" id="inputCheckboxSpeed_sha256Digit" checked>
+    <input type="checkbox" id="inputCheckboxSpeed_sha256Digit" checked disabled>
     <label for="inputCheckboxSpeed_sha256Digit">show only visible hashes (for speed)</label>
 
-    <input type="checkbox" id="inputCheckboxYAxisZoomSpeed_sha256Digit">
+    <input type="checkbox" id="inputCheckboxZoomYAxis_sha256Digit" disabled>
     <label for="inputCheckboxYAxisZoomSpeed_sha256Digit">zoom y-axis</label>
 
     <br><br>

@@ -11,14 +11,18 @@ var probabilitySVGs = {
         countPerBin: [],
         totalCount: 0, // init
         digitEls: {},
-        enableSpeed: false
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
     },
     dice: {
         bins: [1, 2, 3, 4, 5, 6],
         countPerBin: [],
         totalCount: 0, // init
         digitEls: {},
-        enableSpeed: false
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
     },
     sha256Digit: {
         bins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'],
@@ -27,7 +31,9 @@ var probabilitySVGs = {
         digitEls: {},
         selectedDigit: 0, // init 0-63
         matchList: [],
-        enableSpeed: true
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
     }
 };
 var miningData = { // note: raw values are taken directly from the input field
@@ -411,6 +417,36 @@ function initCodeblocks_ToggleWrapsMobileOnly() {
 function initForm_probabilityDistributionGraph(which) {
     var model = probabilitySVGs[which];
     model.countPerBin = newList(model.bins.length, 0);
+
+    addEvent(
+        document.getElementById('inputCheckboxAutomatic_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilityAutomaticChanged(e, which);
+            return false; // do not submit form
+        }
+    );
+
+    addEvent(
+        document.getElementById('inputCheckboxSpeed_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilitySpeedChanged(e, which);
+            return false; // do not submit form
+        }
+    );
+
+    addEvent(
+        document.getElementById('inputCheckboxZoomYAxis_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilityZoomChanged(e, which);
+            return false; // do not submit form
+        }
+    );
 
     // must come before triggering the dropdown to reset this graph
     initProbabilitySVG(which);
@@ -2509,6 +2545,18 @@ function initDropdownProbabilityOptions(which) {
     dropdownEl.innerHTML = contentHTML;
 }
 
+function checkboxProbabilityAutomaticChanged(e, which) {
+    probabilitySVGs[which].enableAutomatic = e.currentTarget.checked;
+}
+
+function checkboxProbabilitySpeedChanged(e, which) {
+    probabilitySVGs[which].enableSpeed = e.currentTarget.checked;
+}
+
+function checkboxProbabilityZoomChanged(e, which) {
+    probabilitySVGs[which].zoomYAxis = e.currentTarget.checked;
+}
+
 // note: we only get here for sha256 hash probabilities
 function probabilityDigitChanged(e, which) {
     var model = probabilitySVGs[which];
@@ -2555,15 +2603,13 @@ function runProbabilityGraphClicked(e, params) {
             e.currentTarget.innerHTML = 'Stop';
             setProbabilityForm(params.which, false);
 
-            var automatically = document.
-            getElementById('inputCheckboxAutomatic_' + params.which).checked;
-
             (function loop(params) {
                 if (stopHashingForm[params.which]) return;
                 incrementProbabilityCodeblock(params.which);
                 updateProbabilitySVG(params.which);
-                if (automatically) setTimeout(function () { loop(params); }, 0);
-                else runProbabilityGraphClicked(e, params);
+                if (probabilitySVGs[params.which].enableAutomatic) {
+                    setTimeout(function () { loop(params); }, 0);
+                } else runProbabilityGraphClicked(e, params); // toggle
             })(params);
             break;
     }
@@ -2575,7 +2621,6 @@ function setProbabilityForm(which, enabled) {
         '#probabilityForm_' + which + ' .btnReset'
     ];
     if (which == 'sha256Digit') {
-        queries.push('#inputCheckboxSpeed_sha256Digit');
         queries.push('#selectBin_sha256Digit');
         queries.push('#inputMessage_sha256Digit');
     }
@@ -2622,20 +2667,28 @@ function updateRandomResults(which, latestResult) {
     var model = probabilitySVGs[which];
     var probResultsEl = document.getElementById('randomResult_' + which);
     var previousResultsStr = probResultsEl.innerHTML;
-    var separator = '';
-    if (which == 'sha256Digit') {
-        separator = '<br>';
-        if (
-            model.enableSpeed && // avoid a dom call if possible
-            previousResultsStr.length > 0 &&
-            document.getElementById('inputCheckboxSpeed_sha256Digit').checked
-        ) {
-            var previousResultsList = previousResultsStr.split(separator);
-            if (previousResultsList.length > 10) {
-                previousResultsList = previousResultsList.slice(0, 10);
-                previousResultsStr = previousResultsList.join(separator);
+    var separator;
+    switch (which) {
+        case 'dice':
+        case 'coin':
+            separator = '';
+            if (model.enableSpeed && previousResultsStr.length > 1000) {
+                previousResultsStr = previousResultsStr.slice(0, 1000);
             }
-        }
+            break;
+        case 'sha256Digit':
+            separator = '<br>';
+            if (
+                model.enableSpeed &&
+                previousResultsStr.length > 0
+            ) {
+                var previousResultsList = previousResultsStr.split(separator);
+                if (previousResultsList.length > 9) {
+                    previousResultsList = previousResultsList.slice(0, 9);
+                    previousResultsStr = previousResultsList.join(separator);
+                }
+            }
+            break;
     }
     probResultsEl.innerHTML = latestResult + separator + previousResultsStr;
 }
