@@ -10,6 +10,7 @@ var probabilitySVGs = {
         bins: ['heads', 'tails'],
         countPerBin: [],
         totalCount: 0, // init
+        yAxisNumberEls: [], // top first
         digitEls: {},
         enableAutomatic: false,
         enableSpeed: true,
@@ -19,6 +20,7 @@ var probabilitySVGs = {
         bins: [1, 2, 3, 4, 5, 6],
         countPerBin: [],
         totalCount: 0, // init
+        yAxisNumberEls: [], // top first
         digitEls: {},
         enableAutomatic: false,
         enableSpeed: true,
@@ -28,6 +30,7 @@ var probabilitySVGs = {
         bins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'],
         countPerBin: [],
         totalCount: 0, // init
+        yAxisNumberEls: [], // top first
         digitEls: {},
         selectedDigit: 0, // init 0-63
         matchList: [],
@@ -2555,6 +2558,11 @@ function checkboxProbabilitySpeedChanged(e, which) {
 
 function checkboxProbabilityZoomChanged(e, which) {
     probabilitySVGs[which].zoomYAxis = e.currentTarget.checked;
+
+    // update the y axis labels here since they will not change again
+    if (!e.currentTarget.checked) updateSVGYAxisLabels(which, 100);
+
+    updateProbabilitySVG(which);
 }
 
 // note: we only get here for sha256 hash probabilities
@@ -2695,13 +2703,28 @@ function updateRandomResults(which, latestResult) {
 
 function updateProbabilitySVG(which) {
     var model = probabilitySVGs[which];
-    var binHeight = 0;
-    for (var barI = 0; barI < model.bins.length; barI++) {
-        if (model.totalCount > 0) {
-            binHeight = probabilitySVGYAxisHeight * model.countPerBin[barI] /
-            model.totalCount;
+    if (model.totalCount == 0) {
+        for (var barI = 0; barI < model.bins.length; barI++) {
+            model.digitEls[barI].setAttribute('height', 0);
         }
-        model.digitEls[barI].setAttribute('height', binHeight);
+        updateSVGYAxisLabels(which, 100);
+        return;
+    }
+    var maxBinCount = 0;
+    if (model.zoomYAxis) {
+        for (var barI = 0; barI < model.bins.length; barI++) {
+            if (model.countPerBin[barI] <= maxBinCount) continue;
+            maxBinCount = model.countPerBin[barI]; // found a bin with a higher count
+        }
+        var maxYAxis = Math.floor(100 * maxBinCount / model.totalCount);
+        if (!isEven(maxYAxis)) maxYAxis++;
+        updateSVGYAxisLabels(which, maxYAxis);
+    }
+    for (var barI = 0; barI < model.bins.length; barI++) {
+        var barHeight = probabilitySVGYAxisHeight * model.countPerBin[barI] /
+        (model.zoomYAxis ? maxBinCount : model.totalCount);
+
+        model.digitEls[barI].setAttribute('height', barHeight);
     }
 }
 
@@ -2723,6 +2746,10 @@ function initProbabilitySVG(which) {
     contentDocument.getElementsByTagName('svg')[0];
 
     var svgView = svg.getElementById('view');
+    model.yAxisNumberEls = [
+        svg.getElementById('yAxisTopNumber'),
+        svg.getElementById('yAxisMiddleNumber')
+    ];
     var yAxisEl = svgView.querySelector('.yAxis');
     probabilitySVGYAxisHeight = yAxisEl.y2.baseVal.value - yAxisEl.y1.baseVal.value;
 
@@ -2765,6 +2792,12 @@ function initProbabilitySVG(which) {
 
         model.digitEls[barI] = newSVGGroup.getElementsByTagName('rect')[0];
     }
+}
+
+function updateSVGYAxisLabels(which, maxYAxis) {
+    var model = probabilitySVGs[which];
+    model.yAxisNumberEls[0].textContent = maxYAxis + '%';
+    model.yAxisNumberEls[1].textContent = (maxYAxis / 2) + '%';
 }
 
 // todo: break this function down into manageable functions and move it to the
