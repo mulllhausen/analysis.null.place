@@ -1,4 +1,4 @@
-var latestCache = '2022-08-30_23:24:30';
+var latestCache = '2022-09-04_16:02:38';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX',
@@ -12,7 +12,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/theme/img/apple-touch-icon.png?hash=FAvW32',
     'https://analysis.null.place/theme/img/apple-touch-icon-72x72.png?hash=vTsYhJ',
     'https://analysis.null.place/theme/img/apple-touch-icon-114x114.png?hash=AxyPrA',
-    'https://analysis.null.place/theme/js/base.js?hash=klUmu1',
+    'https://analysis.null.place/theme/js/base.js?hash=JCtBY8',
     'https://analysis.null.place/theme/js/console-greeter.js?hash=j6dUQ7',
     'https://analysis.null.place/theme/js/manifest.json',
 
@@ -105,10 +105,10 @@ var mandatoryAssets = [
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/index.html',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP',
-    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=3K6VGw',
-    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=93IOhm',
+    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=pPfU02',
+    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=VifTvg',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg?hash=NX7qzY',
-    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl',
+    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=488IlP',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json?hash=i24DRR',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/hex-trial-attempts.json?hash=sjiIF4',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/unittest-bits.json?hash=m8SQwF',

@@ -118,6 +118,5 @@ class="global">
             <text x="0" y="0">drag across</text>
         </g>
     </defs>
-    <g id="view">
-    </g>
+    <g id="view"></g>
 </svg>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+
+<svg version="1.1" baseProfile="basic" xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="200"
+viewBox="0 0 430 200" style="background-color:black" class="global">
+<style type="text/css"><![CDATA[
+    .global {
+        fill: none;
+        font-family: arial, sans-serif;
+        font-weight: normal;
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none;   /* Chrome/Safari/Opera */
+        -khtml-user-select: none;    /* Konqueror */
+        -moz-user-select: none;      /* Firefox */
+        -ms-user-select: none;       /* IE/Edge */
+        user-select: none;
+        pointer-events: none;
+        shape-rendering: crispEdges;
+    }
+    .probabilityBar {
+        stroke: #7db904;/*green*/
+        fill: #7db904;/*green*/
+        stroke-width: 1;
+    }
+    .axisNumber {
+        fill: #7db904;/*green*/
+        font-size: 16px;
+    }
+    .xAxisNumber {
+        text-anchor: middle;/*horizontal*/
+    }
+    .xAxis, .yAxis, .yAxisNotch {
+        stroke: #7db904;/*green*/
+    }
+    .yAxisNumber {
+        text-anchor: end;/*right side*/
+    }
+]]></style>
+    <g id="view">
+        <text id="yAxisTopNumber" class="axisNumber yAxisNumber" x="40" y="25">100%</text>
+        <line class="yAxisNotch" x1="45" y1="20" x2="50" y2="20"/>
+
+        <text id="yAxisMiddleNumber" class="axisNumber yAxisNumber" x="40" y="100">50%</text>
+        <line class="yAxisNotch" x1="45" y1="95" x2="50" y2="95"/>
+
+        <text class="axisNumber yAxisNumber" x="40" y="175">0%</text>
+        <line class="yAxisNotch" x1="45" y1="170" x2="50" y2="170"/>
+
+        <line class="yAxis" x1="50" y1="20" x2="50" y2="170"/>
+        <line class="xAxis" x1="50" y1="170" x2="410" y2="170"/>
+    </g>
+</svg>

@@ -6,22 +6,22 @@
         <title>how do the bitcoin mining algorithms work?</title>
 
         <link rel="stylesheet" href="https://analysis.null.place/theme/css/thematrix.css?hash=qqRYuX"/>
-        <link rel="stylesheet" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=93IOhm"/>
+        <link rel="stylesheet" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=VifTvg"/>
 
 <link rel="preload" as="image" href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo"/>
 <link rel="preload" as="image" href="https://analysis.null.place/theme/img/shattered-glass-2b.png?hash=xZglIf"/>
 <link rel="preload" as="image" href="https://analysis.null.place/theme/img/shattered-glass-black.png?hash=DsMJmV"/>
-<link rel="preload" as="script" href="https://analysis.null.place/theme/js/base.js?hash=klUmu1"/>
+<link rel="preload" as="script" href="https://analysis.null.place/theme/js/base.js?hash=JCtBY8"/>
 <link rel="preload" as="script" href="https://www.googletagmanager.com/gtag/js?id=UA-110200325-1"/>
 <link rel="preload" as="script" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP"/>
-<link rel="preload" as="script" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=3K6VGw"/>
+<link rel="preload" as="script" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=pPfU02"/>
 
 <link rel="preload" as="fetch" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json?hash=i24DRR"/>
 <link rel="preload" as="fetch" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/hex-trial-attempts.json?hash=sjiIF4"/>
 <link rel="preload" as="fetch" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/unittest-bits.json?hash=m8SQwF"/>
 
 <link rel="preload" as="image" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg?hash=NX7qzY"/>
-<link rel="preload" as="image" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl"/>
+<link rel="preload" as="image" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=488IlP"/>
 
 <link rel="preload" as="script" href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"/>
         <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, user-scalable=no"/>
@@ -37,6 +37,7 @@
         <meta property="og:image:width" content="266"/>
         <meta property="og:image:height" content="266"/>
         <meta property="og:article:published_time" content="2018-04-17"/>
+        <meta property="og:article:modified_time" content="2022-09-04"/>
 
         <meta property="fb:app_id" content="2040066019560327"/>
 
@@ -59,7 +60,7 @@
         <link rel="self" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/" type="application/atom+xml" title="analysis ATOM Feed"/>
         <link rel="self" href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/" type="application/rss+xml" title="analysis RSS Feed"/>
 
-        <script type="application/ld+json">{"@context": "http://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Peter Miller"}, "datePublished": "2018-04-17", "description": "An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.", "image": "https://analysis.null.place/theme/img/shattered-glass-matrix.png?hash=gk0yg8", "inLanguage": "English", "name": "how do the bitcoin mining algorithms work?", "url": "https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/"}</script>
+        <script type="application/ld+json">{"@context": "http://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Peter Miller"}, "dateModified": "2022-09-04", "datePublished": "2018-04-17", "description": "An interactive walkthrough of the Bitcoin mining algorithms. No prior knowledge is necessary.", "image": "https://analysis.null.place/theme/img/shattered-glass-matrix.png?hash=gk0yg8", "inLanguage": "English", "name": "how do the bitcoin mining algorithms work?", "url": "https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/"}</script>
 
 <script>
 var siteGlobals = {
@@ -211,7 +212,7 @@ var siteGlobals = {
                 <a href="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/">how do the bitcoin mining algorithms work?</a>
             </h1>
             <div class="info-box">
-<span class="dates">added 17 apr 2018</span>
+<span class="dates">added 17 apr 2018</span><span class="dates">updated 4 sep 2022</span>
             </div>
         </header>
         <div class="entry-content">
@@ -366,13 +367,14 @@ A cryptographic hashing algorithm has the following properties relevant to
 Bitcoin mining:</p>
 <p></p>
 <ol>
-    <li>it is deterministic - the same pre-image always results in the same
-hash</li>
-    <li>it is quick to compute the hash value for any given pre-image</li>
-    <li>it is impossible to reverse a cryptographic hash and recover a pre-image
-from its hash value, except by trying all possible pre-images</li>
-    <li>a small change to a pre-image changes the hash value so extensively
-that the new hash value appears uncorrelated with the old hash value</li>
+    <li>It is deterministic - the same pre-image always results in the same
+hash.</li>
+    <li>It is quick to compute the hash value for any given pre-image.</li>
+    <li>It is impossible to reverse a cryptographic hash and recover a pre-image
+from its hash value, except by trying all possible pre-images.</li>
+    <li>A small change to a pre-image changes the hash value so extensively
+that the new hash value appears uncorrelated with the old hash value.</li>
+    <li>It has a uniform probability distribution for unique pre-images.</li>
 </ol>
 </blockquote>
 
@@ -534,6 +536,196 @@ a pre-image will always hash to the same value, but that value is random, so
 there can be no process of zeroing in. Trying a pre-image that is "further
 along" is no better than trying any other different pre-image - they all
 completely modify the resulting hash.</p>
+
+<p>Property 5 is also very important to Bitcoin mining. The reason for this will
+become clear later on, but for now lets focus on understanding what it means.
+Property 5 states that the output of a cryptographic hash is uniformly
+distributed over the range of possible values. This property is quite
+complicated so lets start by looking at some other uniform probability
+distributions that are familiar to everyone - coin tosses and dice rolls. From
+there we will be able to draw an analogy to <i>SHA256</i>.</p>
+
+<p>When a coin is tossed, there are only 2 possible outcomes - heads or tails.
+And assuming the coin is not weighted on one side, then each outcome has an
+equally likely probability. If we count the number of heads and tails over a
+large number of coin tosses - say 1000 coin tosses - we would expect to see 500
+heads and 500 tails. Another way of putting this, is to say that the probability
+of tossing heads is <code>500 / 1000 = 0.5 = 50%</code> and likewise for tails.
+So, given that there are only 2 possible outcomes (the range of outcomes is 2),
+and given that each outcome has a 50% probability, then we say that the
+probability of a coin toss is uniformly distributed. Have a play with the
+following coin toss simulator, and notice how both bars converge on the same
+probability over a large enough number of coin tosses.</p>
+
+<form class="form-container glass-case" id="probabilityForm_coin">
+    <a href="#probabilityForm_coin">
+        <svg class="icon icon-chain">
+            <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
+        </svg>
+    </a>
+
+    <input type="checkbox" id="inputCheckboxAutomatic_coin" disabled>
+    <label for="inputCheckboxAutomatic_coin">run automatically</label>
+
+    <input type="checkbox" id="inputCheckboxSpeed_coin" checked disabled>
+    <label for="inputCheckboxSpeed_coin">show only visible coin tosses (for speed)</label>
+
+    <input type="checkbox" id="inputCheckboxZoomYAxis_coin" disabled>
+    <label for="inputCheckboxYAxisZoomSpeed_coin">zoom y-axis</label>
+
+    <br><br>
+    <div class="left">
+        <button class="btnRun" disabled>Toss Coin</button>
+        <button class="btnReset" disabled>Reset</button>
+    </div>
+    <br><br>
+<div class="codeblock-container auto-wrap-on-mobile">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <svg class="icon icon-level-left">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-level-left"></use>
+            </svg>
+            <svg class="icon icon-arrows-h" style="display:none;">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-arrows-h"></use>
+            </svg>
+        </button>
+    </div><br>
+    <div id="codeblockRandomResults_coin" class="codeblock">total coin tosses: <span id="randomResultCount_coin">0</span><br>coin&nbsp;toss:&nbsp;<span id="randomResult_coin"></span></div>
+</div>
+
+    <br>
+    <object id="probabilityGraphSVG_coin" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg?hash=JfU3Ta" type="image/svg+xml"></object>
+</form>
+
+
+<p>Likewise when rolling a dice, there are 6 possible outcomes and each is
+equally likely - <code>1,2,3,4,5,6</code>. If we roll the dice 60,000 times we
+would expect to get a <code>2</code> 10,000 times, a <code>3</code> 10,000 times
+and so on. The probability of rolling any side of the dice is
+<code>1/6 = 0.1666... = 16.66%</code>. So as with coin tosses, dice rolls are
+uniformly distributed over the range of 6. Have a play with the following dice
+roll simulator and notice how the probability of rolling any number eventually
+converges upon 16%. By now it is becoming obvious that uniform probability
+distributions are flat probability distributions.</p>
+
+<form class="form-container glass-case" id="probabilityForm_dice">
+    <a href="#probabilityForm_dice">
+        <svg class="icon icon-chain">
+            <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
+        </svg>
+    </a>
+
+    <input type="checkbox" id="inputCheckboxAutomatic_dice" disabled>
+    <label for="inputCheckboxAutomatic_dice">run automatically</label>
+
+    <input type="checkbox" id="inputCheckboxSpeed_dice" checked disabled>
+    <label for="inputCheckboxSpeed_dice">show only visible dice rolls (for speed)</label>
+
+    <input type="checkbox" id="inputCheckboxZoomYAxis_dice" disabled>
+    <label for="inputCheckboxYAxisZoomSpeed_dice">zoom y-axis</label>
+
+    <br><br>
+    <div class="left">
+        <button class="btnRun" disabled>Roll Dice</button>
+        <button class="btnReset" disabled>Reset</button>
+    </div>
+    <br><br>
+<div class="codeblock-container auto-wrap-on-mobile">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <svg class="icon icon-level-left">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-level-left"></use>
+            </svg>
+            <svg class="icon icon-arrows-h" style="display:none;">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-arrows-h"></use>
+            </svg>
+        </button>
+    </div><br>
+    <div id="codeblockRandomResults_dice" class="codeblock">total dice rolls: <span id="randomResultCount_dice">0</span><br>dice&nbsp;roll:&nbsp;<span id="randomResult_dice"></span></div>
+</div>
+
+    <br>
+    <object id="probabilityGraphSVG_dice" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg?hash=JfU3Ta" type="image/svg+xml"></object>
+</form>
+
+
+<p>Now that we have looked at some simple objects that exhibit uniform
+probability distributions, lets look at how cryptographic hashes also exhibit
+uniform probability distributions. With coin tosses and dice rolls we saw that
+each possible outcome in the range had an equal probability, resulting in flat
+bars in the graph. Ideally we would like to do the same thing for <i>SHA256</i>.
+We would like to simply put different values into the <i>SHA256</i> hashing
+algorithm and observe that each possible output value is equally as likely as
+any other. However, there is a problem - as we discussed earlier, the range of
+possible outputs from <i>SHA256</i> is greater than the number of atoms in the
+universe! So how could we ever hope to represent this in a graph? A graph with
+2<sup>256</sup> =
+115792089237316195423570985008687907853269984665640564039457584007913129639936
+bars would be impossible to use and no computer on earth could fill it in fast
+enough to see if the bars end up flat. So unfortunately the simple approach of
+graphing all possible outputs from <i>SHA256</i> is impossible. So instead we
+will do the next best thing - we will just look at 1 digit at a time from the
+hash output. If the hash is really uniformly distributed then any digit we pick
+should also be uniformly distributed. And given that each digit in the hash is a
+hexadecimal number, then the range of possible outcomes is
+<code>0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f</code>. We can think of each digit in the
+hash as a 16-sided dice. <i>SHA256</i> has 64 digits, so we could think of it as
+64 such dice, all rolled at once. And since each of these dice has 16 sides,
+then each side has a probability of <code>1/16 = 0.0625 = 6.25%</code> of being
+rolled.</p>
+
+<p>Have a play with the following <i>SHA256</i> generator and notice how the
+probability of rolling any hexadecimal number eventually converges upon 6.25%.
+You will have to leave it running a long time to see this.</p>
+
+<form class="form-container glass-case" id="probabilityForm_sha256Digit">
+    <a href="#probabilityForm_sha256Digit">
+        <svg class="icon icon-chain">
+            <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-chain"></use>
+        </svg>
+    </a>
+
+    <input type="checkbox" id="inputCheckboxAutomatic_sha256Digit" disabled>
+    <label for="inputCheckboxAutomatic_sha256Digit">run automatically</label>
+
+    <input type="checkbox" id="inputCheckboxSpeed_sha256Digit" checked disabled>
+    <label for="inputCheckboxSpeed_sha256Digit">show only visible hashes (for speed)</label>
+
+    <input type="checkbox" id="inputCheckboxZoomYAxis_sha256Digit" disabled>
+    <label for="inputCheckboxYAxisZoomSpeed_sha256Digit">zoom y-axis</label>
+
+    <br><br>
+    <div class="left">
+        <label for="selectBin_sha256Digit" class="for-select">inspect</label><br>
+        <select id="selectBin_sha256Digit" disabled></select>
+    </div>
+    <div class="left">
+        <label for="inputMessage_sha256Digit" class="for-textbox">pre-image</label><br>
+        <input id="inputMessage_sha256Digit" type="text" value="a" disabled>
+    </div>
+    <div class="left">
+        <button class="btnRun" disabled>Run SHA256</button>
+        <button class="btnReset" disabled>Reset</button>
+    </div>
+    <br><br>
+<div class="codeblock-container auto-wrap-on-mobile">
+    <div class="button-background">
+        <button class="wrap-nowrap" wrapped="false">
+            <svg class="icon icon-level-left">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-level-left"></use>
+            </svg>
+            <svg class="icon icon-arrows-h" style="display:none;">
+                <use xlink:href="https://analysis.null.place/theme/img/icons.svg?hash=eT4uTo#icon-arrows-h"></use>
+            </svg>
+        </button>
+    </div><br>
+    <div id="codeblockRandomResults_sha256Digit" class="codeblock">total hashes: <span id="randomResultCount_sha256Digit"></span><br><span id="randomResult_sha256Digit"></span></div>
+</div>
+
+    <br>
+    <object id="probabilityGraphSVG_sha256Digit" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg?hash=JfU3Ta" type="image/svg+xml"></object>
+</form>
+
 
 <p>Now that we have discussed the properties of cryptographic hashing, we can
 investigate how it is used in a technique known as <i>proof of work</i>, also
@@ -766,7 +958,7 @@ each other over time, like so:</p>
         </svg>
     </a>
 
-    <object id="blockchainSVG" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=70Cxdl" type="image/svg+xml"></object>
+    <object id="blockchainSVG" data="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=488IlP" type="image/svg+xml"></object>
 </form>
 
 <div class="media-caption">the Bitcoin blockchain</div>
@@ -1576,7 +1768,7 @@ the nonce to 0.</p>
         </div>
 
         <!--[if IE]><script>isIE9OrLess = true;</script><![endif]-->
-        <script src="https://analysis.null.place/theme/js/base.js?hash=klUmu1"></script>
+        <script src="https://analysis.null.place/theme/js/base.js?hash=JCtBY8"></script>
         <script>
             init_all_matrix_canvases('.matrix-text-green', '.matrix-text-white');
             var timeout_id_resize_logo;
@@ -1590,7 +1782,7 @@ the nonce to 0.</p>
         </script>
 
         <script src="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP"></script>
-        <script src="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=3K6VGw"></script>
+        <script src="https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=pPfU02"></script>
         <script src="https://analysis.null.place/theme/js/comments-section.js?hash=QBgWaM"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
