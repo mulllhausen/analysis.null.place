@@ -51,7 +51,8 @@ table#dec2hexData tr:nth-child(2n + 2) td {
 #dec2hexTable td {
     padding: 1px;
 }
-#btnRunHash3 {
+#btnRunHash3, #probabilityForm_sha256Digit .btnRun,
+#probabilityForm_sha256Digit .btnReset {
     margin-top: 21px;
 }
 #info3 {
@@ -108,7 +109,10 @@ pre {
 #form7 .error {
     clear: both;
 }
-#form7 .codeblock, #unitTests7 .codeblock {
+#form7 .codeblock, #unitTests7 .codeblock,
+#probabilityForm_coin .codeblock,
+#probabilityForm_dice .codeblock,
+#probabilityForm_sha256Digit .codeblock {
     max-height: 200px;
 }
 @media (min-width: 800px) {/*when x >= 800px*/
@@ -153,6 +157,13 @@ ul.error li {
 }
 #blockchainSVG {
     width: 100%;
+}
+#probabilityGraphSVG_coin,
+#probabilityGraphSVG_dice,
+#probabilityGraphSVG_sha256Digit {
+    display: table;
+    margin: 0 auto;
+    max-width: 100%;
 }
 #form10 textarea {
     width: 100%;

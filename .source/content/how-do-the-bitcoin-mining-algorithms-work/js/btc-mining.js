@@ -5,6 +5,40 @@ var stopHashingForm = {}; // eg {2: false}
 var difficultyChars = {}; // eg {1:64, 2:64, 3:0}
 var difficultyAttempts = {}; // ie {1:8, 2: 128, etc}
 var txsPerBlock = [];
+var probabilitySVGs = {
+    coin: {
+        bins: ['heads', 'tails'],
+        countPerBin: [],
+        totalCount: 0, // init
+        yAxisNumberEls: [], // top first
+        digitEls: {},
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
+    },
+    dice: {
+        bins: [1, 2, 3, 4, 5, 6],
+        countPerBin: [],
+        totalCount: 0, // init
+        yAxisNumberEls: [], // top first
+        digitEls: {},
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
+    },
+    sha256Digit: {
+        bins: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'],
+        countPerBin: [],
+        totalCount: 0, // init
+        yAxisNumberEls: [], // top first
+        digitEls: {},
+        selectedDigit: 0, // init 0-63
+        matchList: [],
+        enableAutomatic: false,
+        enableSpeed: true,
+        zoomYAxis: false
+    }
+};
 var miningData = { // note: raw values are taken directly from the input field
     versionRaw: null,
     versionInt : null,
@@ -31,10 +65,38 @@ var miningData = { // note: raw values are taken directly from the input field
 };
 var permanently = true;
 var keyCodeENTER = 13;
-addEvent(window, 'load', function () {
-    // border the digits anywhere on the page initially (grey only)
-    initBorderTheDigits();
 
+addEvent(window, 'load', function () {
+    initSpans_BorderTheDigitsGreyOnly();
+    initButtons_CodeblockWrap();
+    initForm0_HashingDemo();
+    initTable_Dec2Hex();
+    initForm1_HashingManuallyToMatchHash();
+    initForm2_HashingAutomaticallyToMatchHash();
+    initForm3_ProofOfWork();
+    initForm_probabilityDistributionGraph('coin');
+    initForm_probabilityDistributionGraph('dice');
+    initForm_probabilityDistributionGraph('sha256Digit');
+    initSVG_DragableBlockchain();
+    initForm4_BitcoinMining();
+    initForm5_AnnexVersion();
+    initForm6_AnnexTimestamp();
+    initForm7_AnnexDifficulty();
+    initForm8_AnnexNonce();
+    initForm9_AnnexVersion();
+    initForm10_HashingHexAndAscii();
+    initForm11_LuckCalculator();
+    initCodeblocks_ToggleWrapsMobileOnly();
+});
+
+function initSpans_BorderTheDigitsGreyOnly() {
+    var elementsToBorder = document.querySelectorAll('.individual-digits');
+    foreach(elementsToBorder, function (i, el) {
+        borderTheDigits(el, new Array(el.textContent.length));
+    });
+}
+
+function initButtons_CodeblockWrap() {
     // put newlines in codeblocks when wrap button is clicked
     addEvent(
         document.querySelectorAll('button.wrap-nowrap'),
@@ -45,8 +107,9 @@ addEvent(window, 'load', function () {
             return false; // do not submit form
         }
     );
+}
 
-    // form 0 - hashing demo
+function initForm0_HashingDemo() {
     addEvent(document.getElementById('btnRunHash0'), 'click', function (e) {
         e.preventDefault();
         runHash0Clicked();
@@ -59,8 +122,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit the form
     });
     removeGlassCase('form0', permanently);
+}
 
-    // dec to hex table
+function initTable_Dec2Hex() {
     addEvent(
         document.querySelector('#dec2hexTable .instructions'),
         'click',
@@ -70,8 +134,9 @@ addEvent(window, 'load', function () {
             return false; // do not submit form
         }
     );
+}
 
-    // form 1 - hashing manually to match hash
+function initForm1_HashingManuallyToMatchHash() {
     var hash1Params = { // use an object for pass-by-reference
         firstTime: true,
         hashMatch: document.getElementById('match1').textContent,
@@ -96,8 +161,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form1', permanently);
+}
 
-    // form 2 - hashing automatically to match hash
+function initForm2_HashingAutomaticallyToMatchHash() {
     var hash2Params = { // use an object for pass-by-reference
         firstTime: true,
         hashMatch: document.getElementById('match2').textContent,
@@ -117,9 +183,10 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form2', permanently);
+}
 
-    // form 3 - proof of work
-    var hash3Params = {
+function initForm3_ProofOfWork() {
+    var hash3Params = { // use an object for pass-by-reference
         firstTime: true,
         hashMatch: document.getElementById('match3').textContent,
         matchFound: false,
@@ -149,11 +216,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form3', permanently);
+}
 
-    // dragable blockchain svg
-    initBlockchainSVG();
-
-    // form 4 - bitcoin mining
+function initForm4_BitcoinMining() {
     addEvent(document.getElementById('version4'), 'keyup, change', function (e) {
         e.preventDefault();
         version4Changed(e);
@@ -209,8 +274,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form4', permanently);
+}
 
-    // annex - form 5
+function initForm5_AnnexVersion() {
     addEvent(document.getElementById('version5'), 'keyup, change', function (e) {
         e.preventDefault();
         version5Changed(e);
@@ -218,8 +284,9 @@ addEvent(window, 'load', function () {
     });
     triggerEvent(document.getElementById('version5'), 'change');
     removeGlassCase('form5', permanently);
+}
 
-    // annex - form 6
+function initForm6_AnnexTimestamp() {
     addEvent(document.getElementById('timestamp6'), 'keyup, change', function (e) {
         e.preventDefault();
         timestamp6Changed(e);
@@ -227,8 +294,9 @@ addEvent(window, 'load', function () {
     });
     triggerEvent(document.getElementById('timestamp6'), 'change');
     removeGlassCase('form6', permanently);
+}
 
-    // annex - form 7
+function initForm7_AnnexDifficulty() {
     addEvent(document.getElementById('difficulty7'), 'keyup, change', function (e) {
         e.preventDefault();
         difficulty7Changed(e);
@@ -256,8 +324,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form7', permanently);
+}
 
-    // annex - form 8
+function initForm8_AnnexNonce() {
     addEvent(document.getElementById('nonce8'), 'keyup, change', function (e) {
         e.preventDefault();
         nonce8Changed(e);
@@ -265,8 +334,9 @@ addEvent(window, 'load', function () {
     });
     triggerEvent(document.getElementById('nonce8'), 'change');
     removeGlassCase('form8', permanently);
+}
 
-    // annex - form 9
+function initForm9_AnnexVersion() {
     addEvent(document.getElementById('version9'), 'keyup, change', function (e) {
         e.preventDefault();
         version9Changed(e);
@@ -309,8 +379,9 @@ addEvent(window, 'load', function () {
     });
     triggerEvent(document.getElementById('nonce9'), 'change');
     removeGlassCase('form9', permanently);
+}
 
-    // form 10 - hashing hex and ascii
+function initForm10_HashingHexAndAscii() {
     addEvent(document.getElementById('inputMessage10'), 'keyup, change', function (e) {
         e.preventDefault();
         runHash10Changed(e);
@@ -323,8 +394,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     removeGlassCase('form10', permanently);
+}
 
-    // form 11 - luck calculator
+function initForm11_LuckCalculator() {
     initDifficultyLevelDropdown(11);
     addEvent(document.getElementById('difficulty11'), 'change', function (e) {
         e.preventDefault();
@@ -332,7 +404,9 @@ addEvent(window, 'load', function () {
         return false; // do not submit form
     });
     initDifficultyAttempts();
+}
 
+function initCodeblocks_ToggleWrapsMobileOnly() {
     switch (getDeviceType()) {
         case 'phone':
             toggleAllCodeblockWrapsMobile();
@@ -341,14 +415,80 @@ addEvent(window, 'load', function () {
         case 'pc':
             break;
     }
-});
-
-function initBorderTheDigits() {
-    var elementsToBorder = document.querySelectorAll('.individual-digits');
-    foreach(elementsToBorder, function (i, el) {
-        borderTheDigits(el, new Array(el.textContent.length));
-    });
 }
+
+function initForm_probabilityDistributionGraph(which) {
+    var model = probabilitySVGs[which];
+    model.countPerBin = newList(model.bins.length, 0);
+
+    addEvent(
+        document.getElementById('inputCheckboxAutomatic_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilityAutomaticChanged(e, which);
+            return false; // do not submit form
+        }
+    );
+
+    addEvent(
+        document.getElementById('inputCheckboxSpeed_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilitySpeedChanged(e, which);
+            return false; // do not submit form
+        }
+    );
+
+    addEvent(
+        document.getElementById('inputCheckboxZoomYAxis_' + which),
+        'click',
+        function (e) {
+            // e.preventDefault(); // don't do this - it prevents checkbox toggle
+            checkboxProbabilityZoomChanged(e, which);
+            return false; // do not submit form
+        }
+    );
+
+    // must come before triggering the dropdown to reset this graph
+    initProbabilitySVG(which);
+
+    // models that have a selected digit need a dropdown to choose the diigit
+    if (model.hasOwnProperty('selectedDigit')) {
+        initDropdownProbabilityOptions(which);
+        var dropdownEl = document.getElementById('selectBin_' + which);
+        addEvent(dropdownEl, 'change', function (e) {
+            e.preventDefault();
+            probabilityDigitChanged(e, which);
+            return false; // do not submit form
+        });
+        dropdownEl.value = 0;
+        triggerEvent(dropdownEl, 'change');
+    }
+
+    var probParams = { // use an object for pass-by-reference
+        which: which,
+        state: 'stopped'
+    };
+    stopHashingForm[which] = false;
+    var btn = '#probabilityForm_' + which + ' .btn';
+    addEvent(document.querySelector(btn + 'Run'), 'click', function (e) {
+        e.preventDefault();
+        runProbabilityGraphClicked(e, probParams);
+        return false; // do not submit form
+    });
+
+    addEvent(document.querySelector(btn + 'Reset'), 'click', function (e) {
+        e.preventDefault();
+        resetProbabilityForm(which);
+        return false; // do not submit form
+    });
+
+    removeGlassCase('probabilityForm_' + which, permanently);
+}
+
+// end initializations
 
 function runHashWrapClicked(e) {
     var btn = e.currentTarget;
@@ -2398,8 +2538,271 @@ function difficulty11Changed(e) {
     ' hashes on average';
 }
 
-// dragable blockchain svg
-function initBlockchainSVG() {
+// probability distribution graph
+function initDropdownProbabilityOptions(which) {
+    var dropdownEl = document.getElementById('selectBin_' + which);
+    var contentHTML = '';
+    for (var i = 0; i < 64; i++) {
+        contentHTML += '<option value="' + i + '">digit ' + (i + 1) + '</option>';
+    }
+    dropdownEl.innerHTML = contentHTML;
+}
+
+function checkboxProbabilityAutomaticChanged(e, which) {
+    probabilitySVGs[which].enableAutomatic = e.currentTarget.checked;
+}
+
+function checkboxProbabilitySpeedChanged(e, which) {
+    probabilitySVGs[which].enableSpeed = e.currentTarget.checked;
+}
+
+function checkboxProbabilityZoomChanged(e, which) {
+    probabilitySVGs[which].zoomYAxis = e.currentTarget.checked;
+
+    // update the y axis labels here since they will not change again
+    if (!e.currentTarget.checked) updateSVGYAxisLabels(which, 100);
+
+    updateProbabilitySVG(which);
+}
+
+// note: we only get here for sha256 hash probabilities
+function probabilityDigitChanged(e, which) {
+    var model = probabilitySVGs[which];
+
+    model.selectedDigit = parseInt(e.currentTarget.value);
+    var adHocStyleSheetID = 'probabilityDigitsStyleSheet';
+    var codeblockIDSelector = '#codeblockRandomResults_sha256Digit ';
+    var adHocStyleSheet = codeblockIDSelector +
+    '.individual-digit:nth-child(' + (model.selectedDigit + 1) + ') {' +
+        'border: 1px solid ' + passColor + ';' +
+    '}' +
+    codeblockIDSelector +
+    '.individual-digit:nth-child(' + (model.selectedDigit + 2) + ') {' +
+        'border-left: 1px solid ' + passColor + ';' +
+    '}';
+    removeHocStyleSheet(adHocStyleSheetID);
+    addHocStyleSheet(adHocStyleSheetID, adHocStyleSheet);
+    resetProbabilityForm(which);
+}
+
+function newList(length, initVal) {
+    var newList = new Array(length);
+    for (var i = 0; i < length; i++) {
+        newList[i] = initVal;
+    }
+    return newList;
+}
+
+function runProbabilityGraphClicked(e, params) {
+    switch (params.state) {
+        case 'running':
+            stopHashingForm[params.which] = true;
+            params.state = 'stopped';
+            switch (params.which) {
+                case 'coin': e.currentTarget.innerHTML = 'Toss Coin'; break;
+                case 'dice': e.currentTarget.innerHTML = 'Roll Dice'; break;
+                case 'sha256Digit': e.currentTarget.innerHTML = 'Run SHA256'; break;
+            }
+            setProbabilityForm(params.which, true);
+            break;
+        case 'stopped':
+            stopHashingForm[params.which] = false;
+            params.state = 'running';
+            e.currentTarget.innerHTML = 'Stop';
+            setProbabilityForm(params.which, false);
+
+            (function loop(params) {
+                if (stopHashingForm[params.which]) return;
+                incrementProbabilityCodeblock(params.which);
+                updateProbabilitySVG(params.which);
+                if (probabilitySVGs[params.which].enableAutomatic) {
+                    setTimeout(function () { loop(params); }, 0);
+                } else runProbabilityGraphClicked(e, params); // toggle
+            })(params);
+            break;
+    }
+}
+
+function setProbabilityForm(which, enabled) {
+    var queries = [
+        '#inputCheckboxAutomatic_' + which,
+        '#probabilityForm_' + which + ' .btnReset'
+    ];
+    if (which == 'sha256Digit') {
+        queries.push('#selectBin_sha256Digit');
+        queries.push('#inputMessage_sha256Digit');
+    }
+    for (var i = 0; i < queries.length; i++) {
+        document.querySelector(queries[i]).disabled = !enabled;
+    }
+}
+
+function incrementProbabilityCodeblock(which) {
+    var model = probabilitySVGs[which];
+    var form = document.getElementById('probabilityForm_' + which);
+    var randomlySelectedBin;
+    var latestResult;
+    switch (which) {
+        case 'coin':
+            randomlySelectedBin = Math.floor(Math.random() * model.bins.length);
+            latestResult = model.bins[randomlySelectedBin][0].toUpperCase();
+            break;
+        case 'dice':
+            randomlySelectedBin = Math.floor(Math.random() * model.bins.length);
+            latestResult = model.bins[randomlySelectedBin];
+            break;
+        case 'sha256Digit':
+            var messageEl = document.getElementById('inputMessage_sha256Digit');
+            var message = messageEl.value;
+            var bitArray = sjcl.hash.sha256.hash(message);
+            var sha256HashResult = sjcl.codec.hex.fromBits(bitArray); // 64 digits
+            randomlySelectedBin = parseInt(sha256HashResult[model.selectedDigit], 16);
+            latestResult = '<span>' +
+                borderTheChars(sha256HashResult, 1) +
+            '</span>';
+            messageEl.value = incrementAlpha(message);
+            break;
+    }
+    model.countPerBin[randomlySelectedBin]++; // +1 for this digit's count
+    model.totalCount++;
+    updateRandomResults(which, latestResult);
+
+    document.getElementById('randomResultCount_' + which).innerHTML =
+    model.totalCount;
+}
+
+function updateRandomResults(which, latestResult) {
+    var model = probabilitySVGs[which];
+    var probResultsEl = document.getElementById('randomResult_' + which);
+    var previousResultsStr = probResultsEl.innerHTML;
+    var separator;
+    switch (which) {
+        case 'dice':
+        case 'coin':
+            separator = '';
+            if (model.enableSpeed && previousResultsStr.length > 1000) {
+                previousResultsStr = previousResultsStr.slice(0, 1000);
+            }
+            break;
+        case 'sha256Digit':
+            separator = '<br>';
+            if (
+                model.enableSpeed &&
+                previousResultsStr.length > 0
+            ) {
+                var previousResultsList = previousResultsStr.split(separator);
+                if (previousResultsList.length > 9) {
+                    previousResultsList = previousResultsList.slice(0, 9);
+                    previousResultsStr = previousResultsList.join(separator);
+                }
+            }
+            break;
+    }
+    probResultsEl.innerHTML = latestResult + separator + previousResultsStr;
+}
+
+function updateProbabilitySVG(which) {
+    var model = probabilitySVGs[which];
+    if (model.totalCount == 0) {
+        for (var barI = 0; barI < model.bins.length; barI++) {
+            model.digitEls[barI].setAttribute('height', 0);
+        }
+        updateSVGYAxisLabels(which, 100);
+        return;
+    }
+    var maxBinCount = 0;
+    if (model.zoomYAxis) {
+        for (var barI = 0; barI < model.bins.length; barI++) {
+            if (model.countPerBin[barI] <= maxBinCount) continue;
+            maxBinCount = model.countPerBin[barI]; // found a bin with a higher count
+        }
+        var maxYAxis = Math.floor(100 * maxBinCount / model.totalCount);
+        if (!isEven(maxYAxis)) maxYAxis++;
+        updateSVGYAxisLabels(which, maxYAxis);
+    }
+    for (var barI = 0; barI < model.bins.length; barI++) {
+        var barHeight = probabilitySVGYAxisHeight * model.countPerBin[barI] /
+        (model.zoomYAxis ? maxBinCount : model.totalCount);
+
+        model.digitEls[barI].setAttribute('height', barHeight);
+    }
+}
+
+function resetProbabilityForm(which) {
+    var model = probabilitySVGs[which];
+    stopHashingForm[which] = true;
+    model.countPerBin = newList(model.bins.length, 0);
+    model.totalCount = 0;
+    document.getElementById('randomResult_' + which).innerHTML = '';
+    document.getElementById('randomResultCount_' + which).innerHTML = '0';
+    updateProbabilitySVG(which);
+}
+
+var probabilitySVGYAxisHeight;
+function initProbabilitySVG(which) {
+    var model = probabilitySVGs[which];
+
+    var svg = document.getElementById('probabilityGraphSVG_' + which).
+    contentDocument.getElementsByTagName('svg')[0];
+
+    var svgView = svg.getElementById('view');
+    model.yAxisNumberEls = [
+        svg.getElementById('yAxisTopNumber'),
+        svg.getElementById('yAxisMiddleNumber')
+    ];
+    var yAxisEl = svgView.querySelector('.yAxis');
+    probabilitySVGYAxisHeight = yAxisEl.y2.baseVal.value - yAxisEl.y1.baseVal.value;
+
+    // create the bars from bins
+    var numBars = model.bins.length;
+    var spacingBetweenBars = 5;
+    var xAxisEl = svgView.querySelector('.xAxis');
+    var xAxisLength = xAxisEl.x2.baseVal.value - xAxisEl.x1.baseVal.value;
+    //xAxisLength = (numBars * barWidth) + (numBars + 1) * spacingBetweenBars
+    var barWidth = (xAxisLength - ((numBars + 1) * spacingBetweenBars)) / numBars;
+
+    var currentBarLeftX = xAxisEl.x1.baseVal.value;
+    for (var barI = 0; barI < numBars; barI++) {
+        currentBarLeftX += spacingBetweenBars;
+        var caption = model.bins[barI].toString();
+        var newSVGGroup = document.createElementNS(
+            'http://www.w3.org/2000/svg', 'g'
+        );
+        newSVGGroup.setAttribute(
+            'transform', 'translate(' + currentBarLeftX + ',' + 170 + ')'
+        );
+        var barXML = '<rect' +
+            ' class="probabilityBar"' +
+            ' id="p' + caption + '"' +
+            ' x="0"' +
+            ' y="0"' +
+            ' width="' + barWidth + '"' +
+            ' height="0"' +
+            ' transform="scale(1,-1)"' +
+        '/>';
+        var barCaptionXML = '<text' +
+            ' class="axisNumber xAxisNumber"' +
+            ' x="' + (barWidth / 2) + '"' +
+            ' y="20"' +
+        '>' + caption + '</text>';
+        newSVGGroup.innerHTML = barXML + barCaptionXML;
+        svgView.appendChild(newSVGGroup);
+
+        currentBarLeftX += barWidth;
+
+        model.digitEls[barI] = newSVGGroup.getElementsByTagName('rect')[0];
+    }
+}
+
+function updateSVGYAxisLabels(which, maxYAxis) {
+    var model = probabilitySVGs[which];
+    model.yAxisNumberEls[0].textContent = maxYAxis + '%';
+    model.yAxisNumberEls[1].textContent = (maxYAxis / 2) + '%';
+}
+
+// todo: break this function down into manageable functions and move it to the
+// initializations section above
+function initSVG_DragableBlockchain() {
     var svg = document.getElementById('blockchainSVG').contentDocument.
     getElementsByTagName('svg')[0];
     var svgDefs = svg.getElementsByTagName('defs')[0];
