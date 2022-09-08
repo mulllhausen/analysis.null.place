@@ -22,7 +22,7 @@ p, li {
     word-wrap: break-word;
     line-height: 26px;
 }
-a, a:visited, a:active, a:hover, span.skip-to-content {
+a, a:visited, a:active, a:hover, span.text-causes-action {
     color: #7db904;/*green*/
     text-decoration: none;
     text-shadow: none;
@@ -30,7 +30,7 @@ a, a:visited, a:active, a:hover, span.skip-to-content {
     padding: 0;
     border: 0;
 }
-a:hover {
+a:hover, span.text-causes-action {
     cursor: pointer;
 }
 h1, h2, h3, h4, h5, h6 {
