@@ -22,7 +22,7 @@ p, li {
     word-wrap: break-word;
     line-height: 26px;
 }
-a, a:visited, a:active, a:hover {
+a, a:visited, a:active, a:hover, span.skip-to-content {
     color: #7db904;/*green*/
     text-decoration: none;
     text-shadow: none;
