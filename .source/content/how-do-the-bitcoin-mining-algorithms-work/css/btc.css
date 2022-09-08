@@ -133,6 +133,10 @@ pre {
 #bitsAreHex7Container label {
     padding-left: 14px;
 }
+.btc-header-definition label {
+    font-style: normal;/*not italic*/
+    font-size: 15px;
+}
 #form9 .codeblock .outputField {
     margin-right: 8px;
 }

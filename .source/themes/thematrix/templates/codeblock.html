@@ -2,7 +2,7 @@
 {% if start or (not start and not end) %}
 <div class="codeblock-container auto-wrap-on-mobile"{% if hide %} style="display:none;"{% endif %}>
     <div class="button-background">
-        <button class="wrap-nowrap" wrapped="false">
+        <button class="wrap-nowrap" wrapped="false" aria-label="toggle codeblock wrapping">
             <svg class="icon icon-level-left">
                 <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-level-left"></use>
             </svg>
