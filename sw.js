@@ -1,4 +1,4 @@
-var latestCache = '2022-09-08_17:31:37';
+var latestCache = '2022-09-08_18:49:30';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=pkRr8e',
@@ -106,7 +106,7 @@ var mandatoryAssets = [
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/index.html',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/sjcl.min.js?hash=0JqGiP',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/js/btc-mining.js?hash=pPfU02',
-    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=VifTvg',
+    'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/css/btc.css?hash=nBroL6',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg?hash=NX7qzY',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg?hash=488IlP',
     'https://analysis.null.place/how-do-the-bitcoin-mining-algorithms-work/json/btc-txs-per-block-0-999.json?hash=i24DRR',
