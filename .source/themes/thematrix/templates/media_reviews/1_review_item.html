@@ -14,6 +14,7 @@
         href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
 {% endif %}
         title="right click and copy link for the URL of this {{ media_type }} review"
+        aria-label="permalink to this {{ media_type }}"
     >
         <svg class="icon icon-chain">
             <use xlink:href="
@@ -102,12 +103,16 @@
 {% endif %}
         >
             <button class="external-site">
-                <img src="
+                <img
+                    src="
 {%- set img = '/img/' -%}
+{%- set alt = 'link to this {{ media_type }} on ' -%}
 {%- if media_type in ("movie", "tv-series") -%}
     {%- set img = img + 'imdb' -%}
+    {%- set alt = alt + 'imdb' -%}
 {%- elif media_type == "book" -%}
     {%- set img = img + 'goodreads' -%}
+    {%- set alt = alt + 'goodreads' -%}
 {%- endif -%}
 {%- set img = img + '-logo-button.png' -%}
 {%- if double_parsed -%}
@@ -115,7 +120,9 @@
 {%- else -%}
 {{ QS_LINK[img] }}
 {%- endif -%}
-                ">
+                    "
+                    alt="{{ alt }}"
+                >
             </button>
         </a>
     </div>
