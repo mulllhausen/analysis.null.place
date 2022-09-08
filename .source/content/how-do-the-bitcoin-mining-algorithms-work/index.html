@@ -90,6 +90,8 @@ them into another string of characters. We call the input characters the
         id="hashingFlowchartSVG"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/hashing-flowchart.svg'] }}"
         type="image/svg+xml"
+        aria-label="flowchart of SHA256 hashing, showing the intput > the SHA256
+hashing algorithm > the output"
     ></object>
 </div>
 </div>
@@ -318,6 +320,7 @@ probability over a large enough number of coin tosses.</p>
         id="probabilityGraphSVG_coin"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
+        aria-label="live graph of the probability distribution for a coin toss"
     ></object>
 {{ form_container('probabilityForm_coin', 'end') }}
 
@@ -353,6 +356,7 @@ distributions are flat probability distributions.</p>
         id="probabilityGraphSVG_dice"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
+        aria-label="live graph of the probability distribution for a dice roll"
     ></object>
 {{ form_container('probabilityForm_dice', 'end') }}
 
@@ -415,6 +419,8 @@ You will have to leave it running a long time to see this.</p>
         id="probabilityGraphSVG_sha256Digit"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/probability-graph.svg'] }}"
         type="image/svg+xml"
+        aria-label="live graph of the probability distribution for one digit of
+SHA256"
     ></object>
 {{ form_container('probabilityForm_sha256Digit', 'end') }}
 
@@ -621,6 +627,8 @@ each other over time, like so:</p>
         id="blockchainSVG"
         data="{{ QS_LINK['/how-do-the-bitcoin-mining-algorithms-work/img/bitcoin-blockchain.svg'] }}"
         type="image/svg+xml"
+        aria-label="graphical representation of the bitcoin blockchain, that can
+be dragged left and right to see more blocks"
     ></object>
 {{ form_container('dragableBlockchain', 'end') }}
 <div class="media-caption">the Bitcoin blockchain</div>
@@ -669,27 +677,27 @@ block header:</p>
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
-            version<br>
+            <label for="version4">version</label><br>
             <input id="version4" type="text" class="data-value" size="2" value="1" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            previous block hash<br>
+            <label for="prevHash4">previous block hash</label><br>
             <input id="prevHash4" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            merkle root<br>
+            <label for="merkleRoot4">merkle root</label><br>
             <input id="merkleRoot4" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp<span id="timestamp4Explanation"></span><br>
+            <label for="timestamp4">timestamp<span id="timestamp4Explanation"></span></label><br>
             <input id="timestamp4" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            bits<br>
+            <label for="bits4">bits</label><br>
             <input id="bits4" type="text" class="data-value" size="8" value="1d00ffff" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            nonce<br>
+            <label for="nonce4">nonce</label><br>
             <input id="nonce4" type="text" class="data-value" size="10" value="0" disabled>
         </td></tr>
     </table>
@@ -960,27 +968,27 @@ blockchain, and how these are concatenated together. The block header is always
 <div class="media-container"><div class="media-positioner">
     <table class="btc-header-definition">
         <tr><td class="btc-header-field">
-            version<br>
+            <label for="version9">version</label><br>
             <input id="version9" type="text" class="data-value" size="2" value="1" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            previous block hash<br>
+            <label for="prevHash9">previous block hash</label><br>
             <input id="prevHash9" type="text" class="data-value" size="64" value="0000000000000000000000000000000000000000000000000000000000000000" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            merkle root<br>
+            <label for="merkleRoot9">merkle root</label><br>
             <input id="merkleRoot9" type="text" class="data-value" size="64" value="4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            timestamp<span id="timestamp9Explanation"></span><br>
+            <label for="timestamp9">timestamp<span id="timestamp9Explanation"></span></label><br>
             <input id="timestamp9" type="text" class="data-value" size="24" value="03 Jan 2009 18:15:05 GMT" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            bits<br>
+            <label for="bits9">bits</label><br>
             <input id="bits9" type="text" class="data-value" size="8" value="1d00ffff" disabled>
         </td></tr>
         <tr><td class="btc-header-field">
-            nonce<br>
+            <label for="nonce9">nonce</label><br>
             <input id="nonce9" type="text" class="data-value" size="10" value="2083236893" disabled>
         </td></tr>
     </table>

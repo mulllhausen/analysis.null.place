@@ -2,7 +2,7 @@
 {% if piece == 'start' %}
 <form class="form-container glass-case{% if extra_classes != None %}{{ ' ' + extra_classes }}{% endif %}" id="{{ id }}">
     {% if linkable %}
-    <a href="#{{ id }}">
+    <a href="#{{ id }}" aria-label="permalink to this form">
         <svg class="icon icon-chain">
             <use xlink:href="{{ QS_LINK['/theme/img/icons.svg'] }}#icon-chain"></use>
         </svg>
