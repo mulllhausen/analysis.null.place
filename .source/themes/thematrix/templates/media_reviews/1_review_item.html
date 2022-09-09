@@ -106,15 +106,15 @@
                 <img
                     src="
 {%- set img = '/img/' -%}
-{%- set alt = 'link to this {{ media_type }} on ' -%}
 {%- if media_type in ("movie", "tv-series") -%}
     {%- set img = img + 'imdb' -%}
-    {%- set alt = alt + 'imdb' -%}
+    {%- set alt = 'imdb' -%}
 {%- elif media_type == "book" -%}
     {%- set img = img + 'goodreads' -%}
-    {%- set alt = alt + 'goodreads' -%}
+    {%- set alt = 'goodreads' -%}
 {%- endif -%}
 {%- set img = img + '-logo-button.png' -%}
+{%- set alt = alt + ' logo' -%}
 {%- if double_parsed -%}
 {%- raw %}{{ {% endraw -%}QS_LINK['{{ img }}']{%- raw %} }}{% endraw -%}
 {%- else -%}
