@@ -2,6 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <atom:link href="https://analysis.null.place/feeds/all.rss.xml" rel="self" type="application/rss+xml" />
+        <lastBuildDate>Sun, 04 Sep 2022 00:00:00 +0930</lastBuildDate>
         <title>analysis</title>
         <link>https://analysis.null.place/</link>
         <description></description>
@@ -1355,6 +1356,5 @@
             <lastBuildDate>Thu, 09 Sep 2021 00:00:00 +0930</lastBuildDate>
             <guid isPermaLink="false">tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010/</guid>
         </item>
-        <lastBuildDate>Sun, 04 Sep 2022 00:00:00 +0930</lastBuildDate>
     </channel>
 </rss>
