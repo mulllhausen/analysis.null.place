@@ -33,16 +33,23 @@
                     {{ article.title }}
                 {%- endif -%}
             </description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
-            <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
-            <lastBuildDate>
+            <author>{{ AUTHOR }}</author>
+{#
+    note that the rss spec does not allow for an <item> update (<lastBuildDate/>
+    is not allowed under <item>)
+    https://validator.w3.org/feed/docs/rss2.html
+
+    so to make sure that feed readers always see item changes, use the latest
+    date in this field
+#}
+            <pubDate>
             {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
                 {{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- else -%}
                 {{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- endif -%}
-            </lastBuildDate>
-            <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</guid>
+            </pubDate>
+            <guid isPermaLink="true">{{ SITEURL }}/{{ article.url }}</guid>
             {# % if article.tags %}
                 {% for tag in article.tags %}
             <category>{{ tag }}</category>
@@ -57,10 +64,15 @@
             <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
             <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</link>
             <description>{{ a_media.review_title | striptags }}</description>
-            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ AUTHOR }}</dc:creator>
-            <pubDate>{{ a_media.review_created_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
-            <lastBuildDate>{{ a_media.last_modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
-            <guid isPermaLink="false">tag:{{ SITE_HOSTNAME }},{{ a_media.review_created }}{# Y-m-d #}:/{{ media_type }}-review/{{ a_media.id_ }}/</guid>
+            <author>{{ AUTHOR }}</author>
+            <pubDate>
+            {%- if a_media.last_modified_date and (a_media.last_modified_date.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
+                {{ a_media.last_modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
+            {%- else -%}
+                {{ a_media.review_created_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
+            {%- endif -%}
+            </pubDate>
+            <guid isPermaLink="true">{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</guid>
         </item>
                 {% endfor %}
             {% endfor %}
