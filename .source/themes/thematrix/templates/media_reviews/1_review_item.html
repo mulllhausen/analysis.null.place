@@ -153,7 +153,10 @@
     {{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json
 {%- endif -%}
                 "
-            >updated {{ media.review_updated_dmmmYYYY }}
+            >
+{%- if media != None and media.review_updated_dmmmYYYY -%}
+    updated {{ media.review_updated_dmmmYYYY }}
+{%- endif -%}
             </a>
         </span>
     </div>
