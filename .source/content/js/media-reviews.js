@@ -382,6 +382,10 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
         mediaEl.querySelector('.spoiler-alert.no-spoilers').style.display = 'inline';
     }
     mediaEl.querySelector('.link-external').href = getExternalLinkURL(mediaData);
+
+    mediaEl.querySelector('.link-external .external-site img').alt =
+    getExternalLinkImgAltText();
+
     mediaEl.querySelector('.review-created').innerHTML = 'added ' +
     dateYYYYMMDD2dmmmYYYY(mediaData.reviewCreated).toLowerCase();
 
@@ -528,6 +532,21 @@ function getExternalLinkURL(mediaData) {
             break;
     }
     return externalLink;
+}
+
+function getExternalLinkImgAltText() {
+    var altText;
+    switch (siteGlobals.mediaType) {
+        case 'book':
+            altText = 'goodreads';
+            break;
+        case 'movie':
+        case 'tv-series':
+            altText = 'imdb';
+            break;
+    }
+    altText += ' logo';
+    return altText;
 }
 
 var currentMediaCountPanelPosition = 'inline'; // init
