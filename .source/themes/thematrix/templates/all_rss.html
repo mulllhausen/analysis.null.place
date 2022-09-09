@@ -33,7 +33,13 @@
                     {{ article.title }}
                 {%- endif -%}
             </description>
+{#
+    this is supposed to be the email address but the spec says
+    > for a weblog authored by a single individual it would make sense to omit
+    > the <author> element.
+
             <author>{{ AUTHOR }}</author>
+#}
 {#
     note that the rss spec does not allow for an <item> update (<lastBuildDate/>
     is not allowed under <item>)
@@ -64,7 +70,6 @@
             <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
             <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</link>
             <description>{{ a_media.review_title | striptags }}</description>
-            <author>{{ AUTHOR }}</author>
             <pubDate>
             {%- if a_media.last_modified_date and (a_media.last_modified_date.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
                 {{ a_media.last_modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
