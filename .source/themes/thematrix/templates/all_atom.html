@@ -1,10 +1,26 @@
+{# validated at validator.w3.org/feed #}
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+    {% set feed = namespace(max_date = dates[0].date) %}{# init #}
+    {% for article in dates %}
+        {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
+            {%- set feed.max_date = article.modified if article.modified > feed.max_date else feed.max_date -%}
+        {%- else -%}
+            {%- set feed.max_date = article.date if article.date > feed.max_date else feed.max_date -%}
+        {%- endif -%}
+    {% endfor %}
+    {% if MEDIA_REVIEWS %}
+        {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
+            {% for a_media in media_data.feed_and_sitemap_data %}
+            {% set feed.max_date = a_media.last_modified_date if a_media.last_modified_date > feed.max_date else feed.max_date %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <updated>{{ feed.max_date.isoformat() }}</updated>
     <title>{{ SITENAME }}</title>
     <link href="{{ SITEURL }}/" rel="alternate"></link>
     <link href="{{ SITEURL }}/{{ ALL_ATOM_SAVE_AS}}" rel="self"></link>
     <id>{{ SITEURL }}/</id>
-    {% set feed = namespace(max_date = dates[0].date) %}{# init #}
     {% for article in dates %}
     <entry>
         <title>{{ article.title }}</title>
@@ -12,10 +28,8 @@
         <published>{{ article.date.isoformat() }}</published>
         <updated>
             {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
-                {%- set feed.max_date = article.modified if article.modified > feed.max_date else feed.max_date -%}
                 {{ article.modified.isoformat() }}
             {%- else -%}
-                {%- set feed.max_date = article.date if article.date > feed.max_date else feed.max_date -%}
                 {{ article.date.isoformat() }}
             {%- endif -%}
         </updated>
@@ -25,9 +39,9 @@
         <id>tag:{{ SITE_HOSTNAME }},{{ article.date.strftime('%Y-%m-%d') }}:/{{ article.url }}</id>
         <summary type="html">
             {%- if article.summary -%}
-                {{ article.summary }}
+                {{ article.summary | striptags }}
             {%- else -%}
-                {{ article.title }}
+                {{ article.title | striptags }}
             {%- endif -%}
         </summary>
         {#<content type="html">{{ article.content }}</content>#}
@@ -41,10 +55,9 @@
     {% if MEDIA_REVIEWS %}
         {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
             {% for a_media in media_data.feed_and_sitemap_data %}
-            {% set feed.max_date = a_media.last_modified_date if a_media.last_modified_date > feed.max_date else feed.max_date %}
     <entry>
         <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
-        <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</link>
+        <link href="{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}"/></link>
         <published>{{ a_media.review_created_date.isoformat() }}</published>
         <updated>{{ a_media.last_modified_date.isoformat() }}</updated>
         <author>
@@ -56,5 +69,4 @@
             {% endfor %}
         {% endfor %}
     {% endif %}
-    <updated>{{ feed.max_date.isoformat() }}</updated>
 </feed>
