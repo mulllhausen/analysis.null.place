@@ -64,7 +64,7 @@
             <name>{{ AUTHOR }}</name>
         </author>
         <id>tag:{{ SITE_HOSTNAME }},{{ a_media.review_created }}{# Y-m-d #}:/{{ media_type }}-review/{{ a_media.id_ }}</id>
-        <summary type="html">{{ a_media.review_title }}</summary>
+        <summary type="html">{{ a_media.review_title | striptags }}</summary>
     </entry>
             {% endfor %}
         {% endfor %}
