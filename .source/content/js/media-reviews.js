@@ -389,9 +389,10 @@ function fillRender1MediaItem(mediaEl, mediaIndex, mediaData) {
     mediaEl.querySelector('.review-created').innerHTML = 'added ' +
     dateYYYYMMDD2dmmmYYYY(mediaData.reviewCreated).toLowerCase();
 
-    if (mediaData.reviewUpdated != null) {
-        var a = mediaEl.querySelector('.review-updated a');
-
+    var a = mediaEl.querySelector('.review-updated a');
+    if (mediaData.reviewUpdated == null) {
+        deleteElement(a);
+    } else {
         a.href = siteGlobals.githubURL + '/commits/master/' +
         siteGlobals.mediaType  + '-reviews/json/review-' + mediaData.id_ +
         '.json';
