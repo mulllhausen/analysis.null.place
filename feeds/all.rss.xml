@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
+        <atom:link href="https://analysis.null.place/feeds/all.rss.xml" rel="self" type="application/rss+xml" />
         <title>analysis</title>
         <link>https://analysis.null.place/</link>
         <description></description>
@@ -1330,7 +1331,7 @@
         <item>
             <title>tv-series review: The End of the F***ing World Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s01-2017/</link>
-            <description>Awkward teenage angst meets <i>Pulp Fiction</i></description>
+            <description>Awkward teenage angst meets Pulp Fiction</description>
             <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Peter Miller</dc:creator>
             <pubDate>Wed, 10 Jun 2020 00:00:00 +0930</pubDate>
             <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0930</lastBuildDate>
