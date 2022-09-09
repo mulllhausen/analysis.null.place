@@ -3,10 +3,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <atom:link href="{{ SITEURL }}/feeds/all.rss.xml" rel="self" type="application/rss+xml" />
+        {% set channel = namespace(max_date = dates[0].date) %}{# init #}
+        {% for article in dates %}
+            {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
+                {%- set channel.max_date = article.modified if article.modified > channel.max_date else channel.max_date -%}
+            {%- else -%}
+                {%- set channel.max_date = article.date if article.date > channel.max_date else channel.max_date -%}
+            {%- endif -%}
+        {% endfor %}
+        {% if MEDIA_REVIEWS %}
+            {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
+                {% for a_media in media_data.feed_and_sitemap_data %}
+                    {% set channel.max_date = a_media.last_modified_date if a_media.last_modified_date > channel.max_date else channel.max_date %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <lastBuildDate>{{ channel.max_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
         <title>{{ SITENAME }}</title>
         <link>{{ SITEURL }}/</link>
         <description></description>
-        {% set channel = namespace(max_date = dates[0].date) %}{# init #}
         {% for article in dates %}
         <item>
             <title>{{ article.title }}</title>
@@ -22,10 +37,8 @@
             <pubDate>{{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
             <lastBuildDate>
             {%- if article.modified and (article.modified.strftime('%Y%m%d').encode('ascii', 'ignore') != DATE_NULL_VALUE_HACK_YMD) -%}
-                {%- set channel.max_date = article.modified if article.modified > channel.max_date else channel.max_date -%}
                 {{ article.modified.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- else -%}
-                {%- set channel.max_date = article.date if article.date > channel.max_date else channel.max_date -%}
                 {{ article.date.strftime('%a, %d %b %Y %H:%M:%S %z') }}
             {%- endif -%}
             </lastBuildDate>
@@ -40,7 +53,6 @@
         {% if MEDIA_REVIEWS %}
             {% for (media_type, media_data) in MEDIA_REVIEWS.items() %}
                 {% for a_media in media_data.feed_and_sitemap_data %}
-                {% set channel.max_date = a_media.last_modified_date if a_media.last_modified_date > channel.max_date else channel.max_date %}
         <item>
             <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
             <link>{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/</link>
@@ -53,6 +65,5 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
-        <lastBuildDate>{{ channel.max_date.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
     </channel>
 </rss>
