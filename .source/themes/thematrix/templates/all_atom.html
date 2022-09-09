@@ -57,7 +57,7 @@
             {% for a_media in media_data.feed_and_sitemap_data %}
     <entry>
         <title>{{ media_type }} review: {{ a_media.title }}{% if media_type == 'tv-series' %} Season {{ a_media.season }}{% endif %}</title>
-        <link href="{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}"></link>
+        <link href="{{ SITEURL }}/{{ media_type }}-reviews/{{ a_media.id_ }}/"></link>
         <published>{{ a_media.review_created_date.isoformat() }}</published>
         <updated>{{ a_media.last_modified_date.isoformat() }}</updated>
         <author>
