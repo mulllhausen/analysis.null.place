@@ -10,9 +10,11 @@
 >
     <a
         class="link-to-self chain-link"
-{% if media %}
-        href="{{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/"
-{% endif %}
+        href="
+{%- if media -%}
+        {{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/
+{%- endif -%}
+        "
         title="right click and copy link for the URL of this {{ media_type }} review"
         aria-label="permalink to this {{ media_type }}"
     >
@@ -57,11 +59,13 @@
         </div>
     </div>
     <h3 class="media-title">
-        <a class="link-to-self" href="
+        <a
+            class="link-to-self"
+            href="
 {%- if media -%}
         {{ SITEURL }}/{{ media_type }}-reviews/{{ media.id_ }}/
 {%- endif -%}
-        "
+            "
         >
 {%- if media -%}
     {%- if media_type == "movie" -%}
@@ -97,10 +101,13 @@
         {{ media.html_review }}
 {% endif %}
         <a
-            class="link-external" target="_blank"
-{% if media %}
-            href="{{ media.external_link_url }}"
-{% endif %}
+            class="link-external"
+            target="_blank"
+            href="
+{%- if media -%}
+            {{ media.external_link_url }}
+{%- endif -%}
+            "
         >
             <button class="external-site">
                 <img
