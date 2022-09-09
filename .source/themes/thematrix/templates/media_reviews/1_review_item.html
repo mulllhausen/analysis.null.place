@@ -146,18 +146,16 @@
 {%- endif -%}
         </span>
         <span class="review-updated">
+{%- if media == None -%}
+            <a href="" target="_blank"></a>
+{%- else %}
+    {% if media.review_updated_dmmmYYYY -%}
             <a
                 target="_blank"
-                href="
-{%- if media != None and media.review_updated_dmmmYYYY -%}
-    {{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json
-{%- endif -%}
-                "
-            >
-{%- if media != None and media.review_updated_dmmmYYYY -%}
-    updated {{ media.review_updated_dmmmYYYY }}
-{%- endif -%}
-            </a>
+                href="{{ GITHUB_URL }}/commits/master/{{ media_type }}-reviews/json/review-{{ media.id_ }}.json"
+            >updated {{ media.review_updated_dmmmYYYY }}</a>
+    {%- endif %}
+{%- endif %}
         </span>
     </div>
 </div>
