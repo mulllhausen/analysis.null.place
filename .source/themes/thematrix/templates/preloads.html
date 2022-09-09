@@ -27,7 +27,18 @@
     {% if article.jsons %}
         {% set jsons = article.jsons.split(',') %}
         {% for json_ in jsons %}
-<link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}"/>
+{#
+    to get rid of the following error in the console:
+
+    A preload for '<URL>' is found, but is not used because the request
+    credentials mode does not match. Consider taking a look at crossorigin
+    attribute.
+
+    try adding the crossorigin="anonymous" attribute. i suspect this is because
+    the website is hosted on github.com but returned from analysis.null.place
+    and .json does not match any whitelisted file extension?
+#}
+<link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}" crossorigin="anonymous"/>
         {% endfor %}
     {% endif %}
 {% endif %}
@@ -35,7 +46,7 @@
     {% if page.jsons %}
         {% set jsons = page.jsons.split(',') %}
         {% for json_ in jsons %}
-<link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}"/>
+<link rel="preload" as="fetch" href="{{ QS_LINK[json_] }}" crossorigin="anonymous"/>
         {% endfor %}
     {% endif %}
 {% endif %}
