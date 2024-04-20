@@ -874,7 +874,7 @@ def save_resized_image(img, a_media, img_size_name):
             a_media["%s_width" % img_size_name],
             a_media["%s_height" % img_size_name]
         ),
-        PIL.Image.ANTIALIAS
+        PIL.Image.LANCZOS
     )
     new_img.save(get_img_data(a_media["id_"], img_size_name)["on_filesystem"])
 

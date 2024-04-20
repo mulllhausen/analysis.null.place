@@ -1,5 +1,4 @@
-on linux that has the `apt` package manager...
-to build:
+build on linux with the `apt` package manager installed:
 
     sudo apt install python3-virtualenv yui-compressor
     mkdir analysis.null.place
