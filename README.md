@@ -1,12 +1,11 @@
-on linux...
+on linux that has the `apt` package manager...
 to build:
 
-    pip install virtualenv
+    sudo apt install python3-virtualenv yui-compressor
     mkdir analysis.null.place
     cd analysis.null.place
     virtualenv .
     source bin/activate
-    sudo apt install yui-compressor
     pip install pelican Markdown requests image
     git clone git@github.com:mulllhausen/analysis.null.place.git output
     cd output/.source
@@ -14,6 +13,6 @@ to build:
 
 to debug:
 
-    pip install pudb
+    sudo apt install python3-pudb
     # suppress the "generating..." spinner like so:
     make html | cat
