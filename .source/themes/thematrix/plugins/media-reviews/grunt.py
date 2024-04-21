@@ -876,7 +876,14 @@ def save_resized_image(img, a_media, img_size_name):
         ),
         PIL.Image.LANCZOS
     )
-    new_img.save(get_img_data(a_media["id_"], img_size_name)["on_filesystem"])
+    new_img.save(
+        get_img_data(a_media["id_"], img_size_name)["on_filesystem"]
+        #,quality = 90
+    )
+    print (
+        "saved new image %s" %
+        get_img_data(a_media["id_"], img_size_name)["on_filesystem"]
+    )
 
 def print_img_size_warning_message(original_width, original_height, title):
     if original_width >= desired_width_larger: # ok

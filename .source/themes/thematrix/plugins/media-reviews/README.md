@@ -15,7 +15,26 @@ following list in pelican.py:
 
 Or include only the types you want the plugin to build.
 
-## Plugin Files 
+## Tips
+
+To force a re-download of all images, delete all images and rebuild:
+
+    rm -f .source/content/<media>-reviews/img/*.jpg
+    make publish
+
+Alternatively, just deleting any thumbnail or a larger image will force that
+image to be re-downloaded. For example:
+
+    rm .source/content/beer-reviews/img/thumb-kilkenny-irish-ale.jpg
+    make publish
+
+The original downloaded images are not needed once they are resized, however if
+you need them for debugging, comment out the following line in
+`media_reviews.py`:
+
+    grunt.delete_original_size_thumbnails(all_media_x)
+
+## Plugin Files
 
 - `PATH/<media>-reviews/json/list-all.json` - The list of all \<media> data.
 You will need to create this file manually yourself. This plugin generates all
