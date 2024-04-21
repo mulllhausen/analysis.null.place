@@ -45,6 +45,7 @@ def media_reviews(pelican_obj):
     # initialise the dict where all media data will be stored
     pelican_obj.settings["MEDIA_REVIEWS"] = {}
 
+    grunt.debug = pelican_obj.settings["DEBUG1"]
     grunt.output_path = pelican_obj.settings["OUTPUT_PATH"]
     grunt.content_path = pelican_obj.settings["PATH"]
     grunt.init_jinja_environment(pelican_obj)
