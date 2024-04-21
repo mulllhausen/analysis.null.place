@@ -1,7 +1,6 @@
-on linux...
-to build:
+build on linux using the `apt` package manager:
 
-    pip3 install virtualenv
+    sudo apt install python3-virtualenv yui-compressor
     mkdir analysis.null.place
     cd analysis.null.place
     virtualenv .
