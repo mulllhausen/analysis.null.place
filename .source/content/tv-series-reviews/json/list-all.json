@@ -154,6 +154,20 @@
             "genres": ["Adventure", "Comedy", "Crime"],
             "reviewCreated": "2020-06-10",
             "reviewUpdated": null
+        },
+        {
+            "title": "Squid Game",
+            "year": 2021,
+            "season": 1,
+            "rating": 3.5,
+            "spoilers": false,
+            "thumbnail": "https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3.jpg",
+            "reviewTitle": "Insatiably violent",
+            "review": "Pretty obviously intended to be an allegory for modern economic life (capitalism, socialism, etc). Especially later in the season once the \"high rollers\" (VIPs) are introduced. +5 stars for a really addictive show, -1 star for mass murder, -0.5 stars for some characters lacking depth.",
+            "IMDBID": "tt10919420",
+            "genres": ["Action", "Drama"],
+            "reviewCreated": "2021-10-26",
+            "reviewUpdated": null
         }
     ]
 }
