@@ -12,7 +12,7 @@
     </url>
     <url>
         <loc>https://analysis.null.place/tv-series-reviews/</loc>
-        <lastmod>2021-10-26</lastmod>
+        <lastmod>2024-04-23</lastmod>
         <priority>0.8</priority>
     </url>
     <url>
@@ -747,6 +747,11 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://analysis.null.place/tv-series-reviews/skins-s01-2007/</loc>
+        <lastmod>2024-04-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://analysis.null.place/tv-series-reviews/squid-game-s01-2021/</loc>
         <lastmod>2021-10-26</lastmod>
         <priority>0.8</priority>
@@ -762,8 +767,18 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://analysis.null.place/tv-series-reviews/the-great-s01-2020/</loc>
+        <lastmod>2024-04-23</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/</loc>
         <lastmod>2021-09-09</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://analysis.null.place/tv-series-reviews/westworld-s01-2016/</loc>
+        <lastmod>2024-04-23</lastmod>
         <priority>0.8</priority>
     </url>
 </urlset>

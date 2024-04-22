@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <updated>2022-09-04T00:00:00+09:30</updated>
+    <updated>2024-04-23T00:00:00+09:30</updated>
     <title>analysis</title>
     <link href="https://analysis.null.place/" rel="alternate"></link>
     <link href="https://analysis.null.place/feeds/all.atom.xml" rel="self"></link>
@@ -20,7 +20,7 @@
         <title>tv-series reviews</title>
         <link href="https://analysis.null.place/tv-series-reviews/" rel="alternate"></link>
         <published>2019-03-26T00:00:00+10:30</published>
-        <updated>2021-10-26T00:00:00+10:30</updated>
+        <updated>2024-04-23T00:00:00+09:30</updated>
         <author>
             <name>Peter Miller</name>
         </author>
@@ -1623,6 +1623,17 @@
         <summary type="html">Hillariously disturbing</summary>
     </entry>
     <entry>
+        <title>tv-series review: Skins Season 1</title>
+        <link href="https://analysis.null.place/tv-series-reviews/skins-s01-2007/"></link>
+        <published>2024-04-23T00:00:00+09:30</published>
+        <updated>2024-04-23T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2024-04-23:/tv-series-review/skins-s01-2007</id>
+        <summary type="html">Snapshot of an awkward point in life</summary>
+    </entry>
+    <entry>
         <title>tv-series review: Squid Game Season 1</title>
         <link href="https://analysis.null.place/tv-series-reviews/squid-game-s01-2021/"></link>
         <published>2021-10-26T00:00:00+10:30</published>
@@ -1656,6 +1667,17 @@
         <summary type="html">Brought down a peg</summary>
     </entry>
     <entry>
+        <title>tv-series review: The Great Season 1</title>
+        <link href="https://analysis.null.place/tv-series-reviews/the-great-s01-2020/"></link>
+        <published>2024-04-23T00:00:00+09:30</published>
+        <updated>2024-04-23T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2024-04-23:/tv-series-review/the-great-s01-2020</id>
+        <summary type="html">Brazen, irreverent and playful</summary>
+    </entry>
+    <entry>
         <title>tv-series review: The Walking Dead Season 1</title>
         <link href="https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/"></link>
         <published>2019-03-26T00:00:00+10:30</published>
@@ -1665,5 +1687,16 @@
         </author>
         <id>tag:analysis.null.place,2019-03-26:/tv-series-review/the-walking-dead-s01-2010</id>
         <summary type="html">The Hobbesian state of nature</summary>
+    </entry>
+    <entry>
+        <title>tv-series review: Westworld Season 1</title>
+        <link href="https://analysis.null.place/tv-series-reviews/westworld-s01-2016/"></link>
+        <published>2024-04-23T00:00:00+09:30</published>
+        <updated>2024-04-23T00:00:00+09:30</updated>
+        <author>
+            <name>Peter Miller</name>
+        </author>
+        <id>tag:analysis.null.place,2024-04-23:/tv-series-review/westworld-s01-2016</id>
+        <summary type="html">It doesn't look like anything to me</summary>
     </entry>
 </feed>

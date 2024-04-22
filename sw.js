@@ -1,4 +1,4 @@
-var latestCache = '2024-04-21_18:42:56';
+var latestCache = '2024-04-23_00:38:34';
 var mandatoryAssets = [
     // common assets for all pages
     'https://analysis.null.place/theme/css/thematrix.css?hash=pkRr8e',
@@ -58,22 +58,22 @@ var mandatoryAssets = [
     'https://analysis.null.place/tv-series-reviews/img/thumb-rick-and-morty-s01-2013.jpg?hash=u80QLN',
     'https://analysis.null.place/tv-series-reviews/img/thumb-the-end-of-the-fing-world-s01-2017.jpg?hash=xlZsag',
     'https://analysis.null.place/tv-series-reviews/img/thumb-the-walking-dead-s01-2010.jpg?hash=wUHIwk',
+    'https://analysis.null.place/tv-series-reviews/img/thumb-westworld-s01-2016.jpg?hash=-4lA1b',
     'https://analysis.null.place/tv-series-reviews/img/thumb-maniac-s01-2018.jpg?hash=ikYtYy',
+    'https://analysis.null.place/tv-series-reviews/img/thumb-skins-s01-2007.jpg?hash=GLs5Ru',
     'https://analysis.null.place/tv-series-reviews/img/thumb-black-mirror-s05-2019.jpg?hash=1jjH9T',
     'https://analysis.null.place/tv-series-reviews/img/thumb-dead-pixels-s01-2019.jpg?hash=4UMzmp',
-    'https://analysis.null.place/tv-series-reviews/img/thumb-bbc-war-of-the-worlds-s01-2019.jpg?hash=yRyGkb',
-    'https://analysis.null.place/tv-series-reviews/img/thumb-nightflyers-s01-2018.jpg?hash=UdhUUC',
-    'https://analysis.null.place/tv-series-reviews/json/list-highest-rating-first-10.json?hash=7Sur3w',
+    'https://analysis.null.place/tv-series-reviews/json/list-highest-rating-first-10.json?hash=4pQK3m',
     'https://analysis.null.place/tv-series-reviews/json/data-black-mirror-s01-2011.json?hash=AdKvuc',
     'https://analysis.null.place/tv-series-reviews/json/data-philip-k-dicks-electric-dreams-s01-2017.json?hash=PwEpQV',
     'https://analysis.null.place/tv-series-reviews/json/data-rick-and-morty-s01-2013.json?hash=CeVE2o',
     'https://analysis.null.place/tv-series-reviews/json/data-the-end-of-the-fing-world-s01-2017.json?hash=1dhx71',
     'https://analysis.null.place/tv-series-reviews/json/data-the-walking-dead-s01-2010.json?hash=2yDHUN',
+    'https://analysis.null.place/tv-series-reviews/json/data-westworld-s01-2016.json?hash=-nfzKX',
     'https://analysis.null.place/tv-series-reviews/json/data-maniac-s01-2018.json?hash=puYDJS',
+    'https://analysis.null.place/tv-series-reviews/json/data-skins-s01-2007.json?hash=hxBkYY',
     'https://analysis.null.place/tv-series-reviews/json/data-black-mirror-s05-2019.json?hash=1fzas6',
     'https://analysis.null.place/tv-series-reviews/json/data-dead-pixels-s01-2019.json?hash=js9lsH',
-    'https://analysis.null.place/tv-series-reviews/json/data-bbc-war-of-the-worlds-s01-2019.json?hash=u0WF1J',
-    'https://analysis.null.place/tv-series-reviews/json/data-nightflyers-s01-2018.json?hash=jJgW9W',
 
     // assets for the "movie reviews" article
     'https://analysis.null.place/movie-reviews/',

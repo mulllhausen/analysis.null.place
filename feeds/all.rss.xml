@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <atom:link href="https://analysis.null.place/feeds/all.rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Sun, 04 Sep 2022 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Tue, 23 Apr 2024 00:00:00 +0930</lastBuildDate>
         <title>analysis</title>
         <link>https://analysis.null.place/</link>
         <description></description>
@@ -17,7 +17,7 @@
             <title>tv-series reviews</title>
             <link>https://analysis.null.place/tv-series-reviews/</link>
             <description>tv-series reviews</description>
-            <pubDate>Tue, 26 Oct 2021 00:00:00 +1030</pubDate>
+            <pubDate>Tue, 23 Apr 2024 00:00:00 +0930</pubDate>
             <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/</guid>
         </item>
         <item>
@@ -1036,6 +1036,13 @@
             <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/rick-and-morty-s01-2013/</guid>
         </item>
         <item>
+            <title>tv-series review: Skins Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/skins-s01-2007/</link>
+            <description>Snapshot of an awkward point in life</description>
+            <pubDate>Tue, 23 Apr 2024 00:00:00 +0930</pubDate>
+            <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/skins-s01-2007/</guid>
+        </item>
+        <item>
             <title>tv-series review: Squid Game Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/squid-game-s01-2021/</link>
             <description>Insatiably violent</description>
@@ -1057,11 +1064,25 @@
             <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/the-end-of-the-fing-world-s02-2019/</guid>
         </item>
         <item>
+            <title>tv-series review: The Great Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/the-great-s01-2020/</link>
+            <description>Brazen, irreverent and playful</description>
+            <pubDate>Tue, 23 Apr 2024 00:00:00 +0930</pubDate>
+            <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/the-great-s01-2020/</guid>
+        </item>
+        <item>
             <title>tv-series review: The Walking Dead Season 1</title>
             <link>https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/</link>
             <description>The Hobbesian state of nature</description>
             <pubDate>Thu, 09 Sep 2021 00:00:00 +0930</pubDate>
             <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/the-walking-dead-s01-2010/</guid>
+        </item>
+        <item>
+            <title>tv-series review: Westworld Season 1</title>
+            <link>https://analysis.null.place/tv-series-reviews/westworld-s01-2016/</link>
+            <description>It doesn't look like anything to me</description>
+            <pubDate>Tue, 23 Apr 2024 00:00:00 +0930</pubDate>
+            <guid isPermaLink="true">https://analysis.null.place/tv-series-reviews/westworld-s01-2016/</guid>
         </item>
     </channel>
 </rss>
