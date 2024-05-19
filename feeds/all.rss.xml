@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <atom:link href="https://analysis.null.place/feeds/all.rss.xml" rel="self" type="application/rss+xml" />
-        <lastBuildDate>Tue, 23 Apr 2024 00:00:00 +0930</lastBuildDate>
+        <lastBuildDate>Sun, 19 May 2024 00:00:00 +0930</lastBuildDate>
         <title>analysis</title>
         <link>https://analysis.null.place/</link>
         <description></description>
@@ -10,7 +10,7 @@
             <title>book reviews</title>
             <link>https://analysis.null.place/book-reviews/</link>
             <description>book reviews</description>
-            <pubDate>Sun, 24 Apr 2022 00:00:00 +0930</pubDate>
+            <pubDate>Sun, 19 May 2024 00:00:00 +0930</pubDate>
             <guid isPermaLink="true">https://analysis.null.place/book-reviews/</guid>
         </item>
         <item>
@@ -565,6 +565,13 @@
             <description>N/A</description>
             <pubDate>Fri, 22 Apr 2022 00:00:00 +0930</pubDate>
             <guid isPermaLink="true">https://analysis.null.place/book-reviews/neal-stephenson-the-rise-and-fall-of-dodo-2017/</guid>
+        </item>
+        <item>
+            <title>book review: The Three-Body Problem?</title>
+            <link>https://analysis.null.place/book-reviews/liu-cixin-the-three-body-problem-2008/</link>
+            <description>Needs a prequel</description>
+            <pubDate>Sun, 19 May 2024 00:00:00 +0930</pubDate>
+            <guid isPermaLink="true">https://analysis.null.place/book-reviews/liu-cixin-the-three-body-problem-2008/</guid>
         </item>
         <item>
             <title>book review: The Triumph of Conservatism</title>
